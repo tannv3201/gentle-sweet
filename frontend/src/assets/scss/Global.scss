@@ -1,0 +1,149 @@
+@import "normalize.css";
+// @import url("https://fonts.googleapis.com/css?family=IBM+Plex+Sans:400,500,600,700&display=swap&subset=vietnamese");
+
+:root {
+    --blue: #5e72e4;
+    --indigo: #5603ad;
+    --purple: #8965e0;
+    --pink: #f3a4b5;
+    --red: #f5365c;
+    --orange: #fb6340;
+    --yellow: #ffd600;
+    --secondary: #f4f5f7;
+    --success: #00f2c3;
+    --neutral: #ffffff;
+    --darker: black;
+    --green: #2dce89;
+    --dark-green: #0c3000;
+    --teal: #11cdef;
+    --cyan: #2bffc6;
+    --white: #ffffff;
+    --gray: #6c757d;
+    --gray-dark: #32325d;
+    --info: #1d8cf8;
+    --warning: #ff8d72;
+    --danger: #fd5d93;
+    --light: #adb5bd;
+    --dark: #212529;
+    --default: #344675;
+    --white: #ffffff;
+    --light: #ced4da;
+    --lighter: #e9ecef;
+    // --primary: #f0570b;
+    --primary-bold: #ab003c;
+    --primary: #f50057;
+    --primary-medium: #f73378;
+    --primary-bland: #f3a4b5;
+    --light-gray: #f6f4f1;
+
+    --font-family: "Plus Jakarta Sans", sans-serif;
+
+    // Default layout
+    --default-layout-header-height: 60px;
+    --default-layout-width: 1280px;
+    --default-layout-horizontal-spacer: 24px;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    font-size: 62.5%;
+    scroll-behavior: smooth;
+}
+
+body {
+    font-family: var(--font-family);
+    font-size: 1.6rem;
+    line-height: 1.5;
+    text-rendering: optimizeSpeed;
+    overflow-y: overlay;
+}
+
+// Scrollbar css
+
+html *::-webkit-scrollbar {
+    border-radius: 0;
+    width: 8px;
+}
+
+html *::-webkit-scrollbar-thumb {
+    border-radius: 4px;
+    background-color: rgba(22, 24, 35, 0.06);
+}
+
+html *::-webkit-scrollbar-track {
+    border-radius: 0;
+    background-color: rgba(0, 0, 0, 0);
+}
+
+button,
+input,
+[tabindex] {
+    outline: none;
+    border: none;
+}
+
+a {
+    color: var(--text-color);
+    text-decoration: none;
+}
+
+// fonts embeded
+@font-face {
+    font-family: ProximaNova;
+    src: url("/assets/fonts/Proxima-Nova-Bold.woff");
+    font-weight: 700;
+}
+
+@font-face {
+    font-family: ProximaNova;
+    src: url("/assets/fonts/Proxima-Nova-Regular.woff2");
+    font-weight: 400;
+}
+
+@font-face {
+    font-family: ProximaNova;
+    src: url("/assets/fonts/ProximaNova-Semibold.woff2");
+    font-weight: 600;
+}
+
+@font-face {
+    font-family: SofiaPro;
+    src: url("/assets/fonts/sofiapro-bold.woff2");
+    font-weight: 700;
+}
+
+// custom Tippy tooltip
+body {
+    .tippy-box {
+        border-radius: 8px;
+        font-weight: 600;
+        font-size: 1.6rem;
+        line-height: 22px;
+        background-color: rgba(84, 84, 84, 0.92);
+    }
+
+    .tippy-arrow {
+        color: rgba(84, 84, 84, 0.92);
+    }
+
+    .tippy-content {
+        padding: 8px 9px;
+    }
+}
+
+// Override css Button
+
+// CSS checkbox
+.MuiSvgIcon-root {
+    font-size: 2rem !important;
+}
+
+.MuiTypography-body1 {
+    font-size: 1.6rem !important;
+    user-select: none !important;
+}

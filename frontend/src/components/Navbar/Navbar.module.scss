@@ -1,0 +1,15 @@
+.wrapper {
+    box-shadow: 2px 2px 2px #ccc;
+}
+
+.inner {
+    margin: auto;
+    width: var(--default-layout-width);
+}
+
+.logo-wrapper {
+    .logo {
+        width: auto;
+        height: 120px;
+    }
+}
