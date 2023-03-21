@@ -7,9 +7,9 @@ const cx = classNames.bind(styles);
 
 function HomePage() {
     return (
-        <>
+        <div>
             <HomeBanner />
-        </>
+        </div>
     );
 }
 

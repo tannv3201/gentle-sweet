@@ -1,25 +1,21 @@
-.wrapper {
+.home-banner-wrapper {
     // background-color: var(--light-grey);
     display: flex;
-    align-items: center;
+    // align-items: center;
     justify-content: center;
-}
-.inner {
-    // width: var(--default-layout-width);
     width: 100%;
+    // position: relative;
+}
+.home-banner-inner {
+    width: calc(100%);
 }
 .slider {
-    position: relative;
     .slider-item {
+        transform: translate3d(0, 0, 0);
         .slider-item__img {
             height: 50vw;
             width: 100vw;
             object-fit: cover;
-        }
-
-        .slider-item__title {
-            position: absolute;
-            background-color: var(--white);
         }
     }
 }

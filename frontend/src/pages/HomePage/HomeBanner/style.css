@@ -1,7 +1,29 @@
-.slick-prev:before,
-.slick-next:before {
-    color: var(--primary) !important;
-    font-size: 24px;
+.slick-dots li button:before {
+    background-color: var(--white) !important;
+    content: "" !important;
+    height: 5px !important;
+    width: 50px !important;
+    opacity: 1 !important;
 }
 
-.slick-arrow {}
+.slick-dots li.slick-active button:before {
+    background-color: var(--primary) !important;
+
+}
+
+.slick-dots li {
+    margin: 0 20px !important;
+}
+
+.slick-dots {
+    bottom: 0 !important;
+
+}
+
+/* .slick-slide>div {
+    margin: 0 10px;
+}
+
+.slick-list {
+    margin: 0 -10px;
+} */

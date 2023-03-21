@@ -2,8 +2,8 @@ import React from "react";
 import styles from "./HomeBanner.module.scss";
 import Slider from "react-slick";
 import classNames from "classnames/bind";
-import "slick-carousel/slick/slick.css";
-import "slick-carousel/slick/slick-theme.css";
+// import "slick-carousel/slick/slick.css";
+// import "slick-carousel/slick/slick-theme.css";
 import "./style.css";
 import images from "../../../assets/images";
 
@@ -18,19 +18,28 @@ function SliderItem({ src, alt, title }) {
     );
 }
 
+const NextArrow = () => {
+    return <></>;
+};
+const PrevArrow = () => {
+    return <></>;
+};
+
 function HomeBanner() {
     const settings = {
         dots: true,
-        infinite: true,
-        slidesToShow: 1,
-        slidesToScroll: 1,
+        // infinite: true,
+        // slidesToShow: 1,
+        // slidesToScroll: 1,
         // autoplay: true,
-        autoplaySpeed: 2000,
-        pauseOnHover: true,
+        // autoplaySpeed: 2000,
+        // pauseOnHover: true,
+        nextArrow: <NextArrow />,
+        prevArrow: <PrevArrow />,
     };
     return (
-        <div className={cx("wrapper")}>
-            <div className={cx("inner")}>
+        <div className={cx("home-banner-wrapper")}>
+            <div className={cx("home-banner-inner")}>
                 <Slider {...settings} className={cx("slider")}>
                     <SliderItem
                         src={images.home_banner_slider_1}
