@@ -20,6 +20,8 @@
     --white: #ffffff;
     --gray: #6c757d;
     --gray-dark: #32325d;
+    --grey: #303030;
+    --light-grey: #f1f1f1;
     --info: #1d8cf8;
     --warning: #ff8d72;
     --danger: #fd5d93;
@@ -30,11 +32,12 @@
     --light: #ced4da;
     --lighter: #e9ecef;
     // --primary: #f0570b;
-    --primary-bold: #ab003c;
-    --primary: #f50057;
-    --primary-medium: #f73378;
-    --primary-bland: #f3a4b5;
-    --light-gray: #f6f4f1;
+    --primary: #f15e2c;
+    // --primary-bold: #ab003c;
+    // --primary: #f50057;
+    // --primary-medium: #f73378;
+    // --primary-bland: #f3a4b5;
+    // --light-gray: #f6f4f1;
 
     --font-family: "Plus Jakarta Sans", sans-serif;
 
@@ -146,4 +149,8 @@ body {
 .MuiTypography-body1 {
     font-size: 1.6rem !important;
     user-select: none !important;
+}
+
+.MuiOutlinedInput-adornedStart {
+    padding-left: 4px !important;
 }

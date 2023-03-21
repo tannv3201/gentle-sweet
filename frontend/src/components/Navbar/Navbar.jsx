@@ -3,31 +3,58 @@ import styles from "./Navbar.module.scss";
 import classNames from "classnames/bind";
 import images from "../../assets/images";
 import { Grid } from "@material-ui/core";
+import MenuItem from "./MenuItem";
+import NavbarActionTop from "./NavbarActionTop/NavbarActionTop";
+import MyTextField from "../MyTextField/MyTextField";
+
+import { SearchRounded } from "@material-ui/icons";
+import InfoSaleSlider from "./InfoSaleSlider/InforSaleSlider";
+import { Link } from "react-router-dom";
 
 const cx = classNames.bind(styles);
 
 function Navbar() {
     return (
         <div className={cx("wrapper")}>
-            <div className={cx("inner")}>
+            <NavbarActionTop />
+            <div className={cx("content-inner-navbar")}>
                 <Grid container>
                     <Grid item xs={3}>
                         <div className={cx("logo-wrapper")}>
-                            <img
-                                className={cx("logo")}
-                                src={images.logo}
-                                alt=""
-                            />
+                            <a href="/">
+                                <img
+                                    className={cx("logo")}
+                                    src={images.logo}
+                                    alt=""
+                                />
+                            </a>
                         </div>
                     </Grid>
                     <Grid item xs={6}>
-                        navbar
+                        <div className={cx("menu-list")}>
+                            <MenuItem title={"Sản phẩm"} to={"/product-list"} />
+                            <span className={cx("border-between-item")} />
+                            <MenuItem title={"Dịch vụ"} to={"/service-list"} />
+                            <span className={cx("border-between-item")} />
+                            <MenuItem title={"Sale off"} to={"/sale-off"} />
+                            <span className={cx("border-between-item")} />
+                            <MenuItem title={"Về chúng tôi"} to={"/about-us"} />
+                        </div>
                     </Grid>
                     <Grid item xs={3}>
-                        tifm kiem
+                        <div className={cx("search-input-wrapper")}>
+                            <MyTextField
+                                placeholder={"Search..."}
+                                buttonSize="small"
+                                iconButtonStart={
+                                    <SearchRounded fontSize="inherit" />
+                                }
+                            />
+                        </div>
                     </Grid>
                 </Grid>
             </div>
+            <InfoSaleSlider />
         </div>
     );
 }

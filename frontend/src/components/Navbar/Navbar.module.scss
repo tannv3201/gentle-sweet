@@ -2,14 +2,60 @@
     box-shadow: 2px 2px 2px #ccc;
 }
 
-.inner {
+.content-inner-navbar {
     margin: auto;
     width: var(--default-layout-width);
+    // padding: 12px 0;
+
+    // Menu list in navbar
+    .menu-list {
+        height: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        // Border between item
+        .border-between-item {
+            border-right: #e3e2e2 2px solid;
+            height: 24px;
+        }
+    }
+
+    // Search Input
+    .search-input-wrapper {
+        height: 100%;
+        width: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: flex-end;
+    }
 }
 
 .logo-wrapper {
+    padding: 8px 0;
     .logo {
         width: auto;
-        height: 120px;
+        height: 80px;
+    }
+}
+
+// Component MenuItem
+.menu_item {
+    // background-color: pink;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+    transition: all 0.16s linear;
+    &:hover {
+        .title {
+            color: var(--primary);
+        }
+    }
+    .title {
+        text-transform: uppercase;
+        font-size: 2rem;
+        font-weight: 700;
+        transition: all 0.16s linear;
     }
 }

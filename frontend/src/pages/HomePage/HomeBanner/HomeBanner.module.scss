@@ -1,0 +1,25 @@
+.wrapper {
+    // background-color: var(--light-grey);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.inner {
+    // width: var(--default-layout-width);
+    width: 100%;
+}
+.slider {
+    position: relative;
+    .slider-item {
+        .slider-item__img {
+            height: 50vw;
+            width: 100vw;
+            object-fit: cover;
+        }
+
+        .slider-item__title {
+            position: absolute;
+            background-color: var(--white);
+        }
+    }
+}
