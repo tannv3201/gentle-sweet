@@ -8,7 +8,7 @@ const cx = classNames.bind(styles);
 function MenuItem({ title, to, ...props }) {
     return (
         <>
-            <NavLink className={cx("menu_item")} to={to}>
+            <NavLink className={cx("menu-item")} to={to}>
                 {({ isActive }) => (
                     <span
                         className={

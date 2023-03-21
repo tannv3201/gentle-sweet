@@ -2,8 +2,6 @@ import React from "react";
 import styles from "./HomeBanner.module.scss";
 import Slider from "react-slick";
 import classNames from "classnames/bind";
-// import "slick-carousel/slick/slick.css";
-// import "slick-carousel/slick/slick-theme.css";
 import "./style.css";
 import images from "../../../assets/images";
 

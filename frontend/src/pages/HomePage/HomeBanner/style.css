@@ -12,7 +12,8 @@
 }
 
 .slick-dots li {
-    margin: 0 20px !important;
+    width: 50px !important;
+
 }
 
 .slick-dots {
