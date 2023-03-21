@@ -21,6 +21,7 @@
     --gray: #6c757d;
     --gray-dark: #32325d;
     --grey: #303030;
+    --grey-medium: #4c4c4c;
     --light-grey: #f1f1f1;
     --info: #1d8cf8;
     --warning: #ff8d72;
@@ -153,4 +154,8 @@ body {
 
 .MuiOutlinedInput-adornedStart {
     padding-left: 4px !important;
+}
+
+.MuiOutlinedInput-root {
+    border-radius: 0 !important;
 }

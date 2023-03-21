@@ -1,0 +1,17 @@
+.photo-model-wrapper {
+    // background-size: contain;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    // padding-bottom: 80px;
+    .photo-model-img {
+        img {
+            width: 100vw;
+            height: 100%;
+            object-fit: cover;
+        }
+    }
+}
+.photo-model-inner {
+    width: var(--default-layout-width);
+}
