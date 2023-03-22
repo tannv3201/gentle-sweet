@@ -77,7 +77,7 @@ function ShoppingList() {
                                     Combo dành cho người mới(&lt; 100k)
                                 </a>
                                 <a className={cx("sub")} href="#">
-                                    Combo dành tầm trung(&lt; 500k)
+                                    Combo tầm trung(&lt; 500k)
                                 </a>
                                 <a className={cx("sub")} href="#">
                                     Combo cao cấp(&gt; 1000k)
