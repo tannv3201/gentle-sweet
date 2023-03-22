@@ -26,7 +26,7 @@ function HomeFooter() {
                                 </MyButton>
                             </div>
                         </Grid>
-                        <Grid container xs={8}>
+                        <Grid container item xs={8}>
                             <Grid
                                 item
                                 xs={3}
@@ -37,16 +37,16 @@ function HomeFooter() {
                                 </a>
                                 <ul className={cx("list-of-component")}>
                                     <li className={cx("item-of-component")}>
-                                        <a href="#">Giày nam</a>
+                                        <a href="#">Dụng cụ vệ sinh móng</a>
                                     </li>
                                     <li className={cx("item-of-component")}>
-                                        <a href="#">Giày nam</a>
+                                        <a href="#">Dụng cụ trang trí móng</a>
                                     </li>
                                     <li className={cx("item-of-component")}>
-                                        <a href="#">Giày nam</a>
+                                        <a href="#">Combo tools box</a>
                                     </li>
                                     <li className={cx("item-of-component")}>
-                                        <a href="#">Giày nam</a>
+                                        <a href="#">Khác</a>
                                     </li>
                                 </ul>
                             </Grid>
@@ -56,20 +56,17 @@ function HomeFooter() {
                                 className={cx("footer-component")}
                             >
                                 <a href="#" className={cx("component-title")}>
-                                    <h4>Sản phẩm</h4>
+                                    <h4>Dịch vụ</h4>
                                 </a>
                                 <ul className={cx("list-of-component")}>
                                     <li className={cx("item-of-component")}>
-                                        <a href="#">Giày nam</a>
+                                        <a href="#">Cắt và chăm sóc móng</a>
                                     </li>
                                     <li className={cx("item-of-component")}>
-                                        <a href="#">Giày nam</a>
+                                        <a href="#">Sơn - vẽ - đắp gel</a>
                                     </li>
                                     <li className={cx("item-of-component")}>
-                                        <a href="#">Giày nam</a>
-                                    </li>
-                                    <li className={cx("item-of-component")}>
-                                        <a href="#">Giày nam</a>
+                                        <a href="#">Tháo gen/bột</a>
                                     </li>
                                 </ul>
                             </Grid>
@@ -79,20 +76,20 @@ function HomeFooter() {
                                 className={cx("footer-component")}
                             >
                                 <a href="#" className={cx("component-title")}>
-                                    <h4>Sản phẩm</h4>
+                                    <h4>Hỗ trợ</h4>
                                 </a>
                                 <ul className={cx("list-of-component")}>
                                     <li className={cx("item-of-component")}>
-                                        <a href="#">Giày nam</a>
+                                        <a href="#">FAQs</a>
                                     </li>
                                     <li className={cx("item-of-component")}>
-                                        <a href="#">Giày nam</a>
+                                        <a href="#">Bảo mật thông tin</a>
                                     </li>
                                     <li className={cx("item-of-component")}>
-                                        <a href="#">Giày nam</a>
+                                        <a href="#">Chính sách chung</a>
                                     </li>
                                     <li className={cx("item-of-component")}>
-                                        <a href="#">Giày nam</a>
+                                        <a href="#">Tra cứu đơn hàng</a>
                                     </li>
                                 </ul>
                             </Grid>
@@ -102,20 +99,17 @@ function HomeFooter() {
                                 className={cx("footer-component")}
                             >
                                 <a href="#" className={cx("component-title")}>
-                                    <h4>Sản phẩm</h4>
+                                    <h4>Liên hệ</h4>
                                 </a>
                                 <ul className={cx("list-of-component")}>
                                     <li className={cx("item-of-component")}>
-                                        <a href="#">Giày nam</a>
+                                        <a href="#">Email góp ý</a>
                                     </li>
                                     <li className={cx("item-of-component")}>
-                                        <a href="#">Giày nam</a>
+                                        <a href="#">Hotline</a>
                                     </li>
                                     <li className={cx("item-of-component")}>
-                                        <a href="#">Giày nam</a>
-                                    </li>
-                                    <li className={cx("item-of-component")}>
-                                        <a href="#">Giày nam</a>
+                                        <a href="#">0386 653 766</a>
                                     </li>
                                 </ul>
                             </Grid>
@@ -132,10 +126,13 @@ function HomeFooter() {
                                 className={cx("footer-component")}
                             >
                                 <a className={cx("component-title")}>
-                                    <h4>ANANAS SOCIAL</h4>
+                                    <h4>SOCIAL</h4>
                                 </a>
                                 <div className={cx("social-list")}>
-                                    <a href="#">
+                                    <a
+                                        href="https://www.facebook.com/nheoSoSweet/"
+                                        target="_blank"
+                                    >
                                         <Facebook
                                             className={cx("social-item")}
                                         />

@@ -35,8 +35,12 @@
         overflow: hidden;
         transform: translate3d(0, 0, 0);
         .slider-blog-img {
+            height: 164px;
+            overflow: hidden;
             img {
                 width: 100%;
+                height: 100%;
+                object-fit: cover;
             }
         }
 

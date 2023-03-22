@@ -6,68 +6,53 @@
 }
 .service-list-inner {
     width: var(--default-layout-width);
+
+    .service-list-see-more {
+        display: flex;
+        justify-content: center;
+
+        .see-more-btn {
+            background-color: var(--grey);
+            color: var(--white);
+            width: 200px;
+            margin-top: 80px;
+        }
+    }
+
+    .service-item {
+        box-shadow: rgba(0, 0, 0, 0.15) 0px 2px 8px;
+    }
     .service-list-title {
         display: flex;
         justify-content: center;
         text-transform: uppercase;
         margin-bottom: 36px;
     }
-    .service-list {
-        .service-item {
-            position: relative;
-            .service-item-bg {
-                position: relative;
-                overflow: hidden;
-                height: 270px;
-                img {
-                    width: 100%;
-                    height: 100%;
-                    object-fit: cover;
-                }
-                .black-bg {
-                    position: absolute;
-                    background-color: rgba(0, 0, 0, 0.3);
-                    display: block;
-                    width: 100%;
-                    height: 100%;
-                }
-            }
-            .service-item-group {
-                position: absolute;
-                display: flex;
-                flex-direction: column;
-                align-items: center;
-                width: 90%;
-                top: 40px;
-                left: 50%;
-                transform: translateX(-50%);
-                color: var(--white);
-                .title {
-                    width: 100%;
-                    text-align: center;
-                    font-size: 2rem;
-                    font-weight: 700;
-                    text-transform: uppercase;
-                    margin-bottom: 8px;
-                    transition: all 0.16s linear;
-                    &:hover {
-                        transition: all 0.16s linear;
-                        color: var(--primary);
-                    }
-                }
 
-                .sub {
-                    width: 100%;
-                    text-align: center;
-                    font-size: 1.6rem;
-                    font-weight: 600;
-                    transition: all 0.16s linear;
-                    &:hover {
-                        transition: all 0.16s linear;
-                        color: var(--primary);
-                    }
-                }
-            }
+    .service-img {
+        width: 100%;
+        height: 274px;
+        overflow: hidden;
+        img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
         }
+    }
+
+    .service-content {
+        padding: 12px 24px 24px 24px;
+    }
+    .service-title {
+        margin-bottom: 12px;
+        font-size: 2rem;
+        text-transform: uppercase;
+    }
+    .service-description {
+        margin-bottom: 24px;
+    }
+    .service-btn {
+        background-color: var(--primary) !important;
+        color: var(--white) !important;
     }
 }

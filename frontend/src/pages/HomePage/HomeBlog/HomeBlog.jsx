@@ -62,7 +62,7 @@ function HomeBlog() {
                     <div className={cx("slider-item-wrapper")}>
                         <div className={cx("slider-item")}>
                             <div className={cx("slider-blog-img")}>
-                                <img src={images.banner_sale_off_1} />
+                                <img src={images.collection_1} />
                             </div>
                             <div className={cx("slider-blog-content")}>
                                 <h3 className={cx("blog-content-title")}>
@@ -85,7 +85,7 @@ function HomeBlog() {
                     <div className={cx("slider-item-wrapper")}>
                         <div className={cx("slider-item")}>
                             <div className={cx("slider-blog-img")}>
-                                <img src={images.banner_sale_off_1} />
+                                <img src={images.collection_1} />
                             </div>
                             <div className={cx("slider-blog-content")}>
                                 <h3 className={cx("blog-content-title")}>
@@ -108,7 +108,7 @@ function HomeBlog() {
                     <div className={cx("slider-item-wrapper")}>
                         <div className={cx("slider-item")}>
                             <div className={cx("slider-blog-img")}>
-                                <img src={images.banner_sale_off_1} />
+                                <img src={images.collection_1} />
                             </div>
                             <div className={cx("slider-blog-content")}>
                                 <h3 className={cx("blog-content-title")}>
@@ -131,7 +131,7 @@ function HomeBlog() {
                     <div className={cx("slider-item-wrapper")}>
                         <div className={cx("slider-item")}>
                             <div className={cx("slider-blog-img")}>
-                                <img src={images.banner_sale_off_1} />
+                                <img src={images.collection_1} />
                             </div>
                             <div className={cx("slider-blog-content")}>
                                 <h3 className={cx("blog-content-title")}>
@@ -154,7 +154,7 @@ function HomeBlog() {
                     <div className={cx("slider-item-wrapper")}>
                         <div className={cx("slider-item")}>
                             <div className={cx("slider-blog-img")}>
-                                <img src={images.banner_sale_off_1} />
+                                <img src={images.collection_1} />
                             </div>
                             <div className={cx("slider-blog-content")}>
                                 <h3 className={cx("blog-content-title")}>
@@ -177,7 +177,7 @@ function HomeBlog() {
                     <div className={cx("slider-item-wrapper")}>
                         <div className={cx("slider-item")}>
                             <div className={cx("slider-blog-img")}>
-                                <img src={images.banner_sale_off_1} />
+                                <img src={images.collection_1} />
                             </div>
                             <div className={cx("slider-blog-content")}>
                                 <h3 className={cx("blog-content-title")}>
@@ -200,7 +200,7 @@ function HomeBlog() {
                     <div className={cx("slider-item-wrapper")}>
                         <div className={cx("slider-item")}>
                             <div className={cx("slider-blog-img")}>
-                                <img src={images.banner_sale_off_1} />
+                                <img src={images.collection_1} />
                             </div>
                             <div className={cx("slider-blog-content")}>
                                 <h3 className={cx("blog-content-title")}>
@@ -223,7 +223,7 @@ function HomeBlog() {
                     <div className={cx("slider-item-wrapper")}>
                         <div className={cx("slider-item")}>
                             <div className={cx("slider-blog-img")}>
-                                <img src={images.banner_sale_off_1} />
+                                <img src={images.collection_1} />
                             </div>
                             <div className={cx("slider-blog-content")}>
                                 <h3 className={cx("blog-content-title")}>

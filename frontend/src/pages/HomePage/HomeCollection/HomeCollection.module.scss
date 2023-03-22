@@ -2,7 +2,18 @@
     width: 100%;
     display: flex;
     justify-content: center;
+    padding: 80px 0;
 }
 .home-collection-inner {
     width: var(--default-layout-width);
+    .home-collection-see-more {
+        display: flex;
+        justify-content: center;
+        margin-top: 80px;
+        .see-more-btn {
+            background-color: var(--grey);
+            color: var(--white);
+            width: 200px;
+        }
+    }
 }

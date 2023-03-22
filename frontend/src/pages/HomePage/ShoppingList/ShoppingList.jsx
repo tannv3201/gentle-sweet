@@ -3,7 +3,7 @@ import classNames from "classnames/bind";
 import styles from "./ShoppingList.module.scss";
 import { Grid } from "@material-ui/core";
 import images from "../../../assets/images";
-
+import MyButton from "../../../components/MyButton/MyButton";
 const cx = classNames.bind(styles);
 
 function ShoppingList() {
@@ -16,87 +16,107 @@ function ShoppingList() {
                     </Grid>
                 </Grid>
                 <Grid container className={cx("shopping-list")} spacing={3}>
-                    <Grid item xs={3} className={cx("shopping-item")}>
-                        <div className={cx("shopping-item-bg")}>
-                            <div className={cx("black-bg")}></div>
-                            <img src={images.shopping_list_1} alt="" />
-                        </div>
-                        <div className={cx("shopping-item-group")}>
-                            <a className={cx("title")} href="#">
-                                Giày nam
-                            </a>
-                            <a className={cx("sub")} href="#">
-                                New Arrivals
-                            </a>
-                            <a className={cx("sub")} href="#">
-                                Best Seller
-                            </a>
-                            <a className={cx("sub")} href="#">
-                                Sale-off
-                            </a>
-                        </div>
-                    </Grid>
-                    <Grid item xs={3} className={cx("shopping-item")}>
-                        <div className={cx("shopping-item-bg")}>
-                            <div className={cx("black-bg")}></div>
-                            <img src={images.shopping_list_1} alt="" />
-                        </div>
-                        <div className={cx("shopping-item-group")}>
-                            <a className={cx("title")} href="#">
-                                Giày nam
-                            </a>
-                            <a className={cx("sub")} href="#">
-                                New Arrivals
-                            </a>
-                            <a className={cx("sub")} href="#">
-                                Best Seller
-                            </a>
-                            <a className={cx("sub")} href="#">
-                                Sale-off
-                            </a>
+                    <Grid item xs={6} className={cx("shopping-item")}>
+                        <div className={cx("shopping-item-wrapper")}>
+                            <div className={cx("shopping-item-bg")}>
+                                <img src={images.clean_tools_2} alt="" />
+                            </div>
+                            <div className={cx("shopping-item-group")}>
+                                <a className={cx("title")} href="#">
+                                    Dụng cụ vệ sinh móng
+                                </a>
+                                <a className={cx("sub")} href="#">
+                                    Dụng cụ làm mềm
+                                </a>
+                                <a className={cx("sub")} href="#">
+                                    Dụng cụ cắt/dũa
+                                </a>
+                                <a className={cx("sub")} href="#">
+                                    Giấy/bông
+                                </a>
+                                <MyButton className={cx("btn-see-all")}>
+                                    Xem tất cả
+                                </MyButton>
+                            </div>
                         </div>
                     </Grid>
-                    <Grid item xs={3} className={cx("shopping-item")}>
-                        <div className={cx("shopping-item-bg")}>
-                            <div className={cx("black-bg")}></div>
-                            <img src={images.shopping_list_1} alt="" />
-                        </div>
-                        <div className={cx("shopping-item-group")}>
-                            <a className={cx("title")} href="#">
-                                Giày nam
-                            </a>
-                            <a className={cx("sub")} href="#">
-                                New Arrivals
-                            </a>
-                            <a className={cx("sub")} href="#">
-                                Best Seller
-                            </a>
-                            <a className={cx("sub")} href="#">
-                                Sale-off
-                            </a>
+                    <Grid item xs={6} className={cx("shopping-item")}>
+                        <div className={cx("shopping-item-wrapper")}>
+                            <div className={cx("shopping-item-bg")}>
+                                <img src={images.nail_polish_bottle} alt="" />
+                            </div>
+                            <div className={cx("shopping-item-group")}>
+                                <a className={cx("title")} href="#">
+                                    Dụng cụ trang trí móng
+                                </a>
+                                <a className={cx("sub")} href="#">
+                                    Sơn móng tay
+                                </a>
+                                <a className={cx("sub")} href="#">
+                                    Dụng cụ trang trí
+                                </a>
+                                <a className={cx("sub")} href="#">
+                                    Phụ kiện trang trí
+                                </a>
+                                <MyButton className={cx("btn-see-all")}>
+                                    Xem tất cả
+                                </MyButton>
+                            </div>
                         </div>
                     </Grid>
-                    <Grid item xs={3} className={cx("shopping-item")}>
-                        <div className={cx("shopping-item-bg")}>
-                            <div className={cx("black-bg")}></div>
-                            <img src={images.shopping_list_1} alt="" />
+                    <Grid item xs={6} className={cx("shopping-item")}>
+                        <div className={cx("shopping-item-wrapper")}>
+                            <div className={cx("shopping-item-bg")}>
+                                <img src={images.nail_tools_box} alt="" />
+                            </div>
+                            <div className={cx("shopping-item-group")}>
+                                <a className={cx("title")} href="#">
+                                    Combo dụng cụ làm móng
+                                </a>
+                                <a className={cx("sub")} href="#">
+                                    Combo dành cho người mới(&lt; 100k)
+                                </a>
+                                <a className={cx("sub")} href="#">
+                                    Combo dành tầm trung(&lt; 500k)
+                                </a>
+                                <a className={cx("sub")} href="#">
+                                    Combo cao cấp(&gt; 1000k)
+                                </a>
+                                <MyButton className={cx("btn-see-all")}>
+                                    Xem tất cả
+                                </MyButton>
+                            </div>
                         </div>
-                        <div className={cx("shopping-item-group")}>
-                            <a className={cx("title")} href="#">
-                                Giày nam
-                            </a>
-                            <a className={cx("sub")} href="#">
-                                New Arrivals
-                            </a>
-                            <a className={cx("sub")} href="#">
-                                Best Seller
-                            </a>
-                            <a className={cx("sub")} href="#">
-                                Sale-off
-                            </a>
+                    </Grid>
+                    <Grid item xs={6} className={cx("shopping-item")}>
+                        <div className={cx("shopping-item-wrapper")}>
+                            <div className={cx("shopping-item-bg")}>
+                                <img src={images.nail_polish_sticks} alt="" />
+                            </div>
+                            <div className={cx("shopping-item-group")}>
+                                <a className={cx("title")} href="#">
+                                    Khác
+                                </a>
+                                <a className={cx("sub")} href="#">
+                                    Sách tập vẽ móng
+                                </a>
+                                <a className={cx("sub")} href="#">
+                                    Sách/thẻ trưng bày móng
+                                </a>
+                                <a className={cx("sub")} href="#">
+                                    Giá đỡ móng
+                                </a>
+                                <MyButton className={cx("btn-see-all")}>
+                                    Xem tất cả
+                                </MyButton>
+                            </div>
                         </div>
                     </Grid>
                 </Grid>
+
+                <div className={cx("shopping-list-see-more")}>
+                    <MyButton className={cx("see-more-btn")}>Xem thêm</MyButton>
+                </div>
             </div>
         </div>
     );
