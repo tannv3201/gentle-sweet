@@ -12,7 +12,7 @@
         height: 100%;
         display: flex;
         align-items: center;
-        justify-content: space-between;
+        justify-content: space-around;
         // Border between item
         .border-between-item {
             border-right: #e3e2e2 2px solid;
@@ -39,22 +39,90 @@
 }
 
 // Component MenuItem
-.menu-item {
-    padding: 0 24px;
+.menu-item-wrapper {
+    // padding: 0 20px;
     display: flex;
     align-items: center;
     justify-content: center;
     height: 100%;
     transition: all 0.16s linear;
+
+    .menu-item {
+        position: relative;
+    }
+
+    .dropdown-icon {
+        transform: rotate(0);
+        transition: all 0.16s linear;
+    }
     &:hover {
         .title {
             color: var(--primary);
         }
+
+        .dropdown-icon {
+            transition: all 0.16s linear;
+            transform: rotate(-180deg);
+        }
     }
+
     .title {
+        display: flex;
+        align-items: center;
         text-transform: uppercase;
         font-size: 2rem;
         font-weight: 700;
         transition: all 0.16s linear;
+    }
+}
+
+.navlink-wrapper {
+    position: relative;
+    height: 100%;
+    width: 100%;
+    &.isDropDown:hover::before {
+        position: absolute;
+        content: "";
+        border-width: 16px 12px;
+        border-style: solid;
+        border-color: transparent transparent var(--grey-medium) transparent;
+        bottom: -6px;
+        left: 50%;
+        transform: translateX(-50%);
+    }
+    &.isDropDown:hover {
+        .menu-dropdown {
+            display: block;
+        }
+        .title {
+            color: var(--primary);
+        }
+
+        .dropdown-icon {
+            transition: all 0.16s linear;
+            transform: rotate(-180deg);
+        }
+    }
+}
+
+// Menu dropdown
+
+.menu-dropdown {
+    z-index: 1;
+    display: none;
+    background-color: var(--grey-medium);
+    position: absolute;
+    top: 102px;
+    width: 500px;
+    height: 300px;
+    &:hover {
+        .title {
+            color: var(--primary);
+        }
+
+        .dropdown-icon {
+            transition: all 0.16s linear;
+            transform: rotate(-180deg);
+        }
     }
 }

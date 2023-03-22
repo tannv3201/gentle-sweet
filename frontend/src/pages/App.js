@@ -6,6 +6,7 @@ import Navbar from "../components/Navbar/Navbar";
 import ServicePage from "./ServicePage/ServicePage";
 import SaleOffPage from "./SaleOffPage/SaleOffPage";
 import AboutUs from "./AboutUs/AboutUs";
+import CartFixedRight from "../components/CartFixedRight/CartFixedRight";
 
 function App() {
     return (
@@ -13,6 +14,7 @@ function App() {
             <Router>
                 <Navbar />
                 <div className="App">
+                    <CartFixedRight />
                     <Routes>
                         <Route path="/" element={<HomePage />} />
                         <Route path="/product-list" element={<ShopPage />} />

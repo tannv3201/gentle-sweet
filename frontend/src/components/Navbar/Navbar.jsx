@@ -19,7 +19,7 @@ function Navbar() {
             <NavbarActionTop />
             <div className={cx("content-inner-navbar")}>
                 <Grid container>
-                    <Grid item xs={3}>
+                    <Grid item xs={2}>
                         <div className={cx("logo-wrapper")}>
                             <a href="/">
                                 <img
@@ -30,15 +30,23 @@ function Navbar() {
                             </a>
                         </div>
                     </Grid>
-                    <Grid item xs={6}>
+                    <Grid item xs={7}>
                         <div className={cx("menu-list")}>
-                            <MenuItem title={"Sản phẩm"} to={"/product-list"} />
+                            <MenuItem
+                                title={"Sản phẩm"}
+                                to={"/product-list"}
+                                menuDropDown={<h2>sanpham</h2>}
+                            />
                             <span className={cx("border-between-item")} />
-                            <MenuItem title={"Dịch vụ"} to={"/service-list"} />
+                            <MenuItem
+                                title={"Dịch vụ"}
+                                to={"/service-list"}
+                                menuDropDown={<h2>dich vu</h2>}
+                            />
                             <span className={cx("border-between-item")} />
                             <MenuItem title={"Sale off"} to={"/sale-off"} />
                             <span className={cx("border-between-item")} />
-                            <MenuItem title={"Về chúng tôi"} to={"/about-us"} />
+                            <MenuItem title={"Gentle Sweet"} to={"/about-us"} />
                         </div>
                     </Grid>
                     <Grid item xs={3}>

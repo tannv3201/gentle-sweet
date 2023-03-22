@@ -19,6 +19,7 @@ const images = {
     service_1: require("./service_1.jpg"),
     service_2: require("./service_2.jpg"),
     service_3: require("./service_3.jpg"),
+    icon_down_black: require("./icon_down_black.png"),
 };
 
 export default images;

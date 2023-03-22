@@ -22,17 +22,17 @@ function ShoppingList() {
                                 <img src={images.clean_tools_2} alt="" />
                             </div>
                             <div className={cx("shopping-item-group")}>
-                                <a className={cx("title")} href="#">
+                                <h3 className={cx("title")} href="#">
                                     Dụng cụ vệ sinh móng
+                                </h3>
+                                <a className={cx("sub")} href="#">
+                                    <span>-</span> Dụng cụ làm mềm
                                 </a>
                                 <a className={cx("sub")} href="#">
-                                    Dụng cụ làm mềm
+                                    <span>-</span> Dụng cụ cắt/dũa
                                 </a>
                                 <a className={cx("sub")} href="#">
-                                    Dụng cụ cắt/dũa
-                                </a>
-                                <a className={cx("sub")} href="#">
-                                    Giấy/bông
+                                    <span>-</span> Giấy/bông
                                 </a>
                                 <MyButton className={cx("btn-see-all")}>
                                     Xem tất cả
@@ -46,17 +46,17 @@ function ShoppingList() {
                                 <img src={images.nail_polish_bottle} alt="" />
                             </div>
                             <div className={cx("shopping-item-group")}>
-                                <a className={cx("title")} href="#">
+                                <h3 className={cx("title")} href="#">
                                     Dụng cụ trang trí móng
+                                </h3>
+                                <a className={cx("sub")} href="#">
+                                    <span>-</span> Sơn móng tay
                                 </a>
                                 <a className={cx("sub")} href="#">
-                                    Sơn móng tay
+                                    <span>-</span> Dụng cụ trang trí
                                 </a>
                                 <a className={cx("sub")} href="#">
-                                    Dụng cụ trang trí
-                                </a>
-                                <a className={cx("sub")} href="#">
-                                    Phụ kiện trang trí
+                                    <span>-</span> Phụ kiện trang trí
                                 </a>
                                 <MyButton className={cx("btn-see-all")}>
                                     Xem tất cả
@@ -70,17 +70,18 @@ function ShoppingList() {
                                 <img src={images.nail_tools_box} alt="" />
                             </div>
                             <div className={cx("shopping-item-group")}>
-                                <a className={cx("title")} href="#">
+                                <h3 className={cx("title")} href="#">
                                     Combo dụng cụ làm móng
+                                </h3>
+                                <a className={cx("sub")} href="#">
+                                    <span>-</span> Combo dành cho người mới(&lt;
+                                    100k)
                                 </a>
                                 <a className={cx("sub")} href="#">
-                                    Combo dành cho người mới(&lt; 100k)
+                                    <span>-</span> Combo tầm trung(&lt; 500k)
                                 </a>
                                 <a className={cx("sub")} href="#">
-                                    Combo tầm trung(&lt; 500k)
-                                </a>
-                                <a className={cx("sub")} href="#">
-                                    Combo cao cấp(&gt; 1000k)
+                                    <span>-</span> Combo cao cấp(&gt; 1000k)
                                 </a>
                                 <MyButton className={cx("btn-see-all")}>
                                     Xem tất cả
@@ -94,17 +95,17 @@ function ShoppingList() {
                                 <img src={images.nail_polish_sticks} alt="" />
                             </div>
                             <div className={cx("shopping-item-group")}>
-                                <a className={cx("title")} href="#">
+                                <h3 className={cx("title")} href="#">
                                     Khác
+                                </h3>
+                                <a className={cx("sub")} href="#">
+                                    <span>-</span> Sách tập vẽ móng
                                 </a>
                                 <a className={cx("sub")} href="#">
-                                    Sách tập vẽ móng
+                                    <span>-</span> Sách/thẻ trưng bày móng
                                 </a>
                                 <a className={cx("sub")} href="#">
-                                    Sách/thẻ trưng bày móng
-                                </a>
-                                <a className={cx("sub")} href="#">
-                                    Giá đỡ móng
+                                    <span>-</span> Giá đỡ móng
                                 </a>
                                 <MyButton className={cx("btn-see-all")}>
                                     Xem tất cả
