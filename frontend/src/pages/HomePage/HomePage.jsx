@@ -7,7 +7,8 @@ import ShoppingList from "./ShoppingList/ShoppingList";
 import PhotoModel from "./PhotoModel/PhotoModel";
 import ServiceList from "./ServiceList/ServiceList";
 import HomeBlog from "./HomeBlog/HomeBlog";
-import HomeFooter from "./HomeFooter/HomeFooter";
+
+import ScrollBackToTop from "../../components/ScrollBackToTop";
 
 const cx = classNames.bind(styles);
 
@@ -20,7 +21,6 @@ function HomePage() {
             <PhotoModel />
             <ServiceList />
             <HomeBlog />
-            <HomeFooter />
         </div>
     );
 }

@@ -1,0 +1,75 @@
+// Group item filter : Giá, kích thước, màu sắc, sắp xếp
+.filter-item {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 8px 16px;
+    border: 1px solid #ccc;
+    height: 100%;
+    width: 100%;
+    .filter-item-title {
+    }
+    .filter-item-icon {
+    }
+
+    // Display options of filter item when hover
+    &:hover {
+        & > ul {
+            display: block;
+            // background-color: pink;
+            position: absolute;
+            list-style: none;
+            left: -1px;
+            right: -1px;
+            top: 100%;
+            & li {
+                // font-size: 1.4rem;
+                height: 38px;
+                overflow: hidden;
+                transition: all 300ms;
+                border-top: 1px solid var(--light-grey);
+
+                & div {
+                    width: 100%;
+                    height: 100%;
+                    & label {
+                        cursor: pointer;
+                        user-select: none;
+                    }
+                }
+            }
+        }
+    }
+    // Opton of filter items
+    & > ul {
+        z-index: 2;
+        position: absolute;
+        list-style: none;
+        left: -1px;
+        right: -1px;
+        top: 100%;
+        background-color: var(--white);
+        // box-sizing: unset;
+        border-left: 1px solid #ccc;
+        border-right: 1px solid #ccc;
+        border-bottom: 1px solid #ccc;
+        & li {
+            font-size: 1.4rem;
+            height: 0;
+            overflow: hidden;
+            transition: all 300ms;
+
+            & div {
+                display: flex;
+                align-items: center;
+                & input {
+                }
+                & label {
+                    flex: 1;
+                    padding-left: 8px;
+                }
+            }
+        }
+    }
+}

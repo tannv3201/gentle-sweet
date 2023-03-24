@@ -163,3 +163,21 @@ body {
 .MuiSvgIcon-fontSizeLarge {
     font-size: 3rem !important;
 }
+
+.MuiFormControlLabel-root {
+    margin-left: 0 !important;
+    margin-right: 0 !important;
+}
+
+.MuiRadio-colorPrimary.Mui-checked {
+    color: var(--primary) !important;
+}
+.MuiTypography-body1 {
+    font-size: 1.4rem !important;
+    font-family: var(--font-family) !important;
+}
+
+span.MuiChip-label {
+    font-size: 1.4rem !important;
+    font-family: var(--font-family) !important;
+}

@@ -1,0 +1,50 @@
+// Group item filter : Giá, kích thước, màu sắc, sắp xếp
+.filter-item {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 8px 16px;
+    border: 1px solid #ccc;
+    height: 100%;
+    width: 100%;
+    .filter-item-title {
+    }
+    .filter-item-icon {
+    }
+
+    // Option CSS
+    .filter-item-option {
+        position: absolute;
+        top: 100%;
+        left: -1px;
+        right: -1px;
+        background-color: var(--white);
+        border-left: 1px solid #ccc;
+        border-right: 1px solid #ccc;
+        border-bottom: 1px solid #ccc;
+        .option-item {
+            font-size: 1.4rem !important;
+            height: 0;
+            overflow: hidden;
+            transition: all 300ms;
+        }
+    }
+
+    // Display options of filter item when hover
+    &:hover {
+        .filter-item-option {
+            position: absolute;
+            top: 100%;
+            left: -1px;
+            right: -1px;
+            background-color: var(--white);
+            & .option-item {
+                font-size: 1.4rem;
+                height: 30px;
+                transition: all 300ms;
+                border-top: 1px solid var(--light-grey);
+            }
+        }
+    }
+}

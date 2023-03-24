@@ -1,0 +1,30 @@
+.product-wrapper {
+    // box-shadow: rgba(0, 0, 0, 0.15) 0px 2px 8px;
+}
+.product-inner {
+    margin-top: 32px;
+    padding: 24px 0;
+
+    // Filter
+    .filter-wrapper {
+        .filter-title-wrapper {
+            position: relative;
+            display: flex;
+            align-items: center;
+            .right-divider {
+                border-right: 2px solid #ccc;
+                height: 20px;
+                margin-left: 32px;
+            }
+        }
+        .filter-group-inner {
+            width: 100%;
+            padding: 0 8px;
+        }
+        .filter-title-icon {
+            margin-right: 4px;
+        }
+        .filter-title {
+        }
+    }
+}

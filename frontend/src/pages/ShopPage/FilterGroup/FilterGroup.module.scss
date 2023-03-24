@@ -1,0 +1,43 @@
+.filter-group-wrapper {
+    width: 100%;
+    margin-bottom: 32px;
+}
+.filter-group-inner {
+    width: 100%;
+    padding: 32px 0 12px 0;
+    border-bottom: 1px solid var(--grey-medium);
+
+    // Title: Bộ lọc
+    .filter-group-title {
+        position: relative;
+        display: flex;
+        align-items: center;
+        height: 100%;
+        &::before {
+            position: absolute;
+            content: "";
+            right: 30%;
+            height: 16px;
+            width: 1px;
+            background-color: var(--grey-medium);
+        }
+
+        .filter-group-icon {
+            margin-right: 4px;
+        }
+        .filter-group-text {
+            font-weight: 600;
+            font-size: 1.8rem;
+        }
+    }
+}
+
+// Selected Filter
+.selected-filter {
+    margin-top: 24px;
+
+    .selected-filter-item {
+        margin-right: 8px;
+        margin-top: 8px;
+    }
+}

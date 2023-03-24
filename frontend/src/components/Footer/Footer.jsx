@@ -1,16 +1,16 @@
 import React from "react";
 import classNames from "classnames/bind";
-import styles from "./HomeFooter.module.scss";
+import styles from "./Footer.module.scss";
 import { Grid } from "@material-ui/core";
-import images from "../../../assets/images";
-import MyButton from "../../../components/MyButton/MyButton";
-import MyTextField from "../../../components/MyTextField/MyTextField";
+import images from "../../assets/images";
+import MyButton from "../MyButton/MyButton";
+import MyTextField from "../MyTextField/MyTextField";
 import { Facebook, Instagram, YouTube, SendRounded } from "@material-ui/icons";
-import LogoText from "../../../assets/images/logo_text.svg";
+import LogoText from "../../assets/images/logo_text.svg";
 
 const cx = classNames.bind(styles);
 
-function HomeFooter() {
+function Footer() {
     return (
         <>
             <div className={cx("home-footer-wrapper")}>
@@ -194,4 +194,4 @@ function HomeFooter() {
     );
 }
 
-export default HomeFooter;
+export default Footer;

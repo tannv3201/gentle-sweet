@@ -98,6 +98,7 @@ function MyTextField({
 }) {
     return bgLight ? (
         <CustomTextField
+            {...props}
             label={label}
             size={size}
             variant={variant}
@@ -125,6 +126,7 @@ function MyTextField({
         />
     ) : bgDark ? (
         <TextFieldLight
+            {...props}
             label={label}
             size={size}
             variant={variant}
@@ -152,6 +154,7 @@ function MyTextField({
         />
     ) : (
         <CustomTextField
+            {...props}
             label={label}
             size={size}
             variant={variant}

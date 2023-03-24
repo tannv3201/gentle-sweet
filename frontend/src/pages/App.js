@@ -7,22 +7,30 @@ import ServicePage from "./ServicePage/ServicePage";
 import SaleOffPage from "./SaleOffPage/SaleOffPage";
 import AboutUs from "./AboutUs/AboutUs";
 import CartFixedRight from "../components/CartFixedRight/CartFixedRight";
+import Footer from "../components/Footer/Footer";
+import ScrollBackToTop from "../components/ScrollBackToTop";
 
 function App() {
     return (
         <div>
             <Router>
-                <Navbar />
-                <div className="App">
-                    <CartFixedRight />
-                    <Routes>
-                        <Route path="/" element={<HomePage />} />
-                        <Route path="/product-list" element={<ShopPage />} />
-                        <Route path="/service-list" element={<ServicePage />} />
-                        <Route path="/sale-off" element={<SaleOffPage />} />
-                        <Route path="/about-us" element={<AboutUs />} />
-                    </Routes>
-                </div>
+                <ScrollBackToTop>
+                    <Navbar />
+                    <div className="App">
+                        <CartFixedRight />
+                        <Routes>
+                            <Route path="/" element={<HomePage />} />
+                            <Route path="/product/all" element={<ShopPage />} />
+                            <Route
+                                path="/service-list"
+                                element={<ServicePage />}
+                            />
+                            <Route path="/sale-off" element={<SaleOffPage />} />
+                            <Route path="/about-us" element={<AboutUs />} />
+                        </Routes>
+                    </div>
+                    <Footer />
+                </ScrollBackToTop>
             </Router>
         </div>
     );

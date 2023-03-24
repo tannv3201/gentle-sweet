@@ -1,5 +1,88 @@
 .product-wrapper {
-    background-color: pink;
+    // box-shadow: rgba(0, 0, 0, 0.15) 0px 2px 8px;
+    // background-color: var(--light-grey);
 }
 .product-inner {
+    // Filter
+    .filter-wrapper {
+        // border-bottom: 1px solid var(--grey-medium);
+        padding: 18px 0;
+        background-color: var(--light-grey);
+        margin-top: 32px;
+
+        .filter-title-wrapper {
+            position: relative;
+            display: flex;
+            align-items: center;
+
+            .filter-title-icon {
+                font-size: 1.3rem !important;
+                margin-right: 2px;
+            }
+            .filter-title {
+                font-size: 1.4rem;
+                font-weight: 600;
+            }
+        }
+
+        .filter-group {
+            position: relative;
+            .filter-group-inner {
+                background-color: var(--white);
+                position: relative;
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                padding: 6px 12px;
+                border: 1px solid var(--grey-medium);
+                user-select: none;
+                .filter-price-title {
+                    font-size: 1.4rem;
+                    font-weight: 500;
+                }
+                .filter-price-icon {
+                }
+
+                &:hover {
+                    ul {
+                        display: block;
+
+                        li {
+                            padding: 6px 12px;
+                            height: 30px;
+                            border-top: 1px solid var(--light-grey);
+
+                            a {
+                                display: block;
+                            }
+
+                            &:hover {
+                                background-color: #ccc;
+                            }
+                        }
+                    }
+                }
+
+                ul {
+                    z-index: 1;
+                    position: absolute;
+                    list-style: none;
+                    background-color: var(--white);
+                    // box-sizing: unset;
+                    border-left: 1px solid var(--grey-medium);
+                    border-right: 1px solid var(--grey-medium);
+                    border-bottom: 1px solid var(--grey-medium);
+                    right: -1px;
+                    left: -1px;
+                    top: 100%;
+                    li {
+                        font-size: 1.4rem;
+                        height: 0;
+                        overflow: hidden;
+                        transition: all 300ms;
+                    }
+                }
+            }
+        }
+    }
 }

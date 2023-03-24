@@ -34,7 +34,7 @@ function Navbar() {
                         <div className={cx("menu-list")}>
                             <MenuItem
                                 title={"Sản phẩm"}
-                                to={"/product-list"}
+                                to={"/product/all"}
                                 menuDropDown={<h2>sanpham</h2>}
                             />
                             <span className={cx("border-between-item")} />
