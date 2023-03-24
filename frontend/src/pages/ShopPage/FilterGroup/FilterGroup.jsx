@@ -88,7 +88,7 @@ function FilterGroup() {
                                 value === "optionPrice1"
                                     ? "Giá dưới 100k"
                                     : value === "optionPrice2"
-                                    ? "Giá từ 150k - 250k"
+                                    ? "Giá từ 100k - 250k"
                                     : value === "optionPrice3"
                                     ? "Giá từ 250k - 500k"
                                     : value === "optionPrice4"
