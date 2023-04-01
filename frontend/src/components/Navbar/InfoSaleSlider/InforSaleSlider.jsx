@@ -23,18 +23,13 @@ function InfoSaleSlider() {
             <div className={cx("inner")}>
                 <Slider {...settings} className={cx("slider")}>
                     <div className={cx("slider-item")}>
-                        <h5>FREE SHIPPING VỚI HOÁ ĐƠN TỪ 800K !</h5>
+                        <h5>FREE SHIPPING VỚI HOÁ ĐƠN TỪ 500K !</h5>
                     </div>
                     <div className={cx("slider-item")}>
                         <h5>BUY MORE PAY LESS - ÁP DỤNG KHI MUA PHỤ KIỆN</h5>
                     </div>
                     <div className={cx("slider-item")}>
-                        <h5>HÀNG 2 TUẦN NHẬN ĐỔI - GIÀY NỬA NĂM BẢO HÀNH</h5>
-                    </div>
-                    <div className={cx("slider-item")}>
-                        <h5>
-                            BUY 2 GET 10% OFF - ÁP DỤNG VỚI TẤT CẢ BASIC TEE
-                        </h5>
+                        <h5>BUY 2 GET 10% OFF - ÁP DỤNG VỚI TẤT CẢ LOẠI SƠN</h5>
                     </div>
                 </Slider>
             </div>

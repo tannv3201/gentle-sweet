@@ -34,6 +34,7 @@
     // Display options of filter item when hover
     &:hover {
         .filter-item-option {
+            z-index: 3;
             position: absolute;
             top: 100%;
             left: -1px;
@@ -41,7 +42,7 @@
             background-color: var(--white);
             & .option-item {
                 font-size: 1.4rem;
-                height: 30px;
+                height: 38px;
                 transition: all 300ms;
                 border-top: 1px solid var(--light-grey);
             }

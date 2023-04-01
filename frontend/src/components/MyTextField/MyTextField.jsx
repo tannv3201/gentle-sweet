@@ -18,6 +18,39 @@ import {
     createTheme,
 } from "@material-ui/core/styles";
 
+const RoundedBorderTextField = withStyles({
+    root: {
+        "& label.Mui-focused": {
+            color: "var(--grey)",
+        },
+        "& .MuiInput-underline:after": {
+            borderBottomColor: "var(--grey)",
+        },
+        "& .MuiOutlinedInput-root": {
+            borderRadius: "50px",
+            "& fieldset": {
+                borderColor: "#ccc",
+            },
+            "&:hover fieldset": {
+                borderColor: "var(--black)",
+            },
+            "&.Mui-focused fieldset": {
+                borderColor: "#ccc",
+            },
+        },
+        "& label": {
+            fontSize: "1.6rem",
+        },
+        "& legend": {
+            fontSize: "1.2rem",
+        },
+        "& .MuiInputBase-input": {
+            fontSize: "1.6rem",
+            fontFamily: "var(--font-family)",
+        },
+    },
+})(TextField);
+
 const CustomTextField = withStyles({
     root: {
         "& label.Mui-focused": {
@@ -94,6 +127,7 @@ function MyTextField({
     placeholder,
     bgLight,
     bgDark,
+    roundedBorder,
     ...props
 }) {
     return bgLight ? (
@@ -126,6 +160,34 @@ function MyTextField({
         />
     ) : bgDark ? (
         <TextFieldLight
+            {...props}
+            label={label}
+            size={size}
+            variant={variant}
+            placeholder={placeholder}
+            // id="standard-start-adornment"
+            InputProps={
+                iconButtonStart
+                    ? {
+                          startAdornment: (
+                              <IconButton size={buttonSize}>
+                                  {iconButtonStart}
+                              </IconButton>
+                          ),
+                      }
+                    : iconButtonEnd
+                    ? {
+                          endAdornment: (
+                              <IconButton size={buttonSize}>
+                                  {iconButtonEnd}
+                              </IconButton>
+                          ),
+                      }
+                    : null
+            }
+        />
+    ) : roundedBorder ? (
+        <RoundedBorderTextField
             {...props}
             label={label}
             size={size}

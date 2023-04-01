@@ -10,63 +10,83 @@ import FormControl from "@material-ui/core/FormControl";
 import FormLabel from "@material-ui/core/FormLabel";
 const cx = classNames.bind(styles);
 
-function FilterSort() {
+function FilterSort({ isChecked, handleChangeFilterSort }) {
     return (
         <div className={cx("filter-item")}>
             <span className={cx("filter-item-title")}>Sắp xếp</span>
             <ArrowDropDown className={cx("filter-item-icon")} />
-            <RadioGroup
-                className={cx("filter-item-option")}
-                aria-label="gender"
-                name="gender1"
-            >
+            <RadioGroup className={cx("filter-item-option")} name="sortFilter">
                 <FormControlLabel
                     className={cx("option-item")}
-                    value="sp-noi-bat"
+                    value="featuredProduct"
+                    name="featuredProduct"
                     control={<Radio color="primary" />}
                     label="Sản phẩm nổi bật"
+                    checked={isChecked?.featuredProduct}
+                    onChange={(e) => handleChangeFilterSort(e)}
                 />
                 <FormControlLabel
                     className={cx("option-item")}
-                    value="gia-tang-dan"
+                    value="ascendingPrice"
+                    name="ascendingPrice"
                     control={<Radio color="primary" />}
                     label="Giá: Tăng dần"
+                    checked={isChecked?.ascendingPrice}
+                    onChange={(e) => handleChangeFilterSort(e)}
                 />
                 <FormControlLabel
                     className={cx("option-item")}
-                    value="gia-giam-dan"
+                    value="decreasePrice"
+                    name="decreasePrice"
                     control={<Radio color="primary" />}
                     label="Giá: Giảm dần"
+                    checked={isChecked?.decreasePrice}
+                    onChange={(e) => handleChangeFilterSort(e)}
                 />
                 <FormControlLabel
                     className={cx("option-item")}
-                    value="a-z"
+                    value="aToZ"
+                    name="aToZ"
                     control={<Radio color="primary" />}
                     label="Tên: A - Z"
+                    checked={isChecked?.aToZ}
+                    onChange={(e) => handleChangeFilterSort(e)}
                 />
                 <FormControlLabel
                     className={cx("option-item")}
-                    value="z-a"
+                    value="zToA"
+                    name="zToA"
                     control={<Radio color="primary" />}
                     label="Tên: Z - A"
+                    checked={isChecked?.zToA}
+                    onChange={(e) => handleChangeFilterSort(e)}
                 />
                 <FormControlLabel
                     className={cx("option-item")}
-                    value="cu-nhat"
+                    value="oldest"
+                    name="oldest"
                     control={<Radio color="primary" />}
                     label="Cũ nhất"
+                    checked={isChecked?.oldest}
+                    onChange={(e) => handleChangeFilterSort(e)}
                 />
                 <FormControlLabel
                     className={cx("option-item")}
-                    value="moi-nhat"
+                    value="latest"
+                    name="latest"
                     control={<Radio color="primary" />}
                     label="Mới nhất"
+                    checked={isChecked?.latest}
+                    onChange={(e) => handleChangeFilterSort(e)}
                 />
                 <FormControlLabel
                     className={cx("option-item")}
-                    value="ban-chay-nhat"
+                    value="bestseller"
+                    name="bestseller"
                     control={<Radio color="primary" />}
                     label="Bán chạy nhất"
+                    checked={isChecked?.bestseller}
+                    onChange={(e) => handleChangeFilterSort(e)}
                 />
             </RadioGroup>
         </div>

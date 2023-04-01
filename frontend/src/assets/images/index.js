@@ -20,6 +20,12 @@ const images = {
     service_2: require("./service_2.png"),
     service_3: require("./service_3.png"),
     icon_down_black: require("./icon_down_black.png"),
+    service_clean_nail: require("./service_clean_nail.png"),
+    hair_care_service: require("./hair_care_service.png"),
+    hair_design_service: require("./hair_design_service.png"),
+    hair_chemistry_service: require("./hair_chemistry_service.png"),
+    other_service: require("./other_service.png"),
+    photo_realistic: require("./photo_realistic.png"),
 };
 
 export default images;
