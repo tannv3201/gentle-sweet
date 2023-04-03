@@ -1,92 +1,99 @@
 .home-blog-wrapper {
-    background-color: var(--light-grey);
+    background-color: var(--primary-200);
     padding: 80px 0;
     display: flex;
     justify-content: center;
     width: 100%;
 }
+
 .home-blog-inner {
     width: var(--default-layout-width);
 
-    .home-blog-title {
-        text-align: center;
-        margin-bottom: 36px;
+    .news-title,
+    .tips-title {
+        color: var(--primary);
         text-transform: uppercase;
     }
 
-    .home-blog-see-more {
-        display: flex;
-        justify-content: center;
+    .news-container,
+    .tips-container {
+        display: block;
+        background-color: var(--white);
+        border-radius: 6px;
+        overflow: hidden;
+        box-shadow: var(--primary-box-shadow) 0px 2px 8px;
+    }
 
-        .see-more-btn {
-            background-color: var(--grey);
-            color: var(--white);
-            width: 200px;
-            margin-top: 80px;
+    .news-text,
+    .tips-text {
+        padding: 12px;
+    }
+
+    .news-container {
+        &:hover {
+            .news-img {
+                img {
+                    transform: scale(1.04);
+                }
+            }
+            .news-description {
+                color: var(--primary);
+            }
         }
+    }
+    .tips-container {
+        &:hover {
+            .tips-img {
+                img {
+                    transform: scale(1.04);
+                }
+            }
+            .tips-description {
+                color: var(--primary);
+            }
+        }
+    }
+    .news-img,
+    .tips-img {
+        width: 100%;
+        height: 240px;
+        overflow: hidden;
+        img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: all 0.2s linear;
+            border-top-right-radius: 6px;
+            border-top-left-radius: 6px;
+        }
+    }
+    .news-label,
+    .tips-label {
+        color: var(--primary);
+    }
+    .news-description,
+    .tips-description {
+        font-size: 1.6rem;
+        margin-top: 8px;
+        transition: all 0.2s linear;
     }
 }
-.slider {
-    .slider-item-wrapper {
-        padding: 0 12px;
-    }
-    .slider-item {
-        background-color: var(--white);
-        overflow: hidden;
-        transform: translate3d(0, 0, 0);
-        .slider-blog-img {
-            height: 164px;
-            overflow: hidden;
-            img {
-                width: 100%;
-                height: 100%;
-                object-fit: cover;
-            }
-        }
 
-        .slider-blog-content {
-            padding: 8px 16px;
-            .blog-content-title {
-                font-size: 2rem;
-                text-transform: uppercase;
-                margin: 12px 0;
-                transition: all 0.16s linear;
-                a {
-                    display: block;
-                }
-                &:hover {
-                    transition: all 0.16s linear;
-                    color: var(--primary);
-                }
-            }
-            .blog-content-description {
-                margin-bottom: 4px;
-                font-size: 1.6rem;
-                font-weight: 400;
-                text-overflow: ellipsis;
-                word-wrap: break-word;
-                overflow: hidden;
-                max-height: 10.6rem;
-                line-height: 2.2rem;
-                display: -webkit-box;
-                -webkit-line-clamp: 4;
-                -webkit-box-orient: vertical;
-            }
-            .blog-content-detail {
-                font-size: 1.6rem;
-                font-weight: 400;
-                font-style: italic;
-                color: var(--primary);
-                a {
-                    display: block;
-                }
-
-                &:hover {
-                    a {
-                        text-decoration: underline;
-                    }
-                }
-            }
+// Button see more
+.news-more,
+.tips-more {
+    text-align: center;
+    color: var(--white);
+    margin-top: 12px;
+    a {
+        background-color: var(--primary-500);
+        padding: 8px 16px;
+        border-radius: 6px;
+        transition: all 0.2s linear;
+        &:hover {
+            background-color: var(--white);
+            box-shadow: var(--primary-box-shadow) 0px 2px 8px;
+            color: var(--primary);
         }
     }
 }

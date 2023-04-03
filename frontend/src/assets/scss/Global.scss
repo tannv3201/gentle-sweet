@@ -38,6 +38,7 @@
     --primary: #f50057;
     --primary-500: #f73378;
     --primary-400: #f3a4b5;
+    --primary-box-shadow: #fdb8c7;
     --primary-300: #fde7eb;
     --primary-200: #ffeef1;
     // --light-gray: #f6f4f1;
@@ -183,4 +184,14 @@ body {
 span.MuiChip-label {
     font-size: 1.4rem !important;
     font-family: var(--font-family) !important;
+}
+
+.MuiTab-textColorPrimary.Mui-selected {
+    color: #fff !important;
+    background: var(--primary);
+}
+
+.MuiPaper-root.MuiAppBar-root.MuiAppBar-positionStatic.MuiAppBar-colorDefault.MuiPaper-elevation4 {
+    box-shadow: unset !important;
+    background-color: transparent;
 }

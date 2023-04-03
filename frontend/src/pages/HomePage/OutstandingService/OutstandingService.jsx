@@ -12,12 +12,18 @@ function OutstandingService() {
         <div className={cx("outstanding-service-wrapper")}>
             <div className={cx("outstanding-service-inner")}>
                 <Grid container spacing={3}>
-                    <Grid item xs={12} className={cx("title")}>
+                    <Grid item xs={12} lg={12} md={12} className={cx("title")}>
                         <b></b>
                         <h2>Dịch vụ nổi bật</h2>
                         <b></b>
                     </Grid>
-                    <Grid item xs={12} className={cx("sub-title")}>
+                    <Grid
+                        item
+                        xs={12}
+                        lg={12}
+                        md={12}
+                        className={cx("sub-title")}
+                    >
                         <p>
                             Hoàn thiện vẻ đẹp, hạnh phúc viên mãn có lẽ là ước
                             mơ của mọi phụ nữ trên thế giới này. Đó cũng chính
@@ -27,7 +33,7 @@ function OutstandingService() {
                             khắc yêu thương của cuộc sống.
                         </p>
                     </Grid>
-                    <Grid item xs={4}>
+                    <Grid item lg={4} md={6} xs={12}>
                         <div className={cx("service-wrapper")}>
                             <div className={cx("service-img")}>
                                 <img src={images.service_1} alt="" />
@@ -45,7 +51,7 @@ function OutstandingService() {
                             </div>
                         </div>
                     </Grid>
-                    <Grid item xs={4}>
+                    <Grid item lg={4} md={6} xs={12}>
                         <div className={cx("service-wrapper")}>
                             <div className={cx("service-img")}>
                                 <img src={images.service_2} alt="" />
@@ -63,7 +69,7 @@ function OutstandingService() {
                             </div>
                         </div>
                     </Grid>
-                    <Grid item xs={4}>
+                    <Grid item lg={4} md={6} xs={12}>
                         <div className={cx("service-wrapper")}>
                             <div className={cx("service-img")}>
                                 <img src={images.hair_care_service} alt="" />
@@ -81,7 +87,7 @@ function OutstandingService() {
                             </div>
                         </div>
                     </Grid>
-                    <Grid item xs={4}>
+                    <Grid item lg={4} md={6} xs={12}>
                         <div className={cx("service-wrapper")}>
                             <div className={cx("service-img")}>
                                 <img src={images.hair_design_service} alt="" />
@@ -99,7 +105,7 @@ function OutstandingService() {
                             </div>
                         </div>
                     </Grid>
-                    <Grid item xs={4}>
+                    <Grid item lg={4} md={6} xs={12}>
                         <div className={cx("service-wrapper")}>
                             <div className={cx("service-img")}>
                                 <img
@@ -120,7 +126,7 @@ function OutstandingService() {
                             </div>
                         </div>
                     </Grid>
-                    <Grid item xs={4}>
+                    <Grid item lg={4} md={6} xs={12}>
                         <div className={cx("service-wrapper")}>
                             <div className={cx("service-img")}>
                                 <img src={images.other_service} alt="" />
@@ -140,7 +146,9 @@ function OutstandingService() {
                     </Grid>
                 </Grid>
                 <div className={cx("outstanding-service-see-more")}>
-                    <MyButton className={cx("see-more-btn")}>Xem thêm</MyButton>
+                    <a href="#" className={cx("see-more-btn")}>
+                        Xem thêm...
+                    </a>
                 </div>
             </div>
         </div>

@@ -26,6 +26,7 @@ const images = {
     hair_chemistry_service: require("./hair_chemistry_service.png"),
     other_service: require("./other_service.png"),
     photo_realistic: require("./photo_realistic.png"),
+    salon_system_1: require("./salon_system_1.jpg"),
 };
 
 export default images;
