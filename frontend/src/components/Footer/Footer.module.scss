@@ -7,21 +7,38 @@
 }
 
 .home-footer-inner {
-    width: var(--default-layout-width);
+    width: calc(var(--default-layout-width) + 48px);
+    padding: 0 24px;
 }
 .store-wrapper {
+    width: 100%;
     .store-img {
+        display: flex;
+        justify-content: center;
+
         img {
+            width: 240px;
             height: 240px;
+            object-fit: cover;
         }
     }
     .store-find {
+        display: flex;
+        justify-content: center;
         .store-find-btn {
             background-color: var(--primary);
             color: var(--white);
+            padding: 8px 32px;
+            border-radius: 4px;
             text-transform: uppercase !important;
             font-weight: 700 !important;
-            width: 240px;
+            transition: all 0.2s linear;
+
+            &:hover {
+                color: var(--primary);
+                background-color: var(--white);
+                box-shadow: var(--primary-box-shadow) 0px 2px 8px;
+            }
         }
     }
 }
@@ -79,10 +96,8 @@
 }
 
 .logo {
-    display: flex;
-    justify-content: center;
     img {
-        height: 90px;
+        height: 48px;
     }
 }
 

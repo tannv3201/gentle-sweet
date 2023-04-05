@@ -49,18 +49,11 @@ const TabInPrimary = withStyles((theme) => ({
     },
 }))(Tab);
 
-function MyTab({ bgWhite, bgPrimary, ...props }) {
+function MyTab({ bgWhite, bgPrimary, key, ...props }) {
     return (
         <>
             {bgWhite ? (
-                <TabInWhite
-                    TabIndicatorProps={{
-                        style: {
-                            backgroundColor: "#D97D54",
-                        },
-                    }}
-                    {...props}
-                />
+                <TabInWhite key={key} {...props} />
             ) : bgPrimary ? (
                 <TabInPrimary {...props} />
             ) : null}

@@ -1,10 +1,8 @@
 import React from "react";
 import styles from "./OutstandingService.module.scss";
-import Slider from "react-slick";
 import classNames from "classnames/bind";
 import { Grid } from "@material-ui/core";
 import images from "../../../assets/images";
-import MyButton from "../../../components/MyButton/MyButton";
 const cx = classNames.bind(styles);
 
 function OutstandingService() {
@@ -33,7 +31,9 @@ function OutstandingService() {
                             khắc yêu thương của cuộc sống.
                         </p>
                     </Grid>
-                    <Grid item lg={4} md={6} xs={12}>
+                </Grid>
+                <Grid container spacing={3}>
+                    <Grid item lg={4} md={6} sm={12} xs={12}>
                         <div className={cx("service-wrapper")}>
                             <div className={cx("service-img")}>
                                 <img src={images.service_1} alt="" />

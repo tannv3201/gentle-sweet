@@ -50,7 +50,9 @@ function MenuItem({ title, to, isDropDown, menuDropDown, ...props }) {
                 )}
             </NavLink>
             <Grid container>
-                <div className={cx("menu-dropdown")}>{menuDropDown}</div>
+                <Grid item xs={12}>
+                    <div className={cx("menu-dropdown")}>{menuDropDown}</div>
+                </Grid>
             </Grid>
         </div>
     );

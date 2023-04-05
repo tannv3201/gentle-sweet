@@ -15,8 +15,8 @@ b {
 }
 
 .salon-system-inner {
-    width: var(--default-layout-width);
-    // box-shadow: var(--primary-box-shadow) 0px 2px 8px;
+    width: calc(var(--default-layout-width) + 48px);
+    padding: 0 24px;
 
     .salon-system-see-more {
         display: flex;
@@ -35,10 +35,21 @@ b {
         justify-content: center;
         align-items: center;
         text-transform: uppercase;
-        margin-bottom: 36px;
         color: var(--primary);
         h2 {
             margin: 0 6px;
+        }
+    }
+
+    .salon-system-sub-title {
+        text-align: center;
+        font-size: 1.6rem;
+        .remind {
+            display: block;
+            text-transform: uppercase;
+            color: var(--primary);
+            font-weight: 500;
+            margin: 12px 0 20px 0;
         }
     }
 }
@@ -70,6 +81,7 @@ b {
 .tabpanel-content {
     .address-name {
         font-size: 1.6rem;
+        font-weight: 600;
         color: var(--primary);
         margin-bottom: 8px;
     }

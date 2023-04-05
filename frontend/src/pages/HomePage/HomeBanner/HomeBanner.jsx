@@ -39,13 +39,8 @@ function HomeBanner() {
         <div className={cx("home-banner-wrapper")}>
             <div className={cx("home-banner-inner")}>
                 <Slider {...settings} className={cx("slider")}>
-                    <SliderItem
-                        src={images.home_banner_slider_1}
-                        // title={
-                        //     "Tác phẩm nghệ thuật trên chính đôi bàn tay của bạn"
-                        // }
-                    />
                     <SliderItem src={images.home_banner_slider_2} />
+                    <SliderItem src={images.home_banner_slider_1} />
                 </Slider>
             </div>
         </div>

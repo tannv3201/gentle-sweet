@@ -16,7 +16,8 @@ b {
 }
 
 .advantage-inner {
-    width: var(--default-layout-width);
+    width: calc(var(--default-layout-width) + 48px);
+    padding: 0 24px;
 
     .title {
         text-align: center;
@@ -27,7 +28,6 @@ b {
         span {
             margin-left: 8px;
         }
-        margin-bottom: 12px;
         h2 {
             margin: 0 6px;
         }
@@ -45,7 +45,7 @@ b {
 
     .photo-realistic {
         // background-color: var(--white);
-        margin-top: 12px;
+        margin-top: 8px;
         border-radius: 6px;
         position: relative;
 

@@ -152,11 +152,21 @@ function PhotoRealistic() {
     return (
         <div className={cx("photo-realistic-wrapper")}>
             <div className={cx("photo-realistic-inner")}>
-                <Grid container>
+                <Grid container spacing={3}>
                     <Grid item xs={12} className={cx("photo-realistic-title")}>
                         <b></b>
                         <h2>Hình ảnh thực tế</h2>
                         <b></b>
+                    </Grid>
+                    <Grid
+                        item
+                        xs={12}
+                        className={cx("photo-realistic-sub-title")}
+                    >
+                        <p>
+                            Cảm nhận sự khác biệt khi đến với hệ thống làm đẹp
+                            hàng đầu GentleBeauty.
+                        </p>
                     </Grid>
                 </Grid>
                 <Grid container spacing={3}>
@@ -187,49 +197,47 @@ function PhotoRealistic() {
                                         index={index}
                                         style={{ zIndex: 1 }}
                                     >
-                                        <div style={{ zIndex: 0 }}>
-                                            <MySlider
-                                                autoplay
-                                                infinite
-                                                autoplaySpeed={3000}
-                                                pauseOnHover
-                                                slidesToShow={3}
-                                                slidesToScroll={1}
-                                            >
-                                                {photo.images.map(
-                                                    (image, index) => (
+                                        <MySlider
+                                            autoplay
+                                            infinite
+                                            autoplaySpeed={3000}
+                                            pauseOnHover
+                                            slidesToShow={3}
+                                            slidesToScroll={1}
+                                        >
+                                            {photo.images.map(
+                                                (image, index) => (
+                                                    <div
+                                                        key={index}
+                                                        className={cx(
+                                                            "slider-item-wrapper"
+                                                        )}
+                                                        onClick={() =>
+                                                            openModal(index)
+                                                        }
+                                                    >
                                                         <div
-                                                            key={index}
                                                             className={cx(
-                                                                "slider-item-wrapper"
+                                                                "slider-item"
                                                             )}
-                                                            onClick={() =>
-                                                                openModal(index)
-                                                            }
                                                         >
                                                             <div
                                                                 className={cx(
-                                                                    "slider-item"
+                                                                    "slider-img"
                                                                 )}
                                                             >
-                                                                <div
-                                                                    className={cx(
-                                                                        "slider-img"
-                                                                    )}
-                                                                >
-                                                                    <img
-                                                                        src={
-                                                                            image.src
-                                                                        }
-                                                                        alt=""
-                                                                    />
-                                                                </div>
+                                                                <img
+                                                                    src={
+                                                                        image.src
+                                                                    }
+                                                                    alt=""
+                                                                />
                                                             </div>
                                                         </div>
-                                                    )
-                                                )}
-                                            </MySlider>
-                                        </div>
+                                                    </div>
+                                                )
+                                            )}
+                                        </MySlider>
                                         <ModalImageGallery
                                             images={photoList[value].images}
                                             openModal={openModal}

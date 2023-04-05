@@ -29,13 +29,13 @@ const RoundedBorderTextField = withStyles({
         "& .MuiOutlinedInput-root": {
             borderRadius: "50px",
             "& fieldset": {
-                borderColor: "#ccc",
+                borderColor: "var(--primary-box-shadow)",
             },
             "&:hover fieldset": {
                 borderColor: "var(--black)",
             },
             "&.Mui-focused fieldset": {
-                borderColor: "#ccc",
+                borderColor: "var(--primary-400)",
             },
         },
         "& label": {
@@ -92,6 +92,8 @@ const TextFieldLight = withStyles({
             borderBottomColor: "var(--grey)",
         },
         "& .MuiOutlinedInput-root": {
+            boxShadow: "var(--primary-box-shadow) 0px 2px 8px",
+
             "& fieldset": {
                 borderColor: "#ccc",
             },

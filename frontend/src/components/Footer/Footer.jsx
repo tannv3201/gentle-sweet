@@ -7,29 +7,54 @@ import MyButton from "../MyButton/MyButton";
 import MyTextField from "../MyTextField/MyTextField";
 import { Facebook, Instagram, YouTube, SendRounded } from "@material-ui/icons";
 import LogoText from "../../assets/images/logo_text.svg";
-
+import { useMediaQuery } from "@material-ui/core";
+import { useTheme } from "@material-ui/core/styles";
 const cx = classNames.bind(styles);
 
 function Footer() {
+    const theme = useTheme();
+    const isSmall = useMediaQuery(theme.breakpoints.down("sm"));
+    const isExtraSmall = useMediaQuery(theme.breakpoints.down("xs"));
     return (
         <>
             <div className={cx("home-footer-wrapper")}>
                 <div className={cx("home-footer-inner")}>
-                    <Grid container>
-                        <Grid item xs={4} className={cx("store-wrapper")}>
-                            <div className={cx("store-img")}>
-                                <img src={images.logo_footer} alt="" />
-                            </div>
-                            <div className={cx("store-find")}>
-                                <MyButton className={cx("store-find-btn")}>
-                                    Tìm cửa hàng
-                                </MyButton>
-                            </div>
-                        </Grid>
-                        <Grid container item xs={8}>
+                    <Grid container spacing={3}>
+                        {!isSmall && (
                             <Grid
                                 item
-                                xs={3}
+                                lg={4}
+                                md={6}
+                                className={cx("store-wrapper")}
+                            >
+                                <div className={cx("store-img")}>
+                                    <img src={images.logo_footer} alt="" />
+                                </div>
+                                <div className={cx("store-find")}>
+                                    <a
+                                        href="#"
+                                        className={cx("store-find-btn")}
+                                    >
+                                        Tìm cửa hàng
+                                    </a>
+                                </div>
+                            </Grid>
+                        )}
+                        <Grid
+                            container
+                            item
+                            lg={8}
+                            md={6}
+                            sm={12}
+                            xs={12}
+                            spacing={3}
+                        >
+                            <Grid
+                                item
+                                lg={3}
+                                md={6}
+                                sm={6}
+                                xs={6}
                                 className={cx("footer-component")}
                             >
                                 <a href="#" className={cx("component-title")}>
@@ -52,7 +77,10 @@ function Footer() {
                             </Grid>
                             <Grid
                                 item
-                                xs={3}
+                                lg={3}
+                                md={6}
+                                sm={6}
+                                xs={6}
                                 className={cx("footer-component")}
                             >
                                 <a href="#" className={cx("component-title")}>
@@ -72,7 +100,10 @@ function Footer() {
                             </Grid>
                             <Grid
                                 item
-                                xs={3}
+                                lg={3}
+                                md={6}
+                                sm={6}
+                                xs={6}
                                 className={cx("footer-component")}
                             >
                                 <a href="#" className={cx("component-title")}>
@@ -95,7 +126,10 @@ function Footer() {
                             </Grid>
                             <Grid
                                 item
-                                xs={3}
+                                lg={3}
+                                md={6}
+                                sm={6}
+                                xs={6}
                                 className={cx("footer-component")}
                             >
                                 <a href="#" className={cx("component-title")}>
@@ -115,14 +149,10 @@ function Footer() {
                             </Grid>
                             <Grid
                                 item
-                                xs={12}
-                                className={cx("footer-component")}
-                            >
-                                <br />
-                            </Grid>
-                            <Grid
-                                item
-                                xs={3}
+                                lg={3}
+                                md={6}
+                                sm={6}
+                                xs={6}
                                 className={cx("footer-component")}
                             >
                                 <a className={cx("component-title")}>
@@ -151,7 +181,22 @@ function Footer() {
                             </Grid>
                             <Grid
                                 item
-                                xs={3}
+                                lg={3}
+                                md={6}
+                                sm={6}
+                                xs={6}
+                                className={cx("footer-component")}
+                            >
+                                <div className={cx("logo")}>
+                                    <img src={images.logo} alt="" />
+                                </div>
+                            </Grid>
+                            <Grid
+                                item
+                                lg={6}
+                                md={12}
+                                sm={12}
+                                xs={12}
                                 className={cx("footer-component")}
                             >
                                 <a className={cx("component-title")}>
@@ -172,15 +217,6 @@ function Footer() {
                                             />
                                         }
                                     />
-                                </div>
-                            </Grid>
-                            <Grid
-                                item
-                                xs={6}
-                                className={cx("footer-component")}
-                            >
-                                <div className={cx("logo")}>
-                                    <img src={images.logo} alt="" />
                                 </div>
                             </Grid>
                         </Grid>

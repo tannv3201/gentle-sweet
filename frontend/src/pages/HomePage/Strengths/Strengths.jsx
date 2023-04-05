@@ -61,7 +61,6 @@ function Strengths() {
                 <Grid container spacing={3}>
                     <Grid item xs={12} className={cx("title")}>
                         <b></b>
-
                         <h2>
                             <FavoriteRounded />
                             <span>
@@ -71,15 +70,19 @@ function Strengths() {
                         <b></b>
                     </Grid>
                 </Grid>
-                <Grid container spacing={3} className={cx("advantage")}>
-                    <Grid item xs={6}>
+                <Grid
+                    container
+                    className={cx("advantage")}
+                    style={{ padding: "12px 0" }}
+                >
+                    <Grid item lg={6} md={6} sm={12} xs={12}>
                         <ul>
                             <li>Là sự lựa chọn của 1000 khách hàng mỗi ngày</li>
                             <li>Kỹ thuật viên nhiều năm kinh nghiệm</li>
                             <li>Luôn cam kết hiệu quả mọi dịch vụ</li>
                         </ul>
                     </Grid>
-                    <Grid item xs={6}>
+                    <Grid item lg={6} md={6} sm={12} xs={12}>
                         <ul>
                             <li>Cơ sở vật chất hiện đại</li>
                             <li>Luôn dẫn đầu về các công nghệ làm đẹp</li>
@@ -90,15 +93,9 @@ function Strengths() {
                         </ul>
                     </Grid>
                 </Grid>
-                <Grid
-                    item
-                    xs={12}
-                    container
-                    spacing={3}
-                    className={cx("photo-realistic")}
-                >
+                <Grid container spacing={3} className={cx("photo-realistic")}>
                     {imgList.map((image, index) => (
-                        <Grid key={index} item xs={3}>
+                        <Grid key={index} item lg={3} md={6} sm={12} xs={12}>
                             <div
                                 className={cx("photo-realistic-img")}
                                 onClick={() => openModal(index)}

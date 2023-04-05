@@ -15,15 +15,15 @@ const cx = classNames.bind(styles);
 
 function HomePage() {
     return (
-        <div>
+        <>
             <HomeBanner />
             <OutstandingService />
             <Advantage />
             <PhotoModel />
-            <PhotoRealistic />
+            {/* <PhotoRealistic /> */}
             <HomeBlog />
             <SalonSystem />
-        </div>
+        </>
     );
 }
 

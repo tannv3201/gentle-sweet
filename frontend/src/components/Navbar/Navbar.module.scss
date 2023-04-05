@@ -1,6 +1,9 @@
 .wrapper {
-    box-shadow: rgba(0, 0, 0, 0.1) 0px 1px 3px 0px,
-        rgba(0, 0, 0, 0.06) 0px 1px 2px 0px;
+    background-color: var(--white);
+    position: fixed;
+    left: 0;
+    right: 0;
+    z-index: 10;
 }
 
 .content-inner-navbar {
@@ -124,6 +127,167 @@
         .dropdown-icon {
             transition: all 0.16s linear;
             transform: rotate(-180deg);
+        }
+    }
+}
+
+// Mobile & Tablet
+.navbar-mobile-wrapper {
+    display: flex;
+    align-items: center;
+}
+.navbar-mobile-content {
+    display: flex;
+    justify-content: center;
+    flex: 1;
+}
+.navbar-mobile-button {
+}
+.navbar-mobile-logo {
+    height: 50px;
+    width: auto;
+    img {
+        height: 100%;
+        width: 100%;
+        object-fit: cover;
+    }
+}
+
+// Navbar left wrapper
+.navbar-left {
+    width: 320px;
+    padding: 0 16px;
+    .navbar-header {
+        display: flex;
+        align-items: center;
+        padding: 8px;
+
+        .navbar-logo {
+            flex: 1;
+            display: flex;
+            justify-content: center;
+            img {
+                width: 80px;
+                height: 100%;
+                object-fit: cover;
+            }
+        }
+        .navbar-button {
+        }
+    }
+
+    .navbar-body {
+        .navbar-search {
+            display: flex;
+            justify-content: center;
+            margin-top: 12px;
+            .search-icon {
+                color: var(--primary-500);
+            }
+        }
+
+        .menu-list-container {
+            margin-top: 12px;
+            .menu-item {
+                // border-top: 1px solid var(--primary);
+                div {
+                    display: flex;
+                    align-items: center;
+                    justify-content: space-between;
+                }
+                a {
+                    flex: 1;
+                    display: block;
+                    padding: 12px 0 12px 20px;
+                    font-weight: 500;
+                }
+                list-style: none;
+                .arrow-icon {
+                    transition: all 0.2s linear;
+                }
+                .arrow-icon.rotate {
+                    transform: rotate(-180deg);
+                    color: var(--white);
+                }
+
+                // Menu parent
+                .menu-parent {
+                    &:hover {
+                        background-color: var(--primary-500);
+                        border-radius: 12px;
+                        color: var(--white);
+
+                        .arrow-icon {
+                            color: var(--white);
+                        }
+                    }
+                }
+                .menu-parent.isOpen {
+                    background-color: var(--primary-500);
+                    border-radius: 12px;
+                    color: var(--white);
+                    transition: all 0.2s linear;
+                    margin-bottom: 4px;
+                }
+
+                // Options children
+                .options-children {
+                    position: relative;
+
+                    &::before {
+                        position: absolute;
+                        content: "";
+                        width: 1px;
+                        left: 12px;
+                        top: 8px;
+                        bottom: 4px;
+                        background-color: var(--primary-500);
+                    }
+                    li {
+                        height: 0;
+                        overflow: hidden;
+                        padding-left: 12px;
+                        transition: all 0.2s linear;
+                        a {
+                            padding: 8px 24px;
+                            &:hover {
+                                background-color: var(--primary-500);
+                                border-radius: 12px;
+                                color: var(--white);
+                            }
+                        }
+                    }
+                }
+
+                .options-children.isOpen {
+                    li {
+                        height: 40px;
+                    }
+                }
+            }
+        }
+    }
+}
+
+// Footer actions
+.footer-actions {
+    margin-top: 24px;
+    .call-action,
+    .advise-action,
+    .book-action {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background-color: var(--primary-500);
+        color: var(--white);
+        width: 100%;
+        padding: 8px 20px;
+        text-align: center;
+        font-weight: 500;
+        font-size: 1.4rem;
+        border-radius: 12px;
+        span {
+            margin-left: 4px;
         }
     }
 }

@@ -9,22 +9,30 @@ import AboutUs from "./AboutUs/AboutUs";
 import CartFixedRight from "../components/CartFixedRight/CartFixedRight";
 import Footer from "../components/Footer/Footer";
 import ScrollBackToTop from "../components/ScrollBackToTop";
-
+import { useMediaQuery } from "@material-ui/core";
+import { useTheme } from "@material-ui/core/styles";
 function App() {
+    const theme = useTheme();
+    const isMedium = useMediaQuery(theme.breakpoints.down("md"));
+    const isSmall = useMediaQuery(theme.breakpoints.down("sm"));
+    const isLarge = useMediaQuery(theme.breakpoints.down("lg"));
     return (
         <div>
             <Router>
                 <ScrollBackToTop>
                     <Navbar />
-                    <div className="App">
-                        <CartFixedRight />
+                    <div
+                        style={
+                            isSmall
+                                ? { paddingTop: "54px" }
+                                : { paddingTop: "86px" }
+                        }
+                    >
+                        {!isMedium && <CartFixedRight />}
                         <Routes>
                             <Route path="/" element={<HomePage />} />
                             <Route path="/product/all" element={<ShopPage />} />
-                            <Route
-                                path="/service-list"
-                                element={<ServicePage />}
-                            />
+                            <Route path="/dich-vu" element={<ServicePage />} />
                             <Route path="/sale-off" element={<SaleOffPage />} />
                             <Route path="/about-us" element={<AboutUs />} />
                         </Routes>
