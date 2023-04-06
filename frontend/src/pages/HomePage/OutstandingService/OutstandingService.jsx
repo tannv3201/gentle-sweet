@@ -2,8 +2,27 @@ import React from "react";
 import styles from "./OutstandingService.module.scss";
 import classNames from "classnames/bind";
 import { Grid } from "@material-ui/core";
+import { ArrowForwardRounded } from "@material-ui/icons";
 import images from "../../../assets/images";
 const cx = classNames.bind(styles);
+
+function ServiceItem({ imageSrc, title }) {
+    return (
+        <div className={cx("service-wrapper")}>
+            <div className={cx("service-img")}>
+                <img src={imageSrc} alt="" />
+            </div>
+            <div className={cx("service-info")}>
+                <div className={cx("service-title")}>
+                    <h3>{title}</h3>
+                </div>
+                <a className={cx("service-see-detail")} href="#">
+                    Xem chi tiết
+                </a>
+            </div>
+        </div>
+    );
+}
 
 function OutstandingService() {
     return (
@@ -34,120 +53,45 @@ function OutstandingService() {
                 </Grid>
                 <Grid container spacing={3}>
                     <Grid item lg={4} md={6} sm={12} xs={12}>
-                        <div className={cx("service-wrapper")}>
-                            <div className={cx("service-img")}>
-                                <img src={images.service_1} alt="" />
-                            </div>
-                            <div className={cx("service-info")}>
-                                <div className={cx("service-title")}>
-                                    <h3>Vệ sinh và chăm sóc móng</h3>
-                                </div>
-                                <a
-                                    className={cx("service-see-detail")}
-                                    href="#"
-                                >
-                                    Xem chi tiết
-                                </a>
-                            </div>
-                        </div>
+                        <ServiceItem
+                            imageSrc={images.service_1}
+                            title="Vệ sinh và chăm sóc móng"
+                        />
                     </Grid>
                     <Grid item lg={4} md={6} xs={12}>
-                        <div className={cx("service-wrapper")}>
-                            <div className={cx("service-img")}>
-                                <img src={images.service_2} alt="" />
-                            </div>
-                            <div className={cx("service-info")}>
-                                <div className={cx("service-title")}>
-                                    <h3>Thiết kế & vẽ móng</h3>
-                                </div>
-                                <a
-                                    className={cx("service-see-detail")}
-                                    href="#"
-                                >
-                                    Xem chi tiết
-                                </a>
-                            </div>
-                        </div>
+                        <ServiceItem
+                            imageSrc={images.service_2}
+                            title="Thiết kế & vẽ móng"
+                        />
                     </Grid>
                     <Grid item lg={4} md={6} xs={12}>
-                        <div className={cx("service-wrapper")}>
-                            <div className={cx("service-img")}>
-                                <img src={images.hair_care_service} alt="" />
-                            </div>
-                            <div className={cx("service-info")}>
-                                <div className={cx("service-title")}>
-                                    <h3>Phục hồi tóc</h3>
-                                </div>
-                                <a
-                                    className={cx("service-see-detail")}
-                                    href="#"
-                                >
-                                    Xem chi tiết
-                                </a>
-                            </div>
-                        </div>
+                        <ServiceItem
+                            imageSrc={images.hair_care_service}
+                            title="Phục hồi tóc"
+                        />
                     </Grid>
                     <Grid item lg={4} md={6} xs={12}>
-                        <div className={cx("service-wrapper")}>
-                            <div className={cx("service-img")}>
-                                <img src={images.hair_design_service} alt="" />
-                            </div>
-                            <div className={cx("service-info")}>
-                                <div className={cx("service-title")}>
-                                    <h3>Thiết kế & tạo mẫu tóc</h3>
-                                </div>
-                                <a
-                                    className={cx("service-see-detail")}
-                                    href="#"
-                                >
-                                    Xem chi tiết
-                                </a>
-                            </div>
-                        </div>
+                        <ServiceItem
+                            imageSrc={images.hair_design_service}
+                            title="Thiết kế & tạo mẫu tóc"
+                        />
                     </Grid>
                     <Grid item lg={4} md={6} xs={12}>
-                        <div className={cx("service-wrapper")}>
-                            <div className={cx("service-img")}>
-                                <img
-                                    src={images.hair_chemistry_service}
-                                    alt=""
-                                />
-                            </div>
-                            <div className={cx("service-info")}>
-                                <div className={cx("service-title")}>
-                                    <h3>Các dịch vụ hóa chất tóc</h3>
-                                </div>
-                                <a
-                                    className={cx("service-see-detail")}
-                                    href="#"
-                                >
-                                    Xem chi tiết
-                                </a>
-                            </div>
-                        </div>
+                        <ServiceItem
+                            imageSrc={images.hair_chemistry_service}
+                            title="Các dịch vụ hóa chất tóc"
+                        />
                     </Grid>
                     <Grid item lg={4} md={6} xs={12}>
-                        <div className={cx("service-wrapper")}>
-                            <div className={cx("service-img")}>
-                                <img src={images.other_service} alt="" />
-                            </div>
-                            <div className={cx("service-info")}>
-                                <div className={cx("service-title")}>
-                                    <h3>Dịch vụ khác</h3>
-                                </div>
-                                <a
-                                    className={cx("service-see-detail")}
-                                    href="#"
-                                >
-                                    Xem chi tiết
-                                </a>
-                            </div>
-                        </div>
+                        <ServiceItem
+                            imageSrc={images.other_service}
+                            title="Dịch vụ khác"
+                        />
                     </Grid>
                 </Grid>
                 <div className={cx("outstanding-service-see-more")}>
                     <a href="#" className={cx("see-more-btn")}>
-                        Xem thêm...
+                        <span>Xem thêm</span> <ArrowForwardRounded />
                     </a>
                 </div>
             </div>

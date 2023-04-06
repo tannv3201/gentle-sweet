@@ -1,0 +1,111 @@
+.outstanding-product-wrapper {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    padding: 80px 0;
+}
+.outstanding-product-inner {
+    width: calc(var(--default-layout-width) + 48px);
+    padding: 0 24px;
+
+    .title {
+        text-align: center;
+        text-transform: uppercase;
+        color: var(--primary);
+        display: inline-flex;
+        align-items: center;
+        b {
+            display: block;
+            height: 1px;
+            opacity: 0.4;
+            background-color: currentColor;
+            flex: 1;
+        }
+        h2 {
+            margin: 0 6px;
+        }
+    }
+
+    .sub-title {
+        display: inline-flex;
+        justify-content: center;
+        margin-bottom: 12px;
+
+        p {
+            width: 90%;
+            text-align: center;
+        }
+    }
+
+    .product-container {
+        box-shadow: var(--primary-box-shadow) 0px 2px 8px;
+        border-radius: 6px;
+        .product-img {
+            display: block;
+            width: 100%;
+            height: 240px;
+            overflow: hidden;
+            &:hover {
+                & img {
+                    transform: scale(1.05);
+                }
+            }
+
+            img {
+                border-top-right-radius: 6px;
+                border-top-left-radius: 6px;
+                width: 100%;
+                height: 100%;
+                object-fit: cover;
+                transition: all 0.2s linear;
+            }
+        }
+        .product-content {
+            margin-top: 8px;
+            padding: 0 16px 16px 16px;
+            .product-category {
+                font-size: 1.4rem;
+                background-color: var(--primary-box-shadow);
+                padding: 4px 16px;
+                border-radius: 50px;
+                margin-top: 4px;
+            }
+            .product-name {
+                font-size: 1.8rem;
+                font-weight: 500;
+                margin-top: 8px;
+                padding: 8px 0;
+                transition: all 0.2s linear;
+                a {
+                    display: block;
+                }
+                &:hover {
+                    color: var(--primary);
+                }
+            }
+            .product-price-container {
+                margin-top: 4px;
+                color: var(--primary);
+                font-weight: 700;
+                font-size: 1.8rem;
+                .product-price {
+                }
+                .product-curency-unit {
+                    margin-left: 4px;
+                }
+            }
+
+            .product-rating-container {
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                margin-top: 12px;
+                .product-rating {
+                }
+                .product-sold {
+                    font-size: 1.4rem;
+                }
+            }
+        }
+    }
+}

@@ -1,3 +1,16 @@
+@media screen and (max-width: 767px) {
+    .service-title {
+        h3 {
+            font-size: 1.6rem !important;
+        }
+    }
+
+    .outstanding-service-inner {
+        h2 {
+        }
+    }
+}
+
 .outstanding-service-wrapper {
     width: 100%;
     display: flex;
@@ -120,10 +133,17 @@
         margin-top: 80px;
         .see-more-btn {
             background-color: var(--primary-500);
+            display: flex;
+            align-items: center;
+            justify-content: center;
             color: var(--white);
             padding: 8px 16px;
             border-radius: 6px;
             transition: all 0.2s linear;
+
+            span {
+                margin-right: 4px;
+            }
 
             &:hover {
                 background-color: var(--white);

@@ -156,11 +156,10 @@
 // Navbar left wrapper
 .navbar-left {
     width: 320px;
-    padding: 0 16px;
     .navbar-header {
         display: flex;
         align-items: center;
-        padding: 8px;
+        padding: 8px 0;
 
         .navbar-logo {
             flex: 1;
@@ -177,6 +176,8 @@
     }
 
     .navbar-body {
+        padding: 0 16px;
+
         .navbar-search {
             display: flex;
             justify-content: center;
@@ -272,6 +273,8 @@
 // Footer actions
 .footer-actions {
     margin-top: 24px;
+    padding: 0 16px;
+
     .call-action,
     .advise-action,
     .book-action {

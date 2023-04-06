@@ -1,65 +1,14 @@
-import React, { useState } from "react";
+import React from "react";
 import classNames from "classnames/bind";
 import styles from "./SalonSystem.module.scss";
 import { Grid } from "@material-ui/core";
-import images from "../../../assets/images";
 import AppBar from "@material-ui/core/AppBar";
 import TabPanel from "../../../components/TabPanel/TabPanel";
 import MyTabs from "../../../components/TabPanel/Tabs";
 import MyTab from "../../../components/TabPanel/Tab";
+import { salonSystem } from "./FakeData";
 
 const cx = classNames.bind(styles);
-
-const salonSystem = [
-    {
-        id: "HN",
-        name: "Hà Nội",
-        address: [
-            {
-                id: "HN1",
-                name: "38 Phố Thái Thịnh, P. Ngã Tư Sở, Q. Đống Đa, Hà Nội",
-                province: "Hà Nội",
-                district: "Đống Đa",
-                wards: "Ngã Tư Sở",
-                image: images.salon_system_1,
-                map: "https://www.google.com/maps/place/Seoul+Spa+H%C3%A0+N%E1%BB%99i/@21.0064766,105.8217922,19z/data=!4m5!3m4!1s0x0:0x24b3e951f024d0e9!8m2!3d21.0064763!4d105.8219221",
-            },
-        ],
-    },
-    {
-        id: "TB",
-        name: "Thái Bình",
-        address: [
-            {
-                id: "TB1",
-                name: "Kha Lý, Thụy Quỳnh, Thái Thụy, Thái bình",
-                province: "Thái Bình",
-                district: "Thái Thụy",
-                wards: "Thụy Quỳnh",
-                image: images.salon_system_1,
-                map: "https://www.google.com/maps/place/Seoul+Spa+H%C3%A0+N%E1%BB%99i/@21.0064766,105.8217922,19z/data=!4m5!3m4!1s0x0:0x24b3e951f024d0e9!8m2!3d21.0064763!4d105.8219221",
-            },
-            {
-                id: "TB2",
-                name: "Trà Hồi, Thụy Bình, Thái Thụy, Thái bình",
-                province: "Thái Bình",
-                district: "Thái Thụy",
-                wards: "Thụy Bình",
-                image: images.salon_system_1,
-                map: "https://www.google.com/maps/place/Seoul+Spa+H%C3%A0+N%E1%BB%99i/@21.0064766,105.8217922,19z/data=!4m5!3m4!1s0x0:0x24b3e951f024d0e9!8m2!3d21.0064763!4d105.8219221",
-            },
-            {
-                id: "TB3",
-                name: "Bài Kiện, Thụy Quỳnh, Thái Thụy, Thái bình",
-                province: "Thái Bình",
-                district: "Thái Thụy",
-                wards: "Thụy Quỳnh",
-                image: images.salon_system_1,
-                map: "https://www.google.com/maps/place/Seoul+Spa+H%C3%A0+N%E1%BB%99i/@21.0064766,105.8217922,19z/data=!4m5!3m4!1s0x0:0x24b3e951f024d0e9!8m2!3d21.0064763!4d105.8219221",
-            },
-        ],
-    },
-];
 
 function SalonSystem() {
     const [tabIndex, setTabIndex] = React.useState(0);
@@ -95,13 +44,16 @@ function SalonSystem() {
                         borderRadius: "6px",
                     }}
                 >
-                    <AppBar position="static" color="default">
+                    <AppBar
+                        style={{ overflow: "hidden" }}
+                        position="static"
+                        color="default"
+                    >
                         <MyTabs
                             value={tabIndex}
                             onChange={handleTabChange}
                             indicatorColor="primary"
                             textColor="primary"
-                            centered
                             className={cx("tabspanel-container")}
                         >
                             {salonSystem.map((salon, index) => (

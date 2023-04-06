@@ -2,6 +2,8 @@ import React, { useState } from "react";
 import classNames from "classnames/bind";
 import styles from "./ModalImageGallery.module.scss";
 import { Grid, IconButton } from "@material-ui/core";
+import { useMediaQuery } from "@material-ui/core";
+import { useTheme } from "@material-ui/core/styles";
 import {
     CloseRounded,
     ArrowForwardIosRounded,
@@ -19,30 +21,9 @@ function ModalImageGallery({
     prevImage,
     nextImage,
 }) {
-    // const [currentImage, setCurrentImage] = useState(0);
-    // const [isModalOpen, setIsModalOpen] = useState(false);
-
-    // const openModal = (index) => {
-    //     setCurrentImage(index);
-    //     setIsModalOpen(true);
-    // };
-
-    // const closeModal = () => {
-    //     setIsModalOpen(false);
-    // };
-
-    // const nextImage = () => {
-    //     setCurrentImage((currentImage + 1) % images.length);
-    // };
-
-    // const prevImage = () => {
-    //     if ((currentImage - 1) % images.length < 1) {
-    //         setCurrentImage(images.length - 1);
-    //     } else {
-    //         setCurrentImage((currentImage - 1) % images.length);
-    //     }
-    // };
-
+    const theme = useTheme();
+    const isSmall = useMediaQuery(theme.breakpoints.down("sm"));
+    const isExtraSmall = useMediaQuery(theme.breakpoints.down("xs"));
     return (
         <>
             {isModalOpen && (
@@ -53,15 +34,30 @@ function ModalImageGallery({
                             className={cx("btn-close")}
                             onClick={closeModal}
                         >
-                            <CloseRounded />
+                            <CloseRounded
+                                fontSize={isSmall ? "large" : "medium"}
+                            />
                         </IconButton>
                         <IconButton
                             onClick={prevImage}
                             className={cx("btn-prev")}
                         >
-                            <ArrowBackIosRounded />
+                            <ArrowBackIosRounded
+                                fontSize={isSmall ? "large" : "medium"}
+                            />
                         </IconButton>
-                        <div className={cx("modal-image-container")}>
+                        <div
+                            className={
+                                isSmall
+                                    ? cx("modal-image-container", "isSmall")
+                                    : isExtraSmall
+                                    ? cx(
+                                          "modal-image-container",
+                                          "isExtraSmall"
+                                      )
+                                    : cx("modal-image-container")
+                            }
+                        >
                             <img
                                 src={images[currentImage]?.src}
                                 alt={images[currentImage]?.alt}
@@ -75,7 +71,9 @@ function ModalImageGallery({
                             onClick={nextImage}
                             className={cx("btn-next")}
                         >
-                            <ArrowForwardIosRounded />
+                            <ArrowForwardIosRounded
+                                fontSize={isSmall ? "large" : "medium"}
+                            />
                         </IconButton>
                     </div>
                 </div>

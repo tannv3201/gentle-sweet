@@ -10,6 +10,7 @@ import HomeBlog from "./HomeBlog/HomeBlog";
 import OutstandingService from "./OutstandingService/OutstandingService";
 import Advantage from "./Strengths/Strengths";
 import SalonSystem from "./SalonSystem/SalonSystem";
+import OutstandingProduct from "./OutstandingProduct/OutstandingProduct";
 
 const cx = classNames.bind(styles);
 
@@ -19,6 +20,7 @@ function HomePage() {
             <HomeBanner />
             <OutstandingService />
             <Advantage />
+            <OutstandingProduct />
             <PhotoModel />
             {/* <PhotoRealistic /> */}
             <HomeBlog />
