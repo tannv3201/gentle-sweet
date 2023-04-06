@@ -14,6 +14,7 @@ const productList = [
         price: "30000",
         sold: 3,
         image: images.nail_polish_bottle,
+        rating: 3,
     },
     {
         category: "Sơn móng tay",
@@ -21,6 +22,7 @@ const productList = [
         price: "30000",
         sold: 3,
         image: images.nail_polish_bottle,
+        rating: 5,
     },
     {
         category: "Chăm sóc tóc",
@@ -28,6 +30,7 @@ const productList = [
         price: "150000",
         sold: 10,
         image: images.nail_polish_bottle,
+        rating: 3,
     },
     {
         category: "Chăm sóc móng",
@@ -35,6 +38,7 @@ const productList = [
         price: "75000",
         sold: 1,
         image: images.nail_polish_bottle,
+        rating: 4,
     },
 ];
 
@@ -86,11 +90,6 @@ function ProductItem({
 }
 
 function OutstandingProduct() {
-    const [valueRating, setValueRating] = React.useState(2);
-
-    const handleRating = (e, newValue) => {
-        setValueRating(newValue);
-    };
     return (
         <div className={cx("outstanding-product-wrapper")}>
             <div className={cx("outstanding-product-inner")}>
@@ -110,20 +109,20 @@ function OutstandingProduct() {
                         <p>
                             Gentle Beauty luôn cam kết đem đến cho khách hàng
                             những sản phẩm chất lượng và dịch vụ tốt nhất để
-                            giúp họ có được vẻ đẹp tóc và móng hoàn hảo."
+                            giúp họ có được vẻ đẹp tóc và móng hoàn hảo.
                         </p>
                     </Grid>
                 </Grid>
                 <Grid container spacing={3}>
                     {productList.map((product, index) => (
                         <ProductItem
+                            key={index}
                             imageSrc={product?.image}
                             categoryName={product?.category}
                             productName={product?.name}
                             productPrice={product?.price}
                             productSold={product?.sold}
-                            valueRating={valueRating}
-                            handleRating={handleRating}
+                            valueRating={product?.rating}
                         />
                     ))}
                 </Grid>

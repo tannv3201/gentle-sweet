@@ -3,7 +3,7 @@ import { NavLink } from "react-router-dom";
 import styles from "./Navbar.module.scss";
 import classNames from "classnames/bind";
 import images from "../../assets/images";
-import { ExpandMoreRounded } from "@material-ui/icons";
+import { ArrowDropDown } from "@material-ui/icons";
 import { Grid } from "@material-ui/core";
 
 const cx = classNames.bind(styles);
@@ -42,14 +42,18 @@ function MenuItem({ title, to, isDropDown, menuDropDown, ...props }) {
                                     }}
                                     className={cx("dropdown-icon")}
                                 >
-                                    <ExpandMoreRounded />
+                                    <ArrowDropDown fontSize="large" />
                                 </span>
                             )}
                         </span>
                     </div>
                 )}
             </NavLink>
-            <div className={cx("menu-dropdown")}>{menuDropDown}</div>
+            <Grid container>
+                <Grid item xs={12}>
+                    <div className={cx("menu-dropdown")}>{menuDropDown}</div>
+                </Grid>
+            </Grid>
         </div>
     );
 }
