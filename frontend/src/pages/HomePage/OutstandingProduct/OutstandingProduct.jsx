@@ -4,6 +4,7 @@ import styles from "./OutstandingProduct.module.scss";
 import images from "../../../assets/images";
 import { Grid } from "@material-ui/core";
 import { Rating } from "@material-ui/lab";
+import { ArrowForwardRounded } from "@material-ui/icons";
 const cx = classNames.bind(styles);
 
 const productList = [
@@ -126,6 +127,11 @@ function OutstandingProduct() {
                         />
                     ))}
                 </Grid>
+                <div className={cx("outstanding-product-see-more")}>
+                    <a href="#" className={cx("see-more-btn")}>
+                        <span>Xem thêm</span> <ArrowForwardRounded />
+                    </a>
+                </div>
             </div>
         </div>
     );
