@@ -5,7 +5,8 @@ import ShopPage from "./ShopPage/ShopPage";
 import Navbar from "../components/Navbar/Navbar";
 import ServicePage from "./ServicePage/ServicePage";
 import SaleOffPage from "./SaleOffPage/SaleOffPage";
-import AboutUs from "./AboutUs/AboutUs";
+import AboutUsPage from "./AboutUsPage/AboutUsPage";
+import SalonSystemPage from "./SalonSystemPage/SalonSystemPage";
 import CartFixedRight from "../components/CartFixedRight/CartFixedRight";
 import Footer from "../components/Footer/Footer";
 import ScrollBackToTop from "../components/ScrollBackToTop";
@@ -25,7 +26,7 @@ function App() {
                         style={
                             isSmall
                                 ? { paddingTop: "54px" }
-                                : { paddingTop: "86px" }
+                                : { paddingTop: "109px" }
                         }
                     >
                         {!isMedium && <CartFixedRight />}
@@ -34,7 +35,14 @@ function App() {
                             <Route path="/product/all" element={<ShopPage />} />
                             <Route path="/dich-vu" element={<ServicePage />} />
                             <Route path="/sale-off" element={<SaleOffPage />} />
-                            <Route path="/about-us" element={<AboutUs />} />
+                            <Route
+                                path="/he-thong-chi-nhanh"
+                                element={<SalonSystemPage />}
+                            />
+                            <Route
+                                path="/ve-chung-toi"
+                                element={<AboutUsPage />}
+                            />
                         </Routes>
                     </div>
                     <Footer />

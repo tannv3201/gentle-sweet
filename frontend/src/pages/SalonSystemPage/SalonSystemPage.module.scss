@@ -1,0 +1,22 @@
+.wrapper {
+    background-color: #f8f8fa;
+    padding: 40px 0;
+    // display: flex;
+    // justify-content: center;
+    width: 100%;
+}
+
+// Breadcrumbs
+.breadcrumb-wrapper {
+    background-color: #f8f8fa;
+    width: calc(var(--default-layout-width) + 48px);
+    margin: 0 auto 8px;
+    padding: 0 24px;
+}
+.inner {
+    width: calc(var(--default-layout-width) + 48px);
+    // background-color: var(--white);
+    border-radius: 6px;
+    padding: 0 24px;
+    margin: auto;
+}

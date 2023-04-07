@@ -4,6 +4,7 @@ import styles from "./Navbar.module.scss";
 import classNames from "classnames/bind";
 import { Grid, IconButton } from "@material-ui/core";
 import images from "../../assets/images";
+import { NavLink } from "react-router-dom";
 import {
     PersonRounded,
     SearchRounded,
@@ -19,8 +20,8 @@ const navbarMobileList = [
     {
         name: "Giới thiệu",
         children: [
-            { name: "Gentle Beauty", href: "#" },
-            { name: "Hệ thống chi nhánh", href: "#" },
+            { name: "Gentle Beauty", href: "/ve-chung-toi" },
+            { name: "Hệ thống chi nhánh", href: "/he-thong-chi-nhanh" },
         ],
         isOpen: false,
         href: "#",
@@ -117,7 +118,7 @@ function NavbarDesktop() {
                                                         }
                                                     >
                                                         <Grid item xs={12}>
-                                                            <a
+                                                            <NavLink
                                                                 className={
                                                                     navbarParent?.children
                                                                         ? cx(
@@ -128,14 +129,14 @@ function NavbarDesktop() {
                                                                               "menu-parent-item"
                                                                           )
                                                                 }
-                                                                href={
+                                                                to={
                                                                     navbarParent?.href
                                                                 }
                                                             >
                                                                 {
                                                                     navbarParent?.name
                                                                 }
-                                                            </a>
+                                                            </NavLink>
                                                         </Grid>
                                                         <Grid
                                                             item
@@ -164,18 +165,18 @@ function NavbarDesktop() {
                                                                                 12
                                                                             }
                                                                         >
-                                                                            <a
+                                                                            <NavLink
                                                                                 className={cx(
                                                                                     "menu-children-item"
                                                                                 )}
-                                                                                href={
+                                                                                to={
                                                                                     child?.href
                                                                                 }
                                                                             >
                                                                                 {
                                                                                     child?.name
                                                                                 }
-                                                                            </a>
+                                                                            </NavLink>
                                                                         </Grid>
                                                                     )
                                                                 )}

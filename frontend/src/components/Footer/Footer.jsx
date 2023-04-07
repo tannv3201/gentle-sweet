@@ -188,7 +188,7 @@ function Footer() {
                                 className={cx("footer-component")}
                             >
                                 <div className={cx("logo")}>
-                                    <img src={images.logo} alt="" />
+                                    <img src={images.logo_in_dark} alt="" />
                                 </div>
                             </Grid>
                             <Grid

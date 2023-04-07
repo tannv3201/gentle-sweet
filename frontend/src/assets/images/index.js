@@ -6,7 +6,7 @@ const images = {
     shopping_list_1: require("./shopping_list_1.jpg"),
     photo_model_1: require("./photo_model_1.png"),
     logo_footer: require("./logo_footer.png"),
-    logo_text: require("./logo_text.png"),
+    logo_in_dark: require("./logo_in_dark.png"),
     collection_1: require("./collection_1.png"),
     collection_2: require("./collection_2.jpg"),
     collection_3: require("./collection_3.jpg"),

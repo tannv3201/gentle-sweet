@@ -26,7 +26,7 @@ function NavbarMobile() {
         {
             name: "Giới thiệu",
             children: [
-                { name: "Gentle Beauty", href: "#" },
+                { name: "Gentle Beauty", href: "/ve-chung-toi" },
                 { name: "Hệ thống chi nhánh", href: "#" },
             ],
             isOpen: false,
@@ -147,7 +147,7 @@ function NavbarMobile() {
                     <div className={cx("navbar-left")}>
                         <div className={cx("navbar-header")}>
                             <div className={cx("navbar-logo")}>
-                                <img src={images.logo_text} alt="" />
+                                <img src={images.logo} alt="" />
                             </div>
                             <IconButton
                                 className={cx("navbar-button")}
