@@ -2,7 +2,7 @@ import React from "react";
 import styles from "./OutstandingService.module.scss";
 import classNames from "classnames/bind";
 import { Grid } from "@material-ui/core";
-import { ArrowForwardRounded } from "@material-ui/icons";
+import { ArrowForwardRounded, FormatQuoteRounded } from "@material-ui/icons";
 import images from "../../../assets/images";
 const cx = classNames.bind(styles);
 
@@ -42,12 +42,21 @@ function OutstandingService() {
                         className={cx("sub-title")}
                     >
                         <p>
-                            Hoàn thiện vẻ đẹp, hạnh phúc viên mãn có lẽ là ước
-                            mơ của mọi phụ nữ trên thế giới này. Đó cũng chính
-                            là điều mà Gentle Beauty mong muốn dành cho phụ nữ
-                            Việt. Chỉ khi bạn thật sự khỏe từ bên trong, đẹp từ
-                            bên ngoài thì bạn mới tự tin hưởng trọn mọi khoảnh
-                            khắc yêu thương của cuộc sống.
+                            <FormatQuoteRounded
+                                style={{
+                                    color: "var(--primary)",
+                                    transform: "scaleX(-1)",
+                                    marginRight: "4px",
+                                }}
+                            />
+                            Đánh thức vẻ đẹp tiềm ẩn bên trong bạn với sự phục
+                            vụ tận tâm của chúng tôi.
+                            <FormatQuoteRounded
+                                style={{
+                                    color: "var(--primary)",
+                                    marginLeft: "4px",
+                                }}
+                            />
                         </p>
                     </Grid>
                 </Grid>

@@ -4,7 +4,7 @@ import styles from "./OutstandingProduct.module.scss";
 import images from "../../../assets/images";
 import { Grid } from "@material-ui/core";
 import { Rating } from "@material-ui/lab";
-import { ArrowForwardRounded } from "@material-ui/icons";
+import { ArrowForwardRounded, FormatQuoteRounded } from "@material-ui/icons";
 import { useMediaQuery } from "@material-ui/core";
 import { useTheme } from "@material-ui/core/styles";
 
@@ -118,9 +118,21 @@ function OutstandingProduct() {
                         className={cx("sub-title")}
                     >
                         <p>
-                            Gentle Beauty luôn cam kết đem đến cho khách hàng
-                            những sản phẩm chất lượng và dịch vụ tốt nhất để
-                            giúp họ có được vẻ đẹp tóc và móng hoàn hảo.
+                            <FormatQuoteRounded
+                                style={{
+                                    color: "var(--primary)",
+                                    transform: "scaleX(-1)",
+                                    marginRight: "4px",
+                                }}
+                            />
+                            Khám phá sản phẩm độc đáo của chúng tôi ngay hôm
+                            nay!
+                            <FormatQuoteRounded
+                                style={{
+                                    color: "var(--primary)",
+                                    marginLeft: "4px",
+                                }}
+                            />
                         </p>
                     </Grid>
                 </Grid>

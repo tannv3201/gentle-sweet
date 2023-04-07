@@ -3,7 +3,7 @@ import classNames from "classnames/bind";
 import styles from "./Strengths.module.scss";
 import { Grid } from "@material-ui/core";
 import images from "../../../assets/images";
-import { FavoriteRounded } from "@material-ui/icons";
+import { FavoriteRounded, CheckRounded } from "@material-ui/icons";
 import ModalImageGallery from "../../../components/ModalImageGallery/ModalImageGallery";
 import { useMediaQuery } from "@material-ui/core";
 import { useTheme } from "@material-ui/core/styles";
@@ -29,6 +29,23 @@ const imgList = [
         src: images.collection_3,
         alt: "Image 1",
         title: "Đa dạng dịch vụ",
+    },
+];
+
+const subTitleList = [
+    {
+        children: [
+            "Là sự lựa chọn của 1000 khách hàng mỗi ngày",
+            "Kỹ thuật viên nhiều năm kinh nghiệm",
+            "Luôn cam kết hiệu quả mọi dịch vụ",
+        ],
+    },
+    {
+        children: [
+            "Cơ sở vật chất hiện đại",
+            "Luôn dẫn đầu về các công nghệ làm đẹp",
+            "Luôn tư vấn và chuyên gia đưa ra liệu trình phù hợp",
+        ],
     },
 ];
 function Strengths() {
@@ -77,26 +94,26 @@ function Strengths() {
                 </Grid>
                 <Grid
                     container
-                    className={cx("advantage")}
+                    className={cx("sub-title")}
                     style={{ padding: "12px 0" }}
                 >
-                    <Grid item lg={6} md={6} sm={12} xs={12}>
-                        <ul>
-                            <li>Là sự lựa chọn của 1000 khách hàng mỗi ngày</li>
-                            <li>Kỹ thuật viên nhiều năm kinh nghiệm</li>
-                            <li>Luôn cam kết hiệu quả mọi dịch vụ</li>
-                        </ul>
-                    </Grid>
-                    <Grid item lg={6} md={6} sm={12} xs={12}>
-                        <ul>
-                            <li>Cơ sở vật chất hiện đại</li>
-                            <li>Luôn dẫn đầu về các công nghệ làm đẹp</li>
-                            <li>
-                                Luôn tư vấn và chuyên gia đưa ra liệu trình phù
-                                hợp
-                            </li>
-                        </ul>
-                    </Grid>
+                    {subTitleList?.map((subTitle, index) => (
+                        <Grid key={index} item lg={6} md={6} sm={12} xs={12}>
+                            <ul style={{ listStyle: "none" }}>
+                                {subTitle?.children?.map((child, index) => (
+                                    <li key={index} style={{ display: "flex" }}>
+                                        <CheckRounded
+                                            style={{
+                                                paddingTop: "4px",
+                                                marginRight: "4px",
+                                            }}
+                                        />
+                                        <span>{child}</span>
+                                    </li>
+                                ))}
+                            </ul>
+                        </Grid>
+                    ))}
                 </Grid>
                 <Grid container spacing={3} className={cx("photo-realistic")}>
                     {imgList.map((image, index) => (
