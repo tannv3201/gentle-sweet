@@ -3,9 +3,10 @@ import classNames from "classnames/bind";
 import styles from "./Strengths.module.scss";
 import { Grid } from "@material-ui/core";
 import images from "../../../assets/images";
-import MyButton from "../../../components/MyButton/MyButton";
 import { FavoriteRounded } from "@material-ui/icons";
 import ModalImageGallery from "../../../components/ModalImageGallery/ModalImageGallery";
+import { useMediaQuery } from "@material-ui/core";
+import { useTheme } from "@material-ui/core/styles";
 
 const cx = classNames.bind(styles);
 const imgList = [
@@ -31,6 +32,10 @@ const imgList = [
     },
 ];
 function Strengths() {
+    const theme = useTheme();
+    const isMedium = useMediaQuery(theme.breakpoints.down("md"));
+    const isSmall = useMediaQuery(theme.breakpoints.down("sm"));
+
     const [currentImage, setCurrentImage] = useState(0);
     const [isModalOpen, setIsModalOpen] = useState(false);
 
@@ -95,9 +100,10 @@ function Strengths() {
                 </Grid>
                 <Grid container spacing={3} className={cx("photo-realistic")}>
                     {imgList.map((image, index) => (
-                        <Grid key={index} item lg={3} md={6} sm={12} xs={12}>
+                        <Grid key={index} item lg={3} md={6} sm={6} xs={6}>
                             <div
                                 className={cx("photo-realistic-img")}
+                                style={isSmall ? { height: "240px" } : {}}
                                 onClick={() => openModal(index)}
                             >
                                 <img src={image.src} alt={image.alt} />

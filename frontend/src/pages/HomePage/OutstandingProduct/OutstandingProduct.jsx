@@ -5,6 +5,9 @@ import images from "../../../assets/images";
 import { Grid } from "@material-ui/core";
 import { Rating } from "@material-ui/lab";
 import { ArrowForwardRounded } from "@material-ui/icons";
+import { useMediaQuery } from "@material-ui/core";
+import { useTheme } from "@material-ui/core/styles";
+
 const cx = classNames.bind(styles);
 
 const productList = [
@@ -44,39 +47,47 @@ const productList = [
 
 function ProductItem({
     valueRating,
-    handleRating,
     imageSrc,
     categoryName,
     productName,
     productPrice,
     productSold,
 }) {
+    const theme = useTheme();
+    const isSmall = useMediaQuery(theme.breakpoints.down("sm"));
+
+    const formatCurrency = (price) => {
+        return new Intl.NumberFormat("vi-VN", {
+            style: "currency",
+            currency: "VND",
+        }).format(price);
+    };
+
     return (
-        <Grid item lg={3} md={6} sm={12} xs={12}>
+        <Grid item lg={3} md={6} sm={6} xs={6}>
             <div className={cx("product-container")}>
                 <a href="#" className={cx("product-img")}>
                     <img src={imageSrc} alt="" />
                 </a>
                 <div className={cx("product-content")}>
-                    <span className={cx("product-category")}>
-                        {categoryName}
-                    </span>
+                    <div className={cx("product-category")}>
+                        <span>{categoryName}</span>
+                    </div>
                     <h3 className={cx("product-name")}>
                         <a href="">{productName}</a>
                     </h3>
                     <div className={cx("product-price-container")}>
                         <span className={cx("product-price")}>
-                            {productPrice}
+                            {formatCurrency(productPrice)}
                         </span>
-                        <span className={cx("product-curency-unit")}>₫</span>
                     </div>
                     <div className={cx("product-rating-container")}>
                         <div className={cx("product-rating")}>
                             <Rating
                                 readOnly
-                                name="simple-controlled"
                                 value={valueRating}
-                                onChange={handleRating}
+                                size="small"
+                                className={cx("product-rating-star")}
                             />
                         </div>
                         <div className={cx("product-sold")}>

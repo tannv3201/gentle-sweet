@@ -156,6 +156,9 @@ function NavbarDesktop() {
                                                                         index
                                                                     ) => (
                                                                         <Grid
+                                                                            key={
+                                                                                index
+                                                                            }
                                                                             item
                                                                             xs={
                                                                                 12
