@@ -41,9 +41,8 @@ function Services() {
                                     </h3>
                                 </div>
                                 <p className={cx("service-item-description")}>
-                                    Gentle không chỉ cung cấp dịch vụ làm nails
-                                    đa dạng mà còn chăm sóc và nuôi dưỡng làn da
-                                    tay và chân, để bạn có trải nghiệm chăm sóc
+                                    Gentle cung cấp dịch vụ làm nails và chăm
+                                    sóc da tay chân để bạn trải nghiệm chăm sóc
                                     sắc đẹp toàn diện.
                                 </p>
                             </div>
@@ -64,9 +63,10 @@ function Services() {
                                     </h3>
                                 </div>
                                 <p className={cx("service-item-description")}>
-                                    Zema không chỉ mang đến những mẫu nails đa
-                                    phong cách mà còn chăm sóc làn da tay, chân
-                                    mịn màng.
+                                    Gentle không chỉ làm cho mái tóc của bạn
+                                    trông đẹp hơn, mà còn giúp tóc của bạn khỏe
+                                    mạnh và chắc khỏe từ bên trong, để bạn có
+                                    thể tự tin hơn.
                                 </p>
                             </div>
                         </div>
@@ -86,9 +86,9 @@ function Services() {
                                     </h3>
                                 </div>
                                 <p className={cx("service-item-description")}>
-                                    Zema không chỉ mang đến những mẫu nails đa
-                                    phong cách mà còn chăm sóc làn da tay, chân
-                                    mịn màng.
+                                    Tận hưởng những giây phút thư giãn tuyệt vời
+                                    và được chăm sóc chu đáo tại Gentle với
+                                    nhiều dịch vụ đa dạng và chất lượng.
                                 </p>
                             </div>
                         </div>
