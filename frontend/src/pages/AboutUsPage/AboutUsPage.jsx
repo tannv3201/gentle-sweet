@@ -4,9 +4,17 @@ import styles from "./AboutUsPage.module.scss";
 import { makeStyles } from "@material-ui/core/styles";
 import Typography from "@material-ui/core/Typography";
 import Breadcrumbs from "@material-ui/core/Breadcrumbs";
-import Link from "@material-ui/core/Link";
+import { NavLink } from "react-router-dom";
 import HomeIcon from "@material-ui/icons/Home";
+import images from "../../assets/images";
+import AboutUsPosts from "./AboutUsPosts/AboutUsPosts";
+import Overview from "./Overview/Overview";
+import VisionMission from "./VisionMission/VisionMission";
+import CoreValues from "./CoreValues/CoreValues";
+import Services from "./Services/Services";
+
 const cx = classNames.bind(styles);
+
 const useStyles = makeStyles((theme) => ({
     link: {
         display: "flex",
@@ -19,20 +27,20 @@ const useStyles = makeStyles((theme) => ({
     },
     active: {
         color: "var(--primary)",
-        fontWeight: "600",
+        fontWeight: "var(--fw-medium)",
         fontSize: "1.6rem !important",
     },
 }));
 
-function BreadCrumb() {
+function BreadCrumb({ ...props }) {
     const classes = useStyles();
 
     return (
-        <Breadcrumbs aria-label="breadcrumb">
-            <Link href="/" className={classes.link}>
+        <Breadcrumbs {...props} aria-label="breadcrumb">
+            <NavLink to="/" className={classes.link}>
                 <HomeIcon className={classes.icon} />
                 Trang chủ
-            </Link>
+            </NavLink>
 
             <Typography color="textPrimary" className={classes.active}>
                 Về chúng tôi
@@ -45,11 +53,18 @@ function AboutUsPage() {
     return (
         <div className={cx("wrapper")}>
             <div className={cx("breadcrumb-wrapper")}>
-                <BreadCrumb />
+                <div className={cx("breadcrumb")}>
+                    <BreadCrumb />
+                </div>
             </div>
-            <div className={cx("inner")}>
-                <h1>AboutUs page</h1>
+            <div className={cx("banner-img")}>
+                <img src={images.banner_about_us} alt="" />
             </div>
+            <Overview />
+            <VisionMission />
+            <CoreValues />
+            <Services />
+            <AboutUsPosts />
         </div>
     );
 }

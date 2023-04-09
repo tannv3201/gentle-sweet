@@ -7,10 +7,13 @@ import TabPanel from "../../../components/TabPanel/TabPanel";
 import MyTabs from "../../../components/TabPanel/Tabs";
 import MyTab from "../../../components/TabPanel/Tab";
 import { salonSystem } from "./FakeData";
-
+import { useMediaQuery } from "@material-ui/core";
+import { useTheme } from "@material-ui/core/styles";
 const cx = classNames.bind(styles);
 
 function SalonSystem() {
+    const theme = useTheme();
+    const isMedium = useMediaQuery(theme.breakpoints.down("md"));
     const [tabIndex, setTabIndex] = React.useState(0);
 
     const handleTabChange = (event, newTabIndex) => {
@@ -19,7 +22,14 @@ function SalonSystem() {
 
     return (
         <div className={cx("salon-system-wrapper")}>
-            <div className={cx("salon-system-inner")}>
+            <div
+                style={
+                    !isMedium
+                        ? { width: "calc(var(--default-layout-width) + 48px)" }
+                        : {}
+                }
+                className={cx("salon-system-inner")}
+            >
                 <Grid container spacing={3}>
                     <Grid item xs={12} className={cx("salon-system-title")}>
                         <b></b>
@@ -49,22 +59,24 @@ function SalonSystem() {
                         position="static"
                         color="default"
                     >
-                        <MyTabs
-                            value={tabIndex}
-                            onChange={handleTabChange}
-                            indicatorColor="primary"
-                            textColor="primary"
-                            className={cx("tabspanel-container")}
-                        >
-                            {salonSystem.map((salon, index) => (
-                                <MyTab
-                                    bgPrimary
-                                    key={index}
-                                    label={salon.name}
-                                    className={cx("tabpanel")}
-                                />
-                            ))}
-                        </MyTabs>
+                        <div className={cx("header-tabs")}>
+                            <MyTabs
+                                value={tabIndex}
+                                onChange={handleTabChange}
+                                indicatorColor="primary"
+                                textColor="primary"
+                                className={cx("tabspanel-container")}
+                            >
+                                {salonSystem.map((salon, index) => (
+                                    <MyTab
+                                        bgPrimary
+                                        key={index}
+                                        label={salon.name}
+                                        className={cx("tabpanel")}
+                                    />
+                                ))}
+                            </MyTabs>
+                        </div>
                     </AppBar>
                     <div className={cx("tabpanel-container")}>
                         {salonSystem.map((salon, index) => (

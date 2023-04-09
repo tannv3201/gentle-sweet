@@ -27,6 +27,15 @@ const images = {
     other_service: require("./other_service.png"),
     photo_realistic: require("./photo_realistic.png"),
     salon_system_1: require("./salon_system_1.jpg"),
+    banner_about_us: require("./banner_about_us.jpg"),
+    vision_destiny_left: require("./vision_destiny_left.jpg"),
+    vision_destiny_right: require("./vision_destiny_right.jpg"),
+    core_values: require("./core_values.png"),
+    phu_nu_viet_nam: require("./phu_nu_viet_nam.png"),
+    service_spa: require("./service_spa.png"),
+    vision_img: require("./photo_model_2.jpg"),
+    mission_img: require("./mission_img.png"),
+    warehouse: require("./warehouse.png"),
 };
 
 export default images;

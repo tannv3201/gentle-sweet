@@ -1,0 +1,57 @@
+@media only screen and (max-width: 600px) {
+    .core-values-title h1 {
+        text-align: center !important;
+        &::before {
+            content: none !important;
+        }
+    }
+}
+
+.wrapper {
+    display: flex;
+    justify-content: center;
+    padding: 80px 0;
+    background: url("../../../assets/images/core_values_2.jpg") fixed;
+    background-size: cover;
+    background-position: top;
+
+    .inner {
+        width: calc(var(--default-layout-width) + 48px);
+        padding: 0 24px;
+
+        .core-values-title h1 {
+            position: relative;
+            font-size: 2.4rem;
+            font-weight: var(--fw-bold);
+            text-transform: uppercase;
+            margin-bottom: 12px;
+            color: var(--primary-500);
+
+            &::before {
+                position: absolute;
+                content: "";
+                height: 4px;
+                bottom: -4px;
+                left: 0;
+                width: 56px;
+                background-color: var(--primary-500);
+                border-radius: 50px;
+            }
+        }
+
+        .core-values-col {
+            color: var(--white);
+            min-height: 160px;
+            h3 {
+                font-size: 2rem;
+                font-weight: var(--fw-semi-bold);
+                color: var(--text-primary);
+            }
+            span {
+                font-size: 1.6rem;
+                font-weight: var(--fw-normal);
+                color: var(--text-secondary);
+            }
+        }
+    }
+}

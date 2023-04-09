@@ -1,0 +1,91 @@
+@media only screen and (max-width: 600px) {
+    .overview-title {
+        align-items: center;
+        &::before {
+            content: none !important;
+        }
+        h2 {
+            font-size: 2.4rem;
+            color: var(--text-primary);
+            font-weight: var(--fw-bold);
+        }
+        .overview-title-normal {
+            font-weight: var(--fw-normal);
+            font-size: 2rem;
+            margin: 6px 0;
+            color: var(--text-secondary);
+        }
+    }
+
+    .overview-title {
+        margin-bottom: 24px !important;
+    }
+
+    .establish,
+    .system,
+    .extend {
+        margin-bottom: 24px !important;
+    }
+}
+
+.wrapper {
+    display: flex;
+    justify-content: center;
+    padding: 80px 0;
+    background-color: #f8f8fa;
+    .inner {
+        width: calc(var(--default-layout-width) + 48px);
+        padding: 0 24px;
+
+        .overview-title {
+            position: relative;
+            padding-left: 12px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            height: 100%;
+            &::before {
+                position: absolute;
+                content: "";
+                width: 2px;
+                height: 100%;
+                left: 0;
+                background-color: var(--primary-500);
+            }
+            h2 {
+                font-size: 2.4rem;
+                color: var(--primary-500);
+                font-weight: var(--fw-bold);
+            }
+            .overview-title-normal {
+                font-weight: var(--fw-normal);
+                font-size: 2rem;
+                margin: 6px 0;
+                color: var(--text-secondary);
+            }
+        }
+        .establish,
+        .system,
+        .extend {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            .establish-icon,
+            .system-icon,
+            .extend-icon {
+                color: var(--primary-500);
+                width: 40px;
+                height: 40px;
+            }
+            .establish-text,
+            .system-text,
+            .extend-text {
+                font-weight: var(--fw-normal);
+                font-size: 2rem;
+                text-transform: uppercase;
+                margin: 6px 0;
+                color: var(--text-secondary);
+            }
+        }
+    }
+}

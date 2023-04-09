@@ -23,13 +23,13 @@ function InfoSaleSlider() {
             <div className={cx("inner")}>
                 <Slider {...settings} className={cx("slider")}>
                     <div className={cx("slider-item")}>
-                        <h5>FREE SHIPPING VỚI HOÁ ĐƠN TỪ 500K !</h5>
+                        <h5>Free shipping với hóa đơn trên 500k!</h5>
                     </div>
                     <div className={cx("slider-item")}>
-                        <h5>BUY MORE PAY LESS - ÁP DỤNG KHI MUA PHỤ KIỆN</h5>
+                        <h5>Ra mắt BST "Mùa hè rực rỡ"</h5>
                     </div>
                     <div className={cx("slider-item")}>
-                        <h5>BUY 2 GET 10% OFF - ÁP DỤNG VỚI TẤT CẢ LOẠI SƠN</h5>
+                        <h5>Giảm giá 10% khi mua từ 2 loại sơn</h5>
                     </div>
                 </Slider>
             </div>

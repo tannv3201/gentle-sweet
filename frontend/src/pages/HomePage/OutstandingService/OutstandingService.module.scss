@@ -36,19 +36,22 @@
         }
         h2 {
             margin: 0 6px;
+            font-size: 2.4rem;
+            font-weight: var(--fw-bold);
         }
     }
 
     .sub-title {
         display: inline-flex;
         justify-content: center;
-        margin-bottom: 12px;
+        margin-bottom: 24px;
 
         p {
             width: 80%;
             text-align: center;
             font-size: 1.6rem;
             font-style: italic;
+            font-weight: var(--fw-normal);
         }
     }
 
@@ -89,6 +92,7 @@
             transition: all 0.2s linear;
             h3 {
                 font-size: 2rem;
+                font-weight: var(--fw-semi-bold);
                 text-transform: uppercase;
             }
 
@@ -118,6 +122,7 @@
             padding: 8px 12px;
             text-align: center;
             font-size: 1.6rem;
+            font-weight: var(--fw-medium);
             color: var(--white);
             transition: all 0.2s linear;
 
@@ -142,7 +147,7 @@
             padding: 8px 16px;
             border-radius: 6px;
             transition: all 0.2s linear;
-
+            font-weight: var(--fw-medium);
             span {
                 margin-right: 4px;
             }

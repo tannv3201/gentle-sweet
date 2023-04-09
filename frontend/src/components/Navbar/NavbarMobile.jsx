@@ -1,3 +1,5 @@
+/* eslint-disable jsx-a11y/anchor-is-valid */
+
 import React, { useCallback, useState } from "react";
 import styles from "./Navbar.module.scss";
 import classNames from "classnames/bind";
@@ -146,9 +148,9 @@ function NavbarMobile() {
                 >
                     <div className={cx("navbar-left")}>
                         <div className={cx("navbar-header")}>
-                            <div className={cx("navbar-logo")}>
+                            <a href="/" className={cx("navbar-logo")}>
                                 <img src={images.logo} alt="" />
-                            </div>
+                            </a>
                             <IconButton
                                 className={cx("navbar-button")}
                                 onClick={toggleDrawer}

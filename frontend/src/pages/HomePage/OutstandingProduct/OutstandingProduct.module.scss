@@ -99,6 +99,8 @@
         }
         h2 {
             margin: 0 6px;
+            font-size: 2.4rem;
+            font-weight: var(--fw-bold);
         }
     }
 
@@ -111,6 +113,7 @@
             width: 80%;
             text-align: center;
             font-style: italic;
+            font-weight: var(--fw-normal);
         }
     }
 
@@ -145,6 +148,7 @@
             .product-category {
                 span {
                     font-size: 1.4rem;
+                    font-weight: var(--fw-normal);
                     background-color: var(--primary-box-shadow);
                     padding: 4px 16px;
                     border-radius: 50px;
@@ -153,7 +157,7 @@
             }
             .product-name {
                 font-size: 1.8rem;
-                font-weight: 500;
+                font-weight: var(--fw-semi-bold);
                 margin-top: 8px;
                 padding: 8px 0;
                 transition: all 0.2s linear;
@@ -167,7 +171,7 @@
             .product-price-container {
                 margin-top: 4px;
                 color: var(--primary);
-                font-weight: 700;
+                font-weight: var(--fw-semi-bold);
                 font-size: 1.8rem;
                 .product-price {
                 }
@@ -182,6 +186,7 @@
                 }
                 .product-sold {
                     font-size: 1.4rem;
+                    font-weight: var(--fw-normal);
                 }
             }
         }
