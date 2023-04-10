@@ -12,11 +12,11 @@ import Footer from "../components/Footer/Footer";
 import ScrollBackToTop from "../components/ScrollBackToTop";
 import { useMediaQuery } from "@material-ui/core";
 import { useTheme } from "@material-ui/core/styles";
+import Breadcrumb from "../components/Breadcrumb/Breadcrumb";
 function App() {
     const theme = useTheme();
     const isMedium = useMediaQuery(theme.breakpoints.down("md"));
     const isSmall = useMediaQuery(theme.breakpoints.down("sm"));
-    const isLarge = useMediaQuery(theme.breakpoints.down("lg"));
     return (
         <div>
             <Router>
@@ -30,6 +30,7 @@ function App() {
                         }
                     >
                         {!isMedium && <CartFixedRight />}
+                        <Breadcrumb />
                         <Routes>
                             <Route path="/" element={<HomePage />} />
                             <Route path="/product/all" element={<ShopPage />} />

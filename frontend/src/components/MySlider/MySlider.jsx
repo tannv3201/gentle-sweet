@@ -38,45 +38,25 @@ function MySlider({
     ...props
 }) {
     const settings = {
-        dots: false,
         infinite: true,
-        speed: 500,
-        slidesToShow: 4,
-        slidesToScroll: 1,
-        arrows: false,
-        autoplaySpeed: 3000,
+        slidesToShow: slidesToShow,
+        slidesToScroll: slidesToScroll,
         autoplay: true,
-        responsive: [
-            {
-                breakpoint: 320,
-                settings: {
-                    slidesToShow: 1,
-                    slidesToScroll: 1,
-                    infinite: false,
-                },
-            },
-            {
-                breakpoint: 768,
-                settings: {
-                    slidesToShow: 2,
-                    slidesToScroll: 2,
-                    infinite: false,
-                },
-            },
-            {
-                breakpoint: 1024,
-                settings: {
-                    slidesToShow: 3,
-                    slidesToScroll: 3,
-                    infinite: false,
-                },
-            },
-        ],
+        autoplaySpeed: 3000,
+        pauseOnHover: true,
+        prevArrow: <PrevArrow />,
+        nextArrow: <PrevArrow />,
     };
 
     return (
         <>
-            <Slider {...settings} {...props} className={cx("slider")}>
+            <Slider
+                nextArrow={<NextArrow />}
+                prevArrow={<PrevArrow />}
+                {...settings}
+                {...props}
+                className={cx("slider")}
+            >
                 {children}
             </Slider>
         </>

@@ -21,10 +21,13 @@ const navbarMobileList = [
         name: "Giới thiệu",
         children: [
             { name: "Gentle Beauty", href: "/ve-chung-toi" },
-            { name: "Hệ thống chi nhánh", href: "/he-thong-chi-nhanh" },
+            {
+                name: "Hệ thống chi nhánh",
+                href: "/he-thong-chi-nhanh",
+            },
         ],
         isOpen: false,
-        href: "#",
+        href: "",
     },
     {
         name: "Dịch vụ",
@@ -62,6 +65,7 @@ const navbarMobileList = [
                 href: "#",
             },
         ],
+        href: "/dich-vu",
     },
     {
         name: "Tin tức",
@@ -98,7 +102,7 @@ function NavbarDesktop() {
                             <MenuItem
                                 key={index}
                                 title={navbar?.name}
-                                to={""}
+                                to={navbar?.href}
                                 menuDropDown={
                                     navbar?.children && (
                                         <Grid container spacing={2}>

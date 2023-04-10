@@ -1,56 +1,49 @@
 import React from "react";
 import classNames from "classnames/bind";
 import styles from "./SalonSystemPage.module.scss";
-import { makeStyles } from "@material-ui/core/styles";
-import Typography from "@material-ui/core/Typography";
-import Breadcrumbs from "@material-ui/core/Breadcrumbs";
-import Link from "@material-ui/core/Link";
-import HomeIcon from "@material-ui/icons/Home";
+import images from "../../assets/images";
+import { Grid } from "@material-ui/core";
+import SalonSystem from "../../components/SalonSystem/SalonSystem";
 const cx = classNames.bind(styles);
-const useStyles = makeStyles((theme) => ({
-    link: {
-        display: "flex",
-        color: "var(--dark)",
-        fontSize: "1.6rem",
-        alignItems: "center",
-    },
-    icon: {
-        marginRight: theme.spacing(0.5),
-    },
-    active: {
-        color: "var(--primary)",
-        fontWeight: "600",
-        fontSize: "1.6rem !important",
-    },
-}));
-
-function BreadCrumb() {
-    const classes = useStyles();
-
-    return (
-        <Breadcrumbs aria-label="breadcrumb">
-            <Link href="/" className={classes.link}>
-                <HomeIcon className={classes.icon} />
-                Trang chủ
-            </Link>
-
-            <Typography color="textPrimary" className={classes.active}>
-                Hệ thống chi nhánh
-            </Typography>
-        </Breadcrumbs>
-    );
-}
 
 function SalonSystemPage() {
     return (
-        <div className={cx("wrapper")}>
-            <div className={cx("breadcrumb-wrapper")}>
-                <BreadCrumb />
+        <>
+            <div className={cx("banner-img")}>
+                <img src={images.banner_salon_system} alt="" />
             </div>
-            <div className={cx("inner")}>
-                <h1>SalonSystemPage </h1>
+            <div className={cx("wrapper")}>
+                <div className={cx("inner")}>
+                    <Grid container spacing={1}>
+                        <Grid item xs={12} className={cx("introduce-title")}>
+                            <h2>
+                                Gentle Beauty - Với hơn 10 chi nhánh tại 6 tỉnh
+                                thành phố trên cả nước
+                            </h2>
+                        </Grid>
+                        <Grid item xs={12}>
+                            <p className={cx("introduce-description")}>
+                                Hệ thống spa Gentle là một trong những thương
+                                hiệu spa nổi tiếng tại Việt Nam với hơn 10 chi
+                                nhánh tại 6 tỉnh thành phố trên cả nước. Gentle
+                                tự hào sở hữu đội ngũ nhân sự chuyên nghiệp và
+                                tận tâm với nhiều năm kinh nghiệm trong lĩnh vực
+                                chăm sóc sức khỏe và sắc đẹp. Với phương châm
+                                "Sức khỏe và sắc đẹp từ thiên nhiên", Gentle cam
+                                kết sử dụng những sản phẩm được chiết xuất hoàn
+                                toàn từ thiên nhiên để mang đến cho khách hàng
+                                những trải nghiệm tuyệt vời và đem lại sự thư
+                                giãn tuyệt đối cho cơ thể và tinh thần. Bất kể
+                                chi nhánh nào của Gentle, khách hàng đều có thể
+                                tin tưởng vào chất lượng dịch vụ và sự tận tâm
+                                của đội ngũ nhân viên tại đây.
+                            </p>
+                        </Grid>
+                    </Grid>
+                </div>
             </div>
-        </div>
+            <SalonSystem searchNearYou={true} />
+        </>
     );
 }
 

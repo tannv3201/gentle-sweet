@@ -1,0 +1,9 @@
+.wrapper {
+    display: flex;
+    justify-content: center;
+}
+
+.inner {
+    width: calc(var(--default-layout-width) + 48px);
+    padding: 12px 24px;
+}

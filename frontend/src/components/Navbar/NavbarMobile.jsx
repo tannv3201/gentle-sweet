@@ -29,7 +29,7 @@ function NavbarMobile() {
             name: "Giới thiệu",
             children: [
                 { name: "Gentle Beauty", href: "/ve-chung-toi" },
-                { name: "Hệ thống chi nhánh", href: "#" },
+                { name: "Hệ thống chi nhánh", href: "/he-thong-chi-nhanh" },
             ],
             isOpen: false,
             href: "#",

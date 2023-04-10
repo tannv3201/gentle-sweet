@@ -142,8 +142,8 @@ function AboutUsPosts() {
                     <Grid item xs={12} container className={cx("posts-single")}>
                         <Grid item xs={12} className={cx("posts-title")}>
                             <h1>
-                                Quý khách hàng là nguồn động lực cho Spa Gentle
-                                phát triển
+                                Quý khách hàng là nguồn động lực cho Gentle phát
+                                triển
                             </h1>
                         </Grid>
                         <Grid item xs={12}>

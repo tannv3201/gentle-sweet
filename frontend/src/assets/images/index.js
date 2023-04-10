@@ -36,6 +36,7 @@ const images = {
     vision_img: require("./photo_model_2.jpg"),
     mission_img: require("./mission_img.png"),
     warehouse: require("./warehouse.png"),
+    banner_salon_system: require("./banner_salon_system.png"),
 };
 
 export default images;

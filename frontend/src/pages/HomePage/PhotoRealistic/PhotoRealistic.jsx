@@ -6,7 +6,7 @@ import images from "../../../assets/images";
 import AppBar from "@material-ui/core/AppBar";
 
 import TabPanel from "../../../components/TabPanel/TabPanel";
-import MyTabs, { StyledTabs } from "../../../components/TabPanel/Tabs";
+import MyTabs from "../../../components/TabPanel/Tabs";
 import MyTab from "../../../components/TabPanel/Tab";
 import MySlider from "../../../components/MySlider/MySlider";
 import ModalImageGallery from "../../../components/ModalImageGallery/ModalImageGallery";
@@ -89,7 +89,8 @@ const photoList = [
 
 function PhotoRealistic() {
     const [value, setValue] = React.useState(0);
-    console.log(value);
+    let dragging = false;
+    console.log(dragging);
 
     const handleChange = (event, newValue) => {
         setValue(newValue);
@@ -116,36 +117,6 @@ function PhotoRealistic() {
             setCurrentImage(photoList.length - 1);
         } else {
             setCurrentImage((currentImage - 1) % photoList.length);
-        }
-    };
-
-    const [isMouseDown, setIsMouseDown] = useState(false);
-
-    const [dragStartX, setDragStartX] = useState(0);
-    const [dragX, setDragX] = useState(0);
-
-    const handleMouseDown = (event) => {
-        event.stopPropagation();
-        setIsMouseDown(true);
-        setDragStartX(event.clientX); // Lưu giá trị clientX của sự kiện onMouseDown
-    };
-
-    const handleMouseUp = () => {
-        setIsMouseDown(false);
-    };
-
-    const handleMouseMove = (event) => {
-        if (isMouseDown) {
-            // Tính toán vị trí mới của slide
-            const dragDelta = event.clientX - dragStartX;
-            setDragX(dragX + dragDelta);
-        }
-    };
-
-    const handleClick = (index) => {
-        if (!isMouseDown) {
-            // Code để xử lý sự kiện onClick
-            openModal(index);
         }
     };
 
@@ -204,6 +175,13 @@ function PhotoRealistic() {
                                             pauseOnHover
                                             slidesToShow={3}
                                             slidesToScroll={1}
+                                            // dragging={dragging}
+                                            beforeChange={() =>
+                                                (dragging = false)
+                                            }
+                                            afterChange={() =>
+                                                (dragging = true)
+                                            }
                                         >
                                             {photo.images.map(
                                                 (image, index) => (
@@ -212,9 +190,15 @@ function PhotoRealistic() {
                                                         className={cx(
                                                             "slider-item-wrapper"
                                                         )}
-                                                        onClick={() =>
-                                                            openModal(index)
-                                                        }
+                                                        // onClick={() =>
+                                                        //     openModal(index)
+                                                        // }
+                                                        onClick={() => {
+                                                            dragging &&
+                                                                openModal(
+                                                                    index
+                                                                );
+                                                        }}
                                                     >
                                                         <div
                                                             className={cx(
