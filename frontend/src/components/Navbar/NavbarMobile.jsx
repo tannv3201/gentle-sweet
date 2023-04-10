@@ -35,6 +35,11 @@ function NavbarMobile() {
             href: "#",
         },
         {
+            name: "Dịch vụ",
+            isOpen: false,
+            href: "/dich-vu",
+        },
+        {
             name: "Dịch vụ tóc",
             children: [
                 { name: "Cắt tóc", href: "#" },
