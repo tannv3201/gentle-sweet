@@ -1,7 +1,7 @@
 import React from "react";
 import styles from "./CartFixedRight.module.scss";
 import classnames from "classnames/bind";
-import { LocalMallRounded } from "@material-ui/icons";
+import { LocalMallRounded } from "@mui/icons-material";
 
 const cx = classnames.bind(styles);
 

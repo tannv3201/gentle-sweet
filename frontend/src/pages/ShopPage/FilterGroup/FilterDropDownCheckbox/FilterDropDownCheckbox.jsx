@@ -1,8 +1,8 @@
 import React from "react";
-import { Checkbox } from "@material-ui/core";
+import { Checkbox } from "@mui/material";
 import styles from "./FilterDropDownCheckbox.module.scss";
 import classNames from "classnames/bind";
-import { FilterListRounded, ArrowDropDown } from "@material-ui/icons";
+import { FilterListRounded, ArrowDropDown } from "@mui/icons-material";
 
 import MyCheckbox from "../../../../components/MyCheckbox/MyCheckbox";
 

@@ -1,7 +1,7 @@
 import React from "react";
 import classNames from "classnames/bind";
 import styles from "./CoreValues.module.scss";
-import { Grid } from "@material-ui/core";
+import { Grid } from "@mui/material";
 import images from "../../../assets/images";
 
 const cx = classNames.bind(styles);

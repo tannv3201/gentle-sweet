@@ -8,13 +8,13 @@ import HomeBlog from "./HomeBlog/HomeBlog";
 import OutstandingService from "./OutstandingService/OutstandingService";
 import Advantage from "./Strengths/Strengths";
 import OutstandingProduct from "./OutstandingProduct/OutstandingProduct";
-import { useMediaQuery } from "@material-ui/core";
-import { useTheme } from "@material-ui/core/styles";
+import { useMediaQuery } from "@mui/material";
+import { useTheme } from "@mui/material/styles";
 import SalonSystem from "../../components/SalonSystem/SalonSystem";
 
 function HomePage() {
     const theme = useTheme();
-    const isMedium = useMediaQuery(theme.breakpoints.down("md"));
+    const isMedium = useMediaQuery(theme.breakpoints.down('lg'));
     return (
         <>
             <HomeBanner />

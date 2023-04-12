@@ -1,7 +1,7 @@
 import React from "react";
 import classNames from "classnames/bind";
 import styles from "./ShopPage.module.scss";
-import { Grid } from "@material-ui/core";
+import { Grid } from "@mui/material";
 import ProductPortfolio from "./ProductPortfolio/ProductPortfolio";
 import Product from "./Product/Product";
 import FilterGroup from "./FilterGroup/FilterGroup";

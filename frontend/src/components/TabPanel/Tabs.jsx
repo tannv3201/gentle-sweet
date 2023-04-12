@@ -1,15 +1,15 @@
-import Tabs from "@material-ui/core/Tabs";
+import Tabs from "@mui/material/Tabs";
 
-import { withStyles } from "@material-ui/core/styles";
+import withStyles from "@mui/styles/withStyles";
 const TabsInWhite = withStyles({
     indicator: {
         display: "flex",
         justifyContent: "center",
-        backgroundColor: "transparent",
+        backgroundColor: "transparent !important",
         "& > span": {
             maxWidth: 40,
             width: "100%",
-            backgroundColor: "transparent",
+            backgroundColor: "transparent !important",
         },
     },
 })(Tabs);

@@ -1,9 +1,9 @@
 import React from "react";
 import classNames from "classnames/bind";
 import styles from "./Services.module.scss";
-import { Grid } from "@material-ui/core";
+import { Grid } from "@mui/material";
 import images from "../../../assets/images";
-import { FilterVintageRounded } from "@material-ui/icons";
+import { FilterVintageRounded } from "@mui/icons-material";
 
 const cx = classNames.bind(styles);
 

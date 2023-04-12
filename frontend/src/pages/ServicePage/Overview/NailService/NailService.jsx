@@ -2,7 +2,7 @@ import React from "react";
 import classNames from "classnames/bind";
 import styles from "./NailService.module.scss";
 import images from "../../../../assets/images";
-import { Grid } from "@material-ui/core";
+import { Grid } from "@mui/material";
 
 const cx = classNames.bind(styles);
 

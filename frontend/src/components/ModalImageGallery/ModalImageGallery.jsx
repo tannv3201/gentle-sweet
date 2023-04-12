@@ -1,14 +1,14 @@
-import React, { useState } from "react";
+import React from "react";
 import classNames from "classnames/bind";
 import styles from "./ModalImageGallery.module.scss";
-import { Grid, IconButton } from "@material-ui/core";
-import { useMediaQuery } from "@material-ui/core";
-import { useTheme } from "@material-ui/core/styles";
+import { IconButton } from "@mui/material";
+import { useMediaQuery } from "@mui/material";
+import { useTheme } from "@mui/material/styles";
 import {
     CloseRounded,
     ArrowForwardIosRounded,
     ArrowBackIosRounded,
-} from "@material-ui/icons";
+} from "@mui/icons-material";
 
 const cx = classNames.bind(styles);
 
@@ -22,8 +22,8 @@ function ModalImageGallery({
     nextImage,
 }) {
     const theme = useTheme();
-    const isSmall = useMediaQuery(theme.breakpoints.down("sm"));
-    const isExtraSmall = useMediaQuery(theme.breakpoints.down("xs"));
+    const isSmall = useMediaQuery(theme.breakpoints.down('lg'));
+    const isExtraSmall = useMediaQuery(theme.breakpoints.down('md'));
     return (
         <>
             {isModalOpen && (
@@ -33,6 +33,7 @@ function ModalImageGallery({
                         <IconButton
                             className={cx("btn-close")}
                             onClick={closeModal}
+                            size="large"
                         >
                             <CloseRounded
                                 fontSize={isSmall ? "large" : "medium"}
@@ -41,6 +42,7 @@ function ModalImageGallery({
                         <IconButton
                             onClick={prevImage}
                             className={cx("btn-prev")}
+                            size="large"
                         >
                             <ArrowBackIosRounded
                                 fontSize={isSmall ? "large" : "medium"}
@@ -70,6 +72,7 @@ function ModalImageGallery({
                         <IconButton
                             onClick={nextImage}
                             className={cx("btn-next")}
+                            size="large"
                         >
                             <ArrowForwardIosRounded
                                 fontSize={isSmall ? "large" : "medium"}

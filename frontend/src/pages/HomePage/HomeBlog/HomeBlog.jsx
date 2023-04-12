@@ -2,14 +2,14 @@ import React from "react";
 import styles from "./HomeBlog.module.scss";
 import classNames from "classnames/bind";
 import images from "../../../assets/images";
-import { Grid } from "@material-ui/core";
+import { Grid } from "@mui/material";
 import {
     EmojiObjectsRounded,
     AnnouncementRounded,
     ArrowForwardRounded,
-} from "@material-ui/icons";
-import { useMediaQuery } from "@material-ui/core";
-import { useTheme } from "@material-ui/core/styles";
+} from "@mui/icons-material";
+import { useMediaQuery } from "@mui/material";
+import { useTheme } from "@mui/material/styles";
 const cx = classNames.bind(styles);
 
 const newsList = [
@@ -58,8 +58,8 @@ function BlogItem({ imageSrc, title, description }) {
 
 function HomeBlog() {
     const theme = useTheme();
-    const isMedium = useMediaQuery(theme.breakpoints.down("md"));
-    const isSmall = useMediaQuery(theme.breakpoints.down("sm"));
+    const isMedium = useMediaQuery(theme.breakpoints.down('lg'));
+    const isSmall = useMediaQuery(theme.breakpoints.down('md'));
     return (
         <div className={cx("home-blog-wrapper")}>
             <div className={cx("home-blog-inner")}>

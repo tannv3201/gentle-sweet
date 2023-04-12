@@ -2,11 +2,11 @@ import React from "react";
 import classNames from "classnames/bind";
 import styles from "./OutstandingProduct.module.scss";
 import images from "../../../assets/images";
-import { Grid } from "@material-ui/core";
-import { Rating } from "@material-ui/lab";
-import { ArrowForwardRounded, FormatQuoteRounded } from "@material-ui/icons";
-import { useMediaQuery } from "@material-ui/core";
-import { useTheme } from "@material-ui/core/styles";
+import { Grid } from "@mui/material";
+import { Rating } from '@mui/material';
+import { ArrowForwardRounded, FormatQuoteRounded } from "@mui/icons-material";
+import { useMediaQuery } from "@mui/material";
+import { useTheme } from "@mui/material/styles";
 
 const cx = classNames.bind(styles);
 
@@ -54,7 +54,7 @@ function ProductItem({
     productSold,
 }) {
     const theme = useTheme();
-    const isSmall = useMediaQuery(theme.breakpoints.down("sm"));
+    const isSmall = useMediaQuery(theme.breakpoints.down('md'));
 
     const formatCurrency = (price) => {
         return new Intl.NumberFormat("vi-VN", {

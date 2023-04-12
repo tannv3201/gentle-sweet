@@ -2,7 +2,7 @@ import React from "react";
 import { NavLink } from "react-router-dom";
 import styles from "./NavbarDesktop.module.scss";
 import classNames from "classnames/bind";
-import { ExpandMoreRounded } from "@material-ui/icons";
+import { ExpandMoreRounded } from "@mui/icons-material";
 
 const cx = classNames.bind(styles);
 
@@ -22,6 +22,7 @@ function MenuItem({ title, to, isDropDown, menuDropDown, ...props }) {
                         : cx("menu-item-wrapper")
                 }
                 to={to}
+                title={title}
             >
                 {({ isActive }) => (
                     <div className={cx("menu-item")}>

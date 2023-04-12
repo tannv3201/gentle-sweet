@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import styles from "./MenuDropDown.module.scss";
 import classNames from "classnames/bind";
-import { ArrowDropDown, CloseRounded } from "@material-ui/icons";
+import { ArrowDropDown, CloseRounded } from "@mui/icons-material";
 const cx = classNames.bind(styles);
 
 function MenuDropDown({ title, menuItem1, menuItem2, menuItem3 }) {

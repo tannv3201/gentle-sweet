@@ -5,7 +5,7 @@ import classNames from "classnames/bind";
 import styles from "./Breadcrumb.module.scss";
 
 import { NavLink, useLocation } from "react-router-dom";
-import { HomeRounded, NavigateNextRounded } from "@material-ui/icons";
+import { HomeRounded, NavigateNextRounded } from "@mui/icons-material";
 import { MenuList } from "../../components/Navbar/navigation";
 
 const cx = classNames.bind(styles);

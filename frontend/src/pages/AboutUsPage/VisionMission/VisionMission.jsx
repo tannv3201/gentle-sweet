@@ -1,16 +1,16 @@
 import React from "react";
 import classNames from "classnames/bind";
 import styles from "./VisionMission.module.scss";
-import { Grid } from "@material-ui/core";
+import { Grid } from "@mui/material";
 import images from "../../../assets/images";
-import { useMediaQuery } from "@material-ui/core";
-import { useTheme } from "@material-ui/core/styles";
+import { useMediaQuery } from "@mui/material";
+import { useTheme } from "@mui/material/styles";
 
 const cx = classNames.bind(styles);
 
 function VisionMission() {
     const theme = useTheme();
-    const isSmall = useMediaQuery(theme.breakpoints.down("sm"));
+    const isSmall = useMediaQuery(theme.breakpoints.down("md"));
     return (
         <div className={cx("wrapper")}>
             <div className={cx("inner")}>
@@ -31,7 +31,10 @@ function VisionMission() {
                         </div>
                     </Grid>
                 </Grid>
-                <Grid container direction={isSmall ? "column-reverse" : null}>
+                <Grid
+                    container
+                    direction={isSmall ? "column-reverse" : undefined}
+                >
                     <Grid item lg={6} md={6} sm={12} xs={12}>
                         <div className={cx("mission-img")}>
                             <img src={images.mission_img} alt="" />

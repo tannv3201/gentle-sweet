@@ -2,7 +2,7 @@ import React from "react";
 import styles from "./Collection.module.scss";
 import Slider from "react-slick";
 import classNames from "classnames/bind";
-import { Grid } from "@material-ui/core";
+import { Grid } from "@mui/material";
 
 const cx = classNames.bind(styles);
 

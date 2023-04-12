@@ -1,12 +1,12 @@
 import React, { useState } from "react";
 import classNames from "classnames/bind";
 import styles from "./Strengths.module.scss";
-import { Grid } from "@material-ui/core";
+import { Grid } from "@mui/material";
 import images from "../../../assets/images";
-import { FavoriteRounded, CheckRounded } from "@material-ui/icons";
+import { FavoriteRounded, CheckRounded } from "@mui/icons-material";
 import ModalImageGallery from "../../../components/ModalImageGallery/ModalImageGallery";
-import { useMediaQuery } from "@material-ui/core";
-import { useTheme } from "@material-ui/core/styles";
+import { useMediaQuery } from "@mui/material";
+import { useTheme } from "@mui/material/styles";
 
 const cx = classNames.bind(styles);
 const imgList = [
@@ -50,8 +50,8 @@ const subTitleList = [
 ];
 function Strengths() {
     const theme = useTheme();
-    const isMedium = useMediaQuery(theme.breakpoints.down("md"));
-    const isSmall = useMediaQuery(theme.breakpoints.down("sm"));
+    const isMedium = useMediaQuery(theme.breakpoints.down('lg'));
+    const isSmall = useMediaQuery(theme.breakpoints.down('md'));
 
     const [currentImage, setCurrentImage] = useState(0);
     const [isModalOpen, setIsModalOpen] = useState(false);

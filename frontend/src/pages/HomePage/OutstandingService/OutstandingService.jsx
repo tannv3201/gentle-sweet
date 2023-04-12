@@ -1,8 +1,8 @@
 import React from "react";
 import styles from "./OutstandingService.module.scss";
 import classNames from "classnames/bind";
-import { Grid } from "@material-ui/core";
-import { ArrowForwardRounded, FormatQuoteRounded } from "@material-ui/icons";
+import { Grid } from "@mui/material";
+import { ArrowForwardRounded, FormatQuoteRounded } from "@mui/icons-material";
 import images from "../../../assets/images";
 const cx = classNames.bind(styles);
 

@@ -2,14 +2,14 @@ import React from "react";
 import MenuItem from "./MenuItem";
 import styles from "./NavbarDesktop.module.scss";
 import classNames from "classnames/bind";
-import { Grid, IconButton } from "@material-ui/core";
+import { Grid, IconButton } from "@mui/material";
 import images from "../../../assets/images";
 import { NavLink } from "react-router-dom";
 import {
     PersonRounded,
     SearchRounded,
     ShoppingCartRounded,
-} from "@material-ui/icons";
+} from "@mui/icons-material";
 
 import { MenuList } from "../navigation";
 
@@ -57,6 +57,9 @@ function NavbarDesktop() {
                                                     >
                                                         <Grid item xs={12}>
                                                             <NavLink
+                                                                title={
+                                                                    navbarParent?.title
+                                                                }
                                                                 className={
                                                                     navbarParent?.children
                                                                         ? cx(
@@ -132,13 +135,13 @@ function NavbarDesktop() {
                 </Grid>
                 <Grid item lg={3} md={2} sm={3}>
                     <div className={cx("action-group")}>
-                        <IconButton title="Tìm kiếm">
+                        <IconButton title="Tìm kiếm" size="large">
                             <SearchRounded />
                         </IconButton>
-                        <IconButton title="Giỏ hàng">
+                        <IconButton title="Giỏ hàng" size="large">
                             <ShoppingCartRounded />
                         </IconButton>
-                        <IconButton title="Đăng nhập">
+                        <IconButton title="Đăng nhập" size="large">
                             <PersonRounded />
                         </IconButton>
                     </div>

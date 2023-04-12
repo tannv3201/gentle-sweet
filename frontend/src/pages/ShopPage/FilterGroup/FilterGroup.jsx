@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import classNames from "classnames/bind";
 import styles from "./FilterGroup.module.scss";
-import { FilterListRounded } from "@material-ui/icons";
-import { Chip, Grid } from "@material-ui/core";
+import { FilterListRounded } from "@mui/icons-material";
+import { Chip, Grid } from "@mui/material";
 import FilterPrice from "./FilterPrice/FilterPrice";
 import FilterSize from "./FilterSize/FilterSize";
 import FilterColor from "./FilterColor/FilterColor";

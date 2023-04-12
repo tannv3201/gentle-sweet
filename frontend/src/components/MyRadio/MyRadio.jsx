@@ -1,5 +1,5 @@
 import React from "react";
-import { Checkbox, Radio } from "@material-ui/core";
+import { Radio } from "@mui/material";
 
 function MyRadio({ id, name, label, ...props }) {
     return (

@@ -3,7 +3,7 @@
 import React, { useCallback, useState } from "react";
 import styles from "./NavbarMobile.module.scss";
 import classNames from "classnames/bind";
-import { Drawer, Grid, IconButton } from "@material-ui/core";
+import { Drawer, Grid, IconButton } from "@mui/material";
 import images from "../../../assets/images";
 import {
     CloseRounded,
@@ -13,7 +13,7 @@ import {
     PhoneInTalkRounded,
     ReorderRounded,
     SearchRounded,
-} from "@material-ui/icons";
+} from "@mui/icons-material";
 import MyTextField from "../../MyTextField/MyTextField";
 
 function NavbarMobile() {
@@ -137,7 +137,7 @@ function NavbarMobile() {
                     <IconButton
                         className={cx("navbar-mobile-button")}
                         onClick={toggleDrawer}
-                    >
+                        size="large">
                         <ReorderRounded fontSize="large" />
                     </IconButton>
                     <div className={cx("navbar-mobile-content")}>
@@ -156,17 +156,14 @@ function NavbarMobile() {
                             <a href="/" className={cx("navbar-logo")}>
                                 <img src={images.logo} alt="" />
                             </a>
-                            <IconButton
-                                className={cx("navbar-button")}
-                                onClick={toggleDrawer}
-                            >
+                            <IconButton className={cx("navbar-button")} onClick={toggleDrawer} size="large">
                                 <CloseRounded fontSize="large" />
                             </IconButton>
                         </div>
                         <div className={cx("navbar-body")}>
                             <div className={cx("navbar-search")}>
                                 <MyTextField roundedBorder />
-                                <IconButton>
+                                <IconButton size="large">
                                     <SearchRounded
                                         className={cx("search-icon")}
                                     />
@@ -191,7 +188,7 @@ function NavbarMobile() {
                                                     onClick={() =>
                                                         handleMenuClick(index)
                                                     }
-                                                >
+                                                    size="large">
                                                     <ExpandMore
                                                         className={
                                                             menu.isOpen

@@ -1,9 +1,9 @@
 import React from "react";
-import IconButton from "@material-ui/core/IconButton";
+import IconButton from "@mui/material/IconButton";
 
-import TextField from "@material-ui/core/TextField";
+import TextField from "@mui/material/TextField";
 
-import { withStyles } from "@material-ui/core/styles";
+import withStyles from '@mui/styles/withStyles';
 
 const RoundedBorderTextField = withStyles({
     root: {

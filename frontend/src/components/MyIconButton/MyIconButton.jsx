@@ -1,12 +1,10 @@
 import React from "react";
-import IconButton from "@material-ui/core/IconButton";
+import IconButton from "@mui/material/IconButton";
 
 function MyIconButton({ children, size, ...props }) {
-    return (
-        <>
-            <IconButton {...props}>{children}</IconButton>
-        </>
-    );
+    return <>
+        <IconButton {...props} size="large">{children}</IconButton>
+    </>;
 }
 
 export default MyIconButton;

@@ -12,13 +12,13 @@ import Footer from "../components/Footer/Footer";
 import ScrollBackToTop from "../components/ScrollBackToTop";
 import Service from "./ServicePage/Service/Service";
 
-import { useMediaQuery } from "@material-ui/core";
-import { useTheme } from "@material-ui/core/styles";
+import { useMediaQuery } from "@mui/material";
+import { useTheme } from "@mui/material/styles";
 import Breadcrumb from "../components/Breadcrumb/Breadcrumb";
 function App() {
     const theme = useTheme();
-    const isMedium = useMediaQuery(theme.breakpoints.down("md"));
-    const isSmall = useMediaQuery(theme.breakpoints.down("sm"));
+    const isMedium = useMediaQuery(theme.breakpoints.down('lg'));
+    const isSmall = useMediaQuery(theme.breakpoints.down('md'));
     return (
         <div>
             <Router>

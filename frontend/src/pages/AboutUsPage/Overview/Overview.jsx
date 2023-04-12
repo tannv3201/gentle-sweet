@@ -1,12 +1,12 @@
 import React from "react";
 import classNames from "classnames/bind";
 import styles from "./Overview.module.scss";
-import { Grid } from "@material-ui/core";
+import { Grid } from "@mui/material";
 import {
     HistoryRounded,
     ApartmentRounded,
     BusinessCenterRounded,
-} from "@material-ui/icons";
+} from "@mui/icons-material";
 const cx = classNames.bind(styles);
 
 function Overview() {

@@ -1,5 +1,5 @@
-import { withStyles } from "@material-ui/core/styles";
-import Tab from "@material-ui/core/Tab";
+import withStyles from "@mui/styles/withStyles";
+import Tab from "@mui/material/Tab";
 
 const TabInWhite = withStyles((theme) => ({
     root: {
@@ -10,7 +10,7 @@ const TabInWhite = withStyles((theme) => ({
         backgroundColor: "transparent",
         fontSize: "1.6rem",
         fontFamily: "var(--font-family)",
-        marginRight: theme.spacing(1),
+        marginRight: "8px",
         "&:focus": {
             // opacity: 1,
         },
@@ -18,6 +18,7 @@ const TabInWhite = withStyles((theme) => ({
         ".MuiTab-textColorPrimary.Mui-selected": {
             color: "#fff",
             background: "var(--primary)",
+            borderRadius: "50px",
         },
         ".MuiPaper-elevation": {
             boxShadow: 0,
@@ -34,7 +35,7 @@ const TabInPrimary = withStyles((theme) => ({
         backgroundColor: "transparent",
         fontSize: "1.6rem",
         fontFamily: "var(--font-family)",
-        marginRight: theme.spacing(1),
+        marginRight: "8px",
         "&:focus": {
             // opacity: 1,
         },

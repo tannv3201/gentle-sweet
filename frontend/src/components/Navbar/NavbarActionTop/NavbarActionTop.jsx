@@ -8,7 +8,7 @@ import {
     FavoriteRounded,
     PersonRounded,
     ShoppingCartRounded,
-} from "@material-ui/icons";
+} from "@mui/icons-material";
 
 const cx = classNames.bind(styles);
 

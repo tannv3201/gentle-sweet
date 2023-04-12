@@ -2,7 +2,7 @@ import React from "react";
 import classNames from "classnames/bind";
 import styles from "./SalonSystemPage.module.scss";
 import images from "../../assets/images";
-import { Grid } from "@material-ui/core";
+import { Grid } from "@mui/material";
 import SalonSystem from "../../components/SalonSystem/SalonSystem";
 const cx = classNames.bind(styles);
 

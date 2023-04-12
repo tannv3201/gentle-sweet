@@ -1,9 +1,9 @@
 import React, { useState } from "react";
 import classNames from "classnames/bind";
 import styles from "./PhotoRealistic.module.scss";
-import { Grid } from "@material-ui/core";
+import { Grid } from "@mui/material";
 import images from "../../../assets/images";
-import AppBar from "@material-ui/core/AppBar";
+import AppBar from "@mui/material/AppBar";
 
 import TabPanel from "../../../components/TabPanel/TabPanel";
 import MyTabs from "../../../components/TabPanel/Tabs";
