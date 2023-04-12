@@ -1,10 +1,10 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
 
 import React, { useCallback, useState } from "react";
-import styles from "./Navbar.module.scss";
+import styles from "./NavbarMobile.module.scss";
 import classNames from "classnames/bind";
 import { Drawer, Grid, IconButton } from "@material-ui/core";
-import images from "../../assets/images";
+import images from "../../../assets/images";
 import {
     CloseRounded,
     DateRangeRounded,
@@ -14,7 +14,7 @@ import {
     ReorderRounded,
     SearchRounded,
 } from "@material-ui/icons";
-import MyTextField from "../MyTextField/MyTextField";
+import MyTextField from "../../MyTextField/MyTextField";
 
 function NavbarMobile() {
     const cx = classNames.bind(styles);
@@ -52,7 +52,7 @@ function NavbarMobile() {
                 { name: "Phục hồi tóc", href: "#" },
             ],
             isOpen: false,
-            href: "#",
+            href: "/cham-soc-toc",
         },
         {
             name: "Dịch vụ nails",

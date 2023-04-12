@@ -3,20 +3,7 @@ import IconButton from "@material-ui/core/IconButton";
 
 import TextField from "@material-ui/core/TextField";
 
-import {
-    ReceiptRounded,
-    LocationOnRounded,
-    FavoriteRounded,
-    PersonRounded,
-    ShoppingCartRounded,
-} from "@material-ui/icons";
-import {
-    alpha,
-    ThemeProvider,
-    withStyles,
-    makeStyles,
-    createTheme,
-} from "@material-ui/core/styles";
+import { withStyles } from "@material-ui/core/styles";
 
 const RoundedBorderTextField = withStyles({
     root: {
@@ -132,6 +119,8 @@ function MyTextField({
     roundedBorder,
     ...props
 }) {
+    const nodeRef = React.useRef(null);
+
     return bgLight ? (
         <CustomTextField
             {...props}

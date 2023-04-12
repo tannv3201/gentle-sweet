@@ -3,13 +3,15 @@ import "../assets/scss/Global.scss";
 import HomePage from "./HomePage/HomePage";
 import ShopPage from "./ShopPage/ShopPage";
 import Navbar from "../components/Navbar/Navbar";
-import ServicePage from "./ServicePage/ServicePage";
+import ServiceOverviewIndex from "./ServicePage/Overview/ServiceOverviewIndex";
 import SaleOffPage from "./SaleOffPage/SaleOffPage";
 import AboutUsPage from "./AboutUsPage/AboutUsPage";
 import SalonSystemPage from "./SalonSystemPage/SalonSystemPage";
 import CartFixedRight from "../components/CartFixedRight/CartFixedRight";
 import Footer from "../components/Footer/Footer";
 import ScrollBackToTop from "../components/ScrollBackToTop";
+import Service from "./ServicePage/Service/Service";
+
 import { useMediaQuery } from "@material-ui/core";
 import { useTheme } from "@material-ui/core/styles";
 import Breadcrumb from "../components/Breadcrumb/Breadcrumb";
@@ -34,7 +36,11 @@ function App() {
                         <Routes>
                             <Route path="/" element={<HomePage />} />
                             <Route path="/product/all" element={<ShopPage />} />
-                            <Route path="/dich-vu" element={<ServicePage />} />
+                            <Route
+                                path="/dich-vu"
+                                element={<ServiceOverviewIndex />}
+                            />
+                            <Route path="/cham-soc-toc" element={<Service />} />
                             <Route path="/sale-off" element={<SaleOffPage />} />
                             <Route
                                 path="/he-thong-chi-nhanh"

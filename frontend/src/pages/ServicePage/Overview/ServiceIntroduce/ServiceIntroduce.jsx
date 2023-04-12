@@ -1,12 +1,12 @@
 import React from "react";
 import classNames from "classnames/bind";
-import styles from "./ServiceOverview.module.scss";
-import images from "../../../assets/images";
+import styles from "./ServiceIntroduce.module.scss";
+import images from "../../../../assets/images";
 import { Grid } from "@material-ui/core";
 
 const cx = classNames.bind(styles);
 
-function ServiceOverview() {
+function ServiceIntroduce() {
     return (
         <Grid container spacing={2} className={cx("overview-wrapper")}>
             <Grid item xs={12} className={cx("title")}>
@@ -30,4 +30,4 @@ function ServiceOverview() {
     );
 }
 
-export default ServiceOverview;
+export default ServiceIntroduce;

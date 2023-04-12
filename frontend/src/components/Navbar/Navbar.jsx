@@ -6,8 +6,8 @@ import { useMediaQuery } from "@material-ui/core";
 import { useTheme } from "@material-ui/core/styles";
 
 import InfoSaleSlider from "./InfoSaleSlider/InforSaleSlider";
-import NavbarDesktop from "./NavbarDesktop";
-import NavbarMobile from "./NavbarMobile";
+import NavbarDesktop from "./NavbarDesktop/NavbarDesktop";
+import NavbarMobile from "./NavbarMobile/NavbarMobile";
 
 const cx = classNames.bind(styles);
 

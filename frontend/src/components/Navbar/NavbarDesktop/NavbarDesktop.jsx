@@ -1,9 +1,9 @@
 import React from "react";
 import MenuItem from "./MenuItem";
-import styles from "./Navbar.module.scss";
+import styles from "./NavbarDesktop.module.scss";
 import classNames from "classnames/bind";
 import { Grid, IconButton } from "@material-ui/core";
-import images from "../../assets/images";
+import images from "../../../assets/images";
 import { NavLink } from "react-router-dom";
 import {
     PersonRounded,
@@ -11,73 +11,7 @@ import {
     ShoppingCartRounded,
 } from "@material-ui/icons";
 
-const navbarMobileList = [
-    {
-        name: "Trang chủ",
-        isOpen: false,
-        href: "/",
-    },
-    {
-        name: "Giới thiệu",
-        children: [
-            { name: "Gentle Beauty", href: "/ve-chung-toi" },
-            {
-                name: "Hệ thống chi nhánh",
-                href: "/he-thong-chi-nhanh",
-            },
-        ],
-        isOpen: false,
-        href: "",
-    },
-    {
-        name: "Dịch vụ",
-        children: [
-            {
-                name: "Dịch vụ tóc",
-                children: [
-                    { name: "Cắt tóc", href: "#" },
-                    { name: "Uốn tóc", href: "#" },
-                    { name: "Nhuộm tóc", href: "#" },
-                    { name: "Duỗi tóc", href: "#" },
-                    { name: "Ép tóc", href: "#" },
-                    { name: "Trị rụng tóc", href: "#" },
-                    { name: "Gội đầu massage", href: "#" },
-                    { name: "Phục hồi tóc", href: "#" },
-                ],
-                isOpen: false,
-                href: "#",
-            },
-            {
-                name: "Dịch vụ nails",
-                children: [
-                    { name: "Sơn ombre", href: "#" },
-                    { name: "Sơn french", href: "#" },
-                    { name: "Nhúng bột nails", href: "#" },
-                    // { name: "Skin tay chân", href: "#" },
-                    { name: "Vẽ móng", href: "#" },
-                    { name: "Massage tay chân", href: "#" },
-                    { name: "Chà hồng gót chân", href: "#" },
-                    { name: "Vẽ móng", href: "#" },
-                    { name: "Massage tay chân", href: "#" },
-                    // { name: "Chà hồng gót chân", href: "#" },
-                ],
-                isOpen: false,
-                href: "#",
-            },
-        ],
-        href: "/dich-vu",
-    },
-    {
-        name: "Tin tức",
-        isOpen: false,
-        href: "#",
-    },
-    {
-        name: "Store",
-        isOpen: false,
-        href: "/dich-vu",
-    },
-];
+import { MenuList } from "../navigation";
 
 function NavbarDesktop() {
     const cx = classNames.bind(styles);
@@ -98,10 +32,10 @@ function NavbarDesktop() {
                 </Grid>
                 <Grid item lg={7} md={7}>
                     <div className={cx("menu-list")}>
-                        {navbarMobileList?.map((navbar, index) => (
+                        {MenuList?.map((navbar, index) => (
                             <MenuItem
                                 key={index}
-                                title={navbar?.name}
+                                title={navbar?.title}
                                 to={navbar?.href}
                                 menuDropDown={
                                     navbar?.children && (
@@ -138,7 +72,7 @@ function NavbarDesktop() {
                                                                 }
                                                             >
                                                                 {
-                                                                    navbarParent?.name
+                                                                    navbarParent?.title
                                                                 }
                                                             </NavLink>
                                                         </Grid>
@@ -178,7 +112,7 @@ function NavbarDesktop() {
                                                                                 }
                                                                             >
                                                                                 {
-                                                                                    child?.name
+                                                                                    child?.title
                                                                                 }
                                                                             </NavLink>
                                                                         </Grid>

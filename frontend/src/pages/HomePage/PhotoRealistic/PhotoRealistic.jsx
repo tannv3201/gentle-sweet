@@ -90,7 +90,6 @@ const photoList = [
 function PhotoRealistic() {
     const [value, setValue] = React.useState(0);
     let dragging = false;
-    console.log(dragging);
 
     const handleChange = (event, newValue) => {
         setValue(newValue);

@@ -1,0 +1,190 @@
+.content-inner-navbar {
+    margin: auto;
+    width: var(--default-layout-width);
+    padding: 8px 0;
+    position: relative;
+    // Menu list in navbar
+    .menu-list {
+        height: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: space-around;
+        // Border between item
+        .border-between-item {
+            border-right: #e3e2e2 2px solid;
+            height: 24px;
+        }
+    }
+
+    // Search Input
+    .action-group {
+        height: 100%;
+        width: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: flex-end;
+    }
+}
+
+.logo-wrapper {
+    // padding: 8px 0;
+    .logo {
+        width: auto;
+        height: 56px;
+    }
+}
+
+// Component MenuItem
+.menu-item-wrapper {
+    // padding: 0 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    transition: all 0.16s linear;
+
+    .menu-item {
+        position: relative;
+    }
+
+    .dropdown-icon {
+        transform: rotate(0);
+        transition: all 0.16s linear;
+    }
+    &:hover {
+        .title {
+            color: var(--primary);
+        }
+
+        .dropdown-icon {
+            transition: all 0.16s linear;
+            transform: rotate(-180deg);
+        }
+    }
+
+    .title {
+        display: flex;
+        align-items: center;
+        // text-transform: uppercase;
+        font-size: 1.8rem;
+        font-weight: var(--fw-semi-bold);
+        transition: all 0.16s linear;
+    }
+}
+
+.navlink-wrapper {
+    // position: relative;
+    height: 100%;
+    width: 100%;
+    .menu-item-wrapper {
+        position: relative;
+    }
+    &.isDropDown:hover {
+        .menu-item-wrapper {
+            &.isDropDown::before {
+                position: absolute;
+                content: "";
+                border-width: 12px 12px;
+                border-style: solid;
+                border-color: transparent transparent var(--primary) transparent;
+                bottom: -12px;
+                left: 50%;
+                transform: translateX(-50%);
+            }
+        }
+    }
+    &.isDropDown:hover::after {
+        position: absolute;
+        content: "";
+        width: 100%;
+        left: 50%;
+        height: 8px;
+        transform: translateX(-50%);
+    }
+    &.isDropDown:hover {
+        .menu-dropdown {
+            display: block;
+        }
+        .title {
+            color: var(--primary);
+        }
+
+        .dropdown-icon {
+            transition: all 0.16s linear;
+            transform: rotate(-180deg);
+        }
+    }
+}
+
+// Menu dropdown
+
+.menu-dropdown {
+    z-index: 1;
+    display: none;
+    padding: 12px;
+    background-color: var(--white);
+    border: 1px solid var(--primary);
+    border-radius: 6px;
+    position: absolute;
+    top: 100%;
+    &:hover {
+        .title {
+            color: var(--primary);
+        }
+
+        .dropdown-icon {
+            transition: all 0.16s linear;
+            transform: rotate(-180deg);
+        }
+    }
+}
+
+.menu-dropdown-item-container {
+    &:hover {
+        .menu-parent-item {
+            color: var(--primary);
+            background-color: var(--primary-200);
+        }
+
+        .menu-parent-item.hasChild {
+            color: var(--white);
+            background-color: var(--primary);
+        }
+    }
+
+    .menu-parent-item.hasChild {
+        font-weight: var(--fw-bold);
+    }
+}
+
+.menu-parent-item {
+    display: block;
+    padding: 8px 12px;
+    border-radius: 6px;
+    transition: all 0.2s linear;
+    font-weight: var(--fw-medium);
+    &.hasChild {
+        margin-bottom: 4px;
+    }
+
+    &:hover {
+        color: var(--primary);
+        background-color: var(--primary-200);
+    }
+}
+
+.menu-children-list {
+    padding-left: 12px;
+    .menu-children-item {
+        display: block;
+        padding: 8px 12px;
+        border-radius: 6px;
+        transition: all 0.2s linear;
+        font-weight: var(--fw-medium);
+
+        &:hover {
+            background-color: var(--primary-200);
+            color: var(--primary);
+        }
+    }
+}

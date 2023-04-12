@@ -1,10 +1,8 @@
 import React from "react";
 import { NavLink } from "react-router-dom";
-import styles from "./Navbar.module.scss";
+import styles from "./NavbarDesktop.module.scss";
 import classNames from "classnames/bind";
-import images from "../../assets/images";
 import { ExpandMoreRounded } from "@material-ui/icons";
-import { Grid } from "@material-ui/core";
 
 const cx = classNames.bind(styles);
 

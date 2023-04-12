@@ -6,14 +6,13 @@ import styles from "./Breadcrumb.module.scss";
 
 import { NavLink, useLocation } from "react-router-dom";
 import { HomeRounded, NavigateNextRounded } from "@material-ui/icons";
-import { navigation } from "./navigation";
+import { MenuList } from "../../components/Navbar/navigation";
 
 const cx = classNames.bind(styles);
 
 function Breadcrumb() {
     const location = useLocation();
     const [pathnames, setPathnames] = useState([]);
-    const [titles, setTitles] = useState([]);
 
     useEffect(() => {
         const { pathname } = location;
@@ -22,16 +21,28 @@ function Breadcrumb() {
 
         // Tìm title tương ứng với từng pathname
         const newTitles = newPaths.map((path) => {
-            const item = navigation?.find(
-                (data) => data.pathName === `/${path}`
-            );
+            const item = MenuList?.find((data) => data.href === `/${path}`);
             return item ? item.title : "";
         });
-        setTitles(newTitles);
     }, [location]);
 
-    function getTitle(index) {
-        return titles[index];
+    function flattenMenuList(menuList) {
+        let result = [];
+        for (let i = 0; i < menuList.length; i++) {
+            const item = menuList[i];
+            result.push(item);
+            if (item.children && Array.isArray(item.children)) {
+                result = result.concat(flattenMenuList(item.children));
+            }
+        }
+        return result;
+    }
+
+    function getTitle() {
+        const menuList = flattenMenuList(MenuList);
+        const newPathName = pathnames.join("");
+        const menu = menuList?.find((menu) => menu.href === `/${newPathName}`);
+        return menu?.title;
     }
 
     return (
@@ -53,7 +64,7 @@ function Breadcrumb() {
                             .slice(0, index + 1)
                             .join("/")}`;
                         const isLast = index === pathnames.length - 1;
-                        const title = getTitle(index);
+                        const title = getTitle();
                         return isLast ? (
                             <span
                                 className={cx("breadcrumb-item", "current")}
