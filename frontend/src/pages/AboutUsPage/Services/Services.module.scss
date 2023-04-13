@@ -1,4 +1,9 @@
 @media only screen and (max-width: 600px) {
+    .service-item {
+        .service-item-img {
+            height: 240px !important;
+        }
+    }
     .services-title {
         &::before {
             content: none !important;
