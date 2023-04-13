@@ -67,31 +67,31 @@ function OutstandingService() {
                             title="Vệ sinh và chăm sóc móng"
                         />
                     </Grid>
-                    <Grid item lg={4} md={6} xs={12}>
+                    <Grid item lg={4} md={6} sm={12} xs={12}>
                         <ServiceItem
                             imageSrc={images.service_2}
                             title="Thiết kế & vẽ móng"
                         />
                     </Grid>
-                    <Grid item lg={4} md={6} xs={12}>
+                    <Grid item lg={4} md={6} sm={12} xs={12}>
                         <ServiceItem
                             imageSrc={images.hair_care_service}
                             title="Phục hồi tóc"
                         />
                     </Grid>
-                    <Grid item lg={4} md={6} xs={12}>
+                    <Grid item lg={4} md={6} sm={12} xs={12}>
                         <ServiceItem
                             imageSrc={images.hair_design_service}
                             title="Thiết kế & tạo mẫu tóc"
                         />
                     </Grid>
-                    <Grid item lg={4} md={6} xs={12}>
+                    <Grid item lg={4} md={6} sm={12} xs={12}>
                         <ServiceItem
                             imageSrc={images.hair_chemistry_service}
                             title="Các dịch vụ hóa chất tóc"
                         />
                     </Grid>
-                    <Grid item lg={4} md={6} xs={12}>
+                    <Grid item lg={4} md={6} sm={12} xs={12}>
                         <ServiceItem
                             imageSrc={images.other_service}
                             title="Dịch vụ khác"
