@@ -17,8 +17,8 @@ import { useTheme } from "@mui/material/styles";
 import Breadcrumb from "../components/Breadcrumb/Breadcrumb";
 function App() {
     const theme = useTheme();
-    const isMedium = useMediaQuery(theme.breakpoints.down('lg'));
-    const isSmall = useMediaQuery(theme.breakpoints.down('md'));
+    const isLarge = useMediaQuery(theme.breakpoints.down("lg"));
+    const isMedium = useMediaQuery(theme.breakpoints.down("md"));
     return (
         <div>
             <Router>
@@ -26,9 +26,9 @@ function App() {
                     <Navbar />
                     <div
                         style={
-                            isSmall
-                                ? { paddingTop: "54px" }
-                                : { paddingTop: "109px" }
+                            isMedium
+                                ? { marginTop: "54px" }
+                                : { marginTop: "110px" }
                         }
                     >
                         {!isMedium && <CartFixedRight />}

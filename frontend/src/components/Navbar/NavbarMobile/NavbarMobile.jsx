@@ -53,13 +53,14 @@ function NavbarMobile() {
     };
 
     return (
-        <div>
+        <div className={cx("wrapper")}>
             <React.Fragment>
                 <div className={cx("navbar-mobile-wrapper")}>
                     <IconButton
                         className={cx("navbar-mobile-button")}
                         onClick={toggleDrawer}
-                        size="large">
+                        size="large"
+                    >
                         <ReorderRounded fontSize="large" />
                     </IconButton>
                     <div className={cx("navbar-mobile-content")}>
@@ -78,7 +79,11 @@ function NavbarMobile() {
                             <a href="/" className={cx("navbar-logo")}>
                                 <img src={images.logo} alt="" />
                             </a>
-                            <IconButton className={cx("navbar-button")} onClick={toggleDrawer} size="large">
+                            <IconButton
+                                className={cx("navbar-button")}
+                                onClick={toggleDrawer}
+                                size="large"
+                            >
                                 <CloseRounded fontSize="large" />
                             </IconButton>
                         </div>
@@ -121,7 +126,8 @@ function NavbarMobile() {
                                                                 item
                                                             )
                                                         }
-                                                        size="large">
+                                                        size="large"
+                                                    >
                                                         <ExpandMore
                                                             className={
                                                                 item.title ===
@@ -190,7 +196,8 @@ function NavbarMobile() {
                                                                                 subItem
                                                                             )
                                                                         }
-                                                                        size="large">
+                                                                        size="large"
+                                                                    >
                                                                         <ExpandMore
                                                                             className={
                                                                                 selectedSubItem.includes(

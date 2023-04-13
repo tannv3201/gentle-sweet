@@ -5,6 +5,7 @@ import useScrollTrigger from "@mui/material/useScrollTrigger";
 import Fab from "@mui/material/Fab";
 import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
 import Zoom from "@mui/material/Zoom";
+import { LightTooltip } from "../MyTooltip/MyTooltip";
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -66,14 +67,23 @@ export default function BackToTop({ children, ...props }) {
             <div id="back-to-top-anchor" />
             {children}
             <ScrollTop {...props}>
-                <Fab
-                    color="secondary"
-                    size="small"
-                    aria-label="scroll back to top"
-                    style={{ backgroundColor: "var(--primary)" }}
+                <LightTooltip
+                    title="Về đầu trang"
+                    placement="left"
+                    style={{
+                        fontSize: "1.6rem !important",
+                        fontFamily: "var(--font-family) !important",
+                    }}
                 >
-                    <KeyboardArrowUpIcon />
-                </Fab>
+                    <Fab
+                        color="secondary"
+                        size="small"
+                        aria-label="scroll back to top"
+                        style={{ backgroundColor: "var(--primary)" }}
+                    >
+                        <KeyboardArrowUpIcon />
+                    </Fab>
+                </LightTooltip>
             </ScrollTop>
         </>
     );

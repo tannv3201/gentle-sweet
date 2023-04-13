@@ -7,10 +7,15 @@ import styles from "./Breadcrumb.module.scss";
 import { NavLink, useLocation } from "react-router-dom";
 import { HomeRounded, NavigateNextRounded } from "@mui/icons-material";
 import { MenuList } from "../../components/Navbar/navigation";
-
+import { useMediaQuery } from "@mui/material";
+import { useTheme } from "@mui/material/styles";
 const cx = classNames.bind(styles);
 
 function Breadcrumb() {
+    const theme = useTheme();
+    const isMedium = useMediaQuery(theme.breakpoints.down("md"));
+    const isSmall = useMediaQuery(theme.breakpoints.down("sm"));
+
     const location = useLocation();
     const [pathnames, setPathnames] = useState([]);
 
@@ -46,7 +51,10 @@ function Breadcrumb() {
     }
 
     return (
-        <div className={cx("wrapper")}>
+        <div
+            style={!isMedium ? { marginTop: "110px" } : { marginTop: "54px" }}
+            className={cx("wrapper")}
+        >
             {location.pathname === "/" ? null : (
                 <div className={cx("inner")}>
                     <span className={cx("breadcrumb-item")}>

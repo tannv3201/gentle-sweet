@@ -13,15 +13,15 @@ const cx = classNames.bind(styles);
 
 const Navbar = memo(() => {
     const theme = useTheme();
-    const isMedium = useMediaQuery(theme.breakpoints.down('xl'));
-    const isSmall = useMediaQuery(theme.breakpoints.down('lg'));
+    const isMedium = useMediaQuery(theme.breakpoints.down("md"));
+    const isSmall = useMediaQuery(theme.breakpoints.down("sm"));
 
     return (
         <div className={cx("wrapper")}>
             {/* <NavbarActionTop /> */}
             {!isMedium && <NavbarDesktop />}
             {isMedium && <NavbarMobile />}
-            {!isSmall && <InfoSaleSlider />}
+            {/* {!isSmall && <InfoSaleSlider />} */}
         </div>
     );
 });

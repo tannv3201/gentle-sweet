@@ -1,3 +1,13 @@
+.wrapper {
+    background-color: var(--white);
+    position: fixed;
+    left: 0;
+    right: 0;
+    top: 0;
+    z-index: 10;
+    box-shadow: var(--primary-box-shadow) 0px 2px 8px;
+}
+
 // Mobile & Tablet
 .navbar-mobile-wrapper {
     display: flex;

@@ -1,11 +1,19 @@
+@media only screen and (max-width: 600px) {
+    .service-link-img {
+        width: 100px !important;
+        height: 100px !important;
+    }
+}
+
 .wrapper {
     display: flex;
     justify-content: center;
+    position: relative;
 }
 
 .inner {
     width: calc(var(--default-layout-width) + 48px);
-    padding: 80px 24px;
+    padding: 32px 24px;
 }
 
 // -----------------------------------------------------------------------------------------------------------
@@ -57,14 +65,46 @@ p {
 
 // Article
 .article-category {
+    border: 1px solid var(--primary);
+    margin-top: 24px;
+    .article-category-title {
+        height: 40px !important;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 24px 12px;
+        background-color: var(--primary-200);
+        span {
+            display: block;
+            font-weight: var(--fw-medium);
+            font-size: 2rem;
+            color: var(--primary);
+        }
+    }
     .article-category-link {
-        border: 1px solid var(--primary);
-        padding: 12px 12px;
         list-style: none;
-        a {
-            // display: block;
-            &:hover {
-                text-decoration: underline;
+        height: 0;
+        transition: all 0.2s linear;
+        overflow: hidden;
+
+        &.isOpen {
+            height: 450px;
+            overflow: auto;
+            padding: 12px 12px;
+        }
+
+        li {
+            // height: 0;
+            // overflow: hidden;
+            transition: all 0.2s linear;
+            padding: 4px 8px 4px 0;
+
+            a {
+                transition: all 0.2s linear;
+                &:hover {
+                    text-decoration: underline;
+                    color: var(--primary);
+                }
             }
         }
     }
@@ -157,10 +197,15 @@ p {
 
 .service-list-link-wrapper {
     margin-top: 32px;
+
     .service-link-item {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
         .service-link-img {
-            width: 100%;
-            height: 193px;
+            width: 190px;
+            height: 190px;
             // overflow: hidden;
             img {
                 width: 100%;

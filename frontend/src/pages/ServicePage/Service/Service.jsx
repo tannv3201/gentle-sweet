@@ -5,6 +5,8 @@ import classNames from "classnames/bind";
 import images from "../../../assets/images";
 import { MenuList } from "../../../components/Navbar/navigation";
 
+import ArticleCategory from "../../../components/ArticleCategory/ArticleCategory";
+
 const cx = classNames.bind(styles);
 
 const services = {
@@ -159,7 +161,7 @@ const tips = {
 
 function Service() {
     const [hairServiceList, setHairServiceList] = useState([]);
-    const [heading, setHeading] = useState([]);
+
     const hairServicesFn = () => {
         const findService = MenuList.find((menu) => {
             return menu.title === "Dịch vụ";
@@ -171,63 +173,6 @@ function Service() {
         return hairSv?.children;
     };
 
-    // Tạo một ref để lưu trữ NodeList của các thẻ h2
-    const h2NodesRef = React.useRef(null);
-
-    // Sử dụng useEffect để lấy các thẻ h2 sau khi component đã được render
-    React.useEffect(() => {
-        // Lấy NodeList của các thẻ h2
-        const h2Nodes = document.querySelectorAll("h2");
-
-        // Lưu trữ NodeList vào trong ref
-        h2NodesRef.current = h2Nodes;
-    }, []);
-    // Hàm xử lý khi click vào thẻ a
-    const handleLinkClick = (id) => {
-        // Xử lý logic khi click vào thẻ a với id tương ứng
-        console.log(`Clicked on link with id: ${id}`);
-    };
-
-    // Render các thẻ a tương ứng với các thẻ h2
-    const renderLinks = () => {
-        if (h2NodesRef.current) {
-            // Tạo một biến đếm để đánh dấu các thẻ h2
-            let count = 0;
-            let margin = 0;
-
-            // Lặp qua các thẻ h2 và tạo các thẻ a tương ứng
-            return Array.from(h2NodesRef.current).map((h2Node, index) => {
-                const id = h2Node.id;
-                const textContent = h2Node.textContent;
-
-                // Kiểm tra nếu id của thẻ h2 chứa "heading-title"
-                // thì gán giá trị đầu tiên cho biến đếm, sau đó tăng giá trị lên 1
-                if (id.includes("heading-title")) {
-                    margin = 1;
-                    count++;
-                } else {
-                    margin = 4;
-                }
-
-                return (
-                    <li>
-                        <a
-                            key={id}
-                            href={`#${id}`}
-                            onClick={() => handleLinkClick(id)}
-                            style={{
-                                marginLeft: `${margin * 8}px`,
-                            }}
-                        >
-                            {id.includes("heading-title") ? `${count}. ` : ""}
-                            {textContent}
-                        </a>
-                    </li>
-                );
-            });
-        }
-        return null;
-    };
     useEffect(() => {
         // Thiết lập tiêu đề của trang
         document.title = "Dịch vụ làm tóc";
@@ -235,510 +180,562 @@ function Service() {
         setHairServiceList(hairServiceFnRun);
     }, []);
     return (
-        <div className={cx("wrapper")}>
-            <div className={cx("inner")}>
-                <Grid container spacing={3}>
-                    <Grid item lg={8} md={12} sm={12}>
-                        <div className={cx("col-8-left")}>
-                            <Grid container spacing={1}>
-                                <Grid item xs={12}>
-                                    <div
-                                        className={cx(
-                                            "introduce-service-wrapper"
-                                        )}
-                                    >
-                                        <Grid container spacing={1}>
-                                            <Grid item xs={12}>
-                                                <span
-                                                    className={cx(
-                                                        "introduce-service-title"
-                                                    )}
-                                                >
-                                                    <h1>
-                                                        Các dịch vụ chăm sóc tóc
-                                                        tại Gentle
-                                                    </h1>
-                                                </span>
-                                            </Grid>
-                                            <Grid item xs={12}>
-                                                <blockquote
-                                                    className={cx(
-                                                        "introduce-service-blockquote"
-                                                    )}
-                                                >
-                                                    Trong thời gian gần đây, các
-                                                    bạn trẻ và cả những cô chú
-                                                    trung niên ngày càng quan
-                                                    tâm nhiều hơn đến vấn đề
-                                                    chăm sóc mái tóc. Nguyên
-                                                    nhân là vì chất lượng cuộc
-                                                    sống được nâng cao dẫn đến
-                                                    nhu cầu làm đẹp và chăm sóc
-                                                    bản thân ngày càng tăng. Để
-                                                    đáp ứng tốt nhất nhu cầu của
-                                                    khách hàng, Zema Việt Nam đã
-                                                    phát triển những dịch vụ
-                                                    chăm sóc tóc chuyên nghiệp
-                                                    và toàn diện.
-                                                </blockquote>
-                                            </Grid>
-                                            <Grid item xs={12}>
-                                                <div
-                                                    className={cx(
-                                                        "service-img"
-                                                    )}
-                                                >
-                                                    <img
-                                                        src={images.service_1}
-                                                        alt=""
-                                                    />
-                                                </div>
-                                                <span
-                                                    className={cx(
-                                                        "caption-img"
-                                                    )}
-                                                >
-                                                    Chăm sóc tóc với Gentle
-                                                </span>
-                                            </Grid>
-                                            <Grid item xs={12}>
-                                                <div
-                                                    className={cx(
-                                                        "article-category"
-                                                    )}
-                                                >
-                                                    <ul
-                                                        id="article-category-link"
+        <>
+            <div className={cx("wrapper")}>
+                <div className={cx("inner")}>
+                    <Grid container spacing={3}>
+                        <Grid item lg={9} md={12} sm={12}>
+                            <div className={cx("col-8-left")}>
+                                <Grid container spacing={1}>
+                                    <Grid item xs={12}>
+                                        <div
+                                            className={cx(
+                                                "introduce-service-wrapper"
+                                            )}
+                                        >
+                                            <Grid container spacing={1}>
+                                                <Grid item xs={12}>
+                                                    <span
                                                         className={cx(
-                                                            "article-category-link"
+                                                            "introduce-service-title"
                                                         )}
                                                     >
-                                                        {renderLinks()}
-                                                    </ul>
-                                                </div>
+                                                        <h1>
+                                                            Các dịch vụ chăm sóc
+                                                            tóc tại Gentle
+                                                        </h1>
+                                                    </span>
+                                                </Grid>
+                                                <Grid item xs={12}>
+                                                    <blockquote
+                                                        className={cx(
+                                                            "introduce-service-blockquote"
+                                                        )}
+                                                    >
+                                                        Trong thời gian gần đây,
+                                                        các bạn trẻ và cả những
+                                                        cô chú trung niên ngày
+                                                        càng quan tâm nhiều hơn
+                                                        đến vấn đề chăm sóc mái
+                                                        tóc. Nguyên nhân là vì
+                                                        chất lượng cuộc sống
+                                                        được nâng cao dẫn đến
+                                                        nhu cầu làm đẹp và chăm
+                                                        sóc bản thân ngày càng
+                                                        tăng. Để đáp ứng tốt
+                                                        nhất nhu cầu của khách
+                                                        hàng, Zema Việt Nam đã
+                                                        phát triển những dịch vụ
+                                                        chăm sóc tóc chuyên
+                                                        nghiệp và toàn diện.
+                                                    </blockquote>
+                                                </Grid>
+                                                <Grid item xs={12}>
+                                                    <div
+                                                        className={cx(
+                                                            "service-img"
+                                                        )}
+                                                    >
+                                                        <img
+                                                            src={
+                                                                images.service_1
+                                                            }
+                                                            alt=""
+                                                        />
+                                                    </div>
+                                                    <span
+                                                        className={cx(
+                                                            "caption-img"
+                                                        )}
+                                                    >
+                                                        Chăm sóc tóc với Gentle
+                                                    </span>
+                                                </Grid>
+                                                <Grid item xs={12}>
+                                                    <ArticleCategory />
+                                                </Grid>
+                                                <Grid item xs={12}>
+                                                    <div
+                                                        className={cx(
+                                                            "service-reason"
+                                                        )}
+                                                    >
+                                                        <Grid
+                                                            container
+                                                            spacing={1}
+                                                        >
+                                                            <Grid item xs={12}>
+                                                                <span
+                                                                    className={cx(
+                                                                        "service-reason-title"
+                                                                    )}
+                                                                >
+                                                                    <h2 id="heading-title-1">
+                                                                        Vì sao
+                                                                        cần phải
+                                                                        chăm sóc
+                                                                        tóc
+                                                                        thường
+                                                                        xuyên?
+                                                                    </h2>
+                                                                </span>
+                                                            </Grid>
+                                                            <Grid item xs={12}>
+                                                                <div
+                                                                    className={cx(
+                                                                        "service-reason-content"
+                                                                    )}
+                                                                >
+                                                                    <p>
+                                                                        Cuộc
+                                                                        sống
+                                                                        ngày
+                                                                        càng bận
+                                                                        rộn và
+                                                                        môi
+                                                                        trường
+                                                                        ngày
+                                                                        càng ô
+                                                                        nhiễm là
+                                                                        nguyên
+                                                                        nhân
+                                                                        khiến
+                                                                        mái tóc
+                                                                        bạn dễ
+                                                                        bị tổn
+                                                                        thương.
+                                                                        Căng
+                                                                        thẳng
+                                                                        thường
+                                                                        xuyên có
+                                                                        thể
+                                                                        khiến cơ
+                                                                        thể bị
+                                                                        rối loạn
+                                                                        nội tiết
+                                                                        khiến
+                                                                        tóc ngày
+                                                                        càng
+                                                                        mỏng và
+                                                                        xơ rối.
+                                                                        Ngoài
+                                                                        ra, bụi
+                                                                        và vi
+                                                                        khuẩn
+                                                                        bám lên
+                                                                        tóc cũng
+                                                                        khiến
+                                                                        cho tóc
+                                                                        dễ bị
+                                                                        gãy
+                                                                        rụng. Do
+                                                                        đó, bạn
+                                                                        cần phải
+                                                                        chú ý
+                                                                        đến
+                                                                        những
+                                                                        bước
+                                                                        chăm sóc
+                                                                        tóc cơ
+                                                                        bản như:
+                                                                        gội đầu,
+                                                                        dưỡng ẩm
+                                                                        và che
+                                                                        chắn mái
+                                                                        tóc khi
+                                                                        ở ngoài
+                                                                        trời.
+                                                                        Chăm sóc
+                                                                        tóc thậm
+                                                                        chí cũng
+                                                                        không bị
+                                                                        giới hạn
+                                                                        trong
+                                                                        những
+                                                                        biện
+                                                                        pháp bảo
+                                                                        vệ tóc,
+                                                                        mà còn
+                                                                        có thể
+                                                                        mở rộng
+                                                                        ra việc
+                                                                        làm đẹp
+                                                                        cho tóc.
+                                                                        Đừng
+                                                                        quên cắt
+                                                                        tỉa tóc
+                                                                        thường
+                                                                        xuyên,
+                                                                        hấp dầu
+                                                                        định kỳ
+                                                                        và chăm
+                                                                        sóc tóc
+                                                                        nhuộm
+                                                                        đúng
+                                                                        cách. Có
+                                                                        như vậy,
+                                                                        mái tóc
+                                                                        không
+                                                                        chỉ khỏe
+                                                                        mà còn
+                                                                        đẹp,
+                                                                        giúp ngũ
+                                                                        quan của
+                                                                        bạn trở
+                                                                        nên hài
+                                                                        hòa và
+                                                                        ngoại
+                                                                        hình
+                                                                        cũng
+                                                                        cuốn hút
+                                                                        hơn.
+                                                                    </p>
+                                                                </div>
+                                                            </Grid>
+                                                        </Grid>
+                                                    </div>
+                                                </Grid>
                                             </Grid>
-                                            <Grid item xs={12}>
-                                                <div
-                                                    className={cx(
-                                                        "service-reason"
-                                                    )}
-                                                >
-                                                    <Grid container spacing={1}>
-                                                        <Grid item xs={12}>
-                                                            <span
+                                        </div>
+                                    </Grid>
+                                    <Grid item xs={12}>
+                                        <div
+                                            className={cx(
+                                                "service-list-wrapper"
+                                            )}
+                                        >
+                                            <Grid container spacing={1}>
+                                                <Grid item xs={12}>
+                                                    <span
+                                                        className={cx(
+                                                            "service-list-title"
+                                                        )}
+                                                    >
+                                                        <h2 id="heading-title-2">
+                                                            {services?.title}
+                                                        </h2>
+                                                    </span>
+                                                </Grid>
+                                                <Grid item xs={12}>
+                                                    <div
+                                                        className={cx(
+                                                            "service-list-description"
+                                                        )}
+                                                    >
+                                                        <p>
+                                                            {
+                                                                services?.description
+                                                            }
+                                                        </p>
+                                                    </div>
+                                                </Grid>
+                                                <Grid item xs={12}>
+                                                    {services?.serviceList?.map(
+                                                        (service, index) => (
+                                                            <div
+                                                                key={index}
                                                                 className={cx(
-                                                                    "service-reason-title"
+                                                                    "service-item-wrapper"
                                                                 )}
                                                             >
-                                                                <h2 id="heading-title-1">
-                                                                    Vì sao cần
-                                                                    phải chăm
-                                                                    sóc tóc
-                                                                    thường
-                                                                    xuyên?
-                                                                </h2>
-                                                            </span>
-                                                        </Grid>
-                                                        <Grid item xs={12}>
+                                                                <Grid
+                                                                    container
+                                                                    spacing={2}
+                                                                >
+                                                                    <Grid
+                                                                        item
+                                                                        xs={12}
+                                                                    >
+                                                                        <span
+                                                                            className={cx(
+                                                                                "service-item-title"
+                                                                            )}
+                                                                        >
+                                                                            <h2
+                                                                                id={`service-item-${index}`}
+                                                                            >
+                                                                                {`${
+                                                                                    index +
+                                                                                    1
+                                                                                }. ${
+                                                                                    service?.title
+                                                                                }`}
+                                                                            </h2>
+                                                                        </span>
+                                                                    </Grid>
+                                                                    <Grid
+                                                                        item
+                                                                        xs={12}
+                                                                    >
+                                                                        <div
+                                                                            className={cx(
+                                                                                "service-item-part-article"
+                                                                            )}
+                                                                        >
+                                                                            <p>
+                                                                                {
+                                                                                    service?.partArticle1
+                                                                                }
+                                                                            </p>
+                                                                        </div>
+                                                                    </Grid>
+                                                                    <Grid
+                                                                        item
+                                                                        xs={12}
+                                                                    >
+                                                                        <div
+                                                                            className={cx(
+                                                                                "service-img"
+                                                                            )}
+                                                                        >
+                                                                            <img
+                                                                                src={
+                                                                                    images.service_3
+                                                                                }
+                                                                                alt=""
+                                                                            />
+                                                                        </div>
+                                                                        <span
+                                                                            className={cx(
+                                                                                "caption-img"
+                                                                            )}
+                                                                        >
+                                                                            {
+                                                                                service.title
+                                                                            }
+                                                                        </span>
+                                                                    </Grid>
+                                                                    <Grid
+                                                                        item
+                                                                        xs={12}
+                                                                    >
+                                                                        <div
+                                                                            className={cx(
+                                                                                "service-item-part-article"
+                                                                            )}
+                                                                        >
+                                                                            <p>
+                                                                                {
+                                                                                    service?.partArticle2
+                                                                                }
+                                                                            </p>
+                                                                        </div>
+                                                                    </Grid>
+                                                                </Grid>
+                                                            </div>
+                                                        )
+                                                    )}
+                                                </Grid>
+                                            </Grid>
+                                        </div>
+                                    </Grid>
+                                    <Grid item xs={12}>
+                                        <div
+                                            className={cx("tips-list-wrapper")}
+                                        >
+                                            <Grid container spacing={1}>
+                                                <Grid item xs={12}>
+                                                    <span
+                                                        className={cx(
+                                                            "tips-list-title"
+                                                        )}
+                                                    >
+                                                        <h2 id="heading-title-3">
+                                                            {tips?.title}
+                                                        </h2>
+                                                    </span>
+                                                </Grid>
+                                                <Grid item xs={12}>
+                                                    <div
+                                                        className={cx(
+                                                            "tips-list-description"
+                                                        )}
+                                                    >
+                                                        <p>
+                                                            {tips?.description}
+                                                        </p>
+                                                    </div>
+                                                </Grid>
+                                                <Grid item xs={12}>
+                                                    <div
+                                                        className={cx(
+                                                            "tips-item-wrapper"
+                                                        )}
+                                                    >
+                                                        {tips?.tipsList?.map(
+                                                            (tips, index) => (
+                                                                <Grid
+                                                                    key={index}
+                                                                    container
+                                                                    spacing={1}
+                                                                >
+                                                                    <Grid
+                                                                        item
+                                                                        xs={12}
+                                                                    >
+                                                                        <span
+                                                                            className={cx(
+                                                                                "tips-item-title"
+                                                                            )}
+                                                                        >
+                                                                            <h2
+                                                                                id={`tips-${index}`}
+                                                                            >
+                                                                                {`${
+                                                                                    index +
+                                                                                    1
+                                                                                }. ${
+                                                                                    tips?.title
+                                                                                }`}
+                                                                            </h2>
+                                                                        </span>
+                                                                    </Grid>
+                                                                    <Grid
+                                                                        item
+                                                                        xs={12}
+                                                                    >
+                                                                        <div
+                                                                            className={cx(
+                                                                                "tips-item-description"
+                                                                            )}
+                                                                        >
+                                                                            <p>
+                                                                                {
+                                                                                    tips?.description
+                                                                                }
+                                                                            </p>
+                                                                        </div>
+                                                                    </Grid>
+                                                                </Grid>
+                                                            )
+                                                        )}
+                                                    </div>
+                                                </Grid>
+                                            </Grid>
+                                        </div>
+                                    </Grid>
+
+                                    <Grid item xs={12}>
+                                        <div
+                                            className={cx(
+                                                "service-list-link-wrapper"
+                                            )}
+                                        >
+                                            <Grid container spacing={3}>
+                                                {hairServiceList?.map(
+                                                    (hairSv, i) => (
+                                                        <Grid
+                                                            item
+                                                            lg={3}
+                                                            md={6}
+                                                            sm={6}
+                                                            xs={6}
+                                                            key={i}
+                                                        >
                                                             <div
                                                                 className={cx(
-                                                                    "service-reason-content"
+                                                                    "service-link-item"
                                                                 )}
                                                             >
-                                                                <p>
-                                                                    Cuộc sống
-                                                                    ngày càng
-                                                                    bận rộn và
-                                                                    môi trường
-                                                                    ngày càng ô
-                                                                    nhiễm là
-                                                                    nguyên nhân
-                                                                    khiến mái
-                                                                    tóc bạn dễ
-                                                                    bị tổn
-                                                                    thương. Căng
-                                                                    thẳng thường
-                                                                    xuyên có thể
-                                                                    khiến cơ thể
-                                                                    bị rối loạn
-                                                                    nội tiết
-                                                                    khiến tóc
-                                                                    ngày càng
-                                                                    mỏng và xơ
-                                                                    rối. Ngoài
-                                                                    ra, bụi và
-                                                                    vi khuẩn bám
-                                                                    lên tóc cũng
-                                                                    khiến cho
-                                                                    tóc dễ bị
-                                                                    gãy rụng. Do
-                                                                    đó, bạn cần
-                                                                    phải chú ý
-                                                                    đến những
-                                                                    bước chăm
-                                                                    sóc tóc cơ
-                                                                    bản như: gội
-                                                                    đầu, dưỡng
-                                                                    ẩm và che
-                                                                    chắn mái tóc
-                                                                    khi ở ngoài
-                                                                    trời. Chăm
-                                                                    sóc tóc thậm
-                                                                    chí cũng
-                                                                    không bị
-                                                                    giới hạn
-                                                                    trong những
-                                                                    biện pháp
-                                                                    bảo vệ tóc,
-                                                                    mà còn có
-                                                                    thể mở rộng
-                                                                    ra việc làm
-                                                                    đẹp cho tóc.
-                                                                    Đừng quên
-                                                                    cắt tỉa tóc
-                                                                    thường
-                                                                    xuyên, hấp
-                                                                    dầu định kỳ
-                                                                    và chăm sóc
-                                                                    tóc nhuộm
-                                                                    đúng cách.
-                                                                    Có như vậy,
-                                                                    mái tóc
-                                                                    không chỉ
-                                                                    khỏe mà còn
-                                                                    đẹp, giúp
-                                                                    ngũ quan của
-                                                                    bạn trở nên
-                                                                    hài hòa và
-                                                                    ngoại hình
-                                                                    cũng cuốn
-                                                                    hút hơn.
-                                                                </p>
+                                                                <div
+                                                                    className={cx(
+                                                                        "service-link-img"
+                                                                    )}
+                                                                >
+                                                                    <img
+                                                                        src={
+                                                                            hairSv?.image
+                                                                        }
+                                                                        alt=""
+                                                                    />
+                                                                </div>
+                                                                <span
+                                                                    className={cx(
+                                                                        "service-link-title"
+                                                                    )}
+                                                                >
+                                                                    {
+                                                                        hairSv?.title
+                                                                    }
+                                                                </span>
                                                             </div>
                                                         </Grid>
-                                                    </Grid>
-                                                </div>
-                                            </Grid>
-                                        </Grid>
-                                    </div>
-                                </Grid>
-                                <Grid item xs={12}>
-                                    <div className={cx("service-list-wrapper")}>
-                                        <Grid container spacing={1}>
-                                            <Grid item xs={12}>
-                                                <span
-                                                    className={cx(
-                                                        "service-list-title"
-                                                    )}
-                                                >
-                                                    <h2 id="heading-title-2">
-                                                        {services?.title}
-                                                    </h2>
-                                                </span>
-                                            </Grid>
-                                            <Grid item xs={12}>
-                                                <div
-                                                    className={cx(
-                                                        "service-list-description"
-                                                    )}
-                                                >
-                                                    <p>
-                                                        {services?.description}
-                                                    </p>
-                                                </div>
-                                            </Grid>
-                                            <Grid item xs={12}>
-                                                {services?.serviceList?.map(
-                                                    (service, index) => (
-                                                        <div
-                                                            key={index}
-                                                            className={cx(
-                                                                "service-item-wrapper"
-                                                            )}
-                                                        >
-                                                            <Grid
-                                                                container
-                                                                spacing={2}
-                                                            >
-                                                                <Grid
-                                                                    item
-                                                                    xs={12}
-                                                                >
-                                                                    <span
-                                                                        className={cx(
-                                                                            "service-item-title"
-                                                                        )}
-                                                                    >
-                                                                        <h2
-                                                                            id={`service-item-${index}`}
-                                                                        >
-                                                                            {`${
-                                                                                index +
-                                                                                1
-                                                                            }. ${
-                                                                                service?.title
-                                                                            }`}
-                                                                        </h2>
-                                                                    </span>
-                                                                </Grid>
-                                                                <Grid
-                                                                    item
-                                                                    xs={12}
-                                                                >
-                                                                    <div
-                                                                        className={cx(
-                                                                            "service-item-part-article"
-                                                                        )}
-                                                                    >
-                                                                        <p>
-                                                                            {
-                                                                                service?.partArticle1
-                                                                            }
-                                                                        </p>
-                                                                    </div>
-                                                                </Grid>
-                                                                <Grid
-                                                                    item
-                                                                    xs={12}
-                                                                >
-                                                                    <div
-                                                                        className={cx(
-                                                                            "service-img"
-                                                                        )}
-                                                                    >
-                                                                        <img
-                                                                            src={
-                                                                                images.service_3
-                                                                            }
-                                                                            alt=""
-                                                                        />
-                                                                    </div>
-                                                                    <span
-                                                                        className={cx(
-                                                                            "caption-img"
-                                                                        )}
-                                                                    >
-                                                                        {
-                                                                            service.title
-                                                                        }
-                                                                    </span>
-                                                                </Grid>
-                                                                <Grid
-                                                                    item
-                                                                    xs={12}
-                                                                >
-                                                                    <div
-                                                                        className={cx(
-                                                                            "service-item-part-article"
-                                                                        )}
-                                                                    >
-                                                                        <p>
-                                                                            {
-                                                                                service?.partArticle2
-                                                                            }
-                                                                        </p>
-                                                                    </div>
-                                                                </Grid>
-                                                            </Grid>
-                                                        </div>
                                                     )
                                                 )}
                                             </Grid>
-                                        </Grid>
-                                    </div>
-                                </Grid>
-                                <Grid item xs={12}>
-                                    <div className={cx("tips-list-wrapper")}>
-                                        <Grid container spacing={1}>
-                                            <Grid item xs={12}>
-                                                <span
-                                                    className={cx(
-                                                        "tips-list-title"
-                                                    )}
-                                                >
-                                                    <h2 id="heading-title-3">
-                                                        {tips?.title}
-                                                    </h2>
-                                                </span>
-                                            </Grid>
-                                            <Grid item xs={12}>
-                                                <div
-                                                    className={cx(
-                                                        "tips-list-description"
-                                                    )}
-                                                >
-                                                    <p>{tips?.description}</p>
-                                                </div>
-                                            </Grid>
-                                            <Grid item xs={12}>
-                                                <div
-                                                    className={cx(
-                                                        "tips-item-wrapper"
-                                                    )}
-                                                >
-                                                    {tips?.tipsList?.map(
-                                                        (tips, index) => (
-                                                            <Grid
-                                                                key={index}
-                                                                container
-                                                                spacing={1}
-                                                            >
-                                                                <Grid
-                                                                    item
-                                                                    xs={12}
-                                                                >
-                                                                    <span
-                                                                        className={cx(
-                                                                            "tips-item-title"
-                                                                        )}
-                                                                    >
-                                                                        <h2
-                                                                            id={`tips-${index}`}
-                                                                        >
-                                                                            {`${
-                                                                                index +
-                                                                                1
-                                                                            }. ${
-                                                                                tips?.title
-                                                                            }`}
-                                                                        </h2>
-                                                                    </span>
-                                                                </Grid>
-                                                                <Grid
-                                                                    item
-                                                                    xs={12}
-                                                                >
-                                                                    <div
-                                                                        className={cx(
-                                                                            "tips-item-description"
-                                                                        )}
-                                                                    >
-                                                                        <p>
-                                                                            {
-                                                                                tips?.description
-                                                                            }
-                                                                        </p>
-                                                                    </div>
-                                                                </Grid>
-                                                            </Grid>
-                                                        )
-                                                    )}
-                                                </div>
-                                            </Grid>
-                                        </Grid>
-                                    </div>
-                                </Grid>
-
-                                <Grid item xs={12}>
-                                    <div
-                                        className={cx(
-                                            "service-list-link-wrapper"
-                                        )}
-                                    >
-                                        <Grid container spacing={3}>
-                                            {hairServiceList?.map(
-                                                (hairSv, i) => (
-                                                    <Grid
-                                                        item
-                                                        lg={3}
-                                                        md={6}
-                                                        sm={6}
-                                                        xs={6}
-                                                        key={i}
+                                        </div>
+                                    </Grid>
+                                    <Grid item xs={12}>
+                                        <div
+                                            className={cx("recommend-wrapper")}
+                                        >
+                                            <Grid container spacing={2}>
+                                                <Grid item xs={12}>
+                                                    <span
+                                                        className={cx(
+                                                            "recommend-title"
+                                                        )}
                                                     >
-                                                        <div
-                                                            className={cx(
-                                                                "service-link-item"
-                                                            )}
-                                                        >
-                                                            <div
-                                                                className={cx(
-                                                                    "service-link-img"
-                                                                )}
-                                                            >
-                                                                <img
-                                                                    src={
-                                                                        hairSv?.image
-                                                                    }
-                                                                    alt=""
-                                                                />
-                                                            </div>
-                                                            <span
-                                                                className={cx(
-                                                                    "service-link-title"
-                                                                )}
-                                                            >
-                                                                {hairSv?.title}
-                                                            </span>
-                                                        </div>
-                                                    </Grid>
-                                                )
-                                            )}
-                                        </Grid>
-                                    </div>
-                                </Grid>
-                                <Grid item xs={12}>
-                                    <div className={cx("recommend-wrapper")}>
-                                        <Grid container spacing={2}>
-                                            <Grid item xs={12}>
-                                                <span
-                                                    className={cx(
-                                                        "recommend-title"
-                                                    )}
-                                                >
-                                                    <h2 id="heading-title-4">
-                                                        Có thể bạn quan tâm
-                                                    </h2>
-                                                </span>
+                                                        <h2 id="heading-title-4">
+                                                            Có thể bạn quan tâm
+                                                        </h2>
+                                                    </span>
+                                                </Grid>
+                                                <Grid item xs={12}>
+                                                    <ul
+                                                        className={cx(
+                                                            "recommend-link-list"
+                                                        )}
+                                                    >
+                                                        <li>
+                                                            <a href="#">
+                                                                Nối tóc bao
+                                                                nhiêu tiền? Thời
+                                                                gian giữ được
+                                                                bao lâu?
+                                                            </a>
+                                                        </li>
+                                                        <li>
+                                                            <a href="#">
+                                                                Xu hướng tóc đẹp
+                                                                hot nhất Hàn
+                                                                Quốc 2019
+                                                            </a>
+                                                        </li>
+                                                        <li>
+                                                            <a href="#">
+                                                                35 kiểu tóc tỉa
+                                                                layer giúp bạn
+                                                                “lột xác” trong
+                                                                2022 (UPDATE)
+                                                            </a>
+                                                        </li>
+                                                        <li>
+                                                            <a href="#">
+                                                                20 kiểu tóc xoăn
+                                                                lọn to trẻ
+                                                                trung, nàng nhất
+                                                                định phải thử
+                                                            </a>
+                                                        </li>
+                                                    </ul>
+                                                </Grid>
                                             </Grid>
-                                            <Grid item xs={12}>
-                                                <ul
-                                                    className={cx(
-                                                        "recommend-link-list"
-                                                    )}
-                                                >
-                                                    <li>
-                                                        <a href="#">
-                                                            Nối tóc bao nhiêu
-                                                            tiền? Thời gian giữ
-                                                            được bao lâu?
-                                                        </a>
-                                                    </li>
-                                                    <li>
-                                                        <a href="#">
-                                                            Xu hướng tóc đẹp hot
-                                                            nhất Hàn Quốc 2019
-                                                        </a>
-                                                    </li>
-                                                    <li>
-                                                        <a href="#">
-                                                            35 kiểu tóc tỉa
-                                                            layer giúp bạn “lột
-                                                            xác” trong 2022
-                                                            (UPDATE)
-                                                        </a>
-                                                    </li>
-                                                    <li>
-                                                        <a href="#">
-                                                            20 kiểu tóc xoăn lọn
-                                                            to trẻ trung, nàng
-                                                            nhất định phải thử
-                                                        </a>
-                                                    </li>
-                                                </ul>
-                                            </Grid>
-                                        </Grid>
-                                    </div>
+                                        </div>
+                                    </Grid>
                                 </Grid>
-                            </Grid>
-                        </div>
+                            </div>
+                        </Grid>
+                        <Grid item lg={3} md={12} sm={12}>
+                            <div className={cx("col-4-right")}>a</div>
+                        </Grid>
                     </Grid>
-                    <Grid item xs={4}>
-                        <div className={cx("col-4-right")}>a</div>
-                    </Grid>
-                </Grid>
+                </div>
             </div>
-        </div>
+            {/* <BasicSpeedDial>
+                <ArticleCategory />
+            </BasicSpeedDial> */}
+        </>
     );
 }
 
