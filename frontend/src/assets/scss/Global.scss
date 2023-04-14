@@ -22,7 +22,8 @@
     --gray-dark: #32325d;
     --grey: #303030;
     --grey-medium: #4c4c4c;
-    --light-grey: #f1f1f1;
+    // --light-grey: #f1f1f1;
+    --light-gray: #f8f8fa;
     --info: #1d8cf8;
     --warning: #ff8d72;
     --danger: #fd5d93;
@@ -30,8 +31,8 @@
     --dark: #212529;
     --default: #344675;
     --white: #ffffff;
-    --light: #ced4da;
-    --lighter: #e9ecef;
+    // --light: #ced4da;
+    // --lighter: #e9ecef;
     // --primary: #f0570b;
     // --primary: #f15e2c;
     // --primary-bold: #ab003c;
@@ -49,6 +50,7 @@
     --fw-medium: 500;
     --fw-semi-bold: 600;
     --fw-bold: 700;
+    --color-text-field: #006778;
     // --font-family: "Plus Jakarta Sans", sans-serif;
     --font-family: "Quicksand", sans-serif;
 
@@ -235,4 +237,43 @@ span.MuiChip-label {
 
 .MuiTabs-fixed {
     overflow-x: auto !important;
+}
+
+.MuiInputBase-input {
+    font-size: 1.6rem !important;
+    font-weight: var(--fw-normal) !important;
+    font-family: var(--font-family) !important;
+}
+
+.MuiInputBase-root {
+    font-size: 2rem !important;
+    fieldset {
+        background-color: var(--white) !important;
+    }
+}
+
+.MuiInputLabel-root {
+    font-size: 2rem !important;
+    font-family: var(--font-family) !important;
+    font-weight: var(--fw-medium) !important;
+    &.Mui-focused {
+        color: var(--color-text-field) !important;
+    }
+}
+.MuiInputLabel-root:not(.Mui-focused) {
+    color: var(--text-primary) !important;
+}
+
+.MuiInput-underline:after {
+    border-bottom-color: var(--color-text-field) !important;
+}
+
+.Mui-focused fieldset {
+    border-color: var(--color-text-field) !important;
+    background-color: var(--white) !important;
+}
+
+.MuiButtonBase-root.MuiButton-root {
+    font-family: var(--font-family) !important;
+    font-weight: var(--fw-medium) !important;
 }

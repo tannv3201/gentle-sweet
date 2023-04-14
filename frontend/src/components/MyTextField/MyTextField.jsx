@@ -3,7 +3,7 @@ import IconButton from "@mui/material/IconButton";
 
 import TextField from "@mui/material/TextField";
 
-import withStyles from '@mui/styles/withStyles';
+import withStyles from "@mui/styles/withStyles";
 
 const RoundedBorderTextField = withStyles({
     root: {
@@ -105,6 +105,10 @@ const TextFieldLight = withStyles({
     },
 })(TextField);
 
+const RequiredLabel = () => {
+    return <span style={{ color: "red" }}>*</span>;
+};
+
 function MyTextField({
     label,
     variant = "outlined",
@@ -117,14 +121,20 @@ function MyTextField({
     bgLight,
     bgDark,
     roundedBorder,
+    requiredLabel,
     ...props
 }) {
-    const nodeRef = React.useRef(null);
-
+    const displayLabel = label ? (
+        <>
+            {label} {requiredLabel && <RequiredLabel />}
+        </>
+    ) : (
+        ""
+    );
     return bgLight ? (
         <CustomTextField
             {...props}
-            label={label}
+            label={displayLabel}
             size={size}
             variant={variant}
             placeholder={placeholder}
@@ -152,11 +162,10 @@ function MyTextField({
     ) : bgDark ? (
         <TextFieldLight
             {...props}
-            label={label}
+            label={displayLabel}
             size={size}
             variant={variant}
             placeholder={placeholder}
-            // id="standard-start-adornment"
             InputProps={
                 iconButtonStart
                     ? {
@@ -180,7 +189,7 @@ function MyTextField({
     ) : roundedBorder ? (
         <RoundedBorderTextField
             {...props}
-            label={label}
+            label={displayLabel}
             size={size}
             variant={variant}
             placeholder={placeholder}
@@ -208,7 +217,7 @@ function MyTextField({
     ) : (
         <CustomTextField
             {...props}
-            label={label}
+            label={displayLabel}
             size={size}
             variant={variant}
             placeholder={placeholder}

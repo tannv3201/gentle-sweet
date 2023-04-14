@@ -1,12 +1,21 @@
 import React from "react";
 import { Button } from "@mui/material";
 
-function MyButton({ children, ...props }) {
+function GButton({
+    children,
+    startIcon,
+    size = "small",
+    variant = "contained",
+    ...props
+}) {
     return (
         <>
             <Button
                 style={{ fontSize: "1.6rem", textTransform: "unset" }}
                 {...props}
+                startIcon={startIcon}
+                size={size}
+                variant={variant}
             >
                 {children}
             </Button>
@@ -14,4 +23,4 @@ function MyButton({ children, ...props }) {
     );
 }
 
-export default MyButton;
+export default GButton;

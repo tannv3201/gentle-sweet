@@ -1,0 +1,31 @@
+import React from "react";
+import "./GTextArea.module.scss";
+import { RequiredLabel } from "../MyTextField/GTextField";
+function GTextArea({
+    children,
+    name,
+    id,
+    cols,
+    rows,
+    label,
+    requiredlabel = false,
+    ...props
+}) {
+    const displayLabel = label ? (
+        <label htmlFor={id}>
+            {label} {requiredlabel && <RequiredLabel />}
+        </label>
+    ) : (
+        ""
+    );
+    return (
+        <>
+            {displayLabel}
+            <textarea name={name} id={id} cols={cols} rows={rows} {...props}>
+                {children}
+            </textarea>
+        </>
+    );
+}
+
+export default GTextArea;

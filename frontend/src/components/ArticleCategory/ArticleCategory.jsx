@@ -162,6 +162,7 @@ function ArticleCategory({ h2Nodes }) {
                         style={{
                             border: "1px solid var(--primary)",
                             backgroundColor: "var(--white)",
+                            zIndex: "10",
                         }}
                         onClick={toggleDrawer}
                     >
@@ -172,6 +173,7 @@ function ArticleCategory({ h2Nodes }) {
                     anchor={"right"}
                     open={isOpenDrawer}
                     onClose={toggleDrawer}
+                    onOpen={toggleDrawer}
                     className={cx("articles-drawer")}
                 >
                     <div className={cx("article-category")}>

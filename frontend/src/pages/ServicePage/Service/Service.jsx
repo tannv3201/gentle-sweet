@@ -1,3 +1,4 @@
+/* eslint-disable jsx-a11y/anchor-is-valid */
 import React, { useEffect, useState } from "react";
 import styles from "./Service.module.scss";
 import { Grid } from "@mui/material";
@@ -6,6 +7,7 @@ import images from "../../../assets/images";
 import { MenuList } from "../../../components/Navbar/navigation";
 
 import ArticleCategory from "../../../components/ArticleCategory/ArticleCategory";
+import Comments from "../../../components/Comments/Comments";
 
 const cx = classNames.bind(styles);
 
@@ -180,12 +182,12 @@ function Service() {
         setHairServiceList(hairServiceFnRun);
     }, []);
     return (
-        <>
-            <div className={cx("wrapper")}>
+        <div className={cx("wrapper")}>
+            <div className={cx("wrapper-service")}>
                 <div className={cx("inner")}>
                     <Grid container spacing={3}>
                         <Grid item lg={9} md={12} sm={12}>
-                            <div className={cx("col-8-left")}>
+                            <div className={cx("col-9-left")}>
                                 <Grid container spacing={1}>
                                     <Grid item xs={12}>
                                         <div
@@ -212,22 +214,27 @@ function Service() {
                                                             "introduce-service-blockquote"
                                                         )}
                                                     >
-                                                        Trong thời gian gần đây,
-                                                        các bạn trẻ và cả những
-                                                        cô chú trung niên ngày
-                                                        càng quan tâm nhiều hơn
-                                                        đến vấn đề chăm sóc mái
-                                                        tóc. Nguyên nhân là vì
-                                                        chất lượng cuộc sống
-                                                        được nâng cao dẫn đến
-                                                        nhu cầu làm đẹp và chăm
-                                                        sóc bản thân ngày càng
-                                                        tăng. Để đáp ứng tốt
-                                                        nhất nhu cầu của khách
-                                                        hàng, Zema Việt Nam đã
-                                                        phát triển những dịch vụ
-                                                        chăm sóc tóc chuyên
-                                                        nghiệp và toàn diện.
+                                                        <p>
+                                                            Trong thời gian gần
+                                                            đây, các bạn trẻ và
+                                                            cả những cô chú
+                                                            trung niên ngày càng
+                                                            quan tâm nhiều hơn
+                                                            đến vấn đề chăm sóc
+                                                            mái tóc. Nguyên nhân
+                                                            là vì chất lượng
+                                                            cuộc sống được nâng
+                                                            cao dẫn đến nhu cầu
+                                                            làm đẹp và chăm sóc
+                                                            bản thân ngày càng
+                                                            tăng. Để đáp ứng tốt
+                                                            nhất nhu cầu của
+                                                            khách hàng, Zema
+                                                            Việt Nam đã phát
+                                                            triển những dịch vụ
+                                                            chăm sóc tóc chuyên
+                                                            nghiệp và toàn diện.
+                                                        </p>
                                                     </blockquote>
                                                 </Grid>
                                                 <Grid item xs={12}>
@@ -723,19 +730,19 @@ function Service() {
                                             </Grid>
                                         </div>
                                     </Grid>
+                                    <Grid item xs={12}>
+                                        <Comments />
+                                    </Grid>
                                 </Grid>
                             </div>
                         </Grid>
                         <Grid item lg={3} md={12} sm={12}>
-                            <div className={cx("col-4-right")}>a</div>
+                            <div className={cx("col-3-right")}>a</div>
                         </Grid>
                     </Grid>
                 </div>
             </div>
-            {/* <BasicSpeedDial>
-                <ArticleCategory />
-            </BasicSpeedDial> */}
-        </>
+        </div>
     );
 }
 

@@ -1,0 +1,18 @@
+textarea {
+    border-radius: 4px;
+    font-size: 1.6rem;
+    font-family: var(--font-family);
+    padding: 8px 14px;
+    border: 1px solid rgba(0, 0, 0, 0.23);
+    width: 100%;
+}
+
+textarea:focus-visible {
+    outline: 2px solid var(--color-text-field);
+}
+
+label {
+    user-select: none;
+    font-size: 1.6rem;
+    font-weight: var(--fw-medium);
+}
