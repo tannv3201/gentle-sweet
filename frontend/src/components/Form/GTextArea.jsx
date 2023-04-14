@@ -8,6 +8,7 @@ function GTextArea({
     cols,
     rows,
     label,
+    placeholder,
     requiredlabel = false,
     ...props
 }) {
@@ -21,7 +22,14 @@ function GTextArea({
     return (
         <>
             {displayLabel}
-            <textarea name={name} id={id} cols={cols} rows={rows} {...props}>
+            <textarea
+                placeholder={placeholder}
+                name={name}
+                id={id}
+                cols={cols}
+                rows={rows}
+                {...props}
+            >
                 {children}
             </textarea>
         </>

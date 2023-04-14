@@ -43,6 +43,7 @@ function Comments() {
                                                 label={"Bình luận"}
                                                 id={"comment-textarea"}
                                                 requiredlabel
+                                                placeholder="Viết nhận xét của bạn tại đây..."
                                             />
                                         </div>
                                     </div>

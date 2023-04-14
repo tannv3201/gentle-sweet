@@ -37,6 +37,7 @@ const images = {
     mission_img: require("./mission_img.png"),
     warehouse: require("./warehouse.png"),
     banner_salon_system: require("./banner_salon_system.png"),
+    signin_advise: require("./signin_advise.png"),
     gentle: require("./gentle.svg"),
 };
 

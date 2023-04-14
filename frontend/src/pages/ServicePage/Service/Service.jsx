@@ -9,6 +9,7 @@ import { MenuList } from "../../../components/Navbar/navigation";
 import ArticleCategory from "../../../components/ArticleCategory/ArticleCategory";
 import Comments from "../../../components/Comments/Comments";
 import GRrating from "../../../components/GRating/GRating";
+import Related from "./Related/Related";
 
 const cx = classNames.bind(styles);
 
@@ -700,7 +701,9 @@ function Service() {
                             </div>
                         </Grid>
                         <Grid item lg={3} md={12} sm={12}>
-                            <div className={cx("col-3-right")}>a</div>
+                            <div className={cx("col-3-right")}>
+                                <Related />
+                            </div>
                         </Grid>
                     </Grid>
                 </div>

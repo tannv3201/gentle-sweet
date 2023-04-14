@@ -1,0 +1,80 @@
+.wrapper {
+    width: 100%;
+    position: relative;
+}
+
+.inner {
+    width: 100%;
+
+    .wrapper-each-related {
+        margin-bottom: 24px;
+    }
+    .related-title {
+        h1 {
+            font-size: 2rem;
+            font-weight: var(--fw-semi-bold);
+            color: var(--primary);
+            margin-top: 6px;
+        }
+    }
+
+    .related-item {
+        display: flex;
+        .related-item-img {
+            flex-shrink: 0;
+            width: 70px;
+            height: 70px;
+            border-radius: 6px;
+            overflow: hidden;
+            margin-right: 8px;
+            img {
+                width: 100%;
+                height: 100%;
+                object-fit: cover;
+            }
+        }
+        .related-item-content {
+            .related-item-content-title {
+                h5 {
+                    font-size: 1.6rem;
+                    font-weight: var(--fw-semi-bold);
+                }
+            }
+            .related-item-content-description {
+                display: -webkit-box; /* Đặt kiểu hiển thị là box */
+                -webkit-box-orient: vertical; /* Đặt hướng của box là dọc */
+                overflow: hidden; /* Ẩn dòng vượt quá số dòng được chỉ định */
+                text-overflow: ellipsis; /* Sử dụng dấu "..." để ẩn dòng còn lại */
+                -webkit-line-clamp: 2; /* Chỉ hiển thị tối đa 3 dòng */
+            }
+        }
+    }
+
+    .advise-form {
+        border: 1px solid var(--primary);
+        padding: 12px;
+        border-radius: 6px;
+        background-color: var(--primary-200);
+        position: sticky;
+        top: 110px;
+        .advise-img {
+            width: 100%;
+            height: 100%;
+            img {
+                width: 100%;
+                height: 100%;
+                object-fit: cover;
+            }
+        }
+        .signin-advise {
+            display: flex;
+            justify-content: center;
+            .signin-advise-btn {
+                background-color: var(--white);
+                color: var(--primary);
+                border: 1px solid var(--primary);
+                font-weight: var(--fw-semi-bold) !important;
+            }
+        }
+    }
+}
