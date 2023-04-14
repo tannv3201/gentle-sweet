@@ -243,12 +243,13 @@ span.MuiChip-label {
     font-size: 1.6rem !important;
     font-weight: var(--fw-normal) !important;
     font-family: var(--font-family) !important;
+    color: var(--text-primary) !important;
 }
 
 .MuiInputBase-root {
     font-size: 2rem !important;
     fieldset {
-        background-color: var(--white) !important;
+        // background-color: var(--white) !important;
     }
 }
 
@@ -270,7 +271,6 @@ span.MuiChip-label {
 
 .Mui-focused fieldset {
     border-color: var(--color-text-field) !important;
-    background-color: var(--white) !important;
 }
 
 .MuiButtonBase-root.MuiButton-root {

@@ -5,6 +5,8 @@ textarea {
     padding: 8px 14px;
     border: 1px solid rgba(0, 0, 0, 0.23);
     width: 100%;
+    font-weight: var(--fw-normal);
+    color: var(--text-primary);
 }
 
 textarea:focus-visible {
