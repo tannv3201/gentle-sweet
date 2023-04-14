@@ -8,6 +8,7 @@ import { MenuList } from "../../../components/Navbar/navigation";
 
 import ArticleCategory from "../../../components/ArticleCategory/ArticleCategory";
 import Comments from "../../../components/Comments/Comments";
+import GRrating from "../../../components/GRating/GRating";
 
 const cx = classNames.bind(styles);
 
@@ -623,53 +624,15 @@ function Service() {
                                     </Grid>
 
                                     <Grid item xs={12}>
-                                        <div
-                                            className={cx(
-                                                "service-list-link-wrapper"
-                                            )}
-                                        >
-                                            <Grid container spacing={3}>
-                                                {hairServiceList?.map(
-                                                    (hairSv, i) => (
-                                                        <Grid
-                                                            item
-                                                            lg={3}
-                                                            md={6}
-                                                            sm={6}
-                                                            xs={6}
-                                                            key={i}
-                                                        >
-                                                            <div
-                                                                className={cx(
-                                                                    "service-link-item"
-                                                                )}
-                                                            >
-                                                                <div
-                                                                    className={cx(
-                                                                        "service-link-img"
-                                                                    )}
-                                                                >
-                                                                    <img
-                                                                        src={
-                                                                            hairSv?.image
-                                                                        }
-                                                                        alt=""
-                                                                    />
-                                                                </div>
-                                                                <span
-                                                                    className={cx(
-                                                                        "service-link-title"
-                                                                    )}
-                                                                >
-                                                                    {
-                                                                        hairSv?.title
-                                                                    }
-                                                                </span>
-                                                            </div>
-                                                        </Grid>
-                                                    )
+                                        <div className={cx("service-rating")}>
+                                            <span
+                                                className={cx(
+                                                    "service-rating-title"
                                                 )}
-                                            </Grid>
+                                            >
+                                                Chọn đánh giá sao
+                                            </span>
+                                            <GRrating />
                                         </div>
                                     </Grid>
                                     <Grid item xs={12}>

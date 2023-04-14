@@ -216,41 +216,19 @@ p {
 
 // End: Tips List -------------------------------
 
-// Start: Service Link List -------------------------------
-
-.service-list-link-wrapper {
-    margin-top: 32px;
-
-    .service-link-item {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        flex-direction: column;
-        .service-link-img {
-            width: 190px;
-            height: 190px;
-            // overflow: hidden;
-            img {
-                width: 100%;
-                height: 100%;
-                object-fit: cover;
-                border-radius: 100px;
-                border: 2px solid var(--primary-500);
-                box-shadow: var(--primary-box-shadow) 0px 2px 8px;
-            }
-        }
-        .service-link-title {
-            display: block;
-            text-align: center;
-            margin-top: 8px;
-            font-size: 1.6rem;
-            font-weight: var(--fw-medium);
-            color: var(--primary);
-        }
+// Start: Service Rating -------------------------------
+.service-rating {
+    margin-top: 24px;
+    .service-rating-title {
+        display: block;
+        font-size: 1.6rem;
+        color: var(--text-primary);
+        font-weight: var(--fw-semi-bold);
+        margin-bottom: 8px;
     }
 }
 
-// End: Service Link List ---------------------------------
+// End: Service Rating ---------------------------------
 
 // Start: Recommend ---------------------------------
 .recommend-wrapper {

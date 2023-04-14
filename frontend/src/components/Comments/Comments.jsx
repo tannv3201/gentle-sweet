@@ -5,11 +5,7 @@ import { Grid } from "@mui/material";
 import GTextField from "../MyTextField/GTextField";
 import GTextArea from "../Form/GTextArea";
 import { RequiredLabel } from "../MyTextField/GTextField";
-import {
-    InsertPhotoRounded,
-    SendRounded,
-    AccountCircleRounded,
-} from "@mui/icons-material";
+import { InsertPhotoRounded, SendRounded } from "@mui/icons-material";
 import GButton from "../MyButton/MyButton";
 
 const cx = classnames.bind(styles);
