@@ -11,7 +11,6 @@ function GButton({
     return (
         <>
             <Button
-                style={{ fontSize: "1.6rem", textTransform: "unset" }}
                 {...props}
                 startIcon={startIcon}
                 size={size}

@@ -11,6 +11,7 @@ import CartFixedRight from "../components/CartFixedRight/CartFixedRight";
 import Footer from "../components/Footer/Footer";
 import ScrollBackToTop from "../components/ScrollBackToTop";
 import Service from "./ServicePage/Service/Service";
+import Booking from "./Booking/Booking";
 
 import { useMediaQuery } from "@mui/material";
 import { useTheme } from "@mui/material/styles";
@@ -49,6 +50,7 @@ function App() {
                                 path="/ve-chung-toi"
                                 element={<AboutUsPage />}
                             />
+                            <Route path="/dat-lich" element={<Booking />} />
                         </Routes>
                     </div>
                     <Footer />

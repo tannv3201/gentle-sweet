@@ -10,12 +10,11 @@ import {
     SearchRounded,
     ShoppingCartRounded,
 } from "@mui/icons-material";
-
 import { useMediaQuery } from "@mui/material";
 import { useTheme } from "@mui/material/styles";
-
 import { MenuList } from "../navigation";
 import InfoSaleSlider from "../InfoSaleSlider/InforSaleSlider";
+import GButton from "../../MyButton/MyButton";
 
 const cx = classNames.bind(styles);
 
@@ -51,7 +50,9 @@ function NavbarDesktop() {
                         </Grid>
                         <Grid item lg={7} md={7}>
                             <div className={cx("menu-list")}>
-                                {MenuList?.map((navbar, index) => (
+                                {MenuList?.filter(
+                                    (menu) => menu.title !== "Đặt lịch"
+                                )?.map((navbar, index) => (
                                     <MenuItem
                                         key={index}
                                         title={navbar?.title}
@@ -169,6 +170,11 @@ function NavbarDesktop() {
                                 <IconButton title="Đăng nhập" size="large">
                                     <PersonRounded />
                                 </IconButton>
+                                <GButton
+                                    style={{ background: "var(--primary-500)" }}
+                                >
+                                    <NavLink to="/dat-lich">Đặt lịch</NavLink>
+                                </GButton>
                             </div>
                         </Grid>
                     </Grid>

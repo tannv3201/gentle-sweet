@@ -279,4 +279,6 @@ span.MuiChip-label {
 .MuiButtonBase-root.MuiButton-root {
     font-family: var(--font-family) !important;
     font-weight: var(--fw-medium) !important;
+    font-size: 1.6rem !important;
+    text-transform: unset !important;
 }

@@ -128,4 +128,9 @@ export const MenuList = [
         href: "/product/all",
         isOpen: false,
     },
+    {
+        title: "Đặt lịch",
+        href: "/dat-lich",
+        isOpen: false,
+    },
 ];
