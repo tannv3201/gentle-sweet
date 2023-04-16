@@ -3,10 +3,11 @@ import classNames from "classnames/bind";
 import styles from "./OutstandingProduct.module.scss";
 import images from "../../../assets/images";
 import { Grid } from "@mui/material";
-import { Rating } from '@mui/material';
+import { Rating } from "@mui/material";
 import { ArrowForwardRounded, FormatQuoteRounded } from "@mui/icons-material";
 import { useMediaQuery } from "@mui/material";
 import { useTheme } from "@mui/material/styles";
+import { NavLink } from "react-router-dom";
 
 const cx = classNames.bind(styles);
 
@@ -54,7 +55,7 @@ function ProductItem({
     productSold,
 }) {
     const theme = useTheme();
-    const isSmall = useMediaQuery(theme.breakpoints.down('md'));
+    const isSmall = useMediaQuery(theme.breakpoints.down("md"));
 
     const formatCurrency = (price) => {
         return new Intl.NumberFormat("vi-VN", {
@@ -150,9 +151,9 @@ function OutstandingProduct() {
                     ))}
                 </Grid>
                 <div className={cx("outstanding-product-see-more")}>
-                    <a href="#" className={cx("see-more-btn")}>
+                    <NavLink to={"/product/all"} className={cx("see-more-btn")}>
                         <span>Xem thêm</span> <ArrowForwardRounded />
-                    </a>
+                    </NavLink>
                 </div>
             </div>
         </div>

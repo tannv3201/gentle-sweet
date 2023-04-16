@@ -5,7 +5,7 @@ import useScrollTrigger from "@mui/material/useScrollTrigger";
 import Fab from "@mui/material/Fab";
 import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
 import Zoom from "@mui/material/Zoom";
-import { LightTooltip } from "../MyTooltip/MyTooltip";
+import { LightTooltip } from "../GTooltip/GTooltip";
 
 const useStyles = makeStyles((theme) => ({
     root: {

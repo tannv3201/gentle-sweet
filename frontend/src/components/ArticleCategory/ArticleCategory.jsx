@@ -10,7 +10,7 @@ import {
 import { useMediaQuery } from "@mui/material";
 import { useTheme } from "@mui/material/styles";
 import Box from "@mui/material/Box";
-import { LightTooltip } from "../MyTooltip/MyTooltip";
+import { LightTooltip } from "../GTooltip/GTooltip";
 import { SwipeableDrawer } from "@mui/material";
 const cx = classNames.bind(styles);
 

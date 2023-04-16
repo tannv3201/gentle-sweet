@@ -16,9 +16,23 @@ import Booking from "./Booking/Booking";
 import { useMediaQuery } from "@mui/material";
 import { useTheme } from "@mui/material/styles";
 import Breadcrumb from "../components/Breadcrumb/Breadcrumb";
+import GProgress from "../components/Progress/Progress";
+import { useEffect, useState } from "react";
 function App() {
     const theme = useTheme();
     const isMedium = useMediaQuery(theme.breakpoints.down("md"));
+    const [isLoading, setIsLoading] = useState(true);
+
+    useEffect(() => {
+        const handleLoad = () => {
+            setIsLoading(false);
+        };
+        document.addEventListener("load", handleLoad); // Gán sự kiện load cho document
+
+        return () => {
+            document.removeEventListener("load", handleLoad); // Hủy bỏ sự kiện load khi component bị unmount hoặc useEffect chạy lại
+        };
+    }, []);
     return (
         <div>
             <Router>
@@ -31,6 +45,7 @@ function App() {
                                 : { marginTop: "110px" }
                         }
                     >
+                        {/* <GProgress isLoading={isLoading} /> */}
                         {!isMedium && <CartFixedRight />}
                         <Breadcrumb />
                         <Routes>

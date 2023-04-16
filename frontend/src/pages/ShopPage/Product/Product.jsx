@@ -5,25 +5,34 @@ import { FilterListRounded, ArrowDropDown } from "@mui/icons-material";
 import { Grid, MenuItem } from "@mui/material";
 import MyTextField from "../../../components/MyTextField/MyTextField";
 import FilterGroup from "../FilterGroup/FilterGroup";
+import GProgress from "../../../components/Progress/Progress";
 import axios from "axios";
 
 const cx = classNames.bind(styles);
 function Product() {
     const [productList, setProductList] = useState([]);
+    const [isLoading, setIsLoading] = useState(false);
     useEffect(() => {
-        axios
-            .get("https://6418546729e7e36438e5a243.mockapi.io/api/v1/nails")
-            .then((response) => {
-                setProductList(response.data);
-            })
-            .catch((err) => {
-                console.log(err);
-            });
+        const fetchData = async () => {
+            setIsLoading(true);
+            await axios
+                .get("https://6418546729e7e36438e5a243.mockapi.io/api/v1/nails")
+                .then((response) => {
+                    setProductList(response.data);
+                    setIsLoading(false);
+                })
+                .catch((err) => {
+                    console.log(err);
+                    setIsLoading(false);
+                });
+        };
+        fetchData();
     }, []);
 
     return (
         <div className={cx("product-wrapper")}>
             <div className={cx("product-inner")}>
+                <GProgress isLoading={isLoading} />
                 <Grid container spacing={3}>
                     {productList.map((product, index) => (
                         <Grid item xs={3}>

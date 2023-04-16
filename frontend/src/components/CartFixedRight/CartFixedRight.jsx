@@ -2,7 +2,7 @@ import React from "react";
 import styles from "./CartFixedRight.module.scss";
 import classnames from "classnames/bind";
 import { LocalMallRounded } from "@mui/icons-material";
-import { LightTooltip } from "../MyTooltip/MyTooltip";
+import { LightTooltip } from "../GTooltip/GTooltip";
 
 const cx = classnames.bind(styles);
 
