@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import styles from "./ArticleCategory.module.scss";
 import classNames from "classnames/bind";
 import { IconButton } from "@mui/material";
@@ -48,7 +48,6 @@ function ArticleCategory({ h2Nodes }) {
     const handleScrollToElement = (id) => {
         // Thiết lập giá trị biến trạng thái activeId
         setIsActiveTitle(id);
-        console.log(id);
     };
     // Render các thẻ a tương ứng với các thẻ h2
     const renderLinks = () => {
@@ -111,6 +110,11 @@ function ArticleCategory({ h2Nodes }) {
         }
         return null;
     };
+    const [resultRender, setResultRender] = useState(null);
+    useEffect(() => {
+        const result = renderLinks();
+        setResultRender(result);
+    }, []);
     return (
         <div className={cx("wrapper")}>
             <div className={cx("inner")}>
@@ -154,6 +158,7 @@ function ArticleCategory({ h2Nodes }) {
                     position: "fixed",
                     right: "16px",
                     bottom: "80px",
+                    zIndex: 10,
                 }}
             >
                 <LightTooltip placement="left" title="Danh mục">
@@ -162,7 +167,6 @@ function ArticleCategory({ h2Nodes }) {
                         style={{
                             border: "1px solid var(--primary)",
                             backgroundColor: "var(--white)",
-                            zIndex: "10",
                         }}
                         onClick={toggleDrawer}
                     >
@@ -189,7 +193,7 @@ function ArticleCategory({ h2Nodes }) {
                             id="article-category-link"
                             className={cx("article-category-link")}
                         >
-                            {renderLinks()}
+                            {resultRender}
                         </ul>
                     </div>
                 </SwipeableDrawer>

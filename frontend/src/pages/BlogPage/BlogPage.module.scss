@@ -1,0 +1,27 @@
+.advise-form {
+    border: 1px solid var(--primary);
+    padding: 12px;
+    border-radius: 6px;
+    background-color: var(--primary-200);
+    position: sticky;
+    top: 110px;
+    .advise-img {
+        width: 100%;
+        height: 100%;
+        img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+    }
+    .signin-advise {
+        display: flex;
+        justify-content: center;
+        .signin-advise-btn {
+            background-color: var(--white);
+            color: var(--primary);
+            border: 1px solid var(--primary);
+            font-weight: var(--fw-semi-bold) !important;
+        }
+    }
+}

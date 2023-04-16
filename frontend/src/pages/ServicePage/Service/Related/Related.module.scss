@@ -1,13 +1,21 @@
 .wrapper {
     width: 100%;
     position: relative;
+    height: 100%;
+    // background-color: var(--light-gray);
 }
 
 .inner {
-    width: 100%;
+    position: relative;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
 
     .wrapper-each-related {
         margin-bottom: 24px;
+        background-color: var(--white);
+        padding: 12px;
+        border-radius: 6px;
     }
     .related-title {
         h1 {
@@ -49,14 +57,19 @@
             }
         }
     }
-
+    .advise-form-wrapper {
+        background-color: var(--white);
+        padding: 12px;
+        border-radius: 6px;
+    }
     .advise-form {
+        background-color: var(--white);
+        padding: 12px;
         border: 1px solid var(--primary);
         padding: 12px;
         border-radius: 6px;
         background-color: var(--primary-200);
-        position: sticky;
-        top: 110px;
+
         .advise-img {
             width: 100%;
             height: 100%;

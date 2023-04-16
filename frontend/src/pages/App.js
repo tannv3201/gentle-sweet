@@ -4,7 +4,7 @@ import HomePage from "./HomePage/HomePage";
 import ShopPage from "./ShopPage/ShopPage";
 import Navbar from "../components/Navbar/Navbar";
 import ServiceOverviewIndex from "./ServicePage/Overview/ServiceOverviewIndex";
-import SaleOffPage from "./SaleOffPage/SaleOffPage";
+import BlogPage from "./BlogPage/BlogPage";
 import AboutUsPage from "./AboutUsPage/AboutUsPage";
 import SalonSystemPage from "./SalonSystemPage/SalonSystemPage";
 import CartFixedRight from "../components/CartFixedRight/CartFixedRight";
@@ -17,7 +17,6 @@ import { useTheme } from "@mui/material/styles";
 import Breadcrumb from "../components/Breadcrumb/Breadcrumb";
 function App() {
     const theme = useTheme();
-    const isLarge = useMediaQuery(theme.breakpoints.down("lg"));
     const isMedium = useMediaQuery(theme.breakpoints.down("md"));
     return (
         <div>
@@ -41,7 +40,7 @@ function App() {
                                 element={<ServiceOverviewIndex />}
                             />
                             <Route path="/cham-soc-toc" element={<Service />} />
-                            <Route path="/sale-off" element={<SaleOffPage />} />
+                            <Route path="/tin-tuc" element={<BlogPage />} />
                             <Route
                                 path="/he-thong-chi-nhanh"
                                 element={<SalonSystemPage />}

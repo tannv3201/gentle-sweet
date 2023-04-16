@@ -1,10 +1,9 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import styles from "./Service.module.scss";
 import { Grid } from "@mui/material";
 import classNames from "classnames/bind";
 import images from "../../../assets/images";
-import { MenuList } from "../../../components/Navbar/navigation";
 
 import ArticleCategory from "../../../components/ArticleCategory/ArticleCategory";
 import Comments from "../../../components/Comments/Comments";
@@ -164,30 +163,30 @@ const tips = {
 };
 
 function Service() {
-    const [hairServiceList, setHairServiceList] = useState([]);
+    // const [hairServiceList, setHairServiceList] = useState([]);
 
-    const hairServicesFn = () => {
-        const findService = MenuList.find((menu) => {
-            return menu.title === "Dịch vụ";
-        });
-        const hairSv = findService?.children?.find((child) => {
-            return child?.title === "Dịch vụ tóc";
-        });
+    // const hairServicesFn = () => {
+    //     const findService = MenuList.find((menu) => {
+    //         return menu.title === "Dịch vụ";
+    //     });
+    //     const hairSv = findService?.children?.find((child) => {
+    //         return child?.title === "Dịch vụ tóc";
+    //     });
 
-        return hairSv?.children;
-    };
+    //     return hairSv?.children;
+    // };
 
     useEffect(() => {
         // Thiết lập tiêu đề của trang
         document.title = "Dịch vụ làm tóc";
-        const hairServiceFnRun = hairServicesFn();
-        setHairServiceList(hairServiceFnRun);
+        // const hairServiceFnRun = hairServicesFn();
+        // setHairServiceList(hairServiceFnRun);
     }, []);
     return (
         <div className={cx("wrapper")}>
             <div className={cx("wrapper-service")}>
                 <div className={cx("inner")}>
-                    <Grid container spacing={3}>
+                    <Grid container spacing={3} alignItems="stretch">
                         <Grid item lg={9} md={12} sm={12}>
                             <div className={cx("col-9-left")}>
                                 <Grid container spacing={1}>
