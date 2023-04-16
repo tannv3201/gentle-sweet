@@ -15,8 +15,7 @@ import Booking from "./Booking/Booking";
 
 import { useMediaQuery } from "@mui/material";
 import { useTheme } from "@mui/material/styles";
-import Breadcrumb from "../components/Breadcrumb/Breadcrumb";
-import GProgress from "../components/Progress/Progress";
+import Breadcrumb from "../components/GBreadcrumb/GBreadcrumb";
 import { useEffect, useState } from "react";
 function App() {
     const theme = useTheme();
@@ -45,7 +44,6 @@ function App() {
                                 : { marginTop: "110px" }
                         }
                     >
-                        {/* <GProgress isLoading={isLoading} /> */}
                         {!isMedium && <CartFixedRight />}
                         <Breadcrumb />
                         <Routes>

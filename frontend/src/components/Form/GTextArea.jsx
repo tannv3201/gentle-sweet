@@ -1,6 +1,6 @@
 import React from "react";
 import "./GTextArea.module.scss";
-import { RequiredLabel } from "../MyTextField/GTextField";
+import { RequiredLabel } from "../GTextField/GTextField";
 function GTextArea({
     children,
     name,

@@ -3,9 +3,9 @@ import classNames from "classnames/bind";
 import styles from "./Product.module.scss";
 import { FilterListRounded, ArrowDropDown } from "@mui/icons-material";
 import { Grid, MenuItem } from "@mui/material";
-import MyTextField from "../../../components/MyTextField/MyTextField";
+import MyTextField from "../../../components/GTextField/MyTextField";
 import FilterGroup from "../FilterGroup/FilterGroup";
-import GProgress from "../../../components/Progress/Progress";
+import GProgress from "../../../components/GProgress/GProgress";
 import axios from "axios";
 
 const cx = classNames.bind(styles);

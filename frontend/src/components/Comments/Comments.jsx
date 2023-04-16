@@ -2,9 +2,9 @@ import React from "react";
 import styles from "./Comments.module.scss";
 import classnames from "classnames/bind";
 import { Grid } from "@mui/material";
-import GTextField from "../MyTextField/GTextField";
+import GTextField from "../GTextField/GTextField";
 import GTextArea from "../Form/GTextArea";
-import { RequiredLabel } from "../MyTextField/GTextField";
+import { RequiredLabel } from "../GTextField/GTextField";
 import { InsertPhotoRounded, SendRounded } from "@mui/icons-material";
 import GButton from "../MyButton/MyButton";
 

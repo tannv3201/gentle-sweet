@@ -13,8 +13,6 @@ import {
     ClearAllRounded,
 } from "@mui/icons-material";
 
-import { LightTooltip } from "../../../components/GTooltip/GTooltip";
-
 const cx = classNames.bind(styles);
 
 const listService = [

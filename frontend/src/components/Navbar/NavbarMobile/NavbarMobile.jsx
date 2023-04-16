@@ -15,7 +15,7 @@ import {
     SearchRounded,
 } from "@mui/icons-material";
 
-import MyTextField from "../../MyTextField/MyTextField";
+import MyTextField from "../../GTextField/MyTextField";
 import { MenuList } from "../navigation";
 
 function NavbarMobile() {

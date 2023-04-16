@@ -3,7 +3,7 @@ import classNames from "classnames/bind";
 import styles from "./Footer.module.scss";
 import { Grid } from "@mui/material";
 import images from "../../assets/images";
-import MyTextField from "../MyTextField/MyTextField";
+import MyTextField from "../GTextField/MyTextField";
 import { Facebook, Instagram, YouTube, SendRounded } from "@mui/icons-material";
 import { useMediaQuery } from "@mui/material";
 import { useTheme } from "@mui/material/styles";
@@ -11,7 +11,7 @@ const cx = classNames.bind(styles);
 
 function Footer() {
     const theme = useTheme();
-    const isSmall = useMediaQuery(theme.breakpoints.down('lg'));
+    const isSmall = useMediaQuery(theme.breakpoints.down("lg"));
     return (
         <>
             <div className={cx("home-footer-wrapper")}>

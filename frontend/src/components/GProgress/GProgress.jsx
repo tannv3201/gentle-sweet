@@ -1,5 +1,4 @@
 import * as React from "react";
-import Stack from "@mui/material/Stack";
 import CircularProgress from "@mui/material/CircularProgress";
 
 export default function GProgress({ isLoading }) {
@@ -12,7 +11,7 @@ export default function GProgress({ isLoading }) {
                     left: 0,
                     bottom: 0,
                     right: 0,
-                    backgroundColor: "rgba(0,0,0,0.6)",
+                    backgroundColor: "rgba(0,0,0,0.2)",
                     zIndex: 1000,
                 }}
             >

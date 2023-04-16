@@ -5,7 +5,7 @@ import { Grid } from "@mui/material";
 import classNames from "classnames/bind";
 import images from "../../../../assets/images";
 
-import GTextField from "../../../../components/MyTextField/GTextField";
+import GTextField from "../../../../components/GTextField/GTextField";
 import GButton from "../../../../components/MyButton/MyButton";
 
 const cx = classNames.bind(styles);

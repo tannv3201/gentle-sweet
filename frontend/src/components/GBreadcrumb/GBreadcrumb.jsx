@@ -2,16 +2,16 @@
 
 import React, { useEffect, useState } from "react";
 import classNames from "classnames/bind";
-import styles from "./Breadcrumb.module.scss";
+import styles from "./GBreadcrumb.module.scss";
 
 import { NavLink, useLocation } from "react-router-dom";
 import { HomeRounded, NavigateNextRounded } from "@mui/icons-material";
-import { MenuList } from "../../components/Navbar/navigation";
+import { MenuList } from "../Navbar/navigation";
 import { useMediaQuery } from "@mui/material";
 import { useTheme } from "@mui/material/styles";
 const cx = classNames.bind(styles);
 
-function Breadcrumb() {
+function GBreadcrumb() {
     const theme = useTheme();
     const isMedium = useMediaQuery(theme.breakpoints.down("md"));
     const isSmall = useMediaQuery(theme.breakpoints.down("sm"));
@@ -96,4 +96,4 @@ function Breadcrumb() {
     );
 }
 
-export default Breadcrumb;
+export default GBreadcrumb;
