@@ -255,6 +255,16 @@ span.MuiChip-label {
         background-color: var(--white) !important;
     }
 }
+.MuiFormLabel-root.MuiInputLabel-root.MuiInputLabel-formControl.MuiInputLabel-animated.MuiInputLabel-filled:not(
+        .Mui-focused
+    ) {
+    font-size: 1.6rem !important;
+    // padding-top: 2px !important;
+}
+
+.MuiFormLabel-root.MuiInputLabel-root.MuiInputLabel-formControl.MuiInputLabel-animated.MuiInputLabel-filled {
+    padding-top: 2px !important;
+}
 
 .MuiInputLabel-root {
     font-size: 2rem !important;
@@ -268,6 +278,21 @@ span.MuiChip-label {
     color: var(--text-primary) !important;
 }
 
+.MuiInputBase-root.MuiFilledInput-root::after {
+    border-bottom: unset !important;
+}
+.MuiInputBase-root.MuiFilledInput-root.MuiFilledInput-underline {
+    background-color: var(--white) !important;
+}
+.MuiInputBase-root.MuiFilledInput-root:hover:not(
+        .Mui-disabled,
+        .Mui-error
+    ):before {
+    border-bottom: unset !important;
+}
+.MuiInputBase-root.MuiFilledInput-root::before {
+    border-bottom: unset !important;
+}
 .MuiInput-underline:after {
     border-bottom-color: var(--color-text-field) !important;
 }
@@ -281,4 +306,30 @@ span.MuiChip-label {
     font-weight: var(--fw-medium) !important;
     font-size: 1.6rem !important;
     text-transform: unset !important;
+}
+.MuiFormControl-root {
+    label {
+        font-size: 1.6rem !important;
+    }
+}
+.MuiFormLabel-root.MuiInputLabel-root.MuiInputLabel-formControl.MuiInputLabel-animated.MuiInputLabel-shrink.MuiInputLabel-filled {
+    font-size: 1.8rem !important;
+}
+.MuiAutocomplete-popper {
+    font-size: 1.6rem !important;
+}
+// Step
+.MuiStepLabel-label {
+    font-size: 1.6rem !important;
+    font-weight: var(--fw-medium);
+    color: var(--text-primary);
+}
+
+.MuiSvgIcon-root.MuiSvgIcon-fontSizeMedium.MuiStepIcon-root {
+    width: 2.4rem !important;
+    height: 2.4rem !important;
+
+    .MuiStepIcon-text {
+        font-size: 1.4rem !important;
+    }
 }

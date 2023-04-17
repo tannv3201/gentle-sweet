@@ -5,6 +5,7 @@ import { Grid } from "@mui/material";
 import OverviewBooking from "./OverviewBooking/OverviewBooking";
 import RelatedInformation from "./RelatedInformation/RelatedInformation";
 import images from "../../assets/images";
+import StepperBooking from "./OverviewBooking/StepperBooking/StepperBooking";
 
 const cx = classNames.bind(styles);
 
@@ -17,8 +18,18 @@ function Booking() {
             <div className={cx("wrapper")}>
                 <div className={cx("inner")}>
                     <Grid container spacing={2}>
-                        <Grid item xs={9}>
-                            <OverviewBooking />
+                        <Grid item xs={3}>
+                            <div
+                                style={{
+                                    backgroundColor: "var(--white)",
+                                    height: "300px",
+                                }}
+                            >
+                                a
+                            </div>
+                        </Grid>
+                        <Grid item xs={6}>
+                            <StepperBooking />
                         </Grid>
 
                         <Grid item xs={3}>

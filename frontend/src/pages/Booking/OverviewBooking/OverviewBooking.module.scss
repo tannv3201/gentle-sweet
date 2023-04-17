@@ -50,25 +50,40 @@
     }
 
     .policies-guidelines-wrapper {
-        border: 1px solid var(--primary);
+        // border: 1px solid var(--primary);
+        border: 1px solid #ccc;
         border-radius: 6px;
         margin-top: 12px 0;
-        .policies-guidelines-title {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 8px;
-            cursor: pointer;
-            user-select: none;
-            &.isOpen {
+        &.isOpen {
+            border: 1px solid var(--primary);
+            .policies-guidelines-title {
+                h2 {
+                    color: var(--primary);
+                }
+            }
+            .policies-guidelines-content {
+                height: 360px;
+                overflow-y: auto;
+                border-radius: 6px;
+            }
+            .policies-guidelines-title {
                 h2 {
                     text-decoration: underline;
                 }
             }
+        }
+        .policies-guidelines-title {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 2px 8px;
+            cursor: pointer;
+            user-select: none;
+
             h2 {
-                font-size: 2rem;
-                font-weight: var(--fw-semi-bold);
-                color: var(--primary);
+                font-size: 1.8rem;
+                font-weight: var(--fw-medium);
+                color: var(--text-primary);
                 padding: 0 12px;
                 transition: all 0.2s linear;
             }
@@ -79,10 +94,6 @@
             overflow: hidden;
             transition: all 0.2s linear;
 
-            &.isOpen {
-                height: 480px;
-                overflow-y: auto;
-            }
             .policy {
                 padding: 12px 8px;
             }
@@ -93,7 +104,7 @@
                 h3 {
                     font-size: 2rem;
                     font-weight: var(--fw-semi-bold);
-                    color: var(--primary);
+                    color: var(--text-primary);
                     text-align: center;
                 }
             }
@@ -101,7 +112,7 @@
                 h3 {
                     font-size: 1.8rem;
                     font-weight: var(--fw-medium);
-                    color: var(--primary);
+                    color: var(--text-primary);
                     text-align: center;
                 }
             }
