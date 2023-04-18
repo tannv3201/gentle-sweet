@@ -6,7 +6,11 @@ import { Grid } from "@mui/material";
 import { useMediaQuery } from "@mui/material";
 import { useTheme } from "@mui/material/styles";
 import GModal from "../../../../../common/GModal/GModal";
+import { IconButton } from "@mui/material";
 
+import { MenuRounded, QuestionMarkRounded } from "@mui/icons-material";
+import Box from "@mui/material/Box";
+import { LightTooltip } from "../../../../../components/GTooltip/GTooltip";
 const cx = classNames.bind(styles);
 
 const guidelines = [
@@ -36,6 +40,12 @@ function ModalPolycyGuideline({ handleClose, handleOpen, isOpen }) {
     const theme = useTheme();
     const isMedium = useMediaQuery(theme.breakpoints.down("md"));
     const isSmall = useMediaQuery(theme.breakpoints.down("sm"));
+    const [isOpenDrawer, setIsOpenDrawer] = React.useState(false);
+
+    const toggleDrawer = React.useCallback(
+        () => setIsOpenDrawer((prevOpen) => !prevOpen),
+        [setIsOpenDrawer]
+    );
     return (
         <>
             <GModal
@@ -82,6 +92,29 @@ function ModalPolycyGuideline({ handleClose, handleOpen, isOpen }) {
                     </Grid>
                 </div>
             </GModal>
+            <Box
+                sx={{
+                    position: "fixed",
+                    right: "16px",
+                    bottom: "80px",
+                    zIndex: 10,
+                }}
+            >
+                <LightTooltip placement="left" title="Hướng dẫn">
+                    <IconButton
+                        size="medium"
+                        style={{
+                            border: "1px solid var(--primary)",
+                            backgroundColor: "var(--white)",
+                        }}
+                        onClick={handleOpen}
+                    >
+                        <QuestionMarkRounded
+                            style={{ color: "var(--primary)" }}
+                        />
+                    </IconButton>
+                </LightTooltip>
+            </Box>
         </>
     );
 }

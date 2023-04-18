@@ -1,9 +1,92 @@
 .wrapper {
+    padding: 12px;
+    background-color: var(--white);
+    border-radius: 6px;
+    height: 100%;
 }
 
 .inner {
-    padding: 12px;
-    border-radius: 6px;
-    background-color: var(--white);
-    height: 300px;
+    height: 100%;
+    .booking-summary {
+        border: 1px solid var(--border-color);
+        padding: 12px;
+        border-radius: 6px;
+    }
+
+    .booking-summary-title {
+        h2 {
+            font-size: 2.4rem;
+            font-weight: var(--fw-bold);
+            color: var(--text-primary);
+        }
+    }
+
+    .change-selection {
+        font-weight: var(--fw-medium);
+        padding: 4px 12px;
+        border-radius: 6px;
+        transition: background-color 0.2s linear;
+        &:hover {
+            background-color: var(--primary-300);
+        }
+    }
+
+    .price-summary {
+        padding: 12px;
+        .child-price-summary {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 8px;
+            .child-price-title {
+            }
+            .child-price {
+            }
+        }
+    }
+
+    .temporary-price-wrapper {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin-bottom: 8px;
+
+        .temporary-price-title {
+        }
+        .temporary-price {
+        }
+    }
+
+    .total-price-wrapper {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+
+        .total-price-title {
+            font-size: 1.8rem;
+            font-weight: var(--fw-bold);
+        }
+        .total-price {
+            font-size: 1.8rem;
+            font-weight: var(--fw-bold);
+        }
+    }
+
+    .request-booking-btn {
+        display: block;
+        text-align: center;
+        background-color: var(--primary-500);
+        color: var(--white);
+        padding: 10px 12px;
+        border-radius: 6px;
+        font-size: 1.8rem;
+        font-weight: var(--fw-medium);
+        transition: all 0.2s linear;
+        user-select: none;
+        cursor: pointer;
+        &:hover {
+            transform: translateY(-1px);
+            background-color: var(--primary);
+        }
+    }
 }

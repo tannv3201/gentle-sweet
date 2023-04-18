@@ -180,7 +180,7 @@ export default function StepperService() {
                                                 *
                                             </span>
                                         </span>
-                                        <p className={cx("note-description")}>
+                                        <div className={cx("note-description")}>
                                             <ol>
                                                 <li>
                                                     Quý khách hàng vui lòng kiểm
@@ -204,7 +204,7 @@ export default function StepperService() {
                                                     </a>
                                                 </li>
                                             </ol>
-                                        </p>
+                                        </div>
                                     </div>
                                 </Grid>
                             </Grid>

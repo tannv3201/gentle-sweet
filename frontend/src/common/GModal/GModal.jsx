@@ -4,16 +4,19 @@ import Modal from "@mui/material/Modal";
 import Typography from "@mui/material/Typography";
 import { CloseRounded } from "@mui/icons-material";
 import { IconButton } from "@mui/material";
+import { useMediaQuery } from "@mui/material";
+import { useTheme } from "@mui/material/styles";
 
 const style = {
     position: "absolute",
     top: "50%",
     left: "50%",
     transform: "translate(-50%, -50%)",
-    minWidth: 400,
+    minWidth: 300,
     maxHeight: 600,
     bgcolor: "background.paper",
     border: "1px solid var(--border-color)",
+    overflowY: "auto",
     boxShadow: 24,
     borderRadius: "6px",
     fontFamily: "var(--font-family)",
@@ -26,10 +29,13 @@ export default function GModal({
     children,
     title,
 }) {
+    const theme = useTheme();
+    const isSmall = useMediaQuery(theme.breakpoints.down("sm"));
+    const isExtraSmall = useMediaQuery(theme.breakpoints.down("md"));
     return (
         <div>
             <Modal keepMounted open={isOpen} onClose={handleClose}>
-                <Box sx={style}>
+                <Box sx={{ ...style, maxHeight: isSmall ? 440 : 600 }}>
                     <div
                         style={{
                             display: "flex",
@@ -43,13 +49,17 @@ export default function GModal({
                     >
                         <h2
                             style={{
-                                fontSize: "2.4rem",
+                                fontSize: "2rem",
                                 fontWeight: "var(--fw-bold)",
+                                color: "var(--text-secondary)",
                             }}
                         >
                             {title}
                         </h2>
-                        <IconButton onClick={handleClose}>
+                        <IconButton
+                            onClick={handleClose}
+                            size={isSmall ? "large" : "medium"}
+                        >
                             <CloseRounded />
                         </IconButton>
                     </div>

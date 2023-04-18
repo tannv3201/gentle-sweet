@@ -28,7 +28,9 @@ function Booking() {
 
                         {!isMedium && (
                             <Grid item xs={4}>
-                                <BookingConfirm />
+                                <div style={{ height: "100%" }}>
+                                    <BookingConfirm />
+                                </div>
                             </Grid>
                         )}
                     </Grid>

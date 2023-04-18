@@ -1,0 +1,12 @@
+.modal-wrapper {
+    position: "absolute";
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    min-width: 400;
+    max-height: 600;
+    background-color: var(--white);
+    border: 1px solid var(--border-color);
+    border-radius: 6px;
+    font-family: var(--font-family);
+}
