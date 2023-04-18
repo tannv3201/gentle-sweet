@@ -170,11 +170,14 @@ function NavbarDesktop() {
                                 <IconButton title="Đăng nhập" size="large">
                                     <PersonRounded />
                                 </IconButton>
-                                <GButton
-                                    style={{ background: "var(--primary-500)" }}
-                                >
-                                    <NavLink to="/dat-lich">Đặt lịch</NavLink>
-                                </GButton>
+                                <span>
+                                    <NavLink
+                                        className={cx("booking-btn")}
+                                        to="/dat-lich"
+                                    >
+                                        Đặt lịch
+                                    </NavLink>
+                                </span>
                             </div>
                         </Grid>
                     </Grid>

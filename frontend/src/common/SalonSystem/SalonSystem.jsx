@@ -5,9 +5,9 @@ import classNames from "classnames/bind";
 import styles from "./SalonSystem.module.scss";
 import { Grid } from "@mui/material";
 import AppBar from "@mui/material/AppBar";
-import TabPanel from "../TabPanel/TabPanel";
-import MyTabs from "../TabPanel/Tabs";
-import MyTab from "..//TabPanel/Tab";
+import TabPanel from "../../components/TabPanel/TabPanel";
+import MyTabs from "../../components/TabPanel/Tabs";
+import MyTab from "../../components/TabPanel/Tab";
 import { salonSystem } from "./FakeData";
 import { useMediaQuery } from "@mui/material";
 import { useTheme } from "@mui/material/styles";
@@ -15,7 +15,7 @@ const cx = classNames.bind(styles);
 
 function SalonSystem({ searchNearYou }) {
     const theme = useTheme();
-    const isMedium = useMediaQuery(theme.breakpoints.down('xl'));
+    const isMedium = useMediaQuery(theme.breakpoints.down("xl"));
     const [tabIndex, setTabIndex] = React.useState(0);
 
     const handleTabChange = (event, newTabIndex) => {

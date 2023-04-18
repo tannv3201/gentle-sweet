@@ -7,7 +7,17 @@ export const RequiredLabel = () => {
 };
 
 export const RedditTextField = styled(
-    ({ label, groupLabel, requiredlabel, name, ...props }) => (
+    ({
+        label,
+        groupLabel,
+        requiredlabel,
+        name,
+        multiline,
+        rows,
+        disabled,
+        variant = "filled",
+        ...props
+    }) => (
         <>
             {groupLabel && (
                 <div
@@ -29,6 +39,10 @@ export const RedditTextField = styled(
             <TextField
                 InputProps={{ disableUnderline: true }}
                 id={name}
+                variant={variant}
+                multiline={multiline}
+                rows={rows}
+                disabled={disabled}
                 label={
                     label ? (
                         <>
@@ -75,6 +89,7 @@ function GTextField({
     disabled,
     sx,
     willShrink,
+    multiline,
     ...otherProps
 }) {
     const configTextfield = {
@@ -106,7 +121,11 @@ function GTextField({
 
     return (
         <>
-            <TextField {...configTextfield} label={displayLabel} />
+            <TextField
+                {...configTextfield}
+                multiline={multiline}
+                label={displayLabel}
+            />
         </>
     );
 }

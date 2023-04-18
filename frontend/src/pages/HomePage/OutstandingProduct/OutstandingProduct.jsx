@@ -8,6 +8,7 @@ import { ArrowForwardRounded, FormatQuoteRounded } from "@mui/icons-material";
 import { useMediaQuery } from "@mui/material";
 import { useTheme } from "@mui/material/styles";
 import { NavLink } from "react-router-dom";
+import { FormatCurrency } from "../../../components/FormatCurrency/FormatCurrency";
 
 const cx = classNames.bind(styles);
 
@@ -57,12 +58,12 @@ function ProductItem({
     const theme = useTheme();
     const isSmall = useMediaQuery(theme.breakpoints.down("md"));
 
-    const formatCurrency = (price) => {
-        return new Intl.NumberFormat("vi-VN", {
-            style: "currency",
-            currency: "VND",
-        }).format(price);
-    };
+    // const formatCurrency = (price) => {
+    //     return new Intl.NumberFormat("vi-VN", {
+    //         style: "currency",
+    //         currency: "VND",
+    //     }).format(price);
+    // };
 
     return (
         <Grid item lg={3} md={6} sm={6} xs={6}>
@@ -79,7 +80,7 @@ function ProductItem({
                     </h3>
                     <div className={cx("product-price-container")}>
                         <span className={cx("product-price")}>
-                            {formatCurrency(productPrice)}
+                            {FormatCurrency(productPrice)}
                         </span>
                     </div>
                     <div className={cx("product-rating-container")}>

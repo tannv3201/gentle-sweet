@@ -10,11 +10,11 @@ import Advantage from "./Strengths/Strengths";
 import OutstandingProduct from "./OutstandingProduct/OutstandingProduct";
 import { useMediaQuery } from "@mui/material";
 import { useTheme } from "@mui/material/styles";
-import SalonSystem from "../../components/SalonSystem/SalonSystem";
+import SalonSystem from "../../common/SalonSystem/SalonSystem";
 
 function HomePage() {
     const theme = useTheme();
-    const isMedium = useMediaQuery(theme.breakpoints.down('lg'));
+    const isMedium = useMediaQuery(theme.breakpoints.down("lg"));
     return (
         <>
             <HomeBanner />

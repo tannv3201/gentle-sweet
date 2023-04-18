@@ -32,6 +32,16 @@
         display: flex;
         align-items: center;
         justify-content: flex-end;
+        .booking-btn {
+            background-color: var(--primary-500);
+            padding: 8px 20px;
+            border-radius: 6px;
+            color: var(--white);
+            font-weight: var(--fw-medium);
+            &:active {
+                opacity: 0.8;
+            }
+        }
     }
 }
 

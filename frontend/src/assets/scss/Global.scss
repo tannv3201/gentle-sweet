@@ -24,6 +24,7 @@
     --grey-medium: #4c4c4c;
     // --light-grey: #f1f1f1;
     --light-gray: #f8f8fa;
+    --border-color: #e2e2e1;
     --info: #1d8cf8;
     --warning: #ff8d72;
     --danger: #fd5d93;
@@ -315,21 +316,61 @@ span.MuiChip-label {
 .MuiFormLabel-root.MuiInputLabel-root.MuiInputLabel-formControl.MuiInputLabel-animated.MuiInputLabel-shrink.MuiInputLabel-filled {
     font-size: 1.8rem !important;
 }
-.MuiAutocomplete-popper {
+.MuiAutocomplete-popper.MuiPoper-root {
     font-size: 1.6rem !important;
 }
+
+.MuiAutocomplete-listbox {
+    font-size: 1.6rem !important;
+    font-family: var(--font-family) !important;
+    font-weight: var(--fw-medium) !important;
+    color: var(--text-primary) !important;
+}
+
+.MuiFilledInput-root {
+    border: 1px solid #e2e2e1 !important;
+    overflow: hidden !important;
+    border-radius: 4px !important;
+    transition: border-color 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms,
+        background-color 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms,
+        box-shadow 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms !important;
+    &:hover {
+        background-color: transparent !important;
+    }
+    &.Mui-focused {
+        background-color: transparent !important;
+        box-shadow: rgba(25, 118, 210, 0.25) 0 0 0 2px !important;
+        border-color: #1976d2 !important;
+    }
+}
+
 // Step
 .MuiStepLabel-label {
-    font-size: 1.6rem !important;
+    font-size: 1.4rem !important;
     font-weight: var(--fw-medium);
     color: var(--text-primary);
 }
 
 .MuiSvgIcon-root.MuiSvgIcon-fontSizeMedium.MuiStepIcon-root {
-    width: 2.4rem !important;
-    height: 2.4rem !important;
+    width: 2rem !important;
+    height: 2rem !important;
 
     .MuiStepIcon-text {
         font-size: 1.4rem !important;
     }
+}
+
+// Datepicker
+
+.MuiPickersCalendarHeader-label {
+    font-size: 1.6rem !important;
+}
+
+.MuiDayCalendar-header {
+    span {
+        font-size: 1.4rem !important;
+    }
+}
+.MuiPickersDay-root.MuiPickersDay-dayWithMargin {
+    font-size: 1.4rem !important;
 }

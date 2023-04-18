@@ -1,15 +1,20 @@
 import * as React from "react";
-
-import GTextField, {
-    RedditTextField,
-} from "../../../../../components/GTextField/GTextField";
+import { RedditTextField } from "../../../../components/GTextField/GTextField";
 import classNames from "classnames/bind";
 import styles from "./StepperInformation.module.scss";
 import { Grid } from "@mui/material";
-import GAutocomplete from "../../../../../components/GAutocomplete/GAutocomplete";
+import GAutocomplete from "../../../../components/GAutocomplete/GAutocomplete";
+import { useState } from "react";
 
 const cx = classNames.bind(styles);
-
+const provinces = [
+    { id: 1, name: "Hà Nội" },
+    { id: 2, name: "Thái Bình" },
+    { id: 3, name: "Hải Phòng" },
+    { id: 4, name: "Nam Định" },
+    { id: 5, name: "Nghệ An" },
+    { id: 6, name: "Ninh Bình" },
+];
 const GroupLabel = ({ htmlFor, label }) => {
     return (
         <div
@@ -32,6 +37,10 @@ const GroupLabel = ({ htmlFor, label }) => {
 };
 
 export default function StepperInformation() {
+    const [firstName, setFistName] = useState("");
+    const [lastName, setLastName] = useState("");
+    const fullName =
+        firstName || lastName ? lastName.trim() + " " + firstName.trim() : "";
     return (
         <div className={cx("wrapper")}>
             <div className={cx("inner")}>
@@ -47,33 +56,36 @@ export default function StepperInformation() {
                             </p>
                         </span>
                     </Grid>
-
                     <Grid item xs={12}>
                         <GroupLabel htmlFor={"lastName"} label={"Họ và tên"} />
                     </Grid>
-                    <Grid item xs={6}>
+                    <Grid item lg={4} md={12} sm={12} xs={12}>
                         <RedditTextField
                             variant="filled"
                             label="Họ"
                             id="lastName"
                             requiredlabel
                             fullWidth
+                            onChange={(e) => setLastName(e.target.value)}
                         />
                     </Grid>
-                    <Grid item xs={6}>
+                    <Grid item lg={4} md={12} sm={12} xs={12}>
                         <RedditTextField
                             variant="filled"
                             label="Tên"
                             requiredlabel
                             fullWidth
+                            onChange={(e) => setFistName(e.target.value)}
                         />
                     </Grid>
-                    <Grid item xs={12}>
+                    <Grid item lg={4} md={12} sm={12} xs={12}>
                         <RedditTextField
                             variant="filled"
                             label="Tên hiển thị"
                             requiredlabel
                             fullWidth
+                            disabled
+                            value={fullName}
                         />
                     </Grid>
                     <Grid item xs={12}>
@@ -82,7 +94,7 @@ export default function StepperInformation() {
                             label={"Thông tin liên hệ"}
                         />
                     </Grid>
-                    <Grid item xs={12}>
+                    <Grid item lg={6} md={12} sm={12} xs={12}>
                         <RedditTextField
                             variant="filled"
                             label="Địa chỉ e-mail"
@@ -91,7 +103,7 @@ export default function StepperInformation() {
                             id="email"
                         />
                     </Grid>
-                    <Grid item xs={12}>
+                    <Grid item lg={6} md={12} sm={12} xs={12}>
                         <RedditTextField
                             variant="filled"
                             label="Số điện thoại"
@@ -103,29 +115,29 @@ export default function StepperInformation() {
                     <Grid item xs={12}>
                         <GroupLabel htmlFor="address" label={"Địa chỉ"} />
                     </Grid>
-                    <Grid item xs={4}>
+                    <Grid item lg={4} md={12} sm={12} xs={12}>
                         <GAutocomplete
                             variant="filled"
                             label="Tỉnh/Thành phố"
-                            requiredlabel
                             fullWidth
                             id="address"
+                            data={provinces}
                         />
                     </Grid>
-                    <Grid item xs={4}>
+                    <Grid item lg={4} md={12} sm={12} xs={12}>
                         <GAutocomplete
                             variant="filled"
-                            label="Tỉnh/Thành phố"
-                            requiredlabel
+                            label="Quận/Huyện"
                             fullWidth
+                            data={provinces}
                         />
                     </Grid>
-                    <Grid item xs={4}>
+                    <Grid item lg={4} md={12} sm={12} xs={12}>
                         <GAutocomplete
                             variant="filled"
-                            label="Tỉnh/Thành phố"
-                            requiredlabel
+                            label="Phường/Xã"
                             fullWidth
+                            data={provinces}
                         />
                     </Grid>
                     <Grid item xs={12}>

@@ -5,7 +5,10 @@ function GButton({
     children,
     startIcon,
     size = "small",
+    endIcon,
     variant = "contained",
+    className,
+    style,
     ...props
 }) {
     return (
@@ -13,8 +16,11 @@ function GButton({
             <Button
                 {...props}
                 startIcon={startIcon}
+                endIcon={endIcon}
                 size={size}
                 variant={variant}
+                className={className}
+                style={style}
             >
                 {children}
             </Button>

@@ -3,12 +3,21 @@ import TextField from "@mui/material/TextField";
 import Autocomplete from "@mui/material/Autocomplete";
 import GTextField, { RedditTextField } from "../GTextField/GTextField";
 
-export default function GAutocomplete({ fullWidth, variant, label, id }) {
+export default function GAutocomplete({
+    fullWidth,
+    variant,
+    label,
+    id,
+    data,
+    ...props
+}) {
     return (
         <Autocomplete
             disablePortal
+            {...props}
             id={id}
-            options={top100Films}
+            options={data}
+            getOptionLabel={(option) => `${option.name}`}
             renderInput={(params) => (
                 <RedditTextField
                     {...params}
