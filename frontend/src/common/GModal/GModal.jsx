@@ -11,10 +11,10 @@ const style = {
     left: "50%",
     transform: "translate(-50%, -50%)",
     minWidth: 400,
+    maxHeight: 600,
     bgcolor: "background.paper",
-    border: "1px solid #000",
+    border: "1px solid var(--border-color)",
     boxShadow: 24,
-    p: 1,
     borderRadius: "6px",
     fontFamily: "var(--font-family)",
 };
@@ -35,6 +35,10 @@ export default function GModal({
                             display: "flex",
                             alignItems: "center",
                             justifyContent: "space-between",
+                            backgroundColor: "var(--light-gray)",
+                            padding: "12px",
+                            borderBottom: "1px solid var(--border-color)",
+                            borderRadius: "6px",
                         }}
                     >
                         <h2
@@ -49,7 +53,10 @@ export default function GModal({
                             <CloseRounded />
                         </IconButton>
                     </div>
-                    {children}
+                    <div style={{ padding: "8px 8px 12px 8px" }}>
+                        {" "}
+                        {children}
+                    </div>
                 </Box>
             </Modal>
         </div>
