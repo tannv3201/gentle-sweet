@@ -25,14 +25,11 @@ function Booking() {
                         <Grid item lg={8} md={12} sm={12} xs={12}>
                             <StepperBooking />
                         </Grid>
-
-                        {!isMedium && (
-                            <Grid item xs={4}>
-                                <div style={{ height: "100%" }}>
-                                    <BookingConfirm />
-                                </div>
-                            </Grid>
-                        )}
+                        <Grid item lg={4} md={12} sm={12} xs={12}>
+                            <div style={{ height: "100%", width: "100%" }}>
+                                <BookingConfirm />
+                            </div>
+                        </Grid>
                     </Grid>
                 </div>
             </div>

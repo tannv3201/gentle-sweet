@@ -7,23 +7,28 @@ import MyTextField from "../../../components/GTextField/MyTextField";
 import FilterGroup from "../FilterGroup/FilterGroup";
 import GProgress from "../../../components/GProgress/GProgress";
 import axios from "axios";
+import ProductSkeleton from "./ProductSkeleton";
 
 const cx = classNames.bind(styles);
 function Product() {
     const [productList, setProductList] = useState([]);
     const [isLoading, setIsLoading] = useState(false);
+    const [isLoadingSkeleton, setIsLoadingSkeleton] = useState(false);
     useEffect(() => {
         const fetchData = async () => {
             setIsLoading(true);
+            setIsLoadingSkeleton(true);
             await axios
                 .get("https://6418546729e7e36438e5a243.mockapi.io/api/v1/nails")
                 .then((response) => {
                     setProductList(response.data);
                     setIsLoading(false);
+                    setIsLoadingSkeleton(false);
                 })
                 .catch((err) => {
                     console.log(err);
                     setIsLoading(false);
+                    setIsLoadingSkeleton(false);
                 });
         };
         fetchData();
@@ -32,6 +37,7 @@ function Product() {
     return (
         <div className={cx("product-wrapper")}>
             <div className={cx("product-inner")}>
+                <ProductSkeleton isLoadingSkeleton={isLoadingSkeleton} />
                 <GProgress isLoading={isLoading} />
                 <Grid container spacing={3}>
                     {productList.map((product, index) => (
