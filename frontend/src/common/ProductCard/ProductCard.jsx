@@ -16,6 +16,7 @@ export default function ProductCard({
     valueRating,
     productSold,
     boxShadow,
+    href,
 }) {
     return (
         <div
@@ -25,7 +26,7 @@ export default function ProductCard({
                     : cx("product-container")
             }
         >
-            <a href="#" className={cx("product-img")}>
+            <a href={href} className={cx("product-img")}>
                 <img src={imageSrc} alt="" />
             </a>
             <div className={cx("product-content")}>
@@ -33,7 +34,7 @@ export default function ProductCard({
                     <span>{categoryName}</span>
                 </div>
                 <h3 className={cx("product-name")}>
-                    <a href="">{productName}</a>
+                    <a href={href}>{productName}</a>
                 </h3>
                 <div className={cx("product-price-container")}>
                     <span className={cx("product-price")}>
@@ -54,7 +55,7 @@ export default function ProductCard({
                     </div>
                 </div>
                 <div className={cx("product-add-to-cart")}>
-                    <a href="">Thêm vào giỏ hàng</a>
+                    <a href="#">Thêm vào giỏ hàng</a>
                 </div>
             </div>
         </div>

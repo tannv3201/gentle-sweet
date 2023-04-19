@@ -1,10 +1,7 @@
 import React, { useEffect, useState } from "react";
 import classNames from "classnames/bind";
 import styles from "./Product.module.scss";
-import { FilterListRounded, ArrowDropDown } from "@mui/icons-material";
-import { Grid, MenuItem } from "@mui/material";
-import MyTextField from "../../../components/GTextField/MyTextField";
-import images from "../../../assets/images";
+import { Grid } from "@mui/material";
 import GProgress from "../../../components/GProgress/GProgress";
 import axios from "axios";
 import ProductSkeleton from "./ProductSkeleton";
