@@ -9,6 +9,7 @@ import { useMediaQuery } from "@mui/material";
 import { useTheme } from "@mui/material/styles";
 import { NavLink } from "react-router-dom";
 import { FormatCurrency } from "../../../components/FormatCurrency/FormatCurrency";
+import ProductCard from "../../../common/ProductCard/ProductCard";
 
 const cx = classNames.bind(styles);
 
@@ -57,13 +58,6 @@ function ProductItem({
 }) {
     const theme = useTheme();
     const isSmall = useMediaQuery(theme.breakpoints.down("md"));
-
-    // const formatCurrency = (price) => {
-    //     return new Intl.NumberFormat("vi-VN", {
-    //         style: "currency",
-    //         currency: "VND",
-    //     }).format(price);
-    // };
 
     return (
         <Grid item lg={3} md={6} sm={6} xs={6}>
@@ -140,15 +134,18 @@ function OutstandingProduct() {
                 </Grid>
                 <Grid container spacing={3}>
                     {productList.map((product, index) => (
-                        <ProductItem
-                            key={index}
-                            imageSrc={product?.image}
-                            categoryName={product?.category}
-                            productName={product?.name}
-                            productPrice={product?.price}
-                            productSold={product?.sold}
-                            valueRating={product?.rating}
-                        />
+                        <Grid item lg={3} md={6} sm={6} xs={6}>
+                            <ProductCard
+                                boxShadow={true}
+                                key={index}
+                                imageSrc={product?.image}
+                                categoryName={product?.category}
+                                productName={product?.name}
+                                productPrice={product?.price}
+                                productSold={product?.sold}
+                                valueRating={product?.rating}
+                            />
+                        </Grid>
                     ))}
                 </Grid>
                 <div className={cx("outstanding-product-see-more")}>

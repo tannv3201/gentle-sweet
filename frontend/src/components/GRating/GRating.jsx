@@ -22,16 +22,17 @@ export default function GRrating() {
     return (
         <Box
             sx={{
-                width: 200,
+                // width: 200,
                 display: "flex",
                 alignItems: "center",
             }}
         >
             <Rating
+                size="small"
                 name="hover-feedback"
                 value={value}
                 precision={1}
-                getLabelText={getLabelText}
+                // getLabelText={getLabelText}
                 onChange={(event, newValue) => {
                     setValue(newValue);
                 }}
@@ -39,12 +40,12 @@ export default function GRrating() {
                     setHover(newHover);
                 }}
                 emptyIcon={
-                    <StarIcon style={{ opacity: 0.55 }} fontSize="inherit" />
+                    <StarIcon style={{ opacity: 0.55 }} fontSize="small" />
                 }
             />
-            {value !== null && (
+            {/* {value !== null && (
                 <Box sx={{ ml: 2 }}>{labels[hover !== -1 ? hover : value]}</Box>
-            )}
+            )} */}
         </Box>
     );
 }

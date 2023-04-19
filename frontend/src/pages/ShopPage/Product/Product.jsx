@@ -5,11 +5,47 @@ import { FilterListRounded, ArrowDropDown } from "@mui/icons-material";
 import { Grid, MenuItem } from "@mui/material";
 import MyTextField from "../../../components/GTextField/MyTextField";
 import FilterGroup from "../FilterGroup/FilterGroup";
+import images from "../../../assets/images";
 import GProgress from "../../../components/GProgress/GProgress";
 import axios from "axios";
 import ProductSkeleton from "./ProductSkeleton";
+import ProductCard from "../../../common/ProductCard/ProductCard";
 
 const cx = classNames.bind(styles);
+
+const categoryList = [
+    {
+        id: 1,
+        title: "Tất cả",
+        href: "#",
+    },
+    {
+        id: 2,
+        title: "Dưỡng tóc",
+        href: "#",
+    },
+    {
+        id: 3,
+        title: "Dầu gội",
+        href: "#",
+    },
+    {
+        id: 4,
+        title: "Dưỡng móng",
+        href: "#",
+    },
+    {
+        id: 5,
+        title: "dụng cụ làm nails",
+        href: "#",
+    },
+    {
+        id: 6,
+        title: "Sơn móng",
+        href: "#",
+    },
+];
+
 function Product() {
     const [productList, setProductList] = useState([]);
     const [isLoading, setIsLoading] = useState(false);
@@ -19,7 +55,9 @@ function Product() {
             setIsLoading(true);
             setIsLoadingSkeleton(true);
             await axios
-                .get("https://6418546729e7e36438e5a243.mockapi.io/api/v1/nails")
+                .get(
+                    "https://6418546729e7e36438e5a243.mockapi.io/api/v1/products"
+                )
                 .then((response) => {
                     setProductList(response.data);
                     setIsLoading(false);
@@ -40,33 +78,37 @@ function Product() {
                 <ProductSkeleton isLoadingSkeleton={isLoadingSkeleton} />
                 <GProgress isLoading={isLoading} />
                 <Grid container spacing={3}>
-                    {productList.map((product, index) => (
-                        <Grid item xs={3}>
-                            <div className={cx("product-item")}>
-                                <div className={cx("product-item-img")}>
-                                    <img src={product.image} alt="" />
-                                </div>
-                                <div className={cx("product-item-info")}>
-                                    <h3 className={cx("product-name")}>
-                                        <a href="#">{product.name}</a>
-                                    </h3>
-                                    <p className={cx("product-price")}>
-                                        <span className={cx("product-price")}>
-                                            {product.price}
-                                        </span>
-                                        <span
-                                            className={cx("product-price-del")}
-                                        >
-                                            30000
-                                        </span>
-                                    </p>
-                                    {product.status === "0" && (
-                                        <div className={cx("product-soldout")}>
-                                            Tạm hết hàng
-                                        </div>
-                                    )}
-                                </div>
+                    {/* <Grid item xs={12}>
+                        <div className={cx("category-list-wrapper")}>
+                            <span className={cx("category-list-title")}>
+                                <h3>Danh mục:</h3>
+                            </span>
+                            <div className={cx("category-list")}>
+                                {categoryList?.map((category, index) => (
+                                    <a
+                                        key={index}
+                                        href={category?.href}
+                                        className={
+                                            index === 0 ? cx("isActive") : ""
+                                        }
+                                    >
+                                        {category?.title}
+                                    </a>
+                                ))}
                             </div>
+                        </div>
+                    </Grid> */}
+                    {productList.map((product, index) => (
+                        <Grid key={index} item lg={3} md={6} sm={6} xs={6}>
+                            <ProductCard
+                                key={index}
+                                imageSrc={product?.image}
+                                categoryName={product?.category}
+                                productName={product?.name}
+                                productPrice={product?.price}
+                                productSold={product?.sold}
+                                valueRating={product?.rating}
+                            />
                         </Grid>
                     ))}
                 </Grid>

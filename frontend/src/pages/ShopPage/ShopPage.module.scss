@@ -1,8 +1,19 @@
 .shop-page-wrapper {
-    // display: flex;
-    // justify-content: center;
+    display: flex;
+    justify-content: center;
+    background-color: var(--light-gray);
 }
 
 .shop-page-inner {
-    width: var(--default-layout-width);
+    width: calc(var(--default-layout-width) + 48px);
+    padding: 0 24px 40px 24px;
+
+    .category-filter-mobile {
+        display: flex;
+        justify-content: space-between;
+
+        .category-filter-btn {
+            font-size: 1.4rem !important;
+        }
+    }
 }

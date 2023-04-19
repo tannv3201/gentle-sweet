@@ -8,9 +8,9 @@ import Skeleton from "@mui/material/Skeleton";
 function ProductSkeleton({ isLoadingSkeleton }) {
     return (
         isLoadingSkeleton && (
-            <div>
+            <div style={{ width: "100%" }}>
                 <Grid container spacing={3}>
-                    <Grid item xs={3}>
+                    <Grid item lg={3} md={6} sm={6} xs={6}>
                         <Skeleton
                             variant="rectangular"
                             width="100%"
@@ -19,7 +19,7 @@ function ProductSkeleton({ isLoadingSkeleton }) {
                         <Skeleton />
                         <Skeleton width="60%" />
                     </Grid>
-                    <Grid item xs={3}>
+                    <Grid item lg={3} md={6} sm={6} xs={6}>
                         <Skeleton
                             variant="rectangular"
                             width="100%"
@@ -28,7 +28,7 @@ function ProductSkeleton({ isLoadingSkeleton }) {
                         <Skeleton />
                         <Skeleton width="60%" />
                     </Grid>
-                    <Grid item xs={3}>
+                    <Grid item lg={3} md={6} sm={6} xs={6}>
                         <Skeleton
                             variant="rectangular"
                             width="100%"
@@ -37,7 +37,7 @@ function ProductSkeleton({ isLoadingSkeleton }) {
                         <Skeleton />
                         <Skeleton width="60%" />
                     </Grid>
-                    <Grid item xs={3}>
+                    <Grid item lg={3} md={6} sm={6} xs={6}>
                         <Skeleton
                             variant="rectangular"
                             width="100%"
@@ -46,7 +46,7 @@ function ProductSkeleton({ isLoadingSkeleton }) {
                         <Skeleton />
                         <Skeleton width="60%" />
                     </Grid>
-                    <Grid item xs={3}>
+                    <Grid item lg={3} md={6} sm={6} xs={6}>
                         <Skeleton
                             variant="rectangular"
                             width="100%"
@@ -55,7 +55,7 @@ function ProductSkeleton({ isLoadingSkeleton }) {
                         <Skeleton />
                         <Skeleton width="60%" />
                     </Grid>
-                    <Grid item xs={3}>
+                    <Grid item lg={3} md={6} sm={6} xs={6}>
                         <Skeleton
                             variant="rectangular"
                             width="100%"
@@ -64,7 +64,7 @@ function ProductSkeleton({ isLoadingSkeleton }) {
                         <Skeleton />
                         <Skeleton width="60%" />
                     </Grid>
-                    <Grid item xs={3}>
+                    <Grid item lg={3} md={6} sm={6} xs={6}>
                         <Skeleton
                             variant="rectangular"
                             width="100%"
@@ -73,7 +73,7 @@ function ProductSkeleton({ isLoadingSkeleton }) {
                         <Skeleton />
                         <Skeleton width="60%" />
                     </Grid>
-                    <Grid item xs={3}>
+                    <Grid item lg={3} md={6} sm={6} xs={6}>
                         <Skeleton
                             variant="rectangular"
                             width="100%"
@@ -82,7 +82,7 @@ function ProductSkeleton({ isLoadingSkeleton }) {
                         <Skeleton />
                         <Skeleton width="60%" />
                     </Grid>
-                    <Grid item xs={3}>
+                    <Grid item lg={3} md={6} sm={6} xs={6}>
                         <Skeleton
                             variant="rectangular"
                             width="100%"
@@ -91,7 +91,7 @@ function ProductSkeleton({ isLoadingSkeleton }) {
                         <Skeleton />
                         <Skeleton width="60%" />
                     </Grid>
-                    <Grid item xs={3}>
+                    <Grid item lg={3} md={6} sm={6} xs={6}>
                         <Skeleton
                             variant="rectangular"
                             width="100%"
@@ -100,7 +100,7 @@ function ProductSkeleton({ isLoadingSkeleton }) {
                         <Skeleton />
                         <Skeleton width="60%" />
                     </Grid>
-                    <Grid item xs={3}>
+                    <Grid item lg={3} md={6} sm={6} xs={6}>
                         <Skeleton
                             variant="rectangular"
                             width="100%"
@@ -109,7 +109,7 @@ function ProductSkeleton({ isLoadingSkeleton }) {
                         <Skeleton />
                         <Skeleton width="60%" />
                     </Grid>
-                    <Grid item xs={3}>
+                    <Grid item lg={3} md={6} sm={6} xs={6}>
                         <Skeleton
                             variant="rectangular"
                             width="100%"
