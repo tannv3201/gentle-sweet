@@ -25,7 +25,7 @@ export const CategoryDrawer = ({ onOpen, onClose, open }) => {
                             <IconButton
                                 size="large"
                                 onClick={onClose}
-                                style={{ flex: 1, justifyContent: "flex-end" }}
+                                style={{ marginLeft: "auto" }}
                                 className={cx("close-btn")}
                             >
                                 <CloseRounded fontSize="large" />
