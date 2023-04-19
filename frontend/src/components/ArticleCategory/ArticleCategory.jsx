@@ -187,7 +187,7 @@ function ArticleCategory({ h2Nodes }) {
                                     fontSize={isMedium ? "large" : "medium"}
                                 />
                             </IconButton>
-                            <span>Chuyên mục bài viết</span>
+                            <h2>Chuyên mục bài viết</h2>
                         </div>
                         <ul
                             id="article-category-link"

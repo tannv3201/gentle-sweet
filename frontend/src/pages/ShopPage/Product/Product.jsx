@@ -4,12 +4,12 @@ import styles from "./Product.module.scss";
 import { FilterListRounded, ArrowDropDown } from "@mui/icons-material";
 import { Grid, MenuItem } from "@mui/material";
 import MyTextField from "../../../components/GTextField/MyTextField";
-import FilterGroup from "../FilterGroup/FilterGroup";
 import images from "../../../assets/images";
 import GProgress from "../../../components/GProgress/GProgress";
 import axios from "axios";
 import ProductSkeleton from "./ProductSkeleton";
 import ProductCard from "../../../common/ProductCard/ProductCard";
+import GPagination from "../../../common/GPagination/GPagination";
 
 const cx = classNames.bind(styles);
 
@@ -111,6 +111,10 @@ function Product() {
                             />
                         </Grid>
                     ))}
+
+                    <Grid item xs={12}>
+                        <GPagination count={10} />
+                    </Grid>
                 </Grid>
             </div>
         </div>

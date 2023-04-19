@@ -2,7 +2,11 @@ import React from "react";
 import classNames from "classnames/bind";
 import styles from "./ProductCategory.module.scss";
 import { Grid } from "@mui/material";
+import { useMediaQuery } from "@mui/material";
+import { useTheme } from "@mui/material/styles";
+
 const cx = classNames.bind(styles);
+
 const categoryList = [
     {
         id: 1,
@@ -36,16 +40,20 @@ const categoryList = [
     },
 ];
 function ProductCategory() {
+    const theme = useTheme();
+    const isMedium = useMediaQuery(theme.breakpoints.down("md"));
     return (
         <div className={cx("wrapper")}>
             <div className={cx("inner")}>
                 <div className={cx("inner-sticky")}>
                     <Grid container spacing={2}>
-                        <Grid item xs={12}>
-                            <span className={cx("category-title")}>
-                                <h2>Danh mục</h2>
-                            </span>
-                        </Grid>
+                        {!isMedium && (
+                            <Grid item xs={12}>
+                                <span className={cx("category-title")}>
+                                    <h2>Danh mục</h2>
+                                </span>
+                            </Grid>
+                        )}
                         <Grid item xs={12}>
                             <div className={cx("category-list")}>
                                 <Grid container spacing={0.5}>

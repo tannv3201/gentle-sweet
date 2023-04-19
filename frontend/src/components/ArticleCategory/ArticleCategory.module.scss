@@ -69,12 +69,15 @@
     .article-category-title {
         display: flex;
         justify-content: unset;
-        position: fixed;
-        top: 0;
-        width: 100%;
-        span {
-            width: 100%;
-            margin-left: 160px;
+        position: relative;
+
+        h2 {
+            color: var(--primary);
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 2rem;
+            font-weight: var(--fw-semi-bold);
         }
     }
     .article-category-link {

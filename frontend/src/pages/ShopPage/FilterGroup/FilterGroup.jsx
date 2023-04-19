@@ -1,308 +1,220 @@
-import React, { useState } from "react";
-import classNames from "classnames/bind";
+import * as React from "react";
+import Checkbox from "@mui/material/Checkbox";
+import TextField from "@mui/material/TextField";
+import Autocomplete from "@mui/material/Autocomplete";
 import styles from "./FilterGroup.module.scss";
-import { FilterListRounded } from "@mui/icons-material";
-import { Chip, Grid } from "@mui/material";
-import FilterPrice from "./FilterPrice/FilterPrice";
-import FilterSize from "./FilterSize/FilterSize";
-import FilterColor from "./FilterColor/FilterColor";
-import FilterSort from "./FilterSort/FilterSort";
+import classNames from "classnames/bind";
+import {
+    FilterAltRounded,
+    CheckBoxOutlineBlank,
+    CheckBox,
+    FilterListRounded,
+    AttachMoneyRounded,
+    ColorLensRounded,
+} from "@mui/icons-material";
+import { Grid } from "@mui/material";
+import { RedditTextField } from "../../../components/GTextField/GTextField";
+import GButton from "../../../components/MyButton/MyButton";
+import { useState } from "react";
+
+const icon = <CheckBoxOutlineBlank fontSize="small" />;
+const checkedIcon = <CheckBox fontSize="small" />;
 
 const cx = classNames.bind(styles);
 
-function FilterGroup() {
-    const [filterPriceValue, setFilterPriceValue] = useState([]);
-    const [filterSizeValue, setFilterSizeValue] = useState([]);
-    const [filterColorValue, setFilterColorValue] = useState([]);
-    const [filterSortValue, setFilterSortValue] = useState("");
+const priceFilterList = [
+    { title: "Dưới 100.000₫" },
+    { title: "100.000₫ - 250.000₫" },
+    { title: "250.000₫ - 500.000₫" },
+    { title: "500.000₫ - 800.000₫" },
+    { title: "Trên 800.000₫" },
+];
 
-    const [isCheckedPrice, setIsCheckedPrice] = useState({
-        optionPrice1: false,
-        optionPrice2: false,
-        optionPrice3: false,
-        optionPrice4: false,
-        optionPrice5: false,
-    });
+const colorFilterList = [
+    { title: "Đỏ" },
+    { title: "Trắng" },
+    { title: "Đen" },
+    { title: "Vàng" },
+    { title: "Xanh lá" },
+];
 
-    const [isCheckedSize, setIsCheckedSize] = useState({
-        sizeXS: false,
-        sizeS: false,
-        sizeM: false,
-        sizeL: false,
-    });
-
-    const [isCheckedColor, setIsCheckedColor] = useState({
-        redColor: false,
-        orangeColor: false,
-        yellowColor: false,
-        greenColor: false,
-        pinkColor: false,
-        blackColor: false,
-        whiteColor: false,
-    });
-
-    const [isCheckedSort, setIsCheckedSort] = useState({
-        featuredProduct: false,
-        ascendingPrice: false,
-        decreasePrice: false,
-        aToZ: false,
-        zToA: false,
-        oldest: false,
-        latest: false,
-        bestseller: false,
-    });
-
-    const handleChangeFilterPrice = (e) => {
-        setIsCheckedPrice({
-            ...isCheckedPrice,
-            [e.target.name]: e.target.checked,
-        });
-        if (e.target.checked === true) {
-            setFilterPriceValue([...filterPriceValue, e.target.value]);
-        } else {
-            const newArr = filterPriceValue.filter(
-                (value) => value !== e.target.value
-            );
-            setFilterPriceValue(newArr);
-        }
-    };
-
-    const handleChangeFilterSize = (e) => {
-        setIsCheckedSize({
-            ...isCheckedSize,
-            [e.target.name]: e.target.checked,
-        });
-        if (e.target.checked === true) {
-            setFilterSizeValue([...filterSizeValue, e.target.value]);
-        } else {
-            const newArr = filterSizeValue.filter(
-                (value) => value !== e.target.value
-            );
-            setFilterSizeValue(newArr);
-        }
-    };
-
-    const handleChangeFilterColor = (e) => {
-        setIsCheckedColor({
-            ...isCheckedColor,
-            [e.target.name]: e.target.checked,
-        });
-        if (e.target.checked === true) {
-            setFilterColorValue([...filterColorValue, e.target.value]);
-        } else {
-            const newArr = filterColorValue.filter(
-                (value) => value !== e.target.value
-            );
-            setFilterColorValue(newArr);
-        }
-    };
-
-    const handleChangeFilterSort = (e) => {
-        setIsCheckedSort({
-            [e.target.name]: e.target.checked,
-        });
-        if (e.target.checked === true) {
-            setFilterSortValue(e.target.value);
-        } else {
-            setFilterSortValue("");
-        }
-    };
-
-    const handleRemoveFilterPriceValue = (value) => {
-        const keys = Object.keys(isCheckedPrice);
-        keys?.map((key) => {
-            if (key === value) {
-                return (isCheckedPrice[key] = false);
-            } else {
-                return null;
-            }
-        });
-
-        const newArr = filterPriceValue.filter((v) => v !== value);
-        setFilterPriceValue(newArr);
-    };
-
-    const handleRemoveFilterSizeValue = (value) => {
-        const keys = Object.keys(isCheckedSize);
-        keys?.map((key) => {
-            if (key === value) {
-                return (isCheckedSize[key] = false);
-            } else {
-                return null;
-            }
-        });
-
-        const newArr = filterSizeValue.filter((v) => v !== value);
-        setFilterSizeValue(newArr);
-    };
-
-    const handleRemoveFilterColorValue = (value) => {
-        const keys = Object.keys(isCheckedColor);
-        keys?.map((key) => {
-            if (key === value) {
-                return (isCheckedColor[key] = false);
-            } else {
-                return null;
-            }
-        });
-
-        const newArr = filterColorValue.filter((v) => v !== value);
-        setFilterColorValue(newArr);
-    };
-
-    const handleRemoveFilterSortValue = (value) => {
-        setIsCheckedSort({
-            [value]: false,
-        });
-        setFilterSortValue("");
-    };
-
+const sortList = [
+    { title: "Tên A-Z" },
+    { title: "Tên Z-A" },
+    { title: "Giá tăng dần" },
+    { title: "Giá giảm dần" },
+    { title: "Mới nhất" },
+    { title: "Cũ nhất" },
+];
+const DisplayLabel = ({ label, icon }) => {
     return (
-        <div className={cx("filter-group-wrapper")}>
-            <div className={cx("filter-group-inner")}>
-                <Grid container spacing={3}>
-                    <Grid item xs={2}>
-                        <div className={cx("filter-group-title")}>
-                            <FilterListRounded
-                                className={cx("filter-group-icon")}
-                            />
-                            <span className={cx("filter-group-text")}>
-                                Bộ lọc
-                            </span>
-                        </div>
-                    </Grid>
-                    <Grid item xs={3}>
-                        <FilterPrice
-                            isChecked={isCheckedPrice}
-                            handleChangeFilterPrice={handleChangeFilterPrice}
+        <div style={{ display: "flex", alignItems: "center" }}>
+            <span style={{ marginRight: "4px" }}>{label}</span>
+            {icon}
+        </div>
+    );
+};
+
+export const FilterGroupList = () => {
+    return (
+        <>
+            <div>
+                <Grid container spacing={2}>
+                    <Grid item lg={4} md={12} sm={12} xs={12}>
+                        <Autocomplete
+                            multiple
+                            size="small"
+                            fullWidth
+                            id="checkboxes-tags-demo"
+                            options={priceFilterList}
+                            disableCloseOnSelect
+                            getOptionLabel={(option) => option.title}
+                            renderOption={(props, option, { selected }) => (
+                                <li {...props}>
+                                    <Checkbox
+                                        icon={icon}
+                                        checkedIcon={checkedIcon}
+                                        style={{ marginRight: 8 }}
+                                        checked={selected}
+                                    />
+                                    {option.title}
+                                </li>
+                            )}
+                            renderInput={(params) => (
+                                <RedditTextField
+                                    {...params}
+                                    label={
+                                        <>
+                                            <DisplayLabel
+                                                label="Lọc theo giá"
+                                                // icon={
+                                                //     <AttachMoneyRounded fontSize="small" />
+                                                // }
+                                            />
+                                        </>
+                                    }
+                                    placeholder="Chọn giá..."
+                                />
+                            )}
                         />
                     </Grid>
-                    <Grid item xs={2}>
-                        <FilterSize
-                            isChecked={isCheckedSize}
-                            handleChangeFilterSize={handleChangeFilterSize}
+                    <Grid item lg={4} md={12} sm={12} xs={12}>
+                        <Autocomplete
+                            multiple
+                            size="small"
+                            fullWidth
+                            id="checkboxes-tags-demo"
+                            options={colorFilterList}
+                            disableCloseOnSelect
+                            getOptionLabel={(option) => option.title}
+                            renderOption={(props, option, { selected }) => (
+                                <li {...props}>
+                                    <Checkbox
+                                        icon={icon}
+                                        checkedIcon={checkedIcon}
+                                        style={{ marginRight: 8 }}
+                                        checked={selected}
+                                    />
+                                    {option.title}
+                                </li>
+                            )}
+                            renderInput={(params) => (
+                                <RedditTextField
+                                    {...params}
+                                    label={
+                                        <>
+                                            <DisplayLabel
+                                                label="Lọc theo màu sắc"
+                                                // icon={
+                                                //     <ColorLensRounded fontSize="small" />
+                                                // }
+                                            />
+                                        </>
+                                    }
+                                    placeholder="Chọn màu sắc..."
+                                />
+                            )}
                         />
                     </Grid>
-                    <Grid item xs={2}>
-                        <FilterColor
-                            isChecked={isCheckedColor}
-                            handleChangeFilterColor={handleChangeFilterColor}
-                        />
-                    </Grid>
-                    <Grid item xs={3}>
-                        <FilterSort
-                            isChecked={isCheckedSort}
-                            handleChangeFilterSort={handleChangeFilterSort}
+                    <Grid item lg={4} md={12} sm={12} xs={12}>
+                        <Autocomplete
+                            size="small"
+                            fullWidth
+                            id="checkboxes-tags-demo"
+                            options={sortList}
+                            disableCloseOnSelect
+                            getOptionLabel={(option) => option.title}
+                            renderOption={(props, option, { selected }) => (
+                                <li {...props}>
+                                    <Checkbox
+                                        icon={icon}
+                                        checkedIcon={checkedIcon}
+                                        style={{ marginRight: 8 }}
+                                        checked={selected}
+                                    />
+                                    {option.title}
+                                </li>
+                            )}
+                            renderInput={(params) => (
+                                <RedditTextField
+                                    {...params}
+                                    label={
+                                        <>
+                                            <DisplayLabel
+                                                label="Sắp xếp"
+                                                icon={<FilterListRounded />}
+                                            />
+                                        </>
+                                    }
+                                    placeholder="Chọn cách sắp xếp..."
+                                />
+                            )}
                         />
                     </Grid>
                 </Grid>
-                <div className={cx("selected-filter")}>
-                    {filterPriceValue?.map((value, index) => (
-                        <Chip
-                            key={index}
-                            className={cx("selected-filter-item")}
-                            label={
-                                value === "optionPrice1"
-                                    ? "Giá dưới 100k"
-                                    : value === "optionPrice2"
-                                    ? "Giá từ 100k - 250k"
-                                    : value === "optionPrice3"
-                                    ? "Giá từ 250k - 500k"
-                                    : value === "optionPrice4"
-                                    ? "Giá từ 500k - 800k"
-                                    : "Giá trên 800k"
-                            }
-                            clickable
-                            color="primary"
-                            onDelete={(e) => {
-                                e.preventDefault();
-                                handleRemoveFilterPriceValue(value);
-                            }}
-                        />
-                    ))}
+            </div>
+            <div className={cx("filter-clear")}>
+                <GButton
+                    color="error"
+                    className={cx("filter-clear-btn")}
+                    variant="outlined"
+                >
+                    Xóa bộ lọc
+                </GButton>
+            </div>
+        </>
+    );
+};
 
-                    {filterSizeValue?.map((value, index) => (
-                        <Chip
-                            key={index}
-                            className={cx("selected-filter-item")}
-                            label={
-                                value === "sizeXS"
-                                    ? "Size XS"
-                                    : value === "sizeS"
-                                    ? "Size S"
-                                    : value === "sizeM"
-                                    ? "Size M"
-                                    : "Size L"
-                            }
-                            clickable
-                            color="secondary"
-                            onDelete={(e) => {
-                                e.preventDefault();
-                                handleRemoveFilterSizeValue(value);
-                            }}
-                        />
-                    ))}
-
-                    {filterColorValue?.map((value, index) => (
-                        <Chip
-                            key={index}
-                            className={cx("selected-filter-item")}
-                            label={
-                                value === "redColor"
-                                    ? "Đỏ"
-                                    : value === "orangeColor"
-                                    ? "Cam"
-                                    : value === "yellowColor"
-                                    ? "Vàng"
-                                    : value === "greenColor"
-                                    ? "Xanh lá"
-                                    : value === "pinkColor"
-                                    ? "Hồng"
-                                    : value === "blackColor"
-                                    ? "Đen"
-                                    : "Trắng"
-                            }
-                            clickable
-                            color="secondary"
-                            onDelete={(e) => {
-                                e.preventDefault();
-                                handleRemoveFilterColorValue(value);
-                            }}
-                        />
-                    ))}
-
-                    {filterSortValue && (
-                        <Chip
-                            className={cx("selected-filter-item")}
-                            label={
-                                filterSortValue === "featuredProduct"
-                                    ? "Sản phẩm nổi bật"
-                                    : filterSortValue === "ascendingPrice"
-                                    ? "Giá tăng dần"
-                                    : filterSortValue === "decreasePrice"
-                                    ? "Giá giảm dần"
-                                    : filterSortValue === "aToZ"
-                                    ? "Tên A-Z"
-                                    : filterSortValue === "zToA"
-                                    ? "Tên Z-A"
-                                    : filterSortValue === "oldest"
-                                    ? "Cũ nhất"
-                                    : filterSortValue === "latest"
-                                    ? "Mới nhất"
-                                    : "Bán chạy nhất"
-                            }
-                            clickable
-                            color="secondary"
-                            onDelete={(e) => {
-                                e.preventDefault();
-                                handleRemoveFilterSortValue(filterSortValue);
-                            }}
-                        />
-                    )}
+export default function FilterGroup() {
+    const [isOpenFilterGroup, setIsOpenFilterGroup] = useState(false);
+    return (
+        <>
+            <div
+                className={
+                    isOpenFilterGroup
+                        ? cx("wrapper", "isOpenFilterGroup")
+                        : cx("wrapper")
+                }
+            >
+                <GButton
+                    endIcon={<FilterListRounded />}
+                    onClick={() => setIsOpenFilterGroup(!isOpenFilterGroup)}
+                >
+                    Bộ lọc
+                </GButton>
+                <div
+                    className={
+                        isOpenFilterGroup
+                            ? cx("inner", "isOpenFilterGroup")
+                            : cx("inner")
+                    }
+                >
+                    <FilterGroupList />
                 </div>
             </div>
-        </div>
+        </>
     );
 }
 
-export default FilterGroup;
+// Top 100 films as rated by IMDb users. http://www.imdb.com/chart/top

@@ -336,7 +336,7 @@ span.MuiChip-label {
         background-color 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms,
         box-shadow 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms !important;
     &:hover {
-        background-color: transparent !important;
+        background-color: var(--white) !important;
     }
     &.Mui-focused {
         background-color: transparent !important;
@@ -374,4 +374,14 @@ span.MuiChip-label {
 }
 .MuiPickersDay-root.MuiPickersDay-dayWithMargin {
     font-size: 1.4rem !important;
+}
+
+// pagination
+.MuiButtonBase-root.MuiPaginationItem-root.MuiPaginationItem-sizeMedium.MuiPaginationItem-text.MuiPaginationItem-circular.MuiPaginationItem-page {
+    font-size: 1.4rem !important;
+    font-family: var(--font-family) !important;
+}
+
+.MuiButtonBase-root.MuiPaginationItem-root.MuiPaginationItem-sizeMedium.MuiPaginationItem-text.MuiPaginationItem-circular.Mui-selected.MuiPaginationItem-page {
+    background-color: var(--primary-300) !important;
 }

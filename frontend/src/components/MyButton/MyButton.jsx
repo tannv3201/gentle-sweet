@@ -9,6 +9,8 @@ function GButton({
     variant = "contained",
     className,
     style,
+    onClick,
+    color,
     ...props
 }) {
     return (
@@ -21,6 +23,8 @@ function GButton({
                 variant={variant}
                 className={className}
                 style={style}
+                onClick={onClick}
+                color={color}
             >
                 {children}
             </Button>

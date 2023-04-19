@@ -1,0 +1,18 @@
+.drawer-wrapper {
+    width: 300px;
+    padding: 12px;
+}
+.drawer-wrapper-header {
+    display: flex;
+    align-items: center;
+    position: relative;
+
+    h2 {
+        color: var(--primary);
+        position: absolute;
+        left: 50%;
+        transform: translateX(-50%);
+        font-size: 2rem;
+        font-weight: var(--fw-semi-bold);
+    }
+}
