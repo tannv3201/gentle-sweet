@@ -98,6 +98,7 @@ function Product() {
                     {productList.map((product, index) => (
                         <Grid key={index} item lg={3} md={6} sm={6} xs={6}>
                             <ProductCard
+                                href="/product/son-mong-tay"
                                 key={index}
                                 imageSrc={product?.image}
                                 categoryName={product?.category}

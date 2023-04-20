@@ -12,6 +12,7 @@ import Footer from "../components/Footer/Footer";
 import ScrollBackToTop from "../components/ScrollBackToTop";
 import Service from "./ServicePage/Service/Service";
 import Booking from "./Booking/Booking";
+import ProductDetail from "./ShopPage/ProductDetail/ProductDetail";
 
 import { useMediaQuery } from "@mui/material";
 import { useTheme } from "@mui/material/styles";
@@ -38,7 +39,7 @@ function App() {
                         <Breadcrumb />
                         <Routes>
                             <Route path="/" element={<HomePage />} />
-                            <Route path="/product/all" element={<ShopPage />} />
+                            <Route path="/product" element={<ShopPage />} />
                             <Route
                                 path="/dich-vu"
                                 element={<ServiceOverviewIndex />}
@@ -54,6 +55,10 @@ function App() {
                                 element={<AboutUsPage />}
                             />
                             <Route path="/dat-lich" element={<Booking />} />
+                            <Route
+                                path="/product/son-mong-tay"
+                                element={<ProductDetail />}
+                            />
                         </Routes>
                     </div>
                     <Footer />

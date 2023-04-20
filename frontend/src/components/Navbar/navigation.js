@@ -125,7 +125,7 @@ export const MenuList = [
     },
     {
         title: "Store",
-        href: "/product/all",
+        href: "/product",
         isOpen: false,
     },
     {
