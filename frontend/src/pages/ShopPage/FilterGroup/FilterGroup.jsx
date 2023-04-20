@@ -1,5 +1,5 @@
 import * as React from "react";
-import Checkbox from "@mui/material/Checkbox";
+import { Checkbox, Radio } from "@mui/material";
 import TextField from "@mui/material/TextField";
 import Autocomplete from "@mui/material/Autocomplete";
 import styles from "./FilterGroup.module.scss";

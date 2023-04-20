@@ -385,3 +385,7 @@ span.MuiChip-label {
 .MuiButtonBase-root.MuiPaginationItem-root.MuiPaginationItem-sizeMedium.MuiPaginationItem-text.MuiPaginationItem-circular.Mui-selected.MuiPaginationItem-page {
     background-color: var(--primary-300) !important;
 }
+
+.MuiButtonBase-root.MuiChip-root.MuiChip-filled.MuiChip-sizeSmall.MuiChip-colorDefault.MuiChip-deletable.MuiChip-deletableColorDefault.MuiChip-filledDefault.MuiAutocomplete-tag {
+    margin: 6px 2px 2px 2px !important;
+}
