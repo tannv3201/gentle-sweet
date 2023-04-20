@@ -1,5 +1,5 @@
 .advise-form {
-    border: 1px solid var(--primary);
+    border: 1px solid var(--primary-500);
     padding: 12px;
     border-radius: 6px;
     background-color: var(--primary-200);
@@ -19,8 +19,8 @@
         justify-content: center;
         .signin-advise-btn {
             background-color: var(--white);
-            color: var(--primary);
-            border: 1px solid var(--primary);
+            color: var(--primary-500);
+            border: 1px solid var(--primary-500);
             font-weight: var(--fw-semi-bold) !important;
         }
     }

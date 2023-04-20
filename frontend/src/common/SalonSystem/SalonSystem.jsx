@@ -58,12 +58,7 @@ function SalonSystem({ searchNearYou }) {
                     )}
                 </Grid>
 
-                <div
-                    style={{
-                        boxShadow: "var(--primary-box-shadow) 0px 2px 8px",
-                        borderRadius: "6px",
-                    }}
-                >
+                <div className={cx("wrapper-appbar")}>
                     <AppBar
                         style={{ overflow: "hidden" }}
                         position="static"

@@ -30,11 +30,11 @@
     h2 {
         font-size: 2.4rem;
         font-weight: var(--fw-bold);
-        color: var(--primary);
+        color: var(--primary-500);
         margin-right: 4px;
     }
     b {
-        background-color: var(--primary);
+        background-color: var(--primary-500);
     }
 }
 .service-item {
@@ -56,7 +56,7 @@
             font-size: 1.8rem;
             font-weight: var(--fw-semi-bold);
             text-align: center;
-            color: var(--primary);
+            color: var(--primary-500);
         }
     }
 }

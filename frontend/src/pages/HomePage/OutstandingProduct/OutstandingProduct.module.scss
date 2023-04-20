@@ -48,12 +48,12 @@
                     display: block;
                 }
                 &:hover {
-                    color: var(--primary);
+                    color: var(--primary-500);
                 }
             }
             .product-price-container {
                 margin-top: 0 !important;
-                color: var(--primary);
+                color: var(--primary-500);
                 font-weight: 500 !important;
                 font-size: 1.4rem !important;
 
@@ -81,6 +81,7 @@
     display: flex;
     justify-content: center;
     padding: 80px 0;
+    background-color: var(--light-gray);
 }
 .outstanding-product-inner {
     width: calc(var(--default-layout-width) + 48px);
@@ -89,7 +90,7 @@
     .title {
         text-align: center;
         text-transform: uppercase;
-        color: var(--primary);
+        color: var(--primary-500);
         display: inline-flex;
         align-items: center;
         b {
@@ -141,7 +142,7 @@
 
         &:hover {
             background-color: var(--white);
-            color: var(--primary);
+            color: var(--primary-500);
             box-shadow: var(--box-shadow);
         }
     }

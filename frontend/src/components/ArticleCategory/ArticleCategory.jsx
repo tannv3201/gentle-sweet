@@ -97,7 +97,7 @@ function ArticleCategory({ h2Nodes }) {
                                           fontWeight: "var(--fw-medium)",
                                       }
                                     : isActiveTitle === id
-                                    ? { color: "var(--primary)" }
+                                    ? { color: "var(--primary-500)" }
                                     : {}
                             }
                         >
@@ -165,7 +165,7 @@ function ArticleCategory({ h2Nodes }) {
                     <IconButton
                         size="medium"
                         style={{
-                            border: "1px solid var(--primary)",
+                            border: "1px solid var(--primary-500)",
                             backgroundColor: "var(--white)",
                         }}
                         onClick={toggleDrawer}

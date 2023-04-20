@@ -12,6 +12,10 @@
         h2 {
         }
     }
+
+    .service-see-detail {
+        font-size: 1.6rem !important;
+    }
 }
 
 .outstanding-service-wrapper {
@@ -19,6 +23,7 @@
     display: flex;
     justify-content: center;
     padding: 80px 0;
+    background-color: var(--light-gray);
 }
 
 .outstanding-service-inner {
@@ -27,7 +32,7 @@
     .title {
         text-align: center;
         text-transform: uppercase;
-        color: var(--primary);
+        color: var(--primary-500);
         display: inline-flex;
         align-items: center;
         b {
@@ -63,10 +68,11 @@
         display: block;
 
         transition: all 0.2s linear;
-        box-shadow: var(--box-shadow);
+        background-color: var(--white);
         border-radius: 8px;
         &:hover {
-            transform: translateY(-8px);
+            transform: translateY(-2px);
+            box-shadow: var(--box-shadow);
         }
         .service-img {
             width: 100%;
@@ -88,7 +94,7 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            color: var(--primary);
+            color: var(--primary-500);
             border-bottom-left-radius: 8px;
             border-bottom-right-radius: 8px;
             padding: 16px 0;
@@ -119,20 +125,21 @@
         }
 
         .service-see-detail {
-            background-color: var(--primary-500);
             display: block;
             border-radius: 6px;
             padding: 8px 12px;
+            background-color: var(--primary-100);
             text-align: center;
-            font-size: 1.6rem;
+            font-size: 1.8rem;
             font-weight: var(--fw-medium);
-            color: var(--white);
+            color: var(--primary-500);
+            border: 1px solid var(--primary-500);
             transition: all 0.2s linear;
 
             &:hover {
-                color: var(--primary);
-                background-color: var(--white);
-                box-shadow: var(--box-shadow);
+                color: var(--primary-500);
+                background-color: var(--primary-200);
+                // box-shadow: var(--box-shadow);
             }
         }
     }
@@ -157,7 +164,7 @@
 
             &:hover {
                 background-color: var(--white);
-                color: var(--primary);
+                color: var(--primary-500);
                 box-shadow: var(--box-shadow);
             }
         }

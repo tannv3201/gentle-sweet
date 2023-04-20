@@ -44,7 +44,7 @@ function OutstandingService() {
                         <p>
                             <FormatQuoteRounded
                                 style={{
-                                    color: "var(--primary)",
+                                    color: "var(--primary-500)",
                                     transform: "scaleX(-1)",
                                     marginRight: "4px",
                                 }}
@@ -53,7 +53,7 @@ function OutstandingService() {
                             vụ tận tâm của chúng tôi.
                             <FormatQuoteRounded
                                 style={{
-                                    color: "var(--primary)",
+                                    color: "var(--primary-500)",
                                     marginLeft: "4px",
                                 }}
                             />

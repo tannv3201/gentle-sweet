@@ -23,7 +23,7 @@ export default function GProgress({ isLoading }) {
                         transform: "translate(-50%, -50%)",
                     }}
                 >
-                    <CircularProgress style={{ color: "var(--primary)" }} />
+                    <CircularProgress style={{ color: "var(--primary-500)" }} />
                 </div>
             </div>
         )

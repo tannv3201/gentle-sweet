@@ -57,7 +57,7 @@
         h2 {
             font-size: 2rem;
             font-weight: var(--fw-semi-bold);
-            color: var(--primary);
+            color: var(--primary-500);
             text-align: center;
         }
     }
@@ -101,7 +101,7 @@
         color: var(--text-secondary);
         font-weight: var(--fw-medium);
         font-size: 1.6rem;
-        color: var(--primary);
+        color: var(--primary-500);
     }
     .category-link-btn {
         transition: all 0.2s linear;

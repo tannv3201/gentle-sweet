@@ -43,6 +43,7 @@
     --primary-box-shadow: #fdb8c7;
     --primary-300: #fde7eb;
     --primary-200: #ffeef1;
+    --primary-100: #fcf3f5;
     --text-primary: #212121;
     --text-secondary: #424242;
     --box-shadow: var(--primary-box-shadow) 0px 1px 4px;
@@ -195,25 +196,10 @@ body {
     line-height: 1.5;
     text-rendering: optimizeSpeed;
     overflow-y: overlay;
+    &::selection {
+        color: var(--text-primary);
+    }
 }
-
-// body::-webkit-scrollbar {
-//     width: 10px;
-// }
-
-// body::-webkit-scrollbar-thumb {
-//     background-image: linear-gradient(
-//         to bottom,
-//         var(--primary-500),
-//         var(--primary-200)
-//     );
-//     border-radius: 100px;
-// }
-// body::-webkit-scrollbar-track {
-//     background-color: var(--primary-200) !important;
-//     border-radius: 100px;
-// }
-// Scrollbar css
 
 html *::-webkit-scrollbar {
     border-radius: 0;
@@ -320,7 +306,7 @@ body {
 }
 
 .MuiRadio-colorPrimary.Mui-checked {
-    color: var(--primary) !important;
+    color: var(--primary-500) !important;
 }
 .MuiTypography-body1 {
     font-size: 1.4rem !important;
@@ -334,7 +320,7 @@ span.MuiChip-label {
 
 .MuiTab-textColorPrimary.Mui-selected {
     color: #fff !important;
-    background: var(--primary);
+    background: var(--primary-500);
 }
 .MuiTabs-flexContainer {
     justify-content: center !important;
@@ -343,11 +329,11 @@ span.MuiChip-label {
     font-size: 1.6rem !important;
     text-transform: unset !important;
     font-family: var(--font-family) !important;
-    border: 1px solid var(--primary) !important;
+    border: 1px solid var(--primary-500) !important;
     border-radius: 50px !important;
     margin-right: 8px !important;
     min-height: 40px !important;
-    color: var(--primary) !important;
+    color: var(--primary-500) !important;
 }
 
 .MuiPaper-root.MuiAppBar-root.MuiAppBar-positionStatic.MuiAppBar-colorDefault.MuiPaper-elevation4 {
@@ -512,8 +498,7 @@ span.MuiChip-label {
     .MuiTabs-flexContainer {
         justify-content: unset !important;
     }
-
-    .MuiTabs-scroller.MuiTabs-fixed {
-        padding: 12px 16px !important;
-    }
+}
+.MuiTabs-scroller.MuiTabs-fixed {
+    padding: 12px 16px !important;
 }

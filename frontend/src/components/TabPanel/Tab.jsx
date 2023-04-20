@@ -4,7 +4,7 @@ import Tab from "@mui/material/Tab";
 const TabInWhite = withStyles((theme) => ({
     root: {
         textTransform: "none",
-        color: "var(--primary)",
+        color: "var(--primary-500)",
         border: "1px solid",
         borderRadius: "50px",
         backgroundColor: "transparent",
@@ -17,7 +17,7 @@ const TabInWhite = withStyles((theme) => ({
 
         ".MuiTab-textColorPrimary.Mui-selected": {
             color: "#fff",
-            background: "var(--primary)",
+            background: "var(--primary-500)",
             borderRadius: "50px",
         },
         ".MuiPaper-elevation": {
@@ -29,20 +29,20 @@ const TabInWhite = withStyles((theme) => ({
 const TabInPrimary = withStyles((theme) => ({
     root: {
         textTransform: "none",
-        color: "var(--primary) !important",
+        color: "var(--primary-500) !important",
         border: "1px solid",
         borderRadius: "50px",
         backgroundColor: "transparent",
         fontSize: "1.6rem",
         fontFamily: "var(--font-family)",
         marginRight: "8px",
-        "&:focus": {
+        "&:hover": {
             // opacity: 1,
         },
 
         "& button.Mui-selected": {
-            color: "var(--primary) !important",
-            background: "var(--primary) !important",
+            color: "var(--primary-500) !important",
+            background: "var(--primary-500) !important",
         },
         ".MuiPaper-elevation": {
             boxShadow: 0,

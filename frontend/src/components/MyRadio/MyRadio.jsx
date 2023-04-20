@@ -7,7 +7,7 @@ function MyRadio({ id, name, label, ...props }) {
             <Radio
                 id={id}
                 style={{
-                    color: "var(--primary)",
+                    color: "var(--primary-500)",
                 }}
                 // color="primary"
                 name={name}

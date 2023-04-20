@@ -116,7 +116,7 @@ function OutstandingProduct() {
                         <p>
                             <FormatQuoteRounded
                                 style={{
-                                    color: "var(--primary)",
+                                    color: "var(--primary-500)",
                                     transform: "scaleX(-1)",
                                     marginRight: "4px",
                                 }}
@@ -125,7 +125,7 @@ function OutstandingProduct() {
                             nay!
                             <FormatQuoteRounded
                                 style={{
-                                    color: "var(--primary)",
+                                    color: "var(--primary-500)",
                                     marginLeft: "4px",
                                 }}
                             />
@@ -136,7 +136,7 @@ function OutstandingProduct() {
                     {productList.map((product, index) => (
                         <Grid item lg={3} md={6} sm={6} xs={6}>
                             <ProductCard
-                                boxShadow={true}
+                                // boxShadow={true}
                                 key={index}
                                 imageSrc={product?.image}
                                 categoryName={product?.category}

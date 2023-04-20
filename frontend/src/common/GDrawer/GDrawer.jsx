@@ -45,7 +45,7 @@ function GDrawer({
                     <IconButton
                         size="medium"
                         style={{
-                            border: "1px solid var(--primary)",
+                            border: "1px solid var(--primary-500)",
                             backgroundColor: "var(--white)",
                         }}
                         onClick={handleToggleDrawer}

@@ -7,7 +7,7 @@
 }
 
 .slick-dots li.slick-active button:before {
-    background-color: var(--primary) !important;
+    background-color: var(--primary-500) !important;
 
 }
 

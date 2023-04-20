@@ -11,7 +11,6 @@ import {
     AddShoppingCartRounded,
 } from "@mui/icons-material";
 import GButton from "../../../components/MyButton/MyButton";
-import RedditTextField from "../../../components/GTextField/GTextField";
 import { useMediaQuery } from "@mui/material";
 import { useTheme } from "@mui/material/styles";
 

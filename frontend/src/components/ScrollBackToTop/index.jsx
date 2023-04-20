@@ -79,7 +79,7 @@ export default function BackToTop({ children, ...props }) {
                         color="secondary"
                         size="small"
                         aria-label="scroll back to top"
-                        style={{ backgroundColor: "var(--primary)" }}
+                        style={{ backgroundColor: "var(--primary-500)" }}
                     >
                         <KeyboardArrowUpIcon />
                     </Fab>

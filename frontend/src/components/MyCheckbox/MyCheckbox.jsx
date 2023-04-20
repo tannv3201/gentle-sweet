@@ -11,7 +11,7 @@ function MyCheckbox({ id, name, label, value, checked, onChange, ...props }) {
             <Checkbox
                 id={id}
                 style={{
-                    color: "var(--primary)",
+                    color: "var(--primary-500)",
                 }}
                 // color="primary"
                 name={name}

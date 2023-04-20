@@ -61,12 +61,12 @@ p {
         h1 {
             font-size: 2.8rem;
             font-weight: var(--fw-bold);
-            color: var(--primary);
+            color: var(--primary-500);
         }
     }
     .introduce-service-blockquote {
-        border: 1px solid var(--primary);
-        border-left: 6px solid var(--primary);
+        border: 1px solid var(--primary-500);
+        border-left: 6px solid var(--primary-500);
 
         padding: 12px 24px;
         border-radius: 24px;
@@ -94,7 +94,7 @@ p {
 
 // Article
 .article-category {
-    border: 1px solid var(--primary);
+    border: 1px solid var(--primary-500);
     margin-top: 24px;
     .article-category-title {
         height: 40px !important;
@@ -107,7 +107,7 @@ p {
             display: block;
             font-weight: var(--fw-medium);
             font-size: 2rem;
-            color: var(--primary);
+            color: var(--primary-500);
         }
     }
     .article-category-link {
@@ -132,7 +132,7 @@ p {
                 transition: all 0.2s linear;
                 &:hover {
                     text-decoration: underline;
-                    color: var(--primary);
+                    color: var(--primary-500);
                 }
             }
         }
@@ -145,7 +145,7 @@ p {
         h2 {
             font-size: 2.4rem;
             font-weight: var(--fw-semi-bold);
-            color: var(--primary);
+            color: var(--primary-500);
             margin-top: 12px;
         }
     }
@@ -166,7 +166,7 @@ p {
     .service-list-title {
         h2 {
             font-size: 2.4rem;
-            color: var(--primary);
+            color: var(--primary-500);
             font-weight: var(--fw-semi-bold);
             margin-top: 24px;
         }
@@ -177,7 +177,7 @@ p {
         .service-item-title {
             h2 {
                 font-size: 2rem;
-                color: var(--primary);
+                color: var(--primary-500);
                 font-weight: var(--fw-medium);
                 margin-top: 24px;
             }
@@ -200,7 +200,7 @@ p {
     .tips-list-title {
         h2 {
             font-size: 2.4rem;
-            color: var(--primary);
+            color: var(--primary-500);
             font-weight: var(--fw-semi-bold);
         }
     }
@@ -210,7 +210,7 @@ p {
         .tips-item-title {
             h2 {
                 font-size: 2rem;
-                color: var(--primary);
+                color: var(--primary-500);
                 font-weight: var(--fw-medium);
                 margin-top: 24px;
             }
@@ -243,7 +243,7 @@ p {
         h2 {
             font-size: 2.4rem;
             font-weight: var(--fw-semi-bold);
-            color: var(--primary);
+            color: var(--primary-500);
         }
     }
     .recommend-link-list {
@@ -256,7 +256,7 @@ p {
                 color: var(--blue);
                 transition: all 0.2s linear;
                 &:hover {
-                    color: var(--primary);
+                    color: var(--primary-500);
                 }
             }
         }
