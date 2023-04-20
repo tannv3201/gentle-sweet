@@ -120,6 +120,17 @@ function NavbarMobile() {
                                                 </a>
                                                 {item.children ? (
                                                     <IconButton
+                                                        className={
+                                                            item.title ===
+                                                            selectedNavItem
+                                                                ? cx(
+                                                                      "open-menu-btn",
+                                                                      "rotate"
+                                                                  )
+                                                                : cx(
+                                                                      "open-menu-btn"
+                                                                  )
+                                                        }
                                                         onClick={(e) =>
                                                             handleClickNavItem(
                                                                 e,
@@ -197,6 +208,18 @@ function NavbarMobile() {
                                                                             )
                                                                         }
                                                                         size="large"
+                                                                        className={
+                                                                            selectedSubItem.includes(
+                                                                                subItem.title
+                                                                            )
+                                                                                ? cx(
+                                                                                      "open-chil-btn",
+                                                                                      "rotate"
+                                                                                  )
+                                                                                : cx(
+                                                                                      "open-chil-btn"
+                                                                                  )
+                                                                        }
                                                                     >
                                                                         <ExpandMore
                                                                             className={

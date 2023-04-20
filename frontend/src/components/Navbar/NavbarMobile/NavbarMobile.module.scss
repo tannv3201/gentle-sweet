@@ -258,10 +258,15 @@
     .sub-sub-menu-item {
     }
 }
-.icon-arrow {
+.open-menu-btn,
+.open-chil-btn {
     transition: all 0.2s linear;
     &.rotate {
         transform: rotate(-180deg);
+    }
+}
+.icon-arrow {
+    &.rotate {
         color: var(--white);
     }
 }
