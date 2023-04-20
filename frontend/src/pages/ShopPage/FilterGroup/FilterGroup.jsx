@@ -1,21 +1,19 @@
 import * as React from "react";
-import { Checkbox, Radio } from "@mui/material";
-import TextField from "@mui/material/TextField";
+import { Checkbox } from "@mui/material";
 import Autocomplete from "@mui/material/Autocomplete";
 import styles from "./FilterGroup.module.scss";
 import classNames from "classnames/bind";
 import {
-    FilterAltRounded,
     CheckBoxOutlineBlank,
     CheckBox,
     FilterListRounded,
-    AttachMoneyRounded,
-    ColorLensRounded,
 } from "@mui/icons-material";
 import { Grid } from "@mui/material";
 import { RedditTextField } from "../../../components/GTextField/GTextField";
 import GButton from "../../../components/MyButton/MyButton";
 import { useState } from "react";
+import { useMediaQuery } from "@mui/material";
+import { useTheme } from "@mui/material/styles";
 
 const icon = <CheckBoxOutlineBlank fontSize="small" />;
 const checkedIcon = <CheckBox fontSize="small" />;
@@ -56,9 +54,11 @@ const DisplayLabel = ({ label, icon }) => {
 };
 
 export const FilterGroupList = () => {
+    const theme = useTheme();
+    const isMedium = useMediaQuery(theme.breakpoints.down("md"));
     return (
         <>
-            <div style={{ padding: "0 12px" }}>
+            <div style={isMedium ? { padding: "0 12px" } : {}}>
                 <Grid container spacing={2}>
                     <Grid item lg={4} md={12} sm={12} xs={12}>
                         <Autocomplete
