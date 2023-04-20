@@ -3,7 +3,7 @@
 import React, { useCallback, useState } from "react";
 import styles from "./NavbarMobile.module.scss";
 import classNames from "classnames/bind";
-import { Drawer, Grid, IconButton } from "@mui/material";
+import { Drawer, Grid, IconButton, SwipeableDrawer } from "@mui/material";
 import images from "../../../assets/images";
 import {
     CloseRounded,
@@ -69,9 +69,10 @@ function NavbarMobile() {
                         </a>
                     </div>
                 </div>
-                <Drawer
+                <SwipeableDrawer
                     anchor={"left"}
                     open={isOpenDrawer}
+                    onOpen={toggleDrawer}
                     onClose={toggleDrawer}
                 >
                     <div className={cx("navbar-left")}>
@@ -319,7 +320,7 @@ function NavbarMobile() {
                             </Grid>
                         </div>
                     </div>
-                </Drawer>
+                </SwipeableDrawer>
             </React.Fragment>
         </div>
     );

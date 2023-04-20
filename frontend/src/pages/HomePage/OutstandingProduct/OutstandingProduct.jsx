@@ -134,7 +134,7 @@ function OutstandingProduct() {
                 </Grid>
                 <Grid container spacing={3}>
                     {productList.map((product, index) => (
-                        <Grid item lg={3} md={6} sm={6} xs={6}>
+                        <Grid key={index} item lg={3} md={6} sm={6} xs={6}>
                             <ProductCard
                                 // boxShadow={true}
                                 key={index}
