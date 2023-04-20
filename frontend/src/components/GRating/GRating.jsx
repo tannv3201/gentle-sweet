@@ -2,6 +2,12 @@ import * as React from "react";
 import Rating from "@mui/material/Rating";
 import Box from "@mui/material/Box";
 import StarIcon from "@mui/icons-material/Star";
+import classNames from "classnames/bind";
+import styles from "./GRating.module.scss";
+import { useMediaQuery } from "@mui/material";
+import { useTheme } from "@mui/material/styles";
+
+const cx = classNames.bind(styles);
 
 const labels = {
     1: "Tệ",
@@ -16,13 +22,15 @@ function getLabelText(value) {
 }
 
 export default function GRrating() {
+    const theme = useTheme();
+    const isMedium = useMediaQuery(theme.breakpoints.down("md"));
+
     const [value, setValue] = React.useState(5);
     const [hover, setHover] = React.useState(-1);
 
     return (
         <Box
             sx={{
-                // width: 200,
                 display: "flex",
                 alignItems: "center",
             }}
@@ -32,6 +40,7 @@ export default function GRrating() {
                 name="hover-feedback"
                 value={value}
                 precision={1}
+                style={{ marginRight: 12 }}
                 // getLabelText={getLabelText}
                 onChange={(event, newValue) => {
                     setValue(newValue);
@@ -43,6 +52,11 @@ export default function GRrating() {
                     <StarIcon style={{ opacity: 0.55 }} fontSize="small" />
                 }
             />
+            {!isMedium && (
+                <div className={cx("rating-count")}>
+                    <span>20,3k Đánh giá</span>
+                </div>
+            )}
             {/* {value !== null && (
                 <Box sx={{ ml: 2 }}>{labels[hover !== -1 ? hover : value]}</Box>
             )} */}

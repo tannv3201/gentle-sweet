@@ -1,4 +1,6 @@
-@media only screen and (max-width: 600px) {
+@import "../../../assets/scss/Global.scss";
+
+@include responsive(mobile) {
     .core-values-title h1 {
         text-align: center !important;
         &::before {

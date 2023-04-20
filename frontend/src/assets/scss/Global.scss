@@ -62,6 +62,122 @@
     --default-layout-horizontal-spacer: 24px;
 }
 
+// Variable
+$spacing: 4px;
+
+// -- margin
+@mixin mt($multiplier, $important: false) {
+    margin-top: $multiplier * $spacing;
+
+    @if $important {
+        margin-top: $multiplier * $spacing !important;
+    }
+}
+
+@mixin mr($multiplier, $important: false) {
+    margin-right: $multiplier * $spacing;
+    @if $important {
+        margin-right: $multiplier * $spacing !important;
+    }
+}
+
+@mixin mb($multiplier, $important: false) {
+    margin-bottom: $multiplier * $spacing;
+    @if $important {
+        margin-bottom: $multiplier * $spacing !important;
+    }
+}
+
+@mixin ml($multiplier, $important: false) {
+    margin-left: $multiplier * $spacing;
+    @if $important {
+        margin-left: $multiplier * $spacing !important;
+    }
+}
+
+@mixin m($top, $right, $bottom, $left, $important: false) {
+    margin: $top * $spacing $right * $spacing $bottom * $spacing $left *
+        $spacing;
+    @if $important {
+        margin: $top *
+            $spacing
+            $right *
+            $spacing
+            $bottom *
+            $spacing
+            $left *
+            $spacing !important;
+    }
+}
+
+// -- padding
+@mixin pt($multiplier, $important: false) {
+    padding-top: $multiplier * $spacing;
+
+    @if $important {
+        padding-top: $multiplier * $spacing !important;
+    }
+}
+
+@mixin pr($multiplier, $important: false) {
+    padding-right: $multiplier * $spacing;
+    @if $important {
+        padding-right: $multiplier * $spacing !important;
+    }
+}
+
+@mixin pb($multiplier, $important: false) {
+    padding-bottom: $multiplier * $spacing;
+    @if $important {
+        padding-bottom: $multiplier * $spacing !important;
+    }
+}
+
+@mixin pl($multiplier, $important: false) {
+    padding-left: $multiplier * $spacing;
+    @if $important {
+        padding-left: $multiplier * $spacing !important;
+    }
+}
+
+@mixin p($top, $right, $bottom, $left, $important: false) {
+    padding: $top * $spacing $right * $spacing $bottom * $spacing $left *
+        $spacing;
+    @if $important {
+        padding: $top *
+            $spacing
+            $right *
+            $spacing
+            $bottom *
+            $spacing
+            $left *
+            $spacing !important;
+    }
+}
+
+// --responsive
+@mixin responsive($breakpoint) {
+    @if $breakpoint == desktop {
+        @media (min-width: 1024px) {
+            @content;
+        }
+    }
+
+    @if $breakpoint == tablet {
+        @media (min-width: 768px) and (max-width: 1023px) {
+            @content;
+        }
+    }
+
+    @if $breakpoint == mobile {
+        @media (max-width: 767px) {
+            @content;
+        }
+    }
+}
+
+// ------------
+
 * {
     margin: 0;
     padding: 0;
@@ -243,7 +359,7 @@ span.MuiChip-label {
     overflow-x: auto !important;
 }
 
-.MuiInputBase-input {
+.MuiInputBase-input:not(input[type="number"]) {
     font-size: 1.6rem !important;
     font-weight: var(--fw-normal) !important;
     font-family: var(--font-family) !important;
@@ -392,7 +508,7 @@ span.MuiChip-label {
     margin: 6px 2px 2px 2px !important;
 }
 
-@media only screen and (max-width: 600px) {
+@include responsive(mobile) {
     .MuiTabs-flexContainer {
         justify-content: unset !important;
     }

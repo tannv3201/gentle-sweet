@@ -1,4 +1,6 @@
-@media only screen and (max-width: 600px) {
+@import "../../assets/scss/Global.scss";
+
+@include responsive(mobile) {
     .product-container {
         .product-img {
             height: 180px !important;
@@ -18,8 +20,7 @@
             }
         }
         .product-content {
-            margin-top: 8px;
-            padding: 0 8px 8px 8px !important;
+            @include p(0, 2, 2, 2, true);
             .product-category {
                 width: 100% !important;
                 display: inline-flex !important;
@@ -32,14 +33,14 @@
                     background-color: var(--primary-box-shadow);
                     padding: 2px 12px !important;
                     border-radius: 50px;
-                    margin-top: 4px;
+                    @include mt(1);
                 }
             }
             .product-name {
                 font-size: 1.4rem !important;
                 font-weight: 500;
                 min-height: 58px !important;
-                margin-top: 4px !important;
+                @include mt(1, true);
                 padding: 8px 0;
                 transition: all 0.2s linear;
                 a {
@@ -78,6 +79,7 @@
         }
     }
 }
+
 .boxShadow {
     box-shadow: var(--box-shadow);
 }
@@ -112,7 +114,7 @@
         }
     }
     .product-content {
-        margin-top: 8px;
+        @include mt(2);
         padding: 0 16px 16px 16px;
         .product-category {
             span {

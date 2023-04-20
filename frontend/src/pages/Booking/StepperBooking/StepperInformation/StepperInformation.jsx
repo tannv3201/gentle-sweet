@@ -146,6 +146,7 @@ export default function StepperInformation() {
                             label="Số nhà"
                             requiredlabel
                             fullWidth
+                            multiline
                         />
                     </Grid>
                 </Grid>

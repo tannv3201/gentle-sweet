@@ -1,4 +1,6 @@
-@media only screen and (max-width: 600px) and (hover: none) {
+@import "../../assets/scss/Global.scss";
+
+@include responsive(mobile) {
     .filter-group-wrapper {
         width: 300px !important;
         padding: 12px;

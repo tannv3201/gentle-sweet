@@ -90,6 +90,7 @@ function GTextField({
     sx,
     willShrink,
     multiline,
+    style,
     ...otherProps
 }) {
     const configTextfield = {

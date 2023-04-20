@@ -1,4 +1,6 @@
-@media only screen and (max-width: 600px) {
+@import "../../../assets/scss/Global.scss";
+
+@include responsive(mobile) {
     .category-list {
         width: 300px;
         overflow: auto;

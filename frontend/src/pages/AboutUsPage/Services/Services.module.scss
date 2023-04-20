@@ -1,4 +1,6 @@
-@media only screen and (max-width: 600px) {
+@import "../../../assets/scss/Global.scss";
+
+@include responsive(mobile) {
     .service-item {
         .service-item-img {
             height: 240px !important;

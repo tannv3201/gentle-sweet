@@ -1,4 +1,6 @@
-@media screen and (max-width: 767px) {
+@import "../../../assets/scss/Global.scss";
+
+@include responsive(mobile) {
     .service-title {
         h3 {
             font-size: 1.8rem !important;
