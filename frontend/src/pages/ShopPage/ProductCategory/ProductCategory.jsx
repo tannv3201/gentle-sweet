@@ -115,16 +115,14 @@ function ProductCategory() {
         <div className={cx("wrapper")}>
             <div className={cx("inner")}>
                 <div className={cx("inner-sticky")}>
-                    <div className={cx("fixed-height")}>
-                        <Grid container spacing={2}>
+                    <Grid container spacing={2}>
+                        <Grid item xs={12}>
                             {!isMedium && (
-                                <Grid item xs={12}>
-                                    <span className={cx("category-title")}>
-                                        <h2>Danh mục</h2>
-                                    </span>
-                                </Grid>
+                                <span className={cx("category-title")}>
+                                    <h2>Danh mục</h2>
+                                </span>
                             )}
-                            <Grid item xs={12}>
+                            <div className={cx("fixed-height")}>
                                 <div className={cx("category-list")}>
                                     <Grid container spacing={0.5}>
                                         {categoryList?.map((category, idx) => (
@@ -220,9 +218,9 @@ function ProductCategory() {
                                         ))}
                                     </Grid>
                                 </div>
-                            </Grid>
+                            </div>
                         </Grid>
-                    </div>
+                    </Grid>
                 </div>
             </div>
         </div>

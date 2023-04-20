@@ -3,6 +3,9 @@
         .inner-sticky {
             top: unset !important;
         }
+        .fixed-height {
+            height: unset !important;
+        }
     }
 }
 
@@ -16,14 +19,15 @@
     position: relative;
     .inner-sticky {
         position: sticky;
-        top: 124px;
-        background-color: var(--white);
+        top: 112px;
         border-radius: 6px;
 
         .fixed-height {
             padding: 12px;
-            height: 560px;
+            // height: 500px;
             overflow-y: auto;
+            background-color: var(--white);
+
             &::-webkit-scrollbar {
                 border-radius: 0;
                 width: 6px;
@@ -43,10 +47,16 @@
         }
     }
     .category-title {
+        display: block;
+        background-color: var(--primary-200);
+        padding: 12px;
+        border-top-left-radius: 6px;
+        border-top-right-radius: 6px;
         h2 {
-            font-size: 2.4rem;
+            font-size: 2rem;
             font-weight: var(--fw-semi-bold);
-            color: var(--text-primary);
+            color: var(--primary);
+            text-align: center;
         }
     }
     .category-list {
