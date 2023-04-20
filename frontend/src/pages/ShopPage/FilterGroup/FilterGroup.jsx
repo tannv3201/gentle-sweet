@@ -58,7 +58,7 @@ const DisplayLabel = ({ label, icon }) => {
 export const FilterGroupList = () => {
     return (
         <>
-            <div>
+            <div style={{ padding: "0 12px" }}>
                 <Grid container spacing={2}>
                     <Grid item lg={4} md={12} sm={12} xs={12}>
                         <Autocomplete
