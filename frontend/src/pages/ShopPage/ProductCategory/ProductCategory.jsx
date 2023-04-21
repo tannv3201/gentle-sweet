@@ -107,7 +107,6 @@ function ProductCategory() {
                 };
             }
         });
-        console.log(i, updateList);
         setCategoryList(updateList);
     };
 
