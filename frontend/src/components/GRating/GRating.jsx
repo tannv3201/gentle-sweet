@@ -62,12 +62,12 @@ export default function GRrating({ quantitylabel = false }) {
                 }
             />
             <div className={cx("rating-count")}>
-                <span>
-                    20,3k
-                    {quantitylabel && (
+                {quantitylabel && (
+                    <span>
+                        20,3k
                         <span className={cx("unit-name")}>Đánh giá</span>
-                    )}
-                </span>
+                    </span>
+                )}
             </div>
             {/* {value !== null && (
                 <Box sx={{ ml: 2 }}>{labels[hover !== -1 ? hover : value]}</Box>

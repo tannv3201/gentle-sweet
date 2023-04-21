@@ -274,7 +274,7 @@ function ProductDetail() {
                                                                     isMedium
                                                                         ? {
                                                                               padding:
-                                                                                  "7px 4px",
+                                                                                  "7px 2px",
                                                                           }
                                                                         : {}
                                                                 }
