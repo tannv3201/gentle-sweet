@@ -1,0 +1,34 @@
+.wrapper {
+}
+
+.inner {
+    background-color: var(--white);
+    padding: 12px;
+    border-radius: 6px;
+
+    .contact-wrapper {
+        border: 1px solid var(--border-color);
+        padding: 12px;
+        border-radius: 6px;
+
+        .contact-info {
+            .contact-info-title {
+                font-size: 1.8rem;
+                font-weight: var(--fw-semi-bold);
+                color: var(--text-primary);
+            }
+        }
+        .thanks {
+            font-size: 1.6rem;
+            text-align: justify;
+        }
+    }
+}
+
+.action-btn-wrapper {
+    display: flex;
+    justify-content: flex-end;
+    .save-btn {
+        width: 80px;
+    }
+}

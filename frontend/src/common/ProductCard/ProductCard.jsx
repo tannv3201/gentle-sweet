@@ -17,6 +17,7 @@ export default function ProductCard({
     productSold,
     boxShadow,
     href,
+    onSale,
 }) {
     return (
         <div
@@ -28,6 +29,11 @@ export default function ProductCard({
         >
             <a href={href} className={cx("product-img")}>
                 <img src={imageSrc} alt="" />
+                {onSale > 0 && (
+                    <span
+                        className={cx("label-sale")}
+                    >{`Giảm ${onSale}%`}</span>
+                )}
             </a>
             <div className={cx("product-content")}>
                 <div className={cx("product-category")}>
@@ -36,19 +42,32 @@ export default function ProductCard({
                 <h3 className={cx("product-name")}>
                     <a href={href}>{productName}</a>
                 </h3>
-                <div className={cx("product-price-container")}>
-                    <span className={cx("product-price")}>
+                <div
+                    className={
+                        onSale > 0
+                            ? cx("product-price-container", "onSale")
+                            : cx("product-price-container")
+                    }
+                >
+                    <span className={cx("product-price-default")}>
                         {FormatCurrency(productPrice)}
                     </span>
+                    {onSale > 0 && (
+                        <span className={cx("product-price-onsale")}>
+                            {FormatCurrency(
+                                productPrice - (productPrice * onSale) / 100
+                            )}
+                        </span>
+                    )}
                 </div>
                 <div className={cx("product-rating-container")}>
                     <div className={cx("product-rating")}>
-                        {/* <Rating
+                        <Rating
                             readOnly
                             value={valueRating}
                             size="small"
                             className={cx("product-rating-star")}
-                        /> */}
+                        />
                     </div>
                     <div className={cx("product-sold")}>
                         Đã bán: {productSold}

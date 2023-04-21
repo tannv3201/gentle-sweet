@@ -106,6 +106,7 @@ function Product() {
                                 productPrice={product?.price}
                                 productSold={product?.sold}
                                 valueRating={product?.rating}
+                                onSale={product?.onSale}
                             />
                         </Grid>
                     ))}
