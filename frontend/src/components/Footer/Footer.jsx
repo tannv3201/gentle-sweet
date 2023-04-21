@@ -202,7 +202,9 @@ function Footer() {
                                 <div className={cx("receive-mail")}>
                                     <RedditTextField
                                         placeholder={"Nhập email của bạn..."}
-                                        iconButtonSize="small"
+                                        iconButtonSize={
+                                            isSmall ? "large" : "small"
+                                        }
                                         className={cx("receive-mail-input")}
                                         label="Đăng ký nhận Mail"
                                         iconButtonEnd={
@@ -210,7 +212,7 @@ function Footer() {
                                                 className={cx(
                                                     "receive-mail-icon"
                                                 )}
-                                                fontSize="inherit"
+                                                fontSize={"large"}
                                             />
                                         }
                                     />
