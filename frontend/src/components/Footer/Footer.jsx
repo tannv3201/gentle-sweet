@@ -3,7 +3,7 @@ import classNames from "classnames/bind";
 import styles from "./Footer.module.scss";
 import { Grid } from "@mui/material";
 import images from "../../assets/images";
-import MyTextField from "../GTextField/MyTextField";
+import { RedditTextField } from "../GTextField/GTextField";
 import { Facebook, Instagram, YouTube, SendRounded } from "@mui/icons-material";
 import { useMediaQuery } from "@mui/material";
 import { useTheme } from "@mui/material/styles";
@@ -196,15 +196,15 @@ function Footer() {
                                 xs={12}
                                 className={cx("footer-component")}
                             >
-                                <a className={cx("component-title")}>
+                                {/* <a className={cx("component-title")}>
                                     <h4>Đăng ký nhận Mail</h4>
-                                </a>
+                                </a> */}
                                 <div className={cx("receive-mail")}>
-                                    <MyTextField
-                                        placeholder={"Enter your email..."}
+                                    <RedditTextField
+                                        placeholder={"Nhập email của bạn..."}
                                         buttonSize="small"
                                         className={cx("receive-mail-input")}
-                                        bgDark
+                                        label="Đăng ký nhận Mail"
                                         iconButtonEnd={
                                             <SendRounded
                                                 className={cx(

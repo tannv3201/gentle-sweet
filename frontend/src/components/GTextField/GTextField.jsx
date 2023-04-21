@@ -1,6 +1,7 @@
 import React from "react";
 import TextField from "@mui/material/TextField";
 import { alpha, styled } from "@mui/material/styles";
+import { IconButton } from "@mui/material";
 
 export const RequiredLabel = () => {
     return <span style={{ color: "red" }}>*</span>;
@@ -15,6 +16,9 @@ export const RedditTextField = styled(
         multiline,
         rows,
         disabled,
+        iconButtonStart,
+        iconButtonEnd,
+        iconButtonSize = "small",
         variant = "filled",
         ...props
     }) => (
@@ -37,7 +41,26 @@ export const RedditTextField = styled(
                 </div>
             )}
             <TextField
-                InputProps={{ disableUnderline: true }}
+                // InputProps={{ disableUnderline: true,  }}
+                InputProps={
+                    iconButtonStart
+                        ? {
+                              startAdornment: (
+                                  <IconButton size={iconButtonSize}>
+                                      {iconButtonStart}
+                                  </IconButton>
+                              ),
+                          }
+                        : iconButtonEnd
+                        ? {
+                              endAdornment: (
+                                  <IconButton size={iconButtonSize}>
+                                      {iconButtonEnd}
+                                  </IconButton>
+                              ),
+                          }
+                        : null
+                }
                 id={name}
                 variant={variant}
                 multiline={multiline}
