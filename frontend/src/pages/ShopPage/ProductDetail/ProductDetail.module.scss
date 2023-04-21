@@ -201,4 +201,25 @@
             }
         }
     }
+
+    // product-description
+
+    // tab panel
+    .product-description {
+        .wrapper-appbar {
+            background-color: var(--white);
+        }
+
+        .header-tabs {
+            background-color: var(--primary-200);
+            border-top-left-radius: 6px;
+            border-top-right-radius: 6px;
+        }
+
+        .tabpanel-container {
+            padding: 12px;
+            border-bottom-left-radius: 6px;
+            border-bottom-right-radius: 6px;
+        }
+    }
 }

@@ -13,8 +13,25 @@ import {
 import GButton from "../../../components/MyButton/MyButton";
 import { useMediaQuery } from "@mui/material";
 import { useTheme } from "@mui/material/styles";
-
+import AppBar from "@mui/material/AppBar";
+import TabPanel from "../../../components/TabPanel/TabPanel";
+import MyTabs from "../../../components/TabPanel/Tabs";
+import MyTab from "../../../components/TabPanel/Tab";
+import ProductDescription from "./ProductDescription/ProductDescription";
+import ProductRating from "./ProductRating/ProductRating";
 const cx = classNames.bind(styles);
+
+const productInfo = {
+    name: "Sơn nhũ mắt mèo",
+    category: "Sơn",
+    image: "https://nailzone.vn/wp-content/uploads/2018/03/1200-653345560-colored-nail-polish.jpg",
+    price: 90000,
+    onSale: 20,
+    description1:
+        "Tẩy trang là bước làm sạch quan trọng không thể thiếu trong chu trình chăm sóc da hằng ngày của chị em. Sử dụng sản phẩm tẩy trang không chỉ làm sạch sâu cho làn da mà còn giúp da có vẻ ngoài mịn màng, trắng sáng.",
+    description2:
+        "Nếu bạn nghĩ rằng chỉ sữa rửa mặt là đủ giúp làm sạch hết bụi bẩn, dầu nhờn trên da, giúp da sạch thoáng thì đây là quan điểm khá sai lầm. Cả sữa rửa mặt hay nước tẩy trang đều là những sản phẩm vô cùng cần thiết, đóng vai trò khác nhau và không thể thiếu trong chu trình chăm sóc da mỗi ngày.",
+};
 
 function ProductDetail() {
     const theme = useTheme();
@@ -22,6 +39,11 @@ function ProductDetail() {
 
     const [onSale, setOnSale] = useState(30);
     const [buyQuantity, setBuyQuantity] = useState(1);
+    const [tabIndex, setTabIndex] = React.useState(0);
+
+    const handleTabChange = (event, newTabIndex) => {
+        setTabIndex(newTabIndex);
+    };
 
     const handleChangeBuyQuantity = (value) => {
         setBuyQuantity(value);
@@ -44,6 +66,8 @@ function ProductDetail() {
         }
     };
 
+    const salonSystem = [];
+
     return (
         <div className={cx("wrapper")}>
             <div className={cx("inner")}>
@@ -63,7 +87,7 @@ function ProductDetail() {
                                             )}
                                         >
                                             <img
-                                                src="https://nailzone.vn/wp-content/uploads/2018/03/1200-653345560-colored-nail-polish.jpg"
+                                                src={productInfo?.image}
                                                 alt=""
                                             />
                                         </div>
@@ -83,7 +107,7 @@ function ProductDetail() {
                                                         "product-briefing-title"
                                                     )}
                                                 >
-                                                    <h2>Sơn nhũ mắt mèo</h2>
+                                                    <h2>{productInfo?.name}</h2>
                                                 </span>
                                             </Grid>
                                             <Grid item xs={12}>
@@ -112,7 +136,8 @@ function ProductDetail() {
                                                 >
                                                     <span
                                                         className={
-                                                            onSale !== 0
+                                                            productInfo?.onSale !==
+                                                            0
                                                                 ? cx(
                                                                       "product-briefing-price-default",
                                                                       "onSale"
@@ -122,9 +147,12 @@ function ProductDetail() {
                                                                   )
                                                         }
                                                     >
-                                                        {FormatCurrency(180000)}
+                                                        {FormatCurrency(
+                                                            productInfo?.price
+                                                        )}
                                                     </span>
-                                                    {onSale !== 0 && (
+                                                    {productInfo?.onSale !==
+                                                        0 && (
                                                         <>
                                                             <span
                                                                 className={cx(
@@ -143,7 +171,7 @@ function ProductDetail() {
                                                                     "sale-tag"
                                                                 )}
                                                             >
-                                                                {`Giảm ${onSale}%`}
+                                                                {`Giảm ${productInfo?.onSale}%`}
                                                             </span>
                                                         </>
                                                     )}
@@ -273,6 +301,50 @@ function ProductDetail() {
                                     </div>
                                 </Grid>
                             </Grid>
+                        </div>
+                    </Grid>
+                    <Grid item xs={12}>
+                        <div className={cx("product-description")}>
+                            <div className={cx("wrapper-appbar")}>
+                                <AppBar
+                                    style={{ overflow: "hidden" }}
+                                    position="static"
+                                    color="default"
+                                >
+                                    <div className={cx("header-tabs")}>
+                                        <MyTabs
+                                            value={tabIndex}
+                                            onChange={handleTabChange}
+                                            className={cx(
+                                                "tabspanel-container"
+                                            )}
+                                            indicatorColor="secondary"
+                                            textColor="secondary"
+                                        >
+                                            <MyTab
+                                                bgPrimary
+                                                label={"Mô tả"}
+                                                className={cx("tabpanel")}
+                                            />
+                                            <MyTab
+                                                bgPrimary
+                                                label={"Đánh giá"}
+                                                className={cx("tabpanel")}
+                                            />
+                                        </MyTabs>
+                                    </div>
+                                </AppBar>
+                                <div className={cx("tabpanel-container")}>
+                                    <TabPanel value={tabIndex} index={0}>
+                                        <ProductDescription
+                                            productInfor={productInfo}
+                                        />
+                                    </TabPanel>
+                                    <TabPanel value={tabIndex} index={1}>
+                                        <ProductRating />
+                                    </TabPanel>
+                                </div>
+                            </div>
                         </div>
                     </Grid>
                 </Grid>

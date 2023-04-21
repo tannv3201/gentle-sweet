@@ -68,8 +68,6 @@ function SalonSystem({ searchNearYou }) {
                             <MyTabs
                                 value={tabIndex}
                                 onChange={handleTabChange}
-                                indicatorColor="primary"
-                                textColor="primary"
                                 className={cx("tabspanel-container")}
                             >
                                 {salonSystem.map((salon, index) => (

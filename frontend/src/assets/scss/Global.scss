@@ -322,6 +322,29 @@ span.MuiChip-label {
     color: #fff !important;
     background: var(--primary-500);
 }
+
+.MuiTab-textColorSecondary {
+    font-size: 1.6rem !important;
+    text-transform: unset !important;
+    font-family: var(--font-family) !important;
+    border-radius: 4px !important;
+    margin-right: 8px !important;
+    min-height: 40px !important;
+    color: var(--primary-500) !important;
+    transition: all 0.2s linear !important;
+    padding-top: 4px !important;
+    padding-bottom: 4px !important;
+    &:hover {
+        color: var(--primary-500) !important;
+        border: 1px solid var(--primary-500) !important;
+    }
+    &.Mui-selected {
+        border: 1px solid var(--primary-500) !important;
+        color: var(--primary-500) !important;
+        background-color: var(--white) !important;
+    }
+}
+
 .MuiTabs-flexContainer {
     justify-content: center !important;
 }
@@ -334,6 +357,12 @@ span.MuiChip-label {
     margin-right: 8px !important;
     min-height: 40px !important;
     color: var(--primary-500) !important;
+    transition: all 0.2s linear !important;
+
+    &:hover {
+        color: #fff !important;
+        background: var(--primary-500);
+    }
 }
 
 .MuiPaper-root.MuiAppBar-root.MuiAppBar-positionStatic.MuiAppBar-colorDefault.MuiPaper-elevation4 {

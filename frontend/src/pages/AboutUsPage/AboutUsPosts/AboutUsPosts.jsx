@@ -3,7 +3,7 @@ import classNames from "classnames/bind";
 import styles from "./AboutUsPosts.module.scss";
 import { Grid } from "@mui/material";
 import images from "../../../assets/images";
-
+import GImage from "../../../common/GImage/GImage";
 const cx = classNames.bind(styles);
 
 function AboutUsPosts() {
@@ -41,10 +41,10 @@ function AboutUsPosts() {
                             </div>
                         </Grid>
                         <Grid item xs={12} className={cx("posts-img-wrapper")}>
-                            <div className={cx("posts-img")}>
-                                <img src={images.warehouse} alt="" />
-                                <span>Hình ảnh tại kho vật tư</span>
-                            </div>
+                            <GImage
+                                imgSrc={images.warehouse}
+                                caption={"Hình ảnh tại kho vật tư"}
+                            />
                         </Grid>
                     </Grid>
                     <Grid item xs={12} container className={cx("posts-single")}>
@@ -88,10 +88,10 @@ function AboutUsPosts() {
                             </div>
                         </Grid>
                         <Grid item xs={12} className={cx("posts-img-wrapper")}>
-                            <div className={cx("posts-img")}>
-                                <img src={images.photo_realistic} alt="" />
-                                <span>Hình ảnh tại cơ sở Thái Bình</span>
-                            </div>
+                            <GImage
+                                imgSrc={images.photo_realistic}
+                                caption={"Hình ảnh tại cơ sở Thái Bình"}
+                            />
                         </Grid>
                     </Grid>
                     <Grid item xs={12} container className={cx("posts-single")}>
@@ -133,10 +133,10 @@ function AboutUsPosts() {
                             </div>
                         </Grid>
                         <Grid item xs={12} className={cx("posts-img-wrapper")}>
-                            <div className={cx("posts-img")}>
-                                <img src={images.phu_nu_viet_nam} alt="" />
-                                <span>Hình ảnh người phụ nữ Việt Nam</span>
-                            </div>
+                            <GImage
+                                imgSrc={images.phu_nu_viet_nam}
+                                caption={"Hình ảnh người phụ nữ Việt Nam"}
+                            />
                         </Grid>
                     </Grid>
                     <Grid item xs={12} container className={cx("posts-single")}>

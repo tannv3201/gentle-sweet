@@ -14,9 +14,22 @@ const TabsInWhite = withStyles({
     },
 })(Tabs);
 
-function MyTabs({ children, variant, scrollButtons, ...props }) {
+function MyTabs({
+    children,
+    variant,
+    scrollButtons,
+    indicatorColor = "primary",
+    textColor = "primary",
+    ...props
+}) {
     return (
-        <TabsInWhite variant={variant} scrollButtons={scrollButtons} {...props}>
+        <TabsInWhite
+            indicatorColor={indicatorColor}
+            textColor={textColor}
+            variant={variant}
+            scrollButtons={scrollButtons}
+            {...props}
+        >
             {children}
         </TabsInWhite>
     );
