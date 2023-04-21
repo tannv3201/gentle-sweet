@@ -116,16 +116,42 @@ function ProductDetail() {
                                                         "product-briefing-rating"
                                                     )}
                                                 >
-                                                    <GRating />
-                                                    <div
-                                                        className={cx(
-                                                            "product-briefing-sold"
-                                                        )}
-                                                    >
-                                                        <span>
-                                                            77,7k Đã bán
-                                                        </span>
-                                                    </div>
+                                                    <Grid container spacing={2}>
+                                                        <Grid item xs={12}>
+                                                            <GRating
+                                                                quantitylabel
+                                                            />
+                                                        </Grid>
+                                                        <Grid item xs={12}>
+                                                            <div
+                                                                className={cx(
+                                                                    "product-briefing-sold"
+                                                                )}
+                                                            >
+                                                                <span
+                                                                    className={cx(
+                                                                        "product-sold-title"
+                                                                    )}
+                                                                >
+                                                                    Đã bán:
+                                                                </span>
+                                                                <span
+                                                                    className={cx(
+                                                                        "product-sold-quantity"
+                                                                    )}
+                                                                >
+                                                                    77,7k
+                                                                    <span
+                                                                        className={cx(
+                                                                            "unit-name"
+                                                                        )}
+                                                                    >
+                                                                        Sản phẩm
+                                                                    </span>
+                                                                </span>
+                                                            </div>
+                                                        </Grid>
+                                                    </Grid>
                                                 </div>
                                             </Grid>
                                             <Grid item xs={12}>

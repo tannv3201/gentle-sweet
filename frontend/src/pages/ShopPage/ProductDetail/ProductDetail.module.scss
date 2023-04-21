@@ -23,6 +23,15 @@
                 height: 320px !important;
             }
         }
+
+        .product-sold-title {
+            margin-right: 24px !important;
+        }
+        .product-sold-quantity {
+            .unit-name {
+                margin-left: 8px !important;
+            }
+        }
     }
 }
 
@@ -60,22 +69,15 @@
     }
 
     .product-briefing-rating {
-        display: flex;
-        align-items: center;
-
         .product-briefing-sold {
-            padding: 0 12px;
-            position: relative;
             font-weight: var(--fw-medium);
-
-            &::before {
-                position: absolute;
-                content: "";
-                top: 0;
-                bottom: 0;
-                left: 0;
-                width: 1px;
-                background-color: var(--border-color);
+            .product-sold-title {
+                margin-right: 32px;
+            }
+            .product-sold-quantity {
+                .unit-name {
+                    margin-left: 16px;
+                }
             }
         }
     }

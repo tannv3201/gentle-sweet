@@ -7,7 +7,7 @@ import GTextArea from "../Form/GTextArea";
 import { RequiredLabel } from "../GTextField/GTextField";
 import { InsertPhotoRounded, SendRounded } from "@mui/icons-material";
 import GButton from "../MyButton/MyButton";
-
+import GRating from "../GRating/GRating";
 const cx = classnames.bind(styles);
 
 function Comments() {
@@ -33,6 +33,9 @@ function Comments() {
                     <Grid item xs={12}>
                         <div className={cx("user-info")}>
                             <Grid container spacing={2}>
+                                <Grid item xs={12}>
+                                    <GRating />
+                                </Grid>
                                 <Grid item xs={12}>
                                     <div className={cx("comments-wrapper")}>
                                         <div

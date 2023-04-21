@@ -1,8 +1,36 @@
+@import "../../assets/scss/Global.scss";
+
+@include responsive(mobile) {
+    .label-rating {
+        margin-right: 8px !important;
+    }
+    .rating-count {
+        padding: 0 6px !important;
+        margin-left: 0 !important;
+        .unit-name {
+            margin-left: 8px !important;
+        }
+    }
+}
+
+.label-rating {
+    font-size: 1.6rem;
+    font-weight: var(--fw-medium);
+    color: var(--text-primary);
+    margin-right: 16px;
+
+    &.isMedium {
+    }
+}
+
 .rating-count {
     padding: 0 12px;
     margin-left: 12px;
     position: relative;
     font-weight: var(--fw-medium);
+    .unit-name {
+        margin-left: 16px;
+    }
     &::before {
         position: absolute;
         content: "";
@@ -12,4 +40,9 @@
         width: 1px;
         background-color: var(--border-color);
     }
+}
+
+.wrapper-rating-content {
+    display: flex;
+    align-items: center;
 }

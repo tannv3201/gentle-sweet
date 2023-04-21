@@ -21,7 +21,7 @@ function getLabelText(value) {
     return `${value} Star${value !== 1 ? "s" : ""}, ${labels[value]}`;
 }
 
-export default function GRrating() {
+export default function GRrating({ quantitylabel = false }) {
     const theme = useTheme();
     const isMedium = useMediaQuery(theme.breakpoints.down("md"));
 
@@ -35,12 +35,21 @@ export default function GRrating() {
                 alignItems: "center",
             }}
         >
+            <span
+                className={
+                    isMedium
+                        ? cx("label-rating", "isMedium")
+                        : cx("label-rating")
+                }
+            >
+                Đánh giá:
+            </span>
             <Rating
                 size="small"
                 name="hover-feedback"
                 value={value}
                 precision={1}
-                style={{ marginRight: 12 }}
+                style={{ marginRight: 4 }}
                 // getLabelText={getLabelText}
                 onChange={(event, newValue) => {
                     setValue(newValue);
@@ -52,11 +61,14 @@ export default function GRrating() {
                     <StarIcon style={{ opacity: 0.55 }} fontSize="small" />
                 }
             />
-            {!isMedium && (
-                <div className={cx("rating-count")}>
-                    <span>20,3k Đánh giá</span>
-                </div>
-            )}
+            <div className={cx("rating-count")}>
+                <span>
+                    20,3k
+                    {quantitylabel && (
+                        <span className={cx("unit-name")}>Đánh giá</span>
+                    )}
+                </span>
+            </div>
             {/* {value !== null && (
                 <Box sx={{ ml: 2 }}>{labels[hover !== -1 ? hover : value]}</Box>
             )} */}
