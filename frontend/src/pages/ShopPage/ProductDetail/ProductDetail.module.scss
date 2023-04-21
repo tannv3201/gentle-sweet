@@ -158,7 +158,8 @@
         .add-to-cart-btn {
             font-size: 2rem !important;
             @include responsive(mobile) {
-                font-size: 1.3rem !important;
+                font-size: 1.4rem !important;
+                font-weight: var(--fw-semi-bold) !important;
             }
             color: var(--primary-500);
             border-color: var(--primary-500);
@@ -170,7 +171,8 @@
         .buy-now-btn {
             font-size: 2rem !important;
             @include responsive(mobile) {
-                font-size: 1.3rem !important;
+                font-size: 1.4rem !important;
+                font-weight: var(--fw-semi-bold) !important;
             }
             background-color: var(--primary-500);
             box-shadow: unset !important;

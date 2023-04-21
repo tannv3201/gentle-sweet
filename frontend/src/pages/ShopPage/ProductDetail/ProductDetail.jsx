@@ -216,6 +216,14 @@ function ProductDetail() {
                                                                 variant="outlined"
                                                                 fullWidth
                                                                 size="large"
+                                                                style={
+                                                                    isMedium
+                                                                        ? {
+                                                                              padding:
+                                                                                  "7px 4px",
+                                                                          }
+                                                                        : {}
+                                                                }
                                                             >
                                                                 Thêm vào giỏ
                                                                 hàng
