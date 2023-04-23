@@ -164,9 +164,11 @@ function NavbarDesktop() {
                                 <IconButton title="Tìm kiếm" size="large">
                                     <SearchRounded />
                                 </IconButton>
-                                <IconButton title="Giỏ hàng" size="large">
-                                    <ShoppingCartRounded />
-                                </IconButton>
+                                <NavLink to={"/gio-hang"}>
+                                    <IconButton title="Giỏ hàng" size="large">
+                                        <ShoppingCartRounded />
+                                    </IconButton>
+                                </NavLink>
                                 <IconButton title="Đăng nhập" size="large">
                                     <PersonRounded />
                                 </IconButton>

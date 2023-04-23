@@ -1,0 +1,19 @@
+.wrapper {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    background-color: var(--light-gray);
+    padding: 24px;
+}
+
+.inner {
+    width: calc(var(--default-layout-width));
+    // padding: 0 24px;
+}
+
+.booking-banner {
+    width: 100%;
+    img {
+        width: 100%;
+    }
+}

@@ -9,7 +9,7 @@ import {
     FilterListRounded,
 } from "@mui/icons-material";
 import { Grid } from "@mui/material";
-import { RedditTextField } from "../../../components/GTextField/GTextField";
+import GTextField from "../../../components/GTextField/GTextField";
 import GButton from "../../../components/MyButton/MyButton";
 import { useState } from "react";
 import { useMediaQuery } from "@mui/material";
@@ -81,7 +81,7 @@ export const FilterGroupList = () => {
                                 </li>
                             )}
                             renderInput={(params) => (
-                                <RedditTextField
+                                <GTextField
                                     {...params}
                                     label={
                                         <>
@@ -119,7 +119,7 @@ export const FilterGroupList = () => {
                                 </li>
                             )}
                             renderInput={(params) => (
-                                <RedditTextField
+                                <GTextField
                                     {...params}
                                     label={
                                         <>
@@ -156,7 +156,7 @@ export const FilterGroupList = () => {
                                 </li>
                             )}
                             renderInput={(params) => (
-                                <RedditTextField
+                                <GTextField
                                     {...params}
                                     label={
                                         <>

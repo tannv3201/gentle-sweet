@@ -5,9 +5,7 @@ import { Grid } from "@mui/material";
 import classNames from "classnames/bind";
 import images from "../../../../assets/images";
 
-import GTextField, {
-    RedditTextField,
-} from "../../../../components/GTextField/GTextField";
+import GTextField from "../../../../components/GTextField/GTextField";
 import GButton from "../../../../components/MyButton/MyButton";
 
 const cx = classNames.bind(styles);
@@ -250,14 +248,14 @@ function Related() {
                                         </div>
                                     </Grid>
                                     <Grid item xs={12}>
-                                        <RedditTextField
+                                        <GTextField
                                             label="Họ và tên"
                                             fullWidth
                                             requiredlabel
                                         />
                                     </Grid>
                                     <Grid item xs={12}>
-                                        <RedditTextField
+                                        <GTextField
                                             label="Số điện thoại"
                                             fullWidth
                                             requiredlabel

@@ -2,19 +2,15 @@
 
 import React from "react";
 import classNames from "classnames/bind";
-import styles from "./SummaryCheckout.module.scss";
+import styles from "./SummaryPayment.module.scss";
 import { Grid } from "@mui/material";
 import { FormatCurrency } from "../../../components/FormatCurrency/FormatCurrency";
 import Skeleton from "@mui/material/Skeleton";
 import { useState } from "react";
 import { useEffect } from "react";
-import images from "../../../assets/images";
 import GTextFieldNormal from "../../../components/GTextField/GTextFieldNormal";
 import GButton from "../../../components/MyButton/MyButton";
-import { useNavigate } from "react-router-dom";
-
 const cx = classNames.bind(styles);
-
 const productListCart = [
     {
         name: "Sơn nhũ mắt mèo",
@@ -42,11 +38,7 @@ const productListCart = [
     },
 ];
 
-function SummaryCheckout() {
-    const navigate = useNavigate();
-    const handleCheckoutButtonClick = () => {
-        navigate("/thanh-toan");
-    };
+function SummaryPayment() {
     const [bookedService, setBookedService] = useState({
         title: "Sơn nhũ mắt mèo",
         date: "18/04/2023",
@@ -81,18 +73,18 @@ function SummaryCheckout() {
             <div className={cx("inner")}>
                 {Object.keys(bookedService).length !== 0 ? (
                     <div>
-                        <div className={cx("checkout-summary")}>
+                        <div className={cx("payment-summary")}>
                             <Grid container spacing={2}>
                                 <Grid item xs={12}>
                                     <span
-                                        className={cx("checkout-summary-title")}
+                                        className={cx("payment-summary-title")}
                                     >
                                         <h2>Đơn hàng của bạn</h2>
                                     </span>
                                 </Grid>
                                 {productListCart?.map((product, idx) => (
                                     <Grid key={idx} item xs={12}>
-                                        <div className={cx("checkout-product")}>
+                                        <div className={cx("payment-product")}>
                                             <div
                                                 className={cx("product-image")}
                                             >
@@ -318,9 +310,6 @@ function SummaryCheckout() {
                                                 )}
                                                 size="medium"
                                                 fullWidth
-                                                onClick={
-                                                    handleCheckoutButtonClick
-                                                }
                                             >
                                                 Tiếp tục thanh toán
                                             </GButton>
@@ -426,4 +415,4 @@ function SummaryCheckout() {
     );
 }
 
-export default SummaryCheckout;
+export default SummaryPayment;

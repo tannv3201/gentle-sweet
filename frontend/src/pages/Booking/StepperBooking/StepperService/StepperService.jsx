@@ -1,8 +1,6 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
 import * as React from "react";
-import GTextField, {
-    RedditTextField,
-} from "../../../../components/GTextField/GTextField";
+import GTextField from "../../../../components/GTextField/GTextField";
 import classNames from "classnames/bind";
 import styles from "./StepperService.module.scss";
 import { Grid, IconButton } from "@mui/material";
@@ -11,11 +9,9 @@ import GAutocomplete from "../../../../components/GAutocomplete/GAutocomplete";
 import GRating from "../../../../components/GRating/GRating";
 import CloseIcon from "@mui/icons-material/Close";
 import GDatePicker from "../../../../components/GDatePicker/GDatePicker";
-import GTextArea from "../../../../components/Form/GTextArea";
 import { useState } from "react";
 import { useEffect } from "react";
 import { FormatCurrency } from "../../../../components/FormatCurrency/FormatCurrency";
-import GModal from "../../../../common/GModal/GModal";
 import ModalPolycyGuideline from "./ModalPolycyGuideline/ModalPolycyGuideline";
 
 const cx = classNames.bind(styles);
@@ -157,7 +153,7 @@ export default function StepperService() {
                     </Grid>
                     <Grid item xs={12}>
                         {/* <GTextArea label="Ghi chú" /> */}
-                        <RedditTextField
+                        <GTextField
                             label="Ghi chú"
                             multiline
                             rows={3}

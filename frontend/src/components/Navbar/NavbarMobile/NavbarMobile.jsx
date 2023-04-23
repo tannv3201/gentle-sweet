@@ -3,7 +3,7 @@
 import React, { useCallback, useState } from "react";
 import styles from "./NavbarMobile.module.scss";
 import classNames from "classnames/bind";
-import { Drawer, Grid, IconButton, SwipeableDrawer } from "@mui/material";
+import { Grid, IconButton, SwipeableDrawer } from "@mui/material";
 import images from "../../../assets/images";
 import {
     CloseRounded,
@@ -15,7 +15,7 @@ import {
     SearchRounded,
 } from "@mui/icons-material";
 
-import MyTextField from "../../GTextField/MyTextField";
+import GTextFieldNormal from "../../GTextField/GTextFieldNormal";
 import { MenuList } from "../navigation";
 
 function NavbarMobile() {
@@ -90,7 +90,7 @@ function NavbarMobile() {
                         </div>
                         <div className={cx("navbar-body")}>
                             <div className={cx("navbar-search")}>
-                                <MyTextField roundedBorder />
+                                <GTextFieldNormal roundedBorder />
                                 <IconButton size="large">
                                     <SearchRounded
                                         className={cx("search-icon")}

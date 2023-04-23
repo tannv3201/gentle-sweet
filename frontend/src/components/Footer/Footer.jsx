@@ -3,7 +3,7 @@ import classNames from "classnames/bind";
 import styles from "./Footer.module.scss";
 import { Grid } from "@mui/material";
 import images from "../../assets/images";
-import { RedditTextField } from "../GTextField/GTextField";
+import GTextField from "../GTextField/GTextField";
 import { Facebook, Instagram, YouTube, SendRounded } from "@mui/icons-material";
 import { useMediaQuery } from "@mui/material";
 import { useTheme } from "@mui/material/styles";
@@ -200,7 +200,7 @@ function Footer() {
                                     <h4>Đăng ký nhận Mail</h4>
                                 </a> */}
                                 <div className={cx("receive-mail")}>
-                                    <RedditTextField
+                                    <GTextField
                                         placeholder={"Nhập email của bạn..."}
                                         iconButtonSize={
                                             isSmall ? "large" : "small"

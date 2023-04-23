@@ -478,6 +478,20 @@ span.MuiChip-label {
     }
 }
 
+.MuiFormLabel-root.MuiInputLabel-root.MuiInputLabel-formControl.MuiInputLabel-animated.MuiInputLabel-sizeSmall.MuiInputLabel-outlined.MuiFormLabel-colorSecondary.MuiInputLabel-root.MuiInputLabel-formControl.MuiInputLabel-animated.MuiInputLabel-sizeSmall.MuiInputLabel-outlined:not(
+        .MuiInputLabel-shrink
+    ) {
+    font-size: 1.6rem !important;
+}
+
+.MuiInputBase-root.MuiOutlinedInput-root.MuiInputBase-colorSecondary.MuiInputBase-formControl.MuiInputBase-sizeSmall {
+    fieldset {
+        legend {
+            font-size: 1.6rem !important;
+        }
+    }
+}
+
 // Step
 .MuiStepLabel-label {
     font-size: 1.4rem !important;
@@ -530,4 +544,26 @@ span.MuiChip-label {
 }
 .MuiTabs-scroller.MuiTabs-fixed {
     padding: 12px 16px !important;
+}
+
+// Table
+
+.MuiDataGrid-root {
+    font-family: var(--font-family) !important;
+}
+.MuiDataGrid-columnHeaderTitle {
+    font-size: 1.6rem !important;
+    font-family: var(--font-family) !important;
+}
+
+.MuiDataGrid-cellContent {
+    font-size: 1.6rem;
+}
+
+// Form control
+
+// Mui typography
+
+.MuiTypography-root.MuiTypography-body1.MuiFormControlLabel-label {
+    font-size: 1.6rem !important;
 }

@@ -19,6 +19,8 @@ import { useTheme } from "@mui/material/styles";
 import Breadcrumb from "../components/GBreadcrumb/GBreadcrumb";
 import ScrollToTopOnMouse from "../components/ScrollToTopOnMouse/ScrollToTopOnMouse";
 import Checkout from "./Checkout/Checkout";
+import Cart from "./Cart/Cart";
+import Payment from "./Payment/Payment";
 function App() {
     const theme = useTheme();
     const isMedium = useMediaQuery(theme.breakpoints.down("md"));
@@ -60,7 +62,12 @@ function App() {
                                 path="/product/son-mong-tay"
                                 element={<ProductDetail />}
                             />
-                            <Route path="/checkout" element={<Checkout />} />
+                            <Route
+                                path="/thu-tuc-thanh-toan"
+                                element={<Checkout />}
+                            />
+                            <Route path="/gio-hang" element={<Cart />} />
+                            <Route path="/thanh-toan" element={<Payment />} />
                         </Routes>
                     </div>
                     <Footer />

@@ -1,5 +1,5 @@
 import * as React from "react";
-import { RedditTextField } from "../../../../components/GTextField/GTextField";
+import GTextField from "../../../../components/GTextField/GTextField";
 import classNames from "classnames/bind";
 import styles from "./StepperInformation.module.scss";
 import { Grid } from "@mui/material";
@@ -60,7 +60,7 @@ export default function StepperInformation() {
                         <GroupLabel htmlFor={"lastName"} label={"Họ và tên"} />
                     </Grid>
                     <Grid item lg={4} md={12} sm={12} xs={12}>
-                        <RedditTextField
+                        <GTextField
                             variant="filled"
                             label="Họ"
                             id="lastName"
@@ -70,7 +70,7 @@ export default function StepperInformation() {
                         />
                     </Grid>
                     <Grid item lg={4} md={12} sm={12} xs={12}>
-                        <RedditTextField
+                        <GTextField
                             variant="filled"
                             label="Tên"
                             requiredlabel
@@ -79,7 +79,7 @@ export default function StepperInformation() {
                         />
                     </Grid>
                     <Grid item lg={4} md={12} sm={12} xs={12}>
-                        <RedditTextField
+                        <GTextField
                             variant="filled"
                             label="Tên hiển thị"
                             requiredlabel
@@ -95,7 +95,7 @@ export default function StepperInformation() {
                         />
                     </Grid>
                     <Grid item lg={6} md={12} sm={12} xs={12}>
-                        <RedditTextField
+                        <GTextField
                             variant="filled"
                             label="Địa chỉ e-mail"
                             requiredlabel
@@ -104,7 +104,7 @@ export default function StepperInformation() {
                         />
                     </Grid>
                     <Grid item lg={6} md={12} sm={12} xs={12}>
-                        <RedditTextField
+                        <GTextField
                             variant="filled"
                             label="Số điện thoại"
                             requiredlabel
@@ -141,7 +141,7 @@ export default function StepperInformation() {
                         />
                     </Grid>
                     <Grid item xs={12}>
-                        <RedditTextField
+                        <GTextField
                             variant="filled"
                             label="Số nhà"
                             requiredlabel
