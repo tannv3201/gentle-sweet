@@ -11,6 +11,9 @@ import {
     AddRounded,
     AddShoppingCartRounded,
 } from "@mui/icons-material";
+import { useMediaQuery } from "@mui/material";
+import { useTheme } from "@mui/material/styles";
+import images from "../../../assets/images";
 
 const cx = classNames.bind(styles);
 const productListCart = [
@@ -47,6 +50,8 @@ const productListCart = [
 ];
 
 function CartProductList() {
+    const theme = useTheme();
+    const isMedium = useMediaQuery(theme.breakpoints.down("md"));
     const [productList, setProductList] = useState(productListCart);
     const handleQuantityChange = (id, newValue) => {
         const copyProductList = [...productList];
@@ -132,210 +137,203 @@ function CartProductList() {
                     <Grid item xs={12}>
                         <div className={cx("table-product-list")}>
                             <Grid container>
-                                <Grid item xs={12}>
-                                    <div className={cx("table-header")}>
-                                        <Grid
-                                            container
-                                            display="flex"
-                                            alignItems="center"
-                                        >
-                                            <Grid item xs={1}>
-                                                <MyCheckbox />
-                                            </Grid>
-                                            <Grid item xs={5}>
-                                                <span
-                                                    className={cx(
-                                                        "table-header-name"
-                                                    )}
+                                {
+                                    <Grid item xs={12}>
+                                        <div className={cx("table-header")}>
+                                            <Grid
+                                                container
+                                                display="flex"
+                                                alignItems="center"
+                                            >
+                                                <Grid
+                                                    item
+                                                    lg={1}
+                                                    md={12}
+                                                    sm={12}
+                                                    xs={12}
                                                 >
-                                                    Sản phẩm
-                                                </span>
+                                                    <MyCheckbox
+                                                        id="selecltedAll"
+                                                        label={
+                                                            isMedium
+                                                                ? "Chọn tất cả"
+                                                                : ""
+                                                        }
+                                                    />
+                                                </Grid>
+                                                {!isMedium && (
+                                                    <Grid item xs={5}>
+                                                        <span
+                                                            className={cx(
+                                                                "table-header-name"
+                                                            )}
+                                                        >
+                                                            Sản phẩm
+                                                        </span>
+                                                    </Grid>
+                                                )}
+                                                {!isMedium && (
+                                                    <Grid item xs={3}>
+                                                        <span
+                                                            className={cx(
+                                                                "table-header-name"
+                                                            )}
+                                                        >
+                                                            Số lượng
+                                                        </span>
+                                                    </Grid>
+                                                )}
+                                                {!isMedium && (
+                                                    <Grid item xs={3}>
+                                                        <span
+                                                            className={cx(
+                                                                "table-header-name"
+                                                            )}
+                                                        >
+                                                            Giá
+                                                        </span>
+                                                    </Grid>
+                                                )}
                                             </Grid>
-                                            <Grid item xs={3}>
-                                                <span
-                                                    className={cx(
-                                                        "table-header-name"
-                                                    )}
-                                                >
-                                                    Số lượng
-                                                </span>
-                                            </Grid>
-                                            <Grid item xs={3}>
-                                                <span
-                                                    className={cx(
-                                                        "table-header-name"
-                                                    )}
-                                                >
-                                                    Giá
-                                                </span>
-                                            </Grid>
-                                        </Grid>
-                                    </div>
-                                </Grid>
+                                        </div>
+                                    </Grid>
+                                }
                                 <Grid item xs={12}>
                                     <div className={cx("table-body")}>
                                         <Grid container>
                                             {productList?.length > 0 ? (
                                                 productList?.map(
                                                     (product, idx) => (
-                                                        <Grid
-                                                            key={idx}
-                                                            item
-                                                            xs={12}
-                                                        >
+                                                        <Grid item xs={12}>
                                                             <div
                                                                 className={cx(
                                                                     "product-wrapper"
                                                                 )}
                                                             >
-                                                                <Grid container>
-                                                                    <Grid
-                                                                        item
-                                                                        xs={1}
+                                                                <MyCheckbox />
+                                                                <div
+                                                                    className={cx(
+                                                                        "product-image"
+                                                                    )}
+                                                                >
+                                                                    <img
+                                                                        src={
+                                                                            product?.image
+                                                                        }
+                                                                        alt=""
+                                                                    />
+                                                                </div>
+                                                                <div
+                                                                    className={cx(
+                                                                        "product-content"
+                                                                    )}
+                                                                >
+                                                                    <span
+                                                                        className={cx(
+                                                                            "product-content-name"
+                                                                        )}
                                                                     >
-                                                                        <MyCheckbox />
-                                                                    </Grid>
-                                                                    <Grid
-                                                                        item
-                                                                        xs={5}
+                                                                        {
+                                                                            product?.name
+                                                                        }
+                                                                    </span>
+                                                                    <div
+                                                                        className={cx(
+                                                                            "quantity-purchase"
+                                                                        )}
                                                                     >
-                                                                        <div
+                                                                        <GButton
                                                                             className={cx(
-                                                                                "product-info"
+                                                                                "reduce-btn"
                                                                             )}
-                                                                        >
-                                                                            <div
-                                                                                className={cx(
-                                                                                    "product-image"
-                                                                                )}
-                                                                            >
-                                                                                <img
-                                                                                    src={
-                                                                                        product?.image
-                                                                                    }
-                                                                                    alt=""
-                                                                                />
-                                                                            </div>
-                                                                            <span
-                                                                                className={cx(
-                                                                                    "product-name"
-                                                                                )}
-                                                                            >
-                                                                                <h3>
-                                                                                    {
-                                                                                        product?.name
-                                                                                    }
-                                                                                </h3>
-                                                                            </span>
-                                                                        </div>
-                                                                    </Grid>
-                                                                    <Grid
-                                                                        item
-                                                                        xs={3}
-                                                                    >
-                                                                        <div
-                                                                            className={cx(
-                                                                                "quantity-purchase"
-                                                                            )}
-                                                                        >
-                                                                            <GButton
-                                                                                className={cx(
-                                                                                    "reduce-btn"
-                                                                                )}
-                                                                                variant="outlined"
-                                                                                onClick={() =>
-                                                                                    decreaseQuantity(
-                                                                                        product
-                                                                                    )
-                                                                                }
-                                                                            >
-                                                                                <HorizontalRuleRounded />
-                                                                            </GButton>
-                                                                            <input
-                                                                                className={cx(
-                                                                                    "quantity-input"
-                                                                                )}
-                                                                                type="number"
-                                                                                size="small"
-                                                                                onChange={(
-                                                                                    e
-                                                                                ) => {
-                                                                                    handleQuantityChange(
-                                                                                        product?.id,
-                                                                                        e
-                                                                                            .target
-                                                                                            .value
-                                                                                    );
-                                                                                }}
-                                                                                min={
-                                                                                    1
-                                                                                }
-                                                                                value={
-                                                                                    product?.quantity
-                                                                                }
-                                                                                onKeyDown={
-                                                                                    handleKeyDown
-                                                                                }
-                                                                            />
-                                                                            <GButton
-                                                                                className={cx(
-                                                                                    "increase-btn"
-                                                                                )}
-                                                                                onClick={() =>
-                                                                                    increaseQuantity(
-                                                                                        product
-                                                                                    )
-                                                                                }
-                                                                                variant="outlined"
-                                                                            >
-                                                                                <AddRounded />
-                                                                            </GButton>
-                                                                        </div>
-                                                                    </Grid>
-                                                                    <Grid
-                                                                        item
-                                                                        xs={3}
-                                                                    >
-                                                                        <div
-                                                                            className={
-                                                                                product?.onSale >
-                                                                                0
-                                                                                    ? cx(
-                                                                                          "product-price",
-                                                                                          "onSale"
-                                                                                      )
-                                                                                    : cx(
-                                                                                          "product-price"
-                                                                                      )
+                                                                            variant="outlined"
+                                                                            onClick={() =>
+                                                                                decreaseQuantity(
+                                                                                    product
+                                                                                )
                                                                             }
                                                                         >
+                                                                            <HorizontalRuleRounded />
+                                                                        </GButton>
+                                                                        <input
+                                                                            className={cx(
+                                                                                "quantity-input"
+                                                                            )}
+                                                                            type="number"
+                                                                            size="small"
+                                                                            onChange={(
+                                                                                e
+                                                                            ) => {
+                                                                                handleQuantityChange(
+                                                                                    product?.id,
+                                                                                    e
+                                                                                        .target
+                                                                                        .value
+                                                                                );
+                                                                            }}
+                                                                            min={
+                                                                                1
+                                                                            }
+                                                                            value={
+                                                                                product?.quantity
+                                                                            }
+                                                                            onKeyDown={
+                                                                                handleKeyDown
+                                                                            }
+                                                                        />
+                                                                        <GButton
+                                                                            className={cx(
+                                                                                "increase-btn"
+                                                                            )}
+                                                                            onClick={() =>
+                                                                                increaseQuantity(
+                                                                                    product
+                                                                                )
+                                                                            }
+                                                                            variant="outlined"
+                                                                        >
+                                                                            <AddRounded />
+                                                                        </GButton>
+                                                                    </div>
+                                                                    <div
+                                                                        className={
+                                                                            product?.onSale >
+                                                                            0
+                                                                                ? cx(
+                                                                                      "product-price",
+                                                                                      "onSale"
+                                                                                  )
+                                                                                : cx(
+                                                                                      "product-price"
+                                                                                  )
+                                                                        }
+                                                                    >
+                                                                        <span
+                                                                            className={cx(
+                                                                                "product-price-default"
+                                                                            )}
+                                                                        >
+                                                                            {FormatCurrency(
+                                                                                product?.priceTotal
+                                                                            )}
+                                                                        </span>
+                                                                        {product?.onSale >
+                                                                            0 && (
                                                                             <span
                                                                                 className={cx(
-                                                                                    "product-price-default"
+                                                                                    "product-price-onsale"
                                                                                 )}
                                                                             >
                                                                                 {FormatCurrency(
-                                                                                    product?.priceTotal
+                                                                                    product?.price -
+                                                                                        (product?.price *
+                                                                                            product?.onSale) /
+                                                                                            100
                                                                                 )}
                                                                             </span>
-                                                                            {product?.onSale >
-                                                                                0 && (
-                                                                                <span
-                                                                                    className={cx(
-                                                                                        "product-price-onsale"
-                                                                                    )}
-                                                                                >
-                                                                                    {FormatCurrency(
-                                                                                        product?.price -
-                                                                                            (product?.price *
-                                                                                                product?.onSale) /
-                                                                                                100
-                                                                                    )}
-                                                                                </span>
-                                                                            )}
-                                                                        </div>
-                                                                    </Grid>
-                                                                </Grid>
+                                                                        )}
+                                                                    </div>
+                                                                </div>
                                                             </div>
                                                         </Grid>
                                                     )

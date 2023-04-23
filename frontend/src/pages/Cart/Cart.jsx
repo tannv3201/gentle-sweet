@@ -12,10 +12,10 @@ function Cart() {
         <div className={cx("wrapper")}>
             <div className={cx("inner")}>
                 <Grid container spacing={2}>
-                    <Grid item xs={8}>
+                    <Grid item lg={8} md={12} sm={12} xs={12}>
                         <CartProductList />
                     </Grid>
-                    <Grid item xs={4}>
+                    <Grid item lg={4} md={12} sm={12} xs={12}>
                         <CartProductSummary />
                     </Grid>
                 </Grid>
