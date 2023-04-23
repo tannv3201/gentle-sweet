@@ -42,6 +42,7 @@ const images = {
     qr_code: require("./qr_code.jpg"),
     qr_zalopay: require("./qr_zalopay.jpg"),
     qr_momo: require("./qr_momo.jpg"),
+    login_bg: require("./bg.jpg"),
 };
 
 export default images;

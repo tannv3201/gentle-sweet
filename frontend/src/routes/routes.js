@@ -20,6 +20,7 @@ import Checkout from "../pages/Checkout/Checkout";
 import Cart from "../pages/Cart/Cart";
 import Payment from "../pages/Payment/Payment";
 import Login from "../pages/Login/Login";
+import SignIn from "../pages/SignIn/SignIn";
 
 // public routes
 
@@ -75,6 +76,11 @@ export const publicRoutes = [
     {
         path: "/dang-nhap",
         component: Login,
+        layout: null,
+    },
+    {
+        path: "/dang-ky",
+        component: SignIn,
         layout: null,
     },
 ];

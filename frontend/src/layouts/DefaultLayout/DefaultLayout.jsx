@@ -3,6 +3,7 @@ import classNames from "classnames/bind";
 import styles from "./DefaultLayout.module.scss";
 
 import Navbar from "../components/Navbar/Navbar";
+import Footer from "../components/Footer/Footer";
 import GBreadcrumb from "../components/GBreadcrumb/GBreadcrumb";
 import CartFixedRight from "../components/CartFixedRight/CartFixedRight";
 
@@ -34,6 +35,7 @@ function DefaultLayout({ children }) {
                         <GBreadcrumb />
                         {children}
                     </div>
+                    <Footer />
                 </ScrollBackToTop>
             </div>
         </>

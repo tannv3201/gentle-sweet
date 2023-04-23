@@ -1,5 +1,5 @@
 import React from "react";
-import styles from "./Login.module.scss";
+import styles from "./SignIn.module.scss";
 import classNames from "classnames/bind";
 import images from "../../assets/images";
 import { Grid } from "@mui/material";
@@ -8,7 +8,7 @@ import GButton from "../../components/MyButton/MyButton";
 import { Google, Facebook } from "@mui/icons-material";
 const cx = classNames.bind(styles);
 
-function Login() {
+function SignIn() {
     return (
         <div className={cx("wrapper")}>
             <div className={cx("inner")}>
@@ -25,18 +25,35 @@ function Login() {
                                     <Grid container spacing={2}>
                                         <Grid item xs={12}>
                                             <span className={cx("login-title")}>
-                                                <h2>
-                                                    Chào mừng bạn quay trở lại!
-                                                </h2>
+                                                <h2>Tạo tài khoản</h2>
                                             </span>
                                             <span
                                                 className={cx(
                                                     "login-sub-title"
                                                 )}
                                             >
-                                                Hãy đăng nhập để nhận nhiều ưu
-                                                đãi từ Gentle Beauty.
+                                                Hãy đăng ký để nhận nhiều ưu đãi
+                                                từ Gentle Beauty.
                                             </span>
+                                        </Grid>
+                                        <Grid item xs={6}>
+                                            <GTextField
+                                                fullWidth
+                                                label={"Họ"}
+                                            />
+                                        </Grid>
+                                        <Grid item xs={6}>
+                                            <GTextField
+                                                fullWidth
+                                                label={"Tên"}
+                                            />
+                                        </Grid>
+                                        <Grid item xs={12}>
+                                            <GTextField
+                                                fullWidth
+                                                label={"Tên hiển thị"}
+                                                disabled
+                                            />
                                         </Grid>
                                         <Grid item xs={12}>
                                             <GTextField
@@ -47,21 +64,19 @@ function Login() {
                                         <Grid item xs={12}>
                                             <GTextField
                                                 fullWidth
-                                                label={"Mật khẩu"}
+                                                label={"Số điện thoại"}
                                             />
                                         </Grid>
                                         <Grid item xs={12}>
-                                            <span
-                                                className={cx(
-                                                    "forgot-password"
-                                                )}
-                                            >
-                                                <a href="">Quên mật khẩu?</a>
-                                            </span>
+                                            <GTextField
+                                                fullWidth
+                                                label={"Mật khẩu"}
+                                            />
                                         </Grid>
+
                                         <Grid item xs={12}>
                                             <GButton size="large" fullWidth>
-                                                Đăng nhập
+                                                Đăng ký
                                             </GButton>
                                         </Grid>
                                         <Grid item xs={12}>
@@ -73,34 +88,18 @@ function Login() {
                                             <div
                                                 className={cx("another-signin")}
                                             >
-                                                <Grid container spacing={2}>
-                                                    <Grid item xs={6}>
-                                                        <GButton
-                                                            startIcon={
-                                                                <Google />
-                                                            }
-                                                            fullWidth
-                                                        >
-                                                            Google
-                                                        </GButton>
-                                                    </Grid>
-                                                    <Grid item xs={6}>
-                                                        <GButton
-                                                            startIcon={
-                                                                <Facebook />
-                                                            }
-                                                            fullWidth
-                                                        >
-                                                            Facebook
-                                                        </GButton>
-                                                    </Grid>
-                                                </Grid>
+                                                <GButton
+                                                    startIcon={<Google />}
+                                                    fullWidth
+                                                >
+                                                    Google
+                                                </GButton>
                                             </div>
                                         </Grid>
                                         <Grid item xs={12}>
                                             <span className={cx("register")}>
-                                                Bạn chưa có tài khoản?{" "}
-                                                <a href="#">Đăng ký ngay</a>
+                                                Bạn đã có tài khoản?{" "}
+                                                <a href="#">Đăng nhập</a>
                                             </span>
                                         </Grid>
                                     </Grid>
@@ -117,4 +116,4 @@ function Login() {
     );
 }
 
-export default Login;
+export default SignIn;

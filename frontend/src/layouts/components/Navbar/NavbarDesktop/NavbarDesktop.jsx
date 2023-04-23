@@ -168,9 +168,11 @@ function NavbarDesktop() {
                                         <ShoppingCartRounded />
                                     </IconButton>
                                 </NavLink>
-                                <IconButton title="Đăng nhập" size="large">
-                                    <PersonRounded />
-                                </IconButton>
+                                <NavLink to={"/dang-nhap"}>
+                                    <IconButton title="Đăng nhập" size="large">
+                                        <PersonRounded />
+                                    </IconButton>
+                                </NavLink>
                                 <span>
                                     <NavLink
                                         className={cx("booking-btn")}
