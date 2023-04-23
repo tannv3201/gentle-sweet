@@ -39,6 +39,9 @@ const images = {
     banner_salon_system: require("./banner_salon_system.png"),
     signin_advise: require("./signin_advise.png"),
     gentle: require("./gentle.svg"),
+    qr_code: require("./qr_code.jpg"),
+    qr_zalopay: require("./qr_zalopay.jpg"),
+    qr_momo: require("./qr_momo.jpg"),
 };
 
 export default images;
