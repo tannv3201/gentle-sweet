@@ -47,14 +47,14 @@ function CheckoutInformation() {
                                         <h3>Địa chỉ giao hàng</h3>
                                     </span>
                                 </Grid>
-                                <Grid item lg={6} md={12} sm={12} xs={12}>
+                                <Grid item lg={6} md={6} sm={12} xs={12}>
                                     <GTextField
                                         label={"Họ"}
                                         requiredlabel
                                         fullWidth
                                     />
                                 </Grid>
-                                <Grid item lg={6} md={12} sm={12} xs={12}>
+                                <Grid item lg={6} md={6} sm={12} xs={12}>
                                     <GTextField
                                         label={"Tên"}
                                         requiredlabel
@@ -69,21 +69,21 @@ function CheckoutInformation() {
                                         disabled
                                     />
                                 </Grid>
-                                <Grid item lg={6} md={12} sm={12} xs={12}>
+                                <Grid item lg={6} md={6} sm={12} xs={12}>
                                     <GTextField
                                         label={"Email"}
                                         requiredlabel
                                         fullWidth
                                     />
                                 </Grid>
-                                <Grid item lg={6} md={12} sm={12} xs={12}>
+                                <Grid item lg={6} md={6} sm={12} xs={12}>
                                     <GTextField
                                         label={"Số điện thoại"}
                                         requiredlabel
                                         fullWidth
                                     />
                                 </Grid>
-                                <Grid item lg={4} md={12} sm={12} xs={12}>
+                                <Grid item lg={4} md={6} sm={12} xs={12}>
                                     <GAutocomplete
                                         label={"Tỉnh/thành phố"}
                                         requiredlabel
@@ -91,7 +91,7 @@ function CheckoutInformation() {
                                         data={provinces}
                                     />
                                 </Grid>
-                                <Grid item lg={4} md={12} sm={12} xs={12}>
+                                <Grid item lg={4} md={6} sm={12} xs={12}>
                                     <GAutocomplete
                                         label={"Quận/huyện"}
                                         requiredlabel
@@ -99,7 +99,7 @@ function CheckoutInformation() {
                                         data={provinces}
                                     />
                                 </Grid>
-                                <Grid item lg={4} md={12} sm={12} xs={12}>
+                                <Grid item lg={4} md={6} sm={12} xs={12}>
                                     <GAutocomplete
                                         label={"Phường/xã"}
                                         requiredlabel
@@ -107,7 +107,7 @@ function CheckoutInformation() {
                                         data={provinces}
                                     />
                                 </Grid>
-                                <Grid item lg={12} md={12} sm={12} xs={12}>
+                                <Grid item lg={12} md={6} sm={12} xs={12}>
                                     <GTextField
                                         label={"Tên đường, số nhà"}
                                         requiredlabel

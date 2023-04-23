@@ -159,7 +159,7 @@ function NavbarDesktop() {
                                 ))}
                             </div>
                         </Grid>
-                        <Grid item lg={3} md={2} sm={3}>
+                        <Grid item lg={3} md={3} sm={3}>
                             <div className={cx("action-group")}>
                                 <IconButton title="Tìm kiếm" size="large">
                                     <SearchRounded />
