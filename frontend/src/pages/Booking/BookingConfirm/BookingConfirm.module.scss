@@ -1,13 +1,16 @@
 .wrapper {
-    padding: 12px;
-    background-color: var(--white);
-    border-radius: 6px;
     height: 100%;
     width: 100%;
+    position: relative;
 }
 
 .inner {
-    height: 100%;
+    background-color: var(--white);
+    position: sticky;
+    top: 124px;
+    padding: 12px;
+    border-radius: 6px;
+
     .booking-summary {
         border: 1px solid var(--border-color);
         padding: 12px;

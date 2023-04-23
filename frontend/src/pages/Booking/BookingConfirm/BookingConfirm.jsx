@@ -23,21 +23,9 @@ function BookingConfirm() {
     return (
         <div className={cx("wrapper")}>
             <div className={cx("inner")}>
-                <div
-                    style={{
-                        position: "relative",
-                        flex: "1",
-                        height: "100%",
-                        width: "100%",
-                    }}
-                >
+                <div>
                     {Object.keys(bookedService).length !== 0 ? (
-                        <div
-                            style={{
-                                position: "sticky",
-                                top: "128px",
-                            }}
-                        >
+                        <div>
                             <div className={cx("booking-summary")}>
                                 <Grid container spacing={2}>
                                     <Grid item xs={12}>
@@ -46,7 +34,7 @@ function BookingConfirm() {
                                                 "booking-summary-title"
                                             )}
                                         >
-                                            <h2>Tóm tắt đặt lịch</h2>
+                                            <h2>Dịch vụ của bạn</h2>
                                         </span>
                                     </Grid>
                                     <Grid item xs={12}>
