@@ -1,4 +1,4 @@
-const userModel = require("../models/User");
+const userModel = require("../models/Users");
 const { v4: uuidv4 } = require("uuid");
 const bcrypt = require("bcrypt");
 
@@ -31,12 +31,18 @@ const userController = {
     updateUserByID: async (req, res) => {
         try {
             const userId = req.params.id;
-            const salt = await bcrypt.genSalt(10);
-            const hashed = await bcrypt.hash(req.body.password, salt);
-            const affectedRows = await userModel.updateUserById(userId, {
-                ...req.body,
-                password: hashed,
-            });
+            const updateData = { ...req.body };
+
+            if (req.body.password) {
+                const salt = await bcrypt.genSalt(10);
+                const hashed = await bcrypt.hash(req.body.password, salt);
+                updateData.password = hashed;
+            }
+
+            const affectedRows = await userModel.updateUserById(
+                userId,
+                updateData
+            );
             if (affectedRows === 0) {
                 return res
                     .status(404)
@@ -44,7 +50,9 @@ const userController = {
             } else {
                 return res.status(200).json({ message: "Cập nhật thành công" });
             }
-        } catch (error) {}
+        } catch (error) {
+            console.log(error);
+        }
     },
 
     // DELETE USER BY ID

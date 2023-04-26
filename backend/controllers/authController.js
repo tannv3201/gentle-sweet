@@ -1,7 +1,8 @@
 const bcrypt = require("bcrypt");
-const userModel = require("../models/User");
+const userModel = require("../models/Users");
 const { v4: uuidv4 } = require("uuid");
 const jwt = require("jsonwebtoken");
+
 require("dotenv").config();
 
 let refreshTokenList = [];
@@ -56,16 +57,28 @@ const authController = {
         try {
             const user = await userModel.findUserByUsername(req.body.username);
             if (!user) {
-                return res
-                    .status(404)
-                    .json(`Người dùng: ${req.body.username} không tồn tại`);
+                return (
+                    res
+                        // .status(404)
+                        .json({
+                            error: "Tài khoản hoặc mật khẩu không chính xác.",
+                            status: 404,
+                        })
+                );
             }
             const vailidPassword = await bcrypt.compare(
                 req.body.password,
                 user.password
             );
             if (!vailidPassword) {
-                return res.status(404).json("Mật khẩu không chính xác");
+                return (
+                    res
+                        // .status(401)
+                        .json({
+                            error: "Tài khoản hoặc mật khẩu không chính xác.",
+                            status: 401,
+                        })
+                );
             }
             if (user && vailidPassword) {
                 const accessToken = authController.generateAccessToken(user);
@@ -81,7 +94,9 @@ const authController = {
 
                 const { password, ...others } = user;
 
-                res.status(200).json({ ...others, accessToken });
+                res
+                    // .status(200)
+                    .json({ ...others, accessToken, status: 200 });
             }
         } catch (error) {
             res.status(500).json(error);

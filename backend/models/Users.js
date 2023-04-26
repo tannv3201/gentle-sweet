@@ -2,13 +2,13 @@ const pool = require("../config/database");
 const { v4: uuidv4 } = require("uuid");
 
 const getAllUsers = async () => {
-    const [rows, fields] = await pool.query("SELECT * FROM users");
+    const [rows, fields] = await pool.query("SELECT * FROM tbl_users");
     return rows;
 };
 
 const getUserById = async (userId) => {
     const [rows, fields] = await pool.query(
-        "SELECT * FROM users WHERE id= (?)",
+        "SELECT * FROM tbl_users WHERE id= (?)",
         [userId]
     );
     return rows[0];
@@ -16,14 +16,14 @@ const getUserById = async (userId) => {
 
 const findUserByUsername = async (username) => {
     const [rows, fields] = await pool.query(
-        "SELECT * FROM users WHERE username= (?)",
+        "SELECT * FROM tbl_users WHERE username= (?)",
         [username]
     );
     return rows[0];
 };
 
 const createUser = async (userData) => {
-    const [result, fields] = await pool.query("INSERT INTO users SET ?", [
+    const [result, fields] = await pool.query("INSERT INTO tbl_users SET ?", [
         userData,
     ]);
     return result;
@@ -31,7 +31,7 @@ const createUser = async (userData) => {
 
 const updateUserById = async (userId, userData) => {
     const [result, fields] = await pool.query(
-        "UPDATE users SET ? WHERE id = ?",
+        "UPDATE tbl_users SET ? WHERE id = ?",
         [userData, userId]
     );
     return result.affectedRows;
@@ -39,7 +39,7 @@ const updateUserById = async (userId, userData) => {
 
 const deleteUserById = async (userId) => {
     const [result, fields] = await pool.query(
-        "DELETE FROM users WHERE id = ?",
+        "DELETE FROM tbl_users WHERE id = ?",
         [userId]
     );
     return result.affectedRows;

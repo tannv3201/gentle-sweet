@@ -1,6 +1,6 @@
 const express = require("express");
 const router = express.Router();
-const userController = require("../controllers/userController");
+const userController = require("../controllers/usersController");
 const middlewareController = require("../controllers/middlewareController");
 
 router.get("/", middlewareController.verifyToken, userController.getlAllUser);
