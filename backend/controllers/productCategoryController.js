@@ -52,7 +52,7 @@ const productCategoriesController = {
     updateProductCategoryByID: async (req, res) => {
         try {
             const prd_category_id = req.params.id;
-            const { user_id, ...data } = req.body;
+            const { admin_user_id, ...data } = req.body;
             const affectedRows =
                 await ProductCategoryModel.updateProductCategoryById(
                     prd_category_id,

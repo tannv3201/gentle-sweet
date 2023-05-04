@@ -1,26 +1,26 @@
-const ProductModel = require("../models/Product");
+const DiscountModel = require("../models/Discount");
 
 const { v4: uuidv4 } = require("uuid");
 
-const productsController = {
-    // GET ALL PRODUCT
-    getAllProduct: async (req, res) => {
+const discountController = {
+    // GET ALL DISCOUNT
+    getAllDiscount: async (req, res) => {
         try {
-            const products = await ProductModel.getAllProduct();
-            return res.status(200).json(products);
+            const discounts = await DiscountModel.getAllDiscount();
+            return res.status(200).json(discounts);
         } catch (error) {
             res.status(500).json(error);
         }
     },
 
-    // GET PRODUCT BY ID
-    getProductById: async (req, res) => {
+    // GET DISCOUNT BY ID
+    getDiscountById: async (req, res) => {
         try {
-            const product = await ProductModel.getProductById(req.params.id);
-            if (!product) {
-                return res.status(404).json("Sản phẩm không tồn tại");
+            const discount = await DiscountModel.getDiscountById(req.params.id);
+            if (!discount) {
+                return res.status(404).json("Giảm giá không tồn tại");
             } else {
-                return res.status(200).json(product);
+                return res.status(200).json(discount);
             }
         } catch (error) {
             res.status(500).json(error);
@@ -28,32 +28,29 @@ const productsController = {
     },
 
     // Create Product Category
-    createProduct: async (req, res, next) => {
+    createDiscount: async (req, res, next) => {
         try {
-            const newProduct = await ProductModel.createProduct({
+            const newDiscount = await DiscountModel.createDiscount({
                 id: uuidv4(),
-                product_category_id: req.body.product_category_id,
                 admin_user_id: req.user.id,
                 name: req.body.name,
                 description: req.body.description,
-                quantity: req.body.quantity,
-                price: req.body.price,
-                image: req.body.image,
+                discount_percent: req.body.discount_percent,
                 status: 1,
             });
-            res.status(201).json(newProduct);
+            res.status(201).json(newDiscount);
         } catch (error) {
             res.status(500).json(error);
         }
     },
 
-    // UPDATE PRODUCT BY ID
-    updateProductByID: async (req, res) => {
+    // UPDATE DISCOUNT BY ID
+    updateDiscountByID: async (req, res) => {
         try {
-            const product_id = req.params.id;
+            const discountId = req.params.id;
             const { admin_user_id, ...data } = req.body;
-            const affectedRows = await ProductModel.updateProductById(
-                product_id,
+            const affectedRows = await DiscountModel.updateDiscountById(
+                discountId,
                 data
             );
             if (affectedRows === 0) {
@@ -66,12 +63,12 @@ const productsController = {
         }
     },
 
-    // DELETE PRODUCT BY ID
-    deleteProductById: async (req, res) => {
+    // DELETE DISCOUNT BY ID
+    deleteDiscountById: async (req, res) => {
         try {
-            const product_id = req.params.id;
-            const affectedRows = await ProductModel.updateProductById(
-                product_id,
+            const discountId = req.params.id;
+            const affectedRows = await DiscountModel.updateDiscountById(
+                discountId,
                 { status: 0 }
             );
             if (affectedRows === 0) {
@@ -85,4 +82,4 @@ const productsController = {
     },
 };
 
-module.exports = productsController;
+module.exports = discountController;

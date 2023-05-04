@@ -50,7 +50,7 @@ const serviceController = {
     updateServiceByID: async (req, res) => {
         try {
             const service_id = req.params.id;
-            const { user_id, ...data } = req.body;
+            const { admin_user_id, ...data } = req.body;
             const affectedRows = await ServiceModel.updateServiceById(
                 service_id,
                 data

@@ -50,7 +50,7 @@ const serviceCategoryController = {
     updateServiceCategoryById: async (req, res) => {
         try {
             const serviceCategoryId = req.params.id;
-            const { user_id, ...data } = req.body;
+            const { admin_user_id, ...data } = req.body;
             const affectedRows = await ServiceCategory.updateServiceCategory(
                 serviceCategoryId,
                 data
