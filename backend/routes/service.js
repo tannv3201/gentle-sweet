@@ -5,31 +5,31 @@ const middlewareController = require("../controllers/middlewareController");
 
 router.post(
     "/",
-    middlewareController.verifyTokenAndAdminAuth,
+    middlewareController.verifyTokenAndSystemUserAuth,
     serviceController.createService
 );
 
 router.get(
     "/",
-    middlewareController.verifyTokenAndAdminAuth,
+    middlewareController.verifyTokenAndSystemUserAuth,
     serviceController.getAllService
 );
 
 router.get(
     "/:id",
-    middlewareController.verifyTokenAndAdminAuth,
+    middlewareController.verifyTokenAndSystemUserAuth,
     serviceController.getServiceById
 );
 
 router.put(
     "/:id",
-    middlewareController.verifyTokenAndAdminAuth,
+    middlewareController.verifyTokenAndSystemUserAuth,
     serviceController.updateServiceByID
 );
 
 router.delete(
     "/:id",
-    middlewareController.verifyTokenAndAdminAuth,
+    middlewareController.verifyTokenAndSystemUserAuth,
     serviceController.deleteServiceById
 );
 

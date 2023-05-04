@@ -1,6 +1,7 @@
 const bcrypt = require("bcrypt");
-const accountModel = require("../models/Account");
-const userModel = require("../models/Users");
+const adminUserModel = require("../models/AdminUser");
+const customerUserModel = require("../models/CustomerUser");
+const roleModel = require("../models/Role");
 const { v4: uuidv4 } = require("uuid");
 const jwt = require("jsonwebtoken");
 const pool = require("../config/database");
@@ -17,8 +18,11 @@ const authController = {
             const hashed = await bcrypt.hash(req.body.password, salt);
 
             // Create new user
-            const newUser = await userModel.createUser({
+            const newCustomerUser = await customerUserModel.createCustomerUser({
                 id: uuidv4(),
+                role_id: "5c14eaf0-60cf-4a80-a7cc-43da53962990",
+                username: req.body.username,
+                password: hashed,
                 first_name: req.body.first_name,
                 last_name: req.body.last_name,
                 phone_number: req.body.phone_number,
@@ -30,30 +34,18 @@ const authController = {
                 status: 1,
             });
 
-            // Create new user
-            const newAccount = await accountModel.createAccount({
-                id: uuidv4(),
-                user_id: newUser.id,
-                role: req.body.role,
-                username: req.body.username,
-                password: hashed,
-                email: req.body.email,
-                status: 1,
-            });
-
-            res.status(201).json(newAccount);
+            res.status(201).json(newCustomerUser);
         } catch (error) {
             res.status(500).json(error);
         }
     },
 
     // GENERATE ACCESS TOKEN
-    generateAccessToken: (account) => {
+    generateAccessToken: (adminUser) => {
         return jwt.sign(
             {
-                account_id: account?.id,
-                role: account?.role,
-                user_id: account?.user_id,
+                id: adminUser?.id,
+                role: adminUser?.role_name,
             },
             process.env.JWT_ACCESS_KEY,
             { expiresIn: "20s" }
@@ -61,12 +53,11 @@ const authController = {
     },
 
     // GENERATE REFRESH TOKEN
-    generateRefreshToken: (account) => {
+    generateRefreshToken: (adminUder) => {
         return jwt.sign(
             {
-                account_id: account?.id,
-                role: account?.role,
-                user_id: account?.user_id,
+                id: adminUder?.id,
+                role: adminUder?.role_name,
             },
             process.env.JWT_REFRESH_KEY,
             { expiresIn: "365d" }
@@ -76,10 +67,13 @@ const authController = {
     // LOGIN
     loginUser: async (req, res) => {
         try {
-            const account = await accountModel.findAccountByUsername(
+            const adminUser = await adminUserModel.findAdminUserByUsername(
                 req.body.username
             );
-            if (!account) {
+
+            const role = await roleModel.getRoleById(adminUser.role_id);
+            adminUser.role_name = role.name;
+            if (!adminUser) {
                 return (
                     res
                         // .status(404)
@@ -91,7 +85,7 @@ const authController = {
             }
             const validPassword = await bcrypt.compare(
                 req.body.password,
-                account.password
+                adminUser.password
             );
             if (!validPassword) {
                 return (
@@ -103,10 +97,11 @@ const authController = {
                         })
                 );
             }
-            if (account && validPassword) {
-                const accessToken = authController.generateAccessToken(account);
+            if (adminUser && validPassword) {
+                const accessToken =
+                    authController.generateAccessToken(adminUser);
                 const refreshToken =
-                    authController.generateRefreshToken(account);
+                    authController.generateRefreshToken(adminUser);
                 refreshTokenList.push(refreshToken);
 
                 res.cookie("refreshToken", refreshToken, {
@@ -116,7 +111,7 @@ const authController = {
                     sameSite: "strict", // Ngăn chặn tấn công CSRF
                 });
 
-                const { password, ...others } = account;
+                const { password, ...others } = adminUser;
 
                 res
                     // .status(200)

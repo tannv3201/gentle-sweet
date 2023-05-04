@@ -9,11 +9,12 @@ const middlewareController = {
             jwt.verify(
                 accessToken,
                 process.env.JWT_ACCESS_KEY,
-                (err, account) => {
+                (err, adminUser) => {
                     if (err) {
                         return res.status(403).json("Token is not valid");
                     }
-                    req.account = account;
+                    req.adminUser = adminUser;
+                    console.log(adminUser);
                     next();
                 }
             );
@@ -35,9 +36,24 @@ const middlewareController = {
     //     });
     // },
 
-    verifyTokenAndAdminAuth: (req, res, next) => {
+    verifyTokenAndSystemUserAuth: (req, res, next) => {
         middlewareController.verifyToken(req, res, () => {
-            if (req.account.role === 3) {
+            if (
+                req.adminUser.role === "SUPER_ADMIN" ||
+                req.adminUser.role === "ADMIN" ||
+                req.adminUser.role === "STAFF"
+            ) {
+                next();
+            } else {
+                return res.status(403).json("Bạn không có quyền truy cập");
+            }
+        });
+    },
+
+    // SUPEER_ADMIN
+    verifyTokenAndSuperAdminAuth: (req, res, next) => {
+        middlewareController.verifyToken(req, res, () => {
+            if (req.adminUser.role === "SUPER_ADMIN") {
                 next();
             } else {
                 return res.status(403).json("Bạn không có quyền truy cập");

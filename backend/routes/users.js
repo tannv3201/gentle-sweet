@@ -19,7 +19,7 @@ router.put(
 
 router.delete(
     "/:id",
-    middlewareController.verifyTokenAndAdminAuth,
+    middlewareController.verifyTokenAndSystemUserAuth,
     userController.deleteUserById
 );
 

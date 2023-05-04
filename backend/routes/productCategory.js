@@ -5,31 +5,31 @@ const middlewareController = require("../controllers/middlewareController");
 
 router.post(
     "/",
-    middlewareController.verifyTokenAndAdminAuth,
+    middlewareController.verifyTokenAndSystemUserAuth,
     productCategoryController.createProductCategory
 );
 
 router.get(
     "/",
-    middlewareController.verifyTokenAndAdminAuth,
+    middlewareController.verifyTokenAndSystemUserAuth,
     productCategoryController.getAllProductCategory
 );
 
 router.get(
     "/:id",
-    middlewareController.verifyTokenAndAdminAuth,
+    middlewareController.verifyTokenAndSystemUserAuth,
     productCategoryController.getProductCategoryById
 );
 
 router.put(
     "/:id",
-    middlewareController.verifyTokenAndAdminAuth,
+    middlewareController.verifyTokenAndSystemUserAuth,
     productCategoryController.updateProductCategoryByID
 );
 
 router.delete(
     "/:id",
-    middlewareController.verifyTokenAndAdminAuth,
+    middlewareController.verifyTokenAndSystemUserAuth,
     productCategoryController.deleteProductCategoryById
 );
 

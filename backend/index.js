@@ -2,7 +2,9 @@ const express = require("express");
 const cors = require("cors");
 const cookieParser = require("cookie-parser");
 
-const accountRoute = require("./routes/account");
+const roleRoute = require("./routes/role");
+
+const adminUserRoute = require("./routes/adminUser");
 
 const userRoute = require("./routes/users");
 const authRoute = require("./routes/auth");
@@ -20,7 +22,9 @@ app.use(cookieParser());
 
 const port = 8080;
 
-app.use("/v1/account", accountRoute);
+app.use("/v1/role", roleRoute);
+
+app.use("/v1/adminUser", adminUserRoute);
 
 app.use("/v1/user", userRoute);
 app.use("/v1/auth", authRoute);
