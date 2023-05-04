@@ -41,11 +41,11 @@ const authController = {
     },
 
     // GENERATE ACCESS TOKEN
-    generateAccessToken: (adminUser) => {
+    generateAccessToken: (user) => {
         return jwt.sign(
             {
-                id: adminUser?.id,
-                role: adminUser?.role_name,
+                id: user?.id,
+                role: user?.role_name,
             },
             process.env.JWT_ACCESS_KEY,
             { expiresIn: "20s" }
@@ -53,11 +53,11 @@ const authController = {
     },
 
     // GENERATE REFRESH TOKEN
-    generateRefreshToken: (adminUder) => {
+    generateRefreshToken: (user) => {
         return jwt.sign(
             {
-                id: adminUder?.id,
-                role: adminUder?.role_name,
+                id: user?.id,
+                role: user?.role_name,
             },
             process.env.JWT_REFRESH_KEY,
             { expiresIn: "365d" }
@@ -71,9 +71,24 @@ const authController = {
                 req.body.username
             );
 
-            const role = await roleModel.getRoleById(adminUser.role_id);
-            adminUser.role_name = role.name;
-            if (!adminUser) {
+            const customerUser =
+                await customerUserModel.findCustomerUserByUsername(
+                    req.body.username
+                );
+
+            let user = null;
+
+            if (adminUser) {
+                const role = await roleModel.getRoleById(adminUser?.role_id);
+                adminUser.role_name = role.name;
+                user = adminUser;
+            } else if (customerUser) {
+                const role = await roleModel.getRoleById(customerUser?.role_id);
+                customerUser.role_name = role.name;
+                user = customerUser;
+            }
+            console.log(user);
+            if (!user) {
                 return (
                     res
                         // .status(404)
@@ -83,10 +98,12 @@ const authController = {
                         })
                 );
             }
+
             const validPassword = await bcrypt.compare(
                 req.body.password,
-                adminUser.password
+                user.password
             );
+
             if (!validPassword) {
                 return (
                     res
@@ -97,26 +114,23 @@ const authController = {
                         })
                 );
             }
-            if (adminUser && validPassword) {
-                const accessToken =
-                    authController.generateAccessToken(adminUser);
-                const refreshToken =
-                    authController.generateRefreshToken(adminUser);
-                refreshTokenList.push(refreshToken);
 
-                res.cookie("refreshToken", refreshToken, {
-                    httpOnly: true, //
-                    secure: false, // deploy -> true
-                    path: "/",
-                    sameSite: "strict", // Ngăn chặn tấn công CSRF
-                });
+            const accessToken = authController.generateAccessToken(user);
+            const refreshToken = authController.generateRefreshToken(user);
+            refreshTokenList.push(refreshToken);
 
-                const { password, ...others } = adminUser;
+            res.cookie("refreshToken", refreshToken, {
+                httpOnly: true, //
+                secure: false, // deploy -> true
+                path: "/",
+                sameSite: "strict", // Ngăn chặn tấn công CSRF
+            });
 
-                res
-                    // .status(200)
-                    .json({ ...others, accessToken, status: 200 });
-            }
+            const { password, ...others } = user;
+
+            res
+                // .status(200)
+                .json({ ...others, accessToken, status: 200 });
         } catch (error) {
             res.status(500).json(error);
         }
