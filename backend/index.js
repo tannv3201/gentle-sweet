@@ -5,8 +5,8 @@ const cookieParser = require("cookie-parser");
 const roleRoute = require("./routes/role");
 
 const adminUserRoute = require("./routes/adminUser");
+const customerUserRoute = require("./routes/customerUser");
 
-const userRoute = require("./routes/users");
 const authRoute = require("./routes/auth");
 
 const productCategoryRoute = require("./routes/productCategory");
@@ -25,8 +25,8 @@ const port = 8080;
 app.use("/v1/role", roleRoute);
 
 app.use("/v1/adminUser", adminUserRoute);
+app.use("/v1/customerUser", customerUserRoute);
 
-app.use("/v1/user", userRoute);
 app.use("/v1/auth", authRoute);
 
 app.use("/v1/productCategory", productCategoryRoute);
@@ -38,5 +38,3 @@ app.use("/v1/service", serviceRoute);
 app.listen(port, () => {
     console.log(`Server is running on port ${port}`);
 });
-
-// Authentication

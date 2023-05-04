@@ -1,26 +1,30 @@
 const express = require("express");
 const router = express.Router();
-const userController = require("../controllers/usersController");
+const customerUserController = require("../controllers/customerUserController");
 const middlewareController = require("../controllers/middlewareController");
 
-router.get("/", middlewareController.verifyToken, userController.getlAllUser);
+router.get(
+    "/",
+    middlewareController.verifyTokenAndSystemUserAuth,
+    customerUserController.getlAllCustomerUser
+);
 
 router.get(
     "/:id",
     middlewareController.verifyToken,
-    userController.getUserById
+    customerUserController.getCustomerUserById
 );
 
 router.put(
     "/:id",
     middlewareController.verifyToken,
-    userController.updateUserByID
+    customerUserController.updateCustomerUserById
 );
 
 router.delete(
     "/:id",
     middlewareController.verifyTokenAndSystemUserAuth,
-    userController.deleteUserById
+    customerUserController.deleteCustomerUserById
 );
 
 module.exports = router;

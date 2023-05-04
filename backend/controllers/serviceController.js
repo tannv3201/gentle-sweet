@@ -32,7 +32,7 @@ const serviceController = {
             const newService = await ServiceModel.createService({
                 id: uuidv4(),
                 service_category_id: req.body.service_category_id,
-                user_id: req.account.user_id,
+                admin_user_id: req.user.id,
                 name: req.body.name,
                 description: req.body.description,
                 quantity: req.body.quantity,
@@ -69,13 +69,16 @@ const serviceController = {
     deleteServiceById: async (req, res) => {
         try {
             const service_id = req.params.id;
-            const affectedRows = await ServiceModel.deleteServiceById(
-                service_id
+            const affectedRows = await ServiceModel.updateServiceById(
+                service_id,
+                {
+                    status: 0,
+                }
             );
             if (affectedRows === 0) {
-                res.status(404).json({ message: "Xóa thất bại" });
+                return res.status(404).json({ message: "Xóa thất bại" });
             } else {
-                res.status(200).json({ message: "Xóa thành công" });
+                return res.status(200).json({ message: "Xóa thành công" });
             }
         } catch (error) {
             res.status(500).json({ message: error.message });

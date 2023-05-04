@@ -33,7 +33,7 @@ const productsController = {
             const newProduct = await ProductModel.createProduct({
                 id: uuidv4(),
                 product_category_id: req.body.product_category_id,
-                user_id: req.account.user_id,
+                admin_user_id: req.user.id,
                 name: req.body.name,
                 description: req.body.description,
                 quantity: req.body.quantity,
@@ -70,13 +70,14 @@ const productsController = {
     deleteProductById: async (req, res) => {
         try {
             const product_id = req.params.id;
-            const affectedRows = await ProductModel.deleteProductById(
-                product_id
+            const affectedRows = await ProductModel.updateProductById(
+                product_id,
+                { status: 0 }
             );
             if (affectedRows === 0) {
-                res.status(404).json({ message: "Xóa thất bại" });
+                return res.status(404).json({ message: "Xóa thất bại" });
             } else {
-                res.status(200).json({ message: "Xóa thành công" });
+                return res.status(200).json({ message: "Xóa thành công" });
             }
         } catch (error) {
             res.status(500).json({ message: error.message });

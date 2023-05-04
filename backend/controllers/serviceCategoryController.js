@@ -13,7 +13,7 @@ const serviceCategoryController = {
         }
     },
 
-    // GET SERVICE CATEGOR BY ID
+    // GET SERVICE CATEGORY BY ID
     getServiceCategoryById: async (req, res) => {
         try {
             const service_category =
@@ -28,15 +28,13 @@ const serviceCategoryController = {
         }
     },
 
-    // Create Product Category
+    // Create Service Category
     createServiceCategory: async (req, res, next) => {
         try {
-            // Create new user
-
             const newServiceCategory =
                 await ServiceCategory.createServiceCategory({
                     id: uuidv4(),
-                    user_id: req.account.user_id,
+                    admin_user_id: req.user.id,
                     name: req.body.name,
                     description: req.body.description,
                     image: req.body.image,
@@ -69,13 +67,16 @@ const serviceCategoryController = {
     deleteServiceCategoryById: async (req, res) => {
         try {
             const serviceCategoryId = req.params.id;
-            const affectedRows = await ServiceCategory.deleteServiceCategory(
-                serviceCategoryId
+            const affectedRows = await ServiceCategory.updateServiceCategory(
+                serviceCategoryId,
+                {
+                    status: 0,
+                }
             );
             if (affectedRows === 0) {
-                res.status(404).json({ message: "Xóa thất bại" });
+                return res.status(404).json({ message: "Xóa thất bại" });
             } else {
-                res.status(200).json({ message: "Xóa thành công" });
+                return res.status(200).json({ message: "Xóa thành công" });
             }
         } catch (error) {
             res.status(500).json({ message: error.message });

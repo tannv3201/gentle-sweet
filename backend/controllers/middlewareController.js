@@ -6,18 +6,14 @@ const middlewareController = {
         const token = req.headers.token;
         if (token) {
             const accessToken = token.split(" ")[1];
-            jwt.verify(
-                accessToken,
-                process.env.JWT_ACCESS_KEY,
-                (err, adminUser) => {
-                    if (err) {
-                        return res.status(403).json("Token is not valid");
-                    }
-                    req.adminUser = adminUser;
-                    console.log(adminUser);
-                    next();
+            jwt.verify(accessToken, process.env.JWT_ACCESS_KEY, (err, user) => {
+                if (err) {
+                    return res.status(403).json("Token is not valid");
                 }
-            );
+                req.user = user;
+                console.log(user);
+                next();
+            });
         } else {
             return res.status(401).json("You're not authenticated");
         }
@@ -39,9 +35,9 @@ const middlewareController = {
     verifyTokenAndSystemUserAuth: (req, res, next) => {
         middlewareController.verifyToken(req, res, () => {
             if (
-                req.adminUser.role === "SUPER_ADMIN" ||
-                req.adminUser.role === "ADMIN" ||
-                req.adminUser.role === "STAFF"
+                req.user.role === "SUPER_ADMIN" ||
+                req.user.role === "ADMIN" ||
+                req.user.role === "STAFF"
             ) {
                 next();
             } else {
@@ -53,7 +49,7 @@ const middlewareController = {
     // SUPEER_ADMIN
     verifyTokenAndSuperAdminAuth: (req, res, next) => {
         middlewareController.verifyToken(req, res, () => {
-            if (req.adminUser.role === "SUPER_ADMIN") {
+            if (req.user.role === "SUPER_ADMIN") {
                 next();
             } else {
                 return res.status(403).json("Bạn không có quyền truy cập");
