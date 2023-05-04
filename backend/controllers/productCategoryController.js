@@ -1,25 +1,25 @@
-const ProductCategory = require("../models/ProductCategories");
+const ProductCategoryModel = require("../models/ProductCategory");
 const { v4: uuidv4 } = require("uuid");
-const bcrypt = require("bcrypt");
 
 const productCategoriesController = {
-    // GET ALL USER
+    // GET ALL PRODUCT CATEGORIES
     getAllProductCategory: async (req, res) => {
         try {
             const prd_categories =
-                await ProductCategory.getAllProductCategory();
+                await ProductCategoryModel.getAllProductCategory();
             return res.status(200).json(prd_categories);
         } catch (error) {
             res.status(500).json(error);
         }
     },
 
-    // GET USER BY ID
+    // GET PRODUCT CA BY ID
     getProductCategoryById: async (req, res) => {
         try {
-            const prd_category = await ProductCategory.getProductCategoryById(
-                req.params.id
-            );
+            const prd_category =
+                await ProductCategoryModel.getProductCategoryById(
+                    req.params.id
+                );
             if (!prd_category) {
                 return res.status(404).json("Danh mục sản phẩm không tồn tại");
             } else {
@@ -33,16 +33,14 @@ const productCategoriesController = {
     // Create Product Category
     createProductCategory: async (req, res, next) => {
         try {
-            // Create new user
-            console.log(req?.user?.id);
             const newProductCategory =
-                await ProductCategory.createProductCategory({
+                await ProductCategoryModel.createProductCategory({
                     id: uuidv4(),
+                    user_id: req.account.user_id,
                     name: req.body.name,
                     description: req.body.description,
                     image: req.body.image,
-                    status: req.body.status,
-                    user_id: req?.user?.id,
+                    status: 1,
                 });
             res.status(201).json(newProductCategory);
         } catch (error) {
@@ -50,13 +48,13 @@ const productCategoriesController = {
         }
     },
 
-    // UPDATE USER BY ID
+    // UPDATE PRODUCT CA BY ID
     updateProductCategoryByID: async (req, res) => {
         try {
             const prd_category_id = req.params.id;
             const { user_id, ...data } = req.body;
             const affectedRows =
-                await ProductCategory.updateProductCategoryById(
+                await ProductCategoryModel.updateProductCategoryById(
                     prd_category_id,
                     data
                 );
@@ -68,12 +66,12 @@ const productCategoriesController = {
         } catch (error) {}
     },
 
-    // DELETE USER BY ID
+    // DELETE PRODUCT CA BY ID
     deleteProductCategoryById: async (req, res) => {
         try {
             const prd_category_id = req.params.id;
             const affectedRows =
-                await ProductCategory.deleteProductCategoryById(
+                await ProductCategoryModel.deleteProductCategoryById(
                     prd_category_id
                 );
             if (affectedRows === 0) {

@@ -3,14 +3,14 @@ const { v4: uuidv4 } = require("uuid");
 
 const getAllProductCategory = async () => {
     const [rows, fields] = await pool.query(
-        "SELECT * FROM tbl_product_categories"
+        "SELECT * FROM tbl_product_category"
     );
     return rows;
 };
 
 const getProductCategoryById = async (id) => {
     const [rows, fields] = await pool.query(
-        "SELECT * FROM tbl_product_categories WHERE id= (?)",
+        "SELECT * FROM tbl_product_category WHERE id= (?)",
         [id]
     );
     return rows[0];
@@ -18,7 +18,7 @@ const getProductCategoryById = async (id) => {
 
 const createProductCategory = async (productCategory) => {
     const [result, fields] = await pool.query(
-        "INSERT INTO tbl_product_categories SET ?",
+        "INSERT INTO tbl_product_category SET ?",
         [productCategory]
     );
     return result;
@@ -26,7 +26,7 @@ const createProductCategory = async (productCategory) => {
 
 const updateProductCategoryById = async (id, productCategory) => {
     const [result, fields] = await pool.query(
-        "UPDATE tbl_product_categories SET ? WHERE id = ?",
+        "UPDATE tbl_product_category SET ? WHERE id = ?",
         [productCategory, id]
     );
     return result.affectedRows;
@@ -34,7 +34,7 @@ const updateProductCategoryById = async (id, productCategory) => {
 
 const deleteProductCategoryById = async (id) => {
     const [result, fields] = await pool.query(
-        "DELETE FROM tbl_product_categories WHERE id = ?",
+        "DELETE FROM tbl_product_category WHERE id = ?",
         [id]
     );
     return result.affectedRows;

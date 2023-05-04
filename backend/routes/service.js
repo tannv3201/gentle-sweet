@@ -1,36 +1,36 @@
 const express = require("express");
 const router = express.Router();
-const servicesController = require("../controllers/servicesController");
+const serviceController = require("../controllers/serviceController");
 const middlewareController = require("../controllers/middlewareController");
 
 router.post(
     "/",
     middlewareController.verifyTokenAndAdminAuth,
-    servicesController.createService
+    serviceController.createService
 );
 
 router.get(
     "/",
     middlewareController.verifyTokenAndAdminAuth,
-    servicesController.getAllService
+    serviceController.getAllService
 );
 
 router.get(
     "/:id",
     middlewareController.verifyTokenAndAdminAuth,
-    servicesController.getServiceById
+    serviceController.getServiceById
 );
 
 router.put(
     "/:id",
     middlewareController.verifyTokenAndAdminAuth,
-    servicesController.updateServiceByID
+    serviceController.updateServiceByID
 );
 
 router.delete(
     "/:id",
     middlewareController.verifyTokenAndAdminAuth,
-    servicesController.deleteServiceById
+    serviceController.deleteServiceById
 );
 
 module.exports = router;

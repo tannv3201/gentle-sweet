@@ -1,7 +1,9 @@
 const bcrypt = require("bcrypt");
+const accountModel = require("../models/Account");
 const userModel = require("../models/Users");
 const { v4: uuidv4 } = require("uuid");
 const jwt = require("jsonwebtoken");
+const pool = require("../config/database");
 
 require("dotenv").config();
 
@@ -17,23 +19,41 @@ const authController = {
             // Create new user
             const newUser = await userModel.createUser({
                 id: uuidv4(),
+                first_name: req.body.first_name,
+                last_name: req.body.last_name,
+                phone_number: req.body.phone_number,
+                province: req.body.province,
+                district: req.body.district,
+                ward: req.body.ward,
+                detail_address: req.body.detail_address,
+                birth_date: req.body.birth_date,
+                status: 1,
+            });
+
+            // Create new user
+            const newAccount = await accountModel.createAccount({
+                id: uuidv4(),
+                user_id: newUser.id,
+                role: req.body.role,
                 username: req.body.username,
                 password: hashed,
                 email: req.body.email,
-                role: req.body.role,
+                status: 1,
             });
-            res.status(201).json(newUser);
+
+            res.status(201).json(newAccount);
         } catch (error) {
             res.status(500).json(error);
         }
     },
 
     // GENERATE ACCESS TOKEN
-    generateAccessToken: (user) => {
+    generateAccessToken: (account) => {
         return jwt.sign(
             {
-                id: user?.id,
-                role: user?.role,
+                account_id: account?.id,
+                role: account?.role,
+                user_id: account?.user_id,
             },
             process.env.JWT_ACCESS_KEY,
             { expiresIn: "20s" }
@@ -41,11 +61,12 @@ const authController = {
     },
 
     // GENERATE REFRESH TOKEN
-    generateRefreshToken: (user) => {
+    generateRefreshToken: (account) => {
         return jwt.sign(
             {
-                id: user?.id,
-                role: user?.role,
+                account_id: account?.id,
+                role: account?.role,
+                user_id: account?.user_id,
             },
             process.env.JWT_REFRESH_KEY,
             { expiresIn: "365d" }
@@ -55,8 +76,10 @@ const authController = {
     // LOGIN
     loginUser: async (req, res) => {
         try {
-            const user = await userModel.findUserByUsername(req.body.username);
-            if (!user) {
+            const account = await accountModel.findAccountByUsername(
+                req.body.username
+            );
+            if (!account) {
                 return (
                     res
                         // .status(404)
@@ -66,11 +89,11 @@ const authController = {
                         })
                 );
             }
-            const vailidPassword = await bcrypt.compare(
+            const validPassword = await bcrypt.compare(
                 req.body.password,
-                user.password
+                account.password
             );
-            if (!vailidPassword) {
+            if (!validPassword) {
                 return (
                     res
                         // .status(401)
@@ -80,9 +103,10 @@ const authController = {
                         })
                 );
             }
-            if (user && vailidPassword) {
-                const accessToken = authController.generateAccessToken(user);
-                const refreshToken = authController.generateRefreshToken(user);
+            if (account && validPassword) {
+                const accessToken = authController.generateAccessToken(account);
+                const refreshToken =
+                    authController.generateRefreshToken(account);
                 refreshTokenList.push(refreshToken);
 
                 res.cookie("refreshToken", refreshToken, {
@@ -92,7 +116,7 @@ const authController = {
                     sameSite: "strict", // Ngăn chặn tấn công CSRF
                 });
 
-                const { password, ...others } = user;
+                const { password, ...others } = account;
 
                 res
                     // .status(200)

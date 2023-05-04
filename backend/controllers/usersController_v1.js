@@ -31,10 +31,17 @@ const userController = {
     updateUserByID: async (req, res) => {
         try {
             const userId = req.params.id;
+            const updateData = { ...req.body };
+
+            if (req.body.password) {
+                const salt = await bcrypt.genSalt(10);
+                const hashed = await bcrypt.hash(req.body.password, salt);
+                updateData.password = hashed;
+            }
 
             const affectedRows = await userModel.updateUserById(
                 userId,
-                req.body
+                updateData
             );
             if (affectedRows === 0) {
                 return res

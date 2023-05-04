@@ -5,9 +5,17 @@ const middlewareController = require("../controllers/middlewareController");
 
 router.get("/", middlewareController.verifyToken, userController.getlAllUser);
 
-router.get("/:id", userController.getUserById);
+router.get(
+    "/:id",
+    middlewareController.verifyToken,
+    userController.getUserById
+);
 
-router.put("/:id", userController.updateUserByID);
+router.put(
+    "/:id",
+    middlewareController.verifyToken,
+    userController.updateUserByID
+);
 
 router.delete(
     "/:id",

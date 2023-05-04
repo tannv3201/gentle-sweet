@@ -1,37 +1,37 @@
 const pool = require("../config/database");
+const { v4: uuidv4 } = require("uuid");
 
 const getAllService = async () => {
-    const [rows, fields] = await pool.query("SELECT * FROM tbl_services");
+    const [rows, fields] = await pool.query("SELECT * FROM tbl_service");
     return rows;
 };
 
 const getServiceById = async (id) => {
     const [rows, fields] = await pool.query(
-        "SELECT * FROM tbl_services WHERE id= (?)",
+        "SELECT * FROM tbl_service WHERE id= (?)",
         [id]
     );
     return rows[0];
 };
 
-const createService = async (product) => {
-    const [result, fields] = await pool.query(
-        "INSERT INTO tbl_services SET ?",
-        [product]
-    );
+const createService = async (service) => {
+    const [result, fields] = await pool.query("INSERT INTO tbl_service SET ?", [
+        service,
+    ]);
     return result;
 };
 
-const updateServiceById = async (id, product) => {
+const updateServiceById = async (id, service) => {
     const [result, fields] = await pool.query(
-        "UPDATE tbl_services SET ? WHERE id = ?",
-        [product, id]
+        "UPDATE tbl_service SET ? WHERE id = ?",
+        [service, id]
     );
     return result.affectedRows;
 };
 
 const deleteServiceById = async (id) => {
     const [result, fields] = await pool.query(
-        "DELETE FROM tbl_services WHERE id = ?",
+        "DELETE FROM tbl_service WHERE id = ?",
         [id]
     );
     return result.affectedRows;

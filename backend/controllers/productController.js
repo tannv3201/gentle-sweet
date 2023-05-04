@@ -1,21 +1,22 @@
-const Products = require("../models/Products");
+const ProductModel = require("../models/Product");
+
 const { v4: uuidv4 } = require("uuid");
 
 const productsController = {
-    // GET ALL USER
+    // GET ALL PRODUCT
     getAllProduct: async (req, res) => {
         try {
-            const products = await Products.getAllProduct();
+            const products = await ProductModel.getAllProduct();
             return res.status(200).json(products);
         } catch (error) {
             res.status(500).json(error);
         }
     },
 
-    // GET USER BY ID
+    // GET PRODUCT BY ID
     getProductById: async (req, res) => {
         try {
-            const product = await Products.getProductById(req.params.id);
+            const product = await ProductModel.getProductById(req.params.id);
             if (!product) {
                 return res.status(404).json("Sản phẩm không tồn tại");
             } else {
@@ -29,18 +30,16 @@ const productsController = {
     // Create Product Category
     createProduct: async (req, res, next) => {
         try {
-            // Create new user
-            const newProduct = await Products.createProduct({
+            const newProduct = await ProductModel.createProduct({
                 id: uuidv4(),
+                product_category_id: req.body.product_category_id,
+                user_id: req.account.user_id,
                 name: req.body.name,
                 description: req.body.description,
                 quantity: req.body.quantity,
-                unit: req.body.unit,
-                image: req.body.image,
                 price: req.body.price,
-                status: req.body.status,
-                product_category_id: req.body.product_category_id,
-                user_id: req?.user?.id,
+                image: req.body.image,
+                status: 1,
             });
             res.status(201).json(newProduct);
         } catch (error) {
@@ -48,12 +47,12 @@ const productsController = {
         }
     },
 
-    // UPDATE USER BY ID
+    // UPDATE PRODUCT BY ID
     updateProductByID: async (req, res) => {
         try {
             const product_id = req.params.id;
             const { user_id, ...data } = req.body;
-            const affectedRows = await Products.updateProductById(
+            const affectedRows = await ProductModel.updateProductById(
                 product_id,
                 data
             );
@@ -62,14 +61,18 @@ const productsController = {
             } else {
                 return res.status(200).json({ message: "Cập nhật thành công" });
             }
-        } catch (error) {}
+        } catch (error) {
+            console.log(error);
+        }
     },
 
-    // DELETE USER BY ID
+    // DELETE PRODUCT BY ID
     deleteProductById: async (req, res) => {
         try {
             const product_id = req.params.id;
-            const affectedRows = await Products.deleteProductById(product_id);
+            const affectedRows = await ProductModel.deleteProductById(
+                product_id
+            );
             if (affectedRows === 0) {
                 res.status(404).json({ message: "Xóa thất bại" });
             } else {

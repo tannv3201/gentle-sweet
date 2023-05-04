@@ -1,6 +1,6 @@
 const express = require("express");
 const router = express.Router();
-const serviceCategoryController = require("../controllers/serviceCategoriesController");
+const serviceCategoryController = require("../controllers/serviceCategoryController");
 const middlewareController = require("../controllers/middlewareController");
 
 router.post(
@@ -24,7 +24,7 @@ router.get(
 router.put(
     "/:id",
     middlewareController.verifyTokenAndAdminAuth,
-    serviceCategoryController.updateServiceCategoryByID
+    serviceCategoryController.updateServiceCategoryById
 );
 
 router.delete(

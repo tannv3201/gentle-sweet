@@ -1,23 +1,23 @@
-const Services = require("../models/Services");
+const ServiceModel = require("../models/Service");
 const { v4: uuidv4 } = require("uuid");
 
-const servicesController = {
-    // GET ALL USER
+const serviceController = {
+    // GET ALL SERVICE
     getAllService: async (req, res) => {
         try {
-            const services = await Services.getAllService();
+            const services = await ServiceModel.getAllService();
             return res.status(200).json(services);
         } catch (error) {
             res.status(500).json(error);
         }
     },
 
-    // GET USER BY ID
+    // GET SERVICE BY ID
     getServiceById: async (req, res) => {
         try {
-            const service = await Services.getProductById(req.params.id);
+            const service = await ServiceModel.getServiceById(req.params.id);
             if (!service) {
-                return res.status(404).json("Dịch vụ không tồn tại");
+                return res.status(404).json("Sản phẩm không tồn tại");
             } else {
                 return res.status(200).json(service);
             }
@@ -27,18 +27,18 @@ const servicesController = {
     },
 
     // Create Product Category
-    createService: async (req, res, next) => {
+    createService: async (req, res) => {
         try {
-            // Create new user
-            const newService = await Services.createService({
+            const newService = await ServiceModel.createService({
                 id: uuidv4(),
+                service_category_id: req.body.service_category_id,
+                user_id: req.account.user_id,
                 name: req.body.name,
                 description: req.body.description,
-                image: req.body.image,
+                quantity: req.body.quantity,
                 price: req.body.price,
-                status: req.body.status,
-                service_category_id: req.body.service_category_id,
-                user_id: req?.user?.id,
+                image: req.body.image,
+                status: 1,
             });
             res.status(201).json(newService);
         } catch (error) {
@@ -46,12 +46,12 @@ const servicesController = {
         }
     },
 
-    // UPDATE USER BY ID
+    // UPDATE SERVICE BY ID
     updateServiceByID: async (req, res) => {
         try {
             const service_id = req.params.id;
             const { user_id, ...data } = req.body;
-            const affectedRows = await Services.updateServiceById(
+            const affectedRows = await ServiceModel.updateServiceById(
                 service_id,
                 data
             );
@@ -60,14 +60,18 @@ const servicesController = {
             } else {
                 return res.status(200).json({ message: "Cập nhật thành công" });
             }
-        } catch (error) {}
+        } catch (error) {
+            console.log(error);
+        }
     },
 
-    // DELETE USER BY ID
+    // DELETE SERVICE BY ID
     deleteServiceById: async (req, res) => {
         try {
             const service_id = req.params.id;
-            const affectedRows = await Services.deleteServiceById(service_id);
+            const affectedRows = await ServiceModel.deleteServiceById(
+                service_id
+            );
             if (affectedRows === 0) {
                 res.status(404).json({ message: "Xóa thất bại" });
             } else {
@@ -79,4 +83,4 @@ const servicesController = {
     },
 };
 
-module.exports = servicesController;
+module.exports = serviceController;

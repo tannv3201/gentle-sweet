@@ -1,36 +1,36 @@
 const express = require("express");
 const router = express.Router();
-const productsController = require("../controllers/productsController");
+const productController = require("../controllers/productController");
 const middlewareController = require("../controllers/middlewareController");
 
 router.post(
     "/",
     middlewareController.verifyTokenAndAdminAuth,
-    productsController.createProduct
+    productController.createProduct
 );
 
 router.get(
     "/",
     middlewareController.verifyTokenAndAdminAuth,
-    productsController.getAllProduct
+    productController.getAllProduct
 );
 
 router.get(
     "/:id",
     middlewareController.verifyTokenAndAdminAuth,
-    productsController.getProductById
+    productController.getProductById
 );
 
 router.put(
     "/:id",
     middlewareController.verifyTokenAndAdminAuth,
-    productsController.updateProductByID
+    productController.updateProductByID
 );
 
 router.delete(
     "/:id",
     middlewareController.verifyTokenAndAdminAuth,
-    productsController.deleteProductById
+    productController.deleteProductById
 );
 
 module.exports = router;

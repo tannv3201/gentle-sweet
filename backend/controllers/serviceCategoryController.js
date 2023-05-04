@@ -1,29 +1,27 @@
-const ServiceCategory = require("../models/ServiceCategories");
+const ServiceCategory = require("../models/ServiceCategory");
 const { v4: uuidv4 } = require("uuid");
-const bcrypt = require("bcrypt");
 
-const serviceCategoriesController = {
-    // GET ALL USER
+const serviceCategoryController = {
+    // GET ALL SERVICE CATEGORIES
     getAllServiceCategory: async (req, res) => {
         try {
-            const serv_categorys =
+            const service_categories =
                 await ServiceCategory.getAllServiceCategory();
-            return res.status(200).json(serv_categorys);
+            return res.status(200).json(service_categories);
         } catch (error) {
             res.status(500).json(error);
         }
     },
 
-    // GET USER BY ID
+    // GET SERVICE CATEGOR BY ID
     getServiceCategoryById: async (req, res) => {
         try {
-            const serv_category = await ServiceCategory.getServiceCategoryById(
-                req.params.id
-            );
-            if (!serv_category) {
-                return res.status(404).json("Danh mục dịch vụ không tồn tại");
+            const service_category =
+                await ServiceCategory.getServiceCategoryById(req.params.id);
+            if (!service_category) {
+                return res.status(404).json("Danh mục sản phẩm không tồn tại");
             } else {
-                return res.status(200).json(serv_category);
+                return res.status(200).json(service_category);
             }
         } catch (error) {
             res.status(500).json(error);
@@ -34,14 +32,15 @@ const serviceCategoriesController = {
     createServiceCategory: async (req, res, next) => {
         try {
             // Create new user
+
             const newServiceCategory =
                 await ServiceCategory.createServiceCategory({
                     id: uuidv4(),
+                    user_id: req.account.user_id,
                     name: req.body.name,
                     description: req.body.description,
                     image: req.body.image,
                     status: req.body.status,
-                    user_id: req?.user?.id,
                 });
             res.status(201).json(newServiceCategory);
         } catch (error) {
@@ -49,16 +48,15 @@ const serviceCategoriesController = {
         }
     },
 
-    // UPDATE USER BY ID
-    updateServiceCategoryByID: async (req, res) => {
+    // UPDATE SERVICE CATEGOR BY ID
+    updateServiceCategoryById: async (req, res) => {
         try {
-            const serv_category_id = req.params.id;
+            const serviceCategoryId = req.params.id;
             const { user_id, ...data } = req.body;
-            const affectedRows =
-                await ServiceCategory.updateServiceCategoryById(
-                    serv_category_id,
-                    data
-                );
+            const affectedRows = await ServiceCategory.updateServiceCategory(
+                serviceCategoryId,
+                data
+            );
             if (affectedRows === 0) {
                 return res.status(404).json({ message: "Cập nhật thất bại" });
             } else {
@@ -67,14 +65,13 @@ const serviceCategoriesController = {
         } catch (error) {}
     },
 
-    // DELETE USER BY ID
+    // DELETE SERVICE CATEGOR BY ID
     deleteServiceCategoryById: async (req, res) => {
         try {
-            const serv_category_id = req.params.id;
-            const affectedRows =
-                await ServiceCategory.deleteServiceCategoryById(
-                    serv_category_id
-                );
+            const serviceCategoryId = req.params.id;
+            const affectedRows = await ServiceCategory.deleteServiceCategory(
+                serviceCategoryId
+            );
             if (affectedRows === 0) {
                 res.status(404).json({ message: "Xóa thất bại" });
             } else {
@@ -86,4 +83,4 @@ const serviceCategoriesController = {
     },
 };
 
-module.exports = serviceCategoriesController;
+module.exports = serviceCategoryController;
