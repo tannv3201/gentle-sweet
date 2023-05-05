@@ -45,7 +45,7 @@ const authController = {
         return jwt.sign(
             {
                 id: user?.id,
-                role: user?.role_name,
+                role_name: user.role_name,
             },
             process.env.JWT_ACCESS_KEY,
             { expiresIn: "20s" }
@@ -57,7 +57,7 @@ const authController = {
         return jwt.sign(
             {
                 id: user?.id,
-                role: user?.role_name,
+                role_name: user.role_name,
             },
             process.env.JWT_REFRESH_KEY,
             { expiresIn: "365d" }
@@ -87,7 +87,6 @@ const authController = {
                 customerUser.role_name = role.name;
                 user = customerUser;
             }
-            // console.log(user);
             if (!user) {
                 return (
                     res
@@ -150,11 +149,9 @@ const authController = {
             if (err) {
                 console.log(err);
             }
-
             const refreshTokens = refreshTokenList.filter(
                 (token) => token !== refreshToken
             );
-
             // Create new accesstoken and refresh token
             const newAccessToken = authController.generateAccessToken(user);
             const newRefreshToken = authController.generateRefreshToken(user);

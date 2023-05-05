@@ -11,7 +11,7 @@ const middlewareController = {
                     return res.status(403).json("Token is not valid");
                 }
                 req.user = user;
-                console.log(user);
+                console.log(req.user);
                 next();
             });
         } else {
@@ -35,9 +35,9 @@ const middlewareController = {
     verifyTokenAndSystemUserAuth: (req, res, next) => {
         middlewareController.verifyToken(req, res, () => {
             if (
-                req.user.role === "SUPER_ADMIN" ||
-                req.user.role === "ADMIN" ||
-                req.user.role === "STAFF"
+                req.user?.role_name === "SUPER_ADMIN" ||
+                req.user?.role_name === "ADMIN" ||
+                req.user?.role_name === "STAFF"
             ) {
                 next();
             } else {
@@ -49,7 +49,7 @@ const middlewareController = {
     // SUPEER_ADMIN
     verifyTokenAndSuperAdminAuth: (req, res, next) => {
         middlewareController.verifyToken(req, res, () => {
-            if (req.user.role === "SUPER_ADMIN") {
+            if (req.user.role_name === "SUPER_ADMIN") {
                 next();
             } else {
                 return res.status(403).json("Bạn không có quyền truy cập");
