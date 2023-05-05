@@ -87,7 +87,7 @@ const authController = {
                 customerUser.role_name = role.name;
                 user = customerUser;
             }
-            console.log(user);
+            // console.log(user);
             if (!user) {
                 return (
                     res
