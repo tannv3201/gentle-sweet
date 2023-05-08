@@ -66,8 +66,6 @@ function ProductDetail() {
         }
     };
 
-    const salonSystem = [];
-
     return (
         <div className={cx("wrapper")}>
             <div className={cx("inner")}>

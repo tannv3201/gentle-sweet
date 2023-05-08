@@ -8,7 +8,7 @@ const pool = require("../config/database");
 
 require("dotenv").config();
 
-let refreshTokenList = [];
+let refreshTokens = [];
 
 const authController = {
     // REGISTER
@@ -92,7 +92,7 @@ const authController = {
                     res
                         // .status(404)
                         .json({
-                            error: "Tài khoản hoặc mật khẩu không chính xác.",
+                            msg: "Tài khoản hoặc mật khẩu không chính xác.",
                             status: 404,
                         })
                 );
@@ -102,34 +102,38 @@ const authController = {
                 req.body.password,
                 user.password
             );
-
             if (!validPassword) {
                 return (
                     res
                         // .status(401)
                         .json({
-                            error: "Tài khoản hoặc mật khẩu không chính xác.",
+                            msg: "Tài khoản hoặc mật khẩu không chính xác.",
                             status: 401,
                         })
                 );
             }
 
-            const accessToken = authController.generateAccessToken(user);
-            const refreshToken = authController.generateRefreshToken(user);
-            refreshTokenList.push(refreshToken);
+            if (user && validPassword) {
+                const accessToken = authController.generateAccessToken(user);
+                const refreshToken = authController.generateRefreshToken(user);
+                refreshTokens.push(refreshToken);
 
-            res.cookie("refreshToken", refreshToken, {
-                httpOnly: true, //
-                secure: false, // deploy -> true
-                path: "/",
-                sameSite: "strict", // Ngăn chặn tấn công CSRF
-            });
+                res.cookie("refreshToken", refreshToken, {
+                    httpOnly: true, //
+                    secure: false, // deploy -> true
+                    path: "/",
+                    sameSite: "strict", // Ngăn chặn tấn công CSRF
+                });
 
-            const { password, ...others } = user;
-
-            res
-                // .status(200)
-                .json({ ...others, accessToken, status: 200 });
+                const { password, ...others } = user;
+                // res.status(200).json({ ...others, accessToken, status: 200 });
+                return res.json({
+                    ...others,
+                    accessToken,
+                    msg: "Đăng nhập thành công",
+                    status: 200,
+                });
+            }
         } catch (error) {
             res.status(500).json(error);
         }
@@ -139,23 +143,27 @@ const authController = {
     requestRefreshToken: async (req, res) => {
         // Take refresh token from user
         const refreshToken = req.cookies.refreshToken;
+
         if (!refreshToken) {
             return res.status(401).json("You're not authenticated");
         }
-        if (!refreshTokenList.includes(refreshToken)) {
+        if (!refreshTokens.includes(refreshToken)) {
             return res.status(403).json("Refresh token is valid");
         }
+
         jwt.verify(refreshToken, process.env.JWT_REFRESH_KEY, (err, user) => {
             if (err) {
                 console.log(err);
             }
-            const refreshTokens = refreshTokenList.filter(
+            refreshTokens = refreshTokens.filter(
                 (token) => token !== refreshToken
             );
+
             // Create new accesstoken and refresh token
             const newAccessToken = authController.generateAccessToken(user);
             const newRefreshToken = authController.generateRefreshToken(user);
             refreshTokens.push(newRefreshToken);
+
             res.cookie("refreshToken", newRefreshToken, {
                 httpOnly: true, //
                 secure: false, // deploy -> true
@@ -170,7 +178,7 @@ const authController = {
     // Logout
     userLogout: (req, res) => {
         res.clearCookie("refreshToken");
-        refreshTokenList = refreshTokenList.filter(
+        refreshTokens = refreshTokens.filter(
             (token) => token !== req.cookies.refreshToken
         );
         return res.status(200).json("Logged out!");

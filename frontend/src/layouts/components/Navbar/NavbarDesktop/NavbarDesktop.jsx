@@ -14,13 +14,13 @@ import { useMediaQuery } from "@mui/material";
 import { useTheme } from "@mui/material/styles";
 import { MenuList } from "../navigation";
 import InfoSaleSlider from "../InfoSaleSlider/InforSaleSlider";
+import MenuUser from "../MenuUser/MenuUser";
+import { useEffect } from "react";
 
 const cx = classNames.bind(styles);
 
 function NavbarDesktop() {
     const theme = useTheme();
-    const isMedium = useMediaQuery(theme.breakpoints.down("md"));
-    const isSmall = useMediaQuery(theme.breakpoints.down("sm"));
 
     return (
         <div className={cx("wrapper")}>
@@ -168,11 +168,7 @@ function NavbarDesktop() {
                                         <ShoppingCartRounded />
                                     </IconButton>
                                 </NavLink>
-                                <NavLink to={"/dang-nhap"}>
-                                    <IconButton title="Đăng nhập" size="large">
-                                        <PersonRounded />
-                                    </IconButton>
-                                </NavLink>
+                                <MenuUser />
                                 <span>
                                     <NavLink
                                         className={cx("booking-btn")}

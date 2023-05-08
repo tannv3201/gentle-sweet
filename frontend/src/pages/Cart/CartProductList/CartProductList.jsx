@@ -204,7 +204,11 @@ function CartProductList() {
                                             {productList?.length > 0 ? (
                                                 productList?.map(
                                                     (product, idx) => (
-                                                        <Grid item xs={12}>
+                                                        <Grid
+                                                            key={idx}
+                                                            item
+                                                            xs={12}
+                                                        >
                                                             <div
                                                                 className={cx(
                                                                     "product-wrapper"

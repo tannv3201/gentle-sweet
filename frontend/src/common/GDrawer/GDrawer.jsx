@@ -1,17 +1,11 @@
-import React, { useEffect, useState } from "react";
-// import classNames from "classnames/bind";
+import React from "react";
 import { IconButton } from "@mui/material";
-import {
-    MenuRounded,
-    ClearAllRounded,
-    CloseRounded,
-} from "@mui/icons-material";
+import { MenuRounded } from "@mui/icons-material";
 import { useMediaQuery } from "@mui/material";
 import { useTheme } from "@mui/material/styles";
 import Box from "@mui/material/Box";
 import { LightTooltip } from "../../components/GTooltip/GTooltip";
 import { SwipeableDrawer } from "@mui/material";
-// const cx = classNames.bind(styles);
 
 function GDrawer({
     children,

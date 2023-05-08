@@ -1,17 +1,10 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import classNames from "classnames/bind";
 import styles from "./CartProductSummary.module.scss";
 import { Grid } from "@mui/material";
 import GButton from "../../../components/MyButton/MyButton";
-import { DeleteRounded } from "@mui/icons-material";
 import { FormatCurrency } from "../../../components/FormatCurrency/FormatCurrency";
 import { useNavigate } from "react-router-dom";
-
-import {
-    HorizontalRuleRounded,
-    AddRounded,
-    AddShoppingCartRounded,
-} from "@mui/icons-material";
 
 const cx = classNames.bind(styles);
 

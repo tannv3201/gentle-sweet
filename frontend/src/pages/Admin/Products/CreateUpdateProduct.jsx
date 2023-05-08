@@ -35,7 +35,6 @@ function Products() {
         sold: "",
         rating: undefined,
     });
-    console.log(newProduct);
 
     useEffect(() => {
         const fetchAllProducts = async () => {

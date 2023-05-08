@@ -1,86 +1,25 @@
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import React from "react";
+import {
+    BrowserRouter as Router,
+    Routes,
+    Route,
+    Navigate,
+} from "react-router-dom";
+import React, { useEffect } from "react";
 import "../assets/scss/Global.scss";
-import HomePage from "./HomePage/HomePage";
-import ShopPage from "./ShopPage/ShopPage";
-import Navbar from "../components/Navbar/Navbar";
-import ServiceOverviewIndex from "./ServicePage/Overview/ServiceOverviewIndex";
-import BlogPage from "./BlogPage/BlogPage";
-import AboutUsPage from "./AboutUsPage/AboutUsPage";
-import SalonSystemPage from "./SalonSystemPage/SalonSystemPage";
-import CartFixedRight from "../components/CartFixedRight/CartFixedRight";
-import Footer from "../components/Footer/Footer";
-import ScrollBackToTop from "../components/ScrollBackToTop";
-import Service from "./ServicePage/Service/Service";
-import Booking from "./Booking/Booking";
-import ProductDetail from "./ShopPage/ProductDetail/ProductDetail";
-
-import { useMediaQuery } from "@mui/material";
-import { useTheme } from "@mui/material/styles";
-import Breadcrumb from "../components/GBreadcrumb/GBreadcrumb";
-import ScrollToTopOnMouse from "../components/ScrollToTopOnMouse/ScrollToTopOnMouse";
-import Checkout from "./Checkout/Checkout";
-import Cart from "./Cart/Cart";
-import Payment from "./Payment/Payment";
-import Login from "./Login/Login";
-import { publicRoutes } from "../routes";
+import { privateRoutes, publicRoutes } from "../routes";
 import DefaultLayout from "../layouts/DefaultLayout/DefaultLayout";
 import { Fragment } from "react";
+import { Toaster } from "react-hot-toast";
+
+import { useSelector } from "react-redux";
+
 function App() {
-    const theme = useTheme();
-    const isMedium = useMediaQuery(theme.breakpoints.down("md"));
+    const currentUser = useSelector((state) => state.auth.login.currentUser);
 
     return (
-        // <div>
-        //     <Router>
-        //         <ScrollToTopOnMouse />
-        //         <ScrollBackToTop>
-        //             <Navbar />
-        //             <div
-        //                 style={
-        //                     isMedium
-        //                         ? { marginTop: "54px" }
-        //                         : { marginTop: "110px" }
-        //                 }
-        //             >
-        //                 {!isMedium && <CartFixedRight />}
-        //                 <Breadcrumb />
-        //                 <Routes>
-        //                     <Route path="/" element={<HomePage />} />
-        //                     <Route path="/product" element={<ShopPage />} />
-        //                     <Route
-        //                         path="/dich-vu"
-        //                         element={<ServiceOverviewIndex />}
-        //                     />
-        //                     <Route path="/cham-soc-toc" element={<Service />} />
-        //                     <Route path="/tin-tuc" element={<BlogPage />} />
-        //                     <Route
-        //                         path="/he-thong-chi-nhanh"
-        //                         element={<SalonSystemPage />}
-        //                     />
-        //                     <Route
-        //                         path="/ve-chung-toi"
-        //                         element={<AboutUsPage />}
-        //                     />
-        //                     <Route path="/dat-lich" element={<Booking />} />
-        //                     <Route
-        //                         path="/product/son-mong-tay"
-        //                         element={<ProductDetail />}
-        //                     />
-        //                     <Route
-        //                         path="/thu-tuc-thanh-toan"
-        //                         element={<Checkout />}
-        //                     />
-        //                     <Route path="/gio-hang" element={<Cart />} />
-        //                     <Route path="/thanh-toan" element={<Payment />} />
-        //                 </Routes>
-        //             </div>
-        //             <Footer />
-        //         </ScrollBackToTop>
-        //     </Router>
-        // </div>
         <Router>
             <div className="App">
+                <Toaster position="top-right" />
                 <Routes>
                     {publicRoutes?.map((route, index) => {
                         const Page = route?.component;
@@ -100,6 +39,32 @@ function App() {
                                     <Layout>
                                         <Page />
                                     </Layout>
+                                }
+                            />
+                        );
+                    })}
+                    {privateRoutes?.map((route, index) => {
+                        const Page = route?.component;
+
+                        let Layout = DefaultLayout;
+                        if (route?.layout) {
+                            Layout = route.layout;
+                        } else if (route?.layout === null) {
+                            Layout = Fragment;
+                        }
+
+                        return (
+                            <Route
+                                key={index}
+                                path={route?.path}
+                                element={
+                                    // currentUser?.role_name === "SUPER_ADMIN" ? (
+                                    <Layout>
+                                        <Page />
+                                    </Layout>
+                                    // ) : (
+                                    //     <Navigate to="/dang-nhap" replace />
+                                    // )
                                 }
                             />
                         );

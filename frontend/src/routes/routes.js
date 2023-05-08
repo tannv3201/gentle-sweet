@@ -1,26 +1,30 @@
 import HomePage from "../pages/HomePage/HomePage";
 import ShopPage from "../pages/ShopPage/ShopPage";
-import Navbar from "../components/Navbar/Navbar";
+// import Navbar from "../components/Navbar/Navbar";
 import ServiceOverviewIndex from "../pages/ServicePage/Overview/ServiceOverviewIndex";
 import BlogPage from "../pages/BlogPage/BlogPage";
 import AboutUsPage from "../pages/AboutUsPage/AboutUsPage";
 import SalonSystemPage from "../pages/SalonSystemPage/SalonSystemPage";
-import CartFixedRight from "../components/CartFixedRight/CartFixedRight";
-import Footer from "../components/Footer/Footer";
-import BackToTop from "../components/ScrollBackToTop";
+// import CartFixedRight from "../components/CartFixedRight/CartFixedRight";
+// import Footer from "../components/Footer/Footer";
+// import BackToTop from "../components/ScrollBackToTop";
 import Service from "../pages/ServicePage/Service/Service";
 import Booking from "../pages/Booking/Booking";
 import ProductDetail from "../pages/ShopPage/ProductDetail/ProductDetail";
 
-import { useMediaQuery } from "@mui/material";
-import { useTheme } from "@mui/material/styles";
-import Breadcrumb from "../components/GBreadcrumb/GBreadcrumb";
-import ScrollToTopOnMouse from "../components/ScrollToTopOnMouse/ScrollToTopOnMouse";
+// import { useMediaQuery } from "@mui/material";
+// import { useTheme } from "@mui/material/styles";
+// import Breadcrumb from "../components/GBreadcrumb/GBreadcrumb";
+// import ScrollToTopOnMouse from "../components/ScrollToTopOnMouse/ScrollToTopOnMouse";
 import Checkout from "../pages/Checkout/Checkout";
 import Cart from "../pages/Cart/Cart";
 import Payment from "../pages/Payment/Payment";
 import Login from "../pages/Login/Login";
 import SignIn from "../pages/SignIn/SignIn";
+import Dashboard from "../pages/Admin/Dashboard/Dashboard";
+import Products from "../pages/Admin/Products/Products";
+import AdminLayout from "../layouts/AdminLayout/AdminLayout";
+import AdminUser from "../pages/Admin/AdminUser/AdminUser";
 
 // public routes
 
@@ -82,5 +86,23 @@ export const publicRoutes = [
         path: "/dang-ky",
         component: SignIn,
         layout: null,
+    },
+];
+
+export const privateRoutes = [
+    {
+        path: "/admin",
+        component: Dashboard,
+        layout: AdminLayout,
+    },
+    {
+        path: "/admin/product",
+        component: Products,
+        layout: AdminLayout,
+    },
+    {
+        path: "/admin/admin-user",
+        component: AdminUser,
+        layout: AdminLayout,
     },
 ];

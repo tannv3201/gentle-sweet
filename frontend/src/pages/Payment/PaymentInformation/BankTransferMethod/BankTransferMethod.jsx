@@ -2,14 +2,7 @@ import React from "react";
 import styles from "./BankTransferMethod.module.scss";
 import classNames from "classnames/bind";
 import { Grid } from "@mui/material";
-import MyRadio from "../../../../components/MyRadio/MyRadio";
-import { useState } from "react";
-import GTextField from "../../../../components/GTextField/GTextField";
-import Radio from "@mui/material/Radio";
-import RadioGroup from "@mui/material/RadioGroup";
-import FormControlLabel from "@mui/material/FormControlLabel";
-import FormControl from "@mui/material/FormControl";
-import FormLabel from "@mui/material/FormLabel";
+
 import images from "../../../../assets/images";
 const cx = classNames.bind(styles);
 

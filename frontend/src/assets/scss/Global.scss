@@ -405,11 +405,11 @@ span.MuiChip-label {
     font-size: 2rem !important;
     font-family: var(--font-family) !important;
     font-weight: var(--fw-medium) !important;
-    &.Mui-focused {
+    &.Mui-focused:not(.Mui-error) {
         color: var(--color-text-field) !important;
     }
 }
-.MuiInputLabel-root:not(.Mui-focused) {
+.MuiInputLabel-root:not(.Mui-focused):not(.Mui-error) {
     color: var(--text-primary) !important;
 }
 
@@ -432,7 +432,7 @@ span.MuiChip-label {
     border-bottom-color: var(--color-text-field) !important;
 }
 
-.Mui-focused fieldset {
+.Mui-focused:not(.Mui-error) fieldset {
     border-color: var(--color-text-field) !important;
 }
 
@@ -566,4 +566,43 @@ span.MuiChip-label {
 
 .MuiTypography-root.MuiTypography-body1.MuiFormControlLabel-label {
     font-size: 1.6rem !important;
+}
+
+// Error , helpertext
+.MuiFormHelperText-root.Mui-error.MuiFormHelperText-sizeSmall.MuiFormHelperText-contained {
+    font-size: 1.4rem !important;
+    font-family: var(--font-family) !important;
+}
+
+// Menu user
+.MuiButtonBase-root.MuiMenuItem-root.MuiMenuItem-gutters.MuiMenuItem-root.MuiMenuItem-gutters {
+    font-family: var(--font-family) !important;
+    font-size: 1.6rem !important;
+}
+
+// Sidebar Admin Layout
+.MuiTypography-root.MuiTypography-body1.MuiListItemText-primary {
+    font-size: 1.6rem !important;
+    font-weight: var(--fw-medium) !important;
+    font-family: var(--font-family) !important;
+}
+
+// Material Table
+.MuiTable-root {
+    font-family: var(--font-family) !important;
+}
+.MuiTableRow-root.MuiTableRow-head {
+    th {
+        font-size: 1.6rem !important;
+        font-family: var(--font-family) !important;
+        font-weight: var(--fw-semi-bold) !important;
+    }
+}
+
+.MuiTableBody-root {
+    tr,
+    td {
+        font-size: 1.5rem !important;
+        font-family: var(--font-family) !important;
+    }
 }

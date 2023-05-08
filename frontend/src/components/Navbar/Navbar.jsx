@@ -15,7 +15,6 @@ const Navbar = memo(() => {
     const theme = useTheme();
     const isMedium = useMediaQuery(theme.breakpoints.down("md"));
     const isSmall = useMediaQuery(theme.breakpoints.down("sm"));
-
     return (
         <div className={cx("wrapper")}>
             {/* <NavbarActionTop /> */}

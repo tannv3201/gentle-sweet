@@ -19,8 +19,12 @@ const adminUserController = {
                 last_name: req.body.last_name,
                 status: 1,
             });
-
-            res.status(201).json(newAdminUser);
+            // res.status(201).json(newAdminUser);
+            return res.json({
+                newAdminUser,
+                status: 201,
+                msg: "Thêm thành công",
+            });
         } catch (error) {
             res.status(500).json(error);
         }
@@ -30,6 +34,7 @@ const adminUserController = {
     getlAllAdminUser: async (req, res) => {
         try {
             const adminUsers = await adminUserModel.getAllAdminUser();
+            console.log("*", req.cookies.refreshToken);
             return res.status(200).json(adminUsers);
         } catch (error) {
             res.status(500).json(error);

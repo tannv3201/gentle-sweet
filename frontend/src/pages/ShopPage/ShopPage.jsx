@@ -9,7 +9,6 @@ import { useTheme } from "@mui/material/styles";
 import GButton from "../../components/MyButton/MyButton";
 import {
     FormatListBulletedRounded,
-    FilterAltRounded,
     FilterListRounded,
 } from "@mui/icons-material/";
 import {

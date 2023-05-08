@@ -5,6 +5,7 @@ import classNames from "classnames/bind";
 import { Grid, IconButton } from "@mui/material";
 import images from "../../../assets/images";
 import { NavLink } from "react-router-dom";
+
 import {
     PersonRounded,
     SearchRounded,
@@ -15,6 +16,8 @@ import { useTheme } from "@mui/material/styles";
 import { MenuList } from "../navigation";
 import InfoSaleSlider from "../InfoSaleSlider/InforSaleSlider";
 import GButton from "../../MyButton/MyButton";
+import { useEffect } from "react";
+import { useStore } from "../../../stores/user";
 
 const cx = classNames.bind(styles);
 
@@ -22,6 +25,14 @@ function NavbarDesktop() {
     const theme = useTheme();
     const isMedium = useMediaQuery(theme.breakpoints.down("md"));
     const isSmall = useMediaQuery(theme.breakpoints.down("sm"));
+    const user = useStore((state) => state.user);
+    const setUser = useStore((state) => state.setUser);
+
+    useEffect(() => {
+        const user = JSON.parse(localStorage.getItem("user"));
+        const cart = JSON.parse(localStorage.getItem("cart"));
+        setUser(user);
+    }, []);
 
     return (
         <div className={cx("wrapper")}>
@@ -169,9 +180,13 @@ function NavbarDesktop() {
                                         <ShoppingCartRounded />
                                     </IconButton>
                                 </NavLink>
-                                <IconButton title="Đăng nhập" size="large">
-                                    <PersonRounded />
-                                </IconButton>
+                                {user ? (
+                                    user?.username
+                                ) : (
+                                    <IconButton title="Đăng nhập" size="large">
+                                        <PersonRounded />
+                                    </IconButton>
+                                )}
                                 <span>
                                     <NavLink
                                         className={cx("booking-btn")}

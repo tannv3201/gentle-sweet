@@ -23,9 +23,9 @@ const bookingRoute = require("./routes/booking");
 const deliveryRoute = require("./routes/delivery");
 
 const app = express();
-app.use(express.json());
 app.use(cors());
 app.use(cookieParser());
+app.use(express.json());
 
 const port = 8080;
 

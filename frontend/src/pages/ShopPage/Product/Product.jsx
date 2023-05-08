@@ -10,38 +10,38 @@ import GPagination from "../../../common/GPagination/GPagination";
 
 const cx = classNames.bind(styles);
 
-const categoryList = [
-    {
-        id: 1,
-        title: "Tất cả",
-        href: "#",
-    },
-    {
-        id: 2,
-        title: "Dưỡng tóc",
-        href: "#",
-    },
-    {
-        id: 3,
-        title: "Dầu gội",
-        href: "#",
-    },
-    {
-        id: 4,
-        title: "Dưỡng móng",
-        href: "#",
-    },
-    {
-        id: 5,
-        title: "dụng cụ làm nails",
-        href: "#",
-    },
-    {
-        id: 6,
-        title: "Sơn móng",
-        href: "#",
-    },
-];
+// const categoryList = [
+//     {
+//         id: 1,
+//         title: "Tất cả",
+//         href: "#",
+//     },
+//     {
+//         id: 2,
+//         title: "Dưỡng tóc",
+//         href: "#",
+//     },
+//     {
+//         id: 3,
+//         title: "Dầu gội",
+//         href: "#",
+//     },
+//     {
+//         id: 4,
+//         title: "Dưỡng móng",
+//         href: "#",
+//     },
+//     {
+//         id: 5,
+//         title: "dụng cụ làm nails",
+//         href: "#",
+//     },
+//     {
+//         id: 6,
+//         title: "Sơn móng",
+//         href: "#",
+//     },
+// ];
 
 function Product() {
     const [productList, setProductList] = useState([]);

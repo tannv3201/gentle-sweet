@@ -8,6 +8,8 @@ export default function GAutocomplete({
     label,
     id,
     data,
+    onChange,
+    value,
     ...props
 }) {
     return (
@@ -20,6 +22,8 @@ export default function GAutocomplete({
             renderInput={(params) => (
                 <GTextField
                     {...params}
+                    onChange={onChange}
+                    value={value}
                     fullWidth={fullWidth}
                     variant={variant}
                     label={label}

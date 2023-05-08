@@ -124,8 +124,6 @@ const GTextField = ({
     variant = "filled",
     ...props
 }) => {
-    const theme = props.theme;
-
     const InputProps = iconButtonStart
         ? {
               startAdornment: (

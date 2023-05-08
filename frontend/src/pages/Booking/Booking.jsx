@@ -2,7 +2,7 @@ import React from "react";
 import classNames from "classnames/bind";
 import styles from "./Booking.module.scss";
 import { Grid } from "@mui/material";
-import RelatedInformation from "./RelatedInformation/RelatedInformation";
+// import RelatedInformation from "./RelatedInformation/RelatedInformation";
 import images from "../../assets/images";
 import StepperBooking from "./StepperBooking/StepperBooking";
 import { useMediaQuery } from "@mui/material";
