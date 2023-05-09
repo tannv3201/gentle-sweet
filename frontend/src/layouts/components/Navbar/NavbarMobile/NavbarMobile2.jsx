@@ -137,7 +137,8 @@ function NavbarMobile() {
                     <IconButton
                         className={cx("navbar-mobile-button")}
                         onClick={toggleDrawer}
-                        size="large">
+                        size="large"
+                    >
                         <ReorderRounded fontSize="large" />
                     </IconButton>
                     <div className={cx("navbar-mobile-content")}>
@@ -156,13 +157,17 @@ function NavbarMobile() {
                             <a href="/" className={cx("navbar-logo")}>
                                 <img src={images.logo} alt="" />
                             </a>
-                            <IconButton className={cx("navbar-button")} onClick={toggleDrawer} size="large">
+                            <IconButton
+                                className={cx("navbar-button")}
+                                onClick={toggleDrawer}
+                                size="large"
+                            >
                                 <CloseRounded fontSize="large" />
                             </IconButton>
                         </div>
                         <div className={cx("navbar-body")}>
                             <div className={cx("navbar-search")}>
-                                <MyTextField roundedBorder />
+                                <MyTextField />
                                 <IconButton size="large">
                                     <SearchRounded
                                         className={cx("search-icon")}
@@ -188,7 +193,8 @@ function NavbarMobile() {
                                                     onClick={() =>
                                                         handleMenuClick(index)
                                                     }
-                                                    size="large">
+                                                    size="large"
+                                                >
                                                     <ExpandMore
                                                         className={
                                                             menu.isOpen

@@ -5,11 +5,10 @@ import { useSelector } from "react-redux";
 import { getAllUser } from "../../../redux/apiRequest";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import axios from "axios";
-import jwtDecode from "jwt-decode";
+
 import { loginSuccess } from "../../../redux/authSlice";
 import { createAxios } from "../../../createInstance";
-import { useState } from "react";
+import { useMemo } from "react";
 
 export default function AdminUserList() {
     const user = useSelector((state) => state.auth.login?.currentUser);
@@ -19,7 +18,7 @@ export default function AdminUserList() {
         (state) => state.adminUser.adminUser?.allAdminUser
     );
 
-    const [cloneData, setCloneData] = useState([]);
+    let cloneData = structuredClone(adminUserList);
 
     let axiosJWT = createAxios(user, dispatch, loginSuccess);
 
@@ -30,7 +29,6 @@ export default function AdminUserList() {
         if (user?.accessToken) {
             getAllUser(user?.accessToken, dispatch, axiosJWT);
         }
-        setCloneData(structuredClone(adminUserList));
     }, []);
 
     return (

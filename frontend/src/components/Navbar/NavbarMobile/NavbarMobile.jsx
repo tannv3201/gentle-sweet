@@ -90,7 +90,7 @@ function NavbarMobile() {
                         </div>
                         <div className={cx("navbar-body")}>
                             <div className={cx("navbar-search")}>
-                                <GTextFieldNormal roundedBorder />
+                                <GTextFieldNormal />
                                 <IconButton size="large">
                                     <SearchRounded
                                         className={cx("search-icon")}

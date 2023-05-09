@@ -3,10 +3,9 @@ import jwt_decode from "jwt-decode";
 
 const refreshToken = async () => {
     try {
-        const res = await axios.post("/v1/auth/refresh/", {
+        const res = await axios.post("/v1/auth/refresh", {
             withCredentials: true, // Neu co cookie thi gan vao
         });
-        console.log(res);
         return res.data;
     } catch (error) {
         console.log(error);
