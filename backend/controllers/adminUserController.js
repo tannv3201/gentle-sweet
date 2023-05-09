@@ -34,7 +34,6 @@ const adminUserController = {
     getlAllAdminUser: async (req, res) => {
         try {
             const adminUsers = await adminUserModel.getAllAdminUser();
-            console.log("*", req.cookies.refreshToken);
             return res.status(200).json(adminUsers);
         } catch (error) {
             res.status(500).json(error);

@@ -44,7 +44,7 @@ export const loginUser = async (user, dispatch, navigate) => {
 export const getAllUser = async (accessToken, dispatch, axiosJWT) => {
     dispatch(getAdminUserStart());
     try {
-        const res = await axiosJWT.get("/v1/adminUser/", {
+        const res = await axiosJWT.get("/v1/adminUser", {
             headers: {
                 token: `Bearer ${accessToken}`,
             },
@@ -63,7 +63,7 @@ export const createAdminUser = async (
 ) => {
     dispatch(createAdminUserStart());
     try {
-        const res = await axiosJWT.post("/v1/adminUser/", adminUserData, {
+        const res = await axiosJWT.post("/v1/adminUser", adminUserData, {
             headers: {
                 token: `Bearer ${accessToken}`,
             },

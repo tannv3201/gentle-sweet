@@ -116,6 +116,7 @@ const authController = {
             if (user && validPassword) {
                 const accessToken = authController.generateAccessToken(user);
                 const refreshToken = authController.generateRefreshToken(user);
+
                 refreshTokens.push(refreshToken);
 
                 res.cookie("refreshToken", refreshToken, {
@@ -181,7 +182,7 @@ const authController = {
         refreshTokens = refreshTokens.filter(
             (token) => token !== req.cookies.refreshToken
         );
-        return res.status(200).json("Logged out!");
+        return res.json({ status: 200, msg: "Đăng xuất thành công" });
     },
 };
 
