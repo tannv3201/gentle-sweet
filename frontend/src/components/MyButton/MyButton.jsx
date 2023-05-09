@@ -11,6 +11,8 @@ function GButton({
     style,
     onClick,
     color,
+    disabled,
+    type,
     ...props
 }) {
     return (
@@ -25,6 +27,8 @@ function GButton({
                 style={style}
                 onClick={onClick}
                 color={color}
+                disabled={disabled}
+                type={type}
             >
                 {children}
             </Button>

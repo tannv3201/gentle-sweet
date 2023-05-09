@@ -23,36 +23,9 @@ function AdminUser() {
         setIsOpenModelCreateUpdate(false);
     };
 
-    const user = useSelector((state) => state.auth.login?.currentUser);
-    const [cloneData, setCloneData] = useState([]);
-    const dispatch = useDispatch();
-    const navigate = useNavigate();
-
-    let axiosJWT = createAxios(user, dispatch, loginSuccess);
-
-    const adminUserList = useSelector(
-        (state) => state.adminUser.adminUser?.allAdminUser
-    );
-
-    useEffect(() => {
-        if (!user) {
-            navigate("/dang-nhap");
-        }
-        if (user?.accessToken) {
-            getAllUser(user?.accessToken, dispatch, axiosJWT);
-        }
-    }, []);
-
-    useEffect(() => {
-        setCloneData(structuredClone(adminUserList));
-    }, [adminUserList]);
-
     return (
         <>
-            <GButton onClick={handleOpenModal}>Thêm mới nhân viên</GButton>
-            <br />
-            <br />
-            <AdminUserList data={cloneData || []} />
+            <AdminUserList />
             <CreateUpdateAdminUser
                 isOpen={isOpenModelCreateUpdate}
                 handleOpen={handleOpenModal}

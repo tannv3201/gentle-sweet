@@ -1,11 +1,11 @@
 import React, { useEffect } from "react";
 import axios from "axios";
-import { Formik, FastField } from "formik";
-import GTextFieldNormal from "../../../components/GTextField/GTextFieldNormal";
+import { Formik, FastField, useFormik } from "formik";
+// import TextField from "../../../components/GTextField/TextField";
 import GButton from "../../../components/MyButton/MyButton";
-import { Grid } from "@mui/material";
+import { Grid, TextField } from "@mui/material";
 import { useState } from "react";
-import GentleTextField from "../../../common/Form/GentleTextField";
+// import TextField from "../../../common/Form/TextField";
 import * as Yup from "yup";
 import GModal from "../../../common/GModal/GModal";
 import { createAdminUser } from "../../../redux/apiRequest";
@@ -13,24 +13,22 @@ import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { loginSuccess } from "../../../redux/authSlice";
 import { createAxios } from "../../../createInstance";
+import GentleTextField from "../../../common/Form/GentleTextField";
+import GTextFieldNormal from "../../../components/GTextField/GTextFieldNormal";
 
 const validationSchema = Yup.object({
-    title: Yup.string().required("Vui lòng không để trống"),
-    category: Yup.string().required("Vui lòng không để trống"),
-    price: Yup.number()
-        .required("Vui lòng không để trống")
-        .positive("Vui lòng nhập số dương")
-        .typeError("Vui lòng nhập số")
-        .integer("Vui lòng nhập số nguyên"),
-    on_sale: Yup.number()
-        .required("Vui lòng không để trống")
-        .positive("Vui lòng nhập số dương")
-        .typeError("Vui lòng nhập số")
-        .integer("Vui lòng nhập số nguyên"),
-    description: Yup.string().required("Vui lòng không để trống"),
-    image: Yup.string().required("Vui lòng không để trống"),
+    role_id: Yup.string().required("Vui lòng không để trống"),
+    username: Yup.string().required("Vui lòng không để trống"),
+    password: Yup.string().required("Vui lòng không để trống"),
+    first_name: Yup.string().required("Vui lòng không để trống"),
+    last_name: Yup.string().required("Vui lòng không để trống"),
 });
-function CreateUpdateAdminUser({ handleClose, handleOpen, isOpen }) {
+function CreateUpdateAdminUser({
+    handleClose,
+    handleOpen,
+    isOpen,
+    selectedUser,
+}) {
     const user = useSelector((state) => state.auth.login?.currentUser);
     const dispatch = useDispatch();
     const navigate = useNavigate();
@@ -52,118 +50,139 @@ function CreateUpdateAdminUser({ handleClose, handleOpen, isOpen }) {
         );
     };
 
+    useEffect(() => {
+        if (selectedUser) setAdminUser(selectedUser);
+    }, [selectedUser]);
+    console.log(adminUser);
+
+    const formik = useFormik({
+        enableReinitialize: true,
+        initialValues: adminUser,
+        validationSchema: validationSchema,
+        onSubmit: (data) => {
+            console.log(data);
+            handleSubmit(data);
+        },
+    });
+
     return (
         <>
             <GModal
-                handleClose={handleClose}
+                handleClose={() => {
+                    formik.resetForm();
+                    handleClose();
+                }}
                 handleOpen={handleOpen}
                 isOpen={isOpen}
                 title="Thêm người dùng mới"
             >
-                <Formik
-                    initialValues={adminUser}
-                    onSubmit={(values, actions) => {
-                        handleSubmit(values);
-                        actions.setSubmitting(false);
-                    }}
-                    // validationSchema={validationSchema}
-                >
-                    {(props) => (
-                        <form onSubmit={props.handleSubmit}>
-                            <Grid container spacing={2}>
-                                <Grid item xs={6}>
-                                    <GentleTextField
-                                        onChange={props.handleChange}
-                                        label="Quyền hạn"
-                                        fullWidth
-                                        name="role_id"
-                                        value={props.values.role_id}
-                                        error={
-                                            props.touched.role_id &&
-                                            Boolean(props.errors.role_id)
-                                        }
-                                        helperText={
-                                            props.touched.role_id &&
-                                            props.errors.role_id
-                                        }
-                                    />
-                                </Grid>
-                                <Grid item xs={6}>
-                                    <GentleTextField
-                                        onChange={props.handleChange}
-                                        label="Tên đăng nhập"
-                                        fullWidth
-                                        name="username"
-                                        value={props.values.username}
-                                        error={
-                                            props.touched.username &&
-                                            Boolean(props.errors.username)
-                                        }
-                                        helperText={
-                                            props.touched.username &&
-                                            props.errors.username
-                                        }
-                                    />
-                                </Grid>
-                                <Grid item xs={6}>
-                                    <GentleTextField
-                                        onChange={props.handleChange}
-                                        label="Mật khẩu"
-                                        fullWidth
-                                        name="password"
-                                        value={props.values.password}
-                                        error={
-                                            props.touched.password &&
-                                            Boolean(props.errors.password)
-                                        }
-                                        helperText={
-                                            props.touched.password &&
-                                            props.errors.password
-                                        }
-                                    />
-                                </Grid>
-                                <Grid item xs={6}>
-                                    <GentleTextField
-                                        onChange={props.handleChange}
-                                        label="Họ"
-                                        fullWidth
-                                        name="last_name"
-                                        value={props.values.last_name}
-                                        error={
-                                            props.touched.last_name &&
-                                            Boolean(props.errors.last_name)
-                                        }
-                                        helperText={
-                                            props.touched.last_name &&
-                                            props.errors.last_name
-                                        }
-                                    />
-                                </Grid>
-                                <Grid item xs={6}>
-                                    <GentleTextField
-                                        onChange={props.handleChange}
-                                        label="Tên"
-                                        fullWidth
-                                        name="first_name"
-                                        value={props.values.first_name}
-                                        error={
-                                            props.touched.first_name &&
-                                            Boolean(props.errors.first_name)
-                                        }
-                                        helperText={
-                                            props.touched.first_name &&
-                                            props.errors.first_name
-                                        }
-                                    />
-                                </Grid>
-
-                                <Grid item xs={12}>
-                                    <GButton type="submit">Thêm mới</GButton>
-                                </Grid>
-                            </Grid>
-                        </form>
-                    )}
-                </Formik>
+                <form onSubmit={formik.handleSubmit}>
+                    <Grid container spacing={2}>
+                        <Grid item xs={6}>
+                            <GTextFieldNormal
+                                onChange={formik.handleChange}
+                                label="Quyền hạn"
+                                fullWidth
+                                name="role_id"
+                                id="role_id"
+                                value={formik.values?.role_id || ""}
+                                error={
+                                    formik.touched?.role_id &&
+                                    Boolean(formik.errors?.role_id)
+                                }
+                                helperText={
+                                    formik.touched.role_id &&
+                                    formik.errors?.role_id
+                                }
+                            />
+                        </Grid>
+                        <Grid item xs={6}>
+                            <GTextFieldNormal
+                                onChange={formik.handleChange}
+                                label="Tên đăng nhập"
+                                fullWidth
+                                name="username"
+                                id="username"
+                                value={formik.values?.username || ""}
+                                error={
+                                    formik.touched?.username &&
+                                    Boolean(formik.errors?.username)
+                                }
+                                helperText={
+                                    formik.touched?.username &&
+                                    formik.errors?.username
+                                }
+                            />
+                        </Grid>
+                        <Grid item xs={6}>
+                            <GTextFieldNormal
+                                onChange={formik.handleChange}
+                                label="Mật khẩu"
+                                fullWidth
+                                name="password"
+                                id="username"
+                                value={formik.values?.password || ""}
+                                error={
+                                    formik.touched?.password &&
+                                    Boolean(formik.errors?.password)
+                                }
+                                helperText={
+                                    formik.touched?.password &&
+                                    formik.errors?.password
+                                }
+                            />
+                        </Grid>
+                        <Grid item xs={6}>
+                            <GTextFieldNormal
+                                onChange={formik.handleChange}
+                                label="Họ"
+                                fullWidth
+                                name="last_name"
+                                id="last_name"
+                                value={formik.values?.last_name || ""}
+                                error={
+                                    formik.touched?.last_name &&
+                                    Boolean(formik.errors?.last_name)
+                                }
+                                helperText={
+                                    formik.touched?.last_name &&
+                                    formik.errors?.last_name
+                                }
+                            />
+                        </Grid>
+                        <Grid item xs={6}>
+                            <GTextFieldNormal
+                                onChange={formik.handleChange}
+                                label="Tên"
+                                fullWidth
+                                name="first_name"
+                                id="first_name"
+                                value={formik.values?.first_name || ""}
+                                error={
+                                    formik.touched?.first_name &&
+                                    Boolean(formik.errors?.first_name)
+                                }
+                                helperText={
+                                    formik.touched?.first_name &&
+                                    formik.errors?.first_name
+                                }
+                            />
+                        </Grid>
+                        <Grid item xs={12}>
+                            <GButton type="submit">Thêm mới</GButton>
+                            <GButton
+                                style={{ marginLeft: "12px" }}
+                                color="text"
+                                onClick={() => {
+                                    formik.resetForm();
+                                    handleClose();
+                                }}
+                            >
+                                Hủy
+                            </GButton>
+                        </Grid>
+                    </Grid>
+                </form>
             </GModal>
         </>
     );
