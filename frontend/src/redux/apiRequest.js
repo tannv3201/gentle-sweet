@@ -50,6 +50,7 @@ export const getAllUser = async (accessToken, dispatch, axiosJWT) => {
             },
         });
         dispatch(getAdminUserSuccess(res?.data));
+        return res?.data?.length;
     } catch (error) {
         dispatch(getAdminUserFailed());
     }
@@ -71,6 +72,7 @@ export const createAdminUser = async (
         dispatch(createAdminUserSuccess(res?.data));
         if (res?.data?.status === 201) {
             toast.success(res?.data?.msg);
+            getAllUser(accessToken, dispatch, axiosJWT);
         }
     } catch (error) {
         dispatch(createAdminUserFailed(error.response?.data));

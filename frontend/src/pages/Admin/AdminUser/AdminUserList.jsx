@@ -5,32 +5,12 @@ import { useSelector } from "react-redux";
 import { getAllUser } from "../../../redux/apiRequest";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
-
+import _ from "underscore";
 import { loginSuccess } from "../../../redux/authSlice";
 import { createAxios } from "../../../createInstance";
-import { useMemo } from "react";
+import { useState } from "react";
 
-export default function AdminUserList() {
-    const user = useSelector((state) => state.auth.login?.currentUser);
-    const dispatch = useDispatch();
-    const navigate = useNavigate();
-    const adminUserList = useSelector(
-        (state) => state.adminUser.adminUser?.allAdminUser
-    );
-
-    let cloneData = structuredClone(adminUserList);
-
-    let axiosJWT = createAxios(user, dispatch, loginSuccess);
-
-    useEffect(() => {
-        if (!user) {
-            navigate("/dang-nhap");
-        }
-        if (user?.accessToken) {
-            getAllUser(user?.accessToken, dispatch, axiosJWT);
-        }
-    }, []);
-
+export default function AdminUserList({ data }) {
     return (
         <MaterialTable
             columns={[
@@ -38,7 +18,7 @@ export default function AdminUserList() {
                 { title: "Tên", field: "first_name" },
                 { title: "Tên đăng nhập", field: "username" },
             ]}
-            data={cloneData || []}
+            data={data}
             options={{
                 paging: false,
                 search: false,

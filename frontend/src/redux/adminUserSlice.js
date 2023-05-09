@@ -4,7 +4,7 @@ const adminUserSlice = createSlice({
     name: "adminUser",
     initialState: {
         adminUser: {
-            allAdminUser: null,
+            allAdminUser: [],
             isFetching: false,
             error: false,
         },
