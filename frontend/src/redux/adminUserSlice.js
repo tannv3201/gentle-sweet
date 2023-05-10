@@ -53,7 +53,7 @@ const adminUserSlice = createSlice({
             state.msg = action.payload;
         },
 
-        // Delete ADMIN USER
+        // Update ADMIN USER
         updateAdminUserStart: (state) => {
             state.adminUser.isFetching = true;
         },
@@ -62,6 +62,20 @@ const adminUserSlice = createSlice({
             state.msg = action.payload;
         },
         updateAdminUserFailed: (state, action) => {
+            state.adminUser.isFetching = false;
+            state.adminUser.error = true;
+            state.msg = action.payload;
+        },
+
+        // Change Password by ADMIN USER
+        passwordChangeStart: (state) => {
+            state.adminUser.isFetching = true;
+        },
+        passwordChangeSuccess: (state, action) => {
+            state.adminUser.isFetching = false;
+            state.msg = action.payload;
+        },
+        passwordChangeFailed: (state, action) => {
             state.adminUser.isFetching = false;
             state.adminUser.error = true;
             state.msg = action.payload;
@@ -82,6 +96,9 @@ export const {
     updateAdminUserStart,
     updateAdminUserSuccess,
     updateAdminUserFailed,
+    passwordChangeStart,
+    passwordChangeSuccess,
+    passwordChangeFailed,
 } = adminUserSlice.actions;
 
 export default adminUserSlice.reducer;

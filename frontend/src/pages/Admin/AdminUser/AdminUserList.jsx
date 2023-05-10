@@ -15,6 +15,8 @@ import { IconButton } from "@mui/material";
 import GButton from "../../../components/MyButton/MyButton";
 import CreateUpdateAdminUser from "./CreateUpdateAdminUser";
 import ConfirmPopup from "./ConfirmPopup";
+import PasswordMenu from "./PasswordMenu/PasswordMenu";
+import { LightTooltip } from "../../../components/GTooltip/GTooltip";
 
 export default function AdminUserList({ data }) {
     const user = useSelector((state) => state.auth.login?.currentUser);
@@ -93,22 +95,37 @@ export default function AdminUserList({ data }) {
                         field: "actions",
                         sorting: false,
                         render: (rowData) => (
-                            <>
-                                <IconButton
-                                    onClick={() =>
-                                        handleOpenCreateUpdateModal(rowData)
-                                    }
+                            <div
+                                style={{
+                                    display: "flex",
+                                    alignItems: "center",
+                                }}
+                            >
+                                <LightTooltip
+                                    placement="bottom"
+                                    title="Chỉnh sửa"
                                 >
-                                    <EditRoundedIcon color="primary" />
-                                </IconButton>
-                                <IconButton
-                                    onClick={() => {
-                                        handleOpenDeleteConfirmModal(rowData);
-                                    }}
-                                >
-                                    <DeleteRoundedIcon color="error" />
-                                </IconButton>
-                            </>
+                                    <IconButton
+                                        onClick={() =>
+                                            handleOpenCreateUpdateModal(rowData)
+                                        }
+                                    >
+                                        <EditRoundedIcon color="primary" />
+                                    </IconButton>
+                                </LightTooltip>
+                                <LightTooltip placement="bottom" title="Xóa">
+                                    <IconButton
+                                        onClick={() => {
+                                            handleOpenDeleteConfirmModal(
+                                                rowData
+                                            );
+                                        }}
+                                    >
+                                        <DeleteRoundedIcon color="error" />
+                                    </IconButton>
+                                </LightTooltip>
+                                <PasswordMenu selectedUser={rowData} />
+                            </div>
                         ),
                     },
                 ]}

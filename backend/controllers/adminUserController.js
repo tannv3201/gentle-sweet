@@ -87,6 +87,52 @@ const adminUserController = {
         }
     },
 
+    // Password change by admin
+    passwordChangeByAdmin: async (req, res, next) => {
+        try {
+            const accountId = req.params.id;
+            const user = await adminUserModel.getAdminUserById(accountId);
+            const validPassword = await bcrypt.compare(
+                req.body.currentPassword,
+                user.password
+            );
+
+            if (!validPassword) {
+                return res.json({
+                    msg: "Mật khẩu hiện tại không chính xác",
+                    status: 401,
+                });
+            }
+
+            if (validPassword) {
+                const salt = await bcrypt.genSalt(10);
+                const newPassword = await bcrypt.hash(
+                    req.body.newPassword,
+                    salt
+                );
+
+                const affectedRows = await adminUserModel.updateAdminUserById(
+                    accountId,
+                    {
+                        password: newPassword,
+                    }
+                );
+                if (affectedRows === 0) {
+                    return res
+                        .status(404)
+                        .json({ message: "Tài khoản không tồn tại" });
+                } else {
+                    return res.json({
+                        status: 200,
+                        msg: "Đổi mật khẩu thành công",
+                    });
+                }
+            }
+        } catch (error) {
+            res.status(500).json({ message: error.message });
+        }
+    },
+
     // DELETE ACCOUNT BY ID
     deleteAccountById: async (req, res) => {
         try {

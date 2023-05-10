@@ -34,4 +34,10 @@ router.delete(
     adminUserController.deleteAccountById
 );
 
+router.put(
+    "/passwordChange/:id",
+    middlewareController.verifyTokenAndSuperAdminAuth,
+    adminUserController.passwordChangeByAdmin
+);
+
 module.exports = router;

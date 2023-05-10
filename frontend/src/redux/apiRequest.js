@@ -22,6 +22,9 @@ import {
     updateAdminUserStart,
     updateAdminUserSuccess,
     updateAdminUserFailed,
+    passwordChangeStart,
+    passwordChangeSuccess,
+    passwordChangeFailed,
 } from "./adminUserSlice";
 
 export const loginUser = async (user, dispatch, navigate) => {
@@ -106,6 +109,38 @@ export const updateAdminUser = async (
         }
     } catch (error) {
         dispatch(updateAdminUserFailed(error.response?.data));
+    }
+};
+
+export const passwordChange = async (
+    accessToken,
+    dispatch,
+    id,
+    passwordData,
+    axiosJWT
+) => {
+    dispatch(passwordChangeStart());
+    try {
+        const res = await axiosJWT.put(
+            "/v1/adminUser/passwordChange/" + id,
+            passwordData,
+            {
+                headers: {
+                    token: `Bearer ${accessToken}`,
+                },
+            }
+        );
+        dispatch(passwordChangeSuccess(res?.data));
+        if (res?.data?.status === 200) {
+            toast.success(res?.data?.msg);
+            getAllUser(accessToken, dispatch, axiosJWT);
+        }
+        if (res?.data?.status === 401) {
+            toast.error(res?.data?.msg);
+        }
+        return res?.data;
+    } catch (error) {
+        dispatch(passwordChangeFailed(error.response?.data));
     }
 };
 
