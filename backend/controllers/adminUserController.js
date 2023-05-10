@@ -33,7 +33,7 @@ const adminUserController = {
     // GET ALL ACCOUNT
     getlAllAdminUser: async (req, res) => {
         try {
-            const adminUsers = await adminUserModel.getAllAdminUser();
+            const adminUsers = await adminUserModel.getAllAdminUser(0);
             return res.status(200).json(adminUsers);
         } catch (error) {
             res.status(500).json(error);
@@ -68,7 +68,7 @@ const adminUserController = {
                 updateAdminUserData.password = hashed;
             }
 
-            const affectedRows = await adminUserModel.updateAccountById(
+            const affectedRows = await adminUserModel.updateAdminUserById(
                 adminUserId,
                 updateAdminUserData
             );
@@ -77,7 +77,10 @@ const adminUserController = {
                     .status(404)
                     .json({ message: "Tài khoản không tồn tại" });
             } else {
-                return res.status(200).json({ message: "Cập nhật thành công" });
+                return res.json({
+                    status: 200,
+                    msg: "Cập nhật thành công",
+                });
             }
         } catch (error) {
             console.log(error);
@@ -99,7 +102,28 @@ const adminUserController = {
                     .status(404)
                     .json({ message: "Tài khoản không tồn tại" });
             } else {
-                return res.status(200).json({ message: "Cập nhật thành công" });
+                return res.json({ status: 200, msg: "Xóa thành công" });
+            }
+        } catch (error) {
+            res.status(500).json({ message: error.message });
+        }
+    },
+
+    deleteAdminUserById: async (req, res) => {
+        try {
+            const accountId = req.params.id;
+            const affectedRows = await adminUserModel.deleteAdminUserById(
+                accountId,
+                {
+                    status: 0,
+                }
+            );
+            if (affectedRows === 0) {
+                return res
+                    .status(404)
+                    .json({ message: "Tài khoản không tồn tại" });
+            } else {
+                return res.json({ status: 200, msg: "Xóa thành công" });
             }
         } catch (error) {
             res.status(500).json({ message: error.message });

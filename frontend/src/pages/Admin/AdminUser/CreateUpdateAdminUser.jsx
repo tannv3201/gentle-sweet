@@ -8,7 +8,7 @@ import { useState } from "react";
 // import TextField from "../../../common/Form/TextField";
 import * as Yup from "yup";
 import GModal from "../../../common/GModal/GModal";
-import { createAdminUser } from "../../../redux/apiRequest";
+import { createAdminUser, updateAdminUser } from "../../../redux/apiRequest";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { loginSuccess } from "../../../redux/authSlice";
@@ -33,6 +33,7 @@ function CreateUpdateAdminUser({
     const dispatch = useDispatch();
     const navigate = useNavigate();
     const [adminUser, setAdminUser] = useState({
+        id: "",
         role_id: "",
         username: "",
         password: "",
@@ -42,7 +43,7 @@ function CreateUpdateAdminUser({
 
     let axiosJWT = createAxios(user, dispatch, loginSuccess);
 
-    const handleSubmit = (adminUser) => {
+    const handleCreateAdminUser = (adminUser) => {
         createAdminUser(user?.accessToken, dispatch, adminUser, axiosJWT).then(
             () => {
                 handleClose();
@@ -50,18 +51,32 @@ function CreateUpdateAdminUser({
         );
     };
 
+    const handleUpdateAdminUser = (adminUser) => {
+        updateAdminUser(
+            user?.accessToken,
+            dispatch,
+            selectedUser?.id,
+            adminUser,
+            axiosJWT
+        ).then(() => {
+            handleClose();
+        });
+    };
+
     useEffect(() => {
         if (selectedUser) setAdminUser(selectedUser);
     }, [selectedUser]);
-    console.log(adminUser);
 
     const formik = useFormik({
         enableReinitialize: true,
         initialValues: adminUser,
         validationSchema: validationSchema,
         onSubmit: (data) => {
-            console.log(data);
-            handleSubmit(data);
+            if (data?.id) {
+                handleUpdateAdminUser(data);
+            } else {
+                handleCreateAdminUser(data);
+            }
         },
     });
 

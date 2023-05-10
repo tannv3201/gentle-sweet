@@ -1,8 +1,11 @@
 const pool = require("../config/database");
 const { v4: uuidv4 } = require("uuid");
 
-const getAllAdminUser = async () => {
-    const [rows, fields] = await pool.query("SELECT * FROM tbl_admin_user");
+const getAllAdminUser = async (status) => {
+    const [rows, fields] = await pool.query(
+        "SELECT * FROM tbl_admin_user WHERE status > (?)",
+        [status]
+    );
     return rows;
 };
 
@@ -42,10 +45,19 @@ const updateAdminUserById = async (adminUserId, adminUserData) => {
     return result.affectedRows;
 };
 
+const deleteAdminUserById = async (id) => {
+    const [result, fields] = await pool.query(
+        "DELETE FROM tbl_admin_user WHERE id = ?",
+        [id]
+    );
+    return result.affectedRows;
+};
+
 module.exports = {
     getAllAdminUser,
     getAdminUserById,
     createAdminUser,
     updateAdminUserById,
     findAdminUserByUsername,
+    deleteAdminUserById,
 };

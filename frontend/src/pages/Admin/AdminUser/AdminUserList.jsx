@@ -14,6 +14,7 @@ import GTable from "../../../common/GTable/GTable";
 import { IconButton } from "@mui/material";
 import GButton from "../../../components/MyButton/MyButton";
 import CreateUpdateAdminUser from "./CreateUpdateAdminUser";
+import ConfirmPopup from "./ConfirmPopup";
 
 export default function AdminUserList({ data }) {
     const user = useSelector((state) => state.auth.login?.currentUser);
@@ -41,21 +42,44 @@ export default function AdminUserList({ data }) {
         setCloneData(structuredClone(adminUserList));
     }, [adminUserList]);
 
-    const [isOpenModelCreateUpdate, setIsOpenModelCreateUpdate] =
+    // Create update modal
+    const [isOpenCreateUpdateModel, setIsOpenCreateUpdateModel] =
         useState(false);
 
-    const handleOpenModal = (rowData) => {
-        setSelectedUser(rowData);
-        setIsOpenModelCreateUpdate(true);
+    const handleOpenCreateUpdateModal = (rowData) => {
+        setSelectedUser({
+            id: rowData.id,
+            role_id: rowData.role_id,
+            username: rowData.username,
+            last_name: rowData.last_name,
+            first_name: rowData.first_name,
+            password: rowData.password,
+        });
+        setIsOpenCreateUpdateModel(true);
     };
 
-    const handleCloseModal = () => {
-        setIsOpenModelCreateUpdate(false);
+    const handleCloseCreateUpdateModal = () => {
+        setIsOpenCreateUpdateModel(false);
+    };
+
+    // Delete confirm modal
+    const [isOpenDeleteConfirmModel, setIsOpenDeleteConfirmModel] =
+        useState(false);
+
+    const handleOpenDeleteConfirmModal = (rowData) => {
+        setSelectedUser(rowData);
+        setIsOpenDeleteConfirmModel(true);
+    };
+
+    const handleCloseDeleteConfirmModal = () => {
+        setIsOpenDeleteConfirmModel(false);
     };
 
     return (
         <>
-            <GButton onClick={handleOpenModal}>Thêm người dùng</GButton>
+            <GButton onClick={handleOpenCreateUpdateModal}>
+                Thêm người dùng
+            </GButton>
             <br />
             <br />
             <GTable
@@ -71,13 +95,15 @@ export default function AdminUserList({ data }) {
                         render: (rowData) => (
                             <>
                                 <IconButton
-                                    onClick={() => handleOpenModal(rowData)}
+                                    onClick={() =>
+                                        handleOpenCreateUpdateModal(rowData)
+                                    }
                                 >
                                     <EditRoundedIcon color="primary" />
                                 </IconButton>
                                 <IconButton
                                     onClick={() => {
-                                        console.log(rowData);
+                                        handleOpenDeleteConfirmModal(rowData);
                                     }}
                                 >
                                     <DeleteRoundedIcon color="error" />
@@ -88,26 +114,19 @@ export default function AdminUserList({ data }) {
                 ]}
                 data={cloneData || []}
                 exportFileName={"DanhSachNguoiDung"}
-                actions={[
-                    {
-                        icon: () => <EditRoundedIcon />,
-                        tooltip: "Sửa",
-                        onClick: (event, rowData) =>
-                            alert("You saved " + rowData.id),
-                    },
-                    {
-                        icon: () => <DeleteRoundedIcon />,
-                        tooltip: "Xóa",
-                        onClick: (event, rowData) =>
-                            alert("You want to delete " + rowData.id),
-                    },
-                ]}
             />
 
             <CreateUpdateAdminUser
-                isOpen={isOpenModelCreateUpdate}
-                handleOpen={handleOpenModal}
-                handleClose={handleCloseModal}
+                isOpen={isOpenCreateUpdateModel}
+                handleOpen={handleOpenCreateUpdateModal}
+                handleClose={handleCloseCreateUpdateModal}
+                selectedUser={selectedUser}
+            />
+
+            <ConfirmPopup
+                isOpen={isOpenDeleteConfirmModel}
+                handleOpen={handleCloseDeleteConfirmModal}
+                handleClose={handleCloseDeleteConfirmModal}
                 selectedUser={selectedUser}
             />
         </>

@@ -20,11 +20,12 @@ const adminUserSlice = createSlice({
             state.adminUser.allAdminUser = action.payload;
         },
 
-        // Create ADMIN USER
         getAdminUserFailed: (state) => {
             state.adminUser.isFetching = false;
             state.adminUser.error = true;
         },
+
+        // Create ADMIN USER
         createAdminUserStart: (state) => {
             state.adminUser.isFetching = true;
         },
@@ -33,6 +34,34 @@ const adminUserSlice = createSlice({
             state.msg = action.payload;
         },
         createAdminUserFailed: (state, action) => {
+            state.adminUser.isFetching = false;
+            state.adminUser.error = true;
+            state.msg = action.payload;
+        },
+
+        // Delete ADMIN USER
+        deleteAdminUserStart: (state) => {
+            state.adminUser.isFetching = true;
+        },
+        deleteAdminUserSuccess: (state, action) => {
+            state.adminUser.isFetching = false;
+            state.msg = action.payload;
+        },
+        deleteAdminUserFailed: (state, action) => {
+            state.adminUser.isFetching = false;
+            state.adminUser.error = true;
+            state.msg = action.payload;
+        },
+
+        // Delete ADMIN USER
+        updateAdminUserStart: (state) => {
+            state.adminUser.isFetching = true;
+        },
+        updateAdminUserSuccess: (state, action) => {
+            state.adminUser.isFetching = false;
+            state.msg = action.payload;
+        },
+        updateAdminUserFailed: (state, action) => {
             state.adminUser.isFetching = false;
             state.adminUser.error = true;
             state.msg = action.payload;
@@ -47,6 +76,12 @@ export const {
     createAdminUserStart,
     createAdminUserSuccess,
     createAdminUserFailed,
+    deleteAdminUserStart,
+    deleteAdminUserSuccess,
+    deleteAdminUserFailed,
+    updateAdminUserStart,
+    updateAdminUserSuccess,
+    updateAdminUserFailed,
 } = adminUserSlice.actions;
 
 export default adminUserSlice.reducer;

@@ -16,6 +16,12 @@ import {
     createAdminUserStart,
     createAdminUserFailed,
     createAdminUserSuccess,
+    deleteAdminUserStart,
+    deleteAdminUserSuccess,
+    deleteAdminUserFailed,
+    updateAdminUserStart,
+    updateAdminUserSuccess,
+    updateAdminUserFailed,
 } from "./adminUserSlice";
 
 export const loginUser = async (user, dispatch, navigate) => {
@@ -76,6 +82,48 @@ export const createAdminUser = async (
         }
     } catch (error) {
         dispatch(createAdminUserFailed(error.response?.data));
+    }
+};
+
+export const updateAdminUser = async (
+    accessToken,
+    dispatch,
+    id,
+    adminUserData,
+    axiosJWT
+) => {
+    dispatch(updateAdminUserStart());
+    try {
+        const res = await axiosJWT.put("/v1/adminUser/" + id, adminUserData, {
+            headers: {
+                token: `Bearer ${accessToken}`,
+            },
+        });
+        dispatch(updateAdminUserSuccess(res?.data));
+        if (res?.data?.status === 200) {
+            toast.success(res?.data?.msg);
+            getAllUser(accessToken, dispatch, axiosJWT);
+        }
+    } catch (error) {
+        dispatch(updateAdminUserFailed(error.response?.data));
+    }
+};
+
+export const deleteAdminUser = async (dispatch, id, accessToken, axiosJWT) => {
+    dispatch(deleteAdminUserStart());
+    try {
+        const res = await axiosJWT.delete("/v1/adminUser/" + id, {
+            headers: {
+                token: `Bearer ${accessToken}`,
+            },
+        });
+        dispatch(deleteAdminUserSuccess(res?.data));
+        if (res?.data?.status === 200) {
+            toast.success(res?.data?.msg);
+            getAllUser(accessToken, dispatch, axiosJWT);
+        }
+    } catch (error) {
+        dispatch(deleteAdminUserFailed(error.response?.data));
     }
 };
 
