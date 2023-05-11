@@ -40,4 +40,10 @@ router.put(
     adminUserController.passwordChangeByAdmin
 );
 
+router.put(
+    "/resetPassword/:id",
+    middlewareController.verifyTokenAndSuperAdminAuth,
+    adminUserController.resetPassword
+);
+
 module.exports = router;

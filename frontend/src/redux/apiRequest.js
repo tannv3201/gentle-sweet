@@ -25,6 +25,9 @@ import {
     passwordChangeStart,
     passwordChangeSuccess,
     passwordChangeFailed,
+    resetPasswordStart,
+    resetPasswordSuccess,
+    resetPasswordFailed,
 } from "./adminUserSlice";
 
 export const loginUser = async (user, dispatch, navigate) => {
@@ -141,6 +144,28 @@ export const passwordChange = async (
         return res?.data;
     } catch (error) {
         dispatch(passwordChangeFailed(error.response?.data));
+    }
+};
+
+export const resetPassword = async (dispatch, id, accessToken, axiosJWT) => {
+    dispatch(resetPasswordStart());
+    try {
+        const res = await axiosJWT.put(
+            "/v1/adminUser/resetPassword/" + id,
+            {},
+            {
+                headers: {
+                    token: `Bearer ${accessToken}`,
+                },
+            }
+        );
+        dispatch(resetPasswordSuccess(res?.data));
+        if (res?.data?.status === 200) {
+            toast.success(res?.data?.msg);
+            getAllUser(accessToken, dispatch, axiosJWT);
+        }
+    } catch (error) {
+        dispatch(resetPasswordFailed(error.response?.data));
     }
 };
 

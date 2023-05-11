@@ -17,6 +17,7 @@ const adminUserController = {
                 password: hashed,
                 first_name: req.body.first_name,
                 last_name: req.body.last_name,
+                email: req.body.email,
                 status: 1,
             });
             // res.status(201).json(newAdminUser);
@@ -60,17 +61,11 @@ const adminUserController = {
     updateAdminUserById: async (req, res) => {
         try {
             const adminUserId = req.params.id;
-            const updateAdminUserData = { ...req.body };
-
-            if (req.body.password) {
-                const salt = await bcrypt.genSalt(10);
-                const hashed = await bcrypt.hash(req.body.password, salt);
-                updateAdminUserData.password = hashed;
-            }
+            const { password, ...data } = req.body;
 
             const affectedRows = await adminUserModel.updateAdminUserById(
                 adminUserId,
-                updateAdminUserData
+                data
             );
             if (affectedRows === 0) {
                 return res
@@ -127,6 +122,35 @@ const adminUserController = {
                         msg: "Đổi mật khẩu thành công",
                     });
                 }
+            }
+        } catch (error) {
+            res.status(500).json({ message: error.message });
+        }
+    },
+
+    resetPassword: async (req, res, next) => {
+        try {
+            const accountId = req.params.id;
+            const user = await adminUserModel.getAdminUserById(accountId);
+
+            const salt = await bcrypt.genSalt(10);
+            const newPassword = await bcrypt.hash(user?.username, salt);
+
+            const affectedRows = await adminUserModel.updateAdminUserById(
+                accountId,
+                {
+                    password: newPassword,
+                }
+            );
+            if (affectedRows === 0) {
+                return res
+                    .status(404)
+                    .json({ message: "Tài khoản không tồn tại" });
+            } else {
+                return res.json({
+                    status: 200,
+                    msg: "Reset thành công",
+                });
             }
         } catch (error) {
             res.status(500).json({ message: error.message });
