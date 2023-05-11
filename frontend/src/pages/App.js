@@ -12,14 +12,18 @@ import { Fragment } from "react";
 import { Toaster } from "react-hot-toast";
 
 import { useSelector } from "react-redux";
+import GProgress from "../components/GProgress/GProgress";
 
 function App() {
-    const currentUser = useSelector((state) => state.auth.login.currentUser);
+    const isFetching = useSelector(
+        (state) => state.adminUser.adminUser?.isFetching
+    );
 
     return (
         <Router>
             <div className="App">
                 <Toaster position="top-right" />
+                <GProgress isLoading={isFetching} />
                 <Routes>
                     {publicRoutes?.map((route, index) => {
                         const Page = route?.component;
