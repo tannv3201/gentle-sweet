@@ -11,11 +11,14 @@ import styles from "./PasswordMenu.module.scss";
 import { LightTooltip } from "../../../../components/GTooltip/GTooltip";
 import PasswordChangePopup from "./PasswordChangePopup";
 import { useState } from "react";
+import ConfirmResetPasswordPopup from "./ConfirmResetPasswordPopup";
 
 const cx = classNames.bind(styles);
 
 export default function PasswordMenu({ selectedUser }) {
     const [isOpenPasswordChangeModal, setIsOpenPasswordChangeModal] =
+        useState(false);
+    const [isOpenResetPasswordPopup, setIsOpenResetPasswordPopup] =
         useState(false);
     const [anchorEl, setAnchorEl] = useState(null);
 
@@ -34,6 +37,14 @@ export default function PasswordMenu({ selectedUser }) {
 
     const handleClosePasswordChangeModal = () => {
         setIsOpenPasswordChangeModal(false);
+    };
+
+    const handleOpenResetPasswordPopup = () => {
+        setIsOpenResetPasswordPopup(true);
+    };
+
+    const handleCloseResetPasswordPopup = () => {
+        setIsOpenResetPasswordPopup(false);
     };
 
     return (
@@ -69,13 +80,27 @@ export default function PasswordMenu({ selectedUser }) {
                 >
                     Đổi mật khẩu
                 </MenuItem>
-                <MenuItem onClick={handleClose}>Reset</MenuItem>
+                <MenuItem
+                    onClick={() => {
+                        handleOpenResetPasswordPopup();
+                        handleClose();
+                    }}
+                >
+                    Reset
+                </MenuItem>
             </Menu>
 
             <PasswordChangePopup
                 isOpen={isOpenPasswordChangeModal}
                 handleClose={handleClosePasswordChangeModal}
                 handleOpen={handleOpenPasswordChangeModal}
+                selectedUser={selectedUser}
+            />
+
+            <ConfirmResetPasswordPopup
+                isOpen={isOpenResetPasswordPopup}
+                handleClose={handleCloseResetPasswordPopup}
+                handleOpen={handleOpenResetPasswordPopup}
                 selectedUser={selectedUser}
             />
         </div>

@@ -1,27 +1,23 @@
-import React, { useEffect } from "react";
-import axios from "axios";
-import { Formik, FastField, useFormik } from "formik";
-// import TextField from "../../../components/GTextField/TextField";
-import GButton from "../../../components/MyButton/MyButton";
-import { Grid, TextField } from "@mui/material";
-import { useState } from "react";
-// import TextField from "../../../common/Form/TextField";
-import * as Yup from "yup";
-import GModal from "../../../common/GModal/GModal";
-import { createAdminUser, deleteAdminUser } from "../../../redux/apiRequest";
+import React from "react";
+import GButton from "../../../../components/MyButton/MyButton";
+import GModal from "../../../../common/GModal/GModal";
 import { useDispatch, useSelector } from "react-redux";
-import { useNavigate } from "react-router-dom";
-import { loginSuccess } from "../../../redux/authSlice";
-import { createAxios } from "../../../createInstance";
+import { createAxios } from "../../../../createInstance";
+import { loginSuccess } from "../../../../redux/authSlice";
+import { resetPassword } from "../../../../redux/apiRequest";
 
-function ConfirmPopup({ handleClose, handleOpen, isOpen, selectedUser }) {
+function ConfirmResetPasswordPopup({
+    handleClose,
+    handleOpen,
+    isOpen,
+    selectedUser,
+}) {
     const user = useSelector((state) => state.auth.login?.currentUser);
     const dispatch = useDispatch();
-
     let axiosJWT = createAxios(user, dispatch, loginSuccess);
 
-    const handleDeleteAdminUser = () => {
-        deleteAdminUser(
+    const handleResetPassword = () => {
+        resetPassword(
             dispatch,
             selectedUser.id,
             user?.accessToken,
@@ -43,7 +39,7 @@ function ConfirmPopup({ handleClose, handleOpen, isOpen, selectedUser }) {
             >
                 <div>
                     <div style={{ padding: "12px 0" }}>
-                        Bạn có chắc chắn muốn xóa người dùng{" "}
+                        Bạn có chắc chắn muốn reset mật khẩu của{" "}
                         <span
                             style={{
                                 fontWeight: "var(--fw-semi-bold)",
@@ -55,10 +51,7 @@ function ConfirmPopup({ handleClose, handleOpen, isOpen, selectedUser }) {
                         ?
                     </div>
                     <div style={{ paddingTop: "24px" }}>
-                        <GButton
-                            color={"error"}
-                            onClick={handleDeleteAdminUser}
-                        >
+                        <GButton color={"error"} onClick={handleResetPassword}>
                             Xác nhận
                         </GButton>
                         <GButton
@@ -75,4 +68,4 @@ function ConfirmPopup({ handleClose, handleOpen, isOpen, selectedUser }) {
     );
 }
 
-export default ConfirmPopup;
+export default ConfirmResetPasswordPopup;
