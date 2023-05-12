@@ -42,7 +42,11 @@ const productCategoriesController = {
                     image: req.body.image,
                     status: 1,
                 });
-            res.status(201).json(newProductCategory);
+            return res.json({
+                status: 201,
+                msg: "Thêm mới thành công",
+                data: newProductCategory,
+            });
         } catch (error) {
             res.status(500).json(error);
         }
@@ -61,7 +65,7 @@ const productCategoriesController = {
             if (affectedRows === 0) {
                 return res.status(404).json({ message: "Cập nhật thất bại" });
             } else {
-                return res.status(200).json({ message: "Cập nhật thành công" });
+                return res.json({ status: 200, msg: "Cập nhật thành công" });
             }
         } catch (error) {}
     },
@@ -80,7 +84,7 @@ const productCategoriesController = {
             if (affectedRows === 0) {
                 return res.status(404).json({ message: "Xóa thất bại" });
             } else {
-                return res.status(200).json({ message: "Xóa thành công" });
+                return res.json({ status: 200, msg: "Xóa thành công" });
             }
         } catch (error) {
             res.status(500).json({ message: error.message });
