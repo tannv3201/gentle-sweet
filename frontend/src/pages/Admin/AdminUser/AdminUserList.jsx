@@ -76,8 +76,6 @@ export default function AdminUserList({ data }) {
             last_name: rowData.last_name,
             first_name: rowData.first_name,
             email: rowData.email,
-            password: rowData.password,
-            confirmPassword: rowData.password,
             editState: rowData?.id ? true : false,
         });
         setIsOpenCreateUpdateModel(true);

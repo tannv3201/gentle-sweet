@@ -14,7 +14,21 @@ import { useNavigate } from "react-router-dom";
 import { loginUser } from "../../redux/apiRequest";
 import toast, { Toaster, useToasterStore } from "react-hot-toast";
 import { useEffect } from "react";
+import * as Yup from "yup";
+import GTextFieldNormal from "../../components/GTextField/GTextFieldNormal";
+
 const cx = classNames.bind(styles);
+
+const validationSchema = Yup.object().shape({
+    username: Yup.string()
+        .required("Vui lòng không để trống")
+        .min(6, "Tên tài khoản phải có ít nhất 6 kí tự")
+        .max(20, "Tên tài khoản tối đa 20 kí tự"),
+    password: Yup.string()
+        .required("Vui lòng không để trống")
+        .min(8, "Mật khẩu phải có ít nhất 8 kí tự")
+        .max(20, "Mật khẩu tối đa 20 kí tự"),
+});
 
 function Login() {
     const { toasts } = useToasterStore();
@@ -50,13 +64,20 @@ function Login() {
                                             username: "",
                                             password: "",
                                         }}
+                                        validationSchema={validationSchema}
                                         onSubmit={(values, actions) => {
                                             handleSubmit(values);
                                             actions.setSubmitting(false);
                                         }}
                                     >
-                                        {(props) => (
-                                            <form onSubmit={props.handleSubmit}>
+                                        {({
+                                            handleChange,
+                                            handleSubmit,
+                                            touched,
+                                            errors,
+                                            values,
+                                        }) => (
+                                            <form onSubmit={handleSubmit}>
                                                 <Grid container spacing={2}>
                                                     <Grid item xs={12}>
                                                         <span
@@ -80,33 +101,51 @@ function Login() {
                                                         </span>
                                                     </Grid>
                                                     <Grid item xs={12}>
-                                                        <GTextField
+                                                        <GTextFieldNormal
                                                             fullWidth
                                                             label={
                                                                 "Tên đăng nhập"
                                                             }
                                                             name="username"
                                                             value={
-                                                                props.values
-                                                                    .username
+                                                                values?.username
                                                             }
                                                             onChange={
-                                                                props.handleChange
+                                                                handleChange
+                                                            }
+                                                            error={
+                                                                touched?.username &&
+                                                                Boolean(
+                                                                    errors?.username
+                                                                )
+                                                            }
+                                                            helperText={
+                                                                touched?.username &&
+                                                                errors?.username
                                                             }
                                                         />
                                                     </Grid>
                                                     <Grid item xs={12}>
-                                                        <GTextField
+                                                        <GTextFieldNormal
                                                             fullWidth
                                                             label={"Mật khẩu"}
                                                             name="password"
                                                             type="password"
                                                             value={
-                                                                props.values
-                                                                    .password
+                                                                values?.password
                                                             }
                                                             onChange={
-                                                                props.handleChange
+                                                                handleChange
+                                                            }
+                                                            error={
+                                                                touched?.password &&
+                                                                Boolean(
+                                                                    errors?.password
+                                                                )
+                                                            }
+                                                            helperText={
+                                                                touched?.password &&
+                                                                errors?.password
                                                             }
                                                         />
                                                     </Grid>

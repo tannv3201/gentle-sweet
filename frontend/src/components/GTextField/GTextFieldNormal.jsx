@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import TextField from "@mui/material/TextField";
 import { IconButton, InputAdornment } from "@mui/material";
 import { Visibility, VisibilityOff } from "@mui/icons-material";
@@ -21,6 +21,7 @@ function GTextFieldNormal({
     multiline,
     style,
     password,
+    isShowPassword,
     ...otherProps
 }) {
     const configTextfield = {
@@ -48,6 +49,9 @@ function GTextFieldNormal({
     );
 
     const [showPassword, setShowPassword] = React.useState(false);
+    useEffect(() => {
+        if (isShowPassword) setShowPassword(isShowPassword);
+    }, [isShowPassword]);
 
     const handleClickShowPassword = () => setShowPassword((show) => !show);
 

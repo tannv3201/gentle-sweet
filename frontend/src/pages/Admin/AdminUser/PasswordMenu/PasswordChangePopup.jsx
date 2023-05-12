@@ -1,7 +1,7 @@
 import React from "react";
 import { useFormik } from "formik";
 
-import { Grid, IconButton, InputAdornment } from "@mui/material";
+import { Grid } from "@mui/material";
 import * as Yup from "yup";
 import GModal from "../../../../common/GModal/GModal";
 import GTextFieldNormal from "../../../../components/GTextField/GTextFieldNormal";
@@ -12,6 +12,7 @@ import { createAxios } from "../../../../createInstance";
 import { loginSuccess } from "../../../../redux/authSlice";
 import { passwordChange } from "../../../../redux/apiRequest";
 import { Visibility, VisibilityOff } from "@mui/icons-material";
+import { useState } from "react";
 
 function PasswordChangePopup({
     handleClose,
@@ -21,14 +22,6 @@ function PasswordChangePopup({
 }) {
     const user = useSelector((state) => state.auth.login?.currentUser);
     const dispatch = useDispatch();
-
-    const [showPassword, setShowPassword] = React.useState(false);
-
-    const handleClickShowPassword = () => setShowPassword((show) => !show);
-
-    const handleMouseDownPassword = (event) => {
-        event.preventDefault();
-    };
 
     let axiosJWT = createAxios(user, dispatch, loginSuccess);
 
@@ -45,33 +38,55 @@ function PasswordChangePopup({
                 axiosJWT
             ).then((res) => {
                 if (res?.status === 200) {
+                    formik.handleReset();
                     handleClose();
                 }
             });
         }
     };
 
+    // Validate
+    const validationSchema = Yup.object().shape({
+        currentPassword: Yup.string()
+            .required("Vui lòng không để trống")
+            .min(8, "Mật khẩu phải có ít nhất 8 kí tự")
+            .max(20, "Mật khẩu tối đa 20 kí tự"),
+        newPassword: Yup.string()
+            .required("Vui lòng không để trống")
+            .min(8, "Mật khẩu phải có ít nhất 8 kí tự")
+            .max(20, "Mật khẩu tối đa 20 kí tự"),
+        confirmNewPassword: Yup.string()
+            .required("Vui lòng không để trống")
+            .min(8, "Mật khẩu phải có ít nhất 8 kí tự")
+            .max(20, "Mật khẩu tối đa 20 kí tự"),
+    });
+
     const formik = useFormik({
         enableReinitialize: true,
+        validationSchema: validationSchema,
         initialValues: {
             currentPassword: "",
             newPassword: "",
             confirmNewPassword: "",
         },
-        // validationSchema: validationSchema,
         onSubmit: (data) => {
             handlePasswordChange(data);
         },
     });
 
+    // handle showing password
+    const [isShowPassword, setIsShowPassword] = useState(true);
+
     return (
         <>
             <GModal
                 handleClose={() => {
-                    setShowPassword(false);
+                    formik.handleReset();
+                    setIsShowPassword(false);
                     handleClose();
                 }}
                 handleOpen={() => {
+                    setIsShowPassword(false);
                     handleOpen();
                 }}
                 isOpen={isOpen}
@@ -100,6 +115,7 @@ function PasswordChangePopup({
                             </Grid>
                             <Grid item xs={12}>
                                 <GTextFieldNormal
+                                    password
                                     onChange={formik.handleChange}
                                     label="Mật khẩu mới"
                                     fullWidth
@@ -117,10 +133,11 @@ function PasswordChangePopup({
                             </Grid>
                             <Grid item xs={12}>
                                 <GTextFieldNormal
-                                    onChange={formik.handleChange}
+                                    password
                                     label="Xác nhận mật khẩu"
                                     fullWidth
                                     name="confirmNewPassword"
+                                    onChange={formik.handleChange}
                                     value={
                                         formik.values?.confirmNewPassword || ""
                                     }
@@ -141,7 +158,11 @@ function PasswordChangePopup({
                                 <GButton
                                     color={"text"}
                                     style={{ marginLeft: "12px" }}
-                                    onClick={handleClose}
+                                    onClick={() => {
+                                        formik.handleReset();
+                                        setIsShowPassword(false);
+                                        handleClose();
+                                    }}
                                 >
                                     Hủy
                                 </GButton>

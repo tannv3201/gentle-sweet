@@ -13,18 +13,6 @@ import { createAxios } from "../../../createInstance";
 import GTextFieldNormal from "../../../components/GTextField/GTextFieldNormal";
 import { Visibility, VisibilityOff } from "@mui/icons-material";
 
-const validationSchema = Yup.object().shape({
-    role_id: Yup.string().required("Vui lòng không để trống"),
-    username: Yup.string().required("Vui lòng không để trống"),
-    password: Yup.string().required("Vui lòng không để trống"),
-    first_name: Yup.string().required("Vui lòng không để trống"),
-    last_name: Yup.string().required("Vui lòng không để trống"),
-    email: Yup.string()
-        .email("Vui lòng nhập địa chỉ email hợp lệ")
-        .required("Vui lòng không để trống"),
-    confirmPassword: Yup.string().required("Vui lòng không để trống"),
-});
-
 const roleList = [
     {
         role_name: "ADMIN",
@@ -90,6 +78,29 @@ function CreateUpdateAdminUser({
         if (selectedUser) setAdminUser(selectedUser);
     }, [selectedUser]);
 
+    // Validate
+    const validationSchema = Yup.object().shape({
+        role_id: Yup.string().required("Vui lòng không để trống"),
+        username: Yup.string()
+            .required("Vui lòng không để trống")
+            .min(6, "Tên tài khoản phải có ít nhất 6 kí tự")
+            .max(20, "Tên tài khoản tối đa 20 kí tự"),
+        password: selectedUser?.editState
+            ? Yup.string()
+            : Yup.string()
+                  .required("Vui lòng không để trống")
+                  .min(8, "Mật khẩu phải có ít nhất 8 kí tự")
+                  .max(20, "Mật khẩu tối đa 20 kí tự"),
+        first_name: Yup.string().required("Vui lòng không để trống"),
+        last_name: Yup.string().required("Vui lòng không để trống"),
+        email: Yup.string()
+            .email("Vui lòng nhập địa chỉ email hợp lệ")
+            .required("Vui lòng không để trống"),
+        confirmPassword: selectedUser?.editState
+            ? Yup.string()
+            : Yup.string().required("Vui lòng không để trống"),
+    });
+
     const formik = useFormik({
         enableReinitialize: true,
         initialValues: adminUser,
@@ -104,7 +115,7 @@ function CreateUpdateAdminUser({
             }
         },
     });
-
+    console.log(formik.errors);
     return (
         <>
             <GModal
@@ -115,7 +126,11 @@ function CreateUpdateAdminUser({
                 }}
                 handleOpen={handleOpen}
                 isOpen={isOpen}
-                title="Thêm người dùng mới"
+                title={
+                    selectedUser?.editState
+                        ? "Cập nhật thông tin"
+                        : "Thêm người dùng mới"
+                }
             >
                 <form onSubmit={formik.handleSubmit}>
                     <Grid container spacing={2}>

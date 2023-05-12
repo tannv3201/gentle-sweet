@@ -149,7 +149,7 @@ const adminUserController = {
             } else {
                 return res.json({
                     status: 200,
-                    msg: "Reset thành công",
+                    msg: "Đặt lại mật khẩu thành công",
                 });
             }
         } catch (error) {
