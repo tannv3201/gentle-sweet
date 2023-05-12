@@ -41,8 +41,23 @@ export default function AdminUserList({ data }) {
     }, []);
 
     useEffect(() => {
-        setCloneData(structuredClone(adminUserList));
+        const newList = adminUserList.map((user) => {
+            return {
+                ...user,
+                role_name:
+                    user?.role_id === "eaff3c47-28b5-4315-8bc7-384b72fe039a"
+                        ? "ADMIN"
+                        : user?.role_id ===
+                          "16d0f7f9-e6cc-42d3-b748-5930044b3893"
+                        ? "STAFF"
+                        : "",
+                fullName: user?.last_name + " " + user?.first_name,
+            };
+        });
+
+        setCloneData(structuredClone(newList));
     }, [adminUserList]);
+    console.log(cloneData);
 
     // Create update modal
     const [isOpenCreateUpdateModel, setIsOpenCreateUpdateModel] =
@@ -52,10 +67,16 @@ export default function AdminUserList({ data }) {
         setSelectedUser({
             id: rowData.id,
             role_id: rowData.role_id,
+            role_name:
+                rowData.role_id === "eaff3c47-28b5-4315-8bc7-384b72fe039a"
+                    ? "ADMIN"
+                    : rowData.role_id === "16d0f7f9-e6cc-42d3-b748-5930044b3893"
+                    ? "STAFF"
+                    : "",
             username: rowData.username,
             last_name: rowData.last_name,
             first_name: rowData.first_name,
-            password: rowData.password,
+            email: rowData.email,
         });
         setIsOpenCreateUpdateModel(true);
     };
@@ -87,9 +108,9 @@ export default function AdminUserList({ data }) {
             <GTable
                 title={"DANH SÁCH NGƯỜI DÙNG HỆ THỐNG"}
                 columns={[
-                    { title: "Họ", field: "last_name" },
-                    { title: "Tên", field: "first_name" },
+                    { title: "Họ và tên", field: "fullName" },
                     { title: "Tên đăng nhập", field: "username" },
+                    { title: "Quyền hạn", field: "role_name" },
                     {
                         title: "Thao tác",
                         field: "actions",

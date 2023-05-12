@@ -1,7 +1,7 @@
 import React from "react";
 import { useFormik } from "formik";
 
-import { Grid } from "@mui/material";
+import { Grid, IconButton, InputAdornment } from "@mui/material";
 import * as Yup from "yup";
 import GModal from "../../../../common/GModal/GModal";
 import GTextFieldNormal from "../../../../components/GTextField/GTextFieldNormal";
@@ -11,6 +11,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { createAxios } from "../../../../createInstance";
 import { loginSuccess } from "../../../../redux/authSlice";
 import { passwordChange } from "../../../../redux/apiRequest";
+import { Visibility, VisibilityOff } from "@mui/icons-material";
 
 function PasswordChangePopup({
     handleClose,
@@ -20,6 +21,14 @@ function PasswordChangePopup({
 }) {
     const user = useSelector((state) => state.auth.login?.currentUser);
     const dispatch = useDispatch();
+
+    const [showPassword, setShowPassword] = React.useState(false);
+
+    const handleClickShowPassword = () => setShowPassword((show) => !show);
+
+    const handleMouseDownPassword = (event) => {
+        event.preventDefault();
+    };
 
     let axiosJWT = createAxios(user, dispatch, loginSuccess);
 
@@ -59,9 +68,12 @@ function PasswordChangePopup({
         <>
             <GModal
                 handleClose={() => {
+                    setShowPassword(false);
                     handleClose();
                 }}
-                handleOpen={handleOpen}
+                handleOpen={() => {
+                    handleOpen();
+                }}
                 isOpen={isOpen}
                 title="Đổi mật khẩu"
             >
@@ -70,11 +82,11 @@ function PasswordChangePopup({
                         <Grid container spacing={2}>
                             <Grid item xs={12}>
                                 <GTextFieldNormal
+                                    password
                                     onChange={formik.handleChange}
                                     label="Mật khẩu hiện tại"
                                     fullWidth
                                     name="currentPassword"
-                                    id="currentPassword"
                                     value={formik.values?.currentPassword || ""}
                                     error={
                                         formik.touched?.currentPassword &&
@@ -92,7 +104,6 @@ function PasswordChangePopup({
                                     label="Mật khẩu mới"
                                     fullWidth
                                     name="newPassword"
-                                    id="newPassword"
                                     value={formik.values?.newPassword || ""}
                                     error={
                                         formik.touched?.newPassword &&
@@ -110,7 +121,6 @@ function PasswordChangePopup({
                                     label="Xác nhận mật khẩu"
                                     fullWidth
                                     name="confirmNewPassword"
-                                    id="confirmNewPassword"
                                     value={
                                         formik.values?.confirmNewPassword || ""
                                     }

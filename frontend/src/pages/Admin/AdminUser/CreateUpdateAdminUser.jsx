@@ -3,9 +3,17 @@ import axios from "axios";
 import { Formik, FastField, useFormik } from "formik";
 // import TextField from "../../../components/GTextField/TextField";
 import GButton from "../../../components/MyButton/MyButton";
-import { Grid, TextField } from "@mui/material";
+import {
+    Autocomplete,
+    FormControl,
+    Grid,
+    IconButton,
+    InputAdornment,
+    InputLabel,
+    OutlinedInput,
+    TextField,
+} from "@mui/material";
 import { useState } from "react";
-// import TextField from "../../../common/Form/TextField";
 import * as Yup from "yup";
 import GModal from "../../../common/GModal/GModal";
 import { createAdminUser, updateAdminUser } from "../../../redux/apiRequest";
@@ -13,16 +21,29 @@ import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { loginSuccess } from "../../../redux/authSlice";
 import { createAxios } from "../../../createInstance";
-import GentleTextField from "../../../common/Form/GentleTextField";
 import GTextFieldNormal from "../../../components/GTextField/GTextFieldNormal";
+import { Visibility, VisibilityOff } from "@mui/icons-material";
+import GentleAutocomplete from "../../../components/GAutocomplete/GentleAutocomplete";
 
-const validationSchema = Yup.object({
+const validationSchema = Yup.object().shape({
     role_id: Yup.string().required("Vui lòng không để trống"),
     username: Yup.string().required("Vui lòng không để trống"),
     password: Yup.string().required("Vui lòng không để trống"),
     first_name: Yup.string().required("Vui lòng không để trống"),
     last_name: Yup.string().required("Vui lòng không để trống"),
 });
+
+const roleList = [
+    {
+        role_name: "ADMIN",
+        role_id: "eaff3c47-28b5-4315-8bc7-384b72fe039a",
+    },
+    {
+        role_name: "STAFF",
+        role_id: "16d0f7f9-e6cc-42d3-b748-5930044b3893",
+    },
+];
+
 function CreateUpdateAdminUser({
     handleClose,
     handleOpen,
@@ -31,15 +52,25 @@ function CreateUpdateAdminUser({
 }) {
     const user = useSelector((state) => state.auth.login?.currentUser);
     const dispatch = useDispatch();
-    const navigate = useNavigate();
     const [adminUser, setAdminUser] = useState({
         id: "",
         role_id: "",
+        role_name: "",
         username: "",
         password: "",
+        confirmPassword: "",
         first_name: "",
         last_name: "",
+        email: "",
     });
+
+    const [showPassword, setShowPassword] = React.useState(false);
+
+    const handleClickShowPassword = () => setShowPassword((show) => !show);
+
+    const handleMouseDownPassword = (event) => {
+        event.preventDefault();
+    };
 
     let axiosJWT = createAxios(user, dispatch, loginSuccess);
 
@@ -72,8 +103,9 @@ function CreateUpdateAdminUser({
         initialValues: adminUser,
         validationSchema: validationSchema,
         onSubmit: (data) => {
+            const { role_name, ...updateData } = data;
             if (data?.id) {
-                handleUpdateAdminUser(data);
+                handleUpdateAdminUser(updateData);
             } else {
                 handleCreateAdminUser(data);
             }
@@ -85,6 +117,7 @@ function CreateUpdateAdminUser({
             <GModal
                 handleClose={() => {
                     formik.resetForm();
+                    setShowPassword(false);
                     handleClose();
                 }}
                 handleOpen={handleOpen}
@@ -93,13 +126,12 @@ function CreateUpdateAdminUser({
             >
                 <form onSubmit={formik.handleSubmit}>
                     <Grid container spacing={2}>
-                        <Grid item xs={6}>
-                            <GTextFieldNormal
+                        <Grid item xs={12}>
+                            {/* <GTextFieldNormal
                                 onChange={formik.handleChange}
                                 label="Quyền hạn"
                                 fullWidth
                                 name="role_id"
-                                id="role_id"
                                 value={formik.values?.role_id || ""}
                                 error={
                                     formik.touched?.role_id &&
@@ -109,15 +141,55 @@ function CreateUpdateAdminUser({
                                     formik.touched.role_id &&
                                     formik.errors?.role_id
                                 }
+                            /> */}
+                            <Autocomplete
+                                options={roleList}
+                                getOptionLabel={(option) =>
+                                    `${option?.role_name}` || ""
+                                }
+                                onChange={(e, value) => {
+                                    formik.setFieldValue(
+                                        "role_id",
+                                        value.role_id
+                                    );
+                                    formik.setFieldValue(
+                                        "role_name",
+                                        value?.role_name || ""
+                                    );
+                                }}
+                                isOptionEqualToValue={(option, value) =>
+                                    option?.role_id === value?.role_id
+                                }
+                                value={
+                                    formik.values.role_id && {
+                                        role_id: formik.values.role_id,
+                                        role_name: formik.values.role_name,
+                                    }
+                                }
+                                renderInput={(params) => (
+                                    <GTextFieldNormal
+                                        {...params}
+                                        name="role_id"
+                                        fullWidth
+                                        label="Quyền hạn"
+                                        error={
+                                            formik.touched?.role_id &&
+                                            Boolean(formik.errors?.role_id)
+                                        }
+                                        helperText={
+                                            formik.touched.role_id &&
+                                            formik.errors?.role_id
+                                        }
+                                    />
+                                )}
                             />
                         </Grid>
-                        <Grid item xs={6}>
+                        <Grid item xs={12}>
                             <GTextFieldNormal
                                 onChange={formik.handleChange}
                                 label="Tên đăng nhập"
                                 fullWidth
                                 name="username"
-                                id="username"
                                 value={formik.values?.username || ""}
                                 error={
                                     formik.touched?.username &&
@@ -135,7 +207,6 @@ function CreateUpdateAdminUser({
                                 label="Mật khẩu"
                                 fullWidth
                                 name="password"
-                                id="username"
                                 value={formik.values?.password || ""}
                                 error={
                                     formik.touched?.password &&
@@ -145,6 +216,69 @@ function CreateUpdateAdminUser({
                                     formik.touched?.password &&
                                     formik.errors?.password
                                 }
+                                type={showPassword ? "text" : "password"}
+                                InputProps={{
+                                    endAdornment: (
+                                        <InputAdornment position="end">
+                                            <IconButton
+                                                aria-label="toggle password visibility"
+                                                onClick={
+                                                    handleClickShowPassword
+                                                }
+                                                onMouseDown={
+                                                    handleMouseDownPassword
+                                                }
+                                                edge="end"
+                                            >
+                                                {showPassword ? (
+                                                    <VisibilityOff />
+                                                ) : (
+                                                    <Visibility />
+                                                )}
+                                            </IconButton>
+                                        </InputAdornment>
+                                    ),
+                                }}
+                            />
+                        </Grid>
+                        <Grid item xs={6}>
+                            <GTextFieldNormal
+                                onChange={formik.handleChange}
+                                label="Nhập lại mật khẩu"
+                                fullWidth
+                                name="confirmPassword"
+                                value={formik.values?.confirmPassword || ""}
+                                error={
+                                    formik.touched?.confirmPassword &&
+                                    Boolean(formik.errors?.confirmPassword)
+                                }
+                                helperText={
+                                    formik.touched?.confirmPassword &&
+                                    formik.errors?.confirmPassword
+                                }
+                                type={showPassword ? "text" : "password"}
+                                InputProps={{
+                                    endAdornment: (
+                                        <InputAdornment position="end">
+                                            <IconButton
+                                                aria-label="toggle password visibility"
+                                                onClick={
+                                                    handleClickShowPassword
+                                                }
+                                                onMouseDown={
+                                                    handleMouseDownPassword
+                                                }
+                                                edge="end"
+                                            >
+                                                {showPassword ? (
+                                                    <VisibilityOff />
+                                                ) : (
+                                                    <Visibility />
+                                                )}
+                                            </IconButton>
+                                        </InputAdornment>
+                                    ),
+                                }}
                             />
                         </Grid>
                         <Grid item xs={6}>
@@ -153,7 +287,6 @@ function CreateUpdateAdminUser({
                                 label="Họ"
                                 fullWidth
                                 name="last_name"
-                                id="last_name"
                                 value={formik.values?.last_name || ""}
                                 error={
                                     formik.touched?.last_name &&
@@ -171,7 +304,6 @@ function CreateUpdateAdminUser({
                                 label="Tên"
                                 fullWidth
                                 name="first_name"
-                                id="first_name"
                                 value={formik.values?.first_name || ""}
                                 error={
                                     formik.touched?.first_name &&
@@ -181,6 +313,30 @@ function CreateUpdateAdminUser({
                                     formik.touched?.first_name &&
                                     formik.errors?.first_name
                                 }
+                            />
+                        </Grid>
+                        <Grid item xs={12}>
+                            <GTextFieldNormal
+                                onChange={formik.handleChange}
+                                label="Email"
+                                fullWidth
+                                name="email"
+                                value={formik.values?.email || ""}
+                                error={
+                                    formik.touched?.email &&
+                                    Boolean(formik.errors?.email)
+                                }
+                                helperText={
+                                    formik.touched?.email &&
+                                    formik.errors?.email
+                                }
+                                InputProps={{
+                                    startAdornment: (
+                                        <InputAdornment position="start">
+                                            @
+                                        </InputAdornment>
+                                    ),
+                                }}
                             />
                         </Grid>
                         <Grid item xs={12}>
