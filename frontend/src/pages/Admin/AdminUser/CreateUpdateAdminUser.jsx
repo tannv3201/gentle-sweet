@@ -1,29 +1,17 @@
 import React, { useEffect } from "react";
 import axios from "axios";
-import { Formik, FastField, useFormik } from "formik";
-// import TextField from "../../../components/GTextField/TextField";
+import { useFormik } from "formik";
 import GButton from "../../../components/MyButton/MyButton";
-import {
-    Autocomplete,
-    FormControl,
-    Grid,
-    IconButton,
-    InputAdornment,
-    InputLabel,
-    OutlinedInput,
-    TextField,
-} from "@mui/material";
+import { Autocomplete, Grid, IconButton, InputAdornment } from "@mui/material";
 import { useState } from "react";
 import * as Yup from "yup";
 import GModal from "../../../common/GModal/GModal";
 import { createAdminUser, updateAdminUser } from "../../../redux/apiRequest";
 import { useDispatch, useSelector } from "react-redux";
-import { useNavigate } from "react-router-dom";
 import { loginSuccess } from "../../../redux/authSlice";
 import { createAxios } from "../../../createInstance";
 import GTextFieldNormal from "../../../components/GTextField/GTextFieldNormal";
 import { Visibility, VisibilityOff } from "@mui/icons-material";
-import GentleAutocomplete from "../../../components/GAutocomplete/GentleAutocomplete";
 
 const validationSchema = Yup.object().shape({
     role_id: Yup.string().required("Vui lòng không để trống"),
@@ -31,6 +19,10 @@ const validationSchema = Yup.object().shape({
     password: Yup.string().required("Vui lòng không để trống"),
     first_name: Yup.string().required("Vui lòng không để trống"),
     last_name: Yup.string().required("Vui lòng không để trống"),
+    email: Yup.string()
+        .email("Vui lòng nhập địa chỉ email hợp lệ")
+        .required("Vui lòng không để trống"),
+    confirmPassword: Yup.string().required("Vui lòng không để trống"),
 });
 
 const roleList = [
@@ -103,7 +95,8 @@ function CreateUpdateAdminUser({
         initialValues: adminUser,
         validationSchema: validationSchema,
         onSubmit: (data) => {
-            const { role_name, ...updateData } = data;
+            const { role_name, editState, confirmPassword, ...updateData } =
+                data;
             if (data?.id) {
                 handleUpdateAdminUser(updateData);
             } else {
@@ -150,7 +143,7 @@ function CreateUpdateAdminUser({
                                 onChange={(e, value) => {
                                     formik.setFieldValue(
                                         "role_id",
-                                        value.role_id
+                                        value?.role_id
                                     );
                                     formik.setFieldValue(
                                         "role_name",
@@ -158,12 +151,14 @@ function CreateUpdateAdminUser({
                                     );
                                 }}
                                 isOptionEqualToValue={(option, value) =>
+                                    value === undefined ||
+                                    value === "" ||
                                     option?.role_id === value?.role_id
                                 }
                                 value={
                                     formik.values.role_id && {
-                                        role_id: formik.values.role_id,
-                                        role_name: formik.values.role_name,
+                                        role_id: formik.values?.role_id,
+                                        role_name: formik.values?.role_name,
                                     }
                                 }
                                 renderInput={(params) => (
@@ -201,86 +196,90 @@ function CreateUpdateAdminUser({
                                 }
                             />
                         </Grid>
-                        <Grid item xs={6}>
-                            <GTextFieldNormal
-                                onChange={formik.handleChange}
-                                label="Mật khẩu"
-                                fullWidth
-                                name="password"
-                                value={formik.values?.password || ""}
-                                error={
-                                    formik.touched?.password &&
-                                    Boolean(formik.errors?.password)
-                                }
-                                helperText={
-                                    formik.touched?.password &&
-                                    formik.errors?.password
-                                }
-                                type={showPassword ? "text" : "password"}
-                                InputProps={{
-                                    endAdornment: (
-                                        <InputAdornment position="end">
-                                            <IconButton
-                                                aria-label="toggle password visibility"
-                                                onClick={
-                                                    handleClickShowPassword
-                                                }
-                                                onMouseDown={
-                                                    handleMouseDownPassword
-                                                }
-                                                edge="end"
-                                            >
-                                                {showPassword ? (
-                                                    <VisibilityOff />
-                                                ) : (
-                                                    <Visibility />
-                                                )}
-                                            </IconButton>
-                                        </InputAdornment>
-                                    ),
-                                }}
-                            />
-                        </Grid>
-                        <Grid item xs={6}>
-                            <GTextFieldNormal
-                                onChange={formik.handleChange}
-                                label="Nhập lại mật khẩu"
-                                fullWidth
-                                name="confirmPassword"
-                                value={formik.values?.confirmPassword || ""}
-                                error={
-                                    formik.touched?.confirmPassword &&
-                                    Boolean(formik.errors?.confirmPassword)
-                                }
-                                helperText={
-                                    formik.touched?.confirmPassword &&
-                                    formik.errors?.confirmPassword
-                                }
-                                type={showPassword ? "text" : "password"}
-                                InputProps={{
-                                    endAdornment: (
-                                        <InputAdornment position="end">
-                                            <IconButton
-                                                aria-label="toggle password visibility"
-                                                onClick={
-                                                    handleClickShowPassword
-                                                }
-                                                onMouseDown={
-                                                    handleMouseDownPassword
-                                                }
-                                                edge="end"
-                                            >
-                                                {showPassword ? (
-                                                    <VisibilityOff />
-                                                ) : (
-                                                    <Visibility />
-                                                )}
-                                            </IconButton>
-                                        </InputAdornment>
-                                    ),
-                                }}
-                            />
-                        </Grid>
+                        {!selectedUser?.editState && (
+                            <Grid item xs={6}>
+                                <GTextFieldNormal
+                                    onChange={formik.handleChange}
+                                    label="Mật khẩu"
+                                    fullWidth
+                                    name="password"
+                                    value={formik.values?.password || ""}
+                                    error={
+                                        formik.touched?.password &&
+                                        Boolean(formik.errors?.password)
+                                    }
+                                    helperText={
+                                        formik.touched?.password &&
+                                        formik.errors?.password
+                                    }
+                                    type={showPassword ? "text" : "password"}
+                                    InputProps={{
+                                        endAdornment: (
+                                            <InputAdornment position="end">
+                                                <IconButton
+                                                    aria-label="toggle password visibility"
+                                                    onClick={
+                                                        handleClickShowPassword
+                                                    }
+                                                    onMouseDown={
+                                                        handleMouseDownPassword
+                                                    }
+                                                    edge="end"
+                                                >
+                                                    {showPassword ? (
+                                                        <VisibilityOff />
+                                                    ) : (
+                                                        <Visibility />
+                                                    )}
+                                                </IconButton>
+                                            </InputAdornment>
+                                        ),
+                                    }}
+                                />
+                            </Grid>
+                        )}
+                        {!selectedUser?.editState && (
+                            <Grid item xs={6}>
+                                <GTextFieldNormal
+                                    onChange={formik.handleChange}
+                                    label="Nhập lại mật khẩu"
+                                    fullWidth
+                                    name="confirmPassword"
+                                    value={formik.values?.confirmPassword || ""}
+                                    error={
+                                        formik.touched?.confirmPassword &&
+                                        Boolean(formik.errors?.confirmPassword)
+                                    }
+                                    helperText={
+                                        formik.touched?.confirmPassword &&
+                                        formik.errors?.confirmPassword
+                                    }
+                                    type={showPassword ? "text" : "password"}
+                                    InputProps={{
+                                        endAdornment: (
+                                            <InputAdornment position="end">
+                                                <IconButton
+                                                    aria-label="toggle password visibility"
+                                                    onClick={
+                                                        handleClickShowPassword
+                                                    }
+                                                    onMouseDown={
+                                                        handleMouseDownPassword
+                                                    }
+                                                    edge="end"
+                                                >
+                                                    {showPassword ? (
+                                                        <VisibilityOff />
+                                                    ) : (
+                                                        <Visibility />
+                                                    )}
+                                                </IconButton>
+                                            </InputAdornment>
+                                        ),
+                                    }}
+                                />
+                            </Grid>
+                        )}
                         <Grid item xs={6}>
                             <GTextFieldNormal
                                 onChange={formik.handleChange}
@@ -340,7 +339,7 @@ function CreateUpdateAdminUser({
                             />
                         </Grid>
                         <Grid item xs={12}>
-                            <GButton type="submit">Thêm mới</GButton>
+                            <GButton type="submit">Lưu</GButton>
                             <GButton
                                 style={{ marginLeft: "12px" }}
                                 color="text"
