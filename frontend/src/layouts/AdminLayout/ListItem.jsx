@@ -9,12 +9,9 @@ import PeopleIcon from "@mui/icons-material/People";
 import BarChartIcon from "@mui/icons-material/BarChart";
 import LayersIcon from "@mui/icons-material/Layers";
 import AssignmentIcon from "@mui/icons-material/Assignment";
-import { NavLink } from "react-router-dom";
 import styles from "./DefaultLayout.module.scss";
 import classNames from "classnames/bind";
 import MenuItem from "./MenuItem";
-
-const cx = classNames.bind(styles);
 
 export const mainListItems = (
     <React.Fragment>
@@ -23,6 +20,16 @@ export const mainListItems = (
             title={"Dashboard"}
             icon={<DashboardIcon />}
             end={true}
+        />
+        <MenuItem
+            to={"/admin/admin-user"}
+            title={"Nhân viên"}
+            icon={<PeopleIcon />}
+        />
+        <MenuItem
+            to={"/admin/product-category"}
+            title={"Danh mục sản phẩm"}
+            icon={<DashboardIcon />}
         />
         <MenuItem
             to={"/admin/product"}
@@ -35,11 +42,7 @@ export const mainListItems = (
             </ListItemIcon>
             <ListItemText primary="Đơn hàng" />
         </ListItemButton>
-        <MenuItem
-            to={"/admin/admin-user"}
-            title={"Nhân viên"}
-            icon={<PeopleIcon />}
-        />
+
         <ListItemButton>
             <ListItemIcon>
                 <PeopleIcon />

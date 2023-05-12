@@ -29,7 +29,29 @@ import {
     resetPasswordSuccess,
     resetPasswordFailed,
 } from "./adminUserSlice";
+import {
+    getAllProductFailed,
+    getAllProductStart,
+    getAllProductSuccess,
+} from "./productSlice";
 
+import {
+    createProductCategoryFailed,
+    createProductCategoryStart,
+    createProductCategorySuccess,
+    deleteProductCategoryFailed,
+    deleteProductCategoryStart,
+    deleteProductCategorySuccess,
+    getAllProductCategoryFailed,
+    getAllProductCategoryStart,
+    getAllProductCategorySuccess,
+    updateProductCategoryFailed,
+    updateProductCategoryStart,
+    updateProductCategorySuccess,
+} from "./productCategorySlice";
+
+// ==========================================================================//
+// API: Auth
 export const loginUser = async (user, dispatch, navigate) => {
     dispatch(loginStart());
     try {
@@ -53,6 +75,23 @@ export const loginUser = async (user, dispatch, navigate) => {
     }
 };
 
+export const logout = async (dispatch, id, navigate, accessToken, axiosJWT) => {
+    dispatch(logoutStart());
+    try {
+        await axiosJWT.post("/v1/auth/logout", id, {
+            headers: {
+                token: `Bearer ${accessToken}`,
+            },
+        });
+        dispatch(logoutSuccess());
+        navigate("/");
+    } catch (error) {
+        dispatch(logoutFailded());
+    }
+};
+
+// ==========================================================================//
+// API: AdminUser
 export const getAllUser = async (accessToken, dispatch, axiosJWT) => {
     dispatch(getAdminUserStart());
     try {
@@ -187,17 +226,142 @@ export const deleteAdminUser = async (dispatch, id, accessToken, axiosJWT) => {
     }
 };
 
-export const logout = async (dispatch, id, navigate, accessToken, axiosJWT) => {
-    dispatch(logoutStart());
+// ==========================================================================//
+// API: Product
+export const getAllProduct = async (accessToken, dispatch, axiosJWT) => {
+    dispatch(getAllProductStart());
     try {
-        await axiosJWT.post("/v1/auth/logout", id, {
+        const res = await axiosJWT.get("/v1/product", {
             headers: {
                 token: `Bearer ${accessToken}`,
             },
         });
-        dispatch(logoutSuccess());
-        navigate("/");
+        dispatch(getAllProductSuccess(res?.data));
+        return res?.data?.length;
     } catch (error) {
-        dispatch(logoutFailded());
+        dispatch(getAllProductFailed());
+    }
+};
+// ==========================================================================//
+// API: UPLOAD ảnh
+export const uploadImage = async (formData) => {
+    try {
+        const res = await axios.post(
+            "https://api.imgbb.com/1/upload",
+            formData,
+            {
+                headers: {
+                    "content-type": "multipart/form-data",
+                },
+                params: {
+                    key: "a1376c9fbddb6821bb0a0d7884359357",
+                },
+            }
+        );
+        if (res.data?.data?.display_url) {
+            toast.success("Thêm ảnh lên máy chủ thành công.");
+        }
+        return res.data?.data?.display_url;
+    } catch (error) {
+        console.log(error);
+    }
+};
+
+// ==========================================================================//
+// API: Product Category
+export const getAllProductCategory = async (
+    accessToken,
+    dispatch,
+    axiosJWT
+) => {
+    dispatch(getAllProductCategoryStart());
+    try {
+        const res = await axiosJWT.get("/v1/productCategory", {
+            headers: {
+                token: `Bearer ${accessToken}`,
+            },
+        });
+        dispatch(getAllProductCategorySuccess(res?.data));
+        return res?.data?.length;
+    } catch (error) {
+        dispatch(getAllProductCategoryFailed());
+    }
+};
+
+export const createProductCategory = async (
+    accessToken,
+    dispatch,
+    productCategoryData,
+    axiosJWT
+) => {
+    dispatch(createProductCategoryStart());
+    try {
+        const res = await axiosJWT.post(
+            "/v1/productCategory",
+            productCategoryData,
+            {
+                headers: {
+                    token: `Bearer ${accessToken}`,
+                },
+            }
+        );
+        dispatch(createProductCategorySuccess(res?.data));
+        if (res?.data?.status === 201) {
+            toast.success(res?.data?.msg);
+            getAllProductCategory(accessToken, dispatch, axiosJWT);
+        }
+    } catch (error) {
+        dispatch(createProductCategoryFailed(error.response?.data));
+    }
+};
+
+export const updateProductCategory = async (
+    accessToken,
+    dispatch,
+    id,
+    productCategoryData,
+    axiosJWT
+) => {
+    dispatch(updateProductCategoryStart());
+    try {
+        const res = await axiosJWT.put(
+            "/v1/productCategory/" + id,
+            productCategoryData,
+            {
+                headers: {
+                    token: `Bearer ${accessToken}`,
+                },
+            }
+        );
+        dispatch(updateProductCategorySuccess(res?.data));
+        if (res?.data?.status === 200) {
+            toast.success(res?.data?.msg);
+            getAllProductCategory(accessToken, dispatch, axiosJWT);
+        }
+    } catch (error) {
+        dispatch(updateProductCategoryFailed(error.response?.data));
+    }
+};
+
+export const deleteProductCategory = async (
+    dispatch,
+    id,
+    accessToken,
+    axiosJWT
+) => {
+    dispatch(deleteProductCategoryStart());
+    try {
+        const res = await axiosJWT.delete("/v1/productCategory/" + id, {
+            headers: {
+                token: `Bearer ${accessToken}`,
+            },
+        });
+        dispatch(deleteProductCategorySuccess(res?.data));
+        if (res?.data?.status === 200) {
+            toast.success(res?.data?.msg);
+            getAllProductCategory(accessToken, dispatch, axiosJWT);
+        }
+    } catch (error) {
+        dispatch(deleteProductCategoryFailed(error.response?.data));
     }
 };
