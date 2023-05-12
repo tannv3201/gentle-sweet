@@ -15,6 +15,23 @@ export default function GTable({
             title={title}
             columns={columns}
             data={data || []}
+            tol
+            localization={{
+                pagination: {
+                    labelDisplayedRows: "{from}-{to} of {count}",
+                    labelRowsPerPage: "Số hàng mỗi trang",
+                    labelRowsSelect: "Trang",
+                    nextTooltip: "Trang tiếp theo",
+                    previousTooltip: "Trang trước",
+                },
+                toolbar: {
+                    exportCSVName: "Xuất File CSV",
+                    showColumnsTitle: "Ẩn/hiện cột",
+                    addRemoveColumns: "Ẩn/hiện cột",
+                    searchTooltip: "Tìm kiếm",
+                    searchPlaceholder: "Nhập từ khóa...",
+                },
+            }}
             options={{
                 sorting: true,
                 search: true,
