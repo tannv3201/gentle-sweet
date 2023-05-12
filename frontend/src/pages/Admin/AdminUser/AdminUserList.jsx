@@ -115,6 +115,7 @@ export default function AdminUserList({ data }) {
                         title: "Thao tác",
                         field: "actions",
                         sorting: false,
+                        export: false,
                         render: (rowData) => (
                             <div
                                 style={{

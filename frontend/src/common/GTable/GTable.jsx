@@ -28,7 +28,10 @@ export default function GTable({
                 showFirstLastPageButtons: false,
                 showTextRowsSelected: false,
                 // paginationPosition: "both",
-                exportButton: true,
+                exportButton: {
+                    csv: true,
+                    pdf: false,
+                },
                 exportAllData: true,
                 actionsColumnIndex: -1,
                 selection: true,
