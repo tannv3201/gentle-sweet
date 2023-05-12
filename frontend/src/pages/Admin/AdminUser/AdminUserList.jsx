@@ -65,7 +65,7 @@ export default function AdminUserList({ data }) {
     const handleOpenCreateUpdateModal = (rowData) => {
         setSelectedUser({
             id: rowData.id,
-            role_id: rowData.role_id,
+            role_id: rowData.role_id || null,
             role_name:
                 rowData.role_id === "eaff3c47-28b5-4315-8bc7-384b72fe039a"
                     ? "ADMIN"

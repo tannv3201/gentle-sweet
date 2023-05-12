@@ -165,15 +165,16 @@ function CreateUpdateAdminUser({
                                     );
                                 }}
                                 isOptionEqualToValue={(option, value) =>
-                                    value === undefined ||
+                                    value === null ||
                                     value === "" ||
                                     option?.role_id === value?.role_id
                                 }
                                 value={
-                                    formik.values.role_id && {
+                                    (formik.values.role_id && {
                                         role_id: formik.values?.role_id,
                                         role_name: formik.values?.role_name,
-                                    }
+                                    }) ||
+                                    null
                                 }
                                 renderInput={(params) => (
                                     <GTextFieldNormal
