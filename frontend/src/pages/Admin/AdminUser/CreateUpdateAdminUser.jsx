@@ -115,7 +115,6 @@ function CreateUpdateAdminUser({
             }
         },
     });
-    console.log(formik.errors);
     return (
         <>
             <GModal
