@@ -117,6 +117,17 @@ function CreateUpdateAdminUser({
             }
         },
     });
+
+    const handleChangeRole = (data) => {
+        if (data) {
+            formik.setFieldValue("role_id", data?.role_id);
+            formik.setFieldValue("role_name", data?.role_name);
+        } else {
+            formik.setFieldValue("role_id", null);
+            formik.setFieldValue("role_name", null);
+        }
+    };
+
     return (
         <>
             <GModal
@@ -157,15 +168,9 @@ function CreateUpdateAdminUser({
                                     `${option?.role_name}` || ""
                                 }
                                 onChange={(e, value) => {
-                                    formik.setFieldValue(
-                                        "role_id",
-                                        value?.role_id
-                                    );
-                                    formik.setFieldValue(
-                                        "role_name",
-                                        value?.role_name || ""
-                                    );
+                                    handleChangeRole(value);
                                 }}
+                                onBlur={formik.handleBlur}
                                 isOptionEqualToValue={(option, value) =>
                                     value === null ||
                                     value === "" ||
