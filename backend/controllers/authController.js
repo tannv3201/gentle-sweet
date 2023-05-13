@@ -31,6 +31,7 @@ const authController = {
                 ward: req.body.ward,
                 detail_address: req.body.detail_address,
                 birth_date: req.body.birth_date,
+                email: req.body.email,
                 status: 1,
             });
 
