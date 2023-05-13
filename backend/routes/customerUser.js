@@ -9,6 +9,12 @@ router.get(
     customerUserController.getlAllCustomerUser
 );
 
+router.post(
+    "/create",
+    middlewareController.verifyTokenAndSystemUserAuth,
+    customerUserController.createCustomerUser
+);
+
 router.get(
     "/:id",
     middlewareController.verifyToken,
@@ -25,6 +31,18 @@ router.delete(
     "/:id",
     middlewareController.verifyTokenAndSystemUserAuth,
     customerUserController.deleteCustomerUserById
+);
+
+router.put(
+    "/passwordChange/:id",
+    middlewareController.verifyTokenAndSuperAdminAuth,
+    customerUserController.passwordChangeByAdmin
+);
+
+router.put(
+    "/resetPassword/:id",
+    middlewareController.verifyTokenAndSuperAdminAuth,
+    customerUserController.resetPassword
 );
 
 module.exports = router;

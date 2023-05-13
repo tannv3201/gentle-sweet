@@ -2,7 +2,9 @@ const pool = require("../config/database");
 const { v4: uuidv4 } = require("uuid");
 
 const getAllCustomerUser = async () => {
-    const [rows, fields] = await pool.query("SELECT * FROM tbl_customer_user");
+    const [rows, fields] = await pool.query(
+        "SELECT * FROM tbl_customer_user WHERE status > 0"
+    );
     return rows;
 };
 
