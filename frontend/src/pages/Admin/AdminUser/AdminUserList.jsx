@@ -14,7 +14,7 @@ import GTable from "../../../common/GTable/GTable";
 import { IconButton } from "@mui/material";
 import GButton from "../../../components/MyButton/MyButton";
 import CreateUpdateAdminUser from "./CreateUpdateAdminUser";
-import ConfirmDeletePopup from "./ConfirmDeletePopup";
+import DeleteAdminUser from "./DeleteAdminUser";
 import PasswordMenu from "./PasswordMenu/PasswordMenu";
 import { LightTooltip } from "../../../components/GTooltip/GTooltip";
 
@@ -164,7 +164,7 @@ export default function AdminUserList({ data }) {
                 selectedUser={selectedUser}
             />
 
-            <ConfirmDeletePopup
+            <DeleteAdminUser
                 isOpen={isOpenDeleteConfirmModel}
                 handleOpen={handleCloseDeleteConfirmModal}
                 handleClose={handleCloseDeleteConfirmModal}

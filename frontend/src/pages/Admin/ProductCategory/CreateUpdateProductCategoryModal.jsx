@@ -51,6 +51,7 @@ export default function CreateUpdateProductCategoryModal({
             productCategory,
             axiosJWT
         ).then(() => {
+            formik.handleReset();
             handleClose();
         });
     };
@@ -63,6 +64,7 @@ export default function CreateUpdateProductCategoryModal({
             productCategory,
             axiosJWT
         ).then(() => {
+            formik.handleReset();
             handleClose();
         });
     };

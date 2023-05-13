@@ -6,7 +6,6 @@ import { useSelector } from "react-redux";
 import { getAllProductCategory, getAllUser } from "../../../redux/apiRequest";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import _ from "underscore";
 import { loginSuccess } from "../../../redux/authSlice";
 import { createAxios } from "../../../createInstance";
 import { useState } from "react";
@@ -14,7 +13,7 @@ import GTable from "../../../common/GTable/GTable";
 import { IconButton } from "@mui/material";
 import GButton from "../../../components/MyButton/MyButton";
 import CreateUpdateAdminUser from "./CreateUpdateProductCategoryModal";
-import ConfirmDeletePopup from "./ConfirmDeletePopup";
+import DeleteProductCategory from "./DeleteProductCategory";
 import { LightTooltip } from "../../../components/GTooltip/GTooltip";
 
 export default function ProductCategoryList({ data }) {
@@ -160,7 +159,7 @@ export default function ProductCategoryList({ data }) {
                 selectedProductCategory={selectedProductCategory}
             />
 
-            <ConfirmDeletePopup
+            <DeleteProductCategory
                 isOpen={isOpenDeleteConfirmPopup}
                 handleOpen={handleOpenDeleteConfirmPopup}
                 handleClose={handleCloseDeleteConfirmPopup}

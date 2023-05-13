@@ -374,7 +374,14 @@ span.MuiChip-label {
     overflow-x: auto !important;
 }
 
-.MuiInputBase-input:not(input[type="number"]) {
+// .MuiInputBase-input:not(input[type="number"]) {
+//     font-size: 1.6rem !important;
+//     font-weight: var(--fw-normal) !important;
+//     font-family: var(--font-family) !important;
+//     color: var(--text-primary) !important;
+// }
+
+.MuiInputBase-input {
     font-size: 1.6rem !important;
     font-weight: var(--fw-normal) !important;
     font-family: var(--font-family) !important;

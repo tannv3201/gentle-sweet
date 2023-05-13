@@ -2,7 +2,9 @@ const pool = require("../config/database");
 const { v4: uuidv4 } = require("uuid");
 
 const getAllProduct = async () => {
-    const [rows, fields] = await pool.query("SELECT * FROM tbl_product");
+    const [rows, fields] = await pool.query(
+        "SELECT * FROM tbl_product WHERE status > 0"
+    );
     return rows;
 };
 
