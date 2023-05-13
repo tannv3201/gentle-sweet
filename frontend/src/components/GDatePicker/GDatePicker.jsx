@@ -6,14 +6,15 @@ import { DesktopDatePicker } from "@mui/x-date-pickers";
 import { TextField } from "@mui/material";
 import { RedditTextField } from "../GTextField/GTextField";
 
-export default function FirstComponent({ label, fullWidth }) {
+export default function FirstComponent({ label, fullWidth, ...props }) {
     return (
         <LocalizationProvider dateAdapter={AdapterDayjs}>
             <DatePicker
+                {...props}
                 label={label}
                 format="DD/MM/YYYY"
                 slotProps={{
-                    textField: { fullWidth: fullWidth, variant: "filled" },
+                    textField: { fullWidth: fullWidth, size: "small" },
                 }}
             />
         </LocalizationProvider>
