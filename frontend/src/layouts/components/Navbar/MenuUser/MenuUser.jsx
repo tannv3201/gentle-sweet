@@ -4,15 +4,14 @@ import MenuItem from "@mui/material/MenuItem";
 import { IconButton } from "@mui/material";
 import { Person } from "@mui/icons-material";
 import images from "../../../../assets/images";
-import { useEffect } from "react";
 import classNames from "classnames/bind";
 import styles from "./MenuUser.module.scss";
 import { useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
-import { logout } from "../../../../redux/apiRequest";
+import { logout } from "../../../../redux/api/apiAuth";
 import { useDispatch } from "react-redux";
 import { createAxios } from "../../../../createInstance";
-import { logoutSuccess } from "../../../../redux/authSlice";
+import { logoutSuccess } from "../../../../redux/slice/authSlice";
 
 const cx = classNames.bind(styles);
 

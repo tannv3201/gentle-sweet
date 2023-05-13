@@ -1,11 +1,7 @@
 import React from "react";
 import GButton from "../../../../components/MyButton/MyButton";
 import { PhotoCamera } from "@mui/icons-material";
-import axios from "axios";
-import { useState } from "react";
-import { uploadImage } from "../../../../redux/apiRequest";
-import { useFormikContext } from "formik";
-import FileUploadRoundedIcon from "@mui/icons-material/FileUploadRounded";
+
 import { Grid } from "@mui/material";
 function UploadImage({
     handleFileInputChange,

@@ -9,9 +9,8 @@ import GButton from "../../../../components/MyButton/MyButton";
 import { toast } from "react-hot-toast";
 import { useDispatch, useSelector } from "react-redux";
 import { createAxios } from "../../../../createInstance";
-import { loginSuccess } from "../../../../redux/authSlice";
-import { passwordChange } from "../../../../redux/apiRequest";
-import { Visibility, VisibilityOff } from "@mui/icons-material";
+import { loginSuccess } from "../../../../redux/slice/authSlice";
+import { passwordChange } from "../../../../redux/api/apiAdminUser";
 import { useState } from "react";
 
 function PasswordChangePopup({

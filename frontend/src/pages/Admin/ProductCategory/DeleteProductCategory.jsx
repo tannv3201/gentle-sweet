@@ -1,10 +1,8 @@
 import React from "react";
-import GButton from "../../../components/MyButton/MyButton";
 
-import GModal from "../../../common/GModal/GModal";
-import { deleteProductCategory } from "../../../redux/apiRequest";
+import { deleteProductCategory } from "../../../redux/api/apiProductCategory";
 import { useDispatch, useSelector } from "react-redux";
-import { loginSuccess } from "../../../redux/authSlice";
+import { loginSuccess } from "../../../redux/slice/authSlice";
 import { createAxios } from "../../../createInstance";
 import ConfirmDeletePopup from "../components/ConfirmDeletePopup";
 

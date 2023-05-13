@@ -15,9 +15,13 @@ import { useSelector } from "react-redux";
 import GProgress from "../components/GProgress/GProgress";
 
 function App() {
-    const isFetching = useSelector(
-        (state) => state.adminUser.adminUser?.isFetching
-    );
+    const isFetching = useSelector((state) => {
+        return (
+            state.adminUser.adminUser?.isFetching ||
+            state.product.product?.isFetching ||
+            state.productCategory.productCategory?.isFetching
+        );
+    });
 
     return (
         <Router>

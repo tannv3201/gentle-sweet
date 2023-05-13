@@ -27,6 +27,11 @@ export const mainListItems = (
             icon={<PeopleIcon />}
         />
         <MenuItem
+            to={"/admin/customer"}
+            title={"Khách hàng"}
+            icon={<PeopleIcon />}
+        />
+        <MenuItem
             to={"/admin/product-category"}
             title={"Danh mục sản phẩm"}
             icon={<DashboardIcon />}
@@ -41,13 +46,6 @@ export const mainListItems = (
                 <ShoppingCartIcon />
             </ListItemIcon>
             <ListItemText primary="Đơn hàng" />
-        </ListItemButton>
-
-        <ListItemButton>
-            <ListItemIcon>
-                <PeopleIcon />
-            </ListItemIcon>
-            <ListItemText primary="Khách hàng" />
         </ListItemButton>
         <ListItemButton>
             <ListItemIcon>

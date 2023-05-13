@@ -3,14 +3,10 @@ import EditRoundedIcon from "@mui/icons-material/EditRounded";
 import DeleteRoundedIcon from "@mui/icons-material/DeleteRounded";
 import { useEffect } from "react";
 import { useSelector } from "react-redux";
-import {
-    getAllProduct,
-    getAllProductCategory,
-    getAllUser,
-} from "../../../redux/apiRequest";
+import { getAllProduct } from "../../../redux/api/apiProduct";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { loginSuccess } from "../../../redux/authSlice";
+import { loginSuccess } from "../../../redux/slice/authSlice";
 import { createAxios } from "../../../createInstance";
 import { useState } from "react";
 import GTable from "../../../common/GTable/GTable";
@@ -22,7 +18,7 @@ import DeleteProduct from "./DeleteProduct";
 import CreateUpdateProductModal from "./CreateUpdateProductModal";
 import { FormatCurrency } from "../../../components/FormatCurrency/FormatCurrency";
 
-export default function ProductCategoryList({ data }) {
+export default function ProductCategoryList() {
     const user = useSelector((state) => state.auth.login?.currentUser);
     const [cloneData, setCloneData] = useState([]);
     const dispatch = useDispatch();

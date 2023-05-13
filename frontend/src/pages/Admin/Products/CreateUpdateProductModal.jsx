@@ -5,14 +5,11 @@ import { Autocomplete, Grid } from "@mui/material";
 import { useState } from "react";
 import * as Yup from "yup";
 import GModal from "../../../common/GModal/GModal";
-import {
-    createProduct,
-    getAllProductCategory,
-    updateProduct,
-    uploadImage,
-} from "../../../redux/apiRequest";
+import { createProduct, updateProduct } from "../../../redux/api/apiProduct";
+import { getAllProductCategory } from "../../../redux/api/apiProductCategory";
+import { uploadImage } from "../../../redux/api/apiImageUpload";
 import { useDispatch, useSelector } from "react-redux";
-import { loginSuccess } from "../../../redux/authSlice";
+import { loginSuccess } from "../../../redux/slice/authSlice";
 import { createAxios } from "../../../createInstance";
 import GTextFieldNormal from "../../../components/GTextField/GTextFieldNormal";
 import UploadImage from "./UploadImage/UploadImage";

@@ -1,10 +1,10 @@
 import React from "react";
 
-import { deleteAdminUser } from "../../../redux/apiRequest";
 import { useDispatch, useSelector } from "react-redux";
-import { loginSuccess } from "../../../redux/authSlice";
+import { loginSuccess } from "../../../redux/slice/authSlice";
 import { createAxios } from "../../../createInstance";
 import ConfirmDeletePopup from "../components/ConfirmDeletePopup";
+import { deleteAdminUser } from "../../../redux/api/apiAdminUser";
 
 export default function DeleteAdminUser({
     handleClose,

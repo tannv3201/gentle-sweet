@@ -1,32 +1,18 @@
 import React, { useEffect } from "react";
-import axios from "axios";
 import { useFormik } from "formik";
 import GButton from "../../../components/MyButton/MyButton";
-import { Autocomplete, Grid, IconButton, InputAdornment } from "@mui/material";
+import { Grid } from "@mui/material";
 import { useState } from "react";
 import * as Yup from "yup";
 import GModal from "../../../common/GModal/GModal";
 import {
-    createAdminUser,
     createProductCategory,
-    updateAdminUser,
     updateProductCategory,
-} from "../../../redux/apiRequest";
+} from "../../../redux/api/apiProductCategory";
 import { useDispatch, useSelector } from "react-redux";
-import { loginSuccess } from "../../../redux/authSlice";
+import { loginSuccess } from "../../../redux/slice/authSlice";
 import { createAxios } from "../../../createInstance";
 import GTextFieldNormal from "../../../components/GTextField/GTextFieldNormal";
-
-const roleList = [
-    {
-        role_name: "ADMIN",
-        role_id: "eaff3c47-28b5-4315-8bc7-384b72fe039a",
-    },
-    {
-        role_name: "STAFF",
-        role_id: "16d0f7f9-e6cc-42d3-b748-5930044b3893",
-    },
-];
 
 export default function CreateUpdateProductCategoryModal({
     handleClose,

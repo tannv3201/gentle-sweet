@@ -3,8 +3,8 @@ import GButton from "../../../../components/MyButton/MyButton";
 import GModal from "../../../../common/GModal/GModal";
 import { useDispatch, useSelector } from "react-redux";
 import { createAxios } from "../../../../createInstance";
-import { loginSuccess } from "../../../../redux/authSlice";
-import { resetPassword } from "../../../../redux/apiRequest";
+import { loginSuccess } from "../../../../redux/slice/authSlice";
+import { resetPassword } from "../../../../redux/api/apiAdminUser";
 
 function ConfirmResetPasswordPopup({
     handleClose,

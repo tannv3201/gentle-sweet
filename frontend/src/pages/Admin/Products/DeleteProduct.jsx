@@ -1,8 +1,8 @@
 import React from "react";
 
-import { deleteProduct } from "../../../redux/apiRequest";
+import { deleteProduct } from "../../../redux/api/apiProduct";
 import { useDispatch, useSelector } from "react-redux";
-import { loginSuccess } from "../../../redux/authSlice";
+import { loginSuccess } from "../../../redux/slice/authSlice";
 import { createAxios } from "../../../createInstance";
 import ConfirmDeletePopup from "../components/ConfirmDeletePopup";
 

@@ -3,7 +3,6 @@ import styles from "./Login.module.scss";
 import classNames from "classnames/bind";
 import images from "../../assets/images";
 import { Grid } from "@mui/material";
-import GTextField from "../../components/GTextField/GTextField";
 import GButton from "../../components/MyButton/MyButton";
 import { Google, Facebook } from "@mui/icons-material";
 /* eslint-disable jsx-a11y/anchor-is-valid */
@@ -11,11 +10,11 @@ import { Google, Facebook } from "@mui/icons-material";
 import { Formik } from "formik";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { loginUser } from "../../redux/apiRequest";
-import toast, { Toaster, useToasterStore } from "react-hot-toast";
+import toast, { useToasterStore } from "react-hot-toast";
 import { useEffect } from "react";
 import * as Yup from "yup";
 import GTextFieldNormal from "../../components/GTextField/GTextFieldNormal";
+import { loginUser } from "../../redux/api/apiAuth";
 
 const cx = classNames.bind(styles);
 

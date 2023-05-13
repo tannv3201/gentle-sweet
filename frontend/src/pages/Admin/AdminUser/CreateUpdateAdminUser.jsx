@@ -1,17 +1,19 @@
 import React, { useEffect } from "react";
-import axios from "axios";
 import { useFormik } from "formik";
 import GButton from "../../../components/MyButton/MyButton";
 import { Autocomplete, Grid, IconButton, InputAdornment } from "@mui/material";
 import { useState } from "react";
 import * as Yup from "yup";
 import GModal from "../../../common/GModal/GModal";
-import { createAdminUser, updateAdminUser } from "../../../redux/apiRequest";
 import { useDispatch, useSelector } from "react-redux";
-import { loginSuccess } from "../../../redux/authSlice";
+import { loginSuccess } from "../../../redux/slice/authSlice";
 import { createAxios } from "../../../createInstance";
 import GTextFieldNormal from "../../../components/GTextField/GTextFieldNormal";
 import { Visibility, VisibilityOff } from "@mui/icons-material";
+import {
+    createAdminUser,
+    updateAdminUser,
+} from "../../../redux/api/apiAdminUser";
 
 const roleList = [
     {
