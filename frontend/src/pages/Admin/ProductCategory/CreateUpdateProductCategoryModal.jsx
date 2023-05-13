@@ -69,10 +69,15 @@ export default function CreateUpdateProductCategoryModal({
         });
     };
 
+    // Validate
+    const validationSchema = Yup.object().shape({
+        name: Yup.string().required("Vui lòng không để trống"),
+    });
+
     const formik = useFormik({
         enableReinitialize: true,
         initialValues: productCategory,
-        // validationSchema: validationSchema,
+        validationSchema: validationSchema,
         onSubmit: (data) => {
             if (data?.id) {
                 handleUpdateProductCategory(data);
@@ -81,10 +86,6 @@ export default function CreateUpdateProductCategoryModal({
                     ...data,
                     admin_user_id: user?.id,
                 });
-                // console.log("create", {
-                //     ...data,
-                //     admin_user_id: user?.id,
-                // });
             }
         },
     });
@@ -134,21 +135,10 @@ export default function CreateUpdateProductCategoryModal({
                                 fullWidth
                                 name="description"
                                 value={formik.values?.description || ""}
-                                error={
-                                    formik.touched?.description &&
-                                    Boolean(formik.errors?.description)
-                                }
-                                helperText={
-                                    formik.touched?.description &&
-                                    formik.errors?.description
-                                }
                                 multiline
                                 rows={3}
                             />
                         </Grid>
-                        {/* <Grid item xs={12}>
-                            <UploadImage setImage={setImage} />
-                        </Grid> */}
                         <Grid item xs={12}>
                             <GButton color={"success"} type="submit">
                                 Lưu
