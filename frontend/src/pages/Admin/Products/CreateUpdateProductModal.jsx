@@ -146,6 +146,16 @@ export default function CreateUpdateProductModal({
         },
     });
 
+    const handleChangeProductCategory = (value) => {
+        if (value) {
+            formik.setFieldValue("product_category_id", value?.id);
+            formik.setFieldValue("product_category_name", value?.name);
+        } else {
+            formik.setFieldValue("product_category_id", null);
+            formik.setFieldValue("product_category_name", null);
+        }
+    };
+
     return (
         <>
             <GModal
@@ -166,18 +176,12 @@ export default function CreateUpdateProductModal({
                         <Grid item xs={12}>
                             <Autocomplete
                                 options={productCategoryList}
+                                onBlur={formik.handleBlur}
                                 getOptionLabel={(option) =>
                                     `${option?.name}` || ""
                                 }
                                 onChange={(e, value) => {
-                                    formik.setFieldValue(
-                                        "product_category_id",
-                                        value?.id
-                                    );
-                                    formik.setFieldValue(
-                                        "product_category_name",
-                                        value?.name || ""
-                                    );
+                                    handleChangeProductCategory(value);
                                 }}
                                 isOptionEqualToValue={(option, value) =>
                                     value === null ||
