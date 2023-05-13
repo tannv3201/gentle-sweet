@@ -388,6 +388,11 @@ span.MuiChip-label {
     color: var(--text-primary) !important;
 }
 
+.MuiFormLabel-root.MuiInputLabel-root.MuiInputLabel-formControl.MuiInputLabel-animated.MuiInputLabel-outlined.MuiFormLabel-colorPrimary.MuiInputLabel-root.MuiInputLabel-formControl.MuiInputLabel-animated.MuiInputLabel-outlined:not(
+        .Mui-focused
+    ) {
+    font-size: 1.6rem !important;
+}
 .MuiInputBase-root {
     font-size: 2rem !important;
     fieldset {
@@ -404,9 +409,9 @@ span.MuiChip-label {
     // padding-top: 2px !important;
 }
 
-.MuiFormLabel-root.MuiInputLabel-root.MuiInputLabel-formControl.MuiInputLabel-animated.MuiInputLabel-filled {
-    padding-top: 2px !important;
-}
+// .MuiFormLabel-root.MuiInputLabel-root.MuiInputLabel-formControl.MuiInputLabel-animated.MuiInputLabel-filled {
+//     padding-top: 2px !important;
+// }
 
 .MuiInputLabel-root {
     font-size: 2rem !important;
@@ -439,9 +444,20 @@ span.MuiChip-label {
     border-bottom-color: var(--color-text-field) !important;
 }
 
-.Mui-focused:not(.Mui-error) fieldset {
-    border-color: var(--color-text-field) !important;
+// .Mui-focused:not(.Mui-error) fieldset {
+//     border-color: var(--color-text-field) !important;
+// }
+.MuiInputBase-root.MuiOutlinedInput-root.MuiInputBase-colorSecondary.MuiInputBase-fullWidth.Mui-focused.MuiInputBase-formControl.MuiInputBase-sizeSmall.MuiInputBase-adornedEnd.MuiAutocomplete-inputRoot:not(
+        .Mui-error
+    ) {
+    fieldset {
+        border-color: var(--color-text-field) !important;
+    }
 }
+
+// .MuiInputBase-root.MuiOutlinedInput-root.Mui-error.MuiOutlinedInput-notchedOutline {
+//     border-color: var(--color-text-field) !important;
+// }
 
 .MuiButtonBase-root.MuiButton-root {
     font-family: var(--font-family) !important;
