@@ -17,6 +17,14 @@ import { createAxios } from "../../../createInstance";
 import GTextFieldNormal from "../../../components/GTextField/GTextFieldNormal";
 import UploadImage from "./UploadImage/UploadImage";
 
+// Validate
+const validationSchema = Yup.object().shape({
+    product_category_id: Yup.string().required("Vui lòng không để trống"),
+    name: Yup.string().required("Vui lòng không để trống"),
+    quantity: Yup.string().required("Vui lòng không để trống"),
+    price: Yup.string().required("Vui lòng không để trống"),
+});
+
 export default function CreateUpdateProductModal({
     handleClose,
     handleOpen,
@@ -120,6 +128,7 @@ export default function CreateUpdateProductModal({
     const formik = useFormik({
         enableReinitialize: true,
         initialValues: product,
+        validationSchema: validationSchema,
         onSubmit: async (data) => {
             if (data?.id) {
                 const res = await handleUploadButtonClick();
@@ -130,7 +139,12 @@ export default function CreateUpdateProductModal({
             } else {
                 const res = await handleUploadButtonClick();
                 const newProduct = { ...data, image: res };
-                handleCreateProduct(newProduct);
+                if (!res) {
+                    formik.setFieldError("image", "Vui lòng chọn ảnh");
+                    return;
+                } else {
+                    handleCreateProduct(newProduct);
+                }
             }
         },
     });
@@ -260,6 +274,10 @@ export default function CreateUpdateProductModal({
                             <UploadImage
                                 handleFileInputChange={handleFileInputChange}
                                 imageUrl={imageUrl}
+                                helpertext={
+                                    formik.touched?.image &&
+                                    formik.errors?.image
+                                }
                             />
                         </Grid>
                         <Grid item xs={12}>

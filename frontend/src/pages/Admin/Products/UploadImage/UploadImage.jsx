@@ -11,6 +11,7 @@ function UploadImage({
     handleFileInputChange,
     imageUrl,
     handleUploadButtonClick,
+    helpertext,
 }) {
     return (
         <>
@@ -35,6 +36,18 @@ function UploadImage({
                                     />
                                 </GButton>
                             </Grid>
+                            {!imageUrl && (
+                                <Grid item xs={12}>
+                                    <span
+                                        style={{
+                                            color: "red",
+                                            fontSize: "1.5rem",
+                                        }}
+                                    >
+                                        {helpertext}
+                                    </span>
+                                </Grid>
+                            )}
                             {imageUrl && (
                                 <Grid item xs={6}>
                                     <img
@@ -51,18 +64,6 @@ function UploadImage({
                         </Grid>
                     </div>
                 </Grid>
-                {/* {imageUrl && (
-                    <Grid item xs={12}>
-                        <GButton
-                            startIcon={<FileUploadRoundedIcon />}
-                            color={"info"}
-                            onClick={handleUploadButtonClick}
-                            variant="outlined"
-                        >
-                            Tải lên
-                        </GButton>
-                    </Grid>
-                )} */}
             </Grid>
         </>
     );
