@@ -1,10 +1,10 @@
 import { createSlice } from "@reduxjs/toolkit";
 
-const customerSlice = createSlice({
-    name: "customer",
+const customerUserSlice = createSlice({
+    name: "customerUser",
     initialState: {
-        customer: {
-            customerList: [],
+        customerUser: {
+            customerUserList: [],
             isFetching: false,
             error: false,
         },
@@ -12,96 +12,96 @@ const customerSlice = createSlice({
     },
     reducers: {
         // Get all ADMIN USER
-        getCustomerStart: (state) => {
-            state.customer.isFetching = true;
+        getAllCustomerStart: (state) => {
+            state.customerUser.isFetching = true;
         },
-        getCustomerSuccess: (state, action) => {
-            state.customer.isFetching = false;
-            state.customer.customerList = action.payload;
+        getAllCustomerSuccess: (state, action) => {
+            state.customerUser.isFetching = false;
+            state.customerUser.customerUserList = action.payload;
         },
 
-        getCustomerFailed: (state) => {
-            state.customer.isFetching = false;
-            state.customer.error = true;
+        getAllCustomerFailed: (state) => {
+            state.customerUser.isFetching = false;
+            state.customerUser.error = true;
         },
 
         // Create ADMIN USER
         createCustomerStart: (state) => {
-            state.customer.isFetching = true;
+            state.customerUser.isFetching = true;
         },
         createCustomerSuccess: (state, action) => {
-            state.customer.isFetching = false;
+            state.customerUser.isFetching = false;
             state.msg = action.payload;
         },
         createCustomerFailed: (state, action) => {
-            state.customer.isFetching = false;
-            state.customer.error = true;
+            state.customerUser.isFetching = false;
+            state.customerUser.error = true;
             state.msg = action.payload;
         },
 
         // Delete ADMIN USER
         deleteCustomerStart: (state) => {
-            state.customer.isFetching = true;
+            state.customerUser.isFetching = true;
         },
         deleteCustomerSuccess: (state, action) => {
-            state.customer.isFetching = false;
+            state.customerUser.isFetching = false;
             state.msg = action.payload;
         },
         deleteCustomerFailed: (state, action) => {
-            state.customer.isFetching = false;
-            state.customer.error = true;
+            state.customerUser.isFetching = false;
+            state.customerUser.error = true;
             state.msg = action.payload;
         },
 
         // Update ADMIN USER
         updateCustomerStart: (state) => {
-            state.customer.isFetching = true;
+            state.customerUser.isFetching = true;
         },
         updateCustomerSuccess: (state, action) => {
-            state.customer.isFetching = false;
+            state.customerUser.isFetching = false;
             state.msg = action.payload;
         },
         updateCustomerFailed: (state, action) => {
-            state.customer.isFetching = false;
-            state.customer.error = true;
+            state.customerUser.isFetching = false;
+            state.customerUser.error = true;
             state.msg = action.payload;
         },
 
         // Change Password by ADMIN USER
         passwordChangeStart: (state) => {
-            state.customer.isFetching = true;
+            state.customerUser.isFetching = true;
         },
         passwordChangeSuccess: (state, action) => {
-            state.customer.isFetching = false;
+            state.customerUser.isFetching = false;
             state.msg = action.payload;
         },
         passwordChangeFailed: (state, action) => {
-            state.customer.isFetching = false;
-            state.customer.error = true;
+            state.customerUser.isFetching = false;
+            state.customerUser.error = true;
             state.msg = action.payload;
         },
 
         // Change Password by ADMIN USER
         // Delete ADMIN USER
         resetPasswordStart: (state) => {
-            state.customer.isFetching = true;
+            state.customerUser.isFetching = true;
         },
         resetPasswordSuccess: (state, action) => {
-            state.customer.isFetching = false;
+            state.customerUser.isFetching = false;
             state.msg = action.payload;
         },
         resetPasswordFailed: (state, action) => {
-            state.customer.isFetching = false;
-            state.customer.error = true;
+            state.customerUser.isFetching = false;
+            state.customerUser.error = true;
             state.msg = action.payload;
         },
     },
 });
 
 export const {
-    getCustomerStart,
-    getCustomerSuccess,
-    getCustomerFailed,
+    getAllCustomerStart,
+    getAllCustomerSuccess,
+    getAllCustomerFailed,
     createCustomerStart,
     createCustomerSuccess,
     createCustomerFailed,
@@ -117,6 +117,6 @@ export const {
     resetPasswordStart,
     resetPasswordSuccess,
     resetPasswordFailed,
-} = customerSlice.actions;
+} = customerUserSlice.actions;
 
-export default customerSlice.reducer;
+export default customerUserSlice.reducer;

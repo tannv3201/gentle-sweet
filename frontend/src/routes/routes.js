@@ -26,7 +26,7 @@ import Products from "../pages/Admin/Products/Products";
 import AdminLayout from "../layouts/AdminLayout/AdminLayout";
 import AdminUser from "../pages/Admin/AdminUser/AdminUser";
 import ProductCategory from "../pages/Admin/ProductCategory/ProductCategory";
-import Customer from "../pages/Admin/Customer/Customer";
+import CustomerUser from "../pages/Admin/CustomerUser/CustomerUser";
 
 // public routes
 
@@ -114,7 +114,7 @@ export const privateRoutes = [
     },
     {
         path: "/admin/customer",
-        component: Customer,
+        component: CustomerUser,
         layout: AdminLayout,
     },
 ];
