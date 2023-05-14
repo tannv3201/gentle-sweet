@@ -2,6 +2,7 @@ import React, { useEffect } from "react";
 import TextField from "@mui/material/TextField";
 import { IconButton, InputAdornment } from "@mui/material";
 import { Visibility, VisibilityOff } from "@mui/icons-material";
+import { useFormikContext } from "formik";
 
 export const RequiredLabel = () => {
     return <span style={{ color: "red" }}>*</span>;
@@ -22,6 +23,7 @@ function GTextFieldNormal({
     style,
     password,
     isShowPassword,
+    formik,
     ...otherProps
 }) {
     const configTextfield = {
@@ -64,6 +66,11 @@ function GTextFieldNormal({
             {password ? (
                 <TextField
                     {...configTextfield}
+                    onBlur={formik?.handleBlur}
+                    error={
+                        formik?.touched[name] && Boolean(formik?.errors[name])
+                    }
+                    helperText={formik?.touched[name] && formik?.errors[name]}
                     multiline={multiline}
                     label={displayLabel}
                     color="secondary"
@@ -90,9 +97,14 @@ function GTextFieldNormal({
             ) : (
                 <TextField
                     {...configTextfield}
+                    onBlur={formik?.handleBlur}
                     multiline={multiline}
                     label={displayLabel}
                     color="secondary"
+                    error={
+                        formik?.touched[name] && Boolean(formik?.errors[name])
+                    }
+                    helperText={formik?.touched[name] && formik?.errors[name]}
                 />
             )}
         </>
