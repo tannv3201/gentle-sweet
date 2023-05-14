@@ -388,16 +388,21 @@ span.MuiChip-label {
     color: var(--text-primary) !important;
 }
 
-.MuiFormLabel-root.MuiInputLabel-root.MuiInputLabel-formControl.MuiInputLabel-animated.MuiInputLabel-outlined.MuiFormLabel-colorPrimary.MuiInputLabel-root.MuiInputLabel-formControl.MuiInputLabel-animated.MuiInputLabel-outlined:not(
-        .Mui-focused
+.MuiInputBase-root.MuiOutlinedInput-root.MuiInputBase-colorSecondary.MuiInputBase-fullWidth.Mui-focused.MuiInputBase-formControl:not(
+        .Mui-error
     ) {
-    font-size: 1.6rem !important;
+    fieldset {
+        border-color: var(--color-text-field) !important;
+    }
+}
+.MuiInputBase-root.MuiOutlinedInput-root.MuiInputBase-colorPrimary.MuiInputBase-fullWidth.MuiInputBase-formControl.MuiInputBase-sizeSmall.MuiInputBase-adornedEnd {
+    legend {
+        font-size: 1.6rem !important;
+    }
 }
 .MuiInputBase-root {
     font-size: 2rem !important;
-    fieldset {
-        // background-color: var(--white) !important;
-    }
+
     input {
         background-color: var(--white) !important;
     }
@@ -406,12 +411,20 @@ span.MuiChip-label {
         .Mui-focused
     ) {
     font-size: 1.6rem !important;
-    // padding-top: 2px !important;
 }
 
-// .MuiFormLabel-root.MuiInputLabel-root.MuiInputLabel-formControl.MuiInputLabel-animated.MuiInputLabel-filled {
-//     padding-top: 2px !important;
-// }
+.MuiFormLabel-root.MuiInputLabel-root.MuiInputLabel-formControl.MuiInputLabel-animated.MuiInputLabel-sizeSmall.MuiInputLabel-outlined.MuiFormLabel-colorPrimary.MuiInputLabel-root.MuiInputLabel-formControl.MuiInputLabel-animated.MuiInputLabel-sizeSmall:not(
+        .MuiInputLabel-shrink
+    ) {
+    font-size: 1.6rem !important;
+}
+.MuiInputBase-root.MuiOutlinedInput-root.MuiInputBase-colorPrimary.MuiInputBase-fullWidth.Mui-focused.MuiInputBase-formControl:not(
+        .Mui-error
+    ) {
+    fieldset {
+        border-color: var(--color-text-field) !important;
+    }
+}
 
 .MuiInputLabel-root {
     font-size: 2rem !important;
