@@ -13,11 +13,17 @@ const adminUserController = {
             const newAdminUser = await adminUserModel.createAdminUser({
                 id: uuidv4(),
                 role_id: req.body.role_id,
+                birth_date: req.body.birth_date,
                 username: req.body.username,
                 password: hashed,
                 first_name: req.body.first_name,
                 last_name: req.body.last_name,
                 email: req.body.email,
+                phone_number: req.body.phone_number,
+                province: req.body.province,
+                district: req.body.district,
+                ward: req.body.ward,
+                detail_address: req.body.detail_address,
                 status: 1,
             });
             // res.status(201).json(newAdminUser);

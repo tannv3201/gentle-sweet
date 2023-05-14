@@ -111,4 +111,4 @@ function GTextFieldNormal({
     );
 }
 
-export default GTextFieldNormal;
+export default React.memo(GTextFieldNormal);

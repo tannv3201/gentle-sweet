@@ -46,8 +46,6 @@ export default function PasswordMenu({ selectedCustomerUser }) {
         setIsOpenResetPasswordPopup(false);
     };
 
-    console.log(selectedCustomerUser);
-
     return (
         <div>
             <LightTooltip placement="bottom" title="Mật khẩu">

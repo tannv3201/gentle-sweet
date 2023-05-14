@@ -35,7 +35,7 @@ export default function DeleteAdminUser({
                 handleOpen={handleOpen}
                 isOpen={isOpen}
                 deleteQuestion="Bạn có chắc chắn muốn xóa người dùng"
-                deleteLabel={selectedUser?.username}
+                deleteLabel={selectedUser?.fullName}
                 handleDelete={handleDeleteAdminUser}
             />
         </>

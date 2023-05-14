@@ -1,6 +1,5 @@
 import React from "react";
-import EditRoundedIcon from "@mui/icons-material/EditRounded";
-import DeleteRoundedIcon from "@mui/icons-material/DeleteRounded";
+import { EditRounded, DeleteRounded, InfoRounded } from "@mui/icons-material/";
 import { useEffect } from "react";
 import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
@@ -17,6 +16,8 @@ import DeleteAdminUser from "./DeleteAdminUser";
 import PasswordMenu from "./PasswordMenu/PasswordMenu";
 import { LightTooltip } from "../../../components/GTooltip/GTooltip";
 import { getAllUser } from "../../../redux/api/apiAdminUser";
+import AdminUserInfoDetail from "./AdminUserInfoDetail/AdminUserInfoDetail";
+import dayjs from "dayjs";
 
 export default function AdminUserList({ data }) {
     const user = useSelector((state) => state.auth.login?.currentUser);
@@ -75,10 +76,15 @@ export default function AdminUserList({ data }) {
             username: rowData.username,
             last_name: rowData.last_name,
             first_name: rowData.first_name,
+            phone_number: rowData?.phone_number,
+            province: rowData?.province,
+            district: rowData?.district,
+            ward: rowData?.ward,
+            detail_address: rowData?.detail_address,
+            birth_date: rowData?.birth_date ? dayjs(rowData?.birth_date) : null,
             email: rowData.email,
             password: "",
             confirmPassword: "",
-            editState: rowData?.id ? true : false,
         });
         setIsOpenCreateUpdateModel(true);
     };
@@ -92,12 +98,48 @@ export default function AdminUserList({ data }) {
         useState(false);
 
     const handleOpenDeleteConfirmModal = (rowData) => {
-        setSelectedUser(rowData);
+        setSelectedUser({
+            id: rowData?.id,
+            fullName: rowData?.last_name + " " + rowData?.first_name,
+        });
         setIsOpenDeleteConfirmModel(true);
     };
 
     const handleCloseDeleteConfirmModal = () => {
         setIsOpenDeleteConfirmModel(false);
+    };
+
+    // Information Detail modal
+    const [isOpenInfoDetailModel, setIsOpenInfoDetailModel] = useState(false);
+
+    const handleOpenInfoDetailModal = (rowData) => {
+        setSelectedUser({
+            id: rowData.id,
+            role_id: rowData.role_id || null,
+            role_name:
+                rowData.role_id === "eaff3c47-28b5-4315-8bc7-384b72fe039a"
+                    ? "ADMIN"
+                    : rowData.role_id === "16d0f7f9-e6cc-42d3-b748-5930044b3893"
+                    ? "STAFF"
+                    : "",
+            username: rowData.username,
+            last_name: rowData.last_name,
+            first_name: rowData.first_name,
+            phone_number: rowData?.phone_number,
+            province: rowData?.province,
+            district: rowData?.district,
+            ward: rowData?.ward,
+            detail_address: rowData?.detail_address,
+            birth_date: rowData?.birth_date ? dayjs(rowData?.birth_date) : null,
+            email: rowData.email,
+            password: "",
+            confirmPassword: "",
+        });
+        setIsOpenInfoDetailModel(true);
+    };
+
+    const handleCloseInfoDetailModal = () => {
+        setIsOpenInfoDetailModel(false);
     };
 
     return (
@@ -127,6 +169,18 @@ export default function AdminUserList({ data }) {
                             >
                                 <LightTooltip
                                     placement="bottom"
+                                    title="Chi tiết"
+                                >
+                                    <IconButton
+                                        onClick={() => {
+                                            handleOpenInfoDetailModal(rowData);
+                                        }}
+                                    >
+                                        <InfoRounded color="info" />
+                                    </IconButton>
+                                </LightTooltip>
+                                <LightTooltip
+                                    placement="bottom"
                                     title="Chỉnh sửa"
                                 >
                                     <IconButton
@@ -134,7 +188,7 @@ export default function AdminUserList({ data }) {
                                             handleOpenCreateUpdateModal(rowData)
                                         }
                                     >
-                                        <EditRoundedIcon color="primary" />
+                                        <EditRounded color="primary" />
                                     </IconButton>
                                 </LightTooltip>
                                 <LightTooltip placement="bottom" title="Xóa">
@@ -145,7 +199,7 @@ export default function AdminUserList({ data }) {
                                             );
                                         }}
                                     >
-                                        <DeleteRoundedIcon color="error" />
+                                        <DeleteRounded color="error" />
                                     </IconButton>
                                 </LightTooltip>
                                 <PasswordMenu selectedUser={rowData} />
@@ -168,6 +222,13 @@ export default function AdminUserList({ data }) {
                 isOpen={isOpenDeleteConfirmModel}
                 handleOpen={handleCloseDeleteConfirmModal}
                 handleClose={handleCloseDeleteConfirmModal}
+                selectedUser={selectedUser}
+            />
+
+            <AdminUserInfoDetail
+                isOpen={isOpenInfoDetailModel}
+                handleOpen={handleOpenInfoDetailModal}
+                handleClose={handleCloseInfoDetailModal}
                 selectedUser={selectedUser}
             />
         </>

@@ -9,11 +9,21 @@ import { useDispatch, useSelector } from "react-redux";
 import { loginSuccess } from "../../../redux/slice/authSlice";
 import { createAxios } from "../../../createInstance";
 import GTextFieldNormal from "../../../components/GTextField/GTextFieldNormal";
-import { Visibility, VisibilityOff } from "@mui/icons-material";
 import {
     createAdminUser,
     updateAdminUser,
 } from "../../../redux/api/apiAdminUser";
+import GDatePicker from "../../../components/GDatePicker/GDatePicker";
+import {
+    getDistrict,
+    getDistrictById,
+    getProvince,
+    getProvinceById,
+    getWard,
+    getWardById,
+} from "../../../redux/api/apiProvince";
+import dayjs from "dayjs";
+import utc from "dayjs/plugin/utc";
 
 const roleList = [
     {
@@ -32,18 +42,26 @@ function CreateUpdateAdminUser({
     isOpen,
     selectedUser,
 }) {
+    // Format múi giờ
+    dayjs.extend(utc);
     const user = useSelector((state) => state.auth.login?.currentUser);
     const dispatch = useDispatch();
     const [adminUser, setAdminUser] = useState({
         id: "",
         role_id: "",
         role_name: "",
+        birth_date: "",
         username: "",
-        password: "",
-        confirmPassword: "",
+        email: "",
+        phone_number: "",
         first_name: "",
         last_name: "",
-        email: "",
+        province: "",
+        district: "",
+        ward: "",
+        detail_address: "",
+        password: "",
+        confirmPassword: "",
     });
 
     const [showPassword, setShowPassword] = React.useState(false);
@@ -81,26 +99,44 @@ function CreateUpdateAdminUser({
     }, [selectedUser]);
 
     // Validate
+    const phoneRegExp = /(84|0[3|5|7|8|9])+([0-9]{8})\b/;
     const validationSchema = Yup.object().shape({
         role_id: Yup.string().required("Vui lòng không để trống"),
         username: Yup.string()
             .required("Vui lòng không để trống")
             .min(6, "Tên tài khoản phải có ít nhất 6 kí tự")
             .max(20, "Tên tài khoản tối đa 20 kí tự"),
-        password: selectedUser?.editState
+        password: selectedUser?.id
             ? Yup.string()
             : Yup.string()
                   .required("Vui lòng không để trống")
                   .min(8, "Mật khẩu phải có ít nhất 8 kí tự")
                   .max(20, "Mật khẩu tối đa 20 kí tự"),
         first_name: Yup.string().required("Vui lòng không để trống"),
+        phone_number: Yup.string()
+            .matches(/^\d+$/, "Số điện thoại chỉ bao gồm các ký tự số")
+            .matches(phoneRegExp, "Số điện thoại không hợp lệ")
+            .required("Vui lòng nhập số điện thoại"),
         last_name: Yup.string().required("Vui lòng không để trống"),
         email: Yup.string()
             .email("Vui lòng nhập địa chỉ email hợp lệ")
             .required("Vui lòng không để trống"),
-        confirmPassword: selectedUser?.editState
+        confirmPassword: selectedUser?.id
             ? Yup.string()
             : Yup.string().required("Vui lòng không để trống"),
+        province: Yup.string().required("Vui lòng không để trống"),
+        district: Yup.string().required("Vui lòng không để trống"),
+        ward: Yup.string().required("Vui lòng không để trống"),
+        detail_address: Yup.string().required("Vui lòng không để trống"),
+        birth_date: Yup.date()
+            .nullable()
+            .required("Vui lòng nhập ngày sinh")
+            .typeError("Ngày không hợp lệ")
+            .max(new Date(), "Ngày sinh không được lớn hơn ngày hiện tại")
+            .min(
+                new Date("1900-01-01"),
+                "Ngày sinh không được nhỏ hơn 01/01/1900"
+            ),
     });
 
     const formik = useFormik({
@@ -108,15 +144,124 @@ function CreateUpdateAdminUser({
         initialValues: adminUser,
         validationSchema: validationSchema,
         onSubmit: (data) => {
-            const { role_name, editState, confirmPassword, ...updateData } =
-                data;
+            const { confirmPassword, role_name, editState, ...restData } = data;
+            const dataFinal = {
+                ...restData,
+                birth_date: dayjs
+                    .utc(data?.birth_date)
+                    .utcOffset("+07:00")
+                    .format("YYYY/MM/DD"),
+            };
             if (data?.id) {
-                handleUpdateAdminUser(updateData);
+                handleUpdateAdminUser(dataFinal);
             } else {
-                handleCreateAdminUser(data);
+                handleCreateAdminUser(dataFinal);
             }
         },
     });
+
+    // State PROVINCE LIST - DISTRICT LIST - WARD LIST
+    const [provinces, setProvinces] = useState([]);
+    const [districts, setDistricts] = useState([]);
+    const [wards, setWards] = useState([]);
+
+    // State Selected PROVINCE / DISTRICT /W ARD -> onChange
+    const [selectedProvince, setSelectedProvince] = useState(null);
+    const [selectedDistrict, setSelectedDistrict] = useState(null);
+    const [selectedWard, setSelectedWard] = useState(null);
+
+    // Get province list from API
+    useEffect(() => {
+        getProvince().then((provinces) => {
+            setProvinces(provinces);
+        });
+    }, []);
+
+    // Fn handle province onChange event
+    const handleProvinceChange = (event, value) => {
+        setSelectedProvince(value);
+        setSelectedDistrict(null);
+        setSelectedWard(null);
+        formik.setFieldValue("province", value?.province_id);
+
+        if (value) {
+            getDistrict(value?.province_id).then((districts) => {
+                setDistricts(districts);
+            });
+        } else {
+            setDistricts([]);
+            formik.setFieldValue("province", null);
+            formik.setFieldValue("district", null);
+            formik.setFieldValue("ward", null);
+        }
+    };
+
+    // Fn handle district onChange event
+    const handleDistrictChange = (event, value) => {
+        setSelectedDistrict(value);
+        setSelectedWard(null);
+        formik.setFieldValue("district", value?.district_id);
+
+        if (value) {
+            getWard(value?.district_id).then((wards) => {
+                setWards(wards);
+            });
+        } else {
+            setWards([]);
+            formik.setFieldValue("district", null);
+            formik.setFieldValue("ward", null);
+        }
+    };
+
+    // Fn handle ward onChange event
+    const handleChangeWard = (value) => {
+        if (value) {
+            setSelectedWard(value);
+            formik.setFieldValue("ward", value?.ward_id);
+        } else {
+            formik.setFieldValue("ward", null);
+        }
+    };
+
+    // Set selected province/district/ward into states & Formik field
+    useEffect(() => {
+        if (selectedUser) {
+            const provinceSelected = getProvinceById(
+                selectedUser?.province,
+                provinces
+            );
+            setSelectedProvince(provinceSelected);
+            formik.setFieldValue("province", provinceSelected?.province_id);
+
+            // District
+            getDistrict(selectedUser?.province).then((districtList) => {
+                const districtSelected = getDistrictById(
+                    selectedUser?.district,
+                    districtList
+                );
+                setSelectedDistrict(districtSelected);
+                setDistricts(districtList);
+                formik.setFieldValue("district", districtSelected?.district_id);
+            });
+
+            getWard(selectedUser?.district).then((wardList) => {
+                const wardSelected = getWardById(selectedUser?.ward, wardList);
+                setSelectedWard(wardSelected);
+                setWards(wardList);
+                formik.setFieldValue("ward", wardSelected?.ward_id);
+            });
+        }
+    }, [selectedUser]);
+
+    // Fn handle birthdate onChange
+    const handleChangeBirthDate = (value) => {
+        if (value) {
+            formik.setFieldValue("birth_date", value);
+        } else {
+            formik.setFieldValue("birth_date", null);
+        }
+        formik.validateField("birth_date");
+    };
 
     const handleChangeRole = (data) => {
         if (data) {
@@ -146,22 +291,7 @@ function CreateUpdateAdminUser({
             >
                 <form onSubmit={formik.handleSubmit}>
                     <Grid container spacing={2}>
-                        <Grid item xs={12}>
-                            {/* <GTextFieldNormal
-                                onChange={formik.handleChange}
-                                label="Quyền hạn"
-                                fullWidth
-                                name="role_id"
-                                value={formik.values?.role_id || ""}
-                                error={
-                                    formik.touched?.role_id &&
-                                    Boolean(formik.errors?.role_id)
-                                }
-                                helperText={
-                                    formik.touched.role_id &&
-                                    formik.errors?.role_id
-                                }
-                            /> */}
+                        <Grid item xs={6}>
                             <Autocomplete
                                 options={roleList}
                                 getOptionLabel={(option) =>
@@ -189,16 +319,20 @@ function CreateUpdateAdminUser({
                                         name="role_id"
                                         fullWidth
                                         label="Quyền hạn"
-                                        error={
-                                            formik.touched?.role_id &&
-                                            Boolean(formik.errors?.role_id)
-                                        }
-                                        helperText={
-                                            formik.touched.role_id &&
-                                            formik.errors?.role_id
-                                        }
+                                        formik={formik}
                                     />
                                 )}
+                            />
+                        </Grid>
+                        <Grid item xs={6}>
+                            <GDatePicker
+                                label={"Ngày sinh"}
+                                onBlur={formik.handleBlur}
+                                fullWidth
+                                name="birth_date"
+                                onChange={(date) => handleChangeBirthDate(date)}
+                                value={formik.values?.birth_date || null}
+                                formik={formik}
                             />
                         </Grid>
                         <Grid item xs={12}>
@@ -208,100 +342,9 @@ function CreateUpdateAdminUser({
                                 fullWidth
                                 name="username"
                                 value={formik.values?.username || ""}
-                                error={
-                                    formik.touched?.username &&
-                                    Boolean(formik.errors?.username)
-                                }
-                                helperText={
-                                    formik.touched?.username &&
-                                    formik.errors?.username
-                                }
+                                formik={formik}
                             />
                         </Grid>
-                        {!selectedUser?.editState && (
-                            <Grid item xs={6}>
-                                <GTextFieldNormal
-                                    onChange={formik.handleChange}
-                                    label="Mật khẩu"
-                                    fullWidth
-                                    name="password"
-                                    value={formik.values?.password || ""}
-                                    error={
-                                        formik.touched?.password &&
-                                        Boolean(formik.errors?.password)
-                                    }
-                                    helperText={
-                                        formik.touched?.password &&
-                                        formik.errors?.password
-                                    }
-                                    type={showPassword ? "text" : "password"}
-                                    InputProps={{
-                                        endAdornment: (
-                                            <InputAdornment position="end">
-                                                <IconButton
-                                                    aria-label="toggle password visibility"
-                                                    onClick={
-                                                        handleClickShowPassword
-                                                    }
-                                                    onMouseDown={
-                                                        handleMouseDownPassword
-                                                    }
-                                                    edge="end"
-                                                >
-                                                    {showPassword ? (
-                                                        <VisibilityOff />
-                                                    ) : (
-                                                        <Visibility />
-                                                    )}
-                                                </IconButton>
-                                            </InputAdornment>
-                                        ),
-                                    }}
-                                />
-                            </Grid>
-                        )}
-                        {!selectedUser?.editState && (
-                            <Grid item xs={6}>
-                                <GTextFieldNormal
-                                    onChange={formik.handleChange}
-                                    label="Nhập lại mật khẩu"
-                                    fullWidth
-                                    name="confirmPassword"
-                                    value={formik.values?.confirmPassword || ""}
-                                    error={
-                                        formik.touched?.confirmPassword &&
-                                        Boolean(formik.errors?.confirmPassword)
-                                    }
-                                    helperText={
-                                        formik.touched?.confirmPassword &&
-                                        formik.errors?.confirmPassword
-                                    }
-                                    type={showPassword ? "text" : "password"}
-                                    InputProps={{
-                                        endAdornment: (
-                                            <InputAdornment position="end">
-                                                <IconButton
-                                                    aria-label="toggle password visibility"
-                                                    onClick={
-                                                        handleClickShowPassword
-                                                    }
-                                                    onMouseDown={
-                                                        handleMouseDownPassword
-                                                    }
-                                                    edge="end"
-                                                >
-                                                    {showPassword ? (
-                                                        <VisibilityOff />
-                                                    ) : (
-                                                        <Visibility />
-                                                    )}
-                                                </IconButton>
-                                            </InputAdornment>
-                                        ),
-                                    }}
-                                />
-                            </Grid>
-                        )}
                         <Grid item xs={6}>
                             <GTextFieldNormal
                                 onChange={formik.handleChange}
@@ -309,14 +352,7 @@ function CreateUpdateAdminUser({
                                 fullWidth
                                 name="last_name"
                                 value={formik.values?.last_name || ""}
-                                error={
-                                    formik.touched?.last_name &&
-                                    Boolean(formik.errors?.last_name)
-                                }
-                                helperText={
-                                    formik.touched?.last_name &&
-                                    formik.errors?.last_name
-                                }
+                                formik={formik}
                             />
                         </Grid>
                         <Grid item xs={6}>
@@ -326,31 +362,17 @@ function CreateUpdateAdminUser({
                                 fullWidth
                                 name="first_name"
                                 value={formik.values?.first_name || ""}
-                                error={
-                                    formik.touched?.first_name &&
-                                    Boolean(formik.errors?.first_name)
-                                }
-                                helperText={
-                                    formik.touched?.first_name &&
-                                    formik.errors?.first_name
-                                }
+                                formik={formik}
                             />
                         </Grid>
-                        <Grid item xs={12}>
+                        <Grid item xs={6}>
                             <GTextFieldNormal
                                 onChange={formik.handleChange}
                                 label="Email"
                                 fullWidth
                                 name="email"
                                 value={formik.values?.email || ""}
-                                error={
-                                    formik.touched?.email &&
-                                    Boolean(formik.errors?.email)
-                                }
-                                helperText={
-                                    formik.touched?.email &&
-                                    formik.errors?.email
-                                }
+                                formik={formik}
                                 InputProps={{
                                     startAdornment: (
                                         <InputAdornment position="start">
@@ -360,6 +382,121 @@ function CreateUpdateAdminUser({
                                 }}
                             />
                         </Grid>
+                        <Grid item xs={6}>
+                            <GTextFieldNormal
+                                onChange={formik.handleChange}
+                                label="Số điện thoại"
+                                fullWidth
+                                name="phone_number"
+                                value={formik.values?.phone_number || ""}
+                                formik={formik}
+                            />
+                        </Grid>
+                        <Grid item xs={4}>
+                            <Autocomplete
+                                options={provinces}
+                                onBlur={formik.handleBlur}
+                                getOptionLabel={(option) =>
+                                    option.province_name
+                                }
+                                isOptionEqualToValue={(option, value) =>
+                                    value?.province_id === option?.province_id
+                                }
+                                onChange={handleProvinceChange}
+                                value={selectedProvince || null}
+                                renderInput={(params) => (
+                                    <GTextFieldNormal
+                                        {...params}
+                                        label="Tỉnh/Thành phố"
+                                        variant="outlined"
+                                        name="province"
+                                        formik={formik}
+                                    />
+                                )}
+                            />
+                        </Grid>
+                        <Grid item xs={4}>
+                            <Autocomplete
+                                options={districts}
+                                onBlur={formik.handleBlur}
+                                getOptionLabel={(option) =>
+                                    option.district_name
+                                }
+                                isOptionEqualToValue={(option, value) =>
+                                    value?.district_id === option?.district_id
+                                }
+                                onChange={handleDistrictChange}
+                                value={selectedDistrict || null}
+                                renderInput={(params) => (
+                                    <GTextFieldNormal
+                                        {...params}
+                                        label="Quận/Huyện"
+                                        variant="outlined"
+                                        name="district"
+                                        formik={formik}
+                                    />
+                                )}
+                            />
+                        </Grid>
+                        <Grid item xs={4}>
+                            <Autocomplete
+                                options={wards}
+                                onBlur={formik.handleBlur}
+                                getOptionLabel={(option) => option.ward_name}
+                                isOptionEqualToValue={(option, value) =>
+                                    value?.ward_id === option?.ward_id
+                                }
+                                onChange={(event, value) => {
+                                    handleChangeWard(value);
+                                }}
+                                value={selectedWard || null}
+                                renderInput={(params) => (
+                                    <GTextFieldNormal
+                                        {...params}
+                                        label="Xã/Phường"
+                                        variant="outlined"
+                                        name="ward"
+                                        formik={formik}
+                                    />
+                                )}
+                            />
+                        </Grid>
+                        <Grid item xs={12}>
+                            <GTextFieldNormal
+                                onChange={formik.handleChange}
+                                label="Địa chỉ chi tiết"
+                                fullWidth
+                                name="detail_address"
+                                value={formik.values?.detail_address || ""}
+                                formik={formik}
+                            />
+                        </Grid>
+                        {!selectedUser?.id && (
+                            <Grid item xs={6}>
+                                <GTextFieldNormal
+                                    onChange={formik.handleChange}
+                                    password={true}
+                                    label="Mật khẩu"
+                                    fullWidth
+                                    name="password"
+                                    value={formik.values?.password || ""}
+                                    formik={formik}
+                                />
+                            </Grid>
+                        )}
+                        {!selectedUser?.id && (
+                            <Grid item xs={6}>
+                                <GTextFieldNormal
+                                    onChange={formik.handleChange}
+                                    label="Nhập lại mật khẩu"
+                                    password={true}
+                                    fullWidth
+                                    name="confirmPassword"
+                                    value={formik.values?.confirmPassword || ""}
+                                    formik={formik}
+                                />
+                            </Grid>
+                        )}
                         <Grid item xs={12}>
                             <GButton type="submit">Lưu</GButton>
                             <GButton
