@@ -5,22 +5,23 @@ import { loginSuccess } from "../../../redux/slice/authSlice";
 import { createAxios } from "../../../createInstance";
 import ConfirmDeletePopup from "../components/ConfirmDeletePopup";
 import { deleteAdminUser } from "../../../redux/api/apiAdminUser";
+import { deleteCustomerUser } from "../../../redux/api/apiCustomerUser";
 
-export default function DeleteAdminUser({
+export default function DeleteCustomerUser({
     handleClose,
     handleOpen,
     isOpen,
-    selectedUser,
+    selectedCustomerUser,
 }) {
     const user = useSelector((state) => state.auth.login?.currentUser);
     const dispatch = useDispatch();
 
     let axiosJWT = createAxios(user, dispatch, loginSuccess);
 
-    const handleDeleteAdminUser = () => {
-        deleteAdminUser(
+    const handleDeleteCustomerUser = () => {
+        deleteCustomerUser(
             dispatch,
-            selectedUser.id,
+            selectedCustomerUser.id,
             user?.accessToken,
             axiosJWT
         ).then(() => {
@@ -34,9 +35,9 @@ export default function DeleteAdminUser({
                 handleClose={handleClose}
                 handleOpen={handleOpen}
                 isOpen={isOpen}
-                deleteQuestion="Bạn có chắc chắn muốn xóa người dùng"
-                deleteLabel={selectedUser?.username}
-                handleDelete={handleDeleteAdminUser}
+                deleteQuestion="Bạn có chắc chắn muốn xóa khách hàng"
+                deleteLabel={selectedCustomerUser?.fullName}
+                handleDelete={handleDeleteCustomerUser}
             />
         </>
     );

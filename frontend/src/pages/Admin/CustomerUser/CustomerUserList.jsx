@@ -13,7 +13,7 @@ import GTable from "../../../common/GTable/GTable";
 import { IconButton } from "@mui/material";
 import GButton from "../../../components/MyButton/MyButton";
 import CreateUpdateAdminUser from "./CreateUpdateCustomerUser";
-import DeleteAdminUser from "./DeleteAdminUser";
+import DeleteAdminUser from "./DeleteCustomerUser";
 import PasswordMenu from "./PasswordMenu/PasswordMenu";
 import { LightTooltip } from "../../../components/GTooltip/GTooltip";
 import { getAllCustomerUser } from "../../../redux/api/apiCustomerUser";
@@ -83,14 +83,16 @@ export default function CustomerUserList() {
         useState(false);
 
     const handleOpenDeleteConfirmModal = (rowData) => {
-        setSelectedUser(rowData);
+        setSelectedUser({
+            id: rowData?.id,
+            fullName: rowData?.last_name + " " + rowData?.first_name,
+        });
         setIsOpenDeleteConfirmModel(true);
     };
 
     const handleCloseDeleteConfirmModal = () => {
         setIsOpenDeleteConfirmModel(false);
     };
-    console.log(selectedUser);
 
     return (
         <>
@@ -156,12 +158,12 @@ export default function CustomerUserList() {
                 selectedCustomerUser={selectedUser}
             />
 
-            {/* <DeleteAdminUser
+            <DeleteAdminUser
                 isOpen={isOpenDeleteConfirmModel}
                 handleOpen={handleCloseDeleteConfirmModal}
                 handleClose={handleCloseDeleteConfirmModal}
-                selectedUser={selectedUser}
-            /> */}
+                selectedCustomerUser={selectedUser}
+            />
         </>
     );
 }
