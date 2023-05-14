@@ -102,14 +102,7 @@ function PasswordChangePopup({
                                     fullWidth
                                     name="currentPassword"
                                     value={formik.values?.currentPassword || ""}
-                                    error={
-                                        formik.touched?.currentPassword &&
-                                        Boolean(formik.errors?.currentPassword)
-                                    }
-                                    helperText={
-                                        formik.touched?.currentPassword &&
-                                        formik.errors?.currentPassword
-                                    }
+                                    formik={formik}
                                 />
                             </Grid>
                             <Grid item xs={12}>
@@ -120,14 +113,7 @@ function PasswordChangePopup({
                                     fullWidth
                                     name="newPassword"
                                     value={formik.values?.newPassword || ""}
-                                    error={
-                                        formik.touched?.newPassword &&
-                                        Boolean(formik.errors?.newPassword)
-                                    }
-                                    helperText={
-                                        formik.touched?.newPassword &&
-                                        formik.errors?.newPassword
-                                    }
+                                    formik={formik}
                                 />
                             </Grid>
                             <Grid item xs={12}>
@@ -140,16 +126,7 @@ function PasswordChangePopup({
                                     value={
                                         formik.values?.confirmNewPassword || ""
                                     }
-                                    error={
-                                        formik.touched?.confirmNewPassword &&
-                                        Boolean(
-                                            formik.errors?.confirmNewPassword
-                                        )
-                                    }
-                                    helperText={
-                                        formik.touched?.confirmNewPassword &&
-                                        formik.errors?.confirmNewPassword
-                                    }
+                                    formik={formik}
                                 />
                             </Grid>
                             <Grid item xs={12}>
