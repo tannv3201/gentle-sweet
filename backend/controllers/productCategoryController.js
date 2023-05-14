@@ -35,7 +35,6 @@ const productCategoriesController = {
         try {
             const newProductCategory =
                 await ProductCategoryModel.createProductCategory({
-                    id: uuidv4(),
                     admin_user_id: req.user.id,
                     name: req.body.name,
                     description: req.body.description,

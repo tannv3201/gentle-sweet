@@ -31,7 +31,6 @@ const roleController = {
     createRole: async (req, res, next) => {
         try {
             const newRole = await RoleModel.createRole({
-                id: uuidv4(),
                 name: req.body.name,
                 description: req.body.description,
                 status: 1,

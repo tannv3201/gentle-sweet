@@ -31,7 +31,6 @@ const discountController = {
     createDiscount: async (req, res, next) => {
         try {
             const newDiscount = await DiscountModel.createDiscount({
-                id: uuidv4(),
                 admin_user_id: req.user.id,
                 name: req.body.name,
                 description: req.body.description,

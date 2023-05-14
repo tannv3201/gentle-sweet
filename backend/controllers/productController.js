@@ -31,7 +31,6 @@ const productsController = {
     createProduct: async (req, res, next) => {
         try {
             const newProduct = await ProductModel.createProduct({
-                id: uuidv4(),
                 product_category_id: req.body.product_category_id,
                 admin_user_id: req.user.id,
                 name: req.body.name,

@@ -3,7 +3,7 @@ const { v4: uuidv4 } = require("uuid");
 
 const getAllAdminUser = async (status) => {
     const [rows, fields] = await pool.query(
-        "SELECT * FROM tbl_admin_user WHERE status > (?) AND role_id <> 'dec1fab2-1489-438d-b60b-fe192a6b444a'",
+        "SELECT * FROM tbl_admin_user WHERE status > (?) AND role_id <> '1'",
         [status]
     );
     return rows;

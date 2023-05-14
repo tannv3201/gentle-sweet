@@ -34,7 +34,6 @@ const invoiceController = {
     createInvoice: async (req, res, next) => {
         try {
             const newInvoice = await InvoiceModel.createInvoice({
-                id: uuidv4(),
                 customer_user_id: req.user.id,
                 status: 1,
             });

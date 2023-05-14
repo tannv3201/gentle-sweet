@@ -11,7 +11,6 @@ const adminUserController = {
 
             // Create new user
             const newAdminUser = await adminUserModel.createAdminUser({
-                id: uuidv4(),
                 role_id: req.body.role_id,
                 birth_date: req.body.birth_date,
                 username: req.body.username,

@@ -30,7 +30,6 @@ const serviceController = {
     createService: async (req, res) => {
         try {
             const newService = await ServiceModel.createService({
-                id: uuidv4(),
                 service_category_id: req.body.service_category_id,
                 admin_user_id: req.user.id,
                 name: req.body.name,

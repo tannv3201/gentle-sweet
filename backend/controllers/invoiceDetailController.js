@@ -41,7 +41,6 @@ const invoiceController = {
 
             const newInvoiceDetail =
                 await InvoiceDetailModel.createInvoiceDetail({
-                    id: uuidv4(),
                     invoice_id: newInvoice.id,
                     product_id: req.body.product_id,
                     product_quantity: req.body.product_quantity,

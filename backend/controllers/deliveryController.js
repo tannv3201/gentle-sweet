@@ -31,7 +31,6 @@ const deliveryController = {
     createDelivery: async (req, res, next) => {
         try {
             const newDelivery = await DeliveryModel.createDelivery({
-                id: uuidv4(),
                 invoice_id: req.body.invoice_id,
                 customer_name: req.body.customer_name,
                 province: req.body.province,

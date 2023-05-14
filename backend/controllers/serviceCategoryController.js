@@ -33,7 +33,6 @@ const serviceCategoryController = {
         try {
             const newServiceCategory =
                 await ServiceCategory.createServiceCategory({
-                    id: uuidv4(),
                     admin_user_id: req.user.id,
                     name: req.body.name,
                     description: req.body.description,
