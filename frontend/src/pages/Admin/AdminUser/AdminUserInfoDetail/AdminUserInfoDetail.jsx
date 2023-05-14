@@ -88,34 +88,34 @@ export default function AdminUserInfoDetail({
                         <Grid item xs={6}>
                             <div className={cx("item-info")}>
                                 <Grid container spacing={1}>
-                                    <Grid item xs={5}>
+                                    <Grid item xs={4}>
                                         <label className={cx("label-info")}>
                                             Quyền hạn:{" "}
                                         </label>
                                     </Grid>
-                                    <Grid item xs={7}>
+                                    <Grid item xs={8}>
                                         <span className={cx("content-info")}>
                                             {selectedUser?.role_name}
                                         </span>
                                     </Grid>
-                                    <Grid item xs={5}>
+                                    <Grid item xs={4}>
                                         <label className={cx("label-info")}>
                                             Họ và tên:{" "}
                                         </label>
                                     </Grid>
-                                    <Grid item xs={7}>
+                                    <Grid item xs={8}>
                                         <span className={cx("content-info")}>
                                             {selectedUser?.last_name +
                                                 " " +
                                                 selectedUser?.first_name}
                                         </span>
                                     </Grid>
-                                    <Grid item xs={5}>
+                                    <Grid item xs={4}>
                                         <label className={cx("label-info")}>
                                             Email:{" "}
                                         </label>
                                     </Grid>
-                                    <Grid item xs={7}>
+                                    <Grid item xs={8}>
                                         <span className={cx("content-info")}>
                                             {selectedUser?.email}
                                         </span>
@@ -126,22 +126,22 @@ export default function AdminUserInfoDetail({
                         <Grid item xs={6}>
                             <div className={cx("item-info")}>
                                 <Grid container spacing={1}>
-                                    <Grid item xs={5}>
+                                    <Grid item xs={4}>
                                         <label className={cx("label-info")}>
                                             Tên tài khoản:{" "}
                                         </label>
                                     </Grid>
-                                    <Grid item xs={7}>
+                                    <Grid item xs={8}>
                                         <span className={cx("content-info")}>
                                             {selectedUser?.username}
                                         </span>
                                     </Grid>
-                                    <Grid item xs={5}>
+                                    <Grid item xs={4}>
                                         <label className={cx("label-info")}>
                                             Ngày sinh:{" "}
                                         </label>
                                     </Grid>
-                                    <Grid item xs={7}>
+                                    <Grid item xs={8}>
                                         <span className={cx("content-info")}>
                                             {dayjs
                                                 .utc(selectedUser?.birth_date)
@@ -149,12 +149,12 @@ export default function AdminUserInfoDetail({
                                                 .format("DD/MM/YYYY")}
                                         </span>
                                     </Grid>
-                                    <Grid item xs={5}>
+                                    <Grid item xs={4}>
                                         <label className={cx("label-info")}>
                                             Số điện thoại:{" "}
                                         </label>
                                     </Grid>
-                                    <Grid item xs={7}>
+                                    <Grid item xs={8}>
                                         <span className={cx("content-info")}>
                                             {selectedUser?.phone_number}
                                         </span>

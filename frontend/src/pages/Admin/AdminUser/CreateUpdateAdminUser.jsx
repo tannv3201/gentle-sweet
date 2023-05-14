@@ -28,11 +28,11 @@ import utc from "dayjs/plugin/utc";
 const roleList = [
     {
         role_name: "ADMIN",
-        role_id: "eaff3c47-28b5-4315-8bc7-384b72fe039a",
+        role_id: 2,
     },
     {
         role_name: "STAFF",
-        role_id: "16d0f7f9-e6cc-42d3-b748-5930044b3893",
+        role_id: 3,
     },
 ];
 

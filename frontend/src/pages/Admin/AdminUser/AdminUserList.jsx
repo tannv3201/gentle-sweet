@@ -46,10 +46,9 @@ export default function AdminUserList({ data }) {
             return {
                 ...user,
                 role_name:
-                    user?.role_id === "eaff3c47-28b5-4315-8bc7-384b72fe039a"
+                    user?.role_id === 2
                         ? "ADMIN"
-                        : user?.role_id ===
-                          "16d0f7f9-e6cc-42d3-b748-5930044b3893"
+                        : user?.role_id === 3
                         ? "STAFF"
                         : "",
                 fullName: user?.last_name + " " + user?.first_name,
@@ -68,9 +67,9 @@ export default function AdminUserList({ data }) {
             id: rowData.id,
             role_id: rowData.role_id || null,
             role_name:
-                rowData.role_id === "eaff3c47-28b5-4315-8bc7-384b72fe039a"
+                rowData.role_id === 2
                     ? "ADMIN"
-                    : rowData.role_id === "16d0f7f9-e6cc-42d3-b748-5930044b3893"
+                    : rowData.role_id === 3
                     ? "STAFF"
                     : "",
             username: rowData.username,
@@ -117,9 +116,9 @@ export default function AdminUserList({ data }) {
             id: rowData.id,
             role_id: rowData.role_id || null,
             role_name:
-                rowData.role_id === "eaff3c47-28b5-4315-8bc7-384b72fe039a"
+                rowData.role_id === 2
                     ? "ADMIN"
-                    : rowData.role_id === "16d0f7f9-e6cc-42d3-b748-5930044b3893"
+                    : rowData.role_id === 3
                     ? "STAFF"
                     : "",
             username: rowData.username,

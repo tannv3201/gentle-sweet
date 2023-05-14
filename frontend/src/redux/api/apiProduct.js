@@ -45,9 +45,11 @@ export const createProduct = async (
         });
         dispatch(createProductSuccess(res?.data));
         if (res?.data?.status === 201) {
-            toast.success(res?.data?.msg);
-            getAllProduct(accessToken, dispatch, axiosJWT);
+            // toast.success(res?.data?.msg);
+            toast.success("Thêm sản phẩm thành công.");
+            // getAllProduct(accessToken, dispatch, axiosJWT);
         }
+        return res?.data?.data;
     } catch (error) {
         dispatch(createProductFailed(error.response?.data));
     }

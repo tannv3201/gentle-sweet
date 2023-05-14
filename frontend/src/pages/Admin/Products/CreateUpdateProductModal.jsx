@@ -13,6 +13,9 @@ import { loginSuccess } from "../../../redux/slice/authSlice";
 import { createAxios } from "../../../createInstance";
 import GTextFieldNormal from "../../../components/GTextField/GTextFieldNormal";
 import UploadImage from "./UploadImage/UploadImage";
+import { MyDropzone } from "./DropZone/DropZone";
+import { createProductImage } from "../../../redux/api/apiProductImage";
+import { toast } from "react-hot-toast";
 
 // Validate
 const validationSchema = Yup.object().shape({
@@ -30,6 +33,9 @@ export default function CreateUpdateProductModal({
 }) {
     const user = useSelector((state) => state.auth.login?.currentUser);
     const dispatch = useDispatch();
+
+    // Image url after upload to server
+    const [imageUrls, setImageUrls] = useState([]);
 
     // Product category
     const productCategoryList = structuredClone(
@@ -87,24 +93,42 @@ export default function CreateUpdateProductModal({
         }
     }, [selectedFile, setImageUrl]);
 
-    const handleUploadButtonClick = async () => {
-        if (!selectedFile) {
-            return;
-        }
-        const formData = new FormData();
-        formData.append("image", selectedFile);
-        const res = await uploadImage(formData);
-        formik.setFieldValue("image", res);
-        return res;
-    };
+    // const handleUploadButtonClick = async () => {
+    //     if (!selectedFile) {
+    //         return;
+    //     }
+    //     const formData = new FormData();
+    //     formData.append("image", selectedFile);
+    //     console.log("selectedFile", selectedFile);
+    //     const res = await uploadImage(formData);
+    //     formik.setFieldValue("image", res);
+    //     return res;
+    // };
 
-    const handleCreateProduct = (data) => {
-        createProduct(user?.accessToken, dispatch, data, axiosJWT).then(() => {
-            formik.handleReset();
-            handleClose();
-            setSelectedFile(null);
-            setImageUrl("");
-        });
+    const handleCreateProduct = async (data) => {
+        const productInserted = await createProduct(
+            user?.accessToken,
+            dispatch,
+            data,
+            axiosJWT
+        );
+
+        if (productInserted?.insertId) {
+            for (const imageUrl of imageUrls) {
+                console.log(imageUrl);
+                const productImage = createProductImage(
+                    user?.accessToken,
+                    dispatch,
+                    {
+                        product_id: productInserted?.insertId,
+                        image_url: imageUrl,
+                    },
+                    axiosJWT
+                ).then(() => {});
+            }
+        } else {
+            toast.error("Có lỗi xảy ra khi thêm sản phẩm");
+        }
     };
 
     const handleUpdateProduct = (data) => {
@@ -127,20 +151,15 @@ export default function CreateUpdateProductModal({
         initialValues: product,
         validationSchema: validationSchema,
         onSubmit: async (data) => {
+            const { product_category_name, ...restData } = data;
             if (data?.id) {
-                const res = await handleUploadButtonClick();
-                const { product_category_name, ...newData } = data;
-                const newProduct = { ...newData, image: res };
-                handleUpdateProduct(newProduct);
-                console.log(newProduct);
+                console.log(restData);
             } else {
-                const res = await handleUploadButtonClick();
-                const newProduct = { ...data, image: res };
-                if (!res) {
+                if (!imageUrls) {
                     formik.setFieldError("image", "Vui lòng chọn ảnh");
                     return;
                 } else {
-                    handleCreateProduct(newProduct);
+                    handleCreateProduct(restData);
                 }
             }
         },
@@ -271,7 +290,7 @@ export default function CreateUpdateProductModal({
                                 }
                             />
                         </Grid>
-                        <Grid item xs={12}>
+                        {/* <Grid item xs={12}>
                             <UploadImage
                                 handleFileInputChange={handleFileInputChange}
                                 imageUrl={imageUrl}
@@ -280,7 +299,7 @@ export default function CreateUpdateProductModal({
                                     formik.errors?.image
                                 }
                             />
-                        </Grid>
+                        </Grid> */}
                         <Grid item xs={12}>
                             <GTextFieldNormal
                                 onChange={formik.handleChange}
@@ -299,6 +318,27 @@ export default function CreateUpdateProductModal({
                                 multiline
                                 rows={3}
                             />
+                        </Grid>
+                        <Grid item xs={12}>
+                            <div>
+                                <Grid container spacing={1}>
+                                    {imageUrls.map((img, idx) => (
+                                        <Grid item xs={4}>
+                                            <img
+                                                key={idx}
+                                                style={{
+                                                    width: 60,
+                                                    height: 60,
+                                                    objectFit: "cover",
+                                                }}
+                                                src={img}
+                                                alt="uploaded"
+                                            />
+                                        </Grid>
+                                    ))}
+                                </Grid>
+                            </div>
+                            <MyDropzone setImageUrls={setImageUrls} />
                         </Grid>
                         <Grid item xs={12}>
                             <GButton color={"success"} type="submit">

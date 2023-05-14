@@ -96,7 +96,7 @@ export default function ProductCategoryList({ data }) {
                                 src={
                                     rowData?.image
                                         ? rowData?.image
-                                        : "https://i.ibb.co/PCyK3hF/t-i-xu-ng.png"
+                                        : "https://i.ibb.co/PhscSZk/FB-IMG-1532612997088.jpg"
                                 }
                                 style={{
                                     width: 60,
