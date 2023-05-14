@@ -20,6 +20,7 @@ const customerUserController = {
                 province: req.body.province,
                 district: req.body.district,
                 ward: req.body.ward,
+                email: req.body.email,
                 detail_address: req.body.detail_address,
                 birth_date: req.body.birth_date,
                 status: 1,
