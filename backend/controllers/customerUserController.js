@@ -141,7 +141,7 @@ const customerUserController = {
             const user = await customerUserModel.getCustomerUserById(accountId);
 
             const salt = await bcrypt.genSalt(10);
-            const newPassword = await bcrypt.hash(user?.username, salt);
+            const newPassword = await bcrypt.hash(user?.email, salt);
 
             const affectedRows = await customerUserModel.updateCustomerUserById(
                 accountId,

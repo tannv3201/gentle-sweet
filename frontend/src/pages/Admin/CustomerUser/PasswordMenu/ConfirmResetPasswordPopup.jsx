@@ -4,13 +4,13 @@ import GModal from "../../../../common/GModal/GModal";
 import { useDispatch, useSelector } from "react-redux";
 import { createAxios } from "../../../../createInstance";
 import { loginSuccess } from "../../../../redux/slice/authSlice";
-import { resetPassword } from "../../../../redux/api/apiAdminUser";
+import { resetPassword } from "../../../../redux/api/apiCustomerUser";
 
 function ConfirmResetPasswordPopup({
     handleClose,
     handleOpen,
     isOpen,
-    selectedUser,
+    selectedCustomerUser,
 }) {
     const user = useSelector((state) => state.auth.login?.currentUser);
     const dispatch = useDispatch();
@@ -19,7 +19,7 @@ function ConfirmResetPasswordPopup({
     const handleResetPassword = () => {
         resetPassword(
             dispatch,
-            selectedUser.id,
+            selectedCustomerUser?.id,
             user?.accessToken,
             axiosJWT
         ).then(() => {
@@ -46,7 +46,7 @@ function ConfirmResetPasswordPopup({
                                 color: "red",
                             }}
                         >
-                            {selectedUser?.username}
+                            {selectedCustomerUser?.fullName}
                         </span>{" "}
                         ?
                     </div>

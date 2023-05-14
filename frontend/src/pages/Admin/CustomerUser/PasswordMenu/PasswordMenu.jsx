@@ -2,9 +2,8 @@ import * as React from "react";
 import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
 import { IconButton } from "@mui/material";
-import { Person, PasswordRounded } from "@mui/icons-material";
-import images from "../../../../assets/images";
-import { useEffect } from "react";
+import { PasswordRounded } from "@mui/icons-material";
+
 import classNames from "classnames/bind";
 import styles from "./PasswordMenu.module.scss";
 
@@ -15,7 +14,7 @@ import ConfirmResetPasswordPopup from "./ConfirmResetPasswordPopup";
 
 const cx = classNames.bind(styles);
 
-export default function PasswordMenu({ selectedUser }) {
+export default function PasswordMenu({ selectedCustomerUser }) {
     const [isOpenPasswordChangeModal, setIsOpenPasswordChangeModal] =
         useState(false);
     const [isOpenResetPasswordPopup, setIsOpenResetPasswordPopup] =
@@ -46,6 +45,8 @@ export default function PasswordMenu({ selectedUser }) {
     const handleCloseResetPasswordPopup = () => {
         setIsOpenResetPasswordPopup(false);
     };
+
+    console.log(selectedCustomerUser);
 
     return (
         <div>
@@ -94,14 +95,14 @@ export default function PasswordMenu({ selectedUser }) {
                 isOpen={isOpenPasswordChangeModal}
                 handleClose={handleClosePasswordChangeModal}
                 handleOpen={handleOpenPasswordChangeModal}
-                selectedUser={selectedUser}
+                selectedCustomerUser={selectedCustomerUser}
             />
 
             <ConfirmResetPasswordPopup
                 isOpen={isOpenResetPasswordPopup}
                 handleClose={handleCloseResetPasswordPopup}
                 handleOpen={handleOpenResetPasswordPopup}
-                selectedUser={selectedUser}
+                selectedCustomerUser={selectedCustomerUser}
             />
         </div>
     );

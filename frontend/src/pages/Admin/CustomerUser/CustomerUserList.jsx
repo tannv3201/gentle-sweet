@@ -142,7 +142,15 @@ export default function CustomerUserList() {
                                         <DeleteRoundedIcon color="error" />
                                     </IconButton>
                                 </LightTooltip>
-                                <PasswordMenu selectedUser={rowData} />
+                                <PasswordMenu
+                                    selectedCustomerUser={{
+                                        id: rowData?.id,
+                                        fullName:
+                                            rowData?.last_name +
+                                            " " +
+                                            rowData?.first_name,
+                                    }}
+                                />
                             </div>
                         ),
                     },
