@@ -151,6 +151,8 @@ export default function CreateUpdateProductModal({
                     const imgUrl = await handleUploadToImgbb();
                     const dataUpdate = { ...restData, image: imgUrl };
                     await handleUpdateProduct(dataUpdate);
+                } else {
+                    await handleUpdateProduct(restData);
                 }
             } else {
                 if (imageFileSeleted.length === 0) {
@@ -165,6 +167,8 @@ export default function CreateUpdateProductModal({
             }
         },
     });
+    console.log(formik.errors);
+    console.log(selectedProduct);
 
     const handleChangeProductCategory = (value) => {
         if (value) {

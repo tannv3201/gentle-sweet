@@ -14,21 +14,8 @@ export function ImageUpload({
     imageFileSeleted,
     onChangeImage,
 }) {
-    const [images, setImages] = React.useState([]);
     const maxNumber = 1;
 
-    // const onChange = (imageList, addUpdateIndex) => {
-    //     // data for submit
-    //     console.log(imageList, addUpdateIndex);
-    //     if (imageFileSeleted?.length === 0) {
-    //         setImages([]);
-    //     } else {
-    //         setImages(imageList);
-    //     }
-    //     setImageFileSeleted(imageList);
-    // };
-    console.log(imageFileSeleted);
-    console.log(images);
     return (
         <div className="App">
             <ImageUploading
