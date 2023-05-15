@@ -25,7 +25,7 @@ export default function ProductImageList({ data }) {
     const [cloneData, setCloneData] = useState([]);
     const dispatch = useDispatch();
     const navigate = useNavigate();
-    const [selectedProductCategory, setSelectedProductCategory] = useState({});
+    const [selectedProductImage, setSelectedProductImage] = useState({});
 
     let axiosJWT = createAxios(user, dispatch, loginSuccess);
 
@@ -56,11 +56,6 @@ export default function ProductImageList({ data }) {
         useState(false);
 
     const handleOpenCreateUpdateModal = (rowData) => {
-        setSelectedProductCategory({
-            id: rowData.id,
-            name: rowData.name,
-            description: rowData.description,
-        });
         setIsOpenCreateUpdateModel(true);
     };
 
@@ -73,10 +68,9 @@ export default function ProductImageList({ data }) {
         useState(false);
 
     const handleOpenDeleteConfirmPopup = (rowData) => {
-        setSelectedProductCategory({
-            id: rowData.id,
-            name: rowData.name,
-            description: rowData.description,
+        setSelectedProductImage({
+            id: rowData?.id,
+            image_url: rowData?.image_url,
         });
         setIsOpenDeleteConfirmPopup(true);
     };
@@ -85,13 +79,9 @@ export default function ProductImageList({ data }) {
         setIsOpenDeleteConfirmPopup(false);
     };
 
-    console.log(cloneData);
-
     return (
         <>
-            <GButton onClick={handleOpenCreateUpdateModal}>
-                Thêm danh mục sản phẩm
-            </GButton>
+            <GButton onClick={handleOpenCreateUpdateModal}>Thêm ảnh</GButton>
             <br />
             <br />
             <GTable
@@ -105,7 +95,9 @@ export default function ProductImageList({ data }) {
                             // eslint-disable-next-line jsx-a11y/alt-text
                             <img
                                 src={
-                                    rowData?.image_url ? rowData?.image_url : ""
+                                    rowData?.image_url
+                                        ? `http://localhost:8080/v1/productImage/images/${rowData?.image_url}`
+                                        : ""
                                 }
                                 style={{
                                     width: 60,
@@ -129,21 +121,10 @@ export default function ProductImageList({ data }) {
                                     alignItems: "center",
                                 }}
                             >
-                                <LightTooltip
-                                    placement="bottom"
-                                    title="Chỉnh sửa"
-                                >
-                                    <IconButton
-                                        onClick={() =>
-                                            handleOpenCreateUpdateModal(rowData)
-                                        }
-                                    >
-                                        <EditRoundedIcon color="primary" />
-                                    </IconButton>
-                                </LightTooltip>
                                 <LightTooltip placement="bottom" title="Xóa">
                                     <IconButton
                                         onClick={() => {
+                                            console.log(rowData);
                                             handleOpenDeleteConfirmPopup(
                                                 rowData
                                             );
@@ -164,14 +145,14 @@ export default function ProductImageList({ data }) {
                 isOpen={isOpenCreateUpdateModel}
                 handleOpen={handleOpenCreateUpdateModal}
                 handleClose={handleCloseCreateUpdateModal}
-                selectedProductCategory={selectedProductCategory}
+                selectedProductCategory={selectedProductImage}
             />
 
             <DeleteProductImage
                 isOpen={isOpenDeleteConfirmPopup}
                 handleOpen={handleOpenDeleteConfirmPopup}
                 handleClose={handleCloseDeleteConfirmPopup}
-                selectedProductCategory={selectedProductCategory}
+                selectedProductCategory={selectedProductImage}
             />
         </>
     );

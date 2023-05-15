@@ -18,7 +18,7 @@ const getProductImageById = async (id) => {
 
 const getProductImageByProductId = async (product_id) => {
     const [rows, fields] = await pool.query(
-        "SELECT * FROM tbl_product_image WHERE product_id = (?)",
+        "SELECT * FROM tbl_product_image WHERE product_id = (?) AND status > 0",
         [product_id]
     );
     return rows;

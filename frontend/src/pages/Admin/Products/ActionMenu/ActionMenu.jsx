@@ -15,7 +15,7 @@ export default function ActionMenu({ selectedProduct }) {
     const navigate = useNavigate();
 
     const handleNavigateProductImage = (productId) => {
-        navigate(`/admin/productImage/${productId}`);
+        navigate(`/admin/productImage/${productId}/product`);
     };
 
     const [isOpenPasswordChangeModal, setIsOpenPasswordChangeModal] =

@@ -14,16 +14,19 @@ import { loginSuccess } from "../../../redux/slice/authSlice";
 import { createAxios } from "../../../createInstance";
 import GTextFieldNormal from "../../../components/GTextField/GTextFieldNormal";
 import { ImageUpload } from "./DropZone/CustomDropzone";
-import { uploadImage } from "../../../redux/api/apiImageUpload";
 import { toast } from "react-hot-toast";
-import { createProductImage } from "../../../redux/api/apiProductImage";
+import {
+    createProductImage,
+    uploadImage,
+} from "../../../redux/api/apiProductImage";
 import { useParams } from "react-router-dom";
+import axios from "axios";
 
 export default function CreateUpdateProductImageModal({
-    handleClose,
     handleOpen,
     isOpen,
     selectedProductCategory,
+    ...props
 }) {
     const { productId } = useParams();
 
@@ -35,8 +38,6 @@ export default function CreateUpdateProductImageModal({
         image: "",
     });
 
-    console.log(productId);
-
     let axiosJWT = createAxios(user, dispatch, loginSuccess);
 
     const handleCreateProductCategory = (productCategory) => {
@@ -47,7 +48,7 @@ export default function CreateUpdateProductImageModal({
             axiosJWT
         ).then(() => {
             formik.handleReset();
-            handleClose();
+            handleCloseModal();
         });
     };
 
@@ -60,28 +61,33 @@ export default function CreateUpdateProductImageModal({
             axiosJWT
         ).then(() => {
             formik.handleReset();
-            handleClose();
+            handleCloseModal();
         });
     };
 
-    const handleUploadToImgbb = async () => {
-        if (imageFileSeleted) {
-            const formData = new FormData();
-            formData.append("image", imageFileSeleted[0]?.file);
-            const res = await uploadImage(formData);
-            return res;
-        } else {
-            toast.error("Chưa có ảnh");
-        }
+    const handleCloseModal = () => {
+        formik.resetForm();
+        props.handleClose();
+        setImageFileSeleted([]);
     };
 
     const handleCreateProductImage = async (productImageData) => {
-        await createProductImage(
-            user?.accessToken,
-            dispatch,
-            productImageData,
-            axiosJWT
-        );
+        if (imageFileSeleted) {
+            const formData = new FormData();
+            formData.append("image", imageFileSeleted[0]?.file);
+            formData.append("product_id", productId);
+            createProductImage(
+                productId,
+                user?.accessToken,
+                dispatch,
+                formData,
+                axiosJWT
+            ).then(() => {
+                handleCloseModal();
+            });
+        } else {
+            toast.error("Chưa có ảnh");
+        }
     };
 
     const formik = useFormik({
@@ -91,12 +97,7 @@ export default function CreateUpdateProductImageModal({
             if (data?.id) {
                 console.log("data_update", data);
             } else {
-                const img_url = await handleUploadToImgbb();
-                await handleCreateProductImage({
-                    product_id: productId,
-                    image_url: img_url,
-                });
-                console.log("data_create", img_url);
+                await handleCreateProductImage();
             }
         },
     });
@@ -119,8 +120,7 @@ export default function CreateUpdateProductImageModal({
         <>
             <GModal
                 handleClose={() => {
-                    formik.resetForm();
-                    handleClose();
+                    handleCloseModal();
                 }}
                 handleOpen={handleOpen}
                 isOpen={isOpen}
@@ -142,10 +142,7 @@ export default function CreateUpdateProductImageModal({
                             <GButton
                                 style={{ marginLeft: "12px" }}
                                 color="text"
-                                onClick={() => {
-                                    formik.resetForm();
-                                    handleClose();
-                                }}
+                                onClick={handleCloseModal}
                             >
                                 Hủy
                             </GButton>

@@ -109,7 +109,7 @@ export const privateRoutes = [
         layout: AdminLayout,
     },
     {
-        path: "/admin/productImage/:productId",
+        path: "/admin/productImage/:productId/product",
         component: ProductImage,
         layout: AdminLayout,
     },

@@ -1,12 +1,15 @@
 const multer = require("multer");
-
-const upload = multer({ storage: storage });
+const path = require("path");
 
 const storage = multer.diskStorage({
     destination: function (req, file, cb) {
-        cb(null, "uploads/"); // Đường dẫn đến thư mục uploads
+        cb(null, "Images/"); // Đường dẫn đến thư mục uploads
     },
     filename: function (req, file, cb) {
-        cb(null, file.originalname);
+        cb(null, Date.now() + path.extname(file.originalname));
     },
 });
+
+const upload = multer({ storage: storage });
+
+module.exports = upload;

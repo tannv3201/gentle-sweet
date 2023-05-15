@@ -1,6 +1,7 @@
 const ProductImageModel = require("../models/ProductImage");
-
-const { v4: uuidv4 } = require("uuid");
+const path = require("path");
+const imageFolder = path.join(__dirname, "..", "Images");
+const fs = require("fs");
 
 const productImageController = {
     // GET ALL PRODUCT
@@ -29,6 +30,12 @@ const productImageController = {
         }
     },
 
+    getImageByPathName: async (req, res) => {
+        const pathname = req.params?.pathname.replace(/\\/g, "/");
+        const imagePath = path.join(imageFolder, pathname);
+        res.sendFile(imagePath);
+    },
+
     // GET PRODUCT BY ID
     getProductImageByProductId: async (req, res) => {
         try {
@@ -49,12 +56,29 @@ const productImageController = {
         }
     },
 
+    // Delete image in folder
+    deleteImageInFolder: async (req, res) => {
+        const filename = req.params.filename;
+
+        const imagePath = path.join(imageFolder, filename);
+
+        // Kiểm tra xem tệp ảnh có tồn tại hay không
+        if (fs.existsSync(imagePath)) {
+            // Xóa tệp ảnh
+            fs.unlinkSync(imagePath);
+            res.json({ status: 200, msg: "Ảnh đã được xóa thành công." });
+        } else {
+            res.json({ status: 404, msg: "Không tìm thấy ảnh." });
+        }
+    },
+
     // Create Product Category
     createProductImage: async (req, res, next) => {
         try {
+            console.log(req?.file);
             const newProductImage = await ProductImageModel.createProductImage({
-                product_id: req.body.product_id,
-                image_url: req.body.image_url,
+                product_id: req.body?.product_id,
+                image_url: req?.file?.filename,
                 status: 1,
             });
             res.json({
