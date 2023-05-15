@@ -51,7 +51,7 @@ const productImageController = {
         try {
             const newProductImage = await ProductImageModel.createProductImage({
                 product_id: req.body.product_id,
-                image_url: req.user.image_url,
+                image_url: req.body.image_url,
                 status: 1,
             });
             res.json({

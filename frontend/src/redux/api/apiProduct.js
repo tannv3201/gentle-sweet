@@ -47,8 +47,10 @@ export const createProduct = async (
         if (res?.data?.status === 201) {
             // toast.success(res?.data?.msg);
             toast.success("Thêm sản phẩm thành công.");
-            // getAllProduct(accessToken, dispatch, axiosJWT);
+            getAllProduct(accessToken, dispatch, axiosJWT);
         }
+        console.log(res?.data?.data?.insertId);
+
         return res?.data?.data;
     } catch (error) {
         dispatch(createProductFailed(error.response?.data));

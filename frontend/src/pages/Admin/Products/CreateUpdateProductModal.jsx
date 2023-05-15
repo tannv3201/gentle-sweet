@@ -16,6 +16,7 @@ import UploadImage from "./UploadImage/UploadImage";
 import { MyDropzone } from "./DropZone/DropZone";
 import { createProductImage } from "../../../redux/api/apiProductImage";
 import { toast } from "react-hot-toast";
+import { ImageUpload } from "./DropZone/CustomDropzone";
 
 // Validate
 const validationSchema = Yup.object().shape({
@@ -26,17 +27,23 @@ const validationSchema = Yup.object().shape({
 });
 
 export default function CreateUpdateProductModal({
-    handleClose,
     handleOpen,
     isOpen,
     selectedProduct,
+    ...props
 }) {
     const user = useSelector((state) => state.auth.login?.currentUser);
     const dispatch = useDispatch();
 
     // Image url after upload to server
+    const [imageFileSeleted, setImageFileSeleted] = useState([]);
     const [imageUrls, setImageUrls] = useState([]);
 
+    const onChangeImage = (imageList, addUpdateIndex) => {
+        // data for submit
+        console.log(imageList, addUpdateIndex);
+        setImageFileSeleted(imageList);
+    };
     // Product category
     const productCategoryList = structuredClone(
         useSelector(
@@ -76,73 +83,60 @@ export default function CreateUpdateProductModal({
         }
     }, [selectedProduct]);
 
-    // Upload ảnh
-    const [selectedFile, setSelectedFile] = useState(null);
-    const [imageUrl, setImageUrl] = useState("");
-
-    const handleFileInputChange = (event) => {
-        setSelectedFile(event.target.files[0]);
+    const handleCloseModal = () => {
+        formik.resetForm();
+        props.handleClose();
+        setImageFileSeleted([]);
     };
-    useEffect(() => {
-        if (selectedFile) {
-            const reader = new FileReader();
-            reader.onload = () => {
-                setImageUrl(reader.result);
-            };
-            reader.readAsDataURL(selectedFile);
-        }
-    }, [selectedFile, setImageUrl]);
 
-    // const handleUploadButtonClick = async () => {
-    //     if (!selectedFile) {
-    //         return;
-    //     }
-    //     const formData = new FormData();
-    //     formData.append("image", selectedFile);
-    //     console.log("selectedFile", selectedFile);
-    //     const res = await uploadImage(formData);
-    //     formik.setFieldValue("image", res);
-    //     return res;
-    // };
-
+    // Upload ảnh
     const handleCreateProduct = async (data) => {
         const productInserted = await createProduct(
             user?.accessToken,
             dispatch,
             data,
             axiosJWT
-        );
+        ).then(() => {
+            handleCloseModal();
+        });
+        return productInserted;
+    };
 
-        if (productInserted?.insertId) {
-            for (const imageUrl of imageUrls) {
-                console.log(imageUrl);
-                const productImage = createProductImage(
-                    user?.accessToken,
-                    dispatch,
-                    {
-                        product_id: productInserted?.insertId,
-                        image_url: imageUrl,
-                    },
-                    axiosJWT
-                ).then(() => {});
-            }
+    const handleUploadToImgbb = async (data) => {
+        if (imageFileSeleted) {
+            const formData = new FormData();
+            formData.append("image", imageFileSeleted[0]?.file);
+            const res = await uploadImage(formData);
+
+            return res;
         } else {
-            toast.error("Có lỗi xảy ra khi thêm sản phẩm");
+            toast.error("Chưa có ảnh");
         }
     };
 
-    const handleUpdateProduct = (data) => {
-        updateProduct(
+    const handleCreateProductImage = async (product_id) => {
+        for (const imageUrl of imageUrls) {
+            await createProductImage(
+                user?.accessToken,
+                dispatch,
+                {
+                    product_id: 1,
+                    image_url: imageUrl,
+                },
+                axiosJWT
+            );
+        }
+    };
+
+    const handleUpdateProduct = async (data) => {
+        await updateProduct(
             user?.accessToken,
             dispatch,
             selectedProduct?.id,
             data,
             axiosJWT
         ).then(() => {
-            formik.handleReset();
-            handleClose();
-            setSelectedFile(null);
-            setImageUrl("");
+            handleCloseModal();
         });
     };
 
@@ -153,13 +147,20 @@ export default function CreateUpdateProductModal({
         onSubmit: async (data) => {
             const { product_category_name, ...restData } = data;
             if (data?.id) {
-                console.log(restData);
+                if (imageFileSeleted.length > 0) {
+                    const imgUrl = await handleUploadToImgbb();
+                    const dataUpdate = { ...restData, image: imgUrl };
+                    await handleUpdateProduct(dataUpdate);
+                }
             } else {
-                if (!imageUrls) {
+                if (imageFileSeleted.length === 0) {
                     formik.setFieldError("image", "Vui lòng chọn ảnh");
+                    toast.error("Vui lòng chọn ảnh");
                     return;
                 } else {
-                    handleCreateProduct(restData);
+                    const imgUrl = await handleUploadToImgbb();
+                    const dataCreate = { ...restData, image: imgUrl };
+                    await handleCreateProduct(dataCreate);
                 }
             }
         },
@@ -178,12 +179,7 @@ export default function CreateUpdateProductModal({
     return (
         <>
             <GModal
-                handleClose={() => {
-                    formik.resetForm();
-                    handleClose();
-                    setSelectedFile(null);
-                    setImageUrl("");
-                }}
+                handleClose={handleCloseModal}
                 handleOpen={handleOpen}
                 isOpen={isOpen}
                 title={
@@ -221,19 +217,7 @@ export default function CreateUpdateProductModal({
                                         name="product_category_id"
                                         fullWidth
                                         label="Danh mục"
-                                        error={
-                                            formik.touched
-                                                ?.product_category_id &&
-                                            Boolean(
-                                                formik.errors
-                                                    ?.product_category_id
-                                            )
-                                        }
-                                        helperText={
-                                            formik.touched
-                                                .product_category_id &&
-                                            formik.errors?.product_category_id
-                                        }
+                                        formik={formik}
                                     />
                                 )}
                             />
@@ -245,13 +229,7 @@ export default function CreateUpdateProductModal({
                                 fullWidth
                                 name="name"
                                 value={formik.values?.name || ""}
-                                error={
-                                    formik.touched?.name &&
-                                    Boolean(formik.errors?.name)
-                                }
-                                helperText={
-                                    formik.touched?.name && formik.errors?.name
-                                }
+                                formik={formik}
                             />
                         </Grid>
                         <Grid item xs={6}>
@@ -262,14 +240,7 @@ export default function CreateUpdateProductModal({
                                 fullWidth
                                 name="quantity"
                                 value={formik.values?.quantity || ""}
-                                error={
-                                    formik.touched?.quantity &&
-                                    Boolean(formik.errors?.quantity)
-                                }
-                                helperText={
-                                    formik.touched?.quantity &&
-                                    formik.errors?.quantity
-                                }
+                                formik={formik}
                             />
                         </Grid>
                         <Grid item xs={6}>
@@ -280,26 +251,9 @@ export default function CreateUpdateProductModal({
                                 fullWidth
                                 name="price"
                                 value={formik.values?.price || ""}
-                                error={
-                                    formik.touched?.price &&
-                                    Boolean(formik.errors?.price)
-                                }
-                                helperText={
-                                    formik.touched?.price &&
-                                    formik.errors?.price
-                                }
+                                formik={formik}
                             />
                         </Grid>
-                        {/* <Grid item xs={12}>
-                            <UploadImage
-                                handleFileInputChange={handleFileInputChange}
-                                imageUrl={imageUrl}
-                                helpertext={
-                                    formik.touched?.image &&
-                                    formik.errors?.image
-                                }
-                            />
-                        </Grid> */}
                         <Grid item xs={12}>
                             <GTextFieldNormal
                                 onChange={formik.handleChange}
@@ -307,38 +261,22 @@ export default function CreateUpdateProductModal({
                                 fullWidth
                                 name="description"
                                 value={formik.values?.description || ""}
-                                error={
-                                    formik.touched?.description &&
-                                    Boolean(formik.errors?.description)
-                                }
-                                helperText={
-                                    formik.touched?.description &&
-                                    formik.errors?.description
-                                }
+                                formik={formik}
                                 multiline
                                 rows={3}
                             />
                         </Grid>
                         <Grid item xs={12}>
-                            <div>
-                                <Grid container spacing={1}>
-                                    {imageUrls.map((img, idx) => (
-                                        <Grid item xs={4}>
-                                            <img
-                                                key={idx}
-                                                style={{
-                                                    width: 60,
-                                                    height: 60,
-                                                    objectFit: "cover",
-                                                }}
-                                                src={img}
-                                                alt="uploaded"
-                                            />
-                                        </Grid>
-                                    ))}
-                                </Grid>
-                            </div>
-                            <MyDropzone setImageUrls={setImageUrls} />
+                            <ImageUpload
+                                imageFileSeleted={imageFileSeleted}
+                                setImageFileSeleted={setImageFileSeleted}
+                                onChangeImage={onChangeImage}
+                            />
+                            {imageFileSeleted.length === 0 && (
+                                <span style={{ color: "red" }}>
+                                    {formik.errors?.image}
+                                </span>
+                            )}
                         </Grid>
                         <Grid item xs={12}>
                             <GButton color={"success"} type="submit">
@@ -347,12 +285,7 @@ export default function CreateUpdateProductModal({
                             <GButton
                                 style={{ marginLeft: "12px" }}
                                 color="text"
-                                onClick={() => {
-                                    formik.resetForm();
-                                    handleClose();
-                                    setSelectedFile(null);
-                                    setImageUrl("");
-                                }}
+                                onClick={handleCloseModal}
                             >
                                 Hủy
                             </GButton>

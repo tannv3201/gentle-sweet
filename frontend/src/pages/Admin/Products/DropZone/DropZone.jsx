@@ -1,10 +1,10 @@
 import "react-dropzone-uploader/dist/styles.css";
 import Dropzone from "react-dropzone-uploader";
 import { uploadImage } from "../../../../redux/api/apiImageUpload";
-import { useState } from "react";
+import { useRef, useState } from "react";
 import GButton from "../../../../components/MyButton/MyButton";
 
-export const MyDropzone = ({ setImageUrls }) => {
+export const MyDropzone = ({ setImageUrls, handleSubmitDropzone }) => {
     const handleChangeStatus = ({ meta }, status) => {
         // console.log(status, meta);
     };
@@ -21,19 +21,21 @@ export const MyDropzone = ({ setImageUrls }) => {
                 allFiles.forEach((f) => f.remove());
             }
         }
-        event.preven();
     };
 
+    const handleParentClick = (event) => {
+        event.stopPropagation();
+    };
+    const dropzoneRef = useRef(null);
     return (
-        <>
-            <Dropzone
-                onChangeStatus={handleChangeStatus}
-                onSubmit={handleSubmit}
-                maxFiles={3}
-                inputContent="Chọn 3 ảnh"
-                inputWithFilesContent={(files) => `${3 - files.length} ảnh`}
-                submitButtonDisabled={(files) => files.length < 3}
-            />
-        </>
+        <Dropzone
+            onChangeStatus={handleChangeStatus}
+            onSubmit={handleSubmit}
+            maxFiles={3}
+            inputContent="Chọn 3 ảnh"
+            inputWithFilesContent={(files) => `${3 - files.length} ảnh`}
+            submitButtonDisabled={(files) => files.length < 3}
+            submitButtonContent="Tải ảnh"
+        />
     );
 };

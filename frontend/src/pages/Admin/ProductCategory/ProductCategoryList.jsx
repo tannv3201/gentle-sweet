@@ -93,11 +93,7 @@ export default function ProductCategoryList({ data }) {
                         render: (rowData) => (
                             // eslint-disable-next-line jsx-a11y/alt-text
                             <img
-                                src={
-                                    rowData?.image
-                                        ? rowData?.image
-                                        : "https://i.ibb.co/PhscSZk/FB-IMG-1532612997088.jpg"
-                                }
+                                src={rowData?.image ? rowData?.image : ""}
                                 style={{
                                     width: 60,
                                     height: 60,
