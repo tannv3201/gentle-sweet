@@ -7,6 +7,9 @@ import {
     deleteProductImageFailed,
     deleteProductImageStart,
     deleteProductImageSuccess,
+    getAllProductImageByProductIdFailed,
+    getAllProductImageByProductIdStart,
+    getAllProductImageByProductIdSuccess,
     getAllProductImageFailed,
     getAllProductImageStart,
     getAllProductImageSuccess,
@@ -31,6 +34,29 @@ export const getAllProductImage = async (accessToken, dispatch, axiosJWT) => {
     }
 };
 
+export const getAllProductImageByProductId = async (
+    accessToken,
+    productId,
+    dispatch,
+    axiosJWT
+) => {
+    dispatch(getAllProductImageByProductIdStart());
+    try {
+        const res = await axiosJWT.get("/v1/productImage/images/" + productId, {
+            headers: {
+                token: `Bearer ${accessToken}`,
+            },
+        });
+        dispatch(getAllProductImageByProductIdSuccess(res?.data));
+        if (res?.data?.status === 404) {
+            toast.error(res?.data?.msg);
+        }
+        return res?.data;
+    } catch (error) {
+        dispatch(getAllProductImageByProductIdFailed());
+    }
+};
+
 export const createProductImage = async (
     accessToken,
     dispatch,
@@ -47,7 +73,7 @@ export const createProductImage = async (
         dispatch(createProductImageSuccess(res?.data));
         if (res?.data?.status === 201) {
             toast.success("Thêm ảnh thành công vào product image");
-            // getAllProduct(accessToken, dispatch, axiosJWT);
+            getAllProductImage(accessToken, dispatch, axiosJWT);
         }
     } catch (error) {
         dispatch(createProductImageFailed(error.response?.data));

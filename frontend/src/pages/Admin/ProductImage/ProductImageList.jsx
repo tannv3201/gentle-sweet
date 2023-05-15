@@ -3,7 +3,6 @@ import EditRoundedIcon from "@mui/icons-material/EditRounded";
 import DeleteRoundedIcon from "@mui/icons-material/DeleteRounded";
 import { useEffect } from "react";
 import { useSelector } from "react-redux";
-import { getAllProduct } from "../../../redux/api/apiProduct";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { loginSuccess } from "../../../redux/slice/authSlice";
@@ -14,22 +13,24 @@ import { IconButton } from "@mui/material";
 import GButton from "../../../components/MyButton/MyButton";
 
 import { LightTooltip } from "../../../components/GTooltip/GTooltip";
-import DeleteProduct from "./DeleteProduct";
-import CreateUpdateProductModal from "./CreateUpdateProductModal";
-import { FormatCurrency } from "../../../components/FormatCurrency/FormatCurrency";
-import ActionMenu from "./ActionMenu/ActionMenu";
+import CreateUpdateProductImageModal from "./CreateUpdateProductImageModal";
+import DeleteProductImage from "./DeleteProductImage";
+import { useParams } from "react-router-dom";
+import { getAllProductImageByProductId } from "../../../redux/api/apiProductImage";
 
-export default function ProductCategoryList() {
+export default function ProductImageList({ data }) {
+    const { productId } = useParams();
+
     const user = useSelector((state) => state.auth.login?.currentUser);
     const [cloneData, setCloneData] = useState([]);
     const dispatch = useDispatch();
     const navigate = useNavigate();
-    const [selectedProduct, setSelectedProduct] = useState({});
+    const [selectedProductCategory, setSelectedProductCategory] = useState({});
 
     let axiosJWT = createAxios(user, dispatch, loginSuccess);
 
-    const productList = useSelector(
-        (state) => state.product.product?.productList
+    const productImageList = useSelector(
+        (state) => state.productImage.productImage?.productImageList
     );
 
     useEffect(() => {
@@ -37,27 +38,28 @@ export default function ProductCategoryList() {
             navigate("/dang-nhap");
         }
         if (user?.accessToken) {
-            getAllProduct(user?.accessToken, dispatch, axiosJWT);
+            getAllProductImageByProductId(
+                user?.accessToken,
+                productId,
+                dispatch,
+                axiosJWT
+            );
         }
     }, []);
 
     useEffect(() => {
-        setCloneData(structuredClone(productList));
-    }, [productList]);
+        setCloneData(structuredClone(productImageList));
+    }, [productImageList]);
 
     // Create update modal
     const [isOpenCreateUpdateModel, setIsOpenCreateUpdateModel] =
         useState(false);
 
     const handleOpenCreateUpdateModal = (rowData) => {
-        setSelectedProduct({
-            id: rowData?.id,
-            name: rowData?.name,
-            product_category_id: rowData?.product_category_id,
-            description: rowData?.description,
-            quantity: rowData?.quantity,
-            price: rowData?.price,
-            image: rowData?.image,
+        setSelectedProductCategory({
+            id: rowData.id,
+            name: rowData.name,
+            description: rowData.description,
         });
         setIsOpenCreateUpdateModel(true);
     };
@@ -71,7 +73,7 @@ export default function ProductCategoryList() {
         useState(false);
 
     const handleOpenDeleteConfirmPopup = (rowData) => {
-        setSelectedProduct({
+        setSelectedProductCategory({
             id: rowData.id,
             name: rowData.name,
             description: rowData.description,
@@ -83,15 +85,17 @@ export default function ProductCategoryList() {
         setIsOpenDeleteConfirmPopup(false);
     };
 
+    console.log(cloneData);
+
     return (
         <>
             <GButton onClick={handleOpenCreateUpdateModal}>
-                Thêm sản phẩm
+                Thêm danh mục sản phẩm
             </GButton>
             <br />
             <br />
             <GTable
-                title={"DANH SÁCH SẢN PHẨM"}
+                title={"DANH MỤC SẢN PHẨM"}
                 columns={[
                     {
                         title: "Hình ảnh",
@@ -100,7 +104,9 @@ export default function ProductCategoryList() {
                         render: (rowData) => (
                             // eslint-disable-next-line jsx-a11y/alt-text
                             <img
-                                src={rowData?.image ? rowData?.image : ""}
+                                src={
+                                    rowData?.image_url ? rowData?.image_url : ""
+                                }
                                 style={{
                                     width: 60,
                                     height: 60,
@@ -110,14 +116,7 @@ export default function ProductCategoryList() {
                             />
                         ),
                     },
-                    { title: "Tên sản phẩm", field: "name" },
-                    { title: "Số lượng", field: "quantity" },
-                    {
-                        title: "Giá",
-                        field: "price",
-                        render: (rowData) => FormatCurrency(rowData?.price),
-                    },
-                    { title: "Mô tả", field: "description" },
+                    { title: "Đường dẫn", field: "image_url" },
                     {
                         title: "Thao tác",
                         field: "actions",
@@ -135,11 +134,9 @@ export default function ProductCategoryList() {
                                     title="Chỉnh sửa"
                                 >
                                     <IconButton
-                                        onClick={() => {
-                                            handleOpenCreateUpdateModal(
-                                                rowData
-                                            );
-                                        }}
+                                        onClick={() =>
+                                            handleOpenCreateUpdateModal(rowData)
+                                        }
                                     >
                                         <EditRoundedIcon color="primary" />
                                     </IconButton>
@@ -155,7 +152,6 @@ export default function ProductCategoryList() {
                                         <DeleteRoundedIcon color="error" />
                                     </IconButton>
                                 </LightTooltip>
-                                <ActionMenu selectedProduct={rowData} />
                             </div>
                         ),
                     },
@@ -164,18 +160,18 @@ export default function ProductCategoryList() {
                 exportFileName={"DanhSachNguoiDung"}
             />
 
-            <CreateUpdateProductModal
+            <CreateUpdateProductImageModal
                 isOpen={isOpenCreateUpdateModel}
                 handleOpen={handleOpenCreateUpdateModal}
                 handleClose={handleCloseCreateUpdateModal}
-                selectedProduct={selectedProduct}
+                selectedProductCategory={selectedProductCategory}
             />
 
-            <DeleteProduct
+            <DeleteProductImage
                 isOpen={isOpenDeleteConfirmPopup}
                 handleOpen={handleOpenDeleteConfirmPopup}
                 handleClose={handleCloseDeleteConfirmPopup}
-                selectedProduct={selectedProduct}
+                selectedProductCategory={selectedProductCategory}
             />
         </>
     );

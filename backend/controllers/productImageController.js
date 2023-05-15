@@ -20,7 +20,7 @@ const productImageController = {
                 req.params.id
             );
             if (!productImage) {
-                return res.status(404).json("Sản phẩm không tồn tại");
+                return res.status(404).json("Hình ảnh không tồn tại");
             } else {
                 return res.status(200).json(productImage);
             }
@@ -34,10 +34,13 @@ const productImageController = {
         try {
             const productImages =
                 await ProductImageModel.getProductImageByProductId(
-                    req.params.id
+                    req.params.productId
                 );
             if (!productImages) {
-                return res.status(404).json("Sản phẩm không tồn tại");
+                return res.json({
+                    status: 404,
+                    msg: "Sản phẩm không có hình ảnh",
+                });
             } else {
                 return res.status(200).json(productImages);
             }

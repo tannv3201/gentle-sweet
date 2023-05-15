@@ -23,6 +23,19 @@ const productImageSlice = createSlice({
             state.productImage.isFetching = false;
             state.productImage.error = true;
         },
+
+        // Get all ADMIN USER
+        getAllProductImageByProductIdStart: (state) => {
+            state.productImage.isFetching = true;
+        },
+        getAllProductImageByProductIdSuccess: (state, action) => {
+            state.productImage.isFetching = false;
+            state.productImage.productImageList = action.payload;
+        },
+        getAllProductImageByProductIdFailed: (state) => {
+            state.productImage.isFetching = false;
+            state.productImage.error = true;
+        },
         // Create ProductImage Category
         createProductImageStart: (state) => {
             state.productImage.isFetching = true;
@@ -71,6 +84,10 @@ export const {
     getAllProductImageStart,
     getAllProductImageSuccess,
     getAllProductImageFailed,
+
+    getAllProductImageByProductIdStart,
+    getAllProductImageByProductIdSuccess,
+    getAllProductImageByProductIdFailed,
 
     createProductImageStart,
     createProductImageSuccess,

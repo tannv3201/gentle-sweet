@@ -41,6 +41,11 @@ export const mainListItems = (
             title={"Sản phẩm"}
             icon={<DashboardIcon />}
         />
+        <MenuItem
+            to={"/admin/productImage"}
+            title={"Hình ảnh"}
+            icon={<DashboardIcon />}
+        />
         <ListItemButton>
             <ListItemIcon>
                 <ShoppingCartIcon />

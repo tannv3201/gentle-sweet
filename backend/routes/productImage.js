@@ -22,7 +22,7 @@ router.get(
 );
 
 router.get(
-    "/productImage/:id",
+    "/images/:productId",
     middlewareController.verifyTokenAndSystemUserAuth,
     productImageController.getProductImageByProductId
 );

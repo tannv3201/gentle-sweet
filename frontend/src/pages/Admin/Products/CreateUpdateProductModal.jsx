@@ -35,10 +35,9 @@ export default function CreateUpdateProductModal({
     const user = useSelector((state) => state.auth.login?.currentUser);
     const dispatch = useDispatch();
 
-    // Image url after upload to server
+    // upload image
     const [imageFileSeleted, setImageFileSeleted] = useState([]);
     const [imageUrls, setImageUrls] = useState([]);
-
     const onChangeImage = (imageList, addUpdateIndex) => {
         // data for submit
         console.log(imageList, addUpdateIndex);
