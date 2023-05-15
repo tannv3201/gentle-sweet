@@ -37,7 +37,7 @@ const productsController = {
                 description: req.body.description,
                 quantity: req.body.quantity,
                 price: req.body.price,
-                image: req.body.image,
+                image_url: req.body.image_url,
                 status: 1,
             });
             res.json({

@@ -64,7 +64,7 @@ export default function CreateUpdateProductModal({
         description: "",
         quantity: "",
         price: "",
-        image: "",
+        image_url: "",
     });
 
     let axiosJWT = createAxios(user, dispatch, loginSuccess);
@@ -148,7 +148,7 @@ export default function CreateUpdateProductModal({
             if (data?.id) {
                 if (imageFileSeleted.length > 0) {
                     const imgUrl = await handleUploadToImgbb();
-                    const dataUpdate = { ...restData, image: imgUrl };
+                    const dataUpdate = { ...restData, image_url: imgUrl };
                     await handleUpdateProduct(dataUpdate);
                 } else {
                     await handleUpdateProduct(restData);
@@ -160,7 +160,7 @@ export default function CreateUpdateProductModal({
                     return;
                 } else {
                     const imgUrl = await handleUploadToImgbb();
-                    const dataCreate = { ...restData, image: imgUrl };
+                    const dataCreate = { ...restData, image_url: imgUrl };
                     await handleCreateProduct(dataCreate);
                 }
             }

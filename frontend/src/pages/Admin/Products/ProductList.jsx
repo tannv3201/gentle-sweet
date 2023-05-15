@@ -18,8 +18,12 @@ import DeleteProduct from "./DeleteProduct";
 import CreateUpdateProductModal from "./CreateUpdateProductModal";
 import { FormatCurrency } from "../../../components/FormatCurrency/FormatCurrency";
 import ActionMenu from "./ActionMenu/ActionMenu";
+import { useParams } from "react-router-dom";
+import { getAllProductImageByProductId } from "../../../redux/api/apiProductImage";
 
 export default function ProductCategoryList() {
+    const { productId } = useParams();
+
     const user = useSelector((state) => state.auth.login?.currentUser);
     const [cloneData, setCloneData] = useState([]);
     const dispatch = useDispatch();
@@ -38,6 +42,12 @@ export default function ProductCategoryList() {
         }
         if (user?.accessToken) {
             getAllProduct(user?.accessToken, dispatch, axiosJWT);
+            getAllProductImageByProductId(
+                user?.accessToken,
+                productId,
+                dispatch,
+                axiosJWT
+            );
         }
     }, []);
 
@@ -57,7 +67,7 @@ export default function ProductCategoryList() {
             description: rowData?.description,
             quantity: rowData?.quantity,
             price: rowData?.price,
-            image: rowData?.image,
+            image_url: rowData?.image_url,
         });
         setIsOpenCreateUpdateModel(true);
     };
@@ -95,12 +105,14 @@ export default function ProductCategoryList() {
                 columns={[
                     {
                         title: "Hình ảnh",
-                        field: "image",
+                        field: "image_url",
                         export: false,
                         render: (rowData) => (
                             // eslint-disable-next-line jsx-a11y/alt-text
                             <img
-                                src={rowData?.image ? rowData?.image : ""}
+                                src={
+                                    rowData?.image_url ? rowData?.image_url : ""
+                                }
                                 style={{
                                     width: 60,
                                     height: 60,
