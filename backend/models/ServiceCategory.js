@@ -3,7 +3,7 @@ const { v4: uuidv4 } = require("uuid");
 
 const getAllServiceCategory = async () => {
     const [rows, fields] = await pool.query(
-        "SELECT * FROM tbl_service_category"
+        "SELECT * FROM tbl_service_category WHERE status > 0"
     );
     return rows;
 };
