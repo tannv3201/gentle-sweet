@@ -36,12 +36,7 @@ const roleList = [
     },
 ];
 
-function CreateUpdateAdminUser({
-    handleClose,
-    handleOpen,
-    isOpen,
-    selectedUser,
-}) {
+function CreateUpdateAdminUser({ handleOpen, isOpen, selectedUser, ...props }) {
     // Format múi giờ
     dayjs.extend(utc);
     const user = useSelector((state) => state.auth.login?.currentUser);
@@ -77,7 +72,7 @@ function CreateUpdateAdminUser({
     const handleCreateAdminUser = (adminUser) => {
         createAdminUser(user?.accessToken, dispatch, adminUser, axiosJWT).then(
             () => {
-                handleClose();
+                handleCloseModal();
             }
         );
     };
@@ -90,7 +85,7 @@ function CreateUpdateAdminUser({
             adminUser,
             axiosJWT
         ).then(() => {
-            handleClose();
+            handleCloseModal();
         });
     };
 
@@ -129,7 +124,6 @@ function CreateUpdateAdminUser({
         ward: Yup.string().required("Vui lòng không để trống"),
         detail_address: Yup.string().required("Vui lòng không để trống"),
         birth_date: Yup.date()
-            .nullable()
             .required("Vui lòng nhập ngày sinh")
             .typeError("Ngày không hợp lệ")
             .max(new Date(), "Ngày sinh không được lớn hơn ngày hiện tại")
@@ -138,6 +132,17 @@ function CreateUpdateAdminUser({
                 "Ngày sinh không được nhỏ hơn 01/01/1900"
             ),
     });
+
+    const handleCloseModal = () => {
+        formik.resetForm();
+        formik.setFieldValue("province", null);
+        formik.setFieldValue("district", null);
+        formik.setFieldValue("ward", null);
+        setSelectedProvince(null);
+        setSelectedDistrict(null);
+        setSelectedWard(null);
+        props.handleClose();
+    };
 
     const formik = useFormik({
         enableReinitialize: true,
@@ -272,15 +277,10 @@ function CreateUpdateAdminUser({
             formik.setFieldValue("role_name", null);
         }
     };
-
     return (
         <>
             <GModal
-                handleClose={() => {
-                    formik.resetForm();
-                    setShowPassword(false);
-                    handleClose();
-                }}
+                handleClose={handleCloseModal}
                 handleOpen={handleOpen}
                 isOpen={isOpen}
                 title={
@@ -333,6 +333,14 @@ function CreateUpdateAdminUser({
                                 onChange={(date) => handleChangeBirthDate(date)}
                                 value={formik.values?.birth_date || null}
                                 formik={formik}
+                                error={
+                                    formik?.touched?.birth_date &&
+                                    Boolean(formik?.errors?.birth_date)
+                                }
+                                helperText={
+                                    formik?.touched?.birth_date &&
+                                    formik?.errors?.birth_date
+                                }
                             />
                         </Grid>
                         <Grid item xs={12}>
@@ -502,10 +510,7 @@ function CreateUpdateAdminUser({
                             <GButton
                                 style={{ marginLeft: "12px" }}
                                 color="text"
-                                onClick={() => {
-                                    formik.resetForm();
-                                    handleClose();
-                                }}
+                                onClick={handleCloseModal}
                             >
                                 Hủy
                             </GButton>
