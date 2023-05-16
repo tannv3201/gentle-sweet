@@ -1,6 +1,5 @@
 import React from "react";
 import AdminUserList from "./AdminUserList";
-import CreateUpdateAdminUser from "./CreateUpdateAdminUser";
 import { useState } from "react";
 
 function AdminUser() {
@@ -18,11 +17,6 @@ function AdminUser() {
     return (
         <>
             <AdminUserList />
-            <CreateUpdateAdminUser
-                isOpen={isOpenModelCreateUpdate}
-                handleOpen={handleOpenModal}
-                handleClose={handleCloseModal}
-            />
         </>
     );
 }

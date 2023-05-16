@@ -12,12 +12,11 @@ import { useState } from "react";
 import GTable from "../../../common/GTable/GTable";
 import { IconButton } from "@mui/material";
 import GButton from "../../../components/MyButton/MyButton";
-import CreateUpdateAdminUser from "./CreateUpdateCustomerUser";
-import DeleteAdminUser from "./DeleteCustomerUser";
 import PasswordMenu from "./PasswordMenu/PasswordMenu";
 import { LightTooltip } from "../../../components/GTooltip/GTooltip";
 import { getAllCustomerUser } from "../../../redux/api/apiCustomerUser";
-import moment from "moment";
+import CreateUpdateCustomerUserModal from "./CreateUpdateCustomerUserModal";
+import DeleteCustomerUserPopup from "./DeleteCustomerUserPopup";
 
 export default function CustomerUserList() {
     const user = useSelector((state) => state.auth.login?.currentUser);
@@ -159,14 +158,14 @@ export default function CustomerUserList() {
                 exportFileName={"DanhSachNguoiDung"}
             />
 
-            <CreateUpdateAdminUser
+            <CreateUpdateCustomerUserModal
                 isOpen={isOpenCreateUpdateModel}
                 handleOpen={handleOpenCreateUpdateModal}
                 handleClose={handleCloseCreateUpdateModal}
                 selectedCustomerUser={selectedUser}
             />
 
-            <DeleteAdminUser
+            <DeleteCustomerUserPopup
                 isOpen={isOpenDeleteConfirmModel}
                 handleOpen={handleCloseDeleteConfirmModal}
                 handleClose={handleCloseDeleteConfirmModal}

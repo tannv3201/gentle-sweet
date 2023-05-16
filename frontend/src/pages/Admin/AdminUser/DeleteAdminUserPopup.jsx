@@ -4,23 +4,23 @@ import { useDispatch, useSelector } from "react-redux";
 import { loginSuccess } from "../../../redux/slice/authSlice";
 import { createAxios } from "../../../createInstance";
 import ConfirmDeletePopup from "../components/ConfirmDeletePopup";
-import { deleteServiceCategory } from "../../../redux/api/apiServiceCategory";
+import { deleteAdminUser } from "../../../redux/api/apiAdminUser";
 
-export default function DeleteServiceCategory({
+export default function DeleteAdminUserPopup({
     handleClose,
     handleOpen,
     isOpen,
-    selectedProductCategory,
+    selectedUser,
 }) {
     const user = useSelector((state) => state.auth.login?.currentUser);
     const dispatch = useDispatch();
 
     let axiosJWT = createAxios(user, dispatch, loginSuccess);
 
-    const handleDeleteProductCategory = () => {
-        deleteServiceCategory(
+    const handleDeleteAdminUser = () => {
+        deleteAdminUser(
             dispatch,
-            selectedProductCategory.id,
+            selectedUser.id,
             user?.accessToken,
             axiosJWT
         ).then(() => {
@@ -34,9 +34,9 @@ export default function DeleteServiceCategory({
                 handleClose={handleClose}
                 handleOpen={handleOpen}
                 isOpen={isOpen}
-                deleteQuestion="Bạn có chắc chắn muốn xóa danh mục"
-                deleteLabel={selectedProductCategory?.name}
-                handleDelete={handleDeleteProductCategory}
+                deleteQuestion="Bạn có chắc chắn muốn xóa người dùng"
+                deleteLabel={selectedUser?.fullName}
+                handleDelete={handleDeleteAdminUser}
             />
         </>
     );

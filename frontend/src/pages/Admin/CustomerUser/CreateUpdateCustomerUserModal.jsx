@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import { useFormik } from "formik";
 import GButton from "../../../components/MyButton/MyButton";
-import { Autocomplete, Grid, IconButton, InputAdornment } from "@mui/material";
+import { Autocomplete, Grid, InputAdornment } from "@mui/material";
 import { useState } from "react";
 import * as Yup from "yup";
 import GModal from "../../../common/GModal/GModal";
@@ -9,7 +9,6 @@ import { useDispatch, useSelector } from "react-redux";
 import { loginSuccess } from "../../../redux/slice/authSlice";
 import { createAxios } from "../../../createInstance";
 import GTextFieldNormal from "../../../components/GTextField/GTextFieldNormal";
-import moment from "moment";
 import GDatePicker from "../../../components/GDatePicker/GDatePicker";
 import {
     getDistrict,
@@ -27,7 +26,7 @@ import { toast } from "react-hot-toast";
 import dayjs from "dayjs";
 import utc from "dayjs/plugin/utc";
 
-function CreateUpdateAdminUser({
+export default function CreateUpdateCustomerUserModal({
     handleOpen,
     isOpen,
     selectedCustomerUser,
@@ -499,5 +498,3 @@ function CreateUpdateAdminUser({
         </>
     );
 }
-
-export default CreateUpdateAdminUser;

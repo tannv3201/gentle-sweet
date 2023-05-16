@@ -14,15 +14,15 @@ import { IconButton } from "@mui/material";
 import GButton from "../../../components/MyButton/MyButton";
 
 import { LightTooltip } from "../../../components/GTooltip/GTooltip";
-import DeleteProduct from "./DeleteProduct";
 import CreateUpdateProductModal from "./CreateUpdateProductModal";
 import { FormatCurrency } from "../../../components/FormatCurrency/FormatCurrency";
 import ActionMenu from "./ActionMenu/ActionMenu";
 import { useParams } from "react-router-dom";
 import { getAllProductImageByProductId } from "../../../redux/api/apiProductImage";
+import DeleteProductPopup from "./DeleteProductPopup";
 const API_IMAGE = "http://localhost:8080/v1/productImage/images";
 
-export default function ProductCategoryList() {
+export default function ProductList() {
     const { productId } = useParams();
 
     const user = useSelector((state) => state.auth.login?.currentUser);
@@ -190,7 +190,7 @@ export default function ProductCategoryList() {
                 selectedProduct={selectedProduct}
             />
 
-            <DeleteProduct
+            <DeleteProductPopup
                 isOpen={isOpenDeleteConfirmPopup}
                 handleOpen={handleOpenDeleteConfirmPopup}
                 handleClose={handleCloseDeleteConfirmPopup}

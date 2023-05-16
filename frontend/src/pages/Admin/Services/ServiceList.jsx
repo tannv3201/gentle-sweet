@@ -3,7 +3,7 @@ import EditRoundedIcon from "@mui/icons-material/EditRounded";
 import DeleteRoundedIcon from "@mui/icons-material/DeleteRounded";
 import { useEffect } from "react";
 import { useSelector } from "react-redux";
-import { getAllProductCategory } from "../../../redux/api/apiProductCategory";
+import { getAllProduct } from "../../../redux/api/apiProduct";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { loginSuccess } from "../../../redux/slice/authSlice";
@@ -14,44 +14,65 @@ import { IconButton } from "@mui/material";
 import GButton from "../../../components/MyButton/MyButton";
 
 import { LightTooltip } from "../../../components/GTooltip/GTooltip";
-import CreateUpdateProductCategoryModal from "./CreateUpdateProductCategoryModal";
-import DeleteProductCategoryPopup from "./DeleteProductCategoryPopup";
+import DeleteProduct from "./DeleteProduct";
+import CreateUpdateProductModal from "./CreateUpdateServiceModal";
+import { FormatCurrency } from "../../../components/FormatCurrency/FormatCurrency";
+import ActionMenu from "./ActionMenu/ActionMenu";
+import { useParams } from "react-router-dom";
+import { getAllProductImageByProductId } from "../../../redux/api/apiProductImage";
+const API_IMAGE = "http://localhost:8080/v1/productImage/images";
 
-export default function ProductCategoryList({ data }) {
+export default function ServiceList() {
+    const { productId } = useParams();
+
     const user = useSelector((state) => state.auth.login?.currentUser);
     const [cloneData, setCloneData] = useState([]);
     const dispatch = useDispatch();
     const navigate = useNavigate();
-    const [selectedProductCategory, setSelectedProductCategory] = useState({});
+    const [selectedProduct, setSelectedProduct] = useState({});
 
     let axiosJWT = createAxios(user, dispatch, loginSuccess);
 
-    const productCategoryList = useSelector(
-        (state) => state.productCategory.productCategory?.productCategoryList
+    const productList = useSelector(
+        (state) => state.product.product?.productList
     );
 
     useEffect(() => {
-        if (!user) {
-            navigate("/dang-nhap");
-        }
-        if (user?.accessToken) {
-            getAllProductCategory(user?.accessToken, dispatch, axiosJWT);
-        }
+        const fetchData = async () => {
+            if (!user) {
+                navigate("/dang-nhap");
+            }
+            if (user?.accessToken) {
+                await getAllProduct(user?.accessToken, dispatch, axiosJWT);
+                await getAllProductImageByProductId(
+                    user?.accessToken,
+                    productId,
+                    dispatch,
+                    axiosJWT
+                );
+            }
+        };
+
+        fetchData();
     }, []);
 
     useEffect(() => {
-        setCloneData(structuredClone(productCategoryList));
-    }, [productCategoryList]);
+        setCloneData(structuredClone(productList));
+    }, [productList]);
 
     // Create update modal
     const [isOpenCreateUpdateModel, setIsOpenCreateUpdateModel] =
         useState(false);
 
     const handleOpenCreateUpdateModal = (rowData) => {
-        setSelectedProductCategory({
-            id: rowData.id,
-            name: rowData.name,
-            description: rowData.description,
+        setSelectedProduct({
+            id: rowData?.id,
+            name: rowData?.name,
+            product_category_id: rowData?.product_category_id,
+            description: rowData?.description,
+            quantity: rowData?.quantity,
+            price: rowData?.price,
+            image_url: rowData?.image_url,
         });
         setIsOpenCreateUpdateModel(true);
     };
@@ -65,7 +86,7 @@ export default function ProductCategoryList({ data }) {
         useState(false);
 
     const handleOpenDeleteConfirmPopup = (rowData) => {
-        setSelectedProductCategory({
+        setSelectedProduct({
             id: rowData.id,
             name: rowData.name,
             description: rowData.description,
@@ -80,22 +101,24 @@ export default function ProductCategoryList({ data }) {
     return (
         <>
             <GButton onClick={handleOpenCreateUpdateModal}>
-                Thêm danh mục sản phẩm
+                Thêm sản phẩm
             </GButton>
             <br />
             <br />
             <GTable
-                title={"DANH MỤC SẢN PHẨM"}
+                title={"DANH SÁCH SẢN PHẨM"}
                 columns={[
                     {
                         title: "Hình ảnh",
-                        field: "image",
+                        field: "image_url",
                         export: false,
                         render: (rowData) => (
                             // eslint-disable-next-line jsx-a11y/alt-text
                             <img
                                 src={
-                                    "http://localhost:8080/v1/productImage/images/logo_text.png"
+                                    rowData?.image_url
+                                        ? `${API_IMAGE}/${rowData?.image_url}`
+                                        : ""
                                 }
                                 style={{
                                     width: 60,
@@ -106,7 +129,13 @@ export default function ProductCategoryList({ data }) {
                             />
                         ),
                     },
-                    { title: "Tên danh mục", field: "name" },
+                    { title: "Tên sản phẩm", field: "name" },
+                    { title: "Số lượng", field: "quantity" },
+                    {
+                        title: "Giá",
+                        field: "price",
+                        render: (rowData) => FormatCurrency(rowData?.price),
+                    },
                     { title: "Mô tả", field: "description" },
                     {
                         title: "Thao tác",
@@ -125,9 +154,11 @@ export default function ProductCategoryList({ data }) {
                                     title="Chỉnh sửa"
                                 >
                                     <IconButton
-                                        onClick={() =>
-                                            handleOpenCreateUpdateModal(rowData)
-                                        }
+                                        onClick={() => {
+                                            handleOpenCreateUpdateModal(
+                                                rowData
+                                            );
+                                        }}
                                     >
                                         <EditRoundedIcon color="primary" />
                                     </IconButton>
@@ -143,6 +174,7 @@ export default function ProductCategoryList({ data }) {
                                         <DeleteRoundedIcon color="error" />
                                     </IconButton>
                                 </LightTooltip>
+                                <ActionMenu selectedProduct={rowData} />
                             </div>
                         ),
                     },
@@ -151,18 +183,18 @@ export default function ProductCategoryList({ data }) {
                 exportFileName={"DanhSachNguoiDung"}
             />
 
-            <CreateUpdateProductCategoryModal
+            <CreateUpdateProductModal
                 isOpen={isOpenCreateUpdateModel}
                 handleOpen={handleOpenCreateUpdateModal}
                 handleClose={handleCloseCreateUpdateModal}
-                selectedProductCategory={selectedProductCategory}
+                selectedProduct={selectedProduct}
             />
 
-            <DeleteProductCategoryPopup
+            <DeleteProduct
                 isOpen={isOpenDeleteConfirmPopup}
                 handleOpen={handleOpenDeleteConfirmPopup}
                 handleClose={handleCloseDeleteConfirmPopup}
-                selectedProductCategory={selectedProductCategory}
+                selectedProduct={selectedProduct}
             />
         </>
     );

@@ -4,20 +4,19 @@ import { useEffect } from "react";
 import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import _ from "underscore";
 import { loginSuccess } from "../../../redux/slice/authSlice";
 import { createAxios } from "../../../createInstance";
 import { useState } from "react";
 import GTable from "../../../common/GTable/GTable";
 import { IconButton } from "@mui/material";
 import GButton from "../../../components/MyButton/MyButton";
-import CreateUpdateAdminUser from "./CreateUpdateAdminUser";
-import DeleteAdminUser from "./DeleteAdminUser";
 import PasswordMenu from "./PasswordMenu/PasswordMenu";
 import { LightTooltip } from "../../../components/GTooltip/GTooltip";
 import { getAllUser } from "../../../redux/api/apiAdminUser";
 import AdminUserInfoDetail from "./AdminUserInfoDetail/AdminUserInfoDetail";
 import dayjs from "dayjs";
+import CreateUpdateAdminUserModal from "./CreateUpdateAdminUserModal";
+import DeleteAdminUserPopup from "./DeleteAdminUserPopup";
 
 export default function AdminUserList({ data }) {
     const user = useSelector((state) => state.auth.login?.currentUser);
@@ -210,14 +209,14 @@ export default function AdminUserList({ data }) {
                 exportFileName={"DanhSachNguoiDung"}
             />
 
-            <CreateUpdateAdminUser
+            <CreateUpdateAdminUserModal
                 isOpen={isOpenCreateUpdateModel}
                 handleOpen={handleOpenCreateUpdateModal}
                 handleClose={handleCloseCreateUpdateModal}
                 selectedUser={selectedUser}
             />
 
-            <DeleteAdminUser
+            <DeleteAdminUserPopup
                 isOpen={isOpenDeleteConfirmModel}
                 handleOpen={handleCloseDeleteConfirmModal}
                 handleClose={handleCloseDeleteConfirmModal}

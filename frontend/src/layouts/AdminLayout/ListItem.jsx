@@ -47,6 +47,11 @@ export const mainListItems = (
             title={"Sản phẩm"}
             icon={<Dashboard />}
         />
+        <MenuItem
+            to={"/admin/service"}
+            title={"Dịch vụ"}
+            icon={<Dashboard />}
+        />
         {/* <MenuItem
             to={"/admin/productImage"}
             title={"Hình ảnh"}

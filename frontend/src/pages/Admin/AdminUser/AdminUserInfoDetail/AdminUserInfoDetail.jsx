@@ -8,7 +8,6 @@ import { Grid } from "@mui/material";
 import styles from "./AdminUserInfoDetail.module.scss";
 import classNames from "classnames/bind";
 import dayjs from "dayjs";
-import utc from "dayjs/plugin/utc";
 import { useState } from "react";
 import { useEffect } from "react";
 import {

@@ -14,8 +14,8 @@ import GButton from "../../../components/MyButton/MyButton";
 
 import { LightTooltip } from "../../../components/GTooltip/GTooltip";
 import CreateUpdateServiceCategoryModal from "./CreateUpdateServiceCategoryModal";
-import DeleteServiceCategory from "./DeleteServiceCategory";
 import { getAllServiceCategory } from "../../../redux/api/apiServiceCategory";
+import DeleteServiceCategoryPopup from "./DeleteServiceCategoryPopup";
 
 export default function ServiceCategoryList({ data }) {
     const user = useSelector((state) => state.auth.login?.currentUser);
@@ -158,7 +158,7 @@ export default function ServiceCategoryList({ data }) {
                 selectedServiceCategory={selectedServiceCategory}
             />
 
-            <DeleteServiceCategory
+            <DeleteServiceCategoryPopup
                 isOpen={isOpenDeleteConfirmPopup}
                 handleOpen={handleOpenDeleteConfirmPopup}
                 handleClose={handleCloseDeleteConfirmPopup}

@@ -3,17 +3,21 @@ import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
 import { IconButton } from "@mui/material";
 import { PasswordRounded } from "@mui/icons-material";
+
 import classNames from "classnames/bind";
-import styles from "./PasswordMenu.module.scss";
-
+import styles from "./ActionMenu.module.scss";
 import { LightTooltip } from "../../../../components/GTooltip/GTooltip";
-import PasswordChangePopup from "./PasswordChangePopup";
 import { useState } from "react";
-import ConfirmResetPasswordPopup from "./ConfirmResetPasswordPopup";
-
+import { useNavigate } from "react-router-dom";
 const cx = classNames.bind(styles);
 
-export default function PasswordMenu({ selectedUser }) {
+export default function ActionMenu({ selectedProduct }) {
+    const navigate = useNavigate();
+
+    const handleNavigateProductImage = (productId) => {
+        navigate(`/admin/productImage/${productId}/product`);
+    };
+
     const [isOpenPasswordChangeModal, setIsOpenPasswordChangeModal] =
         useState(false);
     const [isOpenResetPasswordPopup, setIsOpenResetPasswordPopup] =
@@ -47,7 +51,7 @@ export default function PasswordMenu({ selectedUser }) {
 
     return (
         <div>
-            <LightTooltip placement="bottom" title="Mật khẩu">
+            <LightTooltip placement="bottom" title="Quản lý">
                 <IconButton
                     id="basic-button"
                     aria-controls={open ? "basic-menu" : undefined}
@@ -68,7 +72,7 @@ export default function PasswordMenu({ selectedUser }) {
                 }}
             >
                 <div className={cx("menu-title")}>
-                    <span>Mật khẩu</span>
+                    <span>Quản lý</span>
                 </div>
                 <MenuItem
                     onClick={() => {
@@ -76,31 +80,17 @@ export default function PasswordMenu({ selectedUser }) {
                         handleClose();
                     }}
                 >
-                    Đổi mật khẩu
+                    Thông tin chi tiết
                 </MenuItem>
                 <MenuItem
                     onClick={() => {
-                        handleOpenResetPasswordPopup();
+                        handleNavigateProductImage(selectedProduct?.id);
                         handleClose();
                     }}
                 >
-                    Reset
+                    Quản lý hình ảnh
                 </MenuItem>
             </Menu>
-
-            <PasswordChangePopup
-                isOpen={isOpenPasswordChangeModal}
-                handleClose={handleClosePasswordChangeModal}
-                handleOpen={handleOpenPasswordChangeModal}
-                selectedUser={selectedUser}
-            />
-
-            <ConfirmResetPasswordPopup
-                isOpen={isOpenResetPasswordPopup}
-                handleClose={handleCloseResetPasswordPopup}
-                handleOpen={handleOpenResetPasswordPopup}
-                selectedUser={selectedUser}
-            />
         </div>
     );
 }

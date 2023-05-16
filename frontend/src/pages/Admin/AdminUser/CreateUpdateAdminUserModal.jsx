@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import { useFormik } from "formik";
 import GButton from "../../../components/MyButton/MyButton";
-import { Autocomplete, Grid, IconButton, InputAdornment } from "@mui/material";
+import { Autocomplete, Grid, InputAdornment } from "@mui/material";
 import { useState } from "react";
 import * as Yup from "yup";
 import GModal from "../../../common/GModal/GModal";
@@ -36,7 +36,12 @@ const roleList = [
     },
 ];
 
-function CreateUpdateAdminUser({ handleOpen, isOpen, selectedUser, ...props }) {
+export default function CreateUpdateAdminUserModal({
+    handleOpen,
+    isOpen,
+    selectedUser,
+    ...props
+}) {
     // Format múi giờ
     dayjs.extend(utc);
     const user = useSelector((state) => state.auth.login?.currentUser);
@@ -521,5 +526,3 @@ function CreateUpdateAdminUser({ handleOpen, isOpen, selectedUser, ...props }) {
         </>
     );
 }
-
-export default CreateUpdateAdminUser;

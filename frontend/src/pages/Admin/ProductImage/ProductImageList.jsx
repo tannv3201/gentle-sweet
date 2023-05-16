@@ -1,5 +1,4 @@
 import React from "react";
-import EditRoundedIcon from "@mui/icons-material/EditRounded";
 import DeleteRoundedIcon from "@mui/icons-material/DeleteRounded";
 import { useEffect } from "react";
 import { useSelector } from "react-redux";
@@ -14,9 +13,9 @@ import GButton from "../../../components/MyButton/MyButton";
 
 import { LightTooltip } from "../../../components/GTooltip/GTooltip";
 import CreateUpdateProductImageModal from "./CreateUpdateProductImageModal";
-import DeleteProductImage from "./DeleteProductImage";
 import { useParams } from "react-router-dom";
 import { getAllProductImageByProductId } from "../../../redux/api/apiProductImage";
+import DeleteProductImagePopup from "./DeleteProductImagePopup";
 
 export default function ProductImageList({ data }) {
     const { productId } = useParams();
@@ -148,7 +147,7 @@ export default function ProductImageList({ data }) {
                 selectedProductCategory={selectedProductImage}
             />
 
-            <DeleteProductImage
+            <DeleteProductImagePopup
                 isOpen={isOpenDeleteConfirmPopup}
                 handleOpen={handleOpenDeleteConfirmPopup}
                 handleClose={handleCloseDeleteConfirmPopup}

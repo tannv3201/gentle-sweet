@@ -3,24 +3,15 @@ import { useFormik } from "formik";
 import GButton from "../../../components/MyButton/MyButton";
 import { Grid } from "@mui/material";
 import { useState } from "react";
-import * as Yup from "yup";
 import GModal from "../../../common/GModal/GModal";
-import {
-    createProductCategory,
-    updateProductCategory,
-} from "../../../redux/api/apiProductCategory";
+
 import { useDispatch, useSelector } from "react-redux";
 import { loginSuccess } from "../../../redux/slice/authSlice";
 import { createAxios } from "../../../createInstance";
-import GTextFieldNormal from "../../../components/GTextField/GTextFieldNormal";
 import { ImageUpload } from "./DropZone/CustomDropzone";
 import { toast } from "react-hot-toast";
-import {
-    createProductImage,
-    uploadImage,
-} from "../../../redux/api/apiProductImage";
+import { createProductImage } from "../../../redux/api/apiProductImage";
 import { useParams } from "react-router-dom";
-import axios from "axios";
 
 export default function CreateUpdateProductImageModal({
     handleOpen,
@@ -39,31 +30,6 @@ export default function CreateUpdateProductImageModal({
     });
 
     let axiosJWT = createAxios(user, dispatch, loginSuccess);
-
-    const handleCreateProductCategory = (productCategory) => {
-        createProductCategory(
-            user?.accessToken,
-            dispatch,
-            productCategory,
-            axiosJWT
-        ).then(() => {
-            formik.handleReset();
-            handleCloseModal();
-        });
-    };
-
-    const handleUpdateProductCategory = (productCategory) => {
-        updateProductCategory(
-            user?.accessToken,
-            dispatch,
-            selectedProductCategory?.id,
-            productCategory,
-            axiosJWT
-        ).then(() => {
-            formik.handleReset();
-            handleCloseModal();
-        });
-    };
 
     const handleCloseModal = () => {
         formik.resetForm();

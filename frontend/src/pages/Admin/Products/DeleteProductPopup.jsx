@@ -6,7 +6,7 @@ import { loginSuccess } from "../../../redux/slice/authSlice";
 import { createAxios } from "../../../createInstance";
 import ConfirmDeletePopup from "../components/ConfirmDeletePopup";
 
-export default function DeleteProduct({
+export default function DeleteProductPopup({
     handleClose,
     handleOpen,
     isOpen,
