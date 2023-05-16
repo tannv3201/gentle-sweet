@@ -23,7 +23,8 @@ const invoiceRoute = require("./routes/invoice");
 const bookingRoute = require("./routes/booking");
 
 const deliveryRoute = require("./routes/delivery");
-const testRoute = require("./routes/test");
+
+const storageImageRoute = require("./routes/storageImage");
 
 const app = express();
 app.use(cors());
@@ -53,7 +54,7 @@ app.use("/v1/invoice", invoiceRoute);
 app.use("/v1/booking", bookingRoute);
 
 app.use("/v1/delivery", deliveryRoute);
-app.use("/v1/test", testRoute);
+app.use("/v1/assets", storageImageRoute);
 
 app.listen(port, () => {
     console.log(`Server is running on port ${port}`);

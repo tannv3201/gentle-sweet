@@ -16,10 +16,10 @@ const getServiceImageById = async (id) => {
     return rows[0];
 };
 
-const getServiceImageByServiceId = async (product_id) => {
+const getServiceImageByServiceId = async (service_id) => {
     const [rows, fields] = await pool.query(
-        "SELECT * FROM tbl_service_image WHERE product_id = (?) AND status > 0",
-        [product_id]
+        "SELECT * FROM tbl_service_image WHERE service_id = (?) AND status > 0",
+        [service_id]
     );
     return rows;
 };

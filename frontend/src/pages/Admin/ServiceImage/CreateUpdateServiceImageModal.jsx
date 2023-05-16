@@ -10,20 +10,22 @@ import { loginSuccess } from "../../../redux/slice/authSlice";
 import { createAxios } from "../../../createInstance";
 import { ImageUpload } from "./DropZone/CustomDropzone";
 import { toast } from "react-hot-toast";
-import { createProductImage } from "../../../redux/api/apiProductImage";
 import { useParams } from "react-router-dom";
+import { createServiceImage } from "../../../redux/api/apiServiceImage";
 
-export default function CreateUpdateProductImageModal({
+export default function CreateUpdateServiceImageModal({
     handleOpen,
     isOpen,
     selectedProductCategory,
     ...props
 }) {
-    const { productId } = useParams();
+    const { serviceId } = useParams();
+
+    console.log(serviceId);
 
     const user = useSelector((state) => state.auth.login?.currentUser);
     const dispatch = useDispatch();
-    const [productImage, setProductCategory] = useState({
+    const [serviceCategory, setServiceCategory] = useState({
         image: "",
     });
 
@@ -35,12 +37,12 @@ export default function CreateUpdateProductImageModal({
         setImageFileSeleted([]);
     };
 
-    const handleCreateProductImage = async (productImageData) => {
+    const handleCreateProductImage = async () => {
         const formData = new FormData();
         formData.append("image", imageFileSeleted[0]?.file);
-        formData.append("product_id", productId);
-        createProductImage(
-            productId,
+        formData.append("service_id", serviceId);
+        createServiceImage(
+            serviceId,
             user?.accessToken,
             dispatch,
             formData,
@@ -52,7 +54,7 @@ export default function CreateUpdateProductImageModal({
 
     const formik = useFormik({
         enableReinitialize: true,
-        initialValues: productImage,
+        initialValues: serviceCategory,
         onSubmit: async (data) => {
             if (imageFileSeleted.length !== 0) {
                 await handleCreateProductImage();
@@ -64,12 +66,11 @@ export default function CreateUpdateProductImageModal({
 
     useEffect(() => {
         if (selectedProductCategory)
-            setProductCategory(selectedProductCategory);
+            setServiceCategory(selectedProductCategory);
     }, [selectedProductCategory]);
 
     // upload image
     const [imageFileSeleted, setImageFileSeleted] = useState([]);
-    const [imageUrls, setImageUrls] = useState([]);
     const onChangeImage = (imageList, addUpdateIndex) => {
         // data for submit
         console.log(imageList, addUpdateIndex);

@@ -21,7 +21,7 @@ import {
 export const getAllServiceImage = async (accessToken, dispatch, axiosJWT) => {
     dispatch(getAllServiceImageStart());
     try {
-        const res = await axiosJWT.get("/v1/productImage", {
+        const res = await axiosJWT.get("/v1/serviceImage", {
             headers: {
                 token: `Bearer ${accessToken}`,
             },
@@ -35,14 +35,14 @@ export const getAllServiceImage = async (accessToken, dispatch, axiosJWT) => {
 
 export const getAllServiceImageByServiceId = async (
     accessToken,
-    productId,
+    serviceId,
     dispatch,
     axiosJWT
 ) => {
     dispatch(getAllServiceImageByServiceIdStart());
     try {
         const res = await axiosJWT.get(
-            "/v1/productImage/images/" + productId + "/product",
+            "/v1/serviceImage/images/" + serviceId + "/service",
             {
                 headers: {
                     token: `Bearer ${accessToken}`,
@@ -60,15 +60,15 @@ export const getAllServiceImageByServiceId = async (
 };
 
 export const createServiceImage = async (
-    productId,
+    serviceId,
     accessToken,
     dispatch,
-    productImageData,
+    serviceImageData,
     axiosJWT
 ) => {
     dispatch(createServiceImageStart());
     try {
-        const res = await axiosJWT.post("/v1/productImage", productImageData, {
+        const res = await axiosJWT.post("/v1/serviceImage", serviceImageData, {
             headers: {
                 token: `Bearer ${accessToken}`,
             },
@@ -78,7 +78,7 @@ export const createServiceImage = async (
             toast.success("Thêm ảnh thành công vào product image");
             getAllServiceImageByServiceId(
                 accessToken,
-                productId,
+                serviceId,
                 dispatch,
                 axiosJWT
             );
@@ -97,7 +97,7 @@ export const uploadImage = async (
     dispatch(createServiceImageStart());
     try {
         const res = await axiosJWT.post(
-            "/v1/productImage/upload",
+            "/v1/serviceImage/upload",
             productImageData,
             {
                 headers: {
@@ -119,12 +119,12 @@ export const updateServiceImage = async (
     accessToken,
     dispatch,
     id,
-    productData,
+    serviceImage,
     axiosJWT
 ) => {
     dispatch(updateServiceImageStart());
     try {
-        const res = await axiosJWT.put("/v1/productImage/" + id, productData, {
+        const res = await axiosJWT.put("/v1/serviceImage/" + id, serviceImage, {
             headers: {
                 token: `Bearer ${accessToken}`,
             },
@@ -148,7 +148,7 @@ export const deleteImageInFolder = async (
     dispatch(deleteServiceImageStart());
     try {
         const res = await axiosJWT.delete(
-            "/v1/productImage/images/" + image_url,
+            "/v1/serviceImage/images/" + image_url,
             {
                 headers: {
                     token: `Bearer ${accessToken}`,
@@ -167,8 +167,8 @@ export const deleteImageInFolder = async (
     }
 };
 
-export const deleteImageInDB = async (
-    productId,
+export const deleteServiceImage = async (
+    serviceId,
     dispatch,
     id,
     accessToken,
@@ -176,7 +176,7 @@ export const deleteImageInDB = async (
 ) => {
     dispatch(deleteServiceImageStart());
     try {
-        const res = await axiosJWT.delete("/v1/productImage/" + id, {
+        const res = await axiosJWT.delete("/v1/serviceImage/" + id, {
             headers: {
                 token: `Bearer ${accessToken}`,
             },
@@ -186,7 +186,7 @@ export const deleteImageInDB = async (
             toast.success(res?.data?.msg);
             getAllServiceImageByServiceId(
                 accessToken,
-                productId,
+                serviceId,
                 dispatch,
                 axiosJWT
             );

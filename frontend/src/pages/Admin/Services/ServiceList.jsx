@@ -20,7 +20,7 @@ import { getAllService } from "../../../redux/api/apiService";
 import DeleteServicePopup from "./DeleteServicePopup";
 import CreateUpdateServiceModal from "./CreateUpdateServiceModal";
 
-const API_IMAGE = "http://localhost:8080/v1/productImage/images";
+import { API_IMAGE_URL } from "../../../LocalConstants";
 
 export default function ServiceList() {
     const { productId } = useParams();
@@ -117,7 +117,7 @@ export default function ServiceList() {
                             <img
                                 src={
                                     rowData?.image_url
-                                        ? `${API_IMAGE}/${rowData?.image_url}`
+                                        ? `${API_IMAGE_URL}/${rowData?.image_url}`
                                         : ""
                                 }
                                 style={{

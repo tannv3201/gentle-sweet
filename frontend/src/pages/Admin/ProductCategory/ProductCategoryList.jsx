@@ -16,6 +16,7 @@ import GButton from "../../../components/MyButton/MyButton";
 import { LightTooltip } from "../../../components/GTooltip/GTooltip";
 import CreateUpdateProductCategoryModal from "./CreateUpdateProductCategoryModal";
 import DeleteProductCategoryPopup from "./DeleteProductCategoryPopup";
+import { API_IMAGE_URL } from "../../../LocalConstants";
 
 export default function ProductCategoryList({ data }) {
     const user = useSelector((state) => state.auth.login?.currentUser);
@@ -94,9 +95,7 @@ export default function ProductCategoryList({ data }) {
                         render: (rowData) => (
                             // eslint-disable-next-line jsx-a11y/alt-text
                             <img
-                                src={
-                                    "http://localhost:8080/v1/productImage/images/logo_text.png"
-                                }
+                                src={`${API_IMAGE_URL}/logo_text.png`}
                                 style={{
                                     width: 60,
                                     height: 60,

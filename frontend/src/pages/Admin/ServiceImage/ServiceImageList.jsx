@@ -12,25 +12,25 @@ import { IconButton } from "@mui/material";
 import GButton from "../../../components/MyButton/MyButton";
 
 import { LightTooltip } from "../../../components/GTooltip/GTooltip";
-import CreateUpdateProductImageModal from "./CreateUpdateProductImageModal";
 import { useParams } from "react-router-dom";
-import { getAllProductImageByProductId } from "../../../redux/api/apiProductImage";
-import DeleteProductImagePopup from "./DeleteProductImagePopup";
+import CreateUpdateServiceImageModal from "./CreateUpdateServiceImageModal";
+import DeleteServiceImagePopup from "./DeleteServiceImagePopup";
+import { getAllServiceImageByServiceId } from "../../../redux/api/apiServiceImage";
 import { API_IMAGE_URL } from "../../../LocalConstants";
 
-export default function ProductImageList({ data }) {
-    const { productId } = useParams();
+export default function ServiceImageList({ data }) {
+    const { serviceId } = useParams();
 
     const user = useSelector((state) => state.auth.login?.currentUser);
     const [cloneData, setCloneData] = useState([]);
     const dispatch = useDispatch();
     const navigate = useNavigate();
-    const [selectedProductImage, setSelectedProductImage] = useState({});
+    const [selectedServiceImage, setSelectedServiceImage] = useState({});
 
     let axiosJWT = createAxios(user, dispatch, loginSuccess);
 
-    const productImageList = useSelector(
-        (state) => state.productImage.productImage?.productImageList
+    const serviceImageList = useSelector(
+        (state) => state.serviceImage.serviceImage?.serviceImageList
     );
 
     useEffect(() => {
@@ -38,9 +38,9 @@ export default function ProductImageList({ data }) {
             navigate("/dang-nhap");
         }
         if (user?.accessToken) {
-            getAllProductImageByProductId(
+            getAllServiceImageByServiceId(
                 user?.accessToken,
-                productId,
+                serviceId,
                 dispatch,
                 axiosJWT
             );
@@ -48,8 +48,8 @@ export default function ProductImageList({ data }) {
     }, []);
 
     useEffect(() => {
-        setCloneData(structuredClone(productImageList));
-    }, [productImageList]);
+        setCloneData(structuredClone(serviceImageList));
+    }, [serviceImageList]);
 
     // Create update modal
     const [isOpenCreateUpdateModel, setIsOpenCreateUpdateModel] =
@@ -68,7 +68,7 @@ export default function ProductImageList({ data }) {
         useState(false);
 
     const handleOpenDeleteConfirmPopup = (rowData) => {
-        setSelectedProductImage({
+        setSelectedServiceImage({
             id: rowData?.id,
             image_url: rowData?.image_url,
         });
@@ -141,18 +141,18 @@ export default function ProductImageList({ data }) {
                 exportFileName={"DanhSachNguoiDung"}
             />
 
-            <CreateUpdateProductImageModal
+            <CreateUpdateServiceImageModal
                 isOpen={isOpenCreateUpdateModel}
                 handleOpen={handleOpenCreateUpdateModal}
                 handleClose={handleCloseCreateUpdateModal}
-                selectedProductCategory={selectedProductImage}
+                selectedProductCategory={selectedServiceImage}
             />
 
-            <DeleteProductImagePopup
+            <DeleteServiceImagePopup
                 isOpen={isOpenDeleteConfirmPopup}
                 handleOpen={handleOpenDeleteConfirmPopup}
                 handleClose={handleCloseDeleteConfirmPopup}
-                selectedProductCategory={selectedProductImage}
+                selectedProductCategory={selectedServiceImage}
             />
         </>
     );

@@ -30,12 +30,6 @@ const productImageController = {
         }
     },
 
-    getImageByPathName: async (req, res) => {
-        const pathname = req.params?.pathname.replace(/\\/g, "/");
-        const imagePath = path.join(imageFolder, pathname);
-        res.sendFile(imagePath);
-    },
-
     // GET PRODUCT BY ID
     getProductImageByProductId: async (req, res) => {
         try {

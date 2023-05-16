@@ -18,12 +18,6 @@ router.delete(
 );
 
 router.get(
-    "/images/:pathname",
-    // middlewareController.verifyTokenAndSystemUserAuth,
-    serviceImageController.getImageByPathName
-);
-
-router.get(
     "/",
     middlewareController.verifyTokenAndSystemUserAuth,
     serviceImageController.getAllServiceImage
@@ -36,7 +30,7 @@ router.get(
 );
 
 router.get(
-    "/images/:productId/product",
+    "/images/:serviceId/service",
     middlewareController.verifyTokenAndSystemUserAuth,
     serviceImageController.getServiceImageByServiceId
 );

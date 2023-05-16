@@ -11,17 +11,13 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 const cx = classNames.bind(styles);
 
-export default function ActionMenu({ selectedProduct }) {
+export default function ActionMenu({ selectedService }) {
     const navigate = useNavigate();
 
-    const handleNavigateProductImage = (productId) => {
-        navigate(`/admin/productImage/${productId}/product`);
+    const handleNavigateProductImage = (serviceId) => {
+        navigate(`/admin/serviceImage/${serviceId}/service`);
     };
 
-    const [isOpenPasswordChangeModal, setIsOpenPasswordChangeModal] =
-        useState(false);
-    const [isOpenResetPasswordPopup, setIsOpenResetPasswordPopup] =
-        useState(false);
     const [anchorEl, setAnchorEl] = useState(null);
 
     const open = Boolean(anchorEl);
@@ -31,22 +27,6 @@ export default function ActionMenu({ selectedProduct }) {
 
     const handleClose = () => {
         setAnchorEl(null);
-    };
-
-    const handleOpenPasswordChangeModal = () => {
-        setIsOpenPasswordChangeModal(true);
-    };
-
-    const handleClosePasswordChangeModal = () => {
-        setIsOpenPasswordChangeModal(false);
-    };
-
-    const handleOpenResetPasswordPopup = () => {
-        setIsOpenResetPasswordPopup(true);
-    };
-
-    const handleCloseResetPasswordPopup = () => {
-        setIsOpenResetPasswordPopup(false);
     };
 
     return (
@@ -76,7 +56,6 @@ export default function ActionMenu({ selectedProduct }) {
                 </div>
                 <MenuItem
                     onClick={() => {
-                        handleOpenPasswordChangeModal();
                         handleClose();
                     }}
                 >
@@ -84,7 +63,7 @@ export default function ActionMenu({ selectedProduct }) {
                 </MenuItem>
                 <MenuItem
                     onClick={() => {
-                        handleNavigateProductImage(selectedProduct?.id);
+                        handleNavigateProductImage(selectedService?.id);
                         handleClose();
                     }}
                 >

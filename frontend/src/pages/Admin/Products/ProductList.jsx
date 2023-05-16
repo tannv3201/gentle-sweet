@@ -20,7 +20,7 @@ import ActionMenu from "./ActionMenu/ActionMenu";
 import { useParams } from "react-router-dom";
 import { getAllProductImageByProductId } from "../../../redux/api/apiProductImage";
 import DeleteProductPopup from "./DeleteProductPopup";
-const API_IMAGE = "http://localhost:8080/v1/productImage/images";
+import { API_IMAGE_URL } from "../../../LocalConstants";
 
 export default function ProductList() {
     const { productId } = useParams();
@@ -117,7 +117,7 @@ export default function ProductList() {
                             <img
                                 src={
                                     rowData?.image_url
-                                        ? `${API_IMAGE}/${rowData?.image_url}`
+                                        ? `${API_IMAGE_URL}/${rowData?.image_url}`
                                         : ""
                                 }
                                 style={{
