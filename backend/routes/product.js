@@ -4,9 +4,15 @@ const productController = require("../controllers/productController");
 const middlewareController = require("../controllers/middlewareController");
 
 router.post(
-    "/",
+    "/online",
     middlewareController.verifyTokenAndSystemUserAuth,
-    productController.createProduct
+    productController.createProductOnline
+);
+
+router.post(
+    "/local",
+    middlewareController.verifyTokenAndSystemUserAuth,
+    productController.createProductLocal
 );
 
 router.get(

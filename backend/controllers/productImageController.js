@@ -72,10 +72,9 @@ const productImageController = {
         }
     },
 
-    // Create Product Category
+    // Create Product Image
     createProductImage: async (req, res, next) => {
         try {
-            console.log(req?.file);
             const newProductImage = await ProductImageModel.createProductImage({
                 product_id: req.body?.product_id,
                 image_url: req?.file?.filename,

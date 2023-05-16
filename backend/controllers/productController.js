@@ -27,8 +27,8 @@ const productsController = {
         }
     },
 
-    // Create Product Category
-    createProduct: async (req, res, next) => {
+    // Create Product Online
+    createProductOnline: async (req, res, next) => {
         try {
             const newProduct = await ProductModel.createProduct({
                 product_category_id: req.body.product_category_id,
@@ -38,6 +38,29 @@ const productsController = {
                 quantity: req.body.quantity,
                 price: req.body.price,
                 image_url: req.body.image_url,
+                status: 1,
+            });
+            res.json({
+                status: 201,
+                msg: "Thêm mới thành công",
+                data: newProduct,
+            });
+        } catch (error) {
+            res.status(500).json(error);
+        }
+    },
+
+    // Create Product Online
+    createProductLocal: async (req, res, next) => {
+        try {
+            const newProduct = await ProductModel.createProduct({
+                product_category_id: req.body.product_category_id,
+                admin_user_id: req.user.id,
+                name: req.body.name,
+                description: req.body.description,
+                quantity: req.body.quantity,
+                price: req.body.price,
+                image_url: req?.file?.filename,
                 status: 1,
             });
             res.json({
