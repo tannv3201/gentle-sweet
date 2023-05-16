@@ -4,8 +4,6 @@ import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
 import ListSubheader from "@mui/material/ListSubheader";
 
-import styles from "./DefaultLayout.module.scss";
-import classNames from "classnames/bind";
 import MenuItem from "./MenuItem";
 import {
     CategoryRounded,
