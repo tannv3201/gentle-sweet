@@ -94,7 +94,9 @@ export default function ServiceCategoryList({ data }) {
                         render: (rowData) => (
                             // eslint-disable-next-line jsx-a11y/alt-text
                             <img
-                                src={rowData?.image ? rowData?.image : ""}
+                                src={
+                                    "http://localhost:8080/v1/productImage/images/logo_text.png"
+                                }
                                 style={{
                                     width: 60,
                                     height: 60,
