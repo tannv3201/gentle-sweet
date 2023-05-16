@@ -167,7 +167,7 @@ export default function CreateUpdateProductModal({
     };
 
     const handleUpdateProduct = async (data) => {
-        if (imageFileSeleted) {
+        if (imageFileSeleted?.length !== 0) {
             const formData = new FormData();
             formData.append("image", imageFileSeleted[0]?.file);
             formData.append("name", data?.name);
@@ -191,7 +191,9 @@ export default function CreateUpdateProductModal({
                 selectedProduct?.id,
                 data,
                 axiosJWT
-            );
+            ).then(() => {
+                handleCloseModal();
+            });
         }
     };
 

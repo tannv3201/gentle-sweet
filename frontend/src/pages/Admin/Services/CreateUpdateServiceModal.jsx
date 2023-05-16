@@ -160,7 +160,7 @@ export default function CreateUpdateServiceModal({
     };
 
     const handleUpdateProduct = async (data) => {
-        if (imageFileSeleted) {
+        if (imageFileSeleted?.length > 0) {
             const formData = new FormData();
             formData.append("image", imageFileSeleted[0]?.file);
             formData.append("name", data?.name);

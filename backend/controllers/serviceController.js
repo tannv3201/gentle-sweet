@@ -53,13 +53,16 @@ const serviceController = {
     updateServiceByID: async (req, res) => {
         try {
             const service_id = req.params.id;
+            let dataUpdate;
             const { admin_user_id, ...data } = req.body;
+            if (req.file) {
+                dataUpdate = { ...data, image_url: req?.file?.filename };
+            } else {
+                dataUpdate = data;
+            }
             const affectedRows = await ServiceModel.updateServiceById(
                 service_id,
-                {
-                    ...data,
-                    image_url: req?.file?.filename,
-                }
+                dataUpdate
             );
             if (affectedRows === 0) {
                 return res.status(404).json({ message: "Cập nhật thất bại" });
