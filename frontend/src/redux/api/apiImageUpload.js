@@ -1,7 +1,7 @@
 import axios from "axios";
 import toast from "react-hot-toast";
 
-export const uploadImage = async (formData) => {
+export const uploadImageToImgbb = async (formData) => {
     try {
         const res = await axios.post(
             "https://api.imgbb.com/1/upload",

@@ -5,18 +5,18 @@ import { Autocomplete, Grid } from "@mui/material";
 import { useState } from "react";
 import * as Yup from "yup";
 import GModal from "../../../common/GModal/GModal";
-import { createProduct, updateProduct } from "../../../redux/api/apiProduct";
 import { getAllProductCategory } from "../../../redux/api/apiProductCategory";
-import { uploadImage } from "../../../redux/api/apiImageUpload";
 import { useDispatch, useSelector } from "react-redux";
 import { loginSuccess } from "../../../redux/slice/authSlice";
 import { createAxios } from "../../../createInstance";
 import GTextFieldNormal from "../../../components/GTextField/GTextFieldNormal";
-import UploadImage from "./UploadImage/UploadImage";
-import { MyDropzone } from "./DropZone/DropZone";
-import { createProductImage } from "../../../redux/api/apiProductImage";
 import { toast } from "react-hot-toast";
 import { ImageUpload } from "./DropZone/CustomDropzone";
+import { uploadImageToImgbb } from "../../../redux/api/apiImageUpload";
+import {
+    createProductOnline,
+    updateProduct,
+} from "../../../redux/api/apiProduct";
 
 // Validate
 const validationSchema = Yup.object().shape({
@@ -88,9 +88,9 @@ export default function CreateUpdateProductModal({
         setImageFileSeleted([]);
     };
 
-    // Upload ảnh
+    // Upload ảnh lên Server online
     const handleCreateProduct = async (data) => {
-        const productInserted = await createProduct(
+        const productInserted = await createProductOnline(
             user?.accessToken,
             dispatch,
             data,
@@ -105,25 +105,11 @@ export default function CreateUpdateProductModal({
         if (imageFileSeleted) {
             const formData = new FormData();
             formData.append("image", imageFileSeleted[0]?.file);
-            const res = await uploadImage(formData);
+            const res = await uploadImageToImgbb(formData);
 
             return res;
         } else {
             toast.error("Chưa có ảnh");
-        }
-    };
-
-    const handleCreateProductImage = async (product_id) => {
-        for (const imageUrl of imageUrls) {
-            await createProductImage(
-                user?.accessToken,
-                dispatch,
-                {
-                    product_id: 1,
-                    image_url: imageUrl,
-                },
-                axiosJWT
-            );
         }
     };
 
@@ -138,6 +124,8 @@ export default function CreateUpdateProductModal({
             handleCloseModal();
         });
     };
+
+    // Upload ảnh vào server local
 
     const formik = useFormik({
         enableReinitialize: true,
@@ -166,8 +154,6 @@ export default function CreateUpdateProductModal({
             }
         },
     });
-    console.log(formik.errors);
-    console.log(selectedProduct);
 
     const handleChangeProductCategory = (value) => {
         if (value) {

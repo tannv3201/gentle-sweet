@@ -30,7 +30,7 @@ export const getAllProduct = async (accessToken, dispatch, axiosJWT) => {
     }
 };
 
-export const createProduct = async (
+export const createProductOnline = async (
     accessToken,
     dispatch,
     productData,
@@ -38,7 +38,7 @@ export const createProduct = async (
 ) => {
     dispatch(createProductStart());
     try {
-        const res = await axiosJWT.post("/v1/product", productData, {
+        const res = await axiosJWT.post("/v1/product/online", productData, {
             headers: {
                 token: `Bearer ${accessToken}`,
             },
