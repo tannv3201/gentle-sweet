@@ -5,7 +5,9 @@ import customerUserReducer from "./slice/customerUserSlice";
 import productCategoryReducer from "./slice/productCategorySlice";
 import serviceCategoryReducer from "./slice/serviceCategorySlice";
 import productReducer from "./slice/productSlice";
+import serviceReducer from "./slice/serviceSlice";
 import productImageReducer from "./slice/productImageSlice";
+import serviceImageReducer from "./slice/serviceImageSlice";
 
 import {
     persistStore,
@@ -32,7 +34,9 @@ const rootReducer = combineReducers({
     productCategory: productCategoryReducer,
     serviceCategory: serviceCategoryReducer,
     product: productReducer,
+    service: serviceReducer,
     productImage: productImageReducer,
+    serviceImage: serviceImageReducer,
 });
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);

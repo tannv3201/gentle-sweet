@@ -29,6 +29,7 @@ import ProductCategory from "../pages/Admin/ProductCategory/ProductCategory";
 import CustomerUser from "../pages/Admin/CustomerUser/CustomerUser";
 import ProductImage from "../pages/Admin/ProductImage/ProductImage";
 import ServiceCategory from "../pages/Admin/ServiceCategory/ServiceCategory";
+import Services from "../pages/Admin/Services/Services";
 
 // public routes
 
@@ -107,6 +108,11 @@ export const privateRoutes = [
     {
         path: "/admin/product",
         component: Products,
+        layout: AdminLayout,
+    },
+    {
+        path: "/admin/service",
+        component: Services,
         layout: AdminLayout,
     },
     {

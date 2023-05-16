@@ -15,6 +15,7 @@ const productImageRoute = require("./routes/productImage");
 
 const serviceCategoryRoute = require("./routes/serviceCategory");
 const serviceRoute = require("./routes/service");
+const serviceImageRoute = require("./routes/serviceImage");
 
 const discountRoute = require("./routes/discount");
 
@@ -44,6 +45,7 @@ app.use("/v1/productImage", productImageRoute);
 
 app.use("/v1/serviceCategory", serviceCategoryRoute);
 app.use("/v1/service", serviceRoute);
+app.use("/v1/serviceImage", serviceImageRoute);
 
 app.use("/v1/discount", discountRoute);
 
