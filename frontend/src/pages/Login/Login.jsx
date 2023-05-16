@@ -7,7 +7,7 @@ import GButton from "../../components/MyButton/MyButton";
 import { Google, Facebook } from "@mui/icons-material";
 /* eslint-disable jsx-a11y/anchor-is-valid */
 
-import { Formik } from "formik";
+import { Formik, useFormik } from "formik";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import toast, { useToasterStore } from "react-hot-toast";
@@ -45,6 +45,18 @@ function Login() {
         loginUser(value, dispatch, navigate);
     };
 
+    const formik = useFormik({
+        enableReinitialize: true,
+        initialValues: {
+            username: "",
+            password: "",
+        },
+        validationSchema: validationSchema,
+        onSubmit: (data) => {
+            handleSubmit(data);
+        },
+    });
+
     return (
         <div className={cx("wrapper")}>
             <div className={cx("inner")}>
@@ -58,183 +70,123 @@ function Login() {
                         <div className={cx("col-right")}>
                             <div className={cx("signin-form-wrapper")}>
                                 <div className={cx("signin-form")}>
-                                    <Formik
-                                        initialValues={{
-                                            username: "",
-                                            password: "",
-                                        }}
-                                        validationSchema={validationSchema}
-                                        onSubmit={(values, actions) => {
-                                            handleSubmit(values);
-                                            actions.setSubmitting(false);
-                                        }}
-                                    >
-                                        {({
-                                            handleChange,
-                                            handleSubmit,
-                                            touched,
-                                            errors,
-                                            values,
-                                        }) => (
-                                            <form onSubmit={handleSubmit}>
-                                                <Grid container spacing={2}>
-                                                    <Grid item xs={12}>
-                                                        <span
-                                                            className={cx(
-                                                                "login-title"
-                                                            )}
-                                                        >
-                                                            <h2>
-                                                                Chào mừng bạn
-                                                                quay trở lại!
-                                                            </h2>
-                                                        </span>
-                                                        <span
-                                                            className={cx(
-                                                                "login-sub-title"
-                                                            )}
-                                                        >
-                                                            Hãy đăng nhập để
-                                                            nhận nhiều ưu đãi từ
-                                                            Gentle Beauty.
-                                                        </span>
-                                                    </Grid>
-                                                    <Grid item xs={12}>
-                                                        <GTextFieldNormal
-                                                            fullWidth
-                                                            label={
-                                                                "Tên đăng nhập"
-                                                            }
-                                                            name="username"
-                                                            value={
-                                                                values?.username
-                                                            }
-                                                            onChange={
-                                                                handleChange
-                                                            }
-                                                            error={
-                                                                touched?.username &&
-                                                                Boolean(
-                                                                    errors?.username
-                                                                )
-                                                            }
-                                                            helperText={
-                                                                touched?.username &&
-                                                                errors?.username
-                                                            }
-                                                        />
-                                                    </Grid>
-                                                    <Grid item xs={12}>
-                                                        <GTextFieldNormal
-                                                            fullWidth
-                                                            label={"Mật khẩu"}
-                                                            name="password"
-                                                            type="password"
-                                                            value={
-                                                                values?.password
-                                                            }
-                                                            onChange={
-                                                                handleChange
-                                                            }
-                                                            error={
-                                                                touched?.password &&
-                                                                Boolean(
-                                                                    errors?.password
-                                                                )
-                                                            }
-                                                            helperText={
-                                                                touched?.password &&
-                                                                errors?.password
-                                                            }
-                                                        />
-                                                    </Grid>
-                                                    <Grid item xs={12}>
-                                                        <span
-                                                            className={cx(
-                                                                "forgot-password"
-                                                            )}
-                                                        >
-                                                            <a href="">
-                                                                Quên mật khẩu?
-                                                            </a>
-                                                        </span>
-                                                    </Grid>
-                                                    <Grid item xs={12}>
-                                                        <GButton
-                                                            size="large"
-                                                            fullWidth
-                                                            type="submit"
-                                                        >
-                                                            Đăng nhập
-                                                        </GButton>
-                                                    </Grid>
-                                                    <Grid item xs={12}>
-                                                        <div
-                                                            className={cx(
-                                                                "divider"
-                                                            )}
-                                                        >
-                                                            <b />{" "}
-                                                            <span>hoặc</span>{" "}
-                                                            <b />
-                                                        </div>
-                                                    </Grid>
-                                                    <Grid item xs={12}>
-                                                        <div
-                                                            className={cx(
-                                                                "another-signin"
-                                                            )}
-                                                        >
-                                                            <Grid
-                                                                container
-                                                                spacing={2}
+                                    <form onSubmit={formik.handleSubmit}>
+                                        <Grid container spacing={2}>
+                                            <Grid item xs={12}>
+                                                <span
+                                                    className={cx(
+                                                        "login-title"
+                                                    )}
+                                                >
+                                                    <h2>
+                                                        Chào mừng bạn quay trở
+                                                        lại!
+                                                    </h2>
+                                                </span>
+                                                <span
+                                                    className={cx(
+                                                        "login-sub-title"
+                                                    )}
+                                                >
+                                                    Hãy đăng nhập để nhận nhiều
+                                                    ưu đãi từ Gentle Beauty.
+                                                </span>
+                                            </Grid>
+                                            <Grid item xs={12}>
+                                                <GTextFieldNormal
+                                                    fullWidth
+                                                    label={"Tên đăng nhập"}
+                                                    name="username"
+                                                    value={
+                                                        formik.values?.username
+                                                    }
+                                                    onChange={
+                                                        formik.handleChange
+                                                    }
+                                                    formik={formik}
+                                                />
+                                            </Grid>
+                                            <Grid item xs={12}>
+                                                <GTextFieldNormal
+                                                    fullWidth
+                                                    label={"Mật khẩu"}
+                                                    name="password"
+                                                    type="password"
+                                                    value={
+                                                        formik.values?.password
+                                                    }
+                                                    onChange={
+                                                        formik.handleChange
+                                                    }
+                                                    formik={formik}
+                                                />
+                                            </Grid>
+                                            <Grid item xs={12}>
+                                                <span
+                                                    className={cx(
+                                                        "forgot-password"
+                                                    )}
+                                                >
+                                                    <a href="">
+                                                        Quên mật khẩu?
+                                                    </a>
+                                                </span>
+                                            </Grid>
+                                            <Grid item xs={12}>
+                                                <GButton
+                                                    size="large"
+                                                    fullWidth
+                                                    type="submit"
+                                                >
+                                                    Đăng nhập
+                                                </GButton>
+                                            </Grid>
+                                            <Grid item xs={12}>
+                                                <div className={cx("divider")}>
+                                                    <b /> <span>hoặc</span>{" "}
+                                                    <b />
+                                                </div>
+                                            </Grid>
+                                            <Grid item xs={12}>
+                                                <div
+                                                    className={cx(
+                                                        "another-signin"
+                                                    )}
+                                                >
+                                                    <Grid container spacing={2}>
+                                                        <Grid item xs={6}>
+                                                            <GButton
+                                                                startIcon={
+                                                                    <Google />
+                                                                }
+                                                                fullWidth
                                                             >
-                                                                <Grid
-                                                                    item
-                                                                    xs={6}
-                                                                >
-                                                                    <GButton
-                                                                        startIcon={
-                                                                            <Google />
-                                                                        }
-                                                                        fullWidth
-                                                                    >
-                                                                        Google
-                                                                    </GButton>
-                                                                </Grid>
-                                                                <Grid
-                                                                    item
-                                                                    xs={6}
-                                                                >
-                                                                    <GButton
-                                                                        startIcon={
-                                                                            <Facebook />
-                                                                        }
-                                                                        fullWidth
-                                                                    >
-                                                                        Facebook
-                                                                    </GButton>
-                                                                </Grid>
-                                                            </Grid>
-                                                        </div>
+                                                                Google
+                                                            </GButton>
+                                                        </Grid>
+                                                        <Grid item xs={6}>
+                                                            <GButton
+                                                                startIcon={
+                                                                    <Facebook />
+                                                                }
+                                                                fullWidth
+                                                            >
+                                                                Facebook
+                                                            </GButton>
+                                                        </Grid>
                                                     </Grid>
-                                                    <Grid item xs={12}>
-                                                        <span
-                                                            className={cx(
-                                                                "register"
-                                                            )}
-                                                        >
-                                                            Bạn chưa có tài
-                                                            khoản?{" "}
-                                                            <a href="#">
-                                                                Đăng ký ngay
-                                                            </a>
-                                                        </span>
-                                                    </Grid>
-                                                </Grid>
-                                            </form>
-                                        )}
-                                    </Formik>
+                                                </div>
+                                            </Grid>
+                                            <Grid item xs={12}>
+                                                <span
+                                                    className={cx("register")}
+                                                >
+                                                    Bạn chưa có tài khoản?{" "}
+                                                    <a href="#">Đăng ký ngay</a>
+                                                </span>
+                                            </Grid>
+                                        </Grid>
+                                    </form>
                                 </div>
                                 <div className={cx("copy-right")}>
                                     <span>2023 © ALL RIGHT RESERVED</span>
