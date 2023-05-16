@@ -22,12 +22,12 @@ export default function DeleteProductImage({
     const dispatch = useDispatch();
     let axiosJWT = createAxios(user, dispatch, loginSuccess);
     const handleDeleteProductCategory = async () => {
-        await deleteImageInFolder(
-            dispatch,
-            selectedProductCategory?.image_url,
-            user?.accessToken,
-            axiosJWT
-        );
+        // await deleteImageInFolder(
+        //     dispatch,
+        //     selectedProductCategory?.image_url,
+        //     user?.accessToken,
+        //     axiosJWT
+        // );
         await deleteImageInDB(
             productId,
             dispatch,

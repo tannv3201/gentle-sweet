@@ -57,6 +57,33 @@ export const createProductOnline = async (
     }
 };
 
+export const createProductLocal = async (
+    accessToken,
+    dispatch,
+    productData,
+    axiosJWT
+) => {
+    dispatch(createProductStart());
+    try {
+        const res = await axiosJWT.post("/v1/product/local", productData, {
+            headers: {
+                token: `Bearer ${accessToken}`,
+            },
+        });
+        dispatch(createProductSuccess(res?.data));
+        if (res?.data?.status === 201) {
+            // toast.success(res?.data?.msg);
+            toast.success("Thêm sản phẩm thành công.");
+            getAllProduct(accessToken, dispatch, axiosJWT);
+        }
+        console.log(res?.data?.data?.insertId);
+
+        return res?.data?.data;
+    } catch (error) {
+        dispatch(createProductFailed(error.response?.data));
+    }
+};
+
 export const updateProduct = async (
     accessToken,
     dispatch,

@@ -14,6 +14,7 @@ import { toast } from "react-hot-toast";
 import { ImageUpload } from "./DropZone/CustomDropzone";
 import { uploadImageToImgbb } from "../../../redux/api/apiImageUpload";
 import {
+    createProductLocal,
     createProductOnline,
     updateProduct,
 } from "../../../redux/api/apiProduct";
@@ -89,43 +90,110 @@ export default function CreateUpdateProductModal({
     };
 
     // Upload ảnh lên Server online
-    const handleCreateProduct = async (data) => {
-        const productInserted = await createProductOnline(
-            user?.accessToken,
-            dispatch,
-            data,
-            axiosJWT
-        ).then(() => {
-            handleCloseModal();
-        });
-        return productInserted;
-    };
+    // const handleCreateProduct = async (data) => {
+    //     const productInserted = await createProductOnline(
+    //         user?.accessToken,
+    //         dispatch,
+    //         data,
+    //         axiosJWT
+    //     ).then(() => {
+    //         handleCloseModal();
+    //     });
+    //     return productInserted;
+    // };
 
-    const handleUploadToImgbb = async (data) => {
+    // const handleUploadToImgbb = async (data) => {
+    //     if (imageFileSeleted) {
+    //         const formData = new FormData();
+    //         formData.append("image", imageFileSeleted[0]?.file);
+    //         const res = await uploadImageToImgbb(formData);
+
+    //         return res;
+    //     } else {
+    //         toast.error("Chưa có ảnh");
+    //     }
+    // };
+
+    // Upload ảnh vào server online
+    // const formik = useFormik({
+    //     enableReinitialize: true,
+    //     initialValues: product,
+    //     validationSchema: validationSchema,
+    //     onSubmit: async (data) => {
+    //         const { product_category_name, ...restData } = data;
+    //         if (data?.id) {
+    //             if (imageFileSeleted.length > 0) {
+    //                 const imgUrl = await handleUploadToImgbb();
+    //                 const dataUpdate = { ...restData, image_url: imgUrl };
+    //                 await handleUpdateProduct(dataUpdate);
+    //             } else {
+    //                 await handleUpdateProduct(restData);
+    //             }
+    //         } else {
+    //             if (imageFileSeleted.length === 0) {
+    //                 formik.setFieldError("image", "Vui lòng chọn ảnh");
+    //                 toast.error("Vui lòng chọn ảnh");
+    //                 return;
+    //             } else {
+    //                 const imgUrl = await handleUploadToImgbb();
+    //                 const dataCreate = { ...restData, image_url: imgUrl };
+    //                 await handleCreateProduct(dataCreate);
+    //             }
+    //         }
+    //     },
+    // });
+
+    // Upload to server local
+    const handleCreateProduct = async (data) => {
         if (imageFileSeleted) {
             const formData = new FormData();
             formData.append("image", imageFileSeleted[0]?.file);
-            const res = await uploadImageToImgbb(formData);
-
-            return res;
+            formData.append("name", data?.name);
+            formData.append("description", data?.description);
+            formData.append("product_category_id", data?.product_category_id);
+            formData.append("price", data?.price);
+            formData.append("quantity", data?.quantity);
+            createProductLocal(
+                user?.accessToken,
+                dispatch,
+                formData,
+                axiosJWT
+            ).then(() => {
+                handleCloseModal();
+            });
         } else {
             toast.error("Chưa có ảnh");
         }
     };
 
     const handleUpdateProduct = async (data) => {
-        await updateProduct(
-            user?.accessToken,
-            dispatch,
-            selectedProduct?.id,
-            data,
-            axiosJWT
-        ).then(() => {
-            handleCloseModal();
-        });
+        if (imageFileSeleted) {
+            const formData = new FormData();
+            formData.append("image", imageFileSeleted[0]?.file);
+            formData.append("name", data?.name);
+            formData.append("description", data?.description);
+            formData.append("product_category_id", data?.product_category_id);
+            formData.append("price", data?.price);
+            formData.append("quantity", data?.quantity);
+            updateProduct(
+                user?.accessToken,
+                dispatch,
+                selectedProduct?.id,
+                formData,
+                axiosJWT
+            ).then(() => {
+                handleCloseModal();
+            });
+        } else {
+            updateProduct(
+                user?.accessToken,
+                dispatch,
+                selectedProduct?.id,
+                data,
+                axiosJWT
+            );
+        }
     };
-
-    // Upload ảnh vào server local
 
     const formik = useFormik({
         enableReinitialize: true,
@@ -134,23 +202,9 @@ export default function CreateUpdateProductModal({
         onSubmit: async (data) => {
             const { product_category_name, ...restData } = data;
             if (data?.id) {
-                if (imageFileSeleted.length > 0) {
-                    const imgUrl = await handleUploadToImgbb();
-                    const dataUpdate = { ...restData, image_url: imgUrl };
-                    await handleUpdateProduct(dataUpdate);
-                } else {
-                    await handleUpdateProduct(restData);
-                }
+                handleUpdateProduct(restData);
             } else {
-                if (imageFileSeleted.length === 0) {
-                    formik.setFieldError("image", "Vui lòng chọn ảnh");
-                    toast.error("Vui lòng chọn ảnh");
-                    return;
-                } else {
-                    const imgUrl = await handleUploadToImgbb();
-                    const dataCreate = { ...restData, image_url: imgUrl };
-                    await handleCreateProduct(dataCreate);
-                }
+                handleCreateProduct(restData);
             }
         },
     });

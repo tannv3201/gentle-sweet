@@ -20,6 +20,7 @@ import { FormatCurrency } from "../../../components/FormatCurrency/FormatCurrenc
 import ActionMenu from "./ActionMenu/ActionMenu";
 import { useParams } from "react-router-dom";
 import { getAllProductImageByProductId } from "../../../redux/api/apiProductImage";
+const API_IMAGE = "http://localhost:8080/v1/productImage/images";
 
 export default function ProductCategoryList() {
     const { productId } = useParams();
@@ -37,18 +38,22 @@ export default function ProductCategoryList() {
     );
 
     useEffect(() => {
-        if (!user) {
-            navigate("/dang-nhap");
-        }
-        if (user?.accessToken) {
-            getAllProduct(user?.accessToken, dispatch, axiosJWT);
-            getAllProductImageByProductId(
-                user?.accessToken,
-                productId,
-                dispatch,
-                axiosJWT
-            );
-        }
+        const fetchData = async () => {
+            if (!user) {
+                navigate("/dang-nhap");
+            }
+            if (user?.accessToken) {
+                await getAllProduct(user?.accessToken, dispatch, axiosJWT);
+                await getAllProductImageByProductId(
+                    user?.accessToken,
+                    productId,
+                    dispatch,
+                    axiosJWT
+                );
+            }
+        };
+
+        fetchData();
     }, []);
 
     useEffect(() => {
@@ -111,7 +116,9 @@ export default function ProductCategoryList() {
                             // eslint-disable-next-line jsx-a11y/alt-text
                             <img
                                 src={
-                                    rowData?.image_url ? rowData?.image_url : ""
+                                    rowData?.image_url
+                                        ? `${API_IMAGE}/${rowData?.image_url}`
+                                        : ""
                                 }
                                 style={{
                                     width: 60,

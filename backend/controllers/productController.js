@@ -80,7 +80,10 @@ const productsController = {
             const { admin_user_id, ...data } = req.body;
             const affectedRows = await ProductModel.updateProductById(
                 product_id,
-                data
+                {
+                    ...data,
+                    image_url: req?.file?.filename,
+                }
             );
             if (affectedRows === 0) {
                 return res.status(404).json({ message: "Cập nhật thất bại" });
