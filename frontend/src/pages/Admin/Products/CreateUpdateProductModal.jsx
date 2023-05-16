@@ -53,7 +53,7 @@ export default function CreateUpdateProductModal({
     );
 
     useEffect(() => {
-        if (isOpen) {
+        if (productCategoryList?.length === 0) {
             getAllProductCategory(user?.accessToken, dispatch, axiosJWT);
         }
     }, []);

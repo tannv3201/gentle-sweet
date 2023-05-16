@@ -14,6 +14,7 @@ import { toast } from "react-hot-toast";
 import { ImageUpload } from "./DropZone/CustomDropzone";
 import { uploadImageToImgbb } from "../../../redux/api/apiImageUpload";
 import { createService, updateService } from "../../../redux/api/apiService";
+import { getAllServiceCategory } from "../../../redux/api/apiServiceCategory";
 
 // Validate
 const validationSchema = Yup.object().shape({
@@ -47,10 +48,9 @@ export default function CreateUpdateServiceModal({
                 state.serviceCategory.serviceCategory?.serviceCategoryList
         )
     );
-
     useEffect(() => {
-        if (isOpen) {
-            getAllProductCategory(user?.accessToken, dispatch, axiosJWT);
+        if (serviceCategoryList?.length === 0) {
+            getAllServiceCategory(user?.accessToken, dispatch, axiosJWT);
         }
     }, []);
 

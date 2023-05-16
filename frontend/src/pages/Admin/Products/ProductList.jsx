@@ -38,22 +38,12 @@ export default function ProductList() {
     );
 
     useEffect(() => {
-        const fetchData = async () => {
-            if (!user) {
-                navigate("/dang-nhap");
-            }
-            if (user?.accessToken) {
-                await getAllProduct(user?.accessToken, dispatch, axiosJWT);
-                await getAllProductImageByProductId(
-                    user?.accessToken,
-                    productId,
-                    dispatch,
-                    axiosJWT
-                );
-            }
-        };
-
-        fetchData();
+        if (!user) {
+            navigate("/dang-nhap");
+        }
+        if (user?.accessToken) {
+            getAllProduct(user?.accessToken, dispatch, axiosJWT);
+        }
     }, []);
 
     useEffect(() => {
