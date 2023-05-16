@@ -1,12 +1,10 @@
 import React from "react";
 import ServiceList from "./ServiceList";
 
-function Product() {
+export default function Services() {
     return (
         <>
             <ServiceList />
         </>
     );
 }
-
-export default Product;

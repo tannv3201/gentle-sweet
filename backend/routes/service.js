@@ -2,10 +2,12 @@ const express = require("express");
 const router = express.Router();
 const serviceController = require("../controllers/serviceController");
 const middlewareController = require("../controllers/middlewareController");
+const upload = require("../controllers/imageStorageController");
 
 router.post(
     "/",
     middlewareController.verifyTokenAndSystemUserAuth,
+    upload.single("image"),
     serviceController.createService
 );
 
@@ -24,6 +26,7 @@ router.get(
 router.put(
     "/:id",
     middlewareController.verifyTokenAndSystemUserAuth,
+    upload.single("image"),
     serviceController.updateServiceByID
 );
 

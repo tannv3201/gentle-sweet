@@ -3,7 +3,6 @@ import EditRoundedIcon from "@mui/icons-material/EditRounded";
 import DeleteRoundedIcon from "@mui/icons-material/DeleteRounded";
 import { useEffect } from "react";
 import { useSelector } from "react-redux";
-import { getAllProduct } from "../../../redux/api/apiProduct";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { loginSuccess } from "../../../redux/slice/authSlice";
@@ -14,12 +13,13 @@ import { IconButton } from "@mui/material";
 import GButton from "../../../components/MyButton/MyButton";
 
 import { LightTooltip } from "../../../components/GTooltip/GTooltip";
-import DeleteProduct from "./DeleteProduct";
-import CreateUpdateProductModal from "./CreateUpdateServiceModal";
 import { FormatCurrency } from "../../../components/FormatCurrency/FormatCurrency";
 import ActionMenu from "./ActionMenu/ActionMenu";
 import { useParams } from "react-router-dom";
-import { getAllProductImageByProductId } from "../../../redux/api/apiProductImage";
+import { getAllService } from "../../../redux/api/apiService";
+import DeleteServicePopup from "./DeleteServicePopup";
+import CreateUpdateServiceModal from "./CreateUpdateServiceModal";
+
 const API_IMAGE = "http://localhost:8080/v1/productImage/images";
 
 export default function ServiceList() {
@@ -29,12 +29,12 @@ export default function ServiceList() {
     const [cloneData, setCloneData] = useState([]);
     const dispatch = useDispatch();
     const navigate = useNavigate();
-    const [selectedProduct, setSelectedProduct] = useState({});
+    const [selectedService, setSelectedService] = useState({});
 
     let axiosJWT = createAxios(user, dispatch, loginSuccess);
 
-    const productList = useSelector(
-        (state) => state.product.product?.productList
+    const serviceList = useSelector(
+        (state) => state.service.service?.serviceList
     );
 
     useEffect(() => {
@@ -43,13 +43,13 @@ export default function ServiceList() {
                 navigate("/dang-nhap");
             }
             if (user?.accessToken) {
-                await getAllProduct(user?.accessToken, dispatch, axiosJWT);
-                await getAllProductImageByProductId(
-                    user?.accessToken,
-                    productId,
-                    dispatch,
-                    axiosJWT
-                );
+                await getAllService(user?.accessToken, dispatch, axiosJWT);
+                // await getAllProductImageByProductId(
+                //     user?.accessToken,
+                //     productId,
+                //     dispatch,
+                //     axiosJWT
+                // );
             }
         };
 
@@ -57,18 +57,18 @@ export default function ServiceList() {
     }, []);
 
     useEffect(() => {
-        setCloneData(structuredClone(productList));
-    }, [productList]);
+        setCloneData(structuredClone(serviceList));
+    }, [serviceList]);
 
     // Create update modal
     const [isOpenCreateUpdateModel, setIsOpenCreateUpdateModel] =
         useState(false);
 
     const handleOpenCreateUpdateModal = (rowData) => {
-        setSelectedProduct({
+        setSelectedService({
             id: rowData?.id,
             name: rowData?.name,
-            product_category_id: rowData?.product_category_id,
+            service_category_id: rowData?.service_category_id,
             description: rowData?.description,
             quantity: rowData?.quantity,
             price: rowData?.price,
@@ -86,7 +86,7 @@ export default function ServiceList() {
         useState(false);
 
     const handleOpenDeleteConfirmPopup = (rowData) => {
-        setSelectedProduct({
+        setSelectedService({
             id: rowData.id,
             name: rowData.name,
             description: rowData.description,
@@ -101,7 +101,7 @@ export default function ServiceList() {
     return (
         <>
             <GButton onClick={handleOpenCreateUpdateModal}>
-                Thêm sản phẩm
+                Thêm dịch vụ
             </GButton>
             <br />
             <br />
@@ -174,7 +174,7 @@ export default function ServiceList() {
                                         <DeleteRoundedIcon color="error" />
                                     </IconButton>
                                 </LightTooltip>
-                                <ActionMenu selectedProduct={rowData} />
+                                <ActionMenu selectedService={rowData} />
                             </div>
                         ),
                     },
@@ -183,18 +183,18 @@ export default function ServiceList() {
                 exportFileName={"DanhSachNguoiDung"}
             />
 
-            <CreateUpdateProductModal
+            <CreateUpdateServiceModal
                 isOpen={isOpenCreateUpdateModel}
                 handleOpen={handleOpenCreateUpdateModal}
                 handleClose={handleCloseCreateUpdateModal}
-                selectedProduct={selectedProduct}
+                selectedService={selectedService}
             />
 
-            <DeleteProduct
+            <DeleteServicePopup
                 isOpen={isOpenDeleteConfirmPopup}
                 handleOpen={handleOpenDeleteConfirmPopup}
                 handleClose={handleCloseDeleteConfirmPopup}
-                selectedProduct={selectedProduct}
+                selectedService={selectedService}
             />
         </>
     );

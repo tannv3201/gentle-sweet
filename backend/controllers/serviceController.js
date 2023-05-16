@@ -36,10 +36,14 @@ const serviceController = {
                 description: req.body.description,
                 quantity: req.body.quantity,
                 price: req.body.price,
-                image: req.body.image,
+                image_url: req?.file?.filename,
                 status: 1,
             });
-            res.status(201).json(newService);
+            return res.json({
+                status: 201,
+                msg: "Thêm mới thành công",
+                data: newService,
+            });
         } catch (error) {
             res.status(500).json(error);
         }
@@ -52,12 +56,15 @@ const serviceController = {
             const { admin_user_id, ...data } = req.body;
             const affectedRows = await ServiceModel.updateServiceById(
                 service_id,
-                data
+                {
+                    ...data,
+                    image_url: req?.file?.filename,
+                }
             );
             if (affectedRows === 0) {
                 return res.status(404).json({ message: "Cập nhật thất bại" });
             } else {
-                return res.status(200).json({ message: "Cập nhật thành công" });
+                return res.json({ status: 200, msg: "Cập nhật thành công" });
             }
         } catch (error) {
             console.log(error);
@@ -77,7 +84,7 @@ const serviceController = {
             if (affectedRows === 0) {
                 return res.status(404).json({ message: "Xóa thất bại" });
             } else {
-                return res.status(200).json({ message: "Xóa thành công" });
+                return res.json({ status: 200, msg: "Xóa thành công" });
             }
         } catch (error) {
             res.status(500).json({ message: error.message });

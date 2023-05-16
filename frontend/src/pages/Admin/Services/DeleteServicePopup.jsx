@@ -1,26 +1,26 @@
 import React from "react";
 
-import { deleteProduct } from "../../../redux/api/apiProduct";
 import { useDispatch, useSelector } from "react-redux";
 import { loginSuccess } from "../../../redux/slice/authSlice";
 import { createAxios } from "../../../createInstance";
 import ConfirmDeletePopup from "../components/ConfirmDeletePopup";
+import { deleteService } from "../../../redux/api/apiService";
 
-export default function DeleteService({
+export default function DeleteServicePopup({
     handleClose,
     handleOpen,
     isOpen,
-    selectedProduct,
+    selectedService,
 }) {
     const user = useSelector((state) => state.auth.login?.currentUser);
     const dispatch = useDispatch();
 
     let axiosJWT = createAxios(user, dispatch, loginSuccess);
 
-    const handleDeleteProduct = () => {
-        deleteProduct(
+    const handleDeleteService = () => {
+        deleteService(
             dispatch,
-            selectedProduct.id,
+            selectedService.id,
             user?.accessToken,
             axiosJWT
         ).then(() => {
@@ -34,9 +34,9 @@ export default function DeleteService({
                 handleClose={handleClose}
                 handleOpen={handleOpen}
                 isOpen={isOpen}
-                deleteQuestion="Bạn có chắc chắn muốn xóa sản phẩm"
-                deleteLabel={selectedProduct?.name}
-                handleDelete={handleDeleteProduct}
+                deleteQuestion="Bạn có chắc chắn muốn xóa dịch vụ"
+                deleteLabel={selectedService?.name}
+                handleDelete={handleDeleteService}
             />
         </>
     );

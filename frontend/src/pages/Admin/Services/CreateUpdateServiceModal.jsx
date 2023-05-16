@@ -13,15 +13,11 @@ import GTextFieldNormal from "../../../components/GTextField/GTextFieldNormal";
 import { toast } from "react-hot-toast";
 import { ImageUpload } from "./DropZone/CustomDropzone";
 import { uploadImageToImgbb } from "../../../redux/api/apiImageUpload";
-import {
-    createProductLocal,
-    createProductOnline,
-    updateProduct,
-} from "../../../redux/api/apiProduct";
+import { createService, updateService } from "../../../redux/api/apiService";
 
 // Validate
 const validationSchema = Yup.object().shape({
-    product_category_id: Yup.string().required("Vui lòng không để trống"),
+    service_category_id: Yup.string().required("Vui lòng không để trống"),
     name: Yup.string().required("Vui lòng không để trống"),
     quantity: Yup.string().required("Vui lòng không để trống"),
     price: Yup.string().required("Vui lòng không để trống"),
@@ -30,7 +26,7 @@ const validationSchema = Yup.object().shape({
 export default function CreateUpdateServiceModal({
     handleOpen,
     isOpen,
-    selectedProduct,
+    selectedService,
     ...props
 }) {
     const user = useSelector((state) => state.auth.login?.currentUser);
@@ -45,10 +41,10 @@ export default function CreateUpdateServiceModal({
         setImageFileSeleted(imageList);
     };
     // Product category
-    const productCategoryList = structuredClone(
+    const serviceCategoryList = structuredClone(
         useSelector(
             (state) =>
-                state.productCategory.productCategory?.productCategoryList
+                state.serviceCategory.serviceCategory?.serviceCategoryList
         )
     );
 
@@ -58,9 +54,9 @@ export default function CreateUpdateServiceModal({
         }
     }, []);
 
-    const [product, setProduct] = useState({
-        product_category_id: "",
-        product_category_name: "",
+    const [service, setService] = useState({
+        service_category_id: "",
+        service_category_name: "",
         name: "",
         description: "",
         quantity: "",
@@ -71,17 +67,17 @@ export default function CreateUpdateServiceModal({
     let axiosJWT = createAxios(user, dispatch, loginSuccess);
 
     useEffect(() => {
-        if (selectedProduct) {
-            const product_category = productCategoryList?.find(
-                (item) => item?.id === selectedProduct?.product_category_id
+        if (selectedService) {
+            const service_category = serviceCategoryList?.find(
+                (item) => item?.id === selectedService?.service_category_id
             );
             const newSelectedProduct = {
-                ...selectedProduct,
-                product_category_name: product_category?.name,
+                ...selectedService,
+                service_category_name: service_category?.name,
             };
-            setProduct(newSelectedProduct);
+            setService(newSelectedProduct);
         }
-    }, [selectedProduct]);
+    }, [selectedService]);
 
     const handleCloseModal = () => {
         formik.resetForm();
@@ -150,17 +146,14 @@ export default function CreateUpdateServiceModal({
             formData.append("image", imageFileSeleted[0]?.file);
             formData.append("name", data?.name);
             formData.append("description", data?.description);
-            formData.append("product_category_id", data?.product_category_id);
+            formData.append("service_category_id", data?.service_category_id);
             formData.append("price", data?.price);
             formData.append("quantity", data?.quantity);
-            createProductLocal(
-                user?.accessToken,
-                dispatch,
-                formData,
-                axiosJWT
-            ).then(() => {
-                handleCloseModal();
-            });
+            createService(user?.accessToken, dispatch, formData, axiosJWT).then(
+                () => {
+                    handleCloseModal();
+                }
+            );
         } else {
             toast.error("Chưa có ảnh");
         }
@@ -172,23 +165,23 @@ export default function CreateUpdateServiceModal({
             formData.append("image", imageFileSeleted[0]?.file);
             formData.append("name", data?.name);
             formData.append("description", data?.description);
-            formData.append("product_category_id", data?.product_category_id);
+            formData.append("service_category_id", data?.service_category_id);
             formData.append("price", data?.price);
             formData.append("quantity", data?.quantity);
-            updateProduct(
+            updateService(
                 user?.accessToken,
                 dispatch,
-                selectedProduct?.id,
+                selectedService?.id,
                 formData,
                 axiosJWT
             ).then(() => {
                 handleCloseModal();
             });
         } else {
-            updateProduct(
+            updateService(
                 user?.accessToken,
                 dispatch,
-                selectedProduct?.id,
+                selectedService?.id,
                 data,
                 axiosJWT
             );
@@ -197,10 +190,10 @@ export default function CreateUpdateServiceModal({
 
     const formik = useFormik({
         enableReinitialize: true,
-        initialValues: product,
+        initialValues: service,
         validationSchema: validationSchema,
         onSubmit: async (data) => {
-            const { product_category_name, ...restData } = data;
+            const { service_category_name, ...restData } = data;
             if (data?.id) {
                 handleUpdateProduct(restData);
             } else {
@@ -211,11 +204,11 @@ export default function CreateUpdateServiceModal({
 
     const handleChangeProductCategory = (value) => {
         if (value) {
-            formik.setFieldValue("product_category_id", value?.id);
-            formik.setFieldValue("product_category_name", value?.name);
+            formik.setFieldValue("service_category_id", value?.id);
+            formik.setFieldValue("service_category_name", value?.name);
         } else {
-            formik.setFieldValue("product_category_id", null);
-            formik.setFieldValue("product_category_name", null);
+            formik.setFieldValue("service_category_id", null);
+            formik.setFieldValue("service_category_name", null);
         }
     };
 
@@ -226,14 +219,14 @@ export default function CreateUpdateServiceModal({
                 handleOpen={handleOpen}
                 isOpen={isOpen}
                 title={
-                    selectedProduct?.id ? "Cập nhật sản phẩm" : "Thêm sản phẩm"
+                    selectedService?.id ? "Cập nhật dịch vụ" : "Thêm dịch vụ"
                 }
             >
                 <form onSubmit={formik.handleSubmit}>
                     <Grid container spacing={2}>
                         <Grid item xs={12}>
                             <Autocomplete
-                                options={productCategoryList}
+                                options={serviceCategoryList}
                                 onBlur={formik.handleBlur}
                                 getOptionLabel={(option) =>
                                     `${option?.name}` || ""
@@ -247,17 +240,17 @@ export default function CreateUpdateServiceModal({
                                     option?.id === value?.id
                                 }
                                 value={
-                                    (formik.values.product_category_id && {
-                                        id: formik.values?.product_category_id,
+                                    (formik.values.service_category_id && {
+                                        id: formik.values?.service_category_id,
                                         name: formik.values
-                                            ?.product_category_name,
+                                            ?.service_category_name,
                                     }) ||
                                     null
                                 }
                                 renderInput={(params) => (
                                     <GTextFieldNormal
                                         {...params}
-                                        name="product_category_id"
+                                        name="service_category_id"
                                         fullWidth
                                         label="Danh mục"
                                         formik={formik}
@@ -268,7 +261,7 @@ export default function CreateUpdateServiceModal({
                         <Grid item xs={12}>
                             <GTextFieldNormal
                                 onChange={formik.handleChange}
-                                label="Tên sản phẩm"
+                                label="Tên dịch vụ"
                                 fullWidth
                                 name="name"
                                 value={formik.values?.name || ""}
