@@ -5,24 +5,25 @@ import { Grid } from "@mui/material";
 import { useState } from "react";
 import * as Yup from "yup";
 import GModal from "../../../common/GModal/GModal";
-import {
-    createProductCategory,
-    updateProductCategory,
-} from "../../../redux/api/apiProductCategory";
+
 import { useDispatch, useSelector } from "react-redux";
 import { loginSuccess } from "../../../redux/slice/authSlice";
 import { createAxios } from "../../../createInstance";
 import GTextFieldNormal from "../../../components/GTextField/GTextFieldNormal";
+import {
+    createServiceCategory,
+    updateServiceCategory,
+} from "../../../redux/api/apiServiceCategory";
 
-export default function CreateUpdateProductCategoryModal({
+export default function CreateUpdateServiceCategoryModal({
     handleClose,
     handleOpen,
     isOpen,
-    selectedProductCategory,
+    selectedServiceCategory,
 }) {
     const user = useSelector((state) => state.auth.login?.currentUser);
     const dispatch = useDispatch();
-    const [productCategory, setProductCategory] = useState({
+    const [serviceCategory, setServiceCategory] = useState({
         name: "",
         description: "",
         image: "",
@@ -30,11 +31,11 @@ export default function CreateUpdateProductCategoryModal({
 
     let axiosJWT = createAxios(user, dispatch, loginSuccess);
 
-    const handleCreateProductCategory = (productCategory) => {
-        createProductCategory(
+    const handleCreateServiceCategory = (serviceCategory) => {
+        createServiceCategory(
             user?.accessToken,
             dispatch,
-            productCategory,
+            serviceCategory,
             axiosJWT
         ).then(() => {
             formik.handleReset();
@@ -42,12 +43,12 @@ export default function CreateUpdateProductCategoryModal({
         });
     };
 
-    const handleUpdateProductCategory = (productCategory) => {
-        updateProductCategory(
+    const handleUpdateServiceCategory = (serviceCategory) => {
+        updateServiceCategory(
             user?.accessToken,
             dispatch,
-            selectedProductCategory?.id,
-            productCategory,
+            selectedServiceCategory?.id,
+            serviceCategory,
             axiosJWT
         ).then(() => {
             formik.handleReset();
@@ -62,13 +63,13 @@ export default function CreateUpdateProductCategoryModal({
 
     const formik = useFormik({
         enableReinitialize: true,
-        initialValues: productCategory,
+        initialValues: serviceCategory,
         validationSchema: validationSchema,
         onSubmit: (data) => {
             if (data?.id) {
-                handleUpdateProductCategory(data);
+                handleUpdateServiceCategory(data);
             } else {
-                handleCreateProductCategory({
+                handleCreateServiceCategory({
                     ...data,
                     admin_user_id: user?.id,
                 });
@@ -77,9 +78,9 @@ export default function CreateUpdateProductCategoryModal({
     });
 
     useEffect(() => {
-        if (selectedProductCategory)
-            setProductCategory(selectedProductCategory);
-    }, [selectedProductCategory]);
+        if (selectedServiceCategory)
+            setServiceCategory(selectedServiceCategory);
+    }, [selectedServiceCategory]);
 
     return (
         <>
@@ -91,9 +92,9 @@ export default function CreateUpdateProductCategoryModal({
                 handleOpen={handleOpen}
                 isOpen={isOpen}
                 title={
-                    selectedProductCategory?.id
-                        ? "Cập nhật danh mục sản phẩm"
-                        : "Thêm danh mục sản phẩm"
+                    selectedServiceCategory?.id
+                        ? "Cập nhật danh mục dịch vụ"
+                        : "Thêm danh mục dịch vụ"
                 }
             >
                 <form onSubmit={formik.handleSubmit}>
@@ -117,6 +118,7 @@ export default function CreateUpdateProductCategoryModal({
                                 value={formik.values?.description || ""}
                                 multiline
                                 rows={3}
+                                formik={formik}
                             />
                         </Grid>
                         <Grid item xs={12}>

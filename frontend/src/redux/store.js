@@ -3,6 +3,7 @@ import authReducer from "./slice/authSlice";
 import adminUserReducer from "./slice/adminUserSlice";
 import customerUserReducer from "./slice/customerUserSlice";
 import productCategoryReducer from "./slice/productCategorySlice";
+import serviceCategoryReducer from "./slice/serviceCategorySlice";
 import productReducer from "./slice/productSlice";
 import productImageReducer from "./slice/productImageSlice";
 
@@ -29,6 +30,7 @@ const rootReducer = combineReducers({
     adminUser: adminUserReducer,
     customerUser: customerUserReducer,
     productCategory: productCategoryReducer,
+    serviceCategory: serviceCategoryReducer,
     product: productReducer,
     productImage: productImageReducer,
 });

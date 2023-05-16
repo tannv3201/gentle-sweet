@@ -59,9 +59,7 @@ function CreateUpdateAdminUser({
     // Set data selected into Initial Formik state
     useEffect(() => {
         if (selectedCustomerUser) {
-            const { password, confirmPassword, ...restData } =
-                selectedCustomerUser;
-            setCustomerUser(restData);
+            setCustomerUser(selectedCustomerUser);
         }
     }, [selectedCustomerUser]);
 
@@ -289,6 +287,7 @@ function CreateUpdateAdminUser({
         setSelectedWard(null);
         props.handleClose();
     };
+    console.log(formik.errors);
 
     return (
         <>
