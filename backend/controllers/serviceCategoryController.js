@@ -37,9 +37,13 @@ const serviceCategoryController = {
                     name: req.body.name,
                     description: req.body.description,
                     image: req.body.image,
-                    status: req.body.status,
+                    status: 1,
                 });
-            res.status(201).json(newServiceCategory);
+            return res.json({
+                status: 201,
+                msg: "Thêm mới thành công",
+                data: newServiceCategory,
+            });
         } catch (error) {
             res.status(500).json(error);
         }
@@ -57,7 +61,7 @@ const serviceCategoryController = {
             if (affectedRows === 0) {
                 return res.status(404).json({ message: "Cập nhật thất bại" });
             } else {
-                return res.status(200).json({ message: "Cập nhật thành công" });
+                return res.json({ status: 200, msg: "Cập nhật thành công" });
             }
         } catch (error) {}
     },
@@ -75,7 +79,7 @@ const serviceCategoryController = {
             if (affectedRows === 0) {
                 return res.status(404).json({ message: "Xóa thất bại" });
             } else {
-                return res.status(200).json({ message: "Xóa thành công" });
+                return res.json({ status: 200, msg: "Xóa thành công" });
             }
         } catch (error) {
             res.status(500).json({ message: error.message });

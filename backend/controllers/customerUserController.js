@@ -10,7 +10,7 @@ const customerUserController = {
 
             // Create new user
             const newAdminUser = await customerUserModel.createCustomerUser({
-                role_id: "5c14eaf0-60cf-4a80-a7cc-43da53962990",
+                role_id: "4",
                 username: req.body.username,
                 password: hashed,
                 first_name: req.body.first_name,
