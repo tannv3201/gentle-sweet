@@ -24,6 +24,12 @@ router.get(
 );
 
 router.put(
+    "/discount/:id",
+    middlewareController.verifyTokenAndSystemUserAuth,
+    serviceController.addDiscount
+);
+
+router.put(
     "/:id",
     middlewareController.verifyTokenAndSystemUserAuth,
     upload.single("image"),

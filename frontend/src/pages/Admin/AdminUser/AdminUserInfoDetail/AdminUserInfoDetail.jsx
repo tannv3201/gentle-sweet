@@ -31,17 +31,6 @@ export default function AdminUserInfoDetail({
     const dispatch = useDispatch();
     let axiosJWT = createAxios(user, dispatch, loginSuccess);
 
-    const handleResetPassword = () => {
-        resetPassword(
-            dispatch,
-            selectedUser.id,
-            user?.accessToken,
-            axiosJWT
-        ).then(() => {
-            handleClose();
-        });
-    };
-
     const [selectedProvince, setSelectedProvince] = useState(null);
     const [selectedDistrict, setSelectedDistrict] = useState(null);
     const [selectedWard, setSelectedWard] = useState(null);

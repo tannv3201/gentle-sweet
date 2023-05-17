@@ -76,8 +76,6 @@ export const createProductLocal = async (
             toast.success("Thêm sản phẩm thành công.");
             getAllProduct(accessToken, dispatch, axiosJWT);
         }
-        console.log(res?.data?.data?.insertId);
-
         return res?.data?.data;
     } catch (error) {
         dispatch(createProductFailed(error.response?.data));
@@ -98,6 +96,34 @@ export const updateProduct = async (
                 token: `Bearer ${accessToken}`,
             },
         });
+        dispatch(updateProductSuccess(res?.data));
+        if (res?.data?.status === 200) {
+            toast.success(res?.data?.msg);
+            getAllProduct(accessToken, dispatch, axiosJWT);
+        }
+    } catch (error) {
+        dispatch(updateProductFailed(error.response?.data));
+    }
+};
+
+export const addDiscount = async (
+    accessToken,
+    dispatch,
+    id,
+    discountData,
+    axiosJWT
+) => {
+    dispatch(updateProductStart());
+    try {
+        const res = await axiosJWT.put(
+            "/v1/product/discount/" + id,
+            discountData,
+            {
+                headers: {
+                    token: `Bearer ${accessToken}`,
+                },
+            }
+        );
         dispatch(updateProductSuccess(res?.data));
         if (res?.data?.status === 200) {
             toast.success(res?.data?.msg);

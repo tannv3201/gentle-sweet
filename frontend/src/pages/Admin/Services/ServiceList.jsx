@@ -21,6 +21,9 @@ import DeleteServicePopup from "./DeleteServicePopup";
 import CreateUpdateServiceModal from "./CreateUpdateServiceModal";
 
 import { API_IMAGE_URL } from "../../../LocalConstants";
+import styles from "./Service.module.scss";
+import classNames from "classnames/bind";
+const cx = classNames.bind(styles);
 
 export default function ServiceList() {
     const { productId } = useParams();
@@ -129,14 +132,53 @@ export default function ServiceList() {
                             />
                         ),
                     },
-                    { title: "Tên sản phẩm", field: "name" },
-                    { title: "Số lượng", field: "quantity" },
+                    { title: "Tên dịch vụ", field: "name" },
                     {
                         title: "Giá",
                         field: "price",
-                        render: (rowData) => FormatCurrency(rowData?.price),
+                        render: (rowData) => {
+                            if (rowData?.discount_id) {
+                                return (
+                                    <div className={cx("service-price")}>
+                                        <span
+                                            className={cx(
+                                                "service-default-price"
+                                            )}
+                                        >
+                                            {FormatCurrency(rowData?.price)}
+                                        </span>
+                                        <span
+                                            className={cx(
+                                                "service-onsale-price"
+                                            )}
+                                        >
+                                            {FormatCurrency(
+                                                rowData?.price_onsale
+                                            )}
+                                        </span>
+                                        <span className={cx("onsale-label")}>
+                                            SALE
+                                        </span>
+                                    </div>
+                                );
+                            } else {
+                                return FormatCurrency(rowData?.price);
+                            }
+                        },
                     },
-                    { title: "Mô tả", field: "description" },
+                    {
+                        title: "Mô tả",
+                        field: "description",
+                        render: (rowData) => {
+                            return (
+                                <>
+                                    <div className={cx("service-description")}>
+                                        {rowData.description}
+                                    </div>
+                                </>
+                            );
+                        },
+                    },
                     {
                         title: "Thao tác",
                         field: "actions",

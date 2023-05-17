@@ -9,6 +9,7 @@ import styles from "./ActionMenu.module.scss";
 import { LightTooltip } from "../../../../components/GTooltip/GTooltip";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import DiscountSelectPopup from "../DiscountSelectPopup";
 const cx = classNames.bind(styles);
 
 export default function ActionMenu({ selectedProduct }) {
@@ -18,10 +19,6 @@ export default function ActionMenu({ selectedProduct }) {
         navigate(`/admin/productImage/${productId}/product`);
     };
 
-    const [isOpenPasswordChangeModal, setIsOpenPasswordChangeModal] =
-        useState(false);
-    const [isOpenResetPasswordPopup, setIsOpenResetPasswordPopup] =
-        useState(false);
     const [anchorEl, setAnchorEl] = useState(null);
 
     const open = Boolean(anchorEl);
@@ -33,22 +30,17 @@ export default function ActionMenu({ selectedProduct }) {
         setAnchorEl(null);
     };
 
-    const handleOpenPasswordChangeModal = () => {
-        setIsOpenPasswordChangeModal(true);
+    // Discount
+    const [isOpenDiscountSelectPopup, setIsOpenDiscountSelectPopup] =
+        useState(false);
+
+    const handleOpenDiscountSelectPopup = (rowData) => {
+        setIsOpenDiscountSelectPopup(true);
     };
 
-    const handleClosePasswordChangeModal = () => {
-        setIsOpenPasswordChangeModal(false);
+    const handleCloseDiscountSelectPopup = () => {
+        setIsOpenDiscountSelectPopup(false);
     };
-
-    const handleOpenResetPasswordPopup = () => {
-        setIsOpenResetPasswordPopup(true);
-    };
-
-    const handleCloseResetPasswordPopup = () => {
-        setIsOpenResetPasswordPopup(false);
-    };
-
     return (
         <div>
             <LightTooltip placement="bottom" title="Quản lý">
@@ -76,11 +68,19 @@ export default function ActionMenu({ selectedProduct }) {
                 </div>
                 <MenuItem
                     onClick={() => {
-                        handleOpenPasswordChangeModal();
+                        handleOpenDiscountSelectPopup();
                         handleClose();
                     }}
                 >
                     Thông tin chi tiết
+                </MenuItem>
+                <MenuItem
+                    onClick={() => {
+                        handleOpenDiscountSelectPopup();
+                        handleClose();
+                    }}
+                >
+                    Giảm giá
                 </MenuItem>
                 <MenuItem
                     onClick={() => {
@@ -91,6 +91,16 @@ export default function ActionMenu({ selectedProduct }) {
                     Quản lý hình ảnh
                 </MenuItem>
             </Menu>
+            <DiscountSelectPopup
+                isOpen={isOpenDiscountSelectPopup}
+                handleOpen={handleOpenDiscountSelectPopup}
+                handleClose={handleCloseDiscountSelectPopup}
+                selectedProduct={{
+                    id: selectedProduct?.id,
+                    price: selectedProduct?.price,
+                    discount_id: selectedProduct?.discount_id,
+                }}
+            />
         </div>
     );
 }

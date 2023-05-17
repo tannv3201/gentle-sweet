@@ -18,9 +18,11 @@ import CreateUpdateProductModal from "./CreateUpdateProductModal";
 import { FormatCurrency } from "../../../components/FormatCurrency/FormatCurrency";
 import ActionMenu from "./ActionMenu/ActionMenu";
 import { useParams } from "react-router-dom";
-import { getAllProductImageByProductId } from "../../../redux/api/apiProductImage";
 import DeleteProductPopup from "./DeleteProductPopup";
 import { API_IMAGE_URL } from "../../../LocalConstants";
+import styles from "./Product.module.scss";
+import classNames from "classnames/bind";
+const cx = classNames.bind(styles);
 
 export default function ProductList() {
     const { productId } = useParams();
@@ -124,9 +126,49 @@ export default function ProductList() {
                     {
                         title: "Giá",
                         field: "price",
-                        render: (rowData) => FormatCurrency(rowData?.price),
+                        render: (rowData) => {
+                            if (rowData?.discount_id) {
+                                return (
+                                    <div className={cx("product-price")}>
+                                        <span
+                                            className={cx(
+                                                "product-default-price"
+                                            )}
+                                        >
+                                            {FormatCurrency(rowData?.price)}
+                                        </span>
+                                        <span
+                                            className={cx(
+                                                "product-onsale-price"
+                                            )}
+                                        >
+                                            {FormatCurrency(
+                                                rowData?.price_onsale
+                                            )}
+                                        </span>
+                                        <span className={cx("onsale-label")}>
+                                            SALE
+                                        </span>
+                                    </div>
+                                );
+                            } else {
+                                return FormatCurrency(rowData?.price);
+                            }
+                        },
                     },
-                    { title: "Mô tả", field: "description" },
+                    {
+                        title: "Mô tả",
+                        field: "description",
+                        render: (rowData) => {
+                            return (
+                                <>
+                                    <div className={cx("product-description")}>
+                                        {rowData.description}
+                                    </div>
+                                </>
+                            );
+                        },
+                    },
                     {
                         title: "Thao tác",
                         field: "actions",

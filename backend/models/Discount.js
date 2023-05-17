@@ -2,7 +2,9 @@ const pool = require("../config/database");
 const { v4: uuidv4 } = require("uuid");
 
 const getAllDiscount = async () => {
-    const [rows, fields] = await pool.query("SELECT * FROM tbl_discount");
+    const [rows, fields] = await pool.query(
+        "SELECT * FROM tbl_discount WHERE status > 0"
+    );
     return rows;
 };
 

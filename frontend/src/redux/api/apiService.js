@@ -81,6 +81,34 @@ export const updateService = async (
     }
 };
 
+export const addDiscount = async (
+    accessToken,
+    dispatch,
+    id,
+    discountData,
+    axiosJWT
+) => {
+    dispatch(updateServiceStart());
+    try {
+        const res = await axiosJWT.put(
+            "/v1/service/discount/" + id,
+            discountData,
+            {
+                headers: {
+                    token: `Bearer ${accessToken}`,
+                },
+            }
+        );
+        dispatch(updateServiceSuccess(res?.data));
+        if (res?.data?.status === 200) {
+            toast.success(res?.data?.msg);
+            getAllService(accessToken, dispatch, axiosJWT);
+        }
+    } catch (error) {
+        dispatch(updateServiceFailed(error.response?.data));
+    }
+};
+
 export const deleteService = async (dispatch, id, accessToken, axiosJWT) => {
     dispatch(deleteServiceStart());
     try {

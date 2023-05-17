@@ -1,0 +1,6 @@
+.product-category-description {
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2; /* Giới hạn chỉ nằm trên 2 dòng */
+    overflow: hidden;
+}

@@ -17,6 +17,9 @@ import CreateUpdateServiceCategoryModal from "./CreateUpdateServiceCategoryModal
 import { getAllServiceCategory } from "../../../redux/api/apiServiceCategory";
 import DeleteServiceCategoryPopup from "./DeleteServiceCategoryPopup";
 import { API_IMAGE_URL } from "../../../LocalConstants";
+import styles from "./ServiceCategory.module.scss";
+import classNames from "classnames/bind";
+const cx = classNames.bind(styles);
 
 export default function ServiceCategoryList({ data }) {
     const user = useSelector((state) => state.auth.login?.currentUser);
@@ -106,7 +109,23 @@ export default function ServiceCategoryList({ data }) {
                         ),
                     },
                     { title: "Tên danh mục", field: "name" },
-                    { title: "Mô tả", field: "description" },
+                    {
+                        title: "Mô tả",
+                        field: "description",
+                        render: (rowData) => {
+                            return (
+                                <>
+                                    <div
+                                        className={cx(
+                                            "service-category-description"
+                                        )}
+                                    >
+                                        {rowData.description}
+                                    </div>
+                                </>
+                            );
+                        },
+                    },
                     {
                         title: "Thao tác",
                         field: "actions",

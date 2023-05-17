@@ -5,6 +5,7 @@ import customerUserReducer from "./slice/customerUserSlice";
 import productCategoryReducer from "./slice/productCategorySlice";
 import serviceCategoryReducer from "./slice/serviceCategorySlice";
 import productReducer from "./slice/productSlice";
+import discountReducer from "./slice/discountSlice";
 import serviceReducer from "./slice/serviceSlice";
 import productImageReducer from "./slice/productImageSlice";
 import serviceImageReducer from "./slice/serviceImageSlice";
@@ -35,6 +36,7 @@ const rootReducer = combineReducers({
     serviceCategory: serviceCategoryReducer,
     product: productReducer,
     service: serviceReducer,
+    discount: discountReducer,
     productImage: productImageReducer,
     serviceImage: serviceImageReducer,
 });

@@ -73,6 +73,37 @@ const productsController = {
         }
     },
 
+    addDiscount: async (req, res) => {
+        try {
+            const product_id = req.params.id;
+            const { discount_id, price_onsale, ...data } = req.body;
+
+            const affectedRows = await ProductModel.updateProductById(
+                product_id,
+                {
+                    discount_id: discount_id,
+                    price_onsale: price_onsale,
+                }
+            );
+            if (affectedRows === 0) {
+                return res
+                    .status(404)
+                    .json({ message: "Thêm giảm giá thất bại" });
+            } else {
+                if (discount_id) {
+                    return res.json({
+                        status: 200,
+                        msg: "Thêm giảm giá thành công",
+                    });
+                } else {
+                    return res.json({
+                        status: 200,
+                        msg: "Xóa giảm giá thành công",
+                    });
+                }
+            }
+        } catch (error) {}
+    },
     // UPDATE PRODUCT BY ID
     updateProductByID: async (req, res) => {
         try {

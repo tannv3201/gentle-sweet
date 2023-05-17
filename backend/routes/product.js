@@ -9,11 +9,18 @@ router.post(
     middlewareController.verifyTokenAndSystemUserAuth,
     productController.createProductOnline
 );
+
 router.post(
     "/local",
     middlewareController.verifyTokenAndSystemUserAuth,
     upload.single("image"),
     productController.createProductLocal
+);
+
+router.put(
+    "/discount/:id",
+    middlewareController.verifyTokenAndSystemUserAuth,
+    productController.addDiscount
 );
 
 router.get(

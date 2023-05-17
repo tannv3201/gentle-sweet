@@ -18,8 +18,12 @@ function App() {
     const isFetching = useSelector((state) => {
         return (
             state.adminUser.adminUser?.isFetching ||
+            state.customerUser.customerUser?.isFetching ||
             state.product.product?.isFetching ||
-            state.productCategory.productCategory?.isFetching
+            state.productCategory.productCategory?.isFetching ||
+            state.service.service?.isFetching ||
+            state.serviceCategory.serviceCategory?.isFetching ||
+            state.discount.discount?.isFetching
         );
     });
 

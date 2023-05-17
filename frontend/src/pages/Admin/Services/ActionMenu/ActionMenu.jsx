@@ -9,6 +9,7 @@ import styles from "./ActionMenu.module.scss";
 import { LightTooltip } from "../../../../components/GTooltip/GTooltip";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import DiscountSelectPopup from "../DiscountSelectPopup";
 const cx = classNames.bind(styles);
 
 export default function ActionMenu({ selectedService }) {
@@ -29,6 +30,17 @@ export default function ActionMenu({ selectedService }) {
         setAnchorEl(null);
     };
 
+    // Discount
+    const [isOpenDiscountSelectPopup, setIsOpenDiscountSelectPopup] =
+        useState(false);
+
+    const handleOpenDiscountSelectPopup = (rowData) => {
+        setIsOpenDiscountSelectPopup(true);
+    };
+
+    const handleCloseDiscountSelectPopup = () => {
+        setIsOpenDiscountSelectPopup(false);
+    };
     return (
         <div>
             <LightTooltip placement="bottom" title="Quản lý">
@@ -63,6 +75,14 @@ export default function ActionMenu({ selectedService }) {
                 </MenuItem>
                 <MenuItem
                     onClick={() => {
+                        handleOpenDiscountSelectPopup();
+                        handleClose();
+                    }}
+                >
+                    Giảm giá
+                </MenuItem>
+                <MenuItem
+                    onClick={() => {
                         handleNavigateProductImage(selectedService?.id);
                         handleClose();
                     }}
@@ -70,6 +90,16 @@ export default function ActionMenu({ selectedService }) {
                     Quản lý hình ảnh
                 </MenuItem>
             </Menu>
+            <DiscountSelectPopup
+                isOpen={isOpenDiscountSelectPopup}
+                handleOpen={handleOpenDiscountSelectPopup}
+                handleClose={handleCloseDiscountSelectPopup}
+                selectedService={{
+                    id: selectedService?.id,
+                    price: selectedService?.price,
+                    discount_id: selectedService?.discount_id,
+                }}
+            />
         </div>
     );
 }

@@ -1,7 +1,5 @@
 const DiscountModel = require("../models/Discount");
 
-const { v4: uuidv4 } = require("uuid");
-
 const discountController = {
     // GET ALL DISCOUNT
     getAllDiscount: async (req, res) => {
@@ -37,7 +35,7 @@ const discountController = {
                 discount_percent: req.body.discount_percent,
                 status: 1,
             });
-            res.status(201).json(newDiscount);
+            res.json({ status: 201, msg: "Thêm mơi thành công" });
         } catch (error) {
             res.status(500).json(error);
         }
@@ -55,7 +53,7 @@ const discountController = {
             if (affectedRows === 0) {
                 return res.status(404).json({ message: "Cập nhật thất bại" });
             } else {
-                return res.status(200).json({ message: "Cập nhật thành công" });
+                return res.json({ status: 200, msg: "Cập nhật thành công" });
             }
         } catch (error) {
             console.log(error);
