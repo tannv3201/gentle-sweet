@@ -114,7 +114,6 @@ export const passwordChange = async (
         dispatch(passwordChangeSuccess(res?.data));
         if (res?.data?.status === 200) {
             toast.success(res?.data?.msg);
-            getAllCustomerUser(accessToken, dispatch, axiosJWT);
         }
         if (res?.data?.status === 401) {
             toast.error(res?.data?.msg);
@@ -140,7 +139,6 @@ export const resetPassword = async (dispatch, id, accessToken, axiosJWT) => {
         dispatch(resetPasswordSuccess(res?.data));
         if (res?.data?.status === 200) {
             toast.success(res?.data?.msg);
-            getAllCustomerUser(accessToken, dispatch, axiosJWT);
         }
     } catch (error) {
         dispatch(resetPasswordFailed(error.response?.data));
@@ -186,7 +184,6 @@ export const getCustomerUserById = async (
         dispatch(getCustomerUserByIdSuccess(res?.data));
         if (res?.data?.status === 200) {
             toast.success(res?.data?.msg);
-            getAllCustomerUser(accessToken, dispatch, axiosJWT);
         }
         return res?.data;
     } catch (error) {

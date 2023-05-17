@@ -79,7 +79,6 @@ export const updateAdminUser = async (
         dispatch(updateAdminUserSuccess(res?.data));
         if (res?.data?.status === 200) {
             toast.success(res?.data?.msg);
-            getAllUser(accessToken, dispatch, axiosJWT);
         }
     } catch (error) {
         dispatch(updateAdminUserFailed(error.response?.data));
@@ -107,7 +106,6 @@ export const passwordChange = async (
         dispatch(passwordChangeSuccess(res?.data));
         if (res?.data?.status === 200) {
             toast.success(res?.data?.msg);
-            getAllUser(accessToken, dispatch, axiosJWT);
         }
         if (res?.data?.status === 401) {
             toast.error(res?.data?.msg);
@@ -133,7 +131,6 @@ export const resetPassword = async (dispatch, id, accessToken, axiosJWT) => {
         dispatch(resetPasswordSuccess(res?.data));
         if (res?.data?.status === 200) {
             toast.success(res?.data?.msg);
-            getAllUser(accessToken, dispatch, axiosJWT);
         }
     } catch (error) {
         dispatch(resetPasswordFailed(error.response?.data));
@@ -169,7 +166,6 @@ export const getAdminUserById = async (dispatch, id, accessToken, axiosJWT) => {
         dispatch(getAdminUserByIdSuccess(res?.data));
         if (res?.data?.status === 200) {
             toast.success(res?.data?.msg);
-            getAllUser(accessToken, dispatch, axiosJWT);
         }
         return res?.data;
     } catch (error) {
