@@ -64,14 +64,6 @@ export default function CreateUpdateAdminUserModal({
         confirmPassword: "",
     });
 
-    const [showPassword, setShowPassword] = React.useState(false);
-
-    const handleClickShowPassword = () => setShowPassword((show) => !show);
-
-    const handleMouseDownPassword = (event) => {
-        event.preventDefault();
-    };
-
     let axiosJWT = createAxios(user, dispatch, loginSuccess);
 
     const handleCreateAdminUser = (adminUser) => {
@@ -94,10 +86,6 @@ export default function CreateUpdateAdminUserModal({
         });
     };
 
-    useEffect(() => {
-        if (selectedUser) setAdminUser(selectedUser);
-    }, [selectedUser]);
-
     // Validate
     const phoneRegExp = /(84|0[3|5|7|8|9])+([0-9]{8})\b/;
     const validationSchema = Yup.object().shape({
@@ -106,12 +94,10 @@ export default function CreateUpdateAdminUserModal({
             .required("Vui lòng không để trống")
             .min(6, "Tên tài khoản phải có ít nhất 6 kí tự")
             .max(20, "Tên tài khoản tối đa 20 kí tự"),
-        password: selectedUser?.id
-            ? Yup.string()
-            : Yup.string()
-                  .required("Vui lòng không để trống")
-                  .min(8, "Mật khẩu phải có ít nhất 8 kí tự")
-                  .max(20, "Mật khẩu tối đa 20 kí tự"),
+        password: Yup.string()
+            .required("Vui lòng không để trống")
+            .min(8, "Mật khẩu phải có ít nhất 8 kí tự")
+            .max(20, "Mật khẩu tối đa 20 kí tự"),
         first_name: Yup.string().required("Vui lòng không để trống"),
         phone_number: Yup.string()
             .matches(/^\d+$/, "Số điện thoại chỉ bao gồm các ký tự số")
@@ -121,9 +107,7 @@ export default function CreateUpdateAdminUserModal({
         email: Yup.string()
             .email("Vui lòng nhập địa chỉ email hợp lệ")
             .required("Vui lòng không để trống"),
-        confirmPassword: selectedUser?.id
-            ? Yup.string()
-            : Yup.string().required("Vui lòng không để trống"),
+        confirmPassword: Yup.string().required("Vui lòng không để trống"),
         province: Yup.string().required("Vui lòng không để trống"),
         district: Yup.string().required("Vui lòng không để trống"),
         ward: Yup.string().required("Vui lòng không để trống"),
@@ -234,34 +218,34 @@ export default function CreateUpdateAdminUserModal({
     };
 
     // Set selected province/district/ward into states & Formik field
-    useEffect(() => {
-        if (selectedUser) {
-            const provinceSelected = getProvinceById(
-                selectedUser?.province,
-                provinces
-            );
-            setSelectedProvince(provinceSelected);
-            formik.setFieldValue("province", provinceSelected?.province_id);
+    // useEffect(() => {
+    //     if (selectedUser) {
+    //         const provinceSelected = getProvinceById(
+    //             selectedUser?.province,
+    //             provinces
+    //         );
+    //         setSelectedProvince(provinceSelected);
+    //         formik.setFieldValue("province", provinceSelected?.province_id);
 
-            // District
-            getDistrict(selectedUser?.province).then((districtList) => {
-                const districtSelected = getDistrictById(
-                    selectedUser?.district,
-                    districtList
-                );
-                setSelectedDistrict(districtSelected);
-                setDistricts(districtList);
-                formik.setFieldValue("district", districtSelected?.district_id);
-            });
+    //         // District
+    //         getDistrict(selectedUser?.province).then((districtList) => {
+    //             const districtSelected = getDistrictById(
+    //                 selectedUser?.district,
+    //                 districtList
+    //             );
+    //             setSelectedDistrict(districtSelected);
+    //             setDistricts(districtList);
+    //             formik.setFieldValue("district", districtSelected?.district_id);
+    //         });
 
-            getWard(selectedUser?.district).then((wardList) => {
-                const wardSelected = getWardById(selectedUser?.ward, wardList);
-                setSelectedWard(wardSelected);
-                setWards(wardList);
-                formik.setFieldValue("ward", wardSelected?.ward_id);
-            });
-        }
-    }, [selectedUser]);
+    //         getWard(selectedUser?.district).then((wardList) => {
+    //             const wardSelected = getWardById(selectedUser?.ward, wardList);
+    //             setSelectedWard(wardSelected);
+    //             setWards(wardList);
+    //             formik.setFieldValue("ward", wardSelected?.ward_id);
+    //         });
+    //     }
+    // }, [selectedUser]);
 
     // Fn handle birthdate onChange
     const handleChangeBirthDate = (value) => {
@@ -484,32 +468,30 @@ export default function CreateUpdateAdminUserModal({
                                 formik={formik}
                             />
                         </Grid>
-                        {!selectedUser?.id && (
-                            <Grid item xs={6}>
-                                <GTextFieldNormal
-                                    onChange={formik.handleChange}
-                                    password={true}
-                                    label="Mật khẩu"
-                                    fullWidth
-                                    name="password"
-                                    value={formik.values?.password || ""}
-                                    formik={formik}
-                                />
-                            </Grid>
-                        )}
-                        {!selectedUser?.id && (
-                            <Grid item xs={6}>
-                                <GTextFieldNormal
-                                    onChange={formik.handleChange}
-                                    label="Nhập lại mật khẩu"
-                                    password={true}
-                                    fullWidth
-                                    name="confirmPassword"
-                                    value={formik.values?.confirmPassword || ""}
-                                    formik={formik}
-                                />
-                            </Grid>
-                        )}
+
+                        <Grid item xs={6}>
+                            <GTextFieldNormal
+                                onChange={formik.handleChange}
+                                password={true}
+                                label="Mật khẩu"
+                                fullWidth
+                                name="password"
+                                value={formik.values?.password || ""}
+                                formik={formik}
+                            />
+                        </Grid>
+                        <Grid item xs={6}>
+                            <GTextFieldNormal
+                                onChange={formik.handleChange}
+                                label="Nhập lại mật khẩu"
+                                password={true}
+                                fullWidth
+                                name="confirmPassword"
+                                value={formik.values?.confirmPassword || ""}
+                                formik={formik}
+                            />
+                        </Grid>
+
                         <Grid item xs={12}>
                             <GButton type="submit">Lưu</GButton>
                             <GButton

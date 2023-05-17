@@ -5,6 +5,7 @@ const adminUserSlice = createSlice({
     initialState: {
         adminUser: {
             allAdminUser: [],
+            adminUser: null,
             isFetching: false,
             error: false,
         },
@@ -15,12 +16,27 @@ const adminUserSlice = createSlice({
         getAdminUserStart: (state) => {
             state.adminUser.isFetching = true;
         },
+
         getAdminUserSuccess: (state, action) => {
             state.adminUser.isFetching = false;
             state.adminUser.allAdminUser = action.payload;
         },
 
         getAdminUserFailed: (state) => {
+            state.adminUser.isFetching = false;
+            state.adminUser.error = true;
+        },
+
+        getAdminUserByIdStart: (state) => {
+            state.adminUser.isFetching = true;
+        },
+
+        getAdminUserByIdSuccess: (state, action) => {
+            state.adminUser.isFetching = false;
+            state.adminUser.adminUser = action.payload;
+        },
+
+        getAdminUserByIdFailed: (state) => {
             state.adminUser.isFetching = false;
             state.adminUser.error = true;
         },
@@ -102,6 +118,9 @@ export const {
     getAdminUserStart,
     getAdminUserSuccess,
     getAdminUserFailed,
+    getAdminUserByIdStart,
+    getAdminUserByIdSuccess,
+    getAdminUserByIdFailed,
     createAdminUserStart,
     createAdminUserSuccess,
     createAdminUserFailed,

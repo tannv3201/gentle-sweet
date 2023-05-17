@@ -19,6 +19,9 @@ import {
     resetPasswordStart,
     resetPasswordSuccess,
     resetPasswordFailed,
+    getAdminUserByIdStart,
+    getAdminUserByIdSuccess,
+    getAdminUserByIdFailed,
 } from "../slice/adminUserSlice";
 
 export const getAllUser = async (accessToken, dispatch, axiosJWT) => {
@@ -152,5 +155,24 @@ export const deleteAdminUser = async (dispatch, id, accessToken, axiosJWT) => {
         }
     } catch (error) {
         dispatch(deleteAdminUserFailed(error.response?.data));
+    }
+};
+
+export const getAdminUserById = async (dispatch, id, accessToken, axiosJWT) => {
+    dispatch(getAdminUserByIdStart());
+    try {
+        const res = await axiosJWT.get("/v1/adminUser/" + id, {
+            headers: {
+                token: `Bearer ${accessToken}`,
+            },
+        });
+        dispatch(getAdminUserByIdSuccess(res?.data));
+        if (res?.data?.status === 200) {
+            toast.success(res?.data?.msg);
+            getAllUser(accessToken, dispatch, axiosJWT);
+        }
+        return res?.data;
+    } catch (error) {
+        dispatch(getAdminUserByIdFailed(error.response?.data));
     }
 };

@@ -32,6 +32,7 @@ import ServiceCategory from "../pages/Admin/ServiceCategory/ServiceCategory";
 import Services from "../pages/Admin/Services/Services";
 import ServiceImage from "../pages/Admin/ServiceImage/ServiceImage";
 import Discount from "../pages/Admin/Discount/Discount";
+import AdminUserDetail from "../pages/Admin/AdminUser/AdminUserDetail/AdminUserDetail";
 
 // public routes
 
@@ -105,6 +106,11 @@ export const privateRoutes = [
     {
         path: "/admin/admin-user",
         component: AdminUser,
+        layout: AdminLayout,
+    },
+    {
+        path: "/admin/admin-user/:adminUserId",
+        component: AdminUserDetail,
         layout: AdminLayout,
     },
     {

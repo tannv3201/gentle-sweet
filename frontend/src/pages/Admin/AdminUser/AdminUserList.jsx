@@ -13,11 +13,9 @@ import GButton from "../../../components/MyButton/MyButton";
 import PasswordMenu from "./PasswordMenu/PasswordMenu";
 import { LightTooltip } from "../../../components/GTooltip/GTooltip";
 import { getAllUser } from "../../../redux/api/apiAdminUser";
-import AdminUserInfoDetail from "./AdminUserInfoDetail/AdminUserInfoDetail";
 import dayjs from "dayjs";
 import CreateUpdateAdminUserModal from "./CreateUpdateAdminUserModal";
 import DeleteAdminUserPopup from "./DeleteAdminUserPopup";
-
 export default function AdminUserList({ data }) {
     const user = useSelector((state) => state.auth.login?.currentUser);
     const [cloneData, setCloneData] = useState([]);
@@ -41,7 +39,7 @@ export default function AdminUserList({ data }) {
     }, []);
 
     useEffect(() => {
-        const newList = adminUserList.map((user) => {
+        const newList = adminUserList?.map((user) => {
             return {
                 ...user,
                 role_name:
@@ -107,37 +105,8 @@ export default function AdminUserList({ data }) {
         setIsOpenDeleteConfirmModel(false);
     };
 
-    // Information Detail modal
-    const [isOpenInfoDetailModel, setIsOpenInfoDetailModel] = useState(false);
-
-    const handleOpenInfoDetailModal = (rowData) => {
-        setSelectedUser({
-            id: rowData.id,
-            role_id: rowData.role_id || null,
-            role_name:
-                rowData.role_id === 2
-                    ? "ADMIN"
-                    : rowData.role_id === 3
-                    ? "STAFF"
-                    : "",
-            username: rowData.username,
-            last_name: rowData.last_name,
-            first_name: rowData.first_name,
-            phone_number: rowData?.phone_number,
-            province: rowData?.province,
-            district: rowData?.district,
-            ward: rowData?.ward,
-            detail_address: rowData?.detail_address,
-            birth_date: rowData?.birth_date ? dayjs(rowData?.birth_date) : null,
-            email: rowData.email,
-            password: "",
-            confirmPassword: "",
-        });
-        setIsOpenInfoDetailModel(true);
-    };
-
-    const handleCloseInfoDetailModal = () => {
-        setIsOpenInfoDetailModel(false);
+    const handleNavigateAdminUserDetail = (adminUserId) => {
+        navigate(`/admin/admin-user/${adminUserId}`);
     };
 
     return (
@@ -171,24 +140,15 @@ export default function AdminUserList({ data }) {
                                 >
                                     <IconButton
                                         onClick={() => {
-                                            handleOpenInfoDetailModal(rowData);
+                                            handleNavigateAdminUserDetail(
+                                                rowData?.id
+                                            );
                                         }}
                                     >
                                         <InfoRounded color="info" />
                                     </IconButton>
                                 </LightTooltip>
-                                <LightTooltip
-                                    placement="bottom"
-                                    title="Chỉnh sửa"
-                                >
-                                    <IconButton
-                                        onClick={() =>
-                                            handleOpenCreateUpdateModal(rowData)
-                                        }
-                                    >
-                                        <EditRounded color="primary" />
-                                    </IconButton>
-                                </LightTooltip>
+
                                 <LightTooltip placement="bottom" title="Xóa">
                                     <IconButton
                                         onClick={() => {
@@ -200,7 +160,6 @@ export default function AdminUserList({ data }) {
                                         <DeleteRounded color="error" />
                                     </IconButton>
                                 </LightTooltip>
-                                <PasswordMenu selectedUser={rowData} />
                             </div>
                         ),
                     },
@@ -213,20 +172,12 @@ export default function AdminUserList({ data }) {
                 isOpen={isOpenCreateUpdateModel}
                 handleOpen={handleOpenCreateUpdateModal}
                 handleClose={handleCloseCreateUpdateModal}
-                selectedUser={selectedUser}
             />
 
             <DeleteAdminUserPopup
                 isOpen={isOpenDeleteConfirmModel}
                 handleOpen={handleCloseDeleteConfirmModal}
                 handleClose={handleCloseDeleteConfirmModal}
-                selectedUser={selectedUser}
-            />
-
-            <AdminUserInfoDetail
-                isOpen={isOpenInfoDetailModel}
-                handleOpen={handleOpenInfoDetailModal}
-                handleClose={handleCloseInfoDetailModal}
                 selectedUser={selectedUser}
             />
         </>

@@ -569,6 +569,10 @@ span.MuiChip-label {
     background-color: var(--primary-300) !important;
 }
 
+.MuiInputBase-root.MuiOutlinedInput-root.MuiInputBase-colorSecondary.MuiInputBase-fullWidth.MuiInputBase-formControl.MuiInputBase-sizeSmall.MuiInputBase-adornedEnd.MuiAutocomplete-inputRoot {
+    background-color: var(--white) !important;
+}
+
 .MuiButtonBase-root.MuiChip-root.MuiChip-filled.MuiChip-sizeSmall.MuiChip-colorDefault.MuiChip-deletable.MuiChip-deletableColorDefault.MuiChip-filledDefault.MuiAutocomplete-tag {
     margin: 6px 2px 2px 2px !important;
 }
