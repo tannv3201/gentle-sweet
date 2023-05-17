@@ -28,7 +28,7 @@ export const mainListItems = (
             icon={<People />}
         />
         <MenuItem
-            to={"/admin/customer"}
+            to={"/admin/customer-user"}
             title={"Khách hàng"}
             icon={<People />}
         />

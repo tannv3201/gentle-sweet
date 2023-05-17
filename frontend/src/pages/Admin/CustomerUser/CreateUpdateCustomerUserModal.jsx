@@ -29,7 +29,6 @@ import utc from "dayjs/plugin/utc";
 export default function CreateUpdateCustomerUserModal({
     handleOpen,
     isOpen,
-    selectedCustomerUser,
     ...props
 }) {
     // Format múi giờ
@@ -55,13 +54,6 @@ export default function CreateUpdateCustomerUserModal({
         email: "",
     });
 
-    // Set data selected into Initial Formik state
-    useEffect(() => {
-        if (selectedCustomerUser) {
-            setCustomerUser(selectedCustomerUser);
-        }
-    }, [selectedCustomerUser]);
-
     // Create Axios JWT -> Check token & refresh token
     let axiosJWT = createAxios(user, dispatch, loginSuccess);
 
@@ -70,19 +62,6 @@ export default function CreateUpdateCustomerUserModal({
         createCustomerUser(
             user?.accessToken,
             dispatch,
-            customerUser,
-            axiosJWT
-        ).then(() => {
-            handleCloseModal();
-        });
-    };
-
-    // Fn Update Customer User
-    const handleUpdateCustomerUser = (customerUser) => {
-        updateCustomerUser(
-            user?.accessToken,
-            dispatch,
-            selectedCustomerUser?.id,
             customerUser,
             axiosJWT
         ).then(() => {
@@ -106,15 +85,11 @@ export default function CreateUpdateCustomerUserModal({
             .required("Vui lòng không để trống")
             .min(6, "Tên tài khoản phải có ít nhất 6 kí tự")
             .max(20, "Tên tài khoản tối đa 20 kí tự"),
-        password: selectedCustomerUser?.id
-            ? Yup.string()
-            : Yup.string()
-                  .required("Vui lòng không để trống")
-                  .min(8, "Mật khẩu phải có ít nhất 8 kí tự")
-                  .max(20, "Mật khẩu tối đa 20 kí tự"),
-        confirmPassword: selectedCustomerUser?.id
-            ? Yup.string()
-            : Yup.string().required("Vui lòng không để trống"),
+        password: Yup.string()
+            .required("Vui lòng không để trống")
+            .min(8, "Mật khẩu phải có ít nhất 8 kí tự")
+            .max(20, "Mật khẩu tối đa 20 kí tự"),
+        confirmPassword: Yup.string().required("Vui lòng không để trống"),
         first_name: Yup.string().required("Vui lòng không để trống"),
         last_name: Yup.string().required("Vui lòng không để trống"),
         phone_number: Yup.string()
@@ -153,18 +128,15 @@ export default function CreateUpdateCustomerUserModal({
                     .utcOffset("+07:00")
                     .format("YYYY/MM/DD"),
             };
-            if (data?.id) {
-                handleUpdateCustomerUser(dataFinal);
+
+            const passwordCompare = handlePasswordCompare(
+                data?.password,
+                data?.confirmPassword
+            );
+            if (passwordCompare) {
+                handleCreateCustomerUser(dataFinal);
             } else {
-                const passwordCompare = handlePasswordCompare(
-                    data?.password,
-                    data?.confirmPassword
-                );
-                if (passwordCompare) {
-                    handleCreateCustomerUser(dataFinal);
-                } else {
-                    toast.error("Mật khẩu phải giống nhau");
-                }
+                toast.error("Mật khẩu phải giống nhau");
             }
         },
     });
@@ -233,37 +205,6 @@ export default function CreateUpdateCustomerUserModal({
     };
 
     // Set selected province/district/ward into states & Formik field
-    useEffect(() => {
-        if (selectedCustomerUser) {
-            const provinceSelected = getProvinceById(
-                selectedCustomerUser?.province,
-                provinces
-            );
-            setSelectedProvince(provinceSelected);
-            formik.setFieldValue("province", provinceSelected?.province_id);
-
-            // District
-            getDistrict(selectedCustomerUser?.province).then((districtList) => {
-                const districtSelected = getDistrictById(
-                    selectedCustomerUser?.district,
-                    districtList
-                );
-                setSelectedDistrict(districtSelected);
-                setDistricts(districtList);
-                formik.setFieldValue("district", districtSelected?.district_id);
-            });
-
-            getWard(selectedCustomerUser?.district).then((wardList) => {
-                const wardSelected = getWardById(
-                    selectedCustomerUser?.ward,
-                    wardList
-                );
-                setSelectedWard(wardSelected);
-                setWards(wardList);
-                formik.setFieldValue("ward", wardSelected?.ward_id);
-            });
-        }
-    }, [selectedCustomerUser]);
 
     // Fn handle birthdate onChange
     const handleChangeBirthDate = (value) => {
@@ -286,7 +227,6 @@ export default function CreateUpdateCustomerUserModal({
         setSelectedWard(null);
         props.handleClose();
     };
-    console.log(formik.errors);
 
     return (
         <>
@@ -294,11 +234,7 @@ export default function CreateUpdateCustomerUserModal({
                 handleClose={handleCloseModal}
                 handleOpen={handleOpen}
                 isOpen={isOpen}
-                title={
-                    selectedCustomerUser?.id
-                        ? "Cập nhật thông tin"
-                        : "Thêm khách hàng mới"
-                }
+                title={"Thêm khách hàng mới"}
             >
                 <form onSubmit={formik.handleSubmit}>
                     <Grid container spacing={2}>
@@ -456,32 +392,28 @@ export default function CreateUpdateCustomerUserModal({
                                 formik={formik}
                             />
                         </Grid>
-                        {!selectedCustomerUser?.id && (
-                            <Grid item xs={6}>
-                                <GTextFieldNormal
-                                    onChange={formik.handleChange}
-                                    password={true}
-                                    label="Mật khẩu"
-                                    fullWidth
-                                    name="password"
-                                    value={formik.values?.password || ""}
-                                    formik={formik}
-                                />
-                            </Grid>
-                        )}
-                        {!selectedCustomerUser?.id && (
-                            <Grid item xs={6}>
-                                <GTextFieldNormal
-                                    onChange={formik.handleChange}
-                                    label="Nhập lại mật khẩu"
-                                    password={true}
-                                    fullWidth
-                                    name="confirmPassword"
-                                    value={formik.values?.confirmPassword || ""}
-                                    formik={formik}
-                                />
-                            </Grid>
-                        )}
+                        <Grid item xs={6}>
+                            <GTextFieldNormal
+                                onChange={formik.handleChange}
+                                password={true}
+                                label="Mật khẩu"
+                                fullWidth
+                                name="password"
+                                value={formik.values?.password || ""}
+                                formik={formik}
+                            />
+                        </Grid>
+                        <Grid item xs={6}>
+                            <GTextFieldNormal
+                                onChange={formik.handleChange}
+                                label="Nhập lại mật khẩu"
+                                password={true}
+                                fullWidth
+                                name="confirmPassword"
+                                value={formik.values?.confirmPassword || ""}
+                                formik={formik}
+                            />
+                        </Grid>
                         <Grid item xs={12}>
                             <GButton type="submit">Lưu</GButton>
                             <GButton

@@ -1,22 +1,20 @@
 import React from "react";
-import EditRoundedIcon from "@mui/icons-material/EditRounded";
 import DeleteRoundedIcon from "@mui/icons-material/DeleteRounded";
 import { useEffect } from "react";
 import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import dayjs from "dayjs";
 import { loginSuccess } from "../../../redux/slice/authSlice";
 import { createAxios } from "../../../createInstance";
 import { useState } from "react";
 import GTable from "../../../common/GTable/GTable";
 import { IconButton } from "@mui/material";
 import GButton from "../../../components/MyButton/MyButton";
-import PasswordMenu from "./PasswordMenu/PasswordMenu";
 import { LightTooltip } from "../../../components/GTooltip/GTooltip";
 import { getAllCustomerUser } from "../../../redux/api/apiCustomerUser";
 import CreateUpdateCustomerUserModal from "./CreateUpdateCustomerUserModal";
 import DeleteCustomerUserPopup from "./DeleteCustomerUserPopup";
+import { InfoRounded } from "@mui/icons-material";
 
 export default function CustomerUserList() {
     const user = useSelector((state) => state.auth.login?.currentUser);
@@ -56,21 +54,6 @@ export default function CustomerUserList() {
         useState(false);
 
     const handleOpenCreateUpdateModal = (rowData) => {
-        setSelectedUser({
-            id: rowData?.id,
-            username: rowData?.username,
-            password: "",
-            confirmPassword: "",
-            first_name: rowData?.first_name,
-            last_name: rowData?.last_name,
-            phone_number: rowData?.phone_number,
-            province: rowData?.province,
-            district: rowData?.district,
-            ward: rowData?.ward,
-            detail_address: rowData?.detail_address,
-            birth_date: rowData?.birth_date ? dayjs(rowData?.birth_date) : null,
-            email: rowData?.email,
-        });
         setIsOpenCreateUpdateModel(true);
     };
     const handleCloseCreateUpdateModal = () => {
@@ -91,6 +74,9 @@ export default function CustomerUserList() {
 
     const handleCloseDeleteConfirmModal = () => {
         setIsOpenDeleteConfirmModel(false);
+    };
+    const handleNavigateAdminUserDetail = (customerUserId) => {
+        navigate(`/admin/customer-user/${customerUserId}`);
     };
 
     return (
@@ -120,14 +106,16 @@ export default function CustomerUserList() {
                             >
                                 <LightTooltip
                                     placement="bottom"
-                                    title="Chỉnh sửa"
+                                    title="Chi tiết"
                                 >
                                     <IconButton
-                                        onClick={() =>
-                                            handleOpenCreateUpdateModal(rowData)
-                                        }
+                                        onClick={() => {
+                                            handleNavigateAdminUserDetail(
+                                                rowData?.id
+                                            );
+                                        }}
                                     >
-                                        <EditRoundedIcon color="primary" />
+                                        <InfoRounded color="info" />
                                     </IconButton>
                                 </LightTooltip>
                                 <LightTooltip placement="bottom" title="Xóa">
@@ -141,15 +129,6 @@ export default function CustomerUserList() {
                                         <DeleteRoundedIcon color="error" />
                                     </IconButton>
                                 </LightTooltip>
-                                <PasswordMenu
-                                    selectedCustomerUser={{
-                                        id: rowData?.id,
-                                        fullName:
-                                            rowData?.last_name +
-                                            " " +
-                                            rowData?.first_name,
-                                    }}
-                                />
                             </div>
                         ),
                     },
@@ -162,7 +141,6 @@ export default function CustomerUserList() {
                 isOpen={isOpenCreateUpdateModel}
                 handleOpen={handleOpenCreateUpdateModal}
                 handleClose={handleCloseCreateUpdateModal}
-                selectedCustomerUser={selectedUser}
             />
 
             <DeleteCustomerUserPopup

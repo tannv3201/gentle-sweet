@@ -10,6 +10,9 @@ import {
     getAllCustomerFailed,
     getAllCustomerStart,
     getAllCustomerSuccess,
+    getCustomerUserByIdFailed,
+    getCustomerUserByIdStart,
+    getCustomerUserByIdSuccess,
     passwordChangeFailed,
     passwordChangeStart,
     passwordChangeSuccess,
@@ -84,7 +87,6 @@ export const updateCustomerUser = async (
         dispatch(updateCustomerSuccess(res?.data));
         if (res?.data?.status === 200) {
             toast.success(res?.data?.msg);
-            getAllCustomerUser(accessToken, dispatch, axiosJWT);
         }
     } catch (error) {
         dispatch(updateCustomerFailed(error.response?.data));
@@ -165,5 +167,29 @@ export const deleteCustomerUser = async (
         }
     } catch (error) {
         dispatch(deleteCustomerFailed(error.response?.data));
+    }
+};
+
+export const getCustomerUserById = async (
+    dispatch,
+    id,
+    accessToken,
+    axiosJWT
+) => {
+    dispatch(getCustomerUserByIdStart());
+    try {
+        const res = await axiosJWT.get("/v1/customerUser/" + id, {
+            headers: {
+                token: `Bearer ${accessToken}`,
+            },
+        });
+        dispatch(getCustomerUserByIdSuccess(res?.data));
+        if (res?.data?.status === 200) {
+            toast.success(res?.data?.msg);
+            getAllCustomerUser(accessToken, dispatch, axiosJWT);
+        }
+        return res?.data;
+    } catch (error) {
+        dispatch(getCustomerUserByIdFailed(error.response?.data));
     }
 };

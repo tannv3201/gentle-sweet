@@ -1,5 +1,5 @@
 import React from "react";
-import { EditRounded, DeleteRounded, InfoRounded } from "@mui/icons-material/";
+import { DeleteRounded, InfoRounded } from "@mui/icons-material/";
 import { useEffect } from "react";
 import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
@@ -10,10 +10,8 @@ import { useState } from "react";
 import GTable from "../../../common/GTable/GTable";
 import { IconButton } from "@mui/material";
 import GButton from "../../../components/MyButton/MyButton";
-import PasswordMenu from "./PasswordMenu/PasswordMenu";
 import { LightTooltip } from "../../../components/GTooltip/GTooltip";
 import { getAllUser } from "../../../redux/api/apiAdminUser";
-import dayjs from "dayjs";
 import CreateUpdateAdminUserModal from "./CreateUpdateAdminUserModal";
 import DeleteAdminUserPopup from "./DeleteAdminUserPopup";
 export default function AdminUserList({ data }) {
@@ -60,28 +58,6 @@ export default function AdminUserList({ data }) {
         useState(false);
 
     const handleOpenCreateUpdateModal = (rowData) => {
-        setSelectedUser({
-            id: rowData.id,
-            role_id: rowData.role_id || null,
-            role_name:
-                rowData.role_id === 2
-                    ? "ADMIN"
-                    : rowData.role_id === 3
-                    ? "STAFF"
-                    : "",
-            username: rowData.username,
-            last_name: rowData.last_name,
-            first_name: rowData.first_name,
-            phone_number: rowData?.phone_number,
-            province: rowData?.province,
-            district: rowData?.district,
-            ward: rowData?.ward,
-            detail_address: rowData?.detail_address,
-            birth_date: rowData?.birth_date ? dayjs(rowData?.birth_date) : null,
-            email: rowData.email,
-            password: "",
-            confirmPassword: "",
-        });
         setIsOpenCreateUpdateModel(true);
     };
 

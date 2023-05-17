@@ -33,6 +33,7 @@ import Services from "../pages/Admin/Services/Services";
 import ServiceImage from "../pages/Admin/ServiceImage/ServiceImage";
 import Discount from "../pages/Admin/Discount/Discount";
 import AdminUserDetail from "../pages/Admin/AdminUser/AdminUserDetail/AdminUserDetail";
+import CustomerUserDetail from "../pages/Admin/CustomerUser/CustomerUserDetail/CustomerUserDetail";
 
 // public routes
 
@@ -114,6 +115,11 @@ export const privateRoutes = [
         layout: AdminLayout,
     },
     {
+        path: "/admin/customer-user/:customerUserId",
+        component: CustomerUserDetail,
+        layout: AdminLayout,
+    },
+    {
         path: "/admin/product",
         component: Products,
         layout: AdminLayout,
@@ -149,7 +155,7 @@ export const privateRoutes = [
         layout: AdminLayout,
     },
     {
-        path: "/admin/customer",
+        path: "/admin/customer-user",
         component: CustomerUser,
         layout: AdminLayout,
     },

@@ -9,18 +9,12 @@ import { useDispatch, useSelector } from "react-redux";
 import { loginSuccess } from "../../../redux/slice/authSlice";
 import { createAxios } from "../../../createInstance";
 import GTextFieldNormal from "../../../components/GTextField/GTextFieldNormal";
-import {
-    createAdminUser,
-    updateAdminUser,
-} from "../../../redux/api/apiAdminUser";
+import { createAdminUser } from "../../../redux/api/apiAdminUser";
 import GDatePicker from "../../../components/GDatePicker/GDatePicker";
 import {
     getDistrict,
-    getDistrictById,
     getProvince,
-    getProvinceById,
     getWard,
-    getWardById,
 } from "../../../redux/api/apiProvince";
 import dayjs from "dayjs";
 import utc from "dayjs/plugin/utc";
@@ -72,18 +66,6 @@ export default function CreateUpdateAdminUserModal({
                 handleCloseModal();
             }
         );
-    };
-
-    const handleUpdateAdminUser = (adminUser) => {
-        updateAdminUser(
-            user?.accessToken,
-            dispatch,
-            selectedUser?.id,
-            adminUser,
-            axiosJWT
-        ).then(() => {
-            handleCloseModal();
-        });
     };
 
     // Validate
@@ -146,11 +128,7 @@ export default function CreateUpdateAdminUserModal({
                     .utcOffset("+07:00")
                     .format("YYYY/MM/DD"),
             };
-            if (data?.id) {
-                handleUpdateAdminUser(dataFinal);
-            } else {
-                handleCreateAdminUser(dataFinal);
-            }
+            handleCreateAdminUser(dataFinal);
         },
     });
 

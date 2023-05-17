@@ -5,6 +5,7 @@ const customerUserSlice = createSlice({
     initialState: {
         customerUser: {
             customerUserList: [],
+            customerUser: null,
             isFetching: false,
             error: false,
         },
@@ -21,6 +22,20 @@ const customerUserSlice = createSlice({
         },
 
         getAllCustomerFailed: (state) => {
+            state.customerUser.isFetching = false;
+            state.customerUser.error = true;
+        },
+
+        // Get all ADMIN USER
+        getCustomerUserByIdStart: (state) => {
+            state.customerUser.isFetching = true;
+        },
+        getCustomerUserByIdSuccess: (state, action) => {
+            state.customerUser.isFetching = false;
+            state.customerUser.customerUser = action.payload;
+        },
+
+        getCustomerUserByIdFailed: (state) => {
             state.customerUser.isFetching = false;
             state.customerUser.error = true;
         },
@@ -102,6 +117,9 @@ export const {
     getAllCustomerStart,
     getAllCustomerSuccess,
     getAllCustomerFailed,
+    getCustomerUserByIdStart,
+    getCustomerUserByIdSuccess,
+    getCustomerUserByIdFailed,
     createCustomerStart,
     createCustomerSuccess,
     createCustomerFailed,

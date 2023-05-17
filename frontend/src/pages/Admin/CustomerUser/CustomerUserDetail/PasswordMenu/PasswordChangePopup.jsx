@@ -3,21 +3,21 @@ import { useFormik } from "formik";
 
 import { Grid } from "@mui/material";
 import * as Yup from "yup";
-import GModal from "../../../../common/GModal/GModal";
-import GTextFieldNormal from "../../../../components/GTextField/GTextFieldNormal";
-import GButton from "../../../../components/MyButton/MyButton";
+import GModal from "../../../../../common/GModal/GModal";
+import GButton from "../../../../../components/MyButton/MyButton";
+import GTextFieldNormal from "../../../../../components/GTextField/GTextFieldNormal";
 import { toast } from "react-hot-toast";
 import { useDispatch, useSelector } from "react-redux";
-import { createAxios } from "../../../../createInstance";
-import { loginSuccess } from "../../../../redux/slice/authSlice";
+import { createAxios } from "../../../../../createInstance";
+import { loginSuccess } from "../../../../../redux/slice/authSlice";
 import { useState } from "react";
-import { passwordChange } from "../../../../redux/api/apiCustomerUser";
+import { passwordChange } from "../../../../../redux/api/apiCustomerUser";
 
 function PasswordChangePopup({
     handleClose,
     handleOpen,
     isOpen,
-    selectedCustomerUser,
+    selectedUser,
 }) {
     const user = useSelector((state) => state.auth.login?.currentUser);
     const dispatch = useDispatch();
@@ -32,7 +32,7 @@ function PasswordChangePopup({
             passwordChange(
                 user?.accessToken,
                 dispatch,
-                selectedCustomerUser?.id,
+                selectedUser?.id,
                 data,
                 axiosJWT
             ).then((res) => {
