@@ -5,6 +5,7 @@ const productSlice = createSlice({
     initialState: {
         product: {
             productList: [],
+            product: null,
             isFetching: false,
             error: false,
         },
@@ -23,6 +24,20 @@ const productSlice = createSlice({
             state.product.isFetching = false;
             state.product.error = true;
         },
+
+        // Get all ADMIN USER
+        getProductByIdStart: (state) => {
+            state.product.isFetching = true;
+        },
+        getProductByIdSuccess: (state, action) => {
+            state.product.isFetching = false;
+            state.product.product = action.payload;
+        },
+        getProductByIdFailed: (state) => {
+            state.product.isFetching = false;
+            state.product.error = true;
+        },
+
         // Create Product Category
         createProductStart: (state) => {
             state.product.isFetching = true;
@@ -71,6 +86,10 @@ export const {
     getAllProductStart,
     getAllProductSuccess,
     getAllProductFailed,
+
+    getProductByIdStart,
+    getProductByIdSuccess,
+    getProductByIdFailed,
 
     createProductStart,
     createProductSuccess,

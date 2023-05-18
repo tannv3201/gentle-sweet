@@ -22,11 +22,10 @@ import DeleteProductPopup from "./DeleteProductPopup";
 import { API_IMAGE_URL } from "../../../LocalConstants";
 import styles from "./Product.module.scss";
 import classNames from "classnames/bind";
+import { InfoRounded } from "@mui/icons-material";
 const cx = classNames.bind(styles);
 
 export default function ProductList() {
-    const { productId } = useParams();
-
     const user = useSelector((state) => state.auth.login?.currentUser);
     const [cloneData, setCloneData] = useState([]);
     const dispatch = useDispatch();
@@ -57,15 +56,6 @@ export default function ProductList() {
         useState(false);
 
     const handleOpenCreateUpdateModal = (rowData) => {
-        setSelectedProduct({
-            id: rowData?.id,
-            name: rowData?.name,
-            product_category_id: rowData?.product_category_id,
-            description: rowData?.description,
-            quantity: rowData?.quantity,
-            price: rowData?.price,
-            image_url: rowData?.image_url,
-        });
         setIsOpenCreateUpdateModel(true);
     };
 
@@ -88,6 +78,10 @@ export default function ProductList() {
 
     const handleCloseDeleteConfirmPopup = () => {
         setIsOpenDeleteConfirmPopup(false);
+    };
+
+    const handleNavigateProductDetail = (productId) => {
+        navigate(`/admin/product/${productId}`);
     };
 
     return (
@@ -183,16 +177,16 @@ export default function ProductList() {
                             >
                                 <LightTooltip
                                     placement="bottom"
-                                    title="Chỉnh sửa"
+                                    title="Chi tiết"
                                 >
                                     <IconButton
                                         onClick={() => {
-                                            handleOpenCreateUpdateModal(
-                                                rowData
+                                            handleNavigateProductDetail(
+                                                rowData?.id
                                             );
                                         }}
                                     >
-                                        <EditRoundedIcon color="primary" />
+                                        <InfoRounded color="primary" />
                                     </IconButton>
                                 </LightTooltip>
                                 <LightTooltip placement="bottom" title="Xóa">
@@ -206,7 +200,6 @@ export default function ProductList() {
                                         <DeleteRoundedIcon color="error" />
                                     </IconButton>
                                 </LightTooltip>
-                                <ActionMenu selectedProduct={rowData} />
                             </div>
                         ),
                     },
@@ -219,7 +212,6 @@ export default function ProductList() {
                 isOpen={isOpenCreateUpdateModel}
                 handleOpen={handleOpenCreateUpdateModal}
                 handleClose={handleCloseCreateUpdateModal}
-                selectedProduct={selectedProduct}
             />
 
             <DeleteProductPopup

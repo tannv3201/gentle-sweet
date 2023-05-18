@@ -12,12 +12,7 @@ import { createAxios } from "../../../createInstance";
 import GTextFieldNormal from "../../../components/GTextField/GTextFieldNormal";
 import { toast } from "react-hot-toast";
 import { ImageUpload } from "./DropZone/CustomDropzone";
-import { uploadImageToImgbb } from "../../../redux/api/apiImageUpload";
-import {
-    createProductLocal,
-    createProductOnline,
-    updateProduct,
-} from "../../../redux/api/apiProduct";
+import { createProductLocal } from "../../../redux/api/apiProduct";
 
 // Validate
 const validationSchema = Yup.object().shape({
@@ -30,7 +25,6 @@ const validationSchema = Yup.object().shape({
 export default function CreateUpdateProductModal({
     handleOpen,
     isOpen,
-    selectedProduct,
     ...props
 }) {
     const user = useSelector((state) => state.auth.login?.currentUser);
@@ -38,7 +32,6 @@ export default function CreateUpdateProductModal({
 
     // upload image
     const [imageFileSeleted, setImageFileSeleted] = useState([]);
-    const [imageUrls, setImageUrls] = useState([]);
     const onChangeImage = (imageList, addUpdateIndex) => {
         // data for submit
         console.log(imageList, addUpdateIndex);
@@ -69,19 +62,6 @@ export default function CreateUpdateProductModal({
     });
 
     let axiosJWT = createAxios(user, dispatch, loginSuccess);
-
-    useEffect(() => {
-        if (selectedProduct) {
-            const product_category = productCategoryList?.find(
-                (item) => item?.id === selectedProduct?.product_category_id
-            );
-            const newSelectedProduct = {
-                ...selectedProduct,
-                product_category_name: product_category?.name,
-            };
-            setProduct(newSelectedProduct);
-        }
-    }, [selectedProduct]);
 
     const handleCloseModal = () => {
         formik.resetForm();
@@ -166,48 +146,13 @@ export default function CreateUpdateProductModal({
         }
     };
 
-    const handleUpdateProduct = async (data) => {
-        if (imageFileSeleted?.length !== 0) {
-            const formData = new FormData();
-            formData.append("image", imageFileSeleted[0]?.file);
-            formData.append("name", data?.name);
-            formData.append("description", data?.description);
-            formData.append("product_category_id", data?.product_category_id);
-            formData.append("price", data?.price);
-            formData.append("quantity", data?.quantity);
-            updateProduct(
-                user?.accessToken,
-                dispatch,
-                selectedProduct?.id,
-                formData,
-                axiosJWT
-            ).then(() => {
-                handleCloseModal();
-            });
-        } else {
-            updateProduct(
-                user?.accessToken,
-                dispatch,
-                selectedProduct?.id,
-                data,
-                axiosJWT
-            ).then(() => {
-                handleCloseModal();
-            });
-        }
-    };
-
     const formik = useFormik({
         enableReinitialize: true,
         initialValues: product,
         validationSchema: validationSchema,
         onSubmit: async (data) => {
             const { product_category_name, ...restData } = data;
-            if (data?.id) {
-                handleUpdateProduct(restData);
-            } else {
-                handleCreateProduct(restData);
-            }
+            handleCreateProduct(restData);
         },
     });
 
@@ -227,9 +172,7 @@ export default function CreateUpdateProductModal({
                 handleClose={handleCloseModal}
                 handleOpen={handleOpen}
                 isOpen={isOpen}
-                title={
-                    selectedProduct?.id ? "Cập nhật sản phẩm" : "Thêm sản phẩm"
-                }
+                title={"Thêm sản phẩm"}
             >
                 <form onSubmit={formik.handleSubmit}>
                     <Grid container spacing={2}>

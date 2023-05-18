@@ -34,6 +34,7 @@ import ServiceImage from "../pages/Admin/ServiceImage/ServiceImage";
 import Discount from "../pages/Admin/Discount/Discount";
 import AdminUserDetail from "../pages/Admin/AdminUser/AdminUserDetail/AdminUserDetail";
 import CustomerUserDetail from "../pages/Admin/CustomerUser/CustomerUserDetail/CustomerUserDetail";
+import ProductDetailAdmin from "../pages/Admin/Products/ProductDetail/ProductDetail";
 
 // public routes
 
@@ -122,6 +123,11 @@ export const privateRoutes = [
     {
         path: "/admin/product",
         component: Products,
+        layout: AdminLayout,
+    },
+    {
+        path: "/admin/product/:productId",
+        component: ProductDetailAdmin,
         layout: AdminLayout,
     },
     {

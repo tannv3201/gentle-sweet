@@ -387,6 +387,10 @@ span.MuiChip-label {
     font-family: var(--font-family) !important;
     color: var(--text-primary) !important;
 }
+.MuiInputBase-input.MuiOutlinedInput-input.Mui-disabled.MuiInputBase-inputSizeSmall {
+    -webkit-text-fill-color: unset !important;
+    color: rgba(0, 0, 0, 0.8) !important;
+}
 
 .MuiInputBase-root.MuiOutlinedInput-root.MuiInputBase-colorSecondary.MuiInputBase-fullWidth.Mui-focused.MuiInputBase-formControl:not(
         .Mui-error
@@ -429,7 +433,7 @@ span.MuiChip-label {
 .MuiInputLabel-root {
     font-size: 2rem !important;
     font-family: var(--font-family) !important;
-    font-weight: var(--fw-medium) !important;
+    font-weight: var(--fw-semi-bold) !important;
     &.Mui-focused:not(.Mui-error) {
         color: var(--color-text-field) !important;
     }

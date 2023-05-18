@@ -1,21 +1,16 @@
 import React, { useEffect } from "react";
 import { useFormik } from "formik";
-import GButton from "../../../components/MyButton/MyButton";
-import { Autocomplete, Grid, InputAdornment } from "@mui/material";
+import GButton from "../../../../components/MyButton/MyButton";
+import { Autocomplete, Grid } from "@mui/material";
 import { useState } from "react";
 import * as Yup from "yup";
-import GModal from "../../../common/GModal/GModal";
-import {
-    createDiscount,
-    getAllDiscount,
-    updateDiscount,
-} from "../../../redux/api/apiDiscount";
+import GModal from "../../../../common/GModal/GModal";
+import { getAllDiscount } from "../../../../redux/api/apiDiscount";
 import { useDispatch, useSelector } from "react-redux";
-import { loginSuccess } from "../../../redux/slice/authSlice";
-import { createAxios } from "../../../createInstance";
-import GTextFieldNormal from "../../../components/GTextField/GTextFieldNormal";
-import { useNavigate } from "react-router-dom";
-import { addDiscount } from "../../../redux/api/apiProduct";
+import { loginSuccess } from "../../../../redux/slice/authSlice";
+import { createAxios } from "../../../../createInstance";
+import GTextFieldNormal from "../../../../components/GTextField/GTextFieldNormal";
+import { addDiscount } from "../../../../redux/api/apiProduct";
 export default function DiscountSelectPopup({
     handleClose,
     handleOpen,

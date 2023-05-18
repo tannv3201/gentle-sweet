@@ -2,14 +2,15 @@ import * as React from "react";
 import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
 import { IconButton } from "@mui/material";
-import { PasswordRounded } from "@mui/icons-material";
+import { PasswordRounded, ViewListRounded } from "@mui/icons-material";
 
 import classNames from "classnames/bind";
 import styles from "./ActionMenu.module.scss";
-import { LightTooltip } from "../../../../components/GTooltip/GTooltip";
+import { LightTooltip } from "../../../../../components/GTooltip/GTooltip";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import DiscountSelectPopup from "../ProductDetail/DiscountSelectPopup";
+import DiscountSelectPopup from "../DiscountSelectPopup";
+import GButton from "../../../../../components/MyButton/MyButton";
 const cx = classNames.bind(styles);
 
 export default function ActionMenu({ selectedProduct }) {
@@ -44,17 +45,19 @@ export default function ActionMenu({ selectedProduct }) {
     return (
         <div>
             <LightTooltip placement="bottom" title="Quản lý">
-                <IconButton
+                <GButton
                     id="basic-button"
                     aria-controls={open ? "basic-menu" : undefined}
                     aria-haspopup="true"
                     aria-expanded={open ? "true" : undefined}
                     onClick={handleClick}
+                    startIcon={<ViewListRounded />}
                 >
-                    <PasswordRounded />
-                </IconButton>
+                    Quản lý
+                </GButton>
             </LightTooltip>
             <Menu
+                className={cx("basic-menu")}
                 id="basic-menu"
                 anchorEl={anchorEl}
                 open={open}
@@ -63,24 +66,16 @@ export default function ActionMenu({ selectedProduct }) {
                     "aria-labelledby": "basic-button",
                 }}
             >
-                <div className={cx("menu-title")}>
+                {/* <div className={cx("menu-title")}>
                     <span>Quản lý</span>
-                </div>
+                </div> */}
                 <MenuItem
                     onClick={() => {
                         handleOpenDiscountSelectPopup();
                         handleClose();
                     }}
                 >
-                    Thông tin chi tiết
-                </MenuItem>
-                <MenuItem
-                    onClick={() => {
-                        handleOpenDiscountSelectPopup();
-                        handleClose();
-                    }}
-                >
-                    Giảm giá
+                    Quản lý giảm giá
                 </MenuItem>
                 <MenuItem
                     onClick={() => {

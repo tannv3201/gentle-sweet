@@ -10,6 +10,9 @@ import {
     getAllProductFailed,
     getAllProductStart,
     getAllProductSuccess,
+    getProductByIdFailed,
+    getProductByIdStart,
+    getProductByIdSuccess,
     updateProductFailed,
     updateProductStart,
     updateProductSuccess,
@@ -99,8 +102,10 @@ export const updateProduct = async (
         dispatch(updateProductSuccess(res?.data));
         if (res?.data?.status === 200) {
             toast.success(res?.data?.msg);
-            getAllProduct(accessToken, dispatch, axiosJWT);
+            // getAllProduct(accessToken, dispatch, axiosJWT);
+            getProductById(dispatch, id, accessToken, axiosJWT);
         }
+        console.log(res?.data);
     } catch (error) {
         dispatch(updateProductFailed(error.response?.data));
     }
@@ -127,7 +132,7 @@ export const addDiscount = async (
         dispatch(updateProductSuccess(res?.data));
         if (res?.data?.status === 200) {
             toast.success(res?.data?.msg);
-            getAllProduct(accessToken, dispatch, axiosJWT);
+            getProductById(dispatch, id, accessToken, axiosJWT);
         }
     } catch (error) {
         dispatch(updateProductFailed(error.response?.data));
@@ -149,5 +154,23 @@ export const deleteProduct = async (dispatch, id, accessToken, axiosJWT) => {
         }
     } catch (error) {
         dispatch(deleteProductFailed(error.response?.data));
+    }
+};
+
+export const getProductById = async (dispatch, id, accessToken, axiosJWT) => {
+    dispatch(getProductByIdStart());
+    try {
+        const res = await axiosJWT.get("/v1/product/" + id, {
+            headers: {
+                token: `Bearer ${accessToken}`,
+            },
+        });
+        dispatch(getProductByIdSuccess(res?.data));
+        if (res?.data?.status === 200) {
+            toast.success(res?.data?.msg);
+        }
+        return res?.data;
+    } catch (error) {
+        dispatch(getProductByIdFailed(error.response?.data));
     }
 };
