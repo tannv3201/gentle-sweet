@@ -16,8 +16,7 @@ import GButton from "../../../components/MyButton/MyButton";
 import { LightTooltip } from "../../../components/GTooltip/GTooltip";
 import CreateUpdateProductModal from "./CreateUpdateProductModal";
 import { FormatCurrency } from "../../../components/FormatCurrency/FormatCurrency";
-import ActionMenu from "./ActionMenu/ActionMenu";
-import { useParams } from "react-router-dom";
+
 import DeleteProductPopup from "./DeleteProductPopup";
 import { API_IMAGE_URL } from "../../../LocalConstants";
 import styles from "./Product.module.scss";

@@ -27,7 +27,6 @@ const validationSchema = Yup.object().shape({
 export default function CreateUpdateServiceModal({
     handleOpen,
     isOpen,
-    selectedService,
     ...props
 }) {
     const user = useSelector((state) => state.auth.login?.currentUser);
@@ -66,81 +65,14 @@ export default function CreateUpdateServiceModal({
 
     let axiosJWT = createAxios(user, dispatch, loginSuccess);
 
-    useEffect(() => {
-        if (selectedService) {
-            const service_category = serviceCategoryList?.find(
-                (item) => item?.id === selectedService?.service_category_id
-            );
-            const newSelectedProduct = {
-                ...selectedService,
-                service_category_name: service_category?.name,
-            };
-            setService(newSelectedProduct);
-        }
-    }, [selectedService]);
-
     const handleCloseModal = () => {
         formik.resetForm();
         props.handleClose();
         setImageFileSeleted([]);
     };
 
-    // Upload ảnh lên Server online
-    // const handleCreateProduct = async (data) => {
-    //     const productInserted = await createProductOnline(
-    //         user?.accessToken,
-    //         dispatch,
-    //         data,
-    //         axiosJWT
-    //     ).then(() => {
-    //         handleCloseModal();
-    //     });
-    //     return productInserted;
-    // };
-
-    // const handleUploadToImgbb = async (data) => {
-    //     if (imageFileSeleted) {
-    //         const formData = new FormData();
-    //         formData.append("image", imageFileSeleted[0]?.file);
-    //         const res = await uploadImageToImgbb(formData);
-
-    //         return res;
-    //     } else {
-    //         toast.error("Chưa có ảnh");
-    //     }
-    // };
-
-    // Upload ảnh vào server online
-    // const formik = useFormik({
-    //     enableReinitialize: true,
-    //     initialValues: product,
-    //     validationSchema: validationSchema,
-    //     onSubmit: async (data) => {
-    //         const { product_category_name, ...restData } = data;
-    //         if (data?.id) {
-    //             if (imageFileSeleted.length > 0) {
-    //                 const imgUrl = await handleUploadToImgbb();
-    //                 const dataUpdate = { ...restData, image_url: imgUrl };
-    //                 await handleUpdateProduct(dataUpdate);
-    //             } else {
-    //                 await handleUpdateProduct(restData);
-    //             }
-    //         } else {
-    //             if (imageFileSeleted.length === 0) {
-    //                 formik.setFieldError("image", "Vui lòng chọn ảnh");
-    //                 toast.error("Vui lòng chọn ảnh");
-    //                 return;
-    //             } else {
-    //                 const imgUrl = await handleUploadToImgbb();
-    //                 const dataCreate = { ...restData, image_url: imgUrl };
-    //                 await handleCreateProduct(dataCreate);
-    //             }
-    //         }
-    //     },
-    // });
-
     // Upload to server local
-    const handleCreateProduct = async (data) => {
+    const handleCreateService = async (data) => {
         if (imageFileSeleted) {
             const formData = new FormData();
             formData.append("image", imageFileSeleted[0]?.file);
@@ -159,50 +91,17 @@ export default function CreateUpdateServiceModal({
         }
     };
 
-    const handleUpdateProduct = async (data) => {
-        if (imageFileSeleted?.length > 0) {
-            const formData = new FormData();
-            formData.append("image", imageFileSeleted[0]?.file);
-            formData.append("name", data?.name);
-            formData.append("description", data?.description);
-            formData.append("service_category_id", data?.service_category_id);
-            formData.append("price", data?.price);
-            formData.append("quantity", data?.quantity);
-            updateService(
-                user?.accessToken,
-                dispatch,
-                selectedService?.id,
-                formData,
-                axiosJWT
-            ).then(() => {
-                handleCloseModal();
-            });
-        } else {
-            updateService(
-                user?.accessToken,
-                dispatch,
-                selectedService?.id,
-                data,
-                axiosJWT
-            );
-        }
-    };
-
     const formik = useFormik({
         enableReinitialize: true,
         initialValues: service,
         validationSchema: validationSchema,
         onSubmit: async (data) => {
             const { service_category_name, ...restData } = data;
-            if (data?.id) {
-                handleUpdateProduct(restData);
-            } else {
-                handleCreateProduct(restData);
-            }
+            handleCreateService(restData);
         },
     });
 
-    const handleChangeProductCategory = (value) => {
+    const handleChangeSẻviceCategory = (value) => {
         if (value) {
             formik.setFieldValue("service_category_id", value?.id);
             formik.setFieldValue("service_category_name", value?.name);
@@ -218,9 +117,7 @@ export default function CreateUpdateServiceModal({
                 handleClose={handleCloseModal}
                 handleOpen={handleOpen}
                 isOpen={isOpen}
-                title={
-                    selectedService?.id ? "Cập nhật dịch vụ" : "Thêm dịch vụ"
-                }
+                title={"Thêm dịch vụ"}
             >
                 <form onSubmit={formik.handleSubmit}>
                     <Grid container spacing={2}>
@@ -232,7 +129,7 @@ export default function CreateUpdateServiceModal({
                                     `${option?.name}` || ""
                                 }
                                 onChange={(e, value) => {
-                                    handleChangeProductCategory(value);
+                                    handleChangeSẻviceCategory(value);
                                 }}
                                 isOptionEqualToValue={(option, value) =>
                                     value === null ||

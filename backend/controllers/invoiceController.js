@@ -34,87 +34,15 @@ const invoiceController = {
     createInvoice: async (req, res, next) => {
         try {
             const newInvoice = await InvoiceModel.createInvoice({
-                customer_user_id: req.user.id,
+                customer_user_id: req.body.customer_user_id,
+                admin_user_id: req.body.admin_user_id,
                 status: 1,
             });
-
-            const getProduct = await ProductModel.getProductById(
-                req.body.product_id
-            );
-
-            const newInvoiceDetail =
-                await InvoiceDetailModel.createInvoiceDetail({
-                    id: uuidv4(),
-                    invoice_id: newInvoice.id,
-                    product_id: req.body.product_id,
-                    product_quantity: req.body.product_quantity,
-                    unit_price: getProduct?.price,
-                    status: 1,
-                });
-
-            let price_total =
-                newInvoiceDetail?.product_quantity *
-                newInvoiceDetail?.unit_price;
-
-            const affectedRows = await InvoiceModel.updateInvoiceById(
-                newInvoice?.id,
-                {
-                    price_total: price_total,
-                }
-            );
-            if (affectedRows !== 0) {
-                res.status(201).json(newInvoice);
-            }
-        } catch (error) {
-            res.status(500).json(error);
-        }
-    },
-
-    // Create invoice detail
-    createInvoiceDetail: async (req, res, next) => {
-        try {
-            const invoice = await InvoiceModel.getInvoiceByCustomerUserId(
-                req.user.id
-            );
-
-            const getProduct = await ProductModel.getProductById(
-                req.body.product_id
-            );
-
-            const newInvoiceDetail =
-                await InvoiceDetailModel.createInvoiceDetail({
-                    id: uuidv4(),
-                    invoice_id: invoice?.id,
-                    product_id: req.body.product_id,
-                    product_quantity: req.body.product_quantity,
-                    unit_price: getProduct?.price,
-                    status: 1,
-                });
-
-            const getAllInvoiceDetails =
-                await InvoiceDetailModel.getInvoiceDetailByInvoiceId(
-                    invoice?.id
-                );
-
-            let total = getAllInvoiceDetails.reduce(
-                (accumulator, currentValue) => {
-                    let quantity = currentValue.product_quantity;
-                    let unitPrice = parseFloat(currentValue.unit_price);
-                    return accumulator + quantity * unitPrice;
-                },
-                0
-            );
-
-            const { admin_user_id, ...data } = req.body;
-            const affectedRows = await InvoiceModel.updateInvoiceById(
-                invoice?.id,
-                {
-                    price_total: total,
-                }
-            );
-            if (affectedRows !== 0) {
-                res.status(201).json(newInvoiceDetail);
-            }
+            res.json({
+                status: 201,
+                msg: "Thêm hóa đơn thành công",
+                data: newInvoice,
+            });
         } catch (error) {
             res.status(500).json(error);
         }
@@ -130,9 +58,9 @@ const invoiceController = {
                 data
             );
             if (affectedRows === 0) {
-                return res.status(404).json({ message: "Cập nhật thất bại" });
+                return res.json({ status: 404, msg: "Cập nhật thất bại" });
             } else {
-                return res.status(200).json({ message: "Cập nhật thành công" });
+                return res.json({ status: 200, msg: "Cập nhật thành công" });
             }
         } catch (error) {
             console.log(error);
@@ -148,9 +76,9 @@ const invoiceController = {
                 { status: 0 }
             );
             if (affectedRows === 0) {
-                return res.status(404).json({ message: "Xóa thất bại" });
+                return res.json({ status: 404, msg: "Xóa thất bại" });
             } else {
-                return res.status(200).json({ message: "Xóa thành công" });
+                return res.json({ status: 200, msg: "Xóa thành công" });
             }
         } catch (error) {
             res.status(500).json({ message: error.message });

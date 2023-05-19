@@ -422,6 +422,19 @@ span.MuiChip-label {
     ) {
     font-size: 1.6rem !important;
 }
+
+.MuiFormLabel-root.MuiInputLabel-root.MuiInputLabel-formControl.MuiInputLabel-animated.MuiInputLabel-sizeSmall.MuiInputLabel-outlined.MuiFormLabel-colorPrimary.MuiInputLabel-root.MuiInputLabel-formControl.MuiInputLabel-animated.MuiInputLabel-sizeSmall:not(
+        .MuiInputLabel-shrink
+    ) {
+    font-size: 1.6rem !important;
+}
+
+.MuiFormLabel-root.MuiInputLabel-root.MuiInputLabel-formControl.MuiInputLabel-animated.MuiInputLabel-outlined.MuiFormLabel-colorSecondary.MuiInputLabel-root.MuiInputLabel-formControl.MuiInputLabel-animated.MuiInputLabel-outlined:not(
+        .MuiInputLabel-shrink
+    ) {
+    font-size: 1.6rem !important;
+}
+
 .MuiInputBase-root.MuiOutlinedInput-root.MuiInputBase-colorPrimary.MuiInputBase-fullWidth.Mui-focused.MuiInputBase-formControl:not(
         .Mui-error
     ) {
@@ -532,6 +545,22 @@ span.MuiChip-label {
     }
 }
 
+.MuiInputBase-root.MuiOutlinedInput-root.MuiInputBase-colorSecondary.MuiInputBase-formControl.MuiInputBase-sizeSmall {
+    fieldset {
+        legend {
+            font-size: 1.6rem !important;
+        }
+    }
+}
+
+.MuiInputBase-root.MuiOutlinedInput-root.MuiInputBase-colorSecondary.MuiInputBase-formControl {
+    fieldset {
+        legend {
+            font-size: 1.6rem !important;
+        }
+    }
+}
+
 // Step
 .MuiStepLabel-label {
     font-size: 1.4rem !important;
@@ -613,7 +642,8 @@ span.MuiChip-label {
 }
 
 // Error , helpertext
-.MuiFormHelperText-root.Mui-error.MuiFormHelperText-sizeSmall.MuiFormHelperText-contained {
+.MuiFormHelperText-root.Mui-error.MuiFormHelperText-sizeSmall.MuiFormHelperText-contained,
+.MuiFormHelperText-root.Mui-error.MuiFormHelperText-sizeMedium.MuiFormHelperText-contained {
     font-size: 1.4rem !important;
     font-family: var(--font-family) !important;
 }
@@ -656,4 +686,10 @@ span.MuiChip-label {
     .MuiTypography-root.MuiTypography-h6 {
         font-size: 1.6rem !important;
     }
+}
+
+.MuiPaper-root.MuiPaper-elevation.MuiPaper-rounded {
+    box-shadow: unset !important;
+    border-radius: 4px !important;
+    border: 1px solid var(--border-color) !important;
 }

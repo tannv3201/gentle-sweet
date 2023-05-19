@@ -2,7 +2,9 @@ const pool = require("../config/database");
 const { v4: uuidv4 } = require("uuid");
 
 const getAllInvoice = async () => {
-    const [rows, fields] = await pool.query("SELECT * FROM tbl_invoice");
+    const [rows, fields] = await pool.query(
+        "SELECT * FROM tbl_invoice WHERE status > 0"
+    );
     return rows;
 };
 
@@ -26,7 +28,7 @@ const createInvoice = async (invoice) => {
     const [result, fields] = await pool.query("INSERT INTO tbl_invoice SET ?", [
         invoice,
     ]);
-    return invoice;
+    return result;
 };
 
 const updateInvoiceById = async (id, invoice) => {

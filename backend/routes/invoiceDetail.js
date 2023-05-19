@@ -1,36 +1,42 @@
 const express = require("express");
 const router = express.Router();
-const invoiceController = require("../controllers/invoiceController");
+const invoiceDetailController = require("../controllers/invoiceDetailController");
 const middlewareController = require("../controllers/middlewareController");
 
 router.post(
     "/",
     middlewareController.verifyToken,
-    invoiceController.createInvoice
+    invoiceDetailController.createInvoiceDetail
 );
 
 router.get(
     "/",
     middlewareController.verifyToken,
-    invoiceController.getAllInvoice
+    invoiceDetailController.getAllInvoiceDetail
 );
 
 router.get(
     "/:id",
     middlewareController.verifyToken,
-    invoiceController.getInvoiceById
+    invoiceDetailController.getInvoiceDetailById
+);
+
+router.get(
+    "/:invoiceId/invoiceDetail",
+    middlewareController.verifyToken,
+    invoiceDetailController.getInvoiceDetailByInvoiceId
 );
 
 router.put(
     "/:id",
     middlewareController.verifyToken,
-    invoiceController.updateInvoiceById
+    invoiceDetailController.updateInvoiceById
 );
 
 router.delete(
     "/:id",
     middlewareController.verifyToken,
-    invoiceController.deleteInvoiceById
+    invoiceDetailController.deleteInvoiceById
 );
 
 module.exports = router;

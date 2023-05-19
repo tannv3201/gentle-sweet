@@ -10,6 +10,9 @@ import {
     getAllServiceFailed,
     getAllServiceStart,
     getAllServiceSuccess,
+    getServiceByIdFailed,
+    getServiceByIdStart,
+    getServiceByIdSuccess,
     updateServiceFailed,
     updateServiceStart,
     updateServiceSuccess,
@@ -49,7 +52,6 @@ export const createService = async (
             toast.success("Thêm sản phẩm thành công.");
             getAllService(accessToken, dispatch, axiosJWT);
         }
-        console.log(res?.data?.data?.insertId);
 
         return res?.data?.data;
     } catch (error) {
@@ -74,7 +76,7 @@ export const updateService = async (
         dispatch(updateServiceSuccess(res?.data));
         if (res?.data?.status === 200) {
             toast.success(res?.data?.msg);
-            getAllService(accessToken, dispatch, axiosJWT);
+            getServiceById(dispatch, id, accessToken, axiosJWT);
         }
     } catch (error) {
         dispatch(updateServiceFailed(error.response?.data));
@@ -102,7 +104,7 @@ export const addDiscount = async (
         dispatch(updateServiceSuccess(res?.data));
         if (res?.data?.status === 200) {
             toast.success(res?.data?.msg);
-            getAllService(accessToken, dispatch, axiosJWT);
+            getServiceById(dispatch, id, accessToken, axiosJWT);
         }
     } catch (error) {
         dispatch(updateServiceFailed(error.response?.data));
@@ -124,5 +126,23 @@ export const deleteService = async (dispatch, id, accessToken, axiosJWT) => {
         }
     } catch (error) {
         dispatch(deleteServiceFailed(error.response?.data));
+    }
+};
+
+export const getServiceById = async (dispatch, id, accessToken, axiosJWT) => {
+    dispatch(getServiceByIdStart());
+    try {
+        const res = await axiosJWT.get("/v1/Service/" + id, {
+            headers: {
+                token: `Bearer ${accessToken}`,
+            },
+        });
+        dispatch(getServiceByIdSuccess(res?.data));
+        if (res?.data?.status === 200) {
+            toast.success(res?.data?.msg);
+        }
+        return res?.data;
+    } catch (error) {
+        dispatch(getServiceByIdFailed(error.response?.data));
     }
 };

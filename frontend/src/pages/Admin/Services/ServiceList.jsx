@@ -1,5 +1,4 @@
 import React from "react";
-import EditRoundedIcon from "@mui/icons-material/EditRounded";
 import DeleteRoundedIcon from "@mui/icons-material/DeleteRounded";
 import { useEffect } from "react";
 import { useSelector } from "react-redux";
@@ -14,8 +13,6 @@ import GButton from "../../../components/MyButton/MyButton";
 
 import { LightTooltip } from "../../../components/GTooltip/GTooltip";
 import { FormatCurrency } from "../../../components/FormatCurrency/FormatCurrency";
-import ActionMenu from "./ActionMenu/ActionMenu";
-import { useParams } from "react-router-dom";
 import { getAllService } from "../../../redux/api/apiService";
 import DeleteServicePopup from "./DeleteServicePopup";
 import CreateUpdateServiceModal from "./CreateUpdateServiceModal";
@@ -23,11 +20,10 @@ import CreateUpdateServiceModal from "./CreateUpdateServiceModal";
 import { API_IMAGE_URL } from "../../../LocalConstants";
 import styles from "./Service.module.scss";
 import classNames from "classnames/bind";
+import { InfoRounded } from "@mui/icons-material";
 const cx = classNames.bind(styles);
 
 export default function ServiceList() {
-    const { productId } = useParams();
-
     const user = useSelector((state) => state.auth.login?.currentUser);
     const [cloneData, setCloneData] = useState([]);
     const dispatch = useDispatch();
@@ -47,12 +43,6 @@ export default function ServiceList() {
             }
             if (user?.accessToken) {
                 await getAllService(user?.accessToken, dispatch, axiosJWT);
-                // await getAllProductImageByProductId(
-                //     user?.accessToken,
-                //     productId,
-                //     dispatch,
-                //     axiosJWT
-                // );
             }
         };
 
@@ -99,6 +89,10 @@ export default function ServiceList() {
 
     const handleCloseDeleteConfirmPopup = () => {
         setIsOpenDeleteConfirmPopup(false);
+    };
+
+    const handleNavigateProductDetail = (serviceId) => {
+        navigate(`/admin/service/${serviceId}`);
     };
 
     return (
@@ -193,16 +187,16 @@ export default function ServiceList() {
                             >
                                 <LightTooltip
                                     placement="bottom"
-                                    title="Chỉnh sửa"
+                                    title="Chi tiết"
                                 >
                                     <IconButton
                                         onClick={() => {
-                                            handleOpenCreateUpdateModal(
-                                                rowData
+                                            handleNavigateProductDetail(
+                                                rowData?.id
                                             );
                                         }}
                                     >
-                                        <EditRoundedIcon color="primary" />
+                                        <InfoRounded color="primary" />
                                     </IconButton>
                                 </LightTooltip>
                                 <LightTooltip placement="bottom" title="Xóa">
@@ -216,7 +210,6 @@ export default function ServiceList() {
                                         <DeleteRoundedIcon color="error" />
                                     </IconButton>
                                 </LightTooltip>
-                                <ActionMenu selectedService={rowData} />
                             </div>
                         ),
                     },
@@ -229,7 +222,6 @@ export default function ServiceList() {
                 isOpen={isOpenCreateUpdateModel}
                 handleOpen={handleOpenCreateUpdateModal}
                 handleClose={handleCloseCreateUpdateModal}
-                selectedService={selectedService}
             />
 
             <DeleteServicePopup

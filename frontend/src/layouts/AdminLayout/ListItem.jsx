@@ -57,17 +57,11 @@ export const mainListItems = (
             title={"Giảm giá"}
             icon={<Dashboard />}
         />
-        {/* <MenuItem
-            to={"/admin/productImage"}
-            title={"Hình ảnh"}
-            icon={<Dashboard />}
-        /> */}
-        <ListItemButton>
-            <ListItemIcon>
-                <ShoppingCart />
-            </ListItemIcon>
-            <ListItemText primary="Đơn hàng" />
-        </ListItemButton>
+        <MenuItem
+            to={"/admin/invoice"}
+            title={"Đơn hàng"}
+            icon={<ShoppingCart />}
+        />
         <ListItemButton>
             <ListItemIcon>
                 <BarChart />

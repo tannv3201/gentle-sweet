@@ -137,6 +137,9 @@ function Login() {
                                                     size="large"
                                                     fullWidth
                                                     type="submit"
+                                                    disabled={
+                                                        formik.isSubmitting
+                                                    }
                                                 >
                                                     Đăng nhập
                                                 </GButton>

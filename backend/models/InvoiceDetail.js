@@ -14,10 +14,10 @@ const getInvoiceDetailById = async (id) => {
     return rows[0];
 };
 
-const getInvoiceDetailByInvoiceId = async (id) => {
+const getInvoiceDetailByInvoiceId = async (invoice_id) => {
     const [rows, fields] = await pool.query(
         "SELECT * FROM tbl_invoice_detail WHERE invoice_id= (?)",
-        [id]
+        [invoice_id]
     );
     return rows;
 };

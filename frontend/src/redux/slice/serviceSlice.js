@@ -5,6 +5,7 @@ const serviceSlice = createSlice({
     initialState: {
         service: {
             serviceList: [],
+            service: null,
             isFetching: false,
             error: false,
         },
@@ -20,6 +21,19 @@ const serviceSlice = createSlice({
             state.service.serviceList = action.payload;
         },
         getAllServiceFailed: (state) => {
+            state.service.isFetching = false;
+            state.service.error = true;
+        },
+
+        // Get all ADMIN USER
+        getServiceByIdStart: (state) => {
+            state.service.isFetching = true;
+        },
+        getServiceByIdSuccess: (state, action) => {
+            state.service.isFetching = false;
+            state.service.service = action.payload;
+        },
+        getServiceByIdFailed: (state) => {
             state.service.isFetching = false;
             state.service.error = true;
         },
@@ -71,6 +85,10 @@ export const {
     getAllServiceStart,
     getAllServiceSuccess,
     getAllServiceFailed,
+
+    getServiceByIdStart,
+    getServiceByIdSuccess,
+    getServiceByIdFailed,
 
     createServiceStart,
     createServiceSuccess,

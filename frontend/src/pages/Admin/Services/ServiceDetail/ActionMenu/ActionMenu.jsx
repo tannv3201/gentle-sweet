@@ -2,20 +2,21 @@ import * as React from "react";
 import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
 import { IconButton } from "@mui/material";
-import { PasswordRounded } from "@mui/icons-material";
+import { PasswordRounded, ViewListRounded } from "@mui/icons-material";
 
 import classNames from "classnames/bind";
 import styles from "./ActionMenu.module.scss";
-import { LightTooltip } from "../../../../components/GTooltip/GTooltip";
+import { LightTooltip } from "../../../../../components/GTooltip/GTooltip";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import DiscountSelectPopup from "../DiscountSelectPopup";
+import GButton from "../../../../../components/MyButton/MyButton";
 const cx = classNames.bind(styles);
 
-export default function ActionMenu({ selectedService }) {
+export default function ActionMenu({ selectedProduct }) {
     const navigate = useNavigate();
 
-    const handleNavigateProductImage = (serviceId) => {
+    const handleNavigateServiceImage = (serviceId) => {
         navigate(`/admin/serviceImage/${serviceId}/service`);
     };
 
@@ -44,17 +45,19 @@ export default function ActionMenu({ selectedService }) {
     return (
         <div>
             <LightTooltip placement="bottom" title="Quản lý">
-                <IconButton
+                <GButton
                     id="basic-button"
                     aria-controls={open ? "basic-menu" : undefined}
                     aria-haspopup="true"
                     aria-expanded={open ? "true" : undefined}
                     onClick={handleClick}
+                    startIcon={<ViewListRounded />}
                 >
-                    <PasswordRounded />
-                </IconButton>
+                    Quản lý
+                </GButton>
             </LightTooltip>
             <Menu
+                className={cx("basic-menu")}
                 id="basic-menu"
                 anchorEl={anchorEl}
                 open={open}
@@ -63,27 +66,20 @@ export default function ActionMenu({ selectedService }) {
                     "aria-labelledby": "basic-button",
                 }}
             >
-                <div className={cx("menu-title")}>
+                {/* <div className={cx("menu-title")}>
                     <span>Quản lý</span>
-                </div>
-                <MenuItem
-                    onClick={() => {
-                        handleClose();
-                    }}
-                >
-                    Thông tin chi tiết
-                </MenuItem>
+                </div> */}
                 <MenuItem
                     onClick={() => {
                         handleOpenDiscountSelectPopup();
                         handleClose();
                     }}
                 >
-                    Giảm giá
+                    Quản lý giảm giá
                 </MenuItem>
                 <MenuItem
                     onClick={() => {
-                        handleNavigateProductImage(selectedService?.id);
+                        handleNavigateServiceImage(selectedProduct?.id);
                         handleClose();
                     }}
                 >
@@ -94,10 +90,10 @@ export default function ActionMenu({ selectedService }) {
                 isOpen={isOpenDiscountSelectPopup}
                 handleOpen={handleOpenDiscountSelectPopup}
                 handleClose={handleCloseDiscountSelectPopup}
-                selectedService={{
-                    id: selectedService?.id,
-                    price: selectedService?.price,
-                    discount_id: selectedService?.discount_id,
+                selectedProduct={{
+                    id: selectedProduct?.id,
+                    price: selectedProduct?.price,
+                    discount_id: selectedProduct?.discount_id,
                 }}
             />
         </div>

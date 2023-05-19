@@ -7,11 +7,13 @@ export default function GTable({
     columns,
     exportFileName,
     actions,
+    pagesize,
     ...props
 }) {
     return (
         <MaterialTable
             {...props}
+            style={{ boxShadow: "unset !important" }}
             title={title}
             columns={columns}
             data={data || []}
@@ -40,7 +42,7 @@ export default function GTable({
                 searchFieldVariant: "standard",
                 paging: true,
                 pageSizeOptions: [2, 5, 10, 20, 25, 50, 100],
-                pageSize: 5,
+                pageSize: pagesize ? pagesize : 5,
                 paginationType: "stepped",
                 showFirstLastPageButtons: false,
                 showTextRowsSelected: false,

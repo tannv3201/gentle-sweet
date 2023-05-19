@@ -1,6 +1,5 @@
 import * as React from "react";
 import { styled, createTheme, ThemeProvider } from "@mui/material/styles";
-import CssBaseline from "@mui/material/CssBaseline";
 import MuiDrawer from "@mui/material/Drawer";
 import Box from "@mui/material/Box";
 import MuiAppBar from "@mui/material/AppBar";
@@ -106,11 +105,6 @@ export default function AdminLayout({ children }) {
                         >
                             Dashboard
                         </Typography>
-                        {/* <h2>{user?.first_name}</h2>
-                        <IconButton color="inherit">
-                            <Avatar alt="Admin" src={user?.image} />
-                        </IconButton> */}
-
                         <MenuUser />
                     </Toolbar>
                 </AppBar>

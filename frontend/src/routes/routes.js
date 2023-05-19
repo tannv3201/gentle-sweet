@@ -35,6 +35,10 @@ import Discount from "../pages/Admin/Discount/Discount";
 import AdminUserDetail from "../pages/Admin/AdminUser/AdminUserDetail/AdminUserDetail";
 import CustomerUserDetail from "../pages/Admin/CustomerUser/CustomerUserDetail/CustomerUserDetail";
 import ProductDetailAdmin from "../pages/Admin/Products/ProductDetail/ProductDetail";
+import ServiceDetail from "../pages/Admin/Services/ServiceDetail/ServiceDetail";
+import Invoice from "../pages/Admin/Invoice/Invoice";
+import CreateInvoice from "../pages/Admin/Invoice/CreateInvoice";
+import InvoiceDetail from "../pages/Admin/Invoice/InvoiceDetail/InvoiceDetail";
 
 // public routes
 
@@ -133,6 +137,21 @@ export const privateRoutes = [
     {
         path: "/admin/service",
         component: Services,
+        layout: AdminLayout,
+    },
+    {
+        path: "/admin/invoice",
+        component: Invoice,
+        layout: AdminLayout,
+    },
+    {
+        path: "/admin/invoice/:invoiceId",
+        component: InvoiceDetail,
+        layout: AdminLayout,
+    },
+    {
+        path: "/admin/service/:serviceId",
+        component: ServiceDetail,
         layout: AdminLayout,
     },
     {
