@@ -15,12 +15,10 @@ import { string, object, array } from "yup";
 import { useParams } from "react-router-dom";
 import utc from "dayjs/plugin/utc";
 
-import { getAllProduct } from "../../../../redux/api/apiProduct";
 import { createAxios } from "../../../../createInstance";
 import { loginSuccess } from "../../../../redux/slice/authSlice";
 import {
     createInvoiceDetail,
-    getInvoiceDetailByInvoiceId,
     updateInvoiceDetail,
 } from "../../../../redux/api/apiInvoiceDetail";
 import GModal from "../../../../common/GModal/GModal";
@@ -33,14 +31,12 @@ export default function AddProductInvoiceDetailPopup({
     isOpen,
 }) {
     const { invoiceId } = useParams();
-    // const formik = useFormikContext();
     dayjs.extend(utc);
     const user = useSelector((state) => state.auth.login?.currentUser);
     const getInvoiceDetail = useSelector(
         (state) => state.invoiceDetail.invoiceDetail?.invoiceDetailByInvoice
     );
 
-    const [isCreateInvoiceDetail, setIsCreateInvoiceDetail] = useState(true);
     const dispatch = useDispatch();
     const [cloneData, setCloneData] = useState([]);
 
@@ -70,8 +66,27 @@ export default function AddProductInvoiceDetailPopup({
         onSubmit: async (values) => {
             const listUpdate = [];
             const listCreate = [];
+            const processedArray = [];
 
-            values?.products?.forEach((product) => {
+            values?.products?.forEach((item) => {
+                // Kiểm tra xem phần tử đã tồn tại trong mảng processedArray chưa
+                const existingItem = processedArray.find(
+                    (processedItem) =>
+                        processedItem.product_id === item.product_id
+                );
+
+                if (existingItem) {
+                    // Nếu phần tử đã tồn tại, tăng số lượng tương ứng
+                    existingItem.product_quantity =
+                        parseInt(existingItem.product_quantity) +
+                        parseInt(item.product_quantity);
+                } else {
+                    // Nếu phần tử chưa tồn tại, thêm phần tử vào mảng processedArray
+                    processedArray.push({ ...item });
+                }
+            });
+
+            processedArray?.forEach((product) => {
                 let isDuplicate = false;
                 getInvoiceDetail?.forEach((invoice) => {
                     if (product?.product_id === invoice?.product_id) {
@@ -83,11 +98,11 @@ export default function AddProductInvoiceDetailPopup({
                         });
                     }
                 });
-
                 if (!isDuplicate) {
                     listCreate.push(product);
                 }
             });
+
             if (listUpdate?.length > 0) {
                 await handleCreateInvoiceDetailExist(listUpdate);
             }
@@ -100,24 +115,6 @@ export default function AddProductInvoiceDetailPopup({
     const productList = useSelector(
         (state) => state.product.product?.productList
     );
-
-    // useEffect(() => {
-    //     const fetch = async () => {
-    //         if (productList?.length === 0) {
-    //             await getAllProduct(user?.accessToken, dispatch, axiosJWT);
-    //         }
-    //         if (invoiceId) {
-    //             await getInvoiceDetailByInvoiceId(
-    //                 dispatch,
-    //                 invoiceId,
-    //                 user?.accessToken,
-    //                 axiosJWT
-    //             );
-    //         }
-    //     };
-
-    //     fetch();
-    // }, [invoiceId]);
 
     useEffect(() => {
         setCloneData(structuredClone(productList));
@@ -141,7 +138,9 @@ export default function AddProductInvoiceDetailPopup({
                 dispatch,
                 item,
                 axiosJWT
-            );
+            ).then(() => {
+                handleClose();
+            });
         }
     };
 
@@ -153,6 +152,7 @@ export default function AddProductInvoiceDetailPopup({
                 item?.invoice_detail_id,
                 invoiceId,
                 {
+                    invoice_id: invoiceId,
                     product_quantity:
                         item?.old_quantity + parseInt(item?.product_quantity),
                 },
@@ -450,9 +450,7 @@ export default function AddProductInvoiceDetailPopup({
                                         </GButton>
                                         <GButton
                                             color={"text"}
-                                            onClick={() =>
-                                                setIsCreateInvoiceDetail(false)
-                                            }
+                                            onClick={handleClose}
                                         >
                                             Hủy
                                         </GButton>

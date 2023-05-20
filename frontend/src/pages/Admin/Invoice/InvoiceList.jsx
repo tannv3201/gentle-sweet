@@ -79,6 +79,14 @@ export default function InvoiceList() {
                         customerUser?.last_name +
                         " " +
                         customerUser?.first_name,
+                    status_name:
+                        invoice?.status === 1
+                            ? "Chờ tiếp nhận"
+                            : invoice?.status === 2
+                            ? "Đã tiếp nhận"
+                            : invoice?.status === 3
+                            ? "Đã xác thực"
+                            : "",
                 };
             });
             setCloneData(structuredClone(newInvoiceList));
@@ -151,7 +159,7 @@ export default function InvoiceList() {
                     },
                     {
                         title: "Trạng thái",
-                        field: "status",
+                        field: "status_name",
                         // render: (rowData) => {
                         //     return (
                         //         <>

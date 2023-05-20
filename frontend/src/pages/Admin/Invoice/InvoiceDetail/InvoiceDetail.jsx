@@ -72,18 +72,6 @@ export default function InvoiceDetail() {
                     setCurrInvoiceCreator(invoiceCreator);
                 });
             }
-
-            // if (invoice?.admin_user_id) {
-            //     await getAdminUserById(
-            //         dispatch,
-            //         invoice?.admin_user_id,
-            //         user?.accessToken,
-            //         axiosJWT
-            //     ).then((invoiceCreator) => {
-            //         setCurrInvoiceCreator(invoiceCreator);
-            //         console.log(invoiceCreator);
-            //     });
-            // }
         };
 
         fetchData();
@@ -115,8 +103,8 @@ export default function InvoiceDetail() {
                             justifyContent={"flex-end"}
                             alignItems={"center"}
                         >
-                            {!isEditting ? (
-                                <div className={cx("button-list")}>
+                            <div className={cx("button-list")}>
+                                {!isEditting ? (
                                     <GButton
                                         onClick={() => setIsEditting(true)}
                                         startIcon={<ModeEditOutlineRounded />}
@@ -124,12 +112,16 @@ export default function InvoiceDetail() {
                                     >
                                         Chỉnh sửa
                                     </GButton>
-                                </div>
-                            ) : (
-                                <span className={cx("label-editting")}>
-                                    CẬP NHẬT THÔNG TIN
-                                </span>
-                            )}
+                                ) : (
+                                    <GButton
+                                        onClick={() => setIsEditting(false)}
+                                        startIcon={<ModeEditOutlineRounded />}
+                                        color={"success"}
+                                    >
+                                        Lưu lại
+                                    </GButton>
+                                )}
+                            </div>
                         </Grid>
                     </Grid>
                 </div>
@@ -221,7 +213,7 @@ export default function InvoiceDetail() {
                         </Grid>
                     </Grid>
                 </div>
-                <InvoiceDetailList />
+                <InvoiceDetailList isEditting={isEditting} />
                 {/* <InvoiceDetailForm /> */}
             </div>
         </>

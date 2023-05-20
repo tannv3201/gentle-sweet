@@ -29,7 +29,7 @@ import AddProductInvoiceDetailPopup from "./AddProductInvoiceDetailPopup";
 
 const cx = classNames.bind(styles);
 
-export default function InvoiceDetailList() {
+export default function InvoiceDetailList({ isEditting }) {
     dayjs.extend(utc);
     const [cloneData, setCloneData] = useState([]);
 
@@ -103,17 +103,19 @@ export default function InvoiceDetailList() {
 
     return (
         <div className={cx("wrapper-invoice_detail_list")}>
-            {getInvoiceDetail?.length !== 0 ? (
-                <div className={cx("table-invoice-detail")}>
-                    <div className={cx("header-table-invoice-detail")}>
-                        <span>CHI TIẾT HÓA ĐƠN</span>
+            <div className={cx("table-invoice-detail")}>
+                <div className={cx("header-table-invoice-detail")}>
+                    <span>CHI TIẾT HÓA ĐƠN</span>
+                    {isEditting && (
                         <GButton
                             onClick={handleOpenAddProductPopup}
                             color={"success"}
                         >
                             Thêm sản phẩm
                         </GButton>
-                    </div>
+                    )}
+                </div>
+                {getInvoiceDetail?.length !== 0 ? (
                     <GTable
                         style={{ boxShadow: "unset !important" }}
                         title={""}
@@ -156,29 +158,47 @@ export default function InvoiceDetailList() {
                                             placement="bottom"
                                             title="Chi tiết"
                                         >
-                                            <IconButton
-                                                onClick={() =>
-                                                    handleOpenUpdateProductPopup(
-                                                        rowData
-                                                    )
-                                                }
-                                            >
-                                                <EditRounded color="primary" />
-                                            </IconButton>
+                                            <span>
+                                                <IconButton
+                                                    disabled={!isEditting}
+                                                    onClick={() =>
+                                                        handleOpenUpdateProductPopup(
+                                                            rowData
+                                                        )
+                                                    }
+                                                >
+                                                    <EditRounded
+                                                        color={
+                                                            !isEditting
+                                                                ? "neutral"
+                                                                : "primary"
+                                                        }
+                                                    />
+                                                </IconButton>
+                                            </span>
                                         </LightTooltip>
                                         <LightTooltip
                                             placement="bottom"
                                             title="Xóa"
                                         >
-                                            <IconButton
-                                                onClick={() => {
-                                                    handleOpenDeleteConfirmPopup(
-                                                        rowData
-                                                    );
-                                                }}
-                                            >
-                                                <DeleteRoundedIcon color="error" />
-                                            </IconButton>
+                                            <span>
+                                                <IconButton
+                                                    disabled={!isEditting}
+                                                    onClick={() => {
+                                                        handleOpenDeleteConfirmPopup(
+                                                            rowData
+                                                        );
+                                                    }}
+                                                >
+                                                    <DeleteRoundedIcon
+                                                        color={
+                                                            !isEditting
+                                                                ? "neutral"
+                                                                : "error"
+                                                        }
+                                                    />
+                                                </IconButton>
+                                            </span>
                                         </LightTooltip>
                                     </div>
                                 ),
@@ -187,10 +207,12 @@ export default function InvoiceDetailList() {
                         data={cloneData || []}
                         exportFileName={"DanhSachNguoiDung"}
                     />
-                </div>
-            ) : (
-                "Không có chi tiết hóa đơn"
-            )}
+                ) : (
+                    <div className={cx("no-invoice-detail")}>
+                        Chưa có sản phẩm nào
+                    </div>
+                )}
+            </div>
 
             <UpdateProductInvoiceDetailPopup
                 isOpen={isOpenUpdateProductPopup}

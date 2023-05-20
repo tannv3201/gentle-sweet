@@ -1,5 +1,5 @@
 const InvoiceDetailModel = require("../models/InvoiceDetail");
-
+const InvoiceModel = require("../models/Invoice");
 const { v4: uuidv4 } = require("uuid");
 
 const invoiceController = {
@@ -75,15 +75,17 @@ const invoiceController = {
     },
 
     // UPDATE INVOICE DETAIL BY ID
-    updateInvoiceById: async (req, res) => {
+    updateInvoiceDetailById: async (req, res) => {
         try {
-            const invoiceId = req.params.id;
-            const { admin_user_id, ...data } = req.body;
+            const invoiceDetailId = req.params.id;
+            const { admin_user_id, invoice_id, ...data } = req.body;
             const affectedRows =
                 await InvoiceDetailModel.updateInvoiceDetailById(
-                    invoiceId,
+                    invoiceDetailId,
                     data
                 );
+
+            await InvoiceDetailModel.updatePriceTotalInvoice(invoice_id);
             if (affectedRows === 0) {
                 return res.status(404).json({ message: "Cập nhật thất bại" });
             } else {
@@ -113,10 +115,31 @@ const invoiceController = {
     // },
 
     // DELETE INVOICE DETAIL BY ID
-    deleteInvoiceById: async (req, res) => {
+    deleteInvoiceDetailById: async (req, res) => {
         try {
+            const getDeleteInvoiceDetail =
+                await InvoiceDetailModel.getInvoiceDetailById(req.params.id);
+
             const affectedRows =
                 await InvoiceDetailModel.deleteInvoiceDetailById(req.params.id);
+
+            const invoiceDetailByInvoice =
+                await InvoiceDetailModel.getInvoiceDetailByInvoiceId(
+                    getDeleteInvoiceDetail?.invoice_id
+                );
+
+            if (invoiceDetailByInvoice?.length !== 0) {
+                await InvoiceDetailModel.updatePriceTotalInvoice(
+                    getDeleteInvoiceDetail?.invoice_id
+                );
+            } else {
+                await InvoiceModel.updateInvoiceById(
+                    getDeleteInvoiceDetail?.invoice_id,
+                    {
+                        price_total: 0,
+                    }
+                );
+            }
 
             if (affectedRows === 0) {
                 return res.status(404).json({ message: "Xóa thất bại" });

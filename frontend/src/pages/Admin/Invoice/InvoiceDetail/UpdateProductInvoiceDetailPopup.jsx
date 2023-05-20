@@ -64,7 +64,10 @@ export default function UpdateProductInvoiceDetailPopup({
                     dispatch,
                     id,
                     product?.invoice_id,
-                    { product_quantity: product_quantity },
+                    {
+                        invoice_id: product?.invoice_id,
+                        product_quantity: product_quantity,
+                    },
                     axiosJWT
                 ).then(() => {
                     handleClose();

@@ -30,13 +30,13 @@ router.get(
 router.put(
     "/:id",
     middlewareController.verifyToken,
-    invoiceDetailController.updateInvoiceById
+    invoiceDetailController.updateInvoiceDetailById
 );
 
 router.delete(
     "/:id",
     middlewareController.verifyToken,
-    invoiceDetailController.deleteInvoiceById
+    invoiceDetailController.deleteInvoiceDetailById
 );
 
 module.exports = router;
