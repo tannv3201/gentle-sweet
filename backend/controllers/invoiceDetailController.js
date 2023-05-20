@@ -59,6 +59,11 @@ const invoiceController = {
                     status: 1,
                 });
 
+            const updateTotalPrice =
+                await InvoiceDetailModel.updatePriceTotalInvoice(
+                    req.body.invoice_id
+                );
+
             return res.json({
                 status: 201,
                 msg: "Thêm mới thành công",
