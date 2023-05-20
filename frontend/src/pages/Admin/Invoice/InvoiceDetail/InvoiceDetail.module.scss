@@ -34,40 +34,26 @@
     }
 }
 
-.invoice-detail-wrapper {
-    padding: 0 12px;
-
-    .create-invoice-detail-btn {
-        margin-bottom: 12px;
+.invoice-detail-form {
+    border-radius: 4px;
+    min-width: 680px;
+    .form-body {
+        padding: 12px;
+        max-height: 440px;
+        overflow-y: scroll;
     }
-
-    .invoice-detail-form {
-        margin: 12px 0;
-        border: 1px solid var(--border-color);
-        border-radius: 4px;
-        .form-header {
-            background-color: lavender;
-            padding: 8px 12px;
-            font-size: 1.8rem;
-            font-weight: var(--fw-semi-bold);
-            color: var(--text-primary);
-        }
-        .form-body {
-            padding: 12px;
-        }
-    }
-    .remove-btn-wrapper {
-        height: 56px;
-        display: flex;
-        align-items: center;
-    }
-    .submit-btn-wrapper {
-        display: flex;
-        margin-top: 20px;
-        justify-content: flex-end;
-        button {
-            margin-left: 12px;
-        }
+}
+.remove-btn-wrapper {
+    height: 56px;
+    display: flex;
+    align-items: center;
+}
+.submit-btn-wrapper {
+    display: flex;
+    margin-top: 20px;
+    justify-content: flex-end;
+    button {
+        margin-left: 12px;
     }
 }
 
@@ -99,6 +85,9 @@
     padding: 20px;
     .table-invoice-detail {
         .header-table-invoice-detail {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
             background-color: lavender;
             padding: 12px 24px;
             font-weight: var(--fw-semi-bold);

@@ -44,6 +44,12 @@ export default function InvoiceDetail() {
 
     useEffect(() => {
         const fetchData = async () => {
+            await getInvoiceDetailByInvoiceId(
+                dispatch,
+                invoiceId,
+                user?.accessToken,
+                axiosJWT
+            );
             const invoice = await getInvoiceById(
                 dispatch,
                 invoiceId,
@@ -51,27 +57,33 @@ export default function InvoiceDetail() {
                 axiosJWT
             );
             setCurrInvoice(invoice);
-            if (invoice?.admin_user_id) {
-                const invoiceCreator = await getAdminUserById(
-                    dispatch,
-                    invoice?.admin_user_id,
-                    user?.accessToken,
-                    axiosJWT
-                );
-                setCurrInvoiceCreator(invoiceCreator);
-            }
             setCurrCustomerUser(
                 customerUserList?.find(
                     (item) => item.id === invoice?.customer_user_id
                 )
             );
+            if (invoice?.admin_user_id) {
+                await getAdminUserById(
+                    dispatch,
+                    invoice?.admin_user_id,
+                    user?.accessToken,
+                    axiosJWT
+                ).then((invoiceCreator) => {
+                    setCurrInvoiceCreator(invoiceCreator);
+                });
+            }
 
-            await getInvoiceDetailByInvoiceId(
-                dispatch,
-                invoiceId,
-                user?.accessToken,
-                axiosJWT
-            );
+            // if (invoice?.admin_user_id) {
+            //     await getAdminUserById(
+            //         dispatch,
+            //         invoice?.admin_user_id,
+            //         user?.accessToken,
+            //         axiosJWT
+            //     ).then((invoiceCreator) => {
+            //         setCurrInvoiceCreator(invoiceCreator);
+            //         console.log(invoiceCreator);
+            //     });
+            // }
         };
 
         fetchData();

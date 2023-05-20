@@ -22,10 +22,10 @@ import utc from "dayjs/plugin/utc";
 
 import { FormatCurrency } from "../../../../components/FormatCurrency/FormatCurrency";
 
-import UpdateProductPopup from "./UpdateProductPopup";
-
 import ConfirmDeleteProduct from "./ConfirmDeleteProduct";
 import InvoiceDetailForm from "./InvoiceDetailForm";
+import UpdateProductInvoiceDetailPopup from "./UpdateProductInvoiceDetailPopup";
+import AddProductInvoiceDetailPopup from "./AddProductInvoiceDetailPopup";
 
 const cx = classNames.bind(styles);
 
@@ -55,7 +55,7 @@ export default function InvoiceDetailList() {
         setCloneData(structuredClone(arr));
     }, [getInvoiceDetail, productList]);
 
-    // Create update modal
+    // update modal
     const [isOpenUpdateProductPopup, setIsOpenUpdateProductPopup] =
         useState(false);
 
@@ -66,6 +66,18 @@ export default function InvoiceDetailList() {
 
     const handleCloseUpdateProductPopup = () => {
         setIsOpenUpdateProductPopup(false);
+    };
+
+    // Create modal
+    const [isOpenAddProductPopup, setIsOpenAddProductPopup] = useState(false);
+
+    const handleOpenAddProductPopup = (rowData) => {
+        setSelectedProduct(rowData);
+        setIsOpenAddProductPopup(true);
+    };
+
+    const handleCloseAddProductPopup = () => {
+        setIsOpenAddProductPopup(false);
     };
 
     // Delete confirm modal
@@ -94,11 +106,16 @@ export default function InvoiceDetailList() {
                 <div className={cx("table-invoice-detail")}>
                     <div className={cx("header-table-invoice-detail")}>
                         <span>CHI TIẾT HÓA ĐƠN</span>
+                        <GButton
+                            onClick={handleOpenAddProductPopup}
+                            color={"success"}
+                        >
+                            Thêm sản phẩm
+                        </GButton>
                     </div>
                     <GTable
                         style={{ boxShadow: "unset !important" }}
                         title={""}
-                        pagesize={3}
                         columns={[
                             {
                                 title: "Sản phẩm",
@@ -176,13 +193,18 @@ export default function InvoiceDetailList() {
             ) : (
                 "Không có chi tiết hóa đơn"
             )}
-            <InvoiceDetailForm />
 
-            <UpdateProductPopup
+            <UpdateProductInvoiceDetailPopup
                 isOpen={isOpenUpdateProductPopup}
                 handleOpen={handleOpenUpdateProductPopup}
                 handleClose={handleCloseUpdateProductPopup}
                 selectedProduct={selectedProduct}
+            />
+
+            <AddProductInvoiceDetailPopup
+                isOpen={isOpenAddProductPopup}
+                handleOpen={handleOpenAddProductPopup}
+                handleClose={handleCloseAddProductPopup}
             />
 
             <ConfirmDeleteProduct

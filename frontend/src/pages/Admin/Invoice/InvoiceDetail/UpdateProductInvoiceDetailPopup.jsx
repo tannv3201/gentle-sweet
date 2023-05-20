@@ -23,7 +23,7 @@ import { toast } from "react-hot-toast";
 
 // const cx = classNames.bind(styles);
 
-export default function UpdateProductPopup({
+export default function UpdateProductInvoiceDetailPopup({
     handleClose,
     handleOpen,
     isOpen,
