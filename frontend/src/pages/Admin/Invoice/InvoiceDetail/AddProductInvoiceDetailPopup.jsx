@@ -21,6 +21,7 @@ import { loginSuccess } from "../../../../redux/slice/authSlice";
 import {
     createInvoiceDetail,
     getInvoiceDetailByInvoiceId,
+    updateInvoiceDetail,
 } from "../../../../redux/api/apiInvoiceDetail";
 import GModal from "../../../../common/GModal/GModal";
 
@@ -35,6 +36,10 @@ export default function AddProductInvoiceDetailPopup({
     // const formik = useFormikContext();
     dayjs.extend(utc);
     const user = useSelector((state) => state.auth.login?.currentUser);
+    const getInvoiceDetail = useSelector(
+        (state) => state.invoiceDetail.invoiceDetail?.invoiceDetailByInvoice
+    );
+
     const [isCreateInvoiceDetail, setIsCreateInvoiceDetail] = useState(true);
     const dispatch = useDispatch();
     const [cloneData, setCloneData] = useState([]);
@@ -56,16 +61,39 @@ export default function AddProductInvoiceDetailPopup({
                 {
                     product_id: "",
                     product_name: "",
-                    product_quantity: "",
+                    product_quantity: 1,
                     unit_price: "",
                 },
             ],
         },
         // validationSchema: validationSchema,
         onSubmit: async (values) => {
-            await handleCreateInvoiceDetail(values).then(() => {
-                handleClose();
+            const listUpdate = [];
+            const listCreate = [];
+
+            values?.products?.forEach((product) => {
+                let isDuplicate = false;
+                getInvoiceDetail?.forEach((invoice) => {
+                    if (product?.product_id === invoice?.product_id) {
+                        isDuplicate = true;
+                        listUpdate.push({
+                            ...product,
+                            invoice_detail_id: invoice?.id,
+                            old_quantity: invoice?.product_quantity,
+                        });
+                    }
+                });
+
+                if (!isDuplicate) {
+                    listCreate.push(product);
+                }
             });
+            if (listUpdate?.length > 0) {
+                await handleCreateInvoiceDetailExist(listUpdate);
+            }
+            if (listCreate?.length > 0) {
+                await handleCreateInvoiceDetail(listCreate);
+            }
         },
     });
 
@@ -96,7 +124,7 @@ export default function AddProductInvoiceDetailPopup({
     }, [productList]);
 
     const handleCreateInvoiceDetail = async (values) => {
-        const dataCreate = values?.products?.map((product) => {
+        const dataCreate = values?.map((product) => {
             const data = {
                 ...product,
                 unit_price: parseFloat(product?.unit_price),
@@ -114,6 +142,24 @@ export default function AddProductInvoiceDetailPopup({
                 item,
                 axiosJWT
             );
+        }
+    };
+
+    const handleCreateInvoiceDetailExist = async (values) => {
+        for (const item of values) {
+            await updateInvoiceDetail(
+                user?.accessToken,
+                dispatch,
+                item?.invoice_detail_id,
+                invoiceId,
+                {
+                    product_quantity:
+                        item?.old_quantity + parseInt(item?.product_quantity),
+                },
+                axiosJWT
+            ).then(() => {
+                handleClose();
+            });
         }
     };
 
@@ -384,8 +430,7 @@ export default function AddProductInvoiceDetailPopup({
                                                                 product_id: "",
                                                                 product_name:
                                                                     "",
-                                                                product_quantity:
-                                                                    "",
+                                                                product_quantity: 1,
                                                                 unit_price: "",
                                                             })
                                                         }
