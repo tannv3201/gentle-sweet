@@ -6,6 +6,10 @@ import { CloseRounded } from "@mui/icons-material";
 import { IconButton } from "@mui/material";
 import { useMediaQuery } from "@mui/material";
 import { useTheme } from "@mui/material/styles";
+import classNames from "classnames/bind";
+import styles from "./GModal.module.scss";
+
+const cx = classNames.bind(styles);
 
 const style = {
     position: "absolute",
@@ -13,7 +17,6 @@ const style = {
     left: "50%",
     transform: "translate(-50%, -50%)",
     minWidth: 300,
-    maxHeight: 600,
     bgcolor: "background.paper",
     border: "1px solid var(--border-color)",
     overflowY: "auto",
@@ -35,37 +38,26 @@ export default function GModal({
     return (
         <div>
             <Modal keepMounted open={isOpen} onClose={handleClose}>
-                <Box sx={{ ...style, maxHeight: isSmall ? 440 : 600 }}>
-                    <div
-                        style={{
-                            display: "flex",
-                            alignItems: "center",
-                            justifyContent: "space-between",
-                            backgroundColor: "var(--light-gray)",
-                            padding: "12px",
-                            borderBottom: "1px solid var(--border-color)",
-                            borderRadius: "6px",
-                        }}
-                    >
-                        <h2
-                            style={{
-                                fontSize: "2rem",
-                                fontWeight: "var(--fw-bold)",
-                                color: "var(--text-secondary)",
-                            }}
-                        >
-                            {title}
-                        </h2>
-                        <IconButton
-                            onClick={handleClose}
-                            size={isSmall ? "large" : "medium"}
-                        >
-                            <CloseRounded />
-                        </IconButton>
-                    </div>
-                    <div style={{ padding: "8px 8px 12px 8px" }}>
-                        {" "}
-                        {children}
+                <Box sx={{ ...style }}>
+                    <div className={cx("modal-wrapper")}>
+                        <div className={cx("modal-header")}>
+                            <h2
+                                style={{
+                                    fontSize: "2rem",
+                                    fontWeight: "var(--fw-bold)",
+                                    color: "var(--text-secondary)",
+                                }}
+                            >
+                                {title}
+                            </h2>
+                            <IconButton
+                                onClick={handleClose}
+                                size={isSmall ? "large" : "medium"}
+                            >
+                                <CloseRounded />
+                            </IconButton>
+                        </div>
+                        <div className={cx("modal-body")}> {children}</div>
                     </div>
                 </Box>
             </Modal>
