@@ -50,6 +50,7 @@ export default function InvoiceDetailList() {
             return {
                 ...item,
                 product_name: getProduct?.name,
+                price_total: item?.unit_price * item?.product_quantity,
             };
         });
         setCloneData(structuredClone(arr));
@@ -134,12 +135,9 @@ export default function InvoiceDetailList() {
                             },
                             {
                                 title: "Tổng tiền",
-                                field: "product_quantity",
+                                field: "price_total",
                                 render: (rowData) => {
-                                    return FormatCurrency(
-                                        rowData?.unit_price *
-                                            rowData?.product_quantity
-                                    );
+                                    return FormatCurrency(rowData?.price_total);
                                 },
                             },
                             {
