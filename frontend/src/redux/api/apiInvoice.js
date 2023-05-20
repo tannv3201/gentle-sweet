@@ -18,6 +18,8 @@ import {
     updateInvoiceSuccess,
 } from "../slice/invoiceSlice";
 
+import { getInvoiceDetailByInvoiceId } from "./apiInvoiceDetail";
+
 export const getAllInvoice = async (accessToken, dispatch, axiosJWT) => {
     dispatch(getAllInvoiceStart());
     try {
@@ -147,5 +149,55 @@ export const getInvoiceById = async (dispatch, id, accessToken, axiosJWT) => {
         return res?.data;
     } catch (error) {
         dispatch(getInvoiceByIdFailed(error.response?.data));
+    }
+};
+
+export const confirmInvoice = async (accessToken, dispatch, id, axiosJWT) => {
+    dispatch(updateInvoiceStart());
+    try {
+        const res = await axiosJWT.put(
+            "/v1/invoice/" + id,
+            {
+                status: 2,
+            },
+            {
+                headers: {
+                    token: `Bearer ${accessToken}`,
+                },
+            }
+        );
+        dispatch(updateInvoiceSuccess(res?.data));
+        if (res?.data?.status === 200) {
+            toast.success("Xác nhận đơn hàng thành công");
+            getInvoiceById(dispatch, id, accessToken, axiosJWT);
+        }
+        console.log(res?.data);
+    } catch (error) {
+        dispatch(updateInvoiceFailed(error.response?.data));
+    }
+};
+
+export const cancelInvoice = async (accessToken, dispatch, id, axiosJWT) => {
+    dispatch(updateInvoiceStart());
+    try {
+        const res = await axiosJWT.put(
+            "/v1/invoice/" + id,
+            {
+                status: 0,
+            },
+            {
+                headers: {
+                    token: `Bearer ${accessToken}`,
+                },
+            }
+        );
+        dispatch(updateInvoiceSuccess(res?.data));
+        if (res?.data?.status === 200) {
+            toast.success("Hủy đơn hàng thành công");
+            getInvoiceById(dispatch, id, accessToken, axiosJWT);
+        }
+        console.log(res?.data);
+    } catch (error) {
+        dispatch(updateInvoiceFailed(error.response?.data));
     }
 };

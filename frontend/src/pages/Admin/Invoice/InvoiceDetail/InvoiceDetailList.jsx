@@ -2,28 +2,18 @@ import React from "react";
 import DeleteRoundedIcon from "@mui/icons-material/DeleteRounded";
 import { useEffect } from "react";
 import { useSelector } from "react-redux";
-import { useDispatch } from "react-redux";
-import { useNavigate, useParams } from "react-router-dom";
-import { loginSuccess } from "../../../../redux/slice/authSlice";
-import { createAxios } from "../../../../createInstance";
 import { useState } from "react";
 import GTable from "../../../../common/GTable/GTable";
 import { IconButton } from "@mui/material";
 import GButton from "../../../../components/MyButton/MyButton";
-
 import { LightTooltip } from "../../../../components/GTooltip/GTooltip";
-
-import { API_IMAGE_URL } from "../../../../LocalConstants";
 import styles from "./InvoiceDetail.module.scss";
 import classNames from "classnames/bind";
 import { EditRounded } from "@mui/icons-material";
 import dayjs from "dayjs";
 import utc from "dayjs/plugin/utc";
-
 import { FormatCurrency } from "../../../../components/FormatCurrency/FormatCurrency";
-
 import ConfirmDeleteProduct from "./ConfirmDeleteProduct";
-import InvoiceDetailForm from "./InvoiceDetailForm";
 import UpdateProductInvoiceDetailPopup from "./UpdateProductInvoiceDetailPopup";
 import AddProductInvoiceDetailPopup from "./AddProductInvoiceDetailPopup";
 

@@ -20,8 +20,10 @@ import { loginSuccess } from "../../../../redux/slice/authSlice";
 import { getInvoiceById } from "../../../../redux/api/apiInvoice";
 import { getAdminUserById } from "../../../../redux/api/apiAdminUser";
 import InvoiceDetailList from "./InvoiceDetailList";
-import { getAllProduct } from "../../../../redux/api/apiProduct";
 import { getInvoiceDetailByInvoiceId } from "../../../../redux/api/apiInvoiceDetail";
+import ConfirmDeletePopup from "../../components/ConfirmDeletePopup";
+import ConfirmPopup from "./ConfirmInvoice/ConfirmPopup";
+import CancelPopup from "./ConfirmInvoice/CancelPopup";
 
 const cx = classNames.bind(styles);
 
@@ -75,10 +77,32 @@ export default function InvoiceDetail() {
         };
 
         fetchData();
-    }, [invoiceId]);
+    }, [invoiceId, currInvoice?.status]);
 
     const handleBack = () => {
         navigate("/admin/invoice");
+    };
+
+    // Confirm invoice
+    const [isOpenConfirmInvoice, setIsOpenConfirmInvoice] = useState(false);
+
+    const handleOpenConfirmInvoice = () => {
+        setIsOpenConfirmInvoice(true);
+    };
+
+    const handleCloseConfirmInvoice = () => {
+        setIsOpenConfirmInvoice(false);
+    };
+
+    // Cancel invoice
+    const [isOpenCancelInvoice, setIsOpenCancelInvoice] = useState(false);
+
+    const handleOpenCancelInvoice = () => {
+        setIsOpenCancelInvoice(true);
+    };
+
+    const handleCloseCancelInvoice = () => {
+        setIsOpenCancelInvoice(false);
     };
 
     return (
@@ -104,11 +128,27 @@ export default function InvoiceDetail() {
                             alignItems={"center"}
                         >
                             <div className={cx("button-list")}>
+                                {currInvoice?.status === 1 && (
+                                    <>
+                                        <GButton
+                                            onClick={handleOpenConfirmInvoice}
+                                            color={"success"}
+                                        >
+                                            Xác nhận
+                                        </GButton>
+                                        <GButton
+                                            onClick={handleOpenCancelInvoice}
+                                            color={"error"}
+                                        >
+                                            Hủy
+                                        </GButton>
+                                    </>
+                                )}
                                 {!isEditting ? (
                                     <GButton
                                         onClick={() => setIsEditting(true)}
                                         startIcon={<ModeEditOutlineRounded />}
-                                        color={"success"}
+                                        color={"info"}
                                     >
                                         Chỉnh sửa
                                     </GButton>
@@ -214,6 +254,31 @@ export default function InvoiceDetail() {
                     </Grid>
                 </div>
                 <InvoiceDetailList isEditting={isEditting} />
+                <ConfirmPopup
+                    isOpen={isOpenConfirmInvoice}
+                    handleOpen={handleOpenConfirmInvoice}
+                    handleClose={handleCloseConfirmInvoice}
+                    selectedInvoice={{
+                        invoice_id: invoiceId,
+                        customer_name:
+                            currCustomerUser?.last_name +
+                            " " +
+                            currCustomerUser?.first_name,
+                    }}
+                />
+
+                <CancelPopup
+                    isOpen={isOpenCancelInvoice}
+                    handleOpen={handleOpenCancelInvoice}
+                    handleClose={handleCloseCancelInvoice}
+                    selectedInvoice={{
+                        invoice_id: invoiceId,
+                        customer_name:
+                            currCustomerUser?.last_name +
+                            " " +
+                            currCustomerUser?.first_name,
+                    }}
+                />
                 {/* <InvoiceDetailForm /> */}
             </div>
         </>
