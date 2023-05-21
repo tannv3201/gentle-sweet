@@ -30,6 +30,18 @@ const invoiceController = {
         }
     },
 
+    // GET INVOICE BY STATUS
+    getInvoiceByStatus: async (req, res) => {
+        try {
+            const invoices = await InvoiceModel.getAllInvoiceByStatus(
+                req.params.id
+            );
+            return res.status(200).json(invoices);
+        } catch (error) {
+            res.status(500).json(error);
+        }
+    },
+
     // Create Product Category
     createInvoice: async (req, res, next) => {
         try {
@@ -61,6 +73,54 @@ const invoiceController = {
                 return res.json({ status: 404, msg: "Cập nhật thất bại" });
             } else {
                 return res.json({ status: 200, msg: "Cập nhật thành công" });
+            }
+        } catch (error) {
+            console.log(error);
+        }
+    },
+
+    // CONFIRM INVOICE BY ID
+    confirmInvoiceById: async (req, res) => {
+        try {
+            const invoiceId = req.params.id;
+            const { admin_user_id, ...data } = req.body;
+            const affectedRows = await InvoiceModel.updateInvoiceById(
+                invoiceId,
+                {
+                    status: 2,
+                }
+            );
+            if (affectedRows === 0) {
+                return res.json({ status: 404, msg: "Cập nhật thất bại" });
+            } else {
+                return res.json({
+                    status: 200,
+                    msg: "Xác nhận đơn hàng thành công",
+                });
+            }
+        } catch (error) {
+            console.log(error);
+        }
+    },
+
+    // CANCEL INVOICE BY ID
+    cancelInvoiceById: async (req, res) => {
+        try {
+            const invoiceId = req.params.id;
+            const { admin_user_id, ...data } = req.body;
+            const affectedRows = await InvoiceModel.updateInvoiceById(
+                invoiceId,
+                {
+                    status: 0,
+                }
+            );
+            if (affectedRows === 0) {
+                return res.json({ status: 404, msg: "Cập nhật thất bại" });
+            } else {
+                return res.json({
+                    status: 200,
+                    msg: "Hủy đơn hàng thành công",
+                });
             }
         } catch (error) {
             console.log(error);

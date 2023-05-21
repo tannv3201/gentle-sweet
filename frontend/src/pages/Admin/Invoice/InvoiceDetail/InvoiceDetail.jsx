@@ -21,7 +21,6 @@ import { getInvoiceById } from "../../../../redux/api/apiInvoice";
 import { getAdminUserById } from "../../../../redux/api/apiAdminUser";
 import InvoiceDetailList from "./InvoiceDetailList";
 import { getInvoiceDetailByInvoiceId } from "../../../../redux/api/apiInvoiceDetail";
-import ConfirmDeletePopup from "../../components/ConfirmDeletePopup";
 import ConfirmPopup from "./ConfirmInvoice/ConfirmPopup";
 import CancelPopup from "./ConfirmInvoice/CancelPopup";
 
@@ -44,6 +43,20 @@ export default function InvoiceDetail() {
         (state) => state.customerUser.customerUser?.customerUserList
     );
 
+    const getInvoice = useSelector((state) => state.invoice.invoice?.invoice);
+
+    const getInvoiceDetail = useSelector(
+        (state) => state.invoiceDetail.invoiceDetail?.invoiceDetailByInvoice
+    );
+
+    useEffect(() => {
+        setCurrInvoice(structuredClone(getInvoice));
+    }, [getInvoice]);
+
+    useEffect(() => {
+        setCurrInvoice(structuredClone(getInvoice));
+    }, [getInvoice]);
+
     useEffect(() => {
         const fetchData = async () => {
             await getInvoiceDetailByInvoiceId(
@@ -58,10 +71,11 @@ export default function InvoiceDetail() {
                 user?.accessToken,
                 axiosJWT
             );
-            setCurrInvoice(invoice);
             setCurrCustomerUser(
-                customerUserList?.find(
-                    (item) => item.id === invoice?.customer_user_id
+                structuredClone(
+                    customerUserList?.find(
+                        (item) => item.id === invoice?.customer_user_id
+                    )
                 )
             );
             if (invoice?.admin_user_id) {
@@ -71,13 +85,13 @@ export default function InvoiceDetail() {
                     user?.accessToken,
                     axiosJWT
                 ).then((invoiceCreator) => {
-                    setCurrInvoiceCreator(invoiceCreator);
+                    setCurrInvoiceCreator(structuredClone(invoiceCreator));
                 });
             }
         };
 
         fetchData();
-    }, [invoiceId, currInvoice?.status]);
+    }, [invoiceId]);
 
     const handleBack = () => {
         navigate("/admin/invoice");
@@ -128,22 +142,27 @@ export default function InvoiceDetail() {
                             alignItems={"center"}
                         >
                             <div className={cx("button-list")}>
-                                {currInvoice?.status === 1 && (
-                                    <>
-                                        <GButton
-                                            onClick={handleOpenConfirmInvoice}
-                                            color={"success"}
-                                        >
-                                            Xác nhận
-                                        </GButton>
-                                        <GButton
-                                            onClick={handleOpenCancelInvoice}
-                                            color={"error"}
-                                        >
-                                            Hủy
-                                        </GButton>
-                                    </>
-                                )}
+                                {currInvoice?.status === 1 &&
+                                    getInvoiceDetail?.length > 0 && (
+                                        <>
+                                            <GButton
+                                                onClick={
+                                                    handleOpenConfirmInvoice
+                                                }
+                                                color={"success"}
+                                            >
+                                                Xác nhận
+                                            </GButton>
+                                            <GButton
+                                                onClick={
+                                                    handleOpenCancelInvoice
+                                                }
+                                                color={"error"}
+                                            >
+                                                Hủy
+                                            </GButton>
+                                        </>
+                                    )}
                                 {!isEditting ? (
                                     <GButton
                                         onClick={() => setIsEditting(true)}
@@ -192,19 +211,50 @@ export default function InvoiceDetail() {
                                         >
                                             Trạng thái:{" "}
                                         </span>
+                                        {currInvoice?.status === 1 ? (
+                                            <span
+                                                className={cx(
+                                                    "invoice-info-content",
+                                                    "pending"
+                                                )}
+                                            >
+                                                Chờ tiếp nhận
+                                            </span>
+                                        ) : currInvoice?.status === 2 ? (
+                                            <span
+                                                className={cx(
+                                                    "invoice-info-content",
+                                                    "received"
+                                                )}
+                                            >
+                                                Đã tiếp nhận
+                                            </span>
+                                        ) : currInvoice?.status === 3 ? (
+                                            <span
+                                                className={cx(
+                                                    "invoice-info-content",
+                                                    "delivering"
+                                                )}
+                                            >
+                                                Đang giao hàng
+                                            </span>
+                                        ) : currInvoice?.status === 4 ? (
+                                            <span
+                                                className={cx(
+                                                    "invoice-info-content",
+                                                    "delivered"
+                                                )}
+                                            >
+                                                Giao hàng thành công
+                                            </span>
+                                        ) : (
+                                            ""
+                                        )}
                                         <span
                                             className={cx(
                                                 "invoice-info-content"
                                             )}
-                                        >
-                                            {currInvoice?.status === 1
-                                                ? "Chờ tiếp nhận"
-                                                : currInvoice?.status === 2
-                                                ? "Đang xử lý"
-                                                : currInvoice?.status === 3
-                                                ? "Đã xác nhận"
-                                                : ""}
-                                        </span>
+                                        ></span>
                                     </Grid>
                                 </Grid>
                             </div>

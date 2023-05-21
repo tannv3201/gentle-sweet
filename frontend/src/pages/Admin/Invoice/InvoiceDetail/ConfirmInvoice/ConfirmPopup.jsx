@@ -5,7 +5,10 @@ import { useDispatch } from "react-redux";
 import { createAxios } from "../../../../../createInstance";
 import { loginSuccess } from "../../../../../redux/slice/authSlice";
 import { deleteInvoiceDetail } from "../../../../../redux/api/apiInvoiceDetail";
-import { updateInvoice } from "../../../../../redux/api/apiInvoice";
+import {
+    confirmInvoice,
+    updateInvoice,
+} from "../../../../../redux/api/apiInvoice";
 
 export default function ConfirmPopup({
     handleClose,
@@ -19,13 +22,10 @@ export default function ConfirmPopup({
     let axiosJWT = createAxios(user, dispatch, loginSuccess);
 
     const handleConfirmInvoice = () => {
-        updateInvoice(
+        confirmInvoice(
             user?.accessToken,
             dispatch,
             selectedInvoice?.invoice_id,
-            {
-                status: 2,
-            },
             axiosJWT
         ).then(() => {
             handleClose();

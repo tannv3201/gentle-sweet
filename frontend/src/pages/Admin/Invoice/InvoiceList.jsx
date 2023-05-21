@@ -26,6 +26,7 @@ import utc from "dayjs/plugin/utc";
 import moment from "moment/moment";
 import { getAllCustomerUser } from "../../../redux/api/apiCustomerUser";
 import { getAllProduct } from "../../../redux/api/apiProduct";
+import InvoiceClassification from "./FilterInvoice/InvoiceClassification";
 
 const cx = classNames.bind(styles);
 
@@ -35,6 +36,11 @@ export default function InvoiceList() {
     const [cloneData, setCloneData] = useState([]);
     const dispatch = useDispatch();
     const navigate = useNavigate();
+    // Check is filtering
+    const [isFiltering, setIsFiltering] = useState(false);
+    const handleFilter = (newStatus) => {
+        setIsFiltering(newStatus);
+    };
     const [selectedInvoice, setSelectedInvoice] = useState({});
 
     let axiosJWT = createAxios(user, dispatch, loginSuccess);
@@ -53,6 +59,10 @@ export default function InvoiceList() {
         (state) => state.invoice.invoice?.invoiceList
     );
 
+    const invoiceListByStatus = useSelector(
+        (state) => state.invoice.invoice?.invoiceListByStatus
+    );
+
     useEffect(() => {
         const fetchData = async () => {
             if (!user) {
@@ -66,9 +76,35 @@ export default function InvoiceList() {
 
         fetchData();
     }, []);
-
     useEffect(() => {
-        if (invoiceList?.length !== 0) {
+        if (isFiltering === true) {
+            const newInvoiceList = invoiceListByStatus?.map((invoice) => {
+                const customerUser = customerUserList?.find(
+                    (item) => item.id === invoice?.customer_user_id
+                );
+                return {
+                    ...invoice,
+                    fullName:
+                        customerUser?.last_name +
+                        " " +
+                        customerUser?.first_name,
+                    status_name:
+                        invoice?.status === 0
+                            ? "Đã hủy"
+                            : invoice?.status === 1
+                            ? "Chờ tiếp nhận"
+                            : invoice?.status === 2
+                            ? "Đã tiếp nhận"
+                            : invoice?.status === 3
+                            ? "Đang giao hàng"
+                            : invoice?.status === 4
+                            ? "Đã giao hàng"
+                            : "",
+                    created_at: dayjs(invoice?.created_at).format("DD/MM/YYYY"),
+                };
+            });
+            setCloneData(structuredClone(newInvoiceList));
+        } else if (invoiceList?.length !== 0 && isFiltering === false) {
             const newInvoiceList = invoiceList?.map((invoice) => {
                 const customerUser = customerUserList?.find(
                     (item) => item.id === invoice?.customer_user_id
@@ -80,18 +116,25 @@ export default function InvoiceList() {
                         " " +
                         customerUser?.first_name,
                     status_name:
-                        invoice?.status === 1
+                        invoice?.status === 5
+                            ? "Đã hủy"
+                            : invoice?.status === 1
                             ? "Chờ tiếp nhận"
                             : invoice?.status === 2
                             ? "Đã tiếp nhận"
                             : invoice?.status === 3
-                            ? "Đã xác thực"
-                            : "",
+                            ? "Đang giao hàng"
+                            : invoice?.status === 4
+                            ? "Đã giao hàng"
+                            : "Đã hủy",
+                    created_at: dayjs(invoice?.created_at).format("DD/MM/YYYY"),
                 };
             });
             setCloneData(structuredClone(newInvoiceList));
         }
-    }, [invoiceList]);
+    }, [invoiceList, invoiceListByStatus, isFiltering]);
+
+    console.log(cloneData);
 
     // Create update modal
     const [isOpenCreateInvoiceModel, setIsOpenCreateInvoiceModel] =
@@ -103,10 +146,6 @@ export default function InvoiceList() {
 
     const handleCloseCreateInvoiceModal = () => {
         setIsOpenCreateInvoiceModel(false);
-    };
-
-    const handleNavigateCreateInvoice = (rowData) => {
-        navigate(`/admin/invoice/create`);
     };
 
     // Delete confirm modal
@@ -131,11 +170,16 @@ export default function InvoiceList() {
     };
 
     return (
-        <>
-            <GButton onClick={handleOpenCreateInvoiceModal}>
-                Thêm hóa đơn
-            </GButton>
-            <br />
+        <div className={cx("invoice-list-wrapper")}>
+            <div className={cx("btn-list-header")}>
+                <GButton onClick={handleOpenCreateInvoiceModal}>
+                    Thêm hóa đơn
+                </GButton>
+                <InvoiceClassification
+                    isFiltering={isFiltering}
+                    handleFilter={handleFilter}
+                />
+            </div>
             <br />
             <GTable
                 title={"DANH SÁCH ĐƠN HÀNG"}
@@ -147,8 +191,6 @@ export default function InvoiceList() {
                     {
                         title: "Ngày tạo",
                         field: "created_at",
-                        render: (rowData) =>
-                            dayjs(rowData?.created_at).format("DD/MM/YYYY"),
                     },
                     {
                         title: "Tổng tiền",
@@ -160,15 +202,64 @@ export default function InvoiceList() {
                     {
                         title: "Trạng thái",
                         field: "status_name",
-                        // render: (rowData) => {
-                        //     return (
-                        //         <>
-                        //             <div className={cx("service-description")}>
-                        //                 {rowData.description}
-                        //             </div>
-                        //         </>
-                        //     );
-                        // },
+                        render: (rowData) => {
+                            return (
+                                <>
+                                    {rowData?.status_name === "Đã hủy" ? (
+                                        <span
+                                            className={cx(
+                                                "status_invoice",
+                                                "cancel"
+                                            )}
+                                        >
+                                            Đã hủy
+                                        </span>
+                                    ) : rowData?.status_name ===
+                                      "Chờ tiếp nhận" ? (
+                                        <span
+                                            className={cx(
+                                                "status_invoice",
+                                                "pending"
+                                            )}
+                                        >
+                                            Chờ tiếp nhận
+                                        </span>
+                                    ) : rowData?.status_name ===
+                                      "Đã tiếp nhận" ? (
+                                        <span
+                                            className={cx(
+                                                "status_invoice",
+                                                "received"
+                                            )}
+                                        >
+                                            Đã tiếp nhận
+                                        </span>
+                                    ) : rowData?.status_name ===
+                                      "Đang giao hàng" ? (
+                                        <span
+                                            className={cx(
+                                                "status_invoice",
+                                                "delivering"
+                                            )}
+                                        >
+                                            Đang giao hàng
+                                        </span>
+                                    ) : rowData?.status_name ===
+                                      "Giao hàng thành công" ? (
+                                        <span
+                                            className={cx(
+                                                "status_invoice",
+                                                "delivered"
+                                            )}
+                                        >
+                                            Giao hàng thành công
+                                        </span>
+                                    ) : (
+                                        ""
+                                    )}
+                                </>
+                            );
+                        },
                     },
                     {
                         title: "Thao tác",
@@ -227,6 +318,6 @@ export default function InvoiceList() {
                 handleClose={handleCloseDeleteConfirmPopup}
                 selectedInvoice={selectedInvoice}
             />
-        </>
+        </div>
     );
 }

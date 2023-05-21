@@ -2,8 +2,14 @@ const pool = require("../config/database");
 const { v4: uuidv4 } = require("uuid");
 
 const getAllInvoice = async () => {
+    const [rows, fields] = await pool.query("SELECT * FROM tbl_invoice");
+    return rows;
+};
+
+const getAllInvoiceByStatus = async (status) => {
     const [rows, fields] = await pool.query(
-        "SELECT * FROM tbl_invoice WHERE status > 0"
+        "SELECT * FROM tbl_invoice WHERE status = (?)",
+        [status]
     );
     return rows;
 };
@@ -50,6 +56,7 @@ const deleteInvoiceById = async (id) => {
 module.exports = {
     getAllInvoice,
     getInvoiceById,
+    getAllInvoiceByStatus,
     createInvoice,
     updateInvoiceById,
     deleteInvoiceById,

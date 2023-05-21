@@ -1,12 +1,21 @@
 import toast from "react-hot-toast";
 
 import {
+    cancelInvoiceFailed,
+    cancelInvoiceStart,
+    cancelInvoiceSuccess,
+    confirmInvoiceFailed,
+    confirmInvoiceStart,
+    confirmInvoiceSuccess,
     createInvoiceFailed,
     createInvoiceStart,
     createInvoiceSuccess,
     deleteInvoiceFailed,
     deleteInvoiceStart,
     deleteInvoiceSuccess,
+    getAllInvoiceByStatusFailed,
+    getAllInvoiceByStatusStart,
+    getAllInvoiceByStatusSuccess,
     getAllInvoiceFailed,
     getAllInvoiceStart,
     getAllInvoiceSuccess,
@@ -17,8 +26,6 @@ import {
     updateInvoiceStart,
     updateInvoiceSuccess,
 } from "../slice/invoiceSlice";
-
-import { getInvoiceDetailByInvoiceId } from "./apiInvoiceDetail";
 
 export const getAllInvoice = async (accessToken, dispatch, axiosJWT) => {
     dispatch(getAllInvoiceStart());
@@ -32,6 +39,26 @@ export const getAllInvoice = async (accessToken, dispatch, axiosJWT) => {
         return res?.data?.length;
     } catch (error) {
         dispatch(getAllInvoiceFailed());
+    }
+};
+
+export const getAllInvoiceByStatus = async (
+    id,
+    accessToken,
+    dispatch,
+    axiosJWT
+) => {
+    dispatch(getAllInvoiceByStatusStart());
+    try {
+        const res = await axiosJWT.get("/v1/invoice/status/" + id, {
+            headers: {
+                token: `Bearer ${accessToken}`,
+            },
+        });
+        dispatch(getAllInvoiceByStatusSuccess(res?.data));
+        return res?.data?.length;
+    } catch (error) {
+        dispatch(getAllInvoiceByStatusFailed());
     }
 };
 
@@ -79,7 +106,6 @@ export const updateInvoice = async (
         dispatch(updateInvoiceSuccess(res?.data));
         if (res?.data?.status === 200) {
             toast.success(res?.data?.msg);
-            // getAllInvoice(accessToken, dispatch, axiosJWT);
             getInvoiceById(dispatch, id, accessToken, axiosJWT);
         }
         console.log(res?.data);
@@ -153,51 +179,46 @@ export const getInvoiceById = async (dispatch, id, accessToken, axiosJWT) => {
 };
 
 export const confirmInvoice = async (accessToken, dispatch, id, axiosJWT) => {
-    dispatch(updateInvoiceStart());
+    dispatch(confirmInvoiceStart());
     try {
         const res = await axiosJWT.put(
-            "/v1/invoice/" + id,
-            {
-                status: 2,
-            },
+            "/v1/invoice/confirm/" + id,
+            {},
             {
                 headers: {
                     token: `Bearer ${accessToken}`,
                 },
             }
         );
-        dispatch(updateInvoiceSuccess(res?.data));
+        dispatch(confirmInvoiceSuccess(res?.data));
         if (res?.data?.status === 200) {
-            toast.success("Xác nhận đơn hàng thành công");
+            toast.success(res?.data?.msg);
             getInvoiceById(dispatch, id, accessToken, axiosJWT);
         }
         console.log(res?.data);
     } catch (error) {
-        dispatch(updateInvoiceFailed(error.response?.data));
+        dispatch(confirmInvoiceFailed(error.response?.data));
     }
 };
 
 export const cancelInvoice = async (accessToken, dispatch, id, axiosJWT) => {
-    dispatch(updateInvoiceStart());
+    dispatch(cancelInvoiceStart());
     try {
         const res = await axiosJWT.put(
-            "/v1/invoice/" + id,
-            {
-                status: 0,
-            },
+            "/v1/invoice/cancel/" + id,
+            {},
             {
                 headers: {
                     token: `Bearer ${accessToken}`,
                 },
             }
         );
-        dispatch(updateInvoiceSuccess(res?.data));
+        dispatch(cancelInvoiceSuccess(res?.data));
         if (res?.data?.status === 200) {
-            toast.success("Hủy đơn hàng thành công");
+            toast.success(res?.data?.msg);
             getInvoiceById(dispatch, id, accessToken, axiosJWT);
         }
-        console.log(res?.data);
     } catch (error) {
-        dispatch(updateInvoiceFailed(error.response?.data));
+        dispatch(cancelInvoiceFailed(error.response?.data));
     }
 };

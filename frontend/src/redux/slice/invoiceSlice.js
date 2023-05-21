@@ -6,6 +6,7 @@ const invoiceSlice = createSlice({
         invoice: {
             invoiceList: [],
             invoice: null,
+            invoiceListByStatus: [],
             isFetching: false,
             error: false,
         },
@@ -21,6 +22,19 @@ const invoiceSlice = createSlice({
             state.invoice.invoiceList = action.payload;
         },
         getAllInvoiceFailed: (state) => {
+            state.invoice.isFetching = false;
+            state.invoice.error = true;
+        },
+
+        // Get all invoice by status
+        getAllInvoiceByStatusStart: (state) => {
+            state.invoice.isFetching = true;
+        },
+        getAllInvoiceByStatusSuccess: (state, action) => {
+            state.invoice.isFetching = false;
+            state.invoice.invoiceListByStatus = action.payload;
+        },
+        getAllInvoiceByStatusFailed: (state) => {
             state.invoice.isFetching = false;
             state.invoice.error = true;
         },
@@ -66,6 +80,34 @@ const invoiceSlice = createSlice({
             state.msg = action.payload;
         },
 
+        // confirm Invoice
+        confirmInvoiceStart: (state) => {
+            state.invoice.isFetching = true;
+        },
+        confirmInvoiceSuccess: (state, action) => {
+            state.invoice.isFetching = false;
+            state.msg = action.payload;
+        },
+        confirmInvoiceFailed: (state, action) => {
+            state.invoice.isFetching = false;
+            state.invoice.error = true;
+            state.msg = action.payload;
+        },
+
+        // confirm Invoice
+        cancelInvoiceStart: (state) => {
+            state.invoice.isFetching = true;
+        },
+        cancelInvoiceSuccess: (state, action) => {
+            state.invoice.isFetching = false;
+            state.msg = action.payload;
+        },
+        cancelInvoiceFailed: (state, action) => {
+            state.invoice.isFetching = false;
+            state.invoice.error = true;
+            state.msg = action.payload;
+        },
+
         // Delete Invoice
         deleteInvoiceStart: (state) => {
             state.invoice.isFetching = true;
@@ -87,6 +129,10 @@ export const {
     getAllInvoiceSuccess,
     getAllInvoiceFailed,
 
+    getAllInvoiceByStatusStart,
+    getAllInvoiceByStatusSuccess,
+    getAllInvoiceByStatusFailed,
+
     getInvoiceByIdStart,
     getInvoiceByIdSuccess,
     getInvoiceByIdFailed,
@@ -98,6 +144,14 @@ export const {
     updateInvoiceStart,
     updateInvoiceSuccess,
     updateInvoiceFailed,
+
+    confirmInvoiceStart,
+    confirmInvoiceSuccess,
+    confirmInvoiceFailed,
+
+    cancelInvoiceStart,
+    cancelInvoiceSuccess,
+    cancelInvoiceFailed,
 
     deleteInvoiceStart,
     deleteInvoiceSuccess,

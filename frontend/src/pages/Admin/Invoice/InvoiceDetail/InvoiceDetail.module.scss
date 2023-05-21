@@ -77,6 +77,20 @@
         font-size: 1.6rem;
         font-weight: var(--fw-semi-bold);
         color: var(--text-primary);
+
+        &.pending {
+            background-color: #1976d2;
+            color: var(--white);
+            padding: 4px 12px;
+            border-radius: 4px;
+        }
+
+        &.received {
+            background-color: #2e7d32;
+            color: var(--white);
+            padding: 4px 12px;
+            border-radius: 4px;
+        }
     }
 }
 
