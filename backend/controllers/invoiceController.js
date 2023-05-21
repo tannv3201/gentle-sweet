@@ -6,9 +6,31 @@ const pool = require("../config/database");
 const { v4: uuidv4 } = require("uuid");
 
 const invoiceController = {
+    invoiceSearch: async (req, res) => {
+        try {
+            const { status, startDate, endDate, customer_user_id } = req.body;
+            // Xử lý các điều kiện tùy chọn
+            const params = {};
+            if (status) params.status = status;
+            if (startDate) params.startDate = startDate;
+            if (endDate) params.endDate = endDate;
+            if (customer_user_id) params.customer_user_id = customer_user_id;
+
+            console.log(params);
+
+            const invoices = await InvoiceModel.invoiceSearch(params);
+            if (!invoices) {
+                return res.status(404).json("Đơn hàng không tồn tại");
+            } else {
+                return res.status(200).json(invoices);
+            }
+        } catch (error) {
+            res.status(500).json(error);
+        }
+    },
+
     // GET ALL INVOICE
     getAllInvoice: async (req, res) => {
-        console.log(req);
         try {
             const invoices = await InvoiceModel.getAllInvoice();
             return res.status(200).json(invoices);

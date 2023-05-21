@@ -35,6 +35,12 @@ router.get(
 );
 
 router.get(
+    "/search",
+    middlewareController.verifyTokenAndSystemUserAuth,
+    invoiceController.invoiceSearch
+);
+
+router.get(
     "/:id",
     middlewareController.verifyToken,
     invoiceController.getInvoiceById
