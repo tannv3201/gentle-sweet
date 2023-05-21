@@ -22,7 +22,6 @@ import {
     updateInvoiceDetail,
 } from "../../../../redux/api/apiInvoiceDetail";
 import GModal from "../../../../common/GModal/GModal";
-import { getAllProduct } from "../../../../redux/api/apiProduct";
 
 const cx = classNames.bind(styles);
 
@@ -42,7 +41,6 @@ export default function AddProductInvoiceDetailPopup({
     const [cloneData, setCloneData] = useState([]);
 
     let axiosJWT = createAxios(user, dispatch, loginSuccess);
-
     const validationSchema = object({
         products: array(
             object({

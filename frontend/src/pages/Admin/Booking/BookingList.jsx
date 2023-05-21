@@ -3,7 +3,7 @@ import DeleteRoundedIcon from "@mui/icons-material/DeleteRounded";
 import { useEffect } from "react";
 import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
-import { useNavigate, useSearchParams } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { loginSuccess } from "../../../redux/slice/authSlice";
 import { createAxios } from "../../../createInstance";
 import { useState } from "react";
@@ -19,10 +19,7 @@ import styles from "./Invoice.module.scss";
 import classNames from "classnames/bind";
 import { InfoRounded } from "@mui/icons-material";
 import DeleteInvoicePopup from "./DeleteInvoicePopup";
-import {
-    getAllInvoice,
-    getAllInvoiceByStatus,
-} from "../../../redux/api/apiInvoice";
+import { getAllInvoice } from "../../../redux/api/apiInvoice";
 import CreateInvoiceModal from "./CreateInvoiceModal";
 import dayjs from "dayjs";
 import utc from "dayjs/plugin/utc";
@@ -30,11 +27,10 @@ import moment from "moment/moment";
 import { getAllCustomerUser } from "../../../redux/api/apiCustomerUser";
 import { getAllProduct } from "../../../redux/api/apiProduct";
 import InvoiceClassification from "./FilterInvoice/InvoiceClassification";
-import { clearInvoiceListByStatus } from "../../../redux/slice/invoiceSlice";
 
 const cx = classNames.bind(styles);
 
-export default function InvoiceList() {
+export default function BookingList() {
     dayjs.extend(utc);
     const user = useSelector((state) => state.auth.login?.currentUser);
     const [cloneData, setCloneData] = useState([]);
@@ -57,7 +53,6 @@ export default function InvoiceList() {
         if (customerUserList?.length === 0) {
             getAllCustomerUser(user?.accessToken, dispatch, axiosJWT);
         }
-        dispatch(clearInvoiceListByStatus());
     }, []);
 
     const invoiceList = useSelector(
@@ -67,41 +62,22 @@ export default function InvoiceList() {
     const invoiceListByStatus = useSelector(
         (state) => state.invoice.invoice?.invoiceListByStatus
     );
-    const [searchParams, setSearchParams] = useSearchParams();
-    const searchStatus = searchParams.get("status") || "";
-
-    const productList = useSelector(
-        (state) => state.product.product?.productList
-    );
 
     useEffect(() => {
         const fetchData = async () => {
             if (!user) {
                 navigate("/dang-nhap");
             }
-
-            if (invoiceList?.length === 0) {
+            if (user?.accessToken) {
                 await getAllInvoice(user?.accessToken, dispatch, axiosJWT);
             }
-            if (productList?.length === 0) {
-                await getAllProduct(user?.accessToken, dispatch, axiosJWT);
-            }
-            // await getAllProduct(user?.accessToken, dispatch, axiosJWT);
-            if (searchStatus) {
-                await getAllInvoiceByStatus(
-                    searchStatus,
-                    user?.accessToken,
-                    dispatch,
-                    axiosJWT
-                );
-            }
+            await getAllProduct(user?.accessToken, dispatch, axiosJWT);
         };
 
         fetchData();
-    }, [searchStatus]);
-
+    }, []);
     useEffect(() => {
-        if (invoiceListByStatus?.length !== 0) {
+        if (isFiltering === true) {
             const newInvoiceList = invoiceListByStatus?.map((invoice) => {
                 const customerUser = customerUserList?.find(
                     (item) => item.id === invoice?.customer_user_id
@@ -157,6 +133,8 @@ export default function InvoiceList() {
             setCloneData(structuredClone(newInvoiceList));
         }
     }, [invoiceList, invoiceListByStatus, isFiltering]);
+
+    console.log(cloneData);
 
     // Create update modal
     const [isOpenCreateInvoiceModel, setIsOpenCreateInvoiceModel] =

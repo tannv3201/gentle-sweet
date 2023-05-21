@@ -20,6 +20,7 @@ import {
     updateInvoiceDetailStart,
     updateInvoiceDetailSuccess,
 } from "../slice/invoiceDetailSlice";
+import { getAllInvoice } from "./apiInvoice";
 
 export const getAllInvoiceDetail = async (accessToken, dispatch, axiosJWT) => {
     dispatch(getAllInvoiceDetailStart());
@@ -64,6 +65,7 @@ export const createInvoiceDetail = async (
                 accessToken,
                 axiosJWT
             );
+            getAllInvoice(accessToken, dispatch, axiosJWT);
         }
         return res?.data?.data?.insertId;
     } catch (error) {
@@ -100,6 +102,7 @@ export const updateInvoiceDetail = async (
                 accessToken,
                 axiosJWT
             );
+            getAllInvoice(accessToken, dispatch, axiosJWT);
         }
         console.log(res?.data);
     } catch (error) {
@@ -158,6 +161,7 @@ export const deleteInvoiceDetail = async (
                 accessToken,
                 axiosJWT
             );
+            getAllInvoice(accessToken, dispatch, axiosJWT);
         }
     } catch (error) {
         dispatch(deleteInvoiceDetailFailed(error.response?.data));

@@ -1,0 +1,122 @@
+.wrapper {
+    margin-top: 24px;
+    border: 1px solid var(--border-color);
+    border-radius: 4px;
+}
+
+.invoice-info-header {
+    background-color: lavender;
+    padding: 12px 24px;
+    border-top-left-radius: 4px;
+    border-top-right-radius: 4px;
+    .invoice-title {
+        display: flex;
+        align-items: center;
+        height: 100%;
+        .title {
+            display: block;
+            font-size: 1.8rem;
+            font-weight: var(--fw-semi-bold);
+            color: var(--text-primary);
+        }
+    }
+
+    .button-list {
+        display: flex;
+        align-items: center;
+        button {
+            margin-left: 8px;
+        }
+    }
+    .label-editting {
+        font-size: 2rem;
+        font-weight: var(--fw-medium);
+    }
+}
+
+.invoice-detail-form {
+    border-radius: 4px;
+    min-width: 680px;
+    .form-body {
+        padding: 12px;
+        max-height: 440px;
+        overflow-y: scroll;
+    }
+}
+.remove-btn-wrapper {
+    height: 56px;
+    display: flex;
+    align-items: center;
+}
+.submit-btn-wrapper {
+    display: flex;
+    margin-top: 20px;
+    justify-content: flex-end;
+    button {
+        margin-left: 12px;
+    }
+}
+
+.create-invoice-form {
+    min-width: 500px;
+    .select-customer-user {
+        padding: 24px 0;
+    }
+}
+.invoice-info-body {
+    padding: 12px 24px;
+
+    .invoice-info-label {
+        font-size: 1.6rem;
+        font-weight: var(--fw-medium);
+        margin-right: 8px;
+        color: var(--text-secondary);
+    }
+
+    .invoice-info-content {
+        font-size: 1.6rem;
+        font-weight: var(--fw-semi-bold);
+        color: var(--text-primary);
+
+        &.pending {
+            background-color: #1976d2;
+            color: var(--white);
+            padding: 4px 12px;
+            border-radius: 4px;
+        }
+
+        &.received {
+            background-color: #2e7d32;
+            color: var(--white);
+            padding: 4px 12px;
+            border-radius: 4px;
+        }
+    }
+}
+
+// Invoice Detail List
+.wrapper-invoice_detail_list {
+    padding: 20px;
+    .table-invoice-detail {
+        .header-table-invoice-detail {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background-color: lavender;
+            padding: 12px 24px;
+            font-weight: var(--fw-semi-bold);
+            border-top-left-radius: 4px;
+            border-top-right-radius: 4px;
+        }
+    }
+}
+
+.no-invoice-detail {
+    padding: 12px 0;
+    text-align: center;
+    border-left: 1px solid var(--border-color);
+    border-right: 1px solid var(--border-color);
+    border-bottom: 1px solid var(--border-color);
+    border-bottom-left-radius: 4px;
+    border-bottom-right-radius: 4px;
+}

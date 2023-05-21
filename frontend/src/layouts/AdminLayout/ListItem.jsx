@@ -62,12 +62,12 @@ export const mainListItems = (
             title={"Đơn hàng"}
             icon={<ShoppingCart />}
         />
-        <ListItemButton>
-            <ListItemIcon>
-                <BarChart />
-            </ListItemIcon>
-            <ListItemText primary="Báo cáo" />
-        </ListItemButton>
+        <MenuItem
+            to={"/admin/booking"}
+            title={"Đặt lịch"}
+            icon={<ShoppingCart />}
+        />
+
         <ListItemButton>
             <ListItemIcon>
                 <Layers />

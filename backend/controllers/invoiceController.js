@@ -8,6 +8,7 @@ const { v4: uuidv4 } = require("uuid");
 const invoiceController = {
     // GET ALL INVOICE
     getAllInvoice: async (req, res) => {
+        console.log(req);
         try {
             const invoices = await InvoiceModel.getAllInvoice();
             return res.status(200).json(invoices);

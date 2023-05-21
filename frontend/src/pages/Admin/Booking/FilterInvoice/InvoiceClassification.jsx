@@ -13,9 +13,6 @@ import { useDispatch, useSelector } from "react-redux";
 import { loginSuccess } from "../../../../redux/slice/authSlice";
 import { toast } from "react-hot-toast";
 import { getAllCustomerUser } from "../../../../redux/api/apiCustomerUser";
-import { useSearchParams } from "react-router-dom";
-import { useEffect } from "react";
-import { clearInvoiceListByStatus } from "../../../../redux/slice/invoiceSlice";
 const cx = classNames.bind(styles);
 
 export default function InvoiceClassification({ isFiltering, handleFilter }) {
@@ -27,23 +24,6 @@ export default function InvoiceClassification({ isFiltering, handleFilter }) {
     let axiosJWT = createAxios(user, dispatch, loginSuccess);
 
     const [anchorEl, setAnchorEl] = useState(null);
-
-    const [searchParams, setSearchParams] = useSearchParams();
-    // const searchStatus = searchParams.get("status") || "";
-    // useEffect(() => {
-    //     const fetch = async () => {
-    //         if (searchStatus) {
-    //             await getAllInvoiceByStatus(
-    //                 searchStatus,
-    //                 user?.accessToken,
-    //                 dispatch,
-    //                 axiosJWT
-    //             );
-    //         }
-    //     };
-
-    //     fetch();
-    // }, [searchStatus]);
 
     const open = Boolean(anchorEl);
     const handleClick = (event) => {
@@ -57,32 +37,34 @@ export default function InvoiceClassification({ isFiltering, handleFilter }) {
     // Discount
     const handleFindInvoiceByAllStatus = () => {
         handleFilter(false);
-        setSearchParams({});
-        dispatch(clearInvoiceListByStatus());
         handleClose();
     };
 
     const handleFindInvoiceByStatus1 = async () => {
         handleFilter(true);
-        setSearchParams({ status: 1 });
-        handleClose();
+        getAllInvoiceByStatus(1, user?.accessToken, dispatch, axiosJWT).then(
+            () => handleClose()
+        );
     };
 
     const handleFindInvoiceByStatus2 = async () => {
         handleFilter(true);
-        setSearchParams({ status: 2 });
-        handleClose();
+        getAllInvoiceByStatus(2, user?.accessToken, dispatch, axiosJWT).then(
+            () => handleClose()
+        );
     };
 
     const handleFindInvoiceByStatus3 = async () => {
         handleFilter(true);
-        setSearchParams({ status: 3 });
-        handleClose();
+        getAllInvoiceByStatus(3, user?.accessToken, dispatch, axiosJWT).then(
+            () => handleClose()
+        );
     };
     const handleFindInvoiceByStatus4 = async () => {
         handleFilter(true);
-        setSearchParams({ status: 4 });
-        handleClose();
+        getAllInvoiceByStatus(4, user?.accessToken, dispatch, axiosJWT).then(
+            () => handleClose()
+        );
     };
 
     return (

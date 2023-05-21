@@ -13,6 +13,9 @@ const invoiceSlice = createSlice({
         msg: "",
     },
     reducers: {
+        clearInvoiceListByStatus: (state) => {
+            state.invoice.invoiceListByStatus = [];
+        },
         // Get all ADMIN USER
         getAllInvoiceStart: (state) => {
             state.invoice.isFetching = true;
@@ -125,6 +128,8 @@ const invoiceSlice = createSlice({
 });
 
 export const {
+    clearInvoiceListByStatus,
+
     getAllInvoiceStart,
     getAllInvoiceSuccess,
     getAllInvoiceFailed,
