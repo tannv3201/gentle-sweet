@@ -2,56 +2,85 @@ import { TextField } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import { useSearchParams } from "react-router-dom";
 import GButton from "../../../components/MyButton/MyButton";
-import { getAllInvoiceByStatus } from "../../../redux/api/apiInvoice";
+import {
+    getAllInvoiceByStatus,
+    invoiceSearch,
+} from "../../../redux/api/apiInvoice";
 import { useDispatch } from "react-redux";
 import { useSelector } from "react-redux";
 import { loginSuccess } from "../../../redux/slice/authSlice";
 import { createAxios } from "../../../createInstance";
 import { toast } from "react-hot-toast";
 function BookingTest() {
-    const [searchParams, setSearchParams] = useSearchParams();
-    const searchStatus = searchParams.get("status") || "";
-    const [status, setStatus] = useState();
     const dispatch = useDispatch();
 
-    const [selectedInvoice, setSelectedInvoice] = useState({});
+    const [searchParams, setSearchParams] = useSearchParams();
+    const [status, setStatus] = useState(searchParams.get("status") || "");
+    const [customerUserId, setCustomerUserId] = useState(
+        searchParams.get("customer_user_id") || ""
+    );
+    const [startDate, setStartDate] = useState(
+        searchParams.get("startDate") || ""
+    );
+    const [endDate, setEndDate] = useState(searchParams.get("endDate") || "");
 
     const user = useSelector((state) => state.auth.login?.currentUser);
+
     let axiosJWT = createAxios(user, dispatch, loginSuccess);
 
-    const handleSearch = (event) => {
-        setStatus(event.target.value);
-    };
-
-    const handleSubmit = () => {
-        if (status) {
-            setSearchParams({ status });
-        } else {
-            setSearchParams({});
-        }
-    };
+    const [submitClicked, setSubmitClicked] = useState(false);
     useEffect(() => {
-        if (searchStatus) {
-            getAllInvoiceByStatus(
-                searchStatus,
+        if (submitClicked) {
+            invoiceSearch(
                 user?.accessToken,
+                {
+                    status: status,
+                    customer_user_id: customerUserId,
+                    startDate: startDate,
+                    endDate: endDate,
+                },
                 dispatch,
                 axiosJWT
-            ).then(() => toast.success(searchStatus));
-        }
-    }, [searchStatus]);
+            );
+            const newSearchParams = new URLSearchParams();
 
-    console.log(searchStatus);
+            if (status) newSearchParams.set("status", status);
+            if (customerUserId)
+                newSearchParams.set("customer_user_id", customerUserId);
+            if (startDate) newSearchParams.set("startDate", startDate);
+            if (endDate) newSearchParams.set("endDate", endDate);
+            setSearchParams(newSearchParams);
+            setSubmitClicked(false);
+        }
+    }, [submitClicked, customerUserId, endDate, startDate, status]);
+
+    const handleSearch = () => {
+        setSubmitClicked(true);
+    };
 
     return (
         <>
             <TextField
-                label="Search"
+                label="Status"
                 value={status || ""}
-                onChange={handleSearch}
+                onChange={(e) => setStatus(e.target.value)}
             />
-            <GButton onClick={handleSubmit}>Tìm kiếm</GButton>
-            <ul></ul>
+            <TextField
+                label="Customer Id"
+                value={customerUserId || ""}
+                onChange={(e) => setCustomerUserId(e.target.value)}
+            />
+            <TextField
+                label="Start Date"
+                value={startDate || ""}
+                onChange={(e) => setStartDate(e.target.value)}
+            />
+            <TextField
+                label="End Date"
+                value={endDate || ""}
+                onChange={(e) => setEndDate(e.target.value)}
+            />
+            <GButton onClick={handleSearch}>Tìm kiếm</GButton>
         </>
     );
 }

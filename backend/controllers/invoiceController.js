@@ -8,8 +8,8 @@ const { v4: uuidv4 } = require("uuid");
 const invoiceController = {
     invoiceSearch: async (req, res) => {
         try {
-            const { status, startDate, endDate, customer_user_id } = req.body;
-            // Xử lý các điều kiện tùy chọn
+            const { status, startDate, endDate, customer_user_id } = req.query;
+
             const params = {};
             if (status) params.status = status;
             if (startDate) params.startDate = startDate;

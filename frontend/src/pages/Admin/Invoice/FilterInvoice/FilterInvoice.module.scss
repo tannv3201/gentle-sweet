@@ -1,11 +1,16 @@
-.invoice-classification-wrapper {
-}
-.menu-item {
-    // padding: 0 16px;
-    font-weight: var(--fw-medium);
-    // border-bottom: 1px solid var(--border-color);
-}
+.search-box-container {
+    height: 0;
+    overflow: hidden;
+    transition: all 0.2s linear;
 
-.basic-menu {
-    margin-top: 4px;
+    &.isOpen {
+        height: 136px;
+        transition: all 0.2s linear;
+    }
+    .search-box {
+        margin-top: 16px;
+        border: 1px solid var(--border-color);
+        padding: 12px;
+        border-radius: 4px;
+    }
 }

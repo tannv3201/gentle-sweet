@@ -22,6 +22,9 @@ import {
     getInvoiceByIdFailed,
     getInvoiceByIdStart,
     getInvoiceByIdSuccess,
+    invoiceSearchFailed,
+    invoiceSearchStart,
+    invoiceSearchSuccess,
     updateInvoiceFailed,
     updateInvoiceStart,
     updateInvoiceSuccess,
@@ -220,5 +223,26 @@ export const cancelInvoice = async (accessToken, dispatch, id, axiosJWT) => {
         }
     } catch (error) {
         dispatch(cancelInvoiceFailed(error.response?.data));
+    }
+};
+
+export const invoiceSearch = async (
+    accessToken,
+    params,
+    dispatch,
+    axiosJWT
+) => {
+    dispatch(invoiceSearchStart());
+    try {
+        const res = await axiosJWT.get("/v1/invoice/search", {
+            params: params,
+            headers: {
+                token: `Bearer ${accessToken}`,
+            },
+        });
+        dispatch(invoiceSearchSuccess(res?.data));
+        return res?.data?.length;
+    } catch (error) {
+        dispatch(invoiceSearchFailed());
     }
 };

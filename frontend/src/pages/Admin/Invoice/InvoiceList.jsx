@@ -19,18 +19,15 @@ import styles from "./Invoice.module.scss";
 import classNames from "classnames/bind";
 import { InfoRounded } from "@mui/icons-material";
 import DeleteInvoicePopup from "./DeleteInvoicePopup";
-import {
-    getAllInvoice,
-    getAllInvoiceByStatus,
-} from "../../../redux/api/apiInvoice";
+import { getAllInvoice, invoiceSearch } from "../../../redux/api/apiInvoice";
 import CreateInvoiceModal from "./CreateInvoiceModal";
 import dayjs from "dayjs";
 import utc from "dayjs/plugin/utc";
 import moment from "moment/moment";
 import { getAllCustomerUser } from "../../../redux/api/apiCustomerUser";
 import { getAllProduct } from "../../../redux/api/apiProduct";
-import InvoiceClassification from "./FilterInvoice/InvoiceClassification";
-import { clearInvoiceListByStatus } from "../../../redux/slice/invoiceSlice";
+import FilterInvoice from "./FilterInvoice/FilterInvoice";
+import { clearInvoiceListSearch } from "../../../redux/slice/invoiceSlice";
 
 const cx = classNames.bind(styles);
 
@@ -57,18 +54,18 @@ export default function InvoiceList() {
         if (customerUserList?.length === 0) {
             getAllCustomerUser(user?.accessToken, dispatch, axiosJWT);
         }
-        dispatch(clearInvoiceListByStatus());
+        dispatch(clearInvoiceListSearch());
     }, []);
 
     const invoiceList = useSelector(
         (state) => state.invoice.invoice?.invoiceList
     );
 
-    const invoiceListByStatus = useSelector(
-        (state) => state.invoice.invoice?.invoiceListByStatus
+    const invoiceListSearch = useSelector(
+        (state) => state.invoice.invoice?.invoiceListSearch
     );
     const [searchParams, setSearchParams] = useSearchParams();
-    const searchStatus = searchParams.get("status") || "";
+    const invoiceParamSearch = searchParams.get("status") || "";
 
     const productList = useSelector(
         (state) => state.product.product?.productList
@@ -87,10 +84,10 @@ export default function InvoiceList() {
                 await getAllProduct(user?.accessToken, dispatch, axiosJWT);
             }
             // await getAllProduct(user?.accessToken, dispatch, axiosJWT);
-            if (searchStatus) {
-                await getAllInvoiceByStatus(
-                    searchStatus,
+            if (invoiceParamSearch) {
+                await invoiceSearch(
                     user?.accessToken,
+                    invoiceParamSearch,
                     dispatch,
                     axiosJWT
                 );
@@ -98,11 +95,11 @@ export default function InvoiceList() {
         };
 
         fetchData();
-    }, [searchStatus]);
+    }, [invoiceParamSearch]);
 
     useEffect(() => {
-        if (invoiceListByStatus?.length !== 0) {
-            const newInvoiceList = invoiceListByStatus?.map((invoice) => {
+        if (invoiceListSearch?.length !== 0) {
+            const newInvoiceList = invoiceListSearch?.map((invoice) => {
                 const customerUser = customerUserList?.find(
                     (item) => item.id === invoice?.customer_user_id
                 );
@@ -116,9 +113,9 @@ export default function InvoiceList() {
                         invoice?.status === 0
                             ? "Đã hủy"
                             : invoice?.status === 1
-                            ? "Chờ tiếp nhận"
+                            ? "Chờ xác nhận"
                             : invoice?.status === 2
-                            ? "Đã tiếp nhận"
+                            ? "Đã xác nhận"
                             : invoice?.status === 3
                             ? "Đang giao hàng"
                             : invoice?.status === 4
@@ -140,23 +137,23 @@ export default function InvoiceList() {
                         " " +
                         customerUser?.first_name,
                     status_name:
-                        invoice?.status === 5
+                        invoice?.status === 0
                             ? "Đã hủy"
                             : invoice?.status === 1
-                            ? "Chờ tiếp nhận"
+                            ? "Chờ xác nhận"
                             : invoice?.status === 2
-                            ? "Đã tiếp nhận"
+                            ? "Đã xác nhận"
                             : invoice?.status === 3
                             ? "Đang giao hàng"
                             : invoice?.status === 4
                             ? "Đã giao hàng"
-                            : "Đã hủy",
+                            : "",
                     created_at: dayjs(invoice?.created_at).format("DD/MM/YYYY"),
                 };
             });
             setCloneData(structuredClone(newInvoiceList));
         }
-    }, [invoiceList, invoiceListByStatus, isFiltering]);
+    }, [invoiceList, invoiceListSearch, isFiltering]);
 
     // Create update modal
     const [isOpenCreateInvoiceModel, setIsOpenCreateInvoiceModel] =
@@ -197,10 +194,7 @@ export default function InvoiceList() {
                 <GButton onClick={handleOpenCreateInvoiceModal}>
                     Thêm hóa đơn
                 </GButton>
-                <InvoiceClassification
-                    isFiltering={isFiltering}
-                    handleFilter={handleFilter}
-                />
+                <FilterInvoice />
             </div>
             <br />
             <GTable
@@ -237,24 +231,24 @@ export default function InvoiceList() {
                                             Đã hủy
                                         </span>
                                     ) : rowData?.status_name ===
-                                      "Chờ tiếp nhận" ? (
+                                      "Chờ xác nhận" ? (
                                         <span
                                             className={cx(
                                                 "status_invoice",
                                                 "pending"
                                             )}
                                         >
-                                            Chờ tiếp nhận
+                                            Chờ xác nhận
                                         </span>
                                     ) : rowData?.status_name ===
-                                      "Đã tiếp nhận" ? (
+                                      "Đã xác nhận" ? (
                                         <span
                                             className={cx(
                                                 "status_invoice",
                                                 "received"
                                             )}
                                         >
-                                            Đã tiếp nhận
+                                            Đã xác nhận
                                         </span>
                                     ) : rowData?.status_name ===
                                       "Đang giao hàng" ? (

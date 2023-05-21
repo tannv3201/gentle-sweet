@@ -7,14 +7,15 @@ const invoiceSlice = createSlice({
             invoiceList: [],
             invoice: null,
             invoiceListByStatus: [],
+            invoiceListSearch: [],
             isFetching: false,
             error: false,
         },
         msg: "",
     },
     reducers: {
-        clearInvoiceListByStatus: (state) => {
-            state.invoice.invoiceListByStatus = [];
+        clearInvoiceListSearch: (state) => {
+            state.invoice.invoiceListSearch = [];
         },
         // Get all ADMIN USER
         getAllInvoiceStart: (state) => {
@@ -38,6 +39,19 @@ const invoiceSlice = createSlice({
             state.invoice.invoiceListByStatus = action.payload;
         },
         getAllInvoiceByStatusFailed: (state) => {
+            state.invoice.isFetching = false;
+            state.invoice.error = true;
+        },
+
+        // Get all invoice by status
+        invoiceSearchStart: (state) => {
+            state.invoice.isFetching = true;
+        },
+        invoiceSearchSuccess: (state, action) => {
+            state.invoice.isFetching = false;
+            state.invoice.invoiceListSearch = action.payload;
+        },
+        invoiceSearchFailed: (state) => {
             state.invoice.isFetching = false;
             state.invoice.error = true;
         },
@@ -128,7 +142,7 @@ const invoiceSlice = createSlice({
 });
 
 export const {
-    clearInvoiceListByStatus,
+    clearInvoiceListSearch,
 
     getAllInvoiceStart,
     getAllInvoiceSuccess,
@@ -137,6 +151,10 @@ export const {
     getAllInvoiceByStatusStart,
     getAllInvoiceByStatusSuccess,
     getAllInvoiceByStatusFailed,
+
+    invoiceSearchStart,
+    invoiceSearchSuccess,
+    invoiceSearchFailed,
 
     getInvoiceByIdStart,
     getInvoiceByIdSuccess,
