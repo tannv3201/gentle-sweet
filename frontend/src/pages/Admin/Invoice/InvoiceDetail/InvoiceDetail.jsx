@@ -211,14 +211,23 @@ export default function InvoiceDetail() {
                                         >
                                             Trạng thái:{" "}
                                         </span>
-                                        {currInvoice?.status === 1 ? (
+                                        {currInvoice?.status === 5 ? (
+                                            <span
+                                                className={cx(
+                                                    "invoice-info-content",
+                                                    "cancel"
+                                                )}
+                                            >
+                                                Đã hủy
+                                            </span>
+                                        ) : currInvoice?.status === 1 ? (
                                             <span
                                                 className={cx(
                                                     "invoice-info-content",
                                                     "pending"
                                                 )}
                                             >
-                                                Chờ tiếp nhận
+                                                Chờ xác nhận
                                             </span>
                                         ) : currInvoice?.status === 2 ? (
                                             <span
@@ -227,7 +236,7 @@ export default function InvoiceDetail() {
                                                     "received"
                                                 )}
                                             >
-                                                Đã tiếp nhận
+                                                Đã đã xác nhận
                                             </span>
                                         ) : currInvoice?.status === 3 ? (
                                             <span
@@ -250,11 +259,6 @@ export default function InvoiceDetail() {
                                         ) : (
                                             ""
                                         )}
-                                        <span
-                                            className={cx(
-                                                "invoice-info-content"
-                                            )}
-                                        ></span>
                                     </Grid>
                                 </Grid>
                             </div>

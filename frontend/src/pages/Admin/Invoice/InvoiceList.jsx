@@ -3,7 +3,7 @@ import DeleteRoundedIcon from "@mui/icons-material/DeleteRounded";
 import { useEffect } from "react";
 import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
-import { useNavigate, useSearchParams } from "react-router-dom";
+import { useLocation, useNavigate, useSearchParams } from "react-router-dom";
 import { loginSuccess } from "../../../redux/slice/authSlice";
 import { createAxios } from "../../../createInstance";
 import { useState } from "react";
@@ -54,7 +54,7 @@ export default function InvoiceList() {
         if (customerUserList?.length === 0) {
             getAllCustomerUser(user?.accessToken, dispatch, axiosJWT);
         }
-        dispatch(clearInvoiceListSearch());
+        // dispatch(clearInvoiceListSearch());
     }, []);
 
     const invoiceList = useSelector(
@@ -88,8 +88,10 @@ export default function InvoiceList() {
         fetchData();
     }, []);
 
+    const location = useLocation();
+
     useEffect(() => {
-        if (invoiceListSearch?.length !== 0) {
+        if (location.search) {
             const newInvoiceList = invoiceListSearch?.map((invoice) => {
                 const customerUser = customerUserList?.find(
                     (item) => item.id === invoice?.customer_user_id
@@ -101,7 +103,7 @@ export default function InvoiceList() {
                         " " +
                         customerUser?.first_name,
                     status_name:
-                        invoice?.status === 0
+                        invoice?.status === 5
                             ? "Đã hủy"
                             : invoice?.status === 1
                             ? "Chờ xác nhận"
@@ -116,7 +118,7 @@ export default function InvoiceList() {
                 };
             });
             setCloneData(structuredClone(newInvoiceList));
-        } else if (invoiceList?.length !== 0 && isFiltering === false) {
+        } else if (!location.search) {
             const newInvoiceList = invoiceList?.map((invoice) => {
                 const customerUser = customerUserList?.find(
                     (item) => item.id === invoice?.customer_user_id
@@ -128,7 +130,7 @@ export default function InvoiceList() {
                         " " +
                         customerUser?.first_name,
                     status_name:
-                        invoice?.status === 0
+                        invoice?.status === 5
                             ? "Đã hủy"
                             : invoice?.status === 1
                             ? "Chờ xác nhận"

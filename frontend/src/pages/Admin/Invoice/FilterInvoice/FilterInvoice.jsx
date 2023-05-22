@@ -21,10 +21,6 @@ const cx = classNames.bind(styles);
 
 const invoiceStatus = [
     {
-        id: 0,
-        name: "Đã hủy",
-    },
-    {
         id: 1,
         name: "Chờ xác nhận",
     },
@@ -37,8 +33,12 @@ const invoiceStatus = [
         name: "Đang giao hàng",
     },
     {
-        id: 3,
+        id: 4,
         name: "Giao hàng thành công",
+    },
+    {
+        id: 5,
+        name: "Đã hủy",
     },
 ];
 
@@ -68,28 +68,32 @@ function FilterInvoice({ isFiltering, setIsFiltering }) {
     const location = useLocation();
 
     useEffect(() => {
-        if (location.search || submitClicked) {
-            invoiceSearch(
-                user?.accessToken,
-                {
-                    status: status,
-                    customer_user_id: customerUserId,
-                    startDate: startDate,
-                    endDate: endDate,
-                },
-                dispatch,
-                axiosJWT
-            );
-            const newSearchParams = new URLSearchParams();
+        const fetch = async () => {
+            if (location.search || submitClicked) {
+                await invoiceSearch(
+                    user?.accessToken,
+                    {
+                        status: status,
+                        customer_user_id: customerUserId,
+                        startDate: startDate,
+                        endDate: endDate,
+                    },
+                    dispatch,
+                    axiosJWT
+                );
+                const newSearchParams = new URLSearchParams();
 
-            if (status) newSearchParams.set("status", status);
-            if (customerUserId)
-                newSearchParams.set("customer_user_id", customerUserId);
-            if (startDate) newSearchParams.set("startDate", startDate);
-            if (endDate) newSearchParams.set("endDate", endDate);
-            setSearchParams(newSearchParams);
-            setSubmitClicked(false);
-        }
+                if (status) newSearchParams.set("status", status);
+                if (customerUserId)
+                    newSearchParams.set("customer_user_id", customerUserId);
+                if (startDate) newSearchParams.set("startDate", startDate);
+                if (endDate) newSearchParams.set("endDate", endDate);
+                setSearchParams(newSearchParams);
+                setSubmitClicked(false);
+                setIsFiltering(!isFiltering);
+            }
+        };
+        fetch();
     }, [submitClicked, customerUserId, endDate, startDate, status]);
 
     const handleSearch = () => {
@@ -229,6 +233,18 @@ function FilterInvoice({ isFiltering, setIsFiltering }) {
                             justifyContent={"flex-end"}
                         >
                             <div>
+                                <GButton
+                                    color={"text"}
+                                    onClick={() => {
+                                        setStatus(null);
+                                        setCustomerUserId(null);
+                                        setStartDate(null);
+                                        setEndDate(null);
+                                        setIsFiltering(false);
+                                    }}
+                                >
+                                    Xóa bộ lọc
+                                </GButton>
                                 <GButton onClick={handleSearch}>
                                     Tìm kiếm
                                 </GButton>

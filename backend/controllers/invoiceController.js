@@ -134,7 +134,7 @@ const invoiceController = {
             const affectedRows = await InvoiceModel.updateInvoiceById(
                 invoiceId,
                 {
-                    status: 0,
+                    status: 5,
                 }
             );
             if (affectedRows === 0) {
