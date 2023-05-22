@@ -7,7 +7,7 @@ import GTextFieldNormal from "../../../../components/GTextField/GTextFieldNormal
 import styles from "./FilterInvoice.module.scss";
 import classNames from "classnames/bind";
 import { useDispatch } from "react-redux";
-import { useSearchParams } from "react-router-dom";
+import { useLocation, useSearchParams } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { createAxios } from "../../../../createInstance";
 import { loginSuccess } from "../../../../redux/slice/authSlice";
@@ -42,11 +42,13 @@ const invoiceStatus = [
     },
 ];
 
-function FilterInvoice() {
+function FilterInvoice({ isFiltering, setIsFiltering }) {
     const [isOpenFilterBox, setIsOpenFilterBox] = useState(false);
     const dispatch = useDispatch();
-    const customerUserList = useSelector(
-        (state) => state.customerUser.customerUser?.customerUserList
+    const customerUserList = structuredClone(
+        useSelector(
+            (state) => state.customerUser.customerUser?.customerUserList
+        )
     );
     const [searchParams, setSearchParams] = useSearchParams();
     const [status, setStatus] = useState(searchParams.get("status") || null);
@@ -61,11 +63,12 @@ function FilterInvoice() {
     const user = useSelector((state) => state.auth.login?.currentUser);
 
     let axiosJWT = createAxios(user, dispatch, loginSuccess);
-    console.log(status, customerUserId, startDate, endDate);
 
     const [submitClicked, setSubmitClicked] = useState(false);
+    const location = useLocation();
+
     useEffect(() => {
-        if (submitClicked) {
+        if (location.search || submitClicked) {
             invoiceSearch(
                 user?.accessToken,
                 {
@@ -124,12 +127,15 @@ function FilterInvoice() {
                                     `${option?.name}` || null
                                 }
                                 value={
-                                    {
-                                        id: status,
-                                        name: invoiceStatus?.find(
-                                            (i) => i.id === status
-                                        )?.name,
-                                    } || null
+                                    status
+                                        ? {
+                                              id: status,
+                                              name: invoiceStatus?.find(
+                                                  (i) =>
+                                                      i.id === parseInt(status)
+                                              )?.name,
+                                          }
+                                        : null
                                 }
                                 onChange={(e, value) => {
                                     setStatus(value?.id);
@@ -151,7 +157,7 @@ function FilterInvoice() {
                             <Autocomplete
                                 options={customerUserList}
                                 getOptionLabel={(option) =>
-                                    `${option?.last_name} ${option?.first_name}` ||
+                                    `${option?.last_name} ${option?.first_name} ` ||
                                     null
                                 }
                                 onChange={(e, value) => {
@@ -163,17 +169,22 @@ function FilterInvoice() {
                                     option?.id === value?.id
                                 }
                                 value={
-                                    {
-                                        id: customerUserId,
-                                        name:
-                                            customerUserList?.find(
-                                                (i) => i.id === customerUserId
-                                            )?.last_name +
-                                            " " +
-                                            customerUserList?.find(
-                                                (i) => i.id === customerUserId
-                                            )?.first_name,
-                                    } || null
+                                    customerUserId
+                                        ? {
+                                              id: customerUserId,
+                                              last_name: customerUserList?.find(
+                                                  (i) =>
+                                                      i.id ===
+                                                      parseInt(customerUserId)
+                                              )?.last_name,
+                                              first_name:
+                                                  customerUserList?.find(
+                                                      (i) =>
+                                                          i.id ===
+                                                          customerUserId
+                                                  )?.first_name,
+                                          }
+                                        : null
                                 }
                                 renderInput={(params) => (
                                     <GTextFieldNormal
@@ -195,7 +206,7 @@ function FilterInvoice() {
                                         GFormatDate(date, "YYYY/MM/DD")
                                     )
                                 }
-                                value={dayjs(startDate) || null}
+                                value={startDate ? dayjs(startDate) : null}
                             />
                         </Grid>
                         <Grid item xs={3}>
@@ -208,7 +219,7 @@ function FilterInvoice() {
                                         GFormatDate(date, "YYYY/MM/DD")
                                     )
                                 }
-                                value={dayjs(endDate) || null}
+                                value={endDate ? dayjs(endDate) : null}
                             />
                         </Grid>
                         <Grid

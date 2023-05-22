@@ -83,19 +83,10 @@ export default function InvoiceList() {
             if (productList?.length === 0) {
                 await getAllProduct(user?.accessToken, dispatch, axiosJWT);
             }
-            // await getAllProduct(user?.accessToken, dispatch, axiosJWT);
-            if (invoiceParamSearch) {
-                await invoiceSearch(
-                    user?.accessToken,
-                    invoiceParamSearch,
-                    dispatch,
-                    axiosJWT
-                );
-            }
         };
 
         fetchData();
-    }, [invoiceParamSearch]);
+    }, []);
 
     useEffect(() => {
         if (invoiceListSearch?.length !== 0) {
@@ -194,7 +185,10 @@ export default function InvoiceList() {
                 <GButton onClick={handleOpenCreateInvoiceModal}>
                     Thêm hóa đơn
                 </GButton>
-                <FilterInvoice />
+                <FilterInvoice
+                    isFiltering={isFiltering}
+                    setIsFiltering={setIsFiltering}
+                />
             </div>
             <br />
             <GTable
