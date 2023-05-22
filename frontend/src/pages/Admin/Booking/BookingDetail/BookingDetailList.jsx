@@ -13,13 +13,13 @@ import { EditRounded } from "@mui/icons-material";
 import dayjs from "dayjs";
 import utc from "dayjs/plugin/utc";
 import { FormatCurrency } from "../../../../components/FormatCurrency/FormatCurrency";
-import ConfirmDeleteProduct from "./ConfirmDeleteProduct";
-import UpdateProductInvoiceDetailPopup from "./UpdateProductInvoiceDetailPopup";
-import AddProductInvoiceDetailPopup from "./AddProductInvoiceDetailPopup";
+import ConfirmDeleteProduct from "./ConfirmDeleteService";
+import UpdateProductInvoiceDetailPopup from "./UpdateServiceBookingDetailPopup";
+import AddProductInvoiceDetailPopup from "./AddServiceBookingDetailPopup";
 
 const cx = classNames.bind(styles);
 
-export default function InvoiceDetailList({ isEditting }) {
+export default function BookingDetailList({ isEditting }) {
     dayjs.extend(utc);
     const [cloneData, setCloneData] = useState([]);
 

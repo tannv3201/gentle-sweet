@@ -6,7 +6,7 @@ import { createAxios } from "../../../../createInstance";
 import { loginSuccess } from "../../../../redux/slice/authSlice";
 import { deleteInvoiceDetail } from "../../../../redux/api/apiInvoiceDetail";
 
-function ConfirmDeleteProduct({
+export default function ConfirmDeleteService({
     handleClose,
     handleOpen,
     isOpen,
@@ -42,5 +42,3 @@ function ConfirmDeleteProduct({
         </>
     );
 }
-
-export default ConfirmDeleteProduct;

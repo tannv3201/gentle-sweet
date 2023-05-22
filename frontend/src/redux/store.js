@@ -6,7 +6,9 @@ import productCategoryReducer from "./slice/productCategorySlice";
 import serviceCategoryReducer from "./slice/serviceCategorySlice";
 import productReducer from "./slice/productSlice";
 import invoiceReducer from "./slice/invoiceSlice";
+import bookingReducer from "./slice/bookingSlice";
 import invoiceDetailReducer from "./slice/invoiceDetailSlice";
+import bookingDetailReducer from "./slice/bookingDetailSlice";
 import discountReducer from "./slice/discountSlice";
 import serviceReducer from "./slice/serviceSlice";
 import productImageReducer from "./slice/productImageSlice";
@@ -38,7 +40,9 @@ const rootReducer = combineReducers({
     serviceCategory: serviceCategoryReducer,
     product: productReducer,
     invoice: invoiceReducer,
+    booking: bookingReducer,
     invoiceDetail: invoiceDetailReducer,
+    bookingDetail: bookingDetailReducer,
     service: serviceReducer,
     discount: discountReducer,
     productImage: productImageReducer,

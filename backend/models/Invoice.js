@@ -28,7 +28,6 @@ const invoiceSearch = async (params) => {
         values.push(params.startDate);
     }
 
-
     if (params.endDate) {
         query += " AND created_at <= (?)";
         values.push(params.endDate);
@@ -39,16 +38,7 @@ const invoiceSearch = async (params) => {
         values.push(params.customer_user_id);
     }
 
-    const [rows, fields] = await pool.query(query, values)
-    return rows;
-};
-
-const getAllInvoiceByDateToDate = async (date1, date2) => {
-    let
-    const [rows, fields] = await pool.query(
-        "SELECT * FROM tbl_invoice WHERE DATE(created_at) BETWEEN (?) AND (?)",
-        [date1, date2]
-    );
+    const [rows, fields] = await pool.query(query, values);
     return rows;
 };
 

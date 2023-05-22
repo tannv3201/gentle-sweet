@@ -39,6 +39,7 @@ import ServiceDetail from "../pages/Admin/Services/ServiceDetail/ServiceDetail";
 import Invoice from "../pages/Admin/Invoice/Invoice";
 import CreateInvoice from "../pages/Admin/Invoice/CreateInvoice";
 import InvoiceDetail from "../pages/Admin/Invoice/InvoiceDetail/InvoiceDetail";
+import BookingAdmin from "../pages/Admin/Booking/Booking";
 import BookingTest from "../pages/Admin/BookingTest/BookingTest";
 
 // public routes
@@ -147,7 +148,7 @@ export const privateRoutes = [
     },
     {
         path: "/admin/booking",
-        component: BookingTest,
+        component: BookingAdmin,
         layout: AdminLayout,
     },
     {

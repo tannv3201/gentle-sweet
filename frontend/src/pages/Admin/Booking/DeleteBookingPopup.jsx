@@ -6,7 +6,7 @@ import { createAxios } from "../../../createInstance";
 import ConfirmDeletePopup from "../components/ConfirmDeletePopup";
 import { deleteService } from "../../../redux/api/apiService";
 
-export default function DeleteInvoicePopup({
+export default function DeleteBookingPopup({
     handleClose,
     handleOpen,
     isOpen,

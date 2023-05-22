@@ -25,7 +25,7 @@ import GModal from "../../../../common/GModal/GModal";
 
 const cx = classNames.bind(styles);
 
-export default function AddProductInvoiceDetailPopup({
+export default function AddServiceBookingDetailPopup({
     handleClose,
     handleOpen,
     isOpen,

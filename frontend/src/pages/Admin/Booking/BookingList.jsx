@@ -18,15 +18,14 @@ import { API_IMAGE_URL } from "../../../LocalConstants";
 import styles from "./Invoice.module.scss";
 import classNames from "classnames/bind";
 import { InfoRounded } from "@mui/icons-material";
-import DeleteInvoicePopup from "./DeleteInvoicePopup";
 import { getAllInvoice } from "../../../redux/api/apiInvoice";
-import CreateInvoiceModal from "./CreateInvoiceModal";
 import dayjs from "dayjs";
 import utc from "dayjs/plugin/utc";
-import moment from "moment/moment";
 import { getAllCustomerUser } from "../../../redux/api/apiCustomerUser";
 import { getAllProduct } from "../../../redux/api/apiProduct";
 import InvoiceClassification from "./FilterInvoice/InvoiceClassification";
+import DeleteBookingPopup from "./DeleteBookingPopup";
+import CreateBookingModal from "./CreateBookingModal";
 
 const cx = classNames.bind(styles);
 
@@ -306,13 +305,13 @@ export default function BookingList() {
                 exportFileName={"DanhSachNguoiDung"}
             />
 
-            <CreateInvoiceModal
+            <CreateBookingModal
                 isOpen={isOpenCreateInvoiceModel}
                 handleOpen={handleOpenCreateInvoiceModal}
                 handleClose={handleCloseCreateInvoiceModal}
             />
 
-            <DeleteInvoicePopup
+            <DeleteBookingPopup
                 isOpen={isOpenDeleteConfirmPopup}
                 handleOpen={handleOpenDeleteConfirmPopup}
                 handleClose={handleCloseDeleteConfirmPopup}

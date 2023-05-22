@@ -19,14 +19,14 @@ import { createAxios } from "../../../../createInstance";
 import { loginSuccess } from "../../../../redux/slice/authSlice";
 import { getInvoiceById } from "../../../../redux/api/apiInvoice";
 import { getAdminUserById } from "../../../../redux/api/apiAdminUser";
-import InvoiceDetailList from "./InvoiceDetailList";
+import InvoiceDetailList from "./BookingDetailList";
 import { getInvoiceDetailByInvoiceId } from "../../../../redux/api/apiInvoiceDetail";
-import ConfirmPopup from "./ConfirmInvoice/ConfirmPopup";
-import CancelPopup from "./ConfirmInvoice/CancelPopup";
+import ConfirmPopup from "./ConfirmBooking/ConfirmPopup";
+import CancelPopup from "./ConfirmBooking/CancelPopup";
 
 const cx = classNames.bind(styles);
 
-export default function InvoiceDetail() {
+export default function BookingDetail() {
     const { invoiceId } = useParams();
     dayjs.extend(utc);
     const [isEditting, setIsEditting] = useState(false);

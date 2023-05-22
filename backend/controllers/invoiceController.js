@@ -16,8 +16,6 @@ const invoiceController = {
             if (endDate) params.endDate = endDate;
             if (customer_user_id) params.customer_user_id = customer_user_id;
 
-            console.log(params);
-
             const invoices = await InvoiceModel.invoiceSearch(params);
             if (!invoices) {
                 return res.status(404).json("Đơn hàng không tồn tại");

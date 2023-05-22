@@ -31,6 +31,14 @@ const createBookingDetail = async (bookingDetail) => {
     return result, bookingDetail;
 };
 
+const updatePriceTotalBooking = async (booking_id) => {
+    const [result, fields] = await pool.query(
+        "UPDATE tbl_booking AS b JOIN ( SELECT booking_id, SUM(unit_price) AS total FROM tbl_booking_detail WHERE booking_id = (?) GROUP BY booking_id ) AS bd ON b.id = bd.booking_id SET b.price_total = bd.total",
+        [booking_id]
+    );
+    return result.affectedRows;
+};
+
 const updateBookingDetailById = async (id, bookingDetail) => {
     const [result, fields] = await pool.query(
         "UPDATE tbl_booking_detail SET ? WHERE id = ?",
@@ -53,5 +61,6 @@ module.exports = {
     createBookingDetail,
     updateBookingDetailById,
     deleteBookingDetailById,
+    updatePriceTotalBooking,
     getBookingDetailByBookingId,
 };

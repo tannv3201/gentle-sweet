@@ -5,6 +5,34 @@ const ServiceModel = require("../models/Service");
 const { v4: uuidv4 } = require("uuid");
 
 const bookingController = {
+    bookingSearch: async (req, res) => {
+        try {
+            const {
+                status,
+                startDate,
+                endDate,
+                customer_user_id,
+                booking_time,
+            } = req.query;
+
+            const params = {};
+            if (status) params.status = status;
+            if (startDate) params.startDate = startDate;
+            if (endDate) params.endDate = endDate;
+            if (customer_user_id) params.customer_user_id = customer_user_id;
+            if (booking_time) params.booking_time = booking_time;
+
+            const bookings = await BookingModel.bookingSearch(params);
+            if (!bookings) {
+                return res.status(404).json("Đơn hàng không tồn tại");
+            } else {
+                return res.status(200).json(bookings);
+            }
+        } catch (error) {
+            res.status(500).json(error);
+        }
+    },
+
     // GET ALL INVOICE
     getAllBooking: async (req, res) => {
         try {
@@ -34,90 +62,20 @@ const bookingController = {
         try {
             const newBooking = await BookingModel.createBooking({
                 customer_user_id: req.user.id,
+                admin_user_id: req.body.admin_user_id,
                 status: 1,
             });
-
-            const getService = await ServiceModel.getServiceById(
-                req.body.service_id
-            );
-
-            const newBookingDetail =
-                await BookingDetailModel.createBookingDetail({
-                    id: uuidv4(),
-                    booking_id: newBooking.id,
-                    staff_id: req.body.staff_id,
-                    service_id: req.body.service_id,
-                    start_time: req.body.start_time,
-                    end_time: req.body.end_time,
-                    price: getService?.price,
-                    status: 1,
-                });
-
-            const affectedRows = await BookingModel.updateBookingById(
-                newBooking?.id,
-                {
-                    price_total: getService?.price,
-                }
-            );
-            if (affectedRows !== 0) {
-                res.status(201).json(newBooking);
-            }
+            res.json({
+                status: 201,
+                msg: "Thêm lịch đặt thành công",
+                data: newBooking,
+            });
         } catch (error) {
             res.status(500).json(error);
         }
     },
 
-    // Create invoice detail
-    createBookingDetail: async (req, res, next) => {
-        try {
-            const booking = await BookingModel.getBookingByCustomerUserId(
-                req.user.id
-            );
-
-            const getService = await ServiceModel.getServiceById(
-                req.body.service_id
-            );
-
-            const newBookingDetail =
-                await BookingDetailModel.createBookingDetail({
-                    id: uuidv4(),
-                    booking_id: booking?.id,
-                    staff_id: req.body.staff_id,
-                    service_id: req.body.service_id,
-                    start_time: req.body.start_time,
-                    end_time: req.body.end_time,
-                    price: getService?.price,
-                    status: 1,
-                });
-
-            const getAllBookingDetails =
-                await BookingDetailModel.getBookingDetailByBookingId(
-                    booking?.id
-                );
-
-            let total = getAllBookingDetails.reduce(
-                (accumulator, currentValue) => {
-                    let price = parseFloat(currentValue.price);
-                    return accumulator + price;
-                },
-                0
-            );
-
-            const affectedRows = await BookingModel.updateBookingById(
-                booking?.id,
-                {
-                    price_total: total,
-                }
-            );
-            if (affectedRows !== 0) {
-                res.status(201).json(newBookingDetail);
-            }
-        } catch (error) {
-            res.status(500).json(error);
-        }
-    },
-
-    // UPDATE INVOICE BY ID
+    // UPDATE BOOKING BY ID
     updateBookingById: async (req, res) => {
         try {
             const bookingId = req.params.id;
@@ -151,6 +109,54 @@ const bookingController = {
             }
         } catch (error) {
             res.status(500).json({ message: error.message });
+        }
+    },
+
+    // CONFIRM BOOKING BY ID
+    confirmBookingById: async (req, res) => {
+        try {
+            const bookingId = req.params.id;
+            const { admin_user_id, ...data } = req.body;
+            const affectedRows = await BookingModel.updateBookingById(
+                bookingId,
+                {
+                    status: 2,
+                }
+            );
+            if (affectedRows === 0) {
+                return res.json({ status: 404, msg: "Cập nhật thất bại" });
+            } else {
+                return res.json({
+                    status: 200,
+                    msg: "Xác nhận lịch đặt thành công",
+                });
+            }
+        } catch (error) {
+            console.log(error);
+        }
+    },
+
+    // CANCEL Booking BY ID
+    cancelBookingById: async (req, res) => {
+        try {
+            const bookingId = req.params.id;
+            const { admin_user_id, ...data } = req.body;
+            const affectedRows = await BookingModel.updateBookingById(
+                bookingId,
+                {
+                    status: 5,
+                }
+            );
+            if (affectedRows === 0) {
+                return res.json({ status: 404, msg: "Cập nhật thất bại" });
+            } else {
+                return res.json({
+                    status: 200,
+                    msg: "Hủy lịch đặt thành công",
+                });
+            }
+        } catch (error) {
+            console.log(error);
         }
     },
 };

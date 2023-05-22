@@ -23,6 +23,7 @@ const invoiceRoute = require("./routes/invoice");
 const invoiceDetailRoute = require("./routes/invoiceDetail");
 
 const bookingRoute = require("./routes/booking");
+const bookingDetailRoute = require("./routes/bookingDetail");
 
 const deliveryRoute = require("./routes/delivery");
 
@@ -56,6 +57,7 @@ app.use("/v1/invoice", invoiceRoute);
 app.use("/v1/invoiceDetail", invoiceDetailRoute);
 
 app.use("/v1/booking", bookingRoute);
+app.use("/v1/bookingDetail", bookingDetailRoute);
 
 app.use("/v1/delivery", deliveryRoute);
 app.use("/v1/assets", storageImageRoute);
