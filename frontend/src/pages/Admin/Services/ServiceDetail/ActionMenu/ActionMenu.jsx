@@ -44,18 +44,16 @@ export default function ActionMenu({ selectedProduct }) {
     };
     return (
         <div>
-            <LightTooltip placement="bottom" title="Quản lý">
-                <GButton
-                    id="basic-button"
-                    aria-controls={open ? "basic-menu" : undefined}
-                    aria-haspopup="true"
-                    aria-expanded={open ? "true" : undefined}
-                    onClick={handleClick}
-                    startIcon={<ViewListRounded />}
-                >
-                    Quản lý
-                </GButton>
-            </LightTooltip>
+            <GButton
+                id="basic-button"
+                aria-controls={open ? "basic-menu" : undefined}
+                aria-haspopup="true"
+                aria-expanded={open ? "true" : undefined}
+                onClick={handleClick}
+                startIcon={<ViewListRounded />}
+            >
+                Quản lý
+            </GButton>
             <Menu
                 className={cx("basic-menu")}
                 id="basic-menu"
