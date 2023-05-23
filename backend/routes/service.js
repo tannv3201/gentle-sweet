@@ -12,6 +12,12 @@ router.post(
 );
 
 router.get(
+    "/search",
+    middlewareController.verifyTokenAndSystemUserAuth,
+    serviceController.serviceSearch
+);
+
+router.get(
     "/",
     middlewareController.verifyTokenAndSystemUserAuth,
     serviceController.getAllService

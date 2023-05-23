@@ -13,6 +13,9 @@ import {
     getServiceByIdFailed,
     getServiceByIdStart,
     getServiceByIdSuccess,
+    serviceSearchFailed,
+    serviceSearchStart,
+    serviceSearchSuccess,
     updateServiceFailed,
     updateServiceStart,
     updateServiceSuccess,
@@ -50,7 +53,7 @@ export const createService = async (
         if (res?.data?.status === 201) {
             // toast.success(res?.data?.msg);
             toast.success("Thêm sản phẩm thành công.");
-            getAllService(accessToken, dispatch, axiosJWT);
+            await getAllService(accessToken, dispatch, axiosJWT);
         }
 
         return res?.data?.data;
@@ -76,7 +79,7 @@ export const updateService = async (
         dispatch(updateServiceSuccess(res?.data));
         if (res?.data?.status === 200) {
             toast.success(res?.data?.msg);
-            getServiceById(dispatch, id, accessToken, axiosJWT);
+            await getServiceById(dispatch, id, accessToken, axiosJWT);
         }
     } catch (error) {
         dispatch(updateServiceFailed(error.response?.data));
@@ -104,7 +107,7 @@ export const addDiscount = async (
         dispatch(updateServiceSuccess(res?.data));
         if (res?.data?.status === 200) {
             toast.success(res?.data?.msg);
-            getServiceById(dispatch, id, accessToken, axiosJWT);
+            await getServiceById(dispatch, id, accessToken, axiosJWT);
         }
     } catch (error) {
         dispatch(updateServiceFailed(error.response?.data));
@@ -122,7 +125,7 @@ export const deleteService = async (dispatch, id, accessToken, axiosJWT) => {
         dispatch(deleteServiceSuccess(res?.data));
         if (res?.data?.status === 200) {
             toast.success(res?.data?.msg);
-            getAllService(accessToken, dispatch, axiosJWT);
+            await getAllService(accessToken, dispatch, axiosJWT);
         }
     } catch (error) {
         dispatch(deleteServiceFailed(error.response?.data));
@@ -144,5 +147,26 @@ export const getServiceById = async (dispatch, id, accessToken, axiosJWT) => {
         return res?.data;
     } catch (error) {
         dispatch(getServiceByIdFailed(error.response?.data));
+    }
+};
+
+export const serviceSearch = async (
+    accessToken,
+    params,
+    dispatch,
+    axiosJWT
+) => {
+    dispatch(serviceSearchStart());
+    try {
+        const res = await axiosJWT.get("/v1/service/search", {
+            params: params,
+            headers: {
+                token: `Bearer ${accessToken}`,
+            },
+        });
+        dispatch(serviceSearchSuccess(res?.data));
+        return res?.data?.length;
+    } catch (error) {
+        dispatch(serviceSearchFailed());
     }
 };

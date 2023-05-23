@@ -101,7 +101,7 @@ export default function CreateUpdateServiceModal({
         },
     });
 
-    const handleChangeSẻviceCategory = (value) => {
+    const handleChangeServiceCategory = (value) => {
         if (value) {
             formik.setFieldValue("service_category_id", value?.id);
             formik.setFieldValue("service_category_name", value?.name);
@@ -129,7 +129,7 @@ export default function CreateUpdateServiceModal({
                                     `${option?.name}` || ""
                                 }
                                 onChange={(e, value) => {
-                                    handleChangeSẻviceCategory(value);
+                                    handleChangeServiceCategory(value);
                                 }}
                                 isOptionEqualToValue={(option, value) =>
                                     value === null ||

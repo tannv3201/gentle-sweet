@@ -39,10 +39,24 @@ const deleteServiceById = async (id) => {
     return result.affectedRows;
 };
 
+const serviceSearch = async (params) => {
+    let query = "SELECT * FROM tbl_service WHERE status > 0";
+    const values = [];
+
+    if (params.service_category_id) {
+        query += " AND service_category_id = (?)";
+        values.push(params.service_category_id);
+    }
+
+    const [rows, fields] = await pool.query(query, values);
+    return rows;
+};
+
 module.exports = {
     getAllService,
     getServiceById,
     createService,
+    serviceSearch,
     updateServiceById,
     deleteServiceById,
 };

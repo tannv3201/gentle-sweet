@@ -3,7 +3,7 @@ import DeleteRoundedIcon from "@mui/icons-material/DeleteRounded";
 import { useEffect } from "react";
 import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { loginSuccess } from "../../../redux/slice/authSlice";
 import { createAxios } from "../../../createInstance";
 import { useState } from "react";
@@ -21,6 +21,7 @@ import { API_IMAGE_URL } from "../../../LocalConstants";
 import styles from "./Service.module.scss";
 import classNames from "classnames/bind";
 import { InfoRounded } from "@mui/icons-material";
+import FilterService from "./FilterService/FilterService";
 const cx = classNames.bind(styles);
 
 export default function ServiceList() {
@@ -29,6 +30,7 @@ export default function ServiceList() {
     const dispatch = useDispatch();
     const navigate = useNavigate();
     const [selectedService, setSelectedService] = useState({});
+    const [isFiltering, setIsFiltering] = useState(false);
 
     let axiosJWT = createAxios(user, dispatch, loginSuccess);
 
@@ -49,9 +51,18 @@ export default function ServiceList() {
         fetchData();
     }, []);
 
+    const serviceListSearch = useSelector(
+        (state) => state.service.service?.serviceListSearch
+    );
+
+    const location = useLocation();
     useEffect(() => {
-        setCloneData(structuredClone(serviceList));
-    }, [serviceList]);
+        if (location.search) {
+            setCloneData(structuredClone(serviceListSearch));
+        } else if (!location.search) {
+            setCloneData(structuredClone(serviceList));
+        }
+    }, [serviceList, serviceListSearch, isFiltering]);
 
     // Create update modal
     const [isOpenCreateUpdateModel, setIsOpenCreateUpdateModel] =
@@ -97,10 +108,18 @@ export default function ServiceList() {
 
     return (
         <>
-            <GButton onClick={handleOpenCreateUpdateModal}>
-                Thêm dịch vụ
-            </GButton>
-            <br />
+            <div>
+                <GButton
+                    style={{ marginRight: 12 }}
+                    onClick={handleOpenCreateUpdateModal}
+                >
+                    Thêm dịch vụ
+                </GButton>
+                <FilterService
+                    isFiltering={isFiltering}
+                    setIsFiltering={setIsFiltering}
+                />
+            </div>
             <br />
             <GTable
                 title={"DANH SÁCH SẢN PHẨM"}

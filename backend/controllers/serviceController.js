@@ -1,7 +1,24 @@
 const ServiceModel = require("../models/Service");
-const { v4: uuidv4 } = require("uuid");
 
 const serviceController = {
+    serviceSearch: async (req, res) => {
+        try {
+            const { service_category_id } = req.query;
+
+            const params = {};
+            if (service_category_id)
+                params.service_category_id = service_category_id;
+
+            const services = await ServiceModel.serviceSearch(params);
+            if (!services) {
+                return res.status(404).json("Dịch vụ không tồn tại");
+            } else {
+                return res.status(200).json(services);
+            }
+        } catch (error) {
+            res.status(500).json(error);
+        }
+    },
     // GET ALL SERVICE
     getAllService: async (req, res) => {
         try {
