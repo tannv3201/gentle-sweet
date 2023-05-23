@@ -131,7 +131,7 @@ export const addDiscount = async (
         dispatch(updateInvoiceDetailSuccess(res?.data));
         if (res?.data?.status === 200) {
             toast.success(res?.data?.msg);
-            getInvoiceDetailById(dispatch, id, accessToken, axiosJWT);
+            await getInvoiceDetailById(dispatch, id, accessToken, axiosJWT);
         }
     } catch (error) {
         dispatch(updateInvoiceDetailFailed(error.response?.data));

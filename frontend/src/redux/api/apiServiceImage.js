@@ -76,7 +76,7 @@ export const createServiceImage = async (
         dispatch(createServiceImageSuccess(res?.data));
         if (res?.data?.status === 201) {
             toast.success("Thêm ảnh thành công vào product image");
-            getAllServiceImageByServiceId(
+            await getAllServiceImageByServiceId(
                 accessToken,
                 serviceId,
                 dispatch,
@@ -108,7 +108,7 @@ export const uploadImage = async (
         dispatch(createServiceImageSuccess(res?.data));
         if (res?.data?.status === 201) {
             toast.success("Thêm ảnh thành công vào product image");
-            getAllServiceImage(accessToken, dispatch, axiosJWT);
+            await getAllServiceImage(accessToken, dispatch, axiosJWT);
         }
     } catch (error) {
         dispatch(createServiceImageFailed(error.response?.data));
@@ -132,7 +132,7 @@ export const updateServiceImage = async (
         dispatch(updateServiceImageSuccess(res?.data));
         if (res?.data?.status === 200) {
             toast.success(res?.data?.msg);
-            getAllServiceImage(accessToken, dispatch, axiosJWT);
+            await getAllServiceImage(accessToken, dispatch, axiosJWT);
         }
     } catch (error) {
         dispatch(updateServiceImageFailed(error.response?.data));
@@ -158,7 +158,7 @@ export const deleteImageInFolder = async (
         dispatch(deleteServiceImageSuccess(res?.data));
         if (res?.data?.status === 200) {
             toast.success(res?.data?.msg);
-            getAllServiceImage(accessToken, dispatch, axiosJWT);
+            await getAllServiceImage(accessToken, dispatch, axiosJWT);
         } else {
             toast.success(res?.data?.msg);
         }
@@ -184,7 +184,7 @@ export const deleteServiceImage = async (
         dispatch(deleteServiceImageSuccess(res?.data));
         if (res?.data?.status === 200) {
             toast.success(res?.data?.msg);
-            getAllServiceImageByServiceId(
+            await getAllServiceImageByServiceId(
                 accessToken,
                 serviceId,
                 dispatch,

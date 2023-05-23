@@ -54,7 +54,7 @@ export const createProductCategory = async (
         dispatch(createProductCategorySuccess(res?.data));
         if (res?.data?.status === 201) {
             toast.success(res?.data?.msg);
-            getAllProductCategory(accessToken, dispatch, axiosJWT);
+            await getAllProductCategory(accessToken, dispatch, axiosJWT);
         }
     } catch (error) {
         dispatch(createProductCategoryFailed(error.response?.data));
@@ -82,7 +82,7 @@ export const updateProductCategory = async (
         dispatch(updateProductCategorySuccess(res?.data));
         if (res?.data?.status === 200) {
             toast.success(res?.data?.msg);
-            getAllProductCategory(accessToken, dispatch, axiosJWT);
+            await getAllProductCategory(accessToken, dispatch, axiosJWT);
         }
     } catch (error) {
         dispatch(updateProductCategoryFailed(error.response?.data));
@@ -105,7 +105,7 @@ export const deleteProductCategory = async (
         dispatch(deleteProductCategorySuccess(res?.data));
         if (res?.data?.status === 200) {
             toast.success(res?.data?.msg);
-            getAllProductCategory(accessToken, dispatch, axiosJWT);
+            await getAllProductCategory(accessToken, dispatch, axiosJWT);
         }
     } catch (error) {
         dispatch(deleteProductCategoryFailed(error.response?.data));

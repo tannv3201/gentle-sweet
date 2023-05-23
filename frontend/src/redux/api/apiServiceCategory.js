@@ -54,7 +54,7 @@ export const createServiceCategory = async (
         dispatch(createServiceCategorySuccess(res?.data));
         if (res?.data?.status === 201) {
             toast.success(res?.data?.msg);
-            getAllServiceCategory(accessToken, dispatch, axiosJWT);
+            await getAllServiceCategory(accessToken, dispatch, axiosJWT);
         }
     } catch (error) {
         dispatch(createServiceCategoryFailed(error.response?.data));
@@ -82,7 +82,7 @@ export const updateServiceCategory = async (
         dispatch(updateServiceCategorySuccess(res?.data));
         if (res?.data?.status === 200) {
             toast.success(res?.data?.msg);
-            getAllServiceCategory(accessToken, dispatch, axiosJWT);
+            await getAllServiceCategory(accessToken, dispatch, axiosJWT);
         }
     } catch (error) {
         dispatch(updateServiceCategoryFailed(error.response?.data));
@@ -105,7 +105,7 @@ export const deleteServiceCategory = async (
         dispatch(deleteServiceCategorySuccess(res?.data));
         if (res?.data?.status === 200) {
             toast.success(res?.data?.msg);
-            getAllServiceCategory(accessToken, dispatch, axiosJWT);
+            await getAllServiceCategory(accessToken, dispatch, axiosJWT);
         }
     } catch (error) {
         dispatch(deleteServiceCategoryFailed(error.response?.data));

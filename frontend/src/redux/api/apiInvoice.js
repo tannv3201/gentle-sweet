@@ -82,9 +82,8 @@ export const createInvoice = async (
         if (res?.data?.status === 201) {
             // toast.success(res?.data?.msg);
             toast.success("Thêm hóa đơn thành công");
-            getAllInvoice(accessToken, dispatch, axiosJWT);
+            await getAllInvoice(accessToken, dispatch, axiosJWT);
         }
-        console.log(res?.data?.data);
 
         return res?.data?.data?.insertId;
     } catch (error) {
@@ -109,7 +108,7 @@ export const updateInvoice = async (
         dispatch(updateInvoiceSuccess(res?.data));
         if (res?.data?.status === 200) {
             toast.success(res?.data?.msg);
-            getInvoiceById(dispatch, id, accessToken, axiosJWT);
+            await getInvoiceById(dispatch, id, accessToken, axiosJWT);
         }
         console.log(res?.data);
     } catch (error) {
@@ -138,7 +137,7 @@ export const addDiscount = async (
         dispatch(updateInvoiceSuccess(res?.data));
         if (res?.data?.status === 200) {
             toast.success(res?.data?.msg);
-            getInvoiceById(dispatch, id, accessToken, axiosJWT);
+            await getInvoiceById(dispatch, id, accessToken, axiosJWT);
         }
     } catch (error) {
         dispatch(updateInvoiceFailed(error.response?.data));
@@ -156,7 +155,7 @@ export const deleteInvoice = async (dispatch, id, accessToken, axiosJWT) => {
         dispatch(deleteInvoiceSuccess(res?.data));
         if (res?.data?.status === 200) {
             toast.success(res?.data?.msg);
-            getAllInvoice(accessToken, dispatch, axiosJWT);
+            await getAllInvoice(accessToken, dispatch, axiosJWT);
         }
     } catch (error) {
         dispatch(deleteInvoiceFailed(error.response?.data));

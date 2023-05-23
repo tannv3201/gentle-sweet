@@ -59,7 +59,7 @@ export const createCustomerUser = async (
         dispatch(createCustomerSuccess(res?.data));
         if (res?.data?.status === 201) {
             toast.success(res?.data?.msg);
-            getAllCustomerUser(accessToken, dispatch, axiosJWT);
+            await getAllCustomerUser(accessToken, dispatch, axiosJWT);
         }
     } catch (error) {
         dispatch(createCustomerFailed(error.response?.data));
@@ -161,7 +161,7 @@ export const deleteCustomerUser = async (
         dispatch(deleteCustomerSuccess(res?.data));
         if (res?.data?.status === 200) {
             toast.success(res?.data?.msg);
-            getAllCustomerUser(accessToken, dispatch, axiosJWT);
+            await getAllCustomerUser(accessToken, dispatch, axiosJWT);
         }
     } catch (error) {
         dispatch(deleteCustomerFailed(error.response?.data));

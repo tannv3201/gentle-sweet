@@ -46,7 +46,7 @@ export const createDiscount = async (
         dispatch(createDiscountSuccess(res?.data));
         if (res?.data?.status === 201) {
             toast.success("Thêm sản phẩm thành công.");
-            getAllDiscount(accessToken, dispatch, axiosJWT);
+            await getAllDiscount(accessToken, dispatch, axiosJWT);
         }
         return res?.data?.data;
     } catch (error) {
@@ -71,7 +71,7 @@ export const updateDiscount = async (
         dispatch(updateDiscountSuccess(res?.data));
         if (res?.data?.status === 200) {
             toast.success(res?.data?.msg);
-            getAllDiscount(accessToken, dispatch, axiosJWT);
+            await getAllDiscount(accessToken, dispatch, axiosJWT);
         }
     } catch (error) {
         dispatch(updateDiscountFailed(error.response?.data));
@@ -89,7 +89,7 @@ export const deleteDiscount = async (dispatch, id, accessToken, axiosJWT) => {
         dispatch(deleteDiscountSuccess(res?.data));
         if (res?.data?.status === 200) {
             toast.success(res?.data?.msg);
-            getAllDiscount(accessToken, dispatch, axiosJWT);
+            await getAllDiscount(accessToken, dispatch, axiosJWT);
         }
     } catch (error) {
         dispatch(deleteDiscountFailed(error.response?.data));

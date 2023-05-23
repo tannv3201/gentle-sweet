@@ -176,7 +176,6 @@ export const confirmBooking = async (accessToken, dispatch, id, axiosJWT) => {
             await getBookingById(dispatch, id, accessToken, axiosJWT);
             await getAllBooking(accessToken, dispatch, axiosJWT);
         }
-        console.log(res?.data);
     } catch (error) {
         dispatch(confirmBookingFailed(error.response?.data));
     }

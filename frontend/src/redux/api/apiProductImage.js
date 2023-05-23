@@ -76,7 +76,7 @@ export const createProductImage = async (
         dispatch(createProductImageSuccess(res?.data));
         if (res?.data?.status === 201) {
             toast.success("Thêm ảnh thành công vào product image");
-            getAllProductImageByProductId(
+            await getAllProductImageByProductId(
                 accessToken,
                 productId,
                 dispatch,
@@ -108,7 +108,7 @@ export const uploadImage = async (
         dispatch(createProductImageSuccess(res?.data));
         if (res?.data?.status === 201) {
             toast.success("Thêm ảnh thành công vào product image");
-            getAllProductImage(accessToken, dispatch, axiosJWT);
+            await getAllProductImage(accessToken, dispatch, axiosJWT);
         }
     } catch (error) {
         dispatch(createProductImageFailed(error.response?.data));
@@ -132,7 +132,7 @@ export const updateProductImage = async (
         dispatch(updateProductImageSuccess(res?.data));
         if (res?.data?.status === 200) {
             toast.success(res?.data?.msg);
-            getAllProductImage(accessToken, dispatch, axiosJWT);
+            await getAllProductImage(accessToken, dispatch, axiosJWT);
         }
     } catch (error) {
         dispatch(updateProductImageFailed(error.response?.data));
@@ -158,7 +158,7 @@ export const deleteImageInFolder = async (
         dispatch(deleteProductImageSuccess(res?.data));
         if (res?.data?.status === 200) {
             toast.success(res?.data?.msg);
-            getAllProductImage(accessToken, dispatch, axiosJWT);
+            await getAllProductImage(accessToken, dispatch, axiosJWT);
         } else {
             toast.success(res?.data?.msg);
         }
@@ -184,7 +184,7 @@ export const deleteImageInDB = async (
         dispatch(deleteProductImageSuccess(res?.data));
         if (res?.data?.status === 200) {
             toast.success(res?.data?.msg);
-            getAllProductImageByProductId(
+            await getAllProductImageByProductId(
                 accessToken,
                 productId,
                 dispatch,
