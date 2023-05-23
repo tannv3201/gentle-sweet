@@ -40,7 +40,7 @@ export default function BookingDetailList({ isEditting }) {
             );
             return {
                 ...item,
-                product_name: getService?.name,
+                service_name: getService?.name,
                 price_total: item?.unit_price,
             };
         });
@@ -112,7 +112,7 @@ export default function BookingDetailList({ isEditting }) {
                         columns={[
                             {
                                 title: "Dịch vụ",
-                                field: "product_name",
+                                field: "service_name",
                             },
                             {
                                 title: "Ngày đặt",

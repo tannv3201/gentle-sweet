@@ -86,7 +86,7 @@ const bookingController = {
                     data
                 );
 
-            await BookingDetailModel.updatePriceTotalBooking(invoice_id);
+            await BookingDetailModel.updatePriceTotalBooking(booking_id);
             if (affectedRows === 0) {
                 return res.status(404).json({ message: "Cập nhật thất bại" });
             } else {

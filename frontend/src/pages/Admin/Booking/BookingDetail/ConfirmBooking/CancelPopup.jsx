@@ -9,12 +9,13 @@ import {
     cancelInvoice,
     updateInvoice,
 } from "../../../../../redux/api/apiInvoice";
+import { cancelBooking } from "../../../../../redux/api/apiBooking";
 
 export default function CancelPopup({
     handleClose,
     handleOpen,
     isOpen,
-    selectedInvoice,
+    selectedBooking,
 }) {
     const user = useSelector((state) => state.auth.login?.currentUser);
     const dispatch = useDispatch();
@@ -22,10 +23,10 @@ export default function CancelPopup({
     let axiosJWT = createAxios(user, dispatch, loginSuccess);
 
     const handleCancelInvoice = () => {
-        cancelInvoice(
+        cancelBooking(
             user?.accessToken,
             dispatch,
-            selectedInvoice?.invoice_id,
+            selectedBooking?.booking_id,
             axiosJWT
         ).then(() => {
             handleClose();
@@ -39,7 +40,7 @@ export default function CancelPopup({
                 handleOpen={handleOpen}
                 isOpen={isOpen}
                 deleteQuestion="Bạn có muốn hủy hóa đơn của khách hàng"
-                deleteLabel={selectedInvoice?.customer_name}
+                deleteLabel={selectedBooking?.customer_name}
                 handleDelete={handleCancelInvoice}
             />
         </>

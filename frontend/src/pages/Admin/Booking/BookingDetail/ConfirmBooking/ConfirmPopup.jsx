@@ -4,28 +4,25 @@ import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
 import { createAxios } from "../../../../../createInstance";
 import { loginSuccess } from "../../../../../redux/slice/authSlice";
-import { deleteInvoiceDetail } from "../../../../../redux/api/apiInvoiceDetail";
-import {
-    confirmInvoice,
-    updateInvoice,
-} from "../../../../../redux/api/apiInvoice";
+
+import { confirmBooking } from "../../../../../redux/api/apiBooking";
 
 export default function ConfirmPopup({
     handleClose,
     handleOpen,
     isOpen,
-    selectedInvoice,
+    selectedBooking,
 }) {
     const user = useSelector((state) => state.auth.login?.currentUser);
     const dispatch = useDispatch();
 
     let axiosJWT = createAxios(user, dispatch, loginSuccess);
 
-    const handleConfirmInvoice = () => {
-        confirmInvoice(
+    const handleConfirmBooking = () => {
+        confirmBooking(
             user?.accessToken,
             dispatch,
-            selectedInvoice?.invoice_id,
+            selectedBooking?.booking_id,
             axiosJWT
         ).then(() => {
             handleClose();
@@ -38,8 +35,8 @@ export default function ConfirmPopup({
                 handleOpen={handleOpen}
                 isOpen={isOpen}
                 deleteQuestion="Bạn có muốn xác nhận hóa đơn của khách hàng"
-                deleteLabel={selectedInvoice?.customer_name}
-                handleDelete={handleConfirmInvoice}
+                deleteLabel={selectedBooking?.customer_name}
+                handleDelete={handleConfirmBooking}
             />
         </>
     );

@@ -312,8 +312,8 @@ export default function BookingDetail() {
                     isOpen={isOpenConfirmBooking}
                     handleOpen={handleOpenConfirmBooking}
                     handleClose={handleCloseConfirmBooking}
-                    selectedInvoice={{
-                        invoice_id: bookingId,
+                    selectedBooking={{
+                        booking_id: bookingId,
                         customer_name:
                             currCustomerUser?.last_name +
                             " " +
@@ -325,8 +325,8 @@ export default function BookingDetail() {
                     isOpen={isOpenCancelBooking}
                     handleOpen={handleOpenCancelBooking}
                     handleClose={handleCloseCancelInvoice}
-                    selectedInvoice={{
-                        invoice_id: bookingId,
+                    selectedBooking={{
+                        booking_id: bookingId,
                         customer_name:
                             currCustomerUser?.last_name +
                             " " +

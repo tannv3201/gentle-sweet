@@ -76,7 +76,7 @@ export const createBookingDetail = async (
 export const updateBookingDetail = async (
     accessToken,
     dispatch,
-    id,
+    bookingDetailId,
     bookingId,
     bookingDetailData,
     axiosJWT
@@ -84,7 +84,7 @@ export const updateBookingDetail = async (
     dispatch(updateBookingDetailStart());
     try {
         const res = await axiosJWT.put(
-            "/v1/bookingDetail/" + id,
+            "/v1/bookingDetail/" + bookingDetailId,
             bookingDetailData,
             {
                 headers: {

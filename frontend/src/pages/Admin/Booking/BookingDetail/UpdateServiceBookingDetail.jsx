@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import { useFormik } from "formik";
 import GButton from "../../../../components/MyButton/MyButton";
-import { Autocomplete, Grid } from "@mui/material";
+import { Autocomplete, Grid, TextField } from "@mui/material";
 import { useState } from "react";
 import * as Yup from "yup";
 import GModal from "../../../../common/GModal/GModal";
@@ -20,15 +20,20 @@ import { createInvoice } from "../../../../redux/api/apiInvoice";
 import { getAllCustomerUser } from "../../../../redux/api/apiCustomerUser";
 import { updateInvoiceDetail } from "../../../../redux/api/apiInvoiceDetail";
 import { toast } from "react-hot-toast";
-
-// const cx = classNames.bind(styles);
+import GDatePicker, {
+    GFormatDate,
+} from "../../../../components/GDatePicker/GDatePicker";
+import dayjs from "dayjs";
+import utc from "dayjs/plugin/utc";
+import { updateBookingDetail } from "../../../../redux/api/apiBookingDetail";
 
 export default function UpdateServiceBookingDetail({
     handleClose,
     handleOpen,
     isOpen,
-    selectedProduct,
+    selectedService,
 }) {
+    dayjs.extend(utc);
     const user = useSelector((state) => state.auth.login?.currentUser);
     const dispatch = useDispatch();
     const customerUserList = useSelector(
@@ -41,9 +46,12 @@ export default function UpdateServiceBookingDetail({
         }
     }, []);
 
-    const [product, setProductCategory] = useState({
-        product_name: "",
-        product_quantity: "",
+    const [service, setService] = useState({
+        service_name: "",
+        service_id: "",
+        date: "",
+        start_time: "",
+        end_time: "",
         unit_price: "",
     });
 
@@ -52,37 +60,148 @@ export default function UpdateServiceBookingDetail({
     // Validate
     const validationSchema = Yup.object().shape({});
 
+    const handleUpdateService = async (data) => {
+        await updateBookingDetail(
+            user?.accessToken,
+            dispatch,
+            data?.id,
+            data?.booking_id,
+            data,
+            axiosJWT
+        ).then(() => {
+            handleClose();
+        });
+    };
+
     const formik = useFormik({
         enableReinitialize: true,
-        initialValues: product,
+        initialValues: service,
         validationSchema: validationSchema,
-        onSubmit: (data) => {
-            const { product_quantity, id, unit_price, ...rest } = data;
-            if (product?.product_quantity !== product_quantity) {
-                updateInvoiceDetail(
-                    user?.accessToken,
-                    dispatch,
-                    id,
-                    product?.invoice_id,
-                    {
-                        invoice_id: product?.invoice_id,
-                        product_quantity: product_quantity,
-                    },
-                    axiosJWT
-                ).then(() => {
-                    handleClose();
-                });
-            }
+        onSubmit: async (data) => {
+            const {
+                bookingTime_id,
+                bookingTime_name,
+                service_name,
+                price_total,
+                created_at,
+                updated_at,
+                status,
+                unit_price,
+                description,
+                tableData,
+                ...rest
+            } = data;
+            const dataUpdate = {
+                ...rest,
+                date: dayjs
+                    .utc(rest?.date)
+                    .utcOffset("+07:00")
+                    .format("YYYY/MM/DD"),
+            };
+
+            await handleUpdateService(dataUpdate);
         },
     });
 
     useEffect(() => {
-        if (selectedProduct) setProductCategory(selectedProduct);
-    }, [selectedProduct]);
+        if (selectedService) {
+            setService({
+                ...selectedService,
+                date: selectedService?.date
+                    ? dayjs(selectedService?.date)
+                    : null,
+            });
+        }
+        if (selectedService?.date) {
+            const selectedDate = GFormatDate(
+                selectedService?.date,
+                "DD/MM/YYYY"
+            ).toString();
 
-    const handleChangeQuantity = (value) => {
-        if (value === "" || value > 0) {
-            formik.setFieldValue("product_quantity", value);
+            const filteredOptions = bookingTimeDefault.filter((option) => {
+                const matchingBooking = getBookingDetail.find(
+                    (booking) =>
+                        GFormatDate(booking.date, "DD/MM/YYYY").toString() ===
+                            selectedDate &&
+                        booking.start_time === option.start_time
+                );
+                return !matchingBooking;
+            });
+
+            setBookingTime(filteredOptions);
+        }
+    }, [selectedService]);
+
+    const getBookingDetail = useSelector(
+        (state) => state.bookingDetail.bookingDetail?.bookingDetailByBooking
+    );
+
+    const [bookingTime, setBookingTime] = useState([]);
+    const bookingTimeDefault = [
+        {
+            id: 1,
+            name: "7:00 - 09:00",
+            start_time: "07:00:00",
+            end_time: "09:00:00",
+        },
+        {
+            id: 2,
+            name: "09:00 - 11:00",
+            start_time: "09:00:00",
+            end_time: "11:00:00",
+        },
+        {
+            id: 3,
+            name: "13:00 - 15:00",
+            start_time: "13:00:00",
+            end_time: "15:00:00",
+        },
+        {
+            id: 4,
+            name: "15:00 - 17:00",
+            start_time: "15:00:00",
+            end_time: "17:00:00",
+        },
+    ];
+    const handleChangeBookingDate = (value) => {
+        if (value) {
+            formik.setFieldValue("date", value);
+            const selectedDate = GFormatDate(value, "DD/MM/YYYY").toString();
+
+            const filteredOptions = bookingTimeDefault.filter((option) => {
+                const matchingBooking = getBookingDetail.find(
+                    (booking) =>
+                        GFormatDate(booking.date, "DD/MM/YYYY").toString() ===
+                            selectedDate &&
+                        booking.start_time === option.start_time
+                );
+                return !matchingBooking;
+            });
+
+            // console.log(getBookingDetail?.find((b) => b?.date === ""));
+
+            setBookingTime(filteredOptions);
+        } else {
+            formik.setFieldValue("date", null);
+            setBookingTime([]);
+            formik.setFieldValue("bookingTime_id", null);
+            formik.setFieldValue("bookingTime_name", null);
+            formik.setFieldValue("start_time", null);
+            formik.setFieldValue("end_time", null);
+        }
+    };
+
+    const handleChangeBookingTime = (value) => {
+        if (value) {
+            formik.setFieldValue("bookingTime_id", value?.id);
+            formik.setFieldValue("bookingTime_name", value?.name);
+            formik.setFieldValue("start_time", value?.start_time);
+            formik.setFieldValue("end_time", value?.end_time);
+        } else {
+            formik.setFieldValue("bookingTime_id", null);
+            formik.setFieldValue("bookingTime_name", null);
+            formik.setFieldValue("start_time", null);
+            formik.setFieldValue("end_time", null);
         }
     };
 
@@ -104,36 +223,84 @@ export default function UpdateServiceBookingDetail({
                                 <div>
                                     <GTextFieldNormal
                                         disabled={true}
-                                        label={"Sản phẩm"}
+                                        label={"Tên dịch vụ"}
                                         fullWidth
                                         size="medium"
-                                        name={"product_name"}
+                                        name={"service_name"}
                                         value={
-                                            formik.values?.product_name || ""
+                                            formik.values?.service_name || ""
                                         }
                                         onChange={formik.handleChange}
                                         formik={formik}
                                     />
                                 </div>
                             </Grid>
-                            <Grid item xs={12}>
-                                <div>
-                                    <GTextFieldNormal
-                                        label={"Số lượng"}
-                                        fullWidth
-                                        size="medium"
-                                        value={
-                                            formik.values?.product_quantity ||
-                                            ""
-                                        }
-                                        name={"product_quantity"}
-                                        formik={formik}
-                                        type="number"
-                                        onChange={(e) =>
-                                            handleChangeQuantity(e.target.value)
-                                        }
-                                    />
-                                </div>
+                            <Grid item xs={6}>
+                                <GDatePicker
+                                    size={"medium"}
+                                    label={"Chọn ngày"}
+                                    onBlur={formik.handleBlur}
+                                    fullWidth
+                                    name="date"
+                                    onChange={(date) =>
+                                        handleChangeBookingDate(date)
+                                    }
+                                    value={formik.values?.date || null}
+                                    formik={formik}
+                                    error={
+                                        formik?.touched?.date &&
+                                        Boolean(formik?.errors?.date)
+                                    }
+                                    helperText={
+                                        formik?.touched?.date &&
+                                        formik?.errors?.date
+                                    }
+                                />
+                            </Grid>
+
+                            <Grid item xs={6}>
+                                <Autocomplete
+                                    options={bookingTime}
+                                    onBlur={formik.handleBlur}
+                                    getOptionLabel={(option) =>
+                                        `${option?.name}` || ""
+                                    }
+                                    onChange={(e, value) => {
+                                        handleChangeBookingTime(value);
+                                    }}
+                                    value={
+                                        formik.values.start_time
+                                            ? {
+                                                  id: bookingTimeDefault?.find(
+                                                      (t) =>
+                                                          t.start_time ===
+                                                          formik.values
+                                                              .start_time
+                                                  )?.id,
+                                                  name: bookingTimeDefault?.find(
+                                                      (t) =>
+                                                          t.start_time ===
+                                                          formik.values
+                                                              .start_time
+                                                  )?.name,
+                                              }
+                                            : null
+                                    }
+                                    isOptionEqualToValue={(option, value) =>
+                                        value === null ||
+                                        value === "" ||
+                                        option?.id === value?.id
+                                    }
+                                    renderInput={(params) => (
+                                        <TextField
+                                            {...params}
+                                            color="secondary"
+                                            size="medium"
+                                            fullWidth
+                                            label="Khung thời gian"
+                                        />
+                                    )}
+                                />
                             </Grid>
                             <Grid
                                 item

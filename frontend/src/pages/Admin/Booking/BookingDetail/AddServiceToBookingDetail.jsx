@@ -117,25 +117,6 @@ export default function AddServiceToBookingDetail({
         }
     };
 
-    const handleCreateBookingDetailExist = async (values) => {
-        for (const item of values) {
-            await updateInvoiceDetail(
-                user?.accessToken,
-                dispatch,
-                item?.invoice_detail_id,
-                bookingId,
-                {
-                    invoice_id: bookingId,
-                    product_quantity:
-                        item?.old_quantity + parseInt(item?.product_quantity),
-                },
-                axiosJWT
-            ).then(() => {
-                handleCloseModal();
-            });
-        }
-    };
-
     const handleChangeService = (value, index) => {
         if (value) {
             formik.setFieldValue(`services[${index}].service_id`, value?.id);
@@ -177,19 +158,6 @@ export default function AddServiceToBookingDetail({
     };
 
     const [bookingTime, setBookingTime] = useState([]);
-    const bookingDateList = [];
-    useEffect(() => {
-        getBookingDetail?.map((bd) => {
-            if (!bookingDateList.includes(bd?.date)) {
-                bookingDateList.push({
-                    date: GFormatDate(bd?.date?.toString(), "DD/MM/YYYY"),
-                    start_time: bd?.start_time?.toString(),
-                    end_time: bd?.end_time?.toString(),
-                });
-            }
-        });
-    }, [getBookingDetail]);
-    console.log("re-render");
 
     const handleChangeBookingDate = (value, index) => {
         const bookingTimeDefault = [
