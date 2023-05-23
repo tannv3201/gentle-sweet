@@ -13,6 +13,9 @@ import {
     getProductByIdFailed,
     getProductByIdStart,
     getProductByIdSuccess,
+    productSearchFailed,
+    productSearchStart,
+    productSearchSuccess,
     updateProductFailed,
     updateProductStart,
     updateProductSuccess,
@@ -50,9 +53,8 @@ export const createProductOnline = async (
         if (res?.data?.status === 201) {
             // toast.success(res?.data?.msg);
             toast.success("Thêm sản phẩm thành công.");
-            getAllProduct(accessToken, dispatch, axiosJWT);
+            await getAllProduct(accessToken, dispatch, axiosJWT);
         }
-        console.log(res?.data?.data?.insertId);
 
         return res?.data?.data;
     } catch (error) {
@@ -77,7 +79,7 @@ export const createProductLocal = async (
         if (res?.data?.status === 201) {
             // toast.success(res?.data?.msg);
             toast.success("Thêm sản phẩm thành công.");
-            getAllProduct(accessToken, dispatch, axiosJWT);
+            await getAllProduct(accessToken, dispatch, axiosJWT);
         }
         return res?.data?.data;
     } catch (error) {
@@ -103,7 +105,7 @@ export const updateProduct = async (
         if (res?.data?.status === 200) {
             toast.success(res?.data?.msg);
             // getAllProduct(accessToken, dispatch, axiosJWT);
-            getProductById(dispatch, id, accessToken, axiosJWT);
+            await getProductById(dispatch, id, accessToken, axiosJWT);
         }
         console.log(res?.data);
     } catch (error) {
@@ -132,7 +134,7 @@ export const addDiscount = async (
         dispatch(updateProductSuccess(res?.data));
         if (res?.data?.status === 200) {
             toast.success(res?.data?.msg);
-            getProductById(dispatch, id, accessToken, axiosJWT);
+            await getProductById(dispatch, id, accessToken, axiosJWT);
         }
     } catch (error) {
         dispatch(updateProductFailed(error.response?.data));
@@ -150,7 +152,7 @@ export const deleteProduct = async (dispatch, id, accessToken, axiosJWT) => {
         dispatch(deleteProductSuccess(res?.data));
         if (res?.data?.status === 200) {
             toast.success(res?.data?.msg);
-            getAllProduct(accessToken, dispatch, axiosJWT);
+            await getAllProduct(accessToken, dispatch, axiosJWT);
         }
     } catch (error) {
         dispatch(deleteProductFailed(error.response?.data));
@@ -172,5 +174,26 @@ export const getProductById = async (dispatch, id, accessToken, axiosJWT) => {
         return res?.data;
     } catch (error) {
         dispatch(getProductByIdFailed(error.response?.data));
+    }
+};
+
+export const productSearch = async (
+    accessToken,
+    params,
+    dispatch,
+    axiosJWT
+) => {
+    dispatch(productSearchStart());
+    try {
+        const res = await axiosJWT.get("/v1/product/search", {
+            params: params,
+            headers: {
+                token: `Bearer ${accessToken}`,
+            },
+        });
+        dispatch(productSearchSuccess(res?.data));
+        return res?.data?.length;
+    } catch (error) {
+        dispatch(productSearchFailed());
     }
 };

@@ -5,7 +5,7 @@ import { useEffect } from "react";
 import { useSelector } from "react-redux";
 import { getAllProduct } from "../../../redux/api/apiProduct";
 import { useDispatch } from "react-redux";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { loginSuccess } from "../../../redux/slice/authSlice";
 import { createAxios } from "../../../createInstance";
 import { useState } from "react";
@@ -22,11 +22,15 @@ import { API_IMAGE_URL } from "../../../LocalConstants";
 import styles from "./Product.module.scss";
 import classNames from "classnames/bind";
 import { InfoRounded } from "@mui/icons-material";
+import FilterProduct from "./FilterProduct/FilterProduct";
+
 const cx = classNames.bind(styles);
 
 export default function ProductList() {
     const user = useSelector((state) => state.auth.login?.currentUser);
     const [cloneData, setCloneData] = useState([]);
+    const [isFiltering, setIsFiltering] = useState(false);
+
     const dispatch = useDispatch();
     const navigate = useNavigate();
     const [selectedProduct, setSelectedProduct] = useState({});
@@ -46,9 +50,18 @@ export default function ProductList() {
         }
     }, []);
 
+    const productListSearch = useSelector(
+        (state) => state.product.product?.productListSearch
+    );
+
+    const location = useLocation();
     useEffect(() => {
-        setCloneData(structuredClone(productList));
-    }, [productList]);
+        if (location.search) {
+            setCloneData(structuredClone(productListSearch));
+        } else if (!location.search) {
+            setCloneData(structuredClone(productList));
+        }
+    }, [productList, productListSearch, isFiltering]);
 
     // Create update modal
     const [isOpenCreateUpdateModel, setIsOpenCreateUpdateModel] =
@@ -85,10 +98,18 @@ export default function ProductList() {
 
     return (
         <>
-            <GButton onClick={handleOpenCreateUpdateModal}>
-                Thêm sản phẩm
-            </GButton>
-            <br />
+            <div>
+                <GButton
+                    style={{ marginRight: 12 }}
+                    onClick={handleOpenCreateUpdateModal}
+                >
+                    Thêm sản phẩm
+                </GButton>
+                <FilterProduct
+                    isFiltering={isFiltering}
+                    setIsFiltering={setIsFiltering}
+                />
+            </div>
             <br />
             <GTable
                 title={"DANH SÁCH SẢN PHẨM"}

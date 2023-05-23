@@ -10,6 +10,12 @@ router.post(
     productController.createProductOnline
 );
 
+router.get(
+    "/search",
+    middlewareController.verifyTokenAndSystemUserAuth,
+    productController.productSearch
+);
+
 router.post(
     "/local",
     middlewareController.verifyTokenAndSystemUserAuth,

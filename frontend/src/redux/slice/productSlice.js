@@ -5,6 +5,7 @@ const productSlice = createSlice({
     initialState: {
         product: {
             productList: [],
+            productListSearch: [],
             product: null,
             isFetching: false,
             error: false,
@@ -21,6 +22,19 @@ const productSlice = createSlice({
             state.product.productList = action.payload;
         },
         getAllProductFailed: (state) => {
+            state.product.isFetching = false;
+            state.product.error = true;
+        },
+
+        // Search
+        productSearchStart: (state) => {
+            state.product.isFetching = true;
+        },
+        productSearchSuccess: (state, action) => {
+            state.product.isFetching = false;
+            state.product.productListSearch = action.payload;
+        },
+        productSearchFailed: (state) => {
             state.product.isFetching = false;
             state.product.error = true;
         },
@@ -86,6 +100,10 @@ export const {
     getAllProductStart,
     getAllProductSuccess,
     getAllProductFailed,
+
+    productSearchStart,
+    productSearchSuccess,
+    productSearchFailed,
 
     getProductByIdStart,
     getProductByIdSuccess,

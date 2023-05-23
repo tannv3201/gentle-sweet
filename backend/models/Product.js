@@ -39,7 +39,21 @@ const deleteProductById = async (id) => {
     return result.affectedRows;
 };
 
+const productSearch = async (params) => {
+    let query = "SELECT * FROM tbl_product WHERE status > 0";
+    const values = [];
+
+    if (params.product_category_id) {
+        query += " AND product_category_id = (?)";
+        values.push(params.product_category_id);
+    }
+
+    const [rows, fields] = await pool.query(query, values);
+    return rows;
+};
+
 module.exports = {
+    productSearch,
     getAllProduct,
     getProductById,
     createProduct,
