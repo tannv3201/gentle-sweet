@@ -55,7 +55,7 @@ export const createAdminUser = async (
         dispatch(createAdminUserSuccess(res?.data));
         if (res?.data?.status === 201) {
             toast.success(res?.data?.msg);
-            getAllUser(accessToken, dispatch, axiosJWT);
+            await getAllUser(accessToken, dispatch, axiosJWT);
         }
     } catch (error) {
         dispatch(createAdminUserFailed(error.response?.data));
@@ -79,6 +79,7 @@ export const updateAdminUser = async (
         dispatch(updateAdminUserSuccess(res?.data));
         if (res?.data?.status === 200) {
             toast.success(res?.data?.msg);
+            await getAllUser(accessToken, dispatch, axiosJWT);
         }
     } catch (error) {
         dispatch(updateAdminUserFailed(error.response?.data));
@@ -148,7 +149,7 @@ export const deleteAdminUser = async (dispatch, id, accessToken, axiosJWT) => {
         dispatch(deleteAdminUserSuccess(res?.data));
         if (res?.data?.status === 200) {
             toast.success(res?.data?.msg);
-            getAllUser(accessToken, dispatch, axiosJWT);
+            await getAllUser(accessToken, dispatch, axiosJWT);
         }
     } catch (error) {
         dispatch(deleteAdminUserFailed(error.response?.data));

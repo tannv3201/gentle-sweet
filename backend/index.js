@@ -26,6 +26,7 @@ const bookingRoute = require("./routes/booking");
 const bookingDetailRoute = require("./routes/bookingDetail");
 
 const deliveryRoute = require("./routes/delivery");
+const cartRoute = require("./routes/cart");
 
 const storageImageRoute = require("./routes/storageImage");
 
@@ -54,6 +55,7 @@ app.use("/v1/serviceImage", serviceImageRoute);
 app.use("/v1/discount", discountRoute);
 
 app.use("/v1/invoice", invoiceRoute);
+app.use("/v1/cart", cartRoute);
 app.use("/v1/invoiceDetail", invoiceDetailRoute);
 
 app.use("/v1/booking", bookingRoute);

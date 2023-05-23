@@ -87,6 +87,7 @@ export const updateCustomerUser = async (
         dispatch(updateCustomerSuccess(res?.data));
         if (res?.data?.status === 200) {
             toast.success(res?.data?.msg);
+            await getAllCustomerUser(accessToken, dispatch, axiosJWT);
         }
     } catch (error) {
         dispatch(updateCustomerFailed(error.response?.data));

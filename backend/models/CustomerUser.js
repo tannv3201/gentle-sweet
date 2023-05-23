@@ -30,7 +30,7 @@ const createCustomerUser = async (customerUserData) => {
             "INSERT INTO tbl_customer_user SET ?",
             [customerUserData]
         );
-        return customerUserData;
+        return result;
     } catch (error) {
         console.log(error);
     }

@@ -5,6 +5,7 @@ const roleModel = require("../models/Role");
 const { v4: uuidv4 } = require("uuid");
 const jwt = require("jsonwebtoken");
 const pool = require("../config/database");
+const cartModel = require("../models/Cart");
 
 require("dotenv").config();
 
@@ -32,6 +33,10 @@ const authController = {
                 birth_date: req.body.birth_date,
                 email: req.body.email,
                 status: 1,
+            });
+
+            await cartModel.createCart({
+                customer_user_id: newCustomerUser.insertId,
             });
 
             res.status(201).json(newCustomerUser);

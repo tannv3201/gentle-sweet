@@ -80,6 +80,7 @@ export const updateService = async (
         if (res?.data?.status === 200) {
             toast.success(res?.data?.msg);
             await getServiceById(dispatch, id, accessToken, axiosJWT);
+            await getAllService(accessToken, dispatch, axiosJWT);
         }
     } catch (error) {
         dispatch(updateServiceFailed(error.response?.data));
@@ -108,6 +109,7 @@ export const addDiscount = async (
         if (res?.data?.status === 200) {
             toast.success(res?.data?.msg);
             await getServiceById(dispatch, id, accessToken, axiosJWT);
+            await getAllService(accessToken, dispatch, axiosJWT);
         }
     } catch (error) {
         dispatch(updateServiceFailed(error.response?.data));

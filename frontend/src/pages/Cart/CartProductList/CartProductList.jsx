@@ -14,6 +14,11 @@ import {
 import { useMediaQuery } from "@mui/material";
 import { useTheme } from "@mui/material/styles";
 import images from "../../../assets/images";
+import { getCartByUserId } from "../../../redux/api/apiCart";
+import { useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
+import { createAxios } from "../../../createInstance";
+import { logoutSuccess } from "../../../redux/slice/authSlice";
 
 const cx = classNames.bind(styles);
 const productListCart = [
@@ -115,6 +120,15 @@ function CartProductList() {
             e.preventDefault();
         }
     };
+
+    // ============
+    const user = useSelector((state) => state.auth.login?.currentUser);
+    const dispatch = useDispatch();
+    let axiosJWT = createAxios(user, dispatch, logoutSuccess);
+
+    useEffect(() => {
+        getCartByUserId(user?.accessToken, dispatch, user?.id, axiosJWT);
+    }, []);
 
     return (
         <div className={cx("wrapper")}>

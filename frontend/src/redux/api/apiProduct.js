@@ -110,6 +110,7 @@ export const updateProduct = async (
             toast.success(res?.data?.msg);
             // getAllProduct(accessToken, dispatch, axiosJWT);
             await getProductById(dispatch, id, accessToken, axiosJWT);
+            await getAllProduct(accessToken, dispatch, axiosJWT);
         }
         console.log(res?.data);
     } catch (error) {
