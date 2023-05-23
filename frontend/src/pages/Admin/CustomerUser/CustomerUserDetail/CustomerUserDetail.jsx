@@ -145,13 +145,17 @@ export default function CustomerUserDetail() {
     const [districts, setDistricts] = useState([]);
     const [wards, setWards] = useState([]);
 
+    const getProvinceList = structuredClone(
+        useSelector((state) => state.province.province.provinceList)
+    );
+
     // Get province list from API
     useEffect(() => {
-        if (provinces?.length === 0) {
-            getProvince().then((provinces) => {
-                setProvinces(provinces);
-            });
+        if (getProvinceList?.length === 0) {
+            getProvince(dispatch);
         }
+
+        setProvinces(getProvinceList);
     }, []);
 
     // Fn handle province onChange event

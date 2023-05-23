@@ -12,16 +12,10 @@ import GTextFieldNormal from "../../../components/GTextField/GTextFieldNormal";
 import GDatePicker from "../../../components/GDatePicker/GDatePicker";
 import {
     getDistrict,
-    getDistrictById,
     getProvince,
-    getProvinceById,
     getWard,
-    getWardById,
 } from "../../../redux/api/apiProvince";
-import {
-    createCustomerUser,
-    updateCustomerUser,
-} from "../../../redux/api/apiCustomerUser";
+import { createCustomerUser } from "../../../redux/api/apiCustomerUser";
 import { toast } from "react-hot-toast";
 import dayjs from "dayjs";
 import utc from "dayjs/plugin/utc";
@@ -151,11 +145,17 @@ export default function CreateUpdateCustomerUserModal({
     const [selectedDistrict, setSelectedDistrict] = useState(null);
     const [selectedWard, setSelectedWard] = useState(null);
 
+    const getProvinceList = structuredClone(
+        useSelector((state) => state.province.province.provinceList)
+    );
+
     // Get province list from API
     useEffect(() => {
-        getProvince().then((provinces) => {
-            setProvinces(provinces);
-        });
+        if (getProvinceList?.length === 0) {
+            getProvince(dispatch);
+        }
+
+        setProvinces(getProvinceList);
     }, []);
 
     // Fn handle province onChange event
