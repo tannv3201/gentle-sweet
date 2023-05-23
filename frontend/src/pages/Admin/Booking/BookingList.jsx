@@ -3,7 +3,7 @@ import DeleteRoundedIcon from "@mui/icons-material/DeleteRounded";
 import { useEffect } from "react";
 import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate, useSearchParams } from "react-router-dom";
 import { loginSuccess } from "../../../redux/slice/authSlice";
 import { createAxios } from "../../../createInstance";
 import { useState } from "react";
@@ -14,18 +14,18 @@ import GButton from "../../../components/MyButton/MyButton";
 import { LightTooltip } from "../../../components/GTooltip/GTooltip";
 import { FormatCurrency } from "../../../components/FormatCurrency/FormatCurrency";
 
-import { API_IMAGE_URL } from "../../../LocalConstants";
-import styles from "./Invoice.module.scss";
+import styles from "./Booking.module.scss";
 import classNames from "classnames/bind";
 import { InfoRounded } from "@mui/icons-material";
-import { getAllInvoice } from "../../../redux/api/apiInvoice";
 import dayjs from "dayjs";
 import utc from "dayjs/plugin/utc";
 import { getAllCustomerUser } from "../../../redux/api/apiCustomerUser";
 import { getAllProduct } from "../../../redux/api/apiProduct";
-import InvoiceClassification from "./FilterInvoice/InvoiceClassification";
+import FilterInvoice from "./FilterBooking/FilterBooking";
+import CreateInvoiceModal from "./CreateBookingModal";
 import DeleteBookingPopup from "./DeleteBookingPopup";
-import CreateBookingModal from "./CreateBookingModal";
+import { getAllBooking } from "../../../redux/api/apiBooking";
+import { getAllService } from "../../../redux/api/apiService";
 
 const cx = classNames.bind(styles);
 
@@ -37,9 +37,7 @@ export default function BookingList() {
     const navigate = useNavigate();
     // Check is filtering
     const [isFiltering, setIsFiltering] = useState(false);
-    const handleFilter = (newStatus) => {
-        setIsFiltering(newStatus);
-    };
+
     const [selectedInvoice, setSelectedInvoice] = useState({});
 
     let axiosJWT = createAxios(user, dispatch, loginSuccess);
@@ -54,12 +52,16 @@ export default function BookingList() {
         }
     }, []);
 
-    const invoiceList = useSelector(
-        (state) => state.invoice.invoice?.invoiceList
+    const bookingList = useSelector(
+        (state) => state.booking.booking?.bookingList
     );
 
-    const invoiceListByStatus = useSelector(
-        (state) => state.invoice.invoice?.invoiceListByStatus
+    const bookingListSearch = useSelector(
+        (state) => state.booking.booking?.bookingListSearch
+    );
+
+    const serviceList = useSelector(
+        (state) => state.service.service?.serviceList
     );
 
     useEffect(() => {
@@ -67,84 +69,88 @@ export default function BookingList() {
             if (!user) {
                 navigate("/dang-nhap");
             }
-            if (user?.accessToken) {
-                await getAllInvoice(user?.accessToken, dispatch, axiosJWT);
+
+            if (bookingList?.length === 0) {
+                await getAllBooking(user?.accessToken, dispatch, axiosJWT);
             }
-            await getAllProduct(user?.accessToken, dispatch, axiosJWT);
+            if (serviceList?.length === 0) {
+                await getAllService(user?.accessToken, dispatch, axiosJWT);
+            }
         };
 
         fetchData();
     }, []);
+
+    const location = useLocation();
+
     useEffect(() => {
-        if (isFiltering === true) {
-            const newInvoiceList = invoiceListByStatus?.map((invoice) => {
+        if (location.search) {
+            const newBookingList = bookingListSearch?.map((booking) => {
                 const customerUser = customerUserList?.find(
-                    (item) => item.id === invoice?.customer_user_id
+                    (item) => item.id === booking?.customer_user_id
                 );
                 return {
-                    ...invoice,
+                    ...booking,
                     fullName:
                         customerUser?.last_name +
                         " " +
                         customerUser?.first_name,
                     status_name:
-                        invoice?.status === 0
+                        booking?.status === 5
                             ? "Đã hủy"
-                            : invoice?.status === 1
-                            ? "Chờ tiếp nhận"
-                            : invoice?.status === 2
-                            ? "Đã tiếp nhận"
-                            : invoice?.status === 3
+                            : booking?.status === 1
+                            ? "Chờ xác nhận"
+                            : booking?.status === 2
+                            ? "Đã xác nhận"
+                            : booking?.status === 3
                             ? "Đang giao hàng"
-                            : invoice?.status === 4
+                            : booking?.status === 4
                             ? "Đã giao hàng"
                             : "",
-                    created_at: dayjs(invoice?.created_at).format("DD/MM/YYYY"),
+                    created_at: dayjs(booking?.created_at).format("DD/MM/YYYY"),
                 };
             });
-            setCloneData(structuredClone(newInvoiceList));
-        } else if (invoiceList?.length !== 0 && isFiltering === false) {
-            const newInvoiceList = invoiceList?.map((invoice) => {
+            setCloneData(structuredClone(newBookingList));
+        } else if (!location.search) {
+            const newBookingList = bookingList?.map((booking) => {
                 const customerUser = customerUserList?.find(
-                    (item) => item.id === invoice?.customer_user_id
+                    (item) => item.id === booking?.customer_user_id
                 );
                 return {
-                    ...invoice,
+                    ...booking,
                     fullName:
                         customerUser?.last_name +
                         " " +
                         customerUser?.first_name,
                     status_name:
-                        invoice?.status === 5
+                        booking?.status === 5
                             ? "Đã hủy"
-                            : invoice?.status === 1
-                            ? "Chờ tiếp nhận"
-                            : invoice?.status === 2
-                            ? "Đã tiếp nhận"
-                            : invoice?.status === 3
+                            : booking?.status === 1
+                            ? "Chờ xác nhận"
+                            : booking?.status === 2
+                            ? "Đã xác nhận"
+                            : booking?.status === 3
                             ? "Đang giao hàng"
-                            : invoice?.status === 4
+                            : booking?.status === 4
                             ? "Đã giao hàng"
-                            : "Đã hủy",
-                    created_at: dayjs(invoice?.created_at).format("DD/MM/YYYY"),
+                            : "",
+                    created_at: dayjs(booking?.created_at).format("DD/MM/YYYY"),
                 };
             });
-            setCloneData(structuredClone(newInvoiceList));
+            setCloneData(structuredClone(newBookingList));
         }
-    }, [invoiceList, invoiceListByStatus, isFiltering]);
-
-    console.log(cloneData);
+    }, [bookingList, bookingListSearch, isFiltering]);
 
     // Create update modal
-    const [isOpenCreateInvoiceModel, setIsOpenCreateInvoiceModel] =
+    const [isOpenCreateBookingModel, setIsOpenCreateBookingModel] =
         useState(false);
 
-    const handleOpenCreateInvoiceModal = () => {
-        setIsOpenCreateInvoiceModel(true);
+    const handleOpenCreateBookingModal = () => {
+        setIsOpenCreateBookingModel(true);
     };
 
-    const handleCloseCreateInvoiceModal = () => {
-        setIsOpenCreateInvoiceModel(false);
+    const handleCloseCreateBookingModal = () => {
+        setIsOpenCreateBookingModel(false);
     };
 
     // Delete confirm modal
@@ -164,19 +170,19 @@ export default function BookingList() {
         setIsOpenDeleteConfirmPopup(false);
     };
 
-    const handleNavigateInvoiceDetail = (serviceId) => {
-        navigate(`/admin/invoice/${serviceId}`);
+    const handleNavigateBookingDetail = (bookingId) => {
+        navigate(`/admin/booking/${bookingId}`);
     };
 
     return (
         <div className={cx("invoice-list-wrapper")}>
             <div className={cx("btn-list-header")}>
-                <GButton onClick={handleOpenCreateInvoiceModal}>
-                    Thêm hóa đơn
+                <GButton onClick={handleOpenCreateBookingModal}>
+                    Thêm lịch hẹn
                 </GButton>
-                <InvoiceClassification
+                <FilterInvoice
                     isFiltering={isFiltering}
-                    handleFilter={handleFilter}
+                    setIsFiltering={setIsFiltering}
                 />
             </div>
             <br />
@@ -214,24 +220,24 @@ export default function BookingList() {
                                             Đã hủy
                                         </span>
                                     ) : rowData?.status_name ===
-                                      "Chờ tiếp nhận" ? (
+                                      "Chờ xác nhận" ? (
                                         <span
                                             className={cx(
                                                 "status_invoice",
                                                 "pending"
                                             )}
                                         >
-                                            Chờ tiếp nhận
+                                            Chờ xác nhận
                                         </span>
                                     ) : rowData?.status_name ===
-                                      "Đã tiếp nhận" ? (
+                                      "Đã xác nhận" ? (
                                         <span
                                             className={cx(
                                                 "status_invoice",
                                                 "received"
                                             )}
                                         >
-                                            Đã tiếp nhận
+                                            Đã xác nhận
                                         </span>
                                     ) : rowData?.status_name ===
                                       "Đang giao hàng" ? (
@@ -278,7 +284,7 @@ export default function BookingList() {
                                 >
                                     <IconButton
                                         onClick={() => {
-                                            handleNavigateInvoiceDetail(
+                                            handleNavigateBookingDetail(
                                                 rowData?.id
                                             );
                                         }}
@@ -305,10 +311,10 @@ export default function BookingList() {
                 exportFileName={"DanhSachNguoiDung"}
             />
 
-            <CreateBookingModal
-                isOpen={isOpenCreateInvoiceModel}
-                handleOpen={handleOpenCreateInvoiceModal}
-                handleClose={handleCloseCreateInvoiceModal}
+            <CreateInvoiceModal
+                isOpen={isOpenCreateBookingModel}
+                handleOpen={handleOpenCreateBookingModal}
+                handleClose={handleCloseCreateBookingModal}
             />
 
             <DeleteBookingPopup

@@ -53,8 +53,9 @@ const bookingController = {
                 await BookingDetailModel.createBookingDetail({
                     booking_id: req.body.booking_id,
                     service_id: req.body.service_id,
-                    startTime: req.body.startTime,
-                    endTime: req.body.endTime,
+                    start_time: req.body.start_time,
+                    date: req.body.date,
+                    end_time: req.body.end_time,
                     unit_price: req.body.unit_price,
                     status: 1,
                 });
@@ -129,7 +130,7 @@ const bookingController = {
                 );
 
             if (bookingDetailByBooking?.length !== 0) {
-                await BookingDetailModel.updatePriceTotalInvoice(
+                await BookingDetailModel.updatePriceTotalBooking(
                     getDeleteBookingDetail?.booking_id
                 );
             } else {

@@ -37,10 +37,9 @@ import CustomerUserDetail from "../pages/Admin/CustomerUser/CustomerUserDetail/C
 import ProductDetailAdmin from "../pages/Admin/Products/ProductDetail/ProductDetail";
 import ServiceDetail from "../pages/Admin/Services/ServiceDetail/ServiceDetail";
 import Invoice from "../pages/Admin/Invoice/Invoice";
-import CreateInvoice from "../pages/Admin/Invoice/CreateInvoice";
 import InvoiceDetail from "../pages/Admin/Invoice/InvoiceDetail/InvoiceDetail";
 import BookingAdmin from "../pages/Admin/Booking/Booking";
-import BookingTest from "../pages/Admin/BookingTest/BookingTest";
+import BookingDetail from "../pages/Admin/Booking/BookingDetail/BookingDetail";
 
 // public routes
 
@@ -149,6 +148,11 @@ export const privateRoutes = [
     {
         path: "/admin/booking",
         component: BookingAdmin,
+        layout: AdminLayout,
+    },
+    {
+        path: "/admin/booking/:bookingId",
+        component: BookingDetail,
         layout: AdminLayout,
     },
     {

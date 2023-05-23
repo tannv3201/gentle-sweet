@@ -5,12 +5,13 @@ import { useDispatch } from "react-redux";
 import { createAxios } from "../../../../createInstance";
 import { loginSuccess } from "../../../../redux/slice/authSlice";
 import { deleteInvoiceDetail } from "../../../../redux/api/apiInvoiceDetail";
+import { deleteBookingDetail } from "../../../../redux/api/apiBookingDetail";
 
 export default function ConfirmDeleteService({
     handleClose,
     handleOpen,
     isOpen,
-    selectedProduct,
+    selectedService,
 }) {
     const user = useSelector((state) => state.auth.login?.currentUser);
     const dispatch = useDispatch();
@@ -18,10 +19,10 @@ export default function ConfirmDeleteService({
     let axiosJWT = createAxios(user, dispatch, loginSuccess);
 
     const handleDeleteService = () => {
-        deleteInvoiceDetail(
+        deleteBookingDetail(
             dispatch,
-            selectedProduct?.id,
-            selectedProduct?.invoice_id,
+            selectedService?.id,
+            selectedService?.booking_id,
             user?.accessToken,
             axiosJWT
         ).then(() => {
@@ -35,8 +36,8 @@ export default function ConfirmDeleteService({
                 handleClose={handleClose}
                 handleOpen={handleOpen}
                 isOpen={isOpen}
-                deleteQuestion="Bạn có chắc chắn muốn xóa sản phẩm"
-                deleteLabel={selectedProduct?.product_name}
+                deleteQuestion="Bạn có chắc chắn muốn xóa dịch vụ"
+                deleteLabel={selectedService?.service_name}
                 handleDelete={handleDeleteService}
             />
         </>

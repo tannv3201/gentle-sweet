@@ -12,13 +12,14 @@ import { createAxios } from "../../../createInstance";
 import GTextFieldNormal from "../../../components/GTextField/GTextFieldNormal";
 import { getAllCustomerUser } from "../../../redux/api/apiCustomerUser";
 import { useNavigate } from "react-router-dom";
-import styles from "./Invoice.module.scss";
+import styles from "./Booking.module.scss";
 import classNames from "classnames/bind";
 import { createInvoice } from "../../../redux/api/apiInvoice";
+import { createBooking } from "../../../redux/api/apiBooking";
 
 const cx = classNames.bind(styles);
 
-export default function CreateBookingModal({
+export default function CreateInvoiceModal({
     handleClose,
     handleOpen,
     isOpen,
@@ -85,10 +86,10 @@ export default function CreateBookingModal({
     // Validate
     const validationSchema = Yup.object().shape({});
 
-    const handleCreateInvoice = (invoiceDate) => {
-        createInvoice(user?.accessToken, dispatch, invoiceDate, axiosJWT).then(
-            (invoiceId) => {
-                navigate(`/admin/invoice/${invoiceId}`);
+    const handleCreateInvoice = (bookingdata) => {
+        createBooking(user?.accessToken, dispatch, bookingdata, axiosJWT).then(
+            (bookingId) => {
+                navigate(`/admin/booking/${bookingId}`);
                 formik.handleReset();
                 handleClose();
             }
@@ -101,12 +102,12 @@ export default function CreateBookingModal({
         validationSchema: validationSchema,
         onSubmit: (data) => {
             const { id } = data;
-            const invoiceData = {
+            const bookingData = {
                 admin_user_id: user?.id,
                 customer_user_id: id,
             };
-            console.log(invoiceData);
-            handleCreateInvoice(invoiceData);
+            console.log(bookingData);
+            handleCreateInvoice(bookingData);
         },
     });
 
@@ -123,7 +124,7 @@ export default function CreateBookingModal({
                 }}
                 handleOpen={handleOpen}
                 isOpen={isOpen}
-                title={"Thêm hóa đơn"}
+                title={"Thêm lịch hẹn"}
             >
                 <div className={cx("create-invoice-form")}>
                     <form onSubmit={formik.handleSubmit}>

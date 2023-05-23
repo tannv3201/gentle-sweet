@@ -61,7 +61,7 @@ const bookingController = {
     createBooking: async (req, res, next) => {
         try {
             const newBooking = await BookingModel.createBooking({
-                customer_user_id: req.user.id,
+                customer_user_id: req.body.customer_user_id,
                 admin_user_id: req.body.admin_user_id,
                 status: 1,
             });

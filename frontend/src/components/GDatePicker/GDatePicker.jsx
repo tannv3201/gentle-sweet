@@ -21,6 +21,7 @@ export default function GDatePicker({
     onBlur,
     formik,
     name,
+    size,
     ...props
 }) {
     return (
@@ -32,10 +33,11 @@ export default function GDatePicker({
                 slotProps={{
                     textField: {
                         fullWidth: fullWidth,
-                        size: "small",
+                        size: size ? size : "small",
                         error: error,
                         helperText: helperText,
                         onBlur: onBlur,
+                        color: "secondary",
                     },
                 }}
             />

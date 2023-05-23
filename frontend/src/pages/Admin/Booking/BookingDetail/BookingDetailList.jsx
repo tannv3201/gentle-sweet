@@ -7,15 +7,16 @@ import GTable from "../../../../common/GTable/GTable";
 import { IconButton } from "@mui/material";
 import GButton from "../../../../components/MyButton/MyButton";
 import { LightTooltip } from "../../../../components/GTooltip/GTooltip";
-import styles from "./InvoiceDetail.module.scss";
+import styles from "./BookingDetail.module.scss";
 import classNames from "classnames/bind";
 import { EditRounded } from "@mui/icons-material";
 import dayjs from "dayjs";
 import utc from "dayjs/plugin/utc";
 import { FormatCurrency } from "../../../../components/FormatCurrency/FormatCurrency";
-import ConfirmDeleteProduct from "./ConfirmDeleteService";
-import UpdateProductInvoiceDetailPopup from "./UpdateServiceBookingDetailPopup";
-import AddProductInvoiceDetailPopup from "./AddServiceBookingDetailPopup";
+import UpdateServiceInvoiceDetailPopup from "./UpdateServiceBookingDetail";
+import ConfirmDeleteService from "./ConfirmDeleteService";
+import AddServiceToBookingDetail from "./AddServiceToBookingDetail";
+import { GFormatDate } from "../../../../components/GDatePicker/GDatePicker";
 
 const cx = classNames.bind(styles);
 
@@ -23,52 +24,52 @@ export default function BookingDetailList({ isEditting }) {
     dayjs.extend(utc);
     const [cloneData, setCloneData] = useState([]);
 
-    const [selectedProduct, setSelectedProduct] = useState({});
+    const [selectedService, setSelectedService] = useState({});
 
-    const productList = useSelector(
-        (state) => state.product.product?.productList
+    const serviceList = useSelector(
+        (state) => state.service.service?.serviceList
     );
-    const getInvoiceDetail = useSelector(
-        (state) => state.invoiceDetail.invoiceDetail?.invoiceDetailByInvoice
+    const getBookingDetail = useSelector(
+        (state) => state.bookingDetail.bookingDetail?.bookingDetailByBooking
     );
 
     useEffect(() => {
-        const arr = getInvoiceDetail?.map((item) => {
-            const getProduct = productList?.find(
-                (i) => i.id === item?.product_id
+        const arr = getBookingDetail?.map((item) => {
+            const getService = serviceList?.find(
+                (i) => i.id === item?.service_id
             );
             return {
                 ...item,
-                product_name: getProduct?.name,
-                price_total: item?.unit_price * item?.product_quantity,
+                product_name: getService?.name,
+                price_total: item?.unit_price,
             };
         });
         setCloneData(structuredClone(arr));
-    }, [getInvoiceDetail, productList]);
+    }, [getBookingDetail, serviceList]);
 
     // update modal
-    const [isOpenUpdateProductPopup, setIsOpenUpdateProductPopup] =
+    const [isOpenUpdateServicePopup, setIsOpenUpdateServicePopup] =
         useState(false);
 
-    const handleOpenUpdateProductPopup = (rowData) => {
-        setSelectedProduct(rowData);
-        setIsOpenUpdateProductPopup(true);
+    const handleOpenUpdateServicePopup = (rowData) => {
+        setSelectedService(rowData);
+        setIsOpenUpdateServicePopup(true);
     };
 
-    const handleCloseUpdateProductPopup = () => {
-        setIsOpenUpdateProductPopup(false);
+    const handleCloseUpdateServicePopup = () => {
+        setIsOpenUpdateServicePopup(false);
     };
 
     // Create modal
-    const [isOpenAddProductPopup, setIsOpenAddProductPopup] = useState(false);
+    const [isOpenAddServicePopup, setIsOpenAddServicePopup] = useState(false);
 
-    const handleOpenAddProductPopup = (rowData) => {
-        setSelectedProduct(rowData);
-        setIsOpenAddProductPopup(true);
+    const handleOpenAddServicePopup = (rowData) => {
+        setSelectedService(rowData);
+        setIsOpenAddServicePopup(true);
     };
 
-    const handleCloseAddProductPopup = () => {
-        setIsOpenAddProductPopup(false);
+    const handleCloseAddServicePopup = () => {
+        setIsOpenAddServicePopup(false);
     };
 
     // Delete confirm modal
@@ -76,13 +77,13 @@ export default function BookingDetailList({ isEditting }) {
         useState(false);
 
     const handleOpenDeleteConfirmPopup = (rowData) => {
-        const getProduct = productList?.find(
-            (item) => item?.id === rowData?.product_id
+        const getService = serviceList?.find(
+            (item) => item?.id === rowData?.service_id
         );
-        setSelectedProduct({
+        setSelectedService({
             id: rowData?.id,
-            invoice_id: rowData?.invoice_id,
-            product_name: getProduct?.name,
+            booking_id: rowData?.booking_id,
+            service_name: getService?.name,
         });
         setIsOpenDeleteConfirmPopup(true);
     };
@@ -90,46 +91,55 @@ export default function BookingDetailList({ isEditting }) {
     const handleCloseDeleteConfirmPopup = () => {
         setIsOpenDeleteConfirmPopup(false);
     };
-
     return (
         <div className={cx("wrapper-invoice_detail_list")}>
             <div className={cx("table-invoice-detail")}>
                 <div className={cx("header-table-invoice-detail")}>
-                    <span>CHI TIẾT HÓA ĐƠN</span>
+                    <span>CHI TIẾT LỊCH HẸN</span>
                     {isEditting && (
                         <GButton
-                            onClick={handleOpenAddProductPopup}
+                            onClick={handleOpenAddServicePopup}
                             color={"success"}
                         >
-                            Thêm sản phẩm
+                            Thêm dịch vụ
                         </GButton>
                     )}
                 </div>
-                {getInvoiceDetail?.length !== 0 ? (
+                {getBookingDetail?.length !== 0 ? (
                     <GTable
                         style={{ boxShadow: "unset !important" }}
                         title={""}
                         columns={[
                             {
-                                title: "Sản phẩm",
+                                title: "Dịch vụ",
                                 field: "product_name",
                             },
                             {
-                                title: "Giá",
-                                field: "product_price",
+                                title: "Ngày đặt",
+                                field: "date",
                                 render: (rowData) => {
-                                    return FormatCurrency(rowData?.unit_price);
+                                    return GFormatDate(
+                                        rowData?.date,
+                                        "DD-MM-YYYY"
+                                    );
                                 },
                             },
                             {
-                                title: "Số lượng",
-                                field: "product_quantity",
+                                title: "Khung giờ",
+                                field: "start_time",
+                                render: (rowData) => {
+                                    return (
+                                        rowData?.start_time?.slice(0, 5) +
+                                        "-" +
+                                        rowData?.end_time?.slice(0, 5)
+                                    );
+                                },
                             },
                             {
-                                title: "Tổng tiền",
-                                field: "price_total",
+                                title: "Giá",
+                                field: "unit_price",
                                 render: (rowData) => {
-                                    return FormatCurrency(rowData?.price_total);
+                                    return FormatCurrency(rowData?.unit_price);
                                 },
                             },
                             {
@@ -152,7 +162,7 @@ export default function BookingDetailList({ isEditting }) {
                                                 <IconButton
                                                     disabled={!isEditting}
                                                     onClick={() =>
-                                                        handleOpenUpdateProductPopup(
+                                                        handleOpenUpdateServicePopup(
                                                             rowData
                                                         )
                                                     }
@@ -199,29 +209,29 @@ export default function BookingDetailList({ isEditting }) {
                     />
                 ) : (
                     <div className={cx("no-invoice-detail")}>
-                        Chưa có sản phẩm nào
+                        Chưa có dịch vụ nào
                     </div>
                 )}
             </div>
 
-            <UpdateProductInvoiceDetailPopup
-                isOpen={isOpenUpdateProductPopup}
-                handleOpen={handleOpenUpdateProductPopup}
-                handleClose={handleCloseUpdateProductPopup}
-                selectedProduct={selectedProduct}
+            <UpdateServiceInvoiceDetailPopup
+                isOpen={isOpenUpdateServicePopup}
+                handleOpen={handleOpenUpdateServicePopup}
+                handleClose={handleCloseUpdateServicePopup}
+                selectedService={selectedService}
             />
 
-            <AddProductInvoiceDetailPopup
-                isOpen={isOpenAddProductPopup}
-                handleOpen={handleOpenAddProductPopup}
-                handleClose={handleCloseAddProductPopup}
+            <AddServiceToBookingDetail
+                isOpen={isOpenAddServicePopup}
+                handleOpen={handleOpenAddServicePopup}
+                handleClose={handleCloseAddServicePopup}
             />
 
-            <ConfirmDeleteProduct
+            <ConfirmDeleteService
                 isOpen={isOpenDeleteConfirmPopup}
                 handleOpen={handleOpenDeleteConfirmPopup}
                 handleClose={handleCloseDeleteConfirmPopup}
-                selectedProduct={selectedProduct}
+                selectedService={selectedService}
             />
         </div>
     );

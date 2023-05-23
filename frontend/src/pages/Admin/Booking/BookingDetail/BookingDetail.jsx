@@ -2,7 +2,7 @@ import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 
 import { Grid } from "@mui/material";
-import styles from "./InvoiceDetail.module.scss";
+import styles from "./BookingDetail.module.scss";
 import classNames from "classnames/bind";
 import dayjs from "dayjs";
 import { useState } from "react";
@@ -17,23 +17,23 @@ import utc from "dayjs/plugin/utc";
 
 import { createAxios } from "../../../../createInstance";
 import { loginSuccess } from "../../../../redux/slice/authSlice";
-import { getInvoiceById } from "../../../../redux/api/apiInvoice";
 import { getAdminUserById } from "../../../../redux/api/apiAdminUser";
-import InvoiceDetailList from "./BookingDetailList";
-import { getInvoiceDetailByInvoiceId } from "../../../../redux/api/apiInvoiceDetail";
 import ConfirmPopup from "./ConfirmBooking/ConfirmPopup";
 import CancelPopup from "./ConfirmBooking/CancelPopup";
+import BookingDetailList from "./BookingDetailList";
+import { getBookingDetailByBookingId } from "../../../../redux/api/apiBookingDetail";
+import { getBookingById } from "../../../../redux/api/apiBooking";
 
 const cx = classNames.bind(styles);
 
 export default function BookingDetail() {
-    const { invoiceId } = useParams();
+    const { bookingId } = useParams();
     dayjs.extend(utc);
     const [isEditting, setIsEditting] = useState(false);
     const user = useSelector((state) => state.auth.login?.currentUser);
     const [currCustomerUser, setCurrCustomerUser] = useState({});
-    const [currInvoiceCreator, setCurrInvoiceCreator] = useState({});
-    const [currInvoice, setCurrInvoice] = useState({});
+    const [currBookingCreator, setCurrBookingCreator] = useState({});
+    const [currBooking, setCurrBooking] = useState({});
     const dispatch = useDispatch();
     const navigate = useNavigate();
 
@@ -43,31 +43,31 @@ export default function BookingDetail() {
         (state) => state.customerUser.customerUser?.customerUserList
     );
 
-    const getInvoice = useSelector((state) => state.invoice.invoice?.invoice);
+    const getBooking = useSelector((state) => state.booking.booking?.booking);
 
-    const getInvoiceDetail = useSelector(
-        (state) => state.invoiceDetail.invoiceDetail?.invoiceDetailByInvoice
+    const getBookingDetail = useSelector(
+        (state) => state.bookingDetail.bookingDetail?.bookingDetailByBooking
     );
 
     useEffect(() => {
-        setCurrInvoice(structuredClone(getInvoice));
-    }, [getInvoice]);
+        setCurrBooking(structuredClone(getBooking));
+    }, [getBooking]);
 
     useEffect(() => {
-        setCurrInvoice(structuredClone(getInvoice));
-    }, [getInvoice]);
+        setCurrBooking(structuredClone(getBooking));
+    }, [getBooking]);
 
     useEffect(() => {
         const fetchData = async () => {
-            await getInvoiceDetailByInvoiceId(
+            await getBookingDetailByBookingId(
                 dispatch,
-                invoiceId,
+                bookingId,
                 user?.accessToken,
                 axiosJWT
             );
-            const invoice = await getInvoiceById(
+            const invoice = await getBookingById(
                 dispatch,
-                invoiceId,
+                bookingId,
                 user?.accessToken,
                 axiosJWT
             );
@@ -85,38 +85,38 @@ export default function BookingDetail() {
                     user?.accessToken,
                     axiosJWT
                 ).then((invoiceCreator) => {
-                    setCurrInvoiceCreator(structuredClone(invoiceCreator));
+                    setCurrBookingCreator(structuredClone(invoiceCreator));
                 });
             }
         };
 
         fetchData();
-    }, [invoiceId]);
+    }, [bookingId]);
 
     const handleBack = () => {
-        navigate("/admin/invoice");
+        navigate("/admin/booking");
     };
 
     // Confirm invoice
-    const [isOpenConfirmInvoice, setIsOpenConfirmInvoice] = useState(false);
+    const [isOpenConfirmBooking, setIsOpenConfirmBooking] = useState(false);
 
-    const handleOpenConfirmInvoice = () => {
-        setIsOpenConfirmInvoice(true);
+    const handleOpenConfirmBooking = () => {
+        setIsOpenConfirmBooking(true);
     };
 
-    const handleCloseConfirmInvoice = () => {
-        setIsOpenConfirmInvoice(false);
+    const handleCloseConfirmBooking = () => {
+        setIsOpenConfirmBooking(false);
     };
 
     // Cancel invoice
-    const [isOpenCancelInvoice, setIsOpenCancelInvoice] = useState(false);
+    const [isOpenCancelBooking, setIsOpenCancelBooking] = useState(false);
 
-    const handleOpenCancelInvoice = () => {
-        setIsOpenCancelInvoice(true);
+    const handleOpenCancelBooking = () => {
+        setIsOpenCancelBooking(true);
     };
 
     const handleCloseCancelInvoice = () => {
-        setIsOpenCancelInvoice(false);
+        setIsOpenCancelBooking(false);
     };
 
     return (
@@ -130,7 +130,7 @@ export default function BookingDetail() {
                         <Grid item xs={6}>
                             <div className={cx("invoice-title")}>
                                 <span className={cx("title")}>
-                                    THÔNG TIN HÓA ĐƠN
+                                    THÔNG TIN LỊCH HẸN
                                 </span>
                             </div>
                         </Grid>
@@ -142,12 +142,12 @@ export default function BookingDetail() {
                             alignItems={"center"}
                         >
                             <div className={cx("button-list")}>
-                                {currInvoice?.status === 1 &&
-                                    getInvoiceDetail?.length > 0 && (
+                                {currBooking?.status === 1 &&
+                                    getBookingDetail?.length > 0 && (
                                         <>
                                             <GButton
                                                 onClick={
-                                                    handleOpenConfirmInvoice
+                                                    handleOpenConfirmBooking
                                                 }
                                                 color={"success"}
                                             >
@@ -155,7 +155,7 @@ export default function BookingDetail() {
                                             </GButton>
                                             <GButton
                                                 onClick={
-                                                    handleOpenCancelInvoice
+                                                    handleOpenCancelBooking
                                                 }
                                                 color={"error"}
                                             >
@@ -211,25 +211,34 @@ export default function BookingDetail() {
                                         >
                                             Trạng thái:{" "}
                                         </span>
-                                        {currInvoice?.status === 1 ? (
+                                        {currBooking?.status === 5 ? (
+                                            <span
+                                                className={cx(
+                                                    "invoice-info-content",
+                                                    "cancel"
+                                                )}
+                                            >
+                                                Đã hủy
+                                            </span>
+                                        ) : currBooking?.status === 1 ? (
                                             <span
                                                 className={cx(
                                                     "invoice-info-content",
                                                     "pending"
                                                 )}
                                             >
-                                                Chờ tiếp nhận
+                                                Chờ xác nhận
                                             </span>
-                                        ) : currInvoice?.status === 2 ? (
+                                        ) : currBooking?.status === 2 ? (
                                             <span
                                                 className={cx(
                                                     "invoice-info-content",
                                                     "received"
                                                 )}
                                             >
-                                                Đã tiếp nhận
+                                                Đã đã xác nhận
                                             </span>
-                                        ) : currInvoice?.status === 3 ? (
+                                        ) : currBooking?.status === 3 ? (
                                             <span
                                                 className={cx(
                                                     "invoice-info-content",
@@ -238,7 +247,7 @@ export default function BookingDetail() {
                                             >
                                                 Đang giao hàng
                                             </span>
-                                        ) : currInvoice?.status === 4 ? (
+                                        ) : currBooking?.status === 4 ? (
                                             <span
                                                 className={cx(
                                                     "invoice-info-content",
@@ -250,11 +259,6 @@ export default function BookingDetail() {
                                         ) : (
                                             ""
                                         )}
-                                        <span
-                                            className={cx(
-                                                "invoice-info-content"
-                                            )}
-                                        ></span>
                                     </Grid>
                                 </Grid>
                             </div>
@@ -274,7 +278,7 @@ export default function BookingDetail() {
                                             )}
                                         >
                                             {dayjs(
-                                                currInvoice?.created_at
+                                                currBooking?.created_at
                                             ).format("DD/MM/YYYY")}
                                         </span>
                                     </Grid>
@@ -289,11 +293,11 @@ export default function BookingDetail() {
                                                 "invoice-info-content"
                                             )}
                                         >
-                                            {currInvoice?.customer_user_id
+                                            {currBooking?.customer_user_id
                                                 ? `STAFF - ${
-                                                      currInvoiceCreator?.last_name +
+                                                      currBookingCreator?.last_name +
                                                       " " +
-                                                      currInvoiceCreator?.first_name
+                                                      currBookingCreator?.first_name
                                                   }`
                                                 : `CUSTOMER - ${currCustomerUser?.last_name} ${currCustomerUser?.first_name}`}
                                         </span>
@@ -303,13 +307,13 @@ export default function BookingDetail() {
                         </Grid>
                     </Grid>
                 </div>
-                <InvoiceDetailList isEditting={isEditting} />
+                <BookingDetailList isEditting={isEditting} />
                 <ConfirmPopup
-                    isOpen={isOpenConfirmInvoice}
-                    handleOpen={handleOpenConfirmInvoice}
-                    handleClose={handleCloseConfirmInvoice}
+                    isOpen={isOpenConfirmBooking}
+                    handleOpen={handleOpenConfirmBooking}
+                    handleClose={handleCloseConfirmBooking}
                     selectedInvoice={{
-                        invoice_id: invoiceId,
+                        invoice_id: bookingId,
                         customer_name:
                             currCustomerUser?.last_name +
                             " " +
@@ -318,11 +322,11 @@ export default function BookingDetail() {
                 />
 
                 <CancelPopup
-                    isOpen={isOpenCancelInvoice}
-                    handleOpen={handleOpenCancelInvoice}
+                    isOpen={isOpenCancelBooking}
+                    handleOpen={handleOpenCancelBooking}
                     handleClose={handleCloseCancelInvoice}
                     selectedInvoice={{
-                        invoice_id: invoiceId,
+                        invoice_id: bookingId,
                         customer_name:
                             currCustomerUser?.last_name +
                             " " +

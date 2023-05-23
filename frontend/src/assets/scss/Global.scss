@@ -485,6 +485,10 @@ span.MuiChip-label {
     }
 }
 
+.MuiInputBase-root.MuiOutlinedInput-root.MuiInputBase-colorSecondary.MuiInputBase-fullWidth.MuiInputBase-formControl.MuiInputBase-adornedEnd.MuiAutocomplete-inputRoot {
+    background-color: var(--white) !important;
+}
+
 // .MuiInputBase-root.MuiOutlinedInput-root.Mui-error.MuiOutlinedInput-notchedOutline {
 //     border-color: var(--color-text-field) !important;
 // }
