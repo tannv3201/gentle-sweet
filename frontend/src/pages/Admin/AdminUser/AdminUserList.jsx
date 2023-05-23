@@ -31,7 +31,7 @@ export default function AdminUserList({ data }) {
         if (!user) {
             navigate("/dang-nhap");
         }
-        if (user?.accessToken) {
+        if (user?.accessToken && adminUserList?.length === 0) {
             getAllUser(user?.accessToken, dispatch, axiosJWT);
         }
     }, []);

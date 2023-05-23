@@ -45,7 +45,7 @@ export default function ProductList() {
         if (!user) {
             navigate("/dang-nhap");
         }
-        if (user?.accessToken) {
+        if (user?.accessToken && productList?.length === 0) {
             getAllProduct(user?.accessToken, dispatch, axiosJWT);
         }
     }, []);

@@ -34,7 +34,7 @@ export default function DiscountList() {
         if (!user) {
             navigate("/dang-nhap");
         }
-        if (user?.accessToken) {
+        if (user?.accessToken && discountList?.length === 0) {
             getAllDiscount(user?.accessToken, dispatch, axiosJWT);
         }
     }, []);

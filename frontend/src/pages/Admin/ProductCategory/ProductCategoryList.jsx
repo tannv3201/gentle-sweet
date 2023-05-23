@@ -37,7 +37,7 @@ export default function ProductCategoryList({ data }) {
         if (!user) {
             navigate("/dang-nhap");
         }
-        if (user?.accessToken) {
+        if (user?.accessToken && productCategoryList?.length === 0) {
             getAllProductCategory(user?.accessToken, dispatch, axiosJWT);
         }
     }, []);

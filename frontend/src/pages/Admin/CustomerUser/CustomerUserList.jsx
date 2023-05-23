@@ -33,7 +33,7 @@ export default function CustomerUserList() {
         if (!user) {
             navigate("/dang-nhap");
         }
-        if (user?.accessToken) {
+        if (user?.accessToken && customerUserList?.length === 0) {
             getAllCustomerUser(user?.accessToken, dispatch, axiosJWT);
         }
     }, []);

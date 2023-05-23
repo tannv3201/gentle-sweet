@@ -43,7 +43,7 @@ export default function ServiceList() {
             if (!user) {
                 navigate("/dang-nhap");
             }
-            if (user?.accessToken) {
+            if (user?.accessToken && serviceList?.length === 0) {
                 await getAllService(user?.accessToken, dispatch, axiosJWT);
             }
         };

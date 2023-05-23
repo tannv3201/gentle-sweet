@@ -38,7 +38,7 @@ export default function ServiceCategoryList({ data }) {
         if (!user) {
             navigate("/dang-nhap");
         }
-        if (user?.accessToken) {
+        if (user?.accessToken && serviceCategoryList?.length === 0) {
             getAllServiceCategory(user?.accessToken, dispatch, axiosJWT);
         }
     }, []);
