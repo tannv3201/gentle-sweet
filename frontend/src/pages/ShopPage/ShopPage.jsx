@@ -2,7 +2,6 @@ import React from "react";
 import classNames from "classnames/bind";
 import styles from "./ShopPage.module.scss";
 import { Grid } from "@mui/material";
-import Product from "./Product/Product";
 import ProductCategory from "./ProductCategory/ProductCategory";
 import { useMediaQuery } from "@mui/material";
 import { useTheme } from "@mui/material/styles";
@@ -16,6 +15,7 @@ import {
     CategoryDrawer,
 } from "./CategoryFilterDrawer/CategoryFilterDrawer";
 import FilterGroup from "./FilterGroup/FilterGroup";
+import ProductList from "./Product/ProductList";
 
 const cx = classNames.bind(styles);
 
@@ -83,7 +83,7 @@ function ShopPage() {
                                     </Grid>
                                 )}
                                 <Grid item xs={12} width={"100%"}>
-                                    <Product />
+                                    <ProductList />
                                 </Grid>
                             </Grid>
                         </div>

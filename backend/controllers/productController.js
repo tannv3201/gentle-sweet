@@ -5,11 +5,12 @@ const { v4: uuidv4 } = require("uuid");
 const productsController = {
     productSearch: async (req, res) => {
         try {
-            const { product_category_id } = req.query;
+            const { product_category_id, limit } = req.query;
 
             const params = {};
             if (product_category_id)
                 params.product_category_id = product_category_id;
+            if (limit) params.limit = limit;
 
             const products = await ProductModel.productSearch(params);
             if (!products) {

@@ -12,7 +12,7 @@ router.post(
 
 router.get(
     "/search",
-    middlewareController.verifyTokenAndSystemUserAuth,
+    // middlewareController.verifyTokenAndSystemUserAuth,
     productController.productSearch
 );
 
@@ -40,6 +40,8 @@ router.get(
     middlewareController.verifyTokenAndSystemUserAuth,
     productController.getProductById
 );
+
+router.get("/:id/customer", productController.getProductById);
 
 router.put(
     "/:id",

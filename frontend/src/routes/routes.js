@@ -49,7 +49,7 @@ export const publicRoutes = [
         component: HomePage,
     },
     {
-        path: "/product",
+        path: "/san-pham",
         component: ShopPage,
     },
     {
@@ -77,7 +77,7 @@ export const publicRoutes = [
         component: Booking,
     },
     {
-        path: "/product/son-mong-tay",
+        path: "/san-pham/:productId",
         component: ProductDetail,
     },
     {

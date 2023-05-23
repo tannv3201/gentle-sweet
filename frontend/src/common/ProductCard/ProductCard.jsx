@@ -19,6 +19,7 @@ export default function ProductCard({
     boxShadow,
     href,
     onSale,
+    onClick,
 }) {
     return (
         <div
@@ -28,7 +29,7 @@ export default function ProductCard({
                     : cx("product-container")
             }
         >
-            <a href={href} className={cx("product-img")}>
+            <a onClick={onClick} href={href} className={cx("product-img")}>
                 <img src={imageSrc} alt="" />
                 {onSale > 0 && (
                     <span
@@ -40,7 +41,7 @@ export default function ProductCard({
                 <div className={cx("product-category")}>
                     <span>{categoryName}</span>
                 </div>
-                <h3 className={cx("product-name")}>
+                <h3 className={cx("product-name")} onClick={onClick}>
                     <a href={href}>{productName}</a>
                 </h3>
                 <div

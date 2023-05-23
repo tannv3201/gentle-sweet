@@ -5,6 +5,7 @@ const productCategorySlice = createSlice({
     initialState: {
         productCategory: {
             productCategoryList: [],
+            productCategoryListCustomer: [],
             isFetching: false,
             error: false,
         },
@@ -21,6 +22,20 @@ const productCategorySlice = createSlice({
         },
 
         getAllProductCategoryFailed: (state) => {
+            state.productCategory.isFetching = false;
+            state.productCategory.error = true;
+        },
+
+        // Get all Product Category By Customer
+        getAllProductCategoryCustomerStart: (state) => {
+            state.productCategory.isFetching = true;
+        },
+        getAllProductCategoryCustomerSuccess: (state, action) => {
+            state.productCategory.isFetching = false;
+            state.productCategory.productCategoryListCustomer = action.payload;
+        },
+
+        getAllProductCategoryCustomerFailed: (state) => {
             state.productCategory.isFetching = false;
             state.productCategory.error = true;
         },
@@ -73,6 +88,10 @@ export const {
     getAllProductCategoryStart,
     getAllProductCategorySuccess,
     getAllProductCategoryFailed,
+
+    getAllProductCategoryCustomerStart,
+    getAllProductCategoryCustomerSuccess,
+    getAllProductCategoryCustomerFailed,
 
     createProductCategoryStart,
     createProductCategorySuccess,

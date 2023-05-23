@@ -14,12 +14,16 @@ import {
     getProductByIdStart,
     getProductByIdSuccess,
     productSearchFailed,
+    productSearchLimitFailed,
+    productSearchLimitStart,
+    productSearchLimitSuccess,
     productSearchStart,
     productSearchSuccess,
     updateProductFailed,
     updateProductStart,
     updateProductSuccess,
 } from "../slice/productSlice";
+import axios from "axios";
 
 export const getAllProduct = async (accessToken, dispatch, axiosJWT) => {
     dispatch(getAllProductStart());
@@ -135,6 +139,7 @@ export const addDiscount = async (
         if (res?.data?.status === 200) {
             toast.success(res?.data?.msg);
             await getProductById(dispatch, id, accessToken, axiosJWT);
+            await getAllProduct(accessToken, dispatch, axiosJWT);
         }
     } catch (error) {
         dispatch(updateProductFailed(error.response?.data));
@@ -177,6 +182,20 @@ export const getProductById = async (dispatch, id, accessToken, axiosJWT) => {
     }
 };
 
+export const customerGetProductById = async (dispatch, id) => {
+    dispatch(getProductByIdStart());
+    try {
+        const res = await axios.get("/v1/product/" + id + "/customer");
+        dispatch(getProductByIdSuccess(res?.data));
+        if (res?.data?.status === 200) {
+            toast.success(res?.data?.msg);
+        }
+        return res?.data;
+    } catch (error) {
+        dispatch(getProductByIdFailed(error.response?.data));
+    }
+};
+
 export const productSearch = async (
     accessToken,
     params,
@@ -195,5 +214,16 @@ export const productSearch = async (
         return res?.data?.length;
     } catch (error) {
         dispatch(productSearchFailed());
+    }
+};
+
+export const getProductLimit = async (dispatch) => {
+    dispatch(productSearchLimitStart());
+    try {
+        const res = await axios.get("/v1/product/search");
+        dispatch(productSearchLimitSuccess(res?.data));
+        return res?.data?.length;
+    } catch (error) {
+        dispatch(productSearchLimitFailed());
     }
 };

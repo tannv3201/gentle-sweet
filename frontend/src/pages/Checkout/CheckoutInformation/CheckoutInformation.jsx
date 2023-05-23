@@ -86,7 +86,7 @@ function CheckoutInformation() {
                                 <Grid item lg={4} md={6} sm={12} xs={12}>
                                     <GAutocomplete
                                         label={"Tỉnh/thành phố"}
-                                        requiredlabel
+                                        requiredlabel={true}
                                         fullWidth
                                         data={provinces}
                                     />
@@ -94,7 +94,7 @@ function CheckoutInformation() {
                                 <Grid item lg={4} md={6} sm={12} xs={12}>
                                     <GAutocomplete
                                         label={"Quận/huyện"}
-                                        requiredlabel
+                                        requiredlabel={true}
                                         fullWidth
                                         data={provinces}
                                     />
@@ -102,7 +102,7 @@ function CheckoutInformation() {
                                 <Grid item lg={4} md={6} sm={12} xs={12}>
                                     <GAutocomplete
                                         label={"Phường/xã"}
-                                        requiredlabel
+                                        requiredlabel={true}
                                         fullWidth
                                         data={provinces}
                                     />
@@ -110,7 +110,7 @@ function CheckoutInformation() {
                                 <Grid item lg={12} md={6} sm={12} xs={12}>
                                     <GTextField
                                         label={"Tên đường, số nhà"}
-                                        requiredlabel
+                                        requiredlabel={true}
                                         fullWidth
                                     />
                                 </Grid>

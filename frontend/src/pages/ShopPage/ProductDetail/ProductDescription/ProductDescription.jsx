@@ -3,17 +3,18 @@ import styles from "./ProductDescription.module.scss";
 import classNames from "classnames/bind";
 import { Grid } from "@mui/material";
 import GImage from "../../../../common/GImage/GImage";
+import { API_IMAGE_URL } from "../../../../LocalConstants";
 
 const cx = classNames.bind(styles);
 
-function ProductDescription({ productInfor }) {
+function ProductDescription({ productDetail }) {
     return (
         <div className={cx("wrapper")}>
             <div className={cx("inner")}>
                 <Grid container spacing={2}>
                     <Grid item xs={12}>
                         <article className={cx("product-description-text")}>
-                            <p>{productInfor?.description1}</p>
+                            <p>{productDetail?.description}</p>
                         </article>
                     </Grid>
                     <Grid
@@ -23,13 +24,13 @@ function ProductDescription({ productInfor }) {
                         justifyContent={"center"}
                     >
                         <GImage
-                            imgSrc={productInfor?.image}
-                            caption={productInfor?.name}
+                            imgSrc={`${API_IMAGE_URL}/${productDetail?.image_url}`}
+                            caption={productDetail?.name}
                         />
                     </Grid>
                     <Grid item xs={12}>
                         <article className={cx("product-description-text")}>
-                            <p>{productInfor?.description2}</p>
+                            <p>{productDetail?.description}</p>
                         </article>
                     </Grid>
                 </Grid>

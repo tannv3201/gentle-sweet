@@ -15,6 +15,8 @@ router.get(
     discountController.getAllDiscount
 );
 
+router.get("/customer", discountController.getAllDiscount);
+
 router.get(
     "/:id",
     middlewareController.verifyTokenAndSystemUserAuth,

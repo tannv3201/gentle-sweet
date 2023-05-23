@@ -5,6 +5,7 @@ const discountSlice = createSlice({
     initialState: {
         discount: {
             discountList: [],
+            discountListCustomer: [],
             isFetching: false,
             error: false,
         },
@@ -20,6 +21,19 @@ const discountSlice = createSlice({
             state.discount.discountList = action.payload;
         },
         getAllDiscountFailed: (state) => {
+            state.discount.isFetching = false;
+            state.discount.error = true;
+        },
+
+        // Get all ADMIN USER
+        getAllDiscountCustomerStart: (state) => {
+            state.discount.isFetching = true;
+        },
+        getAllDiscountCustomerSuccess: (state, action) => {
+            state.discount.isFetching = false;
+            state.discount.discountListCustomer = action.payload;
+        },
+        getAllDiscountCustomerFailed: (state) => {
             state.discount.isFetching = false;
             state.discount.error = true;
         },
@@ -71,6 +85,10 @@ export const {
     getAllDiscountStart,
     getAllDiscountSuccess,
     getAllDiscountFailed,
+
+    getAllDiscountCustomerStart,
+    getAllDiscountCustomerSuccess,
+    getAllDiscountCustomerFailed,
 
     createDiscountStart,
     createDiscountSuccess,

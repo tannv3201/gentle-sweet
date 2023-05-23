@@ -7,6 +7,9 @@ import {
     deleteDiscountFailed,
     deleteDiscountStart,
     deleteDiscountSuccess,
+    getAllDiscountCustomerFailed,
+    getAllDiscountCustomerStart,
+    getAllDiscountCustomerSuccess,
     getAllDiscountFailed,
     getAllDiscountStart,
     getAllDiscountSuccess,
@@ -14,6 +17,7 @@ import {
     updateDiscountStart,
     updateDiscountSuccess,
 } from "../slice/discountSlice";
+import axios from "axios";
 
 export const getAllDiscount = async (accessToken, dispatch, axiosJWT) => {
     dispatch(getAllDiscountStart());
@@ -27,6 +31,17 @@ export const getAllDiscount = async (accessToken, dispatch, axiosJWT) => {
         return res?.data?.length;
     } catch (error) {
         dispatch(getAllDiscountFailed());
+    }
+};
+
+export const getAllDiscountCustomer = async (dispatch) => {
+    dispatch(getAllDiscountCustomerStart());
+    try {
+        const res = await axios.get("/v1/discount/customer");
+        dispatch(getAllDiscountCustomerSuccess(res?.data));
+        return res?.data?.length;
+    } catch (error) {
+        dispatch(getAllDiscountCustomerFailed());
     }
 };
 

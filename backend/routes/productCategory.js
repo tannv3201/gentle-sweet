@@ -15,6 +15,8 @@ router.get(
     productCategoryController.getAllProductCategory
 );
 
+router.get("/customer", productCategoryController.getAllProductCategory);
+
 router.get(
     "/:id",
     middlewareController.verifyTokenAndSystemUserAuth,

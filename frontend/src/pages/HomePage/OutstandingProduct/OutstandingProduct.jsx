@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import classNames from "classnames/bind";
 import styles from "./OutstandingProduct.module.scss";
 import images from "../../../assets/images";
@@ -10,6 +10,15 @@ import { useTheme } from "@mui/material/styles";
 import { NavLink } from "react-router-dom";
 import { FormatCurrency } from "../../../components/FormatCurrency/FormatCurrency";
 import ProductCard from "../../../common/ProductCard/ProductCard";
+import { useSelector } from "react-redux";
+import { getProductLimit } from "../../../redux/api/apiProduct";
+import { useDispatch } from "react-redux";
+import { API_IMAGE_URL } from "../../../LocalConstants";
+import {
+    getAllProductCategory,
+    getAllProductCategoryCustomer,
+} from "../../../redux/api/apiProductCategory";
+import { getAllDiscountCustomer } from "../../../redux/api/apiDiscount";
 
 const cx = classNames.bind(styles);
 
@@ -48,55 +57,58 @@ const productList = [
     },
 ];
 
-function ProductItem({
-    valueRating,
-    imageSrc,
-    categoryName,
-    productName,
-    productPrice,
-    productSold,
-}) {
-    const theme = useTheme();
-    const isSmall = useMediaQuery(theme.breakpoints.down("md"));
-
-    return (
-        <Grid item lg={3} md={6} sm={6} xs={6}>
-            <div className={cx("product-container")}>
-                <a href="#" className={cx("product-img")}>
-                    <img src={imageSrc} alt="" />
-                </a>
-                <div className={cx("product-content")}>
-                    <div className={cx("product-category")}>
-                        <span>{categoryName}</span>
-                    </div>
-                    <h3 className={cx("product-name")}>
-                        <a href="">{productName}</a>
-                    </h3>
-                    <div className={cx("product-price-container")}>
-                        <span className={cx("product-price")}>
-                            {FormatCurrency(productPrice)}
-                        </span>
-                    </div>
-                    <div className={cx("product-rating-container")}>
-                        <div className={cx("product-rating")}>
-                            <Rating
-                                readOnly
-                                value={valueRating}
-                                size="small"
-                                className={cx("product-rating-star")}
-                            />
-                        </div>
-                        <div className={cx("product-sold")}>
-                            Đã bán: {productSold}
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </Grid>
-    );
-}
-
 function OutstandingProduct() {
+    const dispatch = useDispatch();
+    const [productLimit, setProductLimit] = useState([]);
+    const [productCategoryList, setProductCategoryList] = useState([]);
+
+    const getProductLimit4 = useSelector(
+        (state) => state.product.product?.productListSearchLimit
+    );
+    const productCategoryListCustomer = useSelector(
+        (state) =>
+            state.productCategory.productCategory?.productCategoryListCustomer
+    );
+    const discountListCustomer = useSelector(
+        (state) => state.discount.discount?.discountListCustomer
+    );
+
+    useEffect(() => {
+        if (getProductLimit4) {
+            const newProductLimit = getProductLimit4?.map((p) => {
+                let getDiscount;
+                const getProductCategory = productCategoryListCustomer?.find(
+                    (pc) => pc?.id === p?.product_category_id
+                );
+
+                if (p?.discount_id) {
+                    const discount = discountListCustomer?.find(
+                        (d) => d.id === parseInt(p.discount_id)
+                    );
+                    getDiscount = discount;
+                }
+
+                return {
+                    ...p,
+                    product_category_name: getProductCategory?.name,
+                    discount_percent: getDiscount?.discount_percent,
+                };
+            });
+
+            setProductLimit(structuredClone(newProductLimit));
+        }
+    }, [getProductLimit4]);
+
+    useEffect(() => {
+        const fetch = async () => {
+            await getAllProductCategoryCustomer(dispatch);
+            await getAllDiscountCustomer(dispatch);
+
+            await getProductLimit(dispatch);
+        };
+        fetch();
+    }, []);
+
     return (
         <div className={cx("outstanding-product-wrapper")}>
             <div className={cx("outstanding-product-inner")}>
@@ -133,17 +145,18 @@ function OutstandingProduct() {
                     </Grid>
                 </Grid>
                 <Grid container spacing={3}>
-                    {productList.map((product, index) => (
+                    {productLimit?.map((product, index) => (
                         <Grid key={index} item lg={3} md={6} sm={6} xs={6}>
                             <ProductCard
                                 // boxShadow={true}
                                 key={index}
-                                imageSrc={product?.image}
-                                categoryName={product?.category}
+                                imageSrc={`${API_IMAGE_URL}/${product?.image_url}`}
+                                categoryName={product?.product_category_name}
                                 productName={product?.name}
                                 productPrice={product?.price}
-                                productSold={product?.sold}
-                                valueRating={product?.rating}
+                                productSold={20}
+                                valueRating={5}
+                                onSale={product?.discount_percent}
                             />
                         </Grid>
                     ))}

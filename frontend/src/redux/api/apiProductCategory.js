@@ -7,6 +7,9 @@ import {
     deleteProductCategoryFailed,
     deleteProductCategoryStart,
     deleteProductCategorySuccess,
+    getAllProductCategoryCustomerFailed,
+    getAllProductCategoryCustomerStart,
+    getAllProductCategoryCustomerSuccess,
     getAllProductCategoryFailed,
     getAllProductCategoryStart,
     getAllProductCategorySuccess,
@@ -14,6 +17,7 @@ import {
     updateProductCategoryStart,
     updateProductCategorySuccess,
 } from "../slice/productCategorySlice";
+import axios from "axios";
 
 export const getAllProductCategory = async (
     accessToken,
@@ -31,6 +35,17 @@ export const getAllProductCategory = async (
         return res?.data?.length;
     } catch (error) {
         dispatch(getAllProductCategoryFailed());
+    }
+};
+
+export const getAllProductCategoryCustomer = async (dispatch) => {
+    dispatch(getAllProductCategoryCustomerStart());
+    try {
+        const res = await axios.get("/v1/productCategory/customer");
+        dispatch(getAllProductCategoryCustomerSuccess(res?.data));
+        return res?.data?.length;
+    } catch (error) {
+        dispatch(getAllProductCategoryCustomerFailed());
     }
 };
 

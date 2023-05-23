@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import styles from "./ProductDetail.module.scss";
 import classNames from "classnames/bind";
 import { Grid } from "@mui/material";
@@ -19,6 +19,16 @@ import MyTabs from "../../../components/TabPanel/Tabs";
 import MyTab from "../../../components/TabPanel/Tab";
 import ProductDescription from "./ProductDescription/ProductDescription";
 import ProductRating from "./ProductRating/ProductRating";
+import { useParams } from "react-router-dom";
+import { customerGetProductById } from "../../../redux/api/apiProduct";
+import { useDispatch } from "react-redux";
+import { useSelector } from "react-redux";
+import { API_IMAGE_URL } from "../../../LocalConstants";
+import { getAllDiscountCustomer } from "../../../redux/api/apiDiscount";
+import { toast } from "react-hot-toast";
+import { createInvoice } from "../../../redux/api/apiInvoice";
+import { createAxios } from "../../../createInstance";
+import { logoutSuccess } from "../../../redux/slice/authSlice";
 const cx = classNames.bind(styles);
 
 const productInfo = {
@@ -36,6 +46,8 @@ const productInfo = {
 function ProductDetail() {
     const theme = useTheme();
     const isMedium = useMediaQuery(theme.breakpoints.down("md"));
+    const dispatch = useDispatch();
+    const [productDetail, setProductDetail] = useState({});
 
     const [onSale, setOnSale] = useState(30);
     const [buyQuantity, setBuyQuantity] = useState(1);
@@ -66,6 +78,55 @@ function ProductDetail() {
         }
     };
 
+    const { productId } = useParams();
+    const user = useSelector((state) => state.auth.login?.currentUser);
+    let axiosJWT = createAxios(user, dispatch, logoutSuccess);
+
+    const getProducById = useSelector((state) => state.product.product.product);
+    const discountListCustomer = useSelector(
+        (state) => state.discount.discount?.discountListCustomer
+    );
+
+    useEffect(() => {
+        getAllDiscountCustomer(dispatch);
+    }, []);
+
+    useEffect(() => {
+        if (getProducById) {
+            const discount = discountListCustomer?.find(
+                (d) => d.id === parseInt(getProducById.discount_id)
+            );
+            const newProductDetail = {
+                ...getProducById,
+                discount_percent: discount?.discount_percent,
+            };
+            setProductDetail(structuredClone(newProductDetail));
+        }
+    }, [getProducById]);
+
+    useEffect(() => {
+        if (productId) {
+            customerGetProductById(dispatch, productId);
+        }
+    }, [productId]);
+
+    const handleAddToCart = async () => {
+        if (!user) {
+            toast.error("đăng nhập đi đcmm");
+        } else {
+            await createInvoice(
+                user?.accessToken,
+                dispatch,
+                {
+                    customer_user_id: user?.id,
+                },
+                axiosJWT
+            ).then(() => {
+                toast.success("oke rồi em");
+            });
+        }
+    };
+
     return (
         <div className={cx("wrapper")}>
             <div className={cx("inner")}>
@@ -85,7 +146,7 @@ function ProductDetail() {
                                             )}
                                         >
                                             <img
-                                                src={productInfo?.image}
+                                                src={`${API_IMAGE_URL}/${productDetail?.image_url}`}
                                                 alt=""
                                             />
                                         </div>
@@ -105,7 +166,9 @@ function ProductDetail() {
                                                         "product-briefing-title"
                                                     )}
                                                 >
-                                                    <h2>{productInfo?.name}</h2>
+                                                    <h2>
+                                                        {productDetail?.name}
+                                                    </h2>
                                                 </span>
                                             </Grid>
                                             <Grid item xs={12}>
@@ -160,8 +223,7 @@ function ProductDetail() {
                                                 >
                                                     <span
                                                         className={
-                                                            productInfo?.onSale !==
-                                                            0
+                                                            productDetail?.discount_percent
                                                                 ? cx(
                                                                       "product-briefing-price-default",
                                                                       "onSale"
@@ -172,11 +234,10 @@ function ProductDetail() {
                                                         }
                                                     >
                                                         {FormatCurrency(
-                                                            productInfo?.price
+                                                            productDetail?.price
                                                         )}
                                                     </span>
-                                                    {productInfo?.onSale !==
-                                                        0 && (
+                                                    {productDetail?.discount_percent && (
                                                         <>
                                                             <span
                                                                 className={cx(
@@ -184,9 +245,9 @@ function ProductDetail() {
                                                                 )}
                                                             >
                                                                 {FormatCurrency(
-                                                                    180000 -
-                                                                        (180000 *
-                                                                            onSale) /
+                                                                    productDetail?.price -
+                                                                        (productDetail?.price *
+                                                                            productDetail?.discount_percent) /
                                                                             100
                                                                 )}
                                                             </span>
@@ -195,7 +256,7 @@ function ProductDetail() {
                                                                     "sale-tag"
                                                                 )}
                                                             >
-                                                                {`Giảm ${productInfo?.onSale}%`}
+                                                                {`Giảm ${productDetail?.discount_percent}%`}
                                                             </span>
                                                         </>
                                                     )}
@@ -257,6 +318,9 @@ function ProductDetail() {
                                                     <Grid container spacing={1}>
                                                         <Grid item xs={6}>
                                                             <GButton
+                                                                onClick={
+                                                                    handleAddToCart
+                                                                }
                                                                 className={cx(
                                                                     "add-to-cart-btn"
                                                                 )}
@@ -361,7 +425,7 @@ function ProductDetail() {
                                 <div className={cx("tabpanel-container")}>
                                     <TabPanel value={tabIndex} index={0}>
                                         <ProductDescription
-                                            productInfor={productInfo}
+                                            productDetail={productDetail}
                                         />
                                     </TabPanel>
                                     <TabPanel value={tabIndex} index={1}>
