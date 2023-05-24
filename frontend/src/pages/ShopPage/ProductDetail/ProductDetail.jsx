@@ -28,7 +28,8 @@ import { getAllDiscountCustomer } from "../../../redux/api/apiDiscount";
 import { toast } from "react-hot-toast";
 import { createInvoice } from "../../../redux/api/apiInvoice";
 import { createAxios } from "../../../createInstance";
-import { logoutSuccess } from "../../../redux/slice/authSlice";
+import { loginSuccess, logoutSuccess } from "../../../redux/slice/authSlice";
+import { createCart } from "../../../redux/api/apiCart";
 const cx = classNames.bind(styles);
 
 const productInfo = {
@@ -80,7 +81,7 @@ function ProductDetail() {
 
     const { productId } = useParams();
     const user = useSelector((state) => state.auth.login?.currentUser);
-    let axiosJWT = createAxios(user, dispatch, logoutSuccess);
+    let axiosJWT = createAxios(user, dispatch, loginSuccess);
 
     const getProducById = useSelector((state) => state.product.product.product);
     const discountListCustomer = useSelector(
@@ -114,11 +115,16 @@ function ProductDetail() {
         if (!user) {
             toast.error("đăng nhập đi đcmm");
         } else {
-            await createInvoice(
+            await createCart(
                 user?.accessToken,
                 dispatch,
                 {
                     customer_user_id: user?.id,
+                    product_id: productDetail?.id,
+                    product_name: productDetail?.name,
+                    product_quantity: buyQuantity,
+                    unit_price: parseFloat(productDetail?.price),
+                    image_url: productDetail?.image_url,
                 },
                 axiosJWT
             ).then(() => {

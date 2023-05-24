@@ -54,6 +54,7 @@ const cartController = {
                 product_name: req.body.product_name,
                 product_quantity: req.body.product_quantity,
                 unit_price: req.body.unit_price,
+                image_url: req.body.image_url,
                 status: 1,
             });
             res.json({

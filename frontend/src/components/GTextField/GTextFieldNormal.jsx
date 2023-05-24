@@ -24,6 +24,7 @@ function GTextFieldNormal({
     password,
     isShowPassword,
     formik,
+    onBlur,
     ...otherProps
 }) {
     const configTextfield = {
@@ -97,7 +98,7 @@ function GTextFieldNormal({
             ) : (
                 <TextField
                     {...configTextfield}
-                    onBlur={formik?.handleBlur}
+                    onBlur={onBlur ? onBlur : formik?.handleBlur}
                     multiline={multiline}
                     label={displayLabel}
                     color="secondary"

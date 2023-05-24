@@ -62,6 +62,7 @@
         }
     }
     .table-product-list {
+        width: 100%;
         .table-header {
             border-bottom: 1px solid var(--gray);
         }
@@ -89,7 +90,7 @@
 
                 .product-content {
                     display: flex;
-                    align-items: flex-start;
+                    align-items: center;
 
                     .product-content-name {
                         font-size: 1.8rem;

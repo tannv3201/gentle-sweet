@@ -36,10 +36,10 @@ export const getAllCart = async (accessToken, dispatch, axiosJWT) => {
     }
 };
 
-export const createCart = async (accessToken, dispatch, cartDate, axiosJWT) => {
+export const createCart = async (accessToken, dispatch, cartData, axiosJWT) => {
     dispatch(createCartStart());
     try {
-        const res = await axiosJWT.post("/v1/cart", cartDate, {
+        const res = await axiosJWT.post("/v1/cart", cartData, {
             headers: {
                 token: `Bearer ${accessToken}`,
             },
@@ -60,13 +60,14 @@ export const createCart = async (accessToken, dispatch, cartDate, axiosJWT) => {
 export const updateCart = async (
     accessToken,
     dispatch,
-    id,
-    cartDate,
+    userId,
+    cartId,
+    cartData,
     axiosJWT
 ) => {
     dispatch(updateCartStart());
     try {
-        const res = await axiosJWT.put("/v1/cart/" + id, cartDate, {
+        const res = await axiosJWT.put("/v1/cart/" + cartId, cartData, {
             headers: {
                 token: `Bearer ${accessToken}`,
             },
@@ -75,7 +76,7 @@ export const updateCart = async (
         if (res?.data?.status === 200) {
             toast.success(res?.data?.msg);
             // getAllCart(accessToken, dispatch, axiosJWT);
-            await getCartById(dispatch, id, accessToken, axiosJWT);
+            await getCartByUserId(accessToken, dispatch, userId, axiosJWT);
         }
         console.log(res?.data);
     } catch (error) {
@@ -83,10 +84,16 @@ export const updateCart = async (
     }
 };
 
-export const deleteCart = async (dispatch, id, accessToken, axiosJWT) => {
+export const deleteCart = async (
+    accessToken,
+    dispatch,
+    cartItemId,
+    userId,
+    axiosJWT
+) => {
     dispatch(deleteCartStart());
     try {
-        const res = await axiosJWT.delete("/v1/cart/" + id, {
+        const res = await axiosJWT.delete("/v1/cart/" + cartItemId, {
             headers: {
                 token: `Bearer ${accessToken}`,
             },
@@ -94,7 +101,7 @@ export const deleteCart = async (dispatch, id, accessToken, axiosJWT) => {
         dispatch(deleteCartSuccess(res?.data));
         if (res?.data?.status === 200) {
             toast.success(res?.data?.msg);
-            await getAllCart(accessToken, dispatch, axiosJWT);
+            await getCartByUserId(accessToken, dispatch, userId, axiosJWT);
         }
     } catch (error) {
         dispatch(deleteCartFailed(error.response?.data));
