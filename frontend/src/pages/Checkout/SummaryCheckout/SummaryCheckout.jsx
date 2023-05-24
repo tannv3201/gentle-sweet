@@ -31,6 +31,8 @@ import {
     getWardById,
 } from "../../../redux/api/apiProvince";
 import PaymentInformation from "../PaymentInformation/PaymentInformation";
+import { createInvoice } from "../../../redux/api/apiInvoice";
+import { createInvoiceDetail } from "../../../redux/api/apiInvoiceDetail";
 const cx = classNames.bind(styles);
 
 function SummaryCheckout() {
@@ -99,6 +101,8 @@ function SummaryCheckout() {
         }
     }, [selectedProductCartList]);
 
+    console.log(selectedProductCartList);
+
     const phoneRegExp = /(84|0[3|5|7|8|9])+([0-9]{8})\b/;
     const validationSchema = Yup.object().shape({
         fullName: Yup.string().required("Vui lòng không để trống"),
@@ -111,14 +115,63 @@ function SummaryCheckout() {
         ward: Yup.string().required("Vui lòng không để trống"),
         detail_address: Yup.string().required("Vui lòng không để trống"),
     });
+
+    const handleSubmit = async (values) => {
+        const newInvoice = await createInvoice(
+            user?.accessToken,
+            dispatch,
+            {
+                customer_user_id: user?.id,
+            },
+            axiosJWT
+        );
+
+        const productList = await selectedProductCartList?.map((p) => {
+            const data = {
+                ...p,
+                unit_price: p.unit_price_onsale
+                    ? parseFloat(p.unit_price_onsale)
+                    : parseFloat(p.unit_price),
+                product_quantity: parseInt(p?.product_quantity),
+                product_id: p?.product_id,
+                invoice_id: newInvoice,
+            };
+            const {
+                discount_percent,
+                image_url,
+                product_name,
+                tableData,
+                created_at,
+                updated_at,
+                id,
+                customer_user_id,
+                unit_price_onsale,
+                status,
+                ...restData
+            } = data;
+            return restData;
+        });
+
+        console.log(productList);
+
+        for (const item of productList) {
+            await createInvoiceDetail(
+                newInvoice,
+                user?.accessToken,
+                dispatch,
+                item,
+                axiosJWT
+            );
+        }
+    };
     return (
         <div className={cx("wrapper")}>
             <div className={cx("inner")}>
                 <Formik
                     initialValues={checkoutInfo}
                     validationSchema={validationSchema}
-                    onSubmit={(values, actions) => {
-                        console.log(values);
+                    onSubmit={async (values, actions) => {
+                        await handleSubmit(values);
                     }}
                 >
                     {({ handleSubmit }) => (
