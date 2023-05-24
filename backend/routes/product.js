@@ -31,7 +31,7 @@ router.put(
 
 router.get(
     "/",
-    middlewareController.verifyTokenAndSystemUserAuth,
+    // middlewareController.verifyTokenAndSystemUserAuth,
     productController.getAllProduct
 );
 

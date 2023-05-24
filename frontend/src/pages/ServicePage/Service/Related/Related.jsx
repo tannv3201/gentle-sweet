@@ -251,14 +251,14 @@ function Related() {
                                         <GTextField
                                             label="Họ và tên"
                                             fullWidth
-                                            requiredlabel
+                                            requiredlabel={true}
                                         />
                                     </Grid>
                                     <Grid item xs={12}>
                                         <GTextField
                                             label="Số điện thoại"
                                             fullWidth
-                                            requiredlabel
+                                            requiredlabel={true}
                                         />
                                     </Grid>
                                     <Grid item xs={12}>

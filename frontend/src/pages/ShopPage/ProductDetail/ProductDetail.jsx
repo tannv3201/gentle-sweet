@@ -32,25 +32,12 @@ import { loginSuccess, logoutSuccess } from "../../../redux/slice/authSlice";
 import { createCart } from "../../../redux/api/apiCart";
 const cx = classNames.bind(styles);
 
-const productInfo = {
-    name: "Sơn nhũ mắt mèo",
-    category: "Sơn",
-    image: "https://nailzone.vn/wp-content/uploads/2018/03/1200-653345560-colored-nail-polish.jpg",
-    price: 90000,
-    onSale: 20,
-    description1:
-        "Tẩy trang là bước làm sạch quan trọng không thể thiếu trong chu trình chăm sóc da hằng ngày của chị em. Sử dụng sản phẩm tẩy trang không chỉ làm sạch sâu cho làn da mà còn giúp da có vẻ ngoài mịn màng, trắng sáng.",
-    description2:
-        "Nếu bạn nghĩ rằng chỉ sữa rửa mặt là đủ giúp làm sạch hết bụi bẩn, dầu nhờn trên da, giúp da sạch thoáng thì đây là quan điểm khá sai lầm. Cả sữa rửa mặt hay nước tẩy trang đều là những sản phẩm vô cùng cần thiết, đóng vai trò khác nhau và không thể thiếu trong chu trình chăm sóc da mỗi ngày.",
-};
-
 function ProductDetail() {
     const theme = useTheme();
     const isMedium = useMediaQuery(theme.breakpoints.down("md"));
     const dispatch = useDispatch();
     const [productDetail, setProductDetail] = useState({});
 
-    const [onSale, setOnSale] = useState(30);
     const [buyQuantity, setBuyQuantity] = useState(1);
     const [tabIndex, setTabIndex] = React.useState(0);
 

@@ -64,7 +64,7 @@ export default function StepperInformation() {
                             variant="filled"
                             label="Họ"
                             id="lastName"
-                            requiredlabel
+                            requiredlabel={true}
                             fullWidth
                             onChange={(e) => setLastName(e.target.value)}
                         />
@@ -73,7 +73,7 @@ export default function StepperInformation() {
                         <GTextField
                             variant="filled"
                             label="Tên"
-                            requiredlabel
+                            requiredlabel={true}
                             fullWidth
                             onChange={(e) => setFistName(e.target.value)}
                         />
@@ -82,7 +82,7 @@ export default function StepperInformation() {
                         <GTextField
                             variant="filled"
                             label="Tên hiển thị"
-                            requiredlabel
+                            requiredlabel={true}
                             fullWidth
                             disabled
                             value={fullName}
@@ -98,7 +98,7 @@ export default function StepperInformation() {
                         <GTextField
                             variant="filled"
                             label="Địa chỉ e-mail"
-                            requiredlabel
+                            requiredlabel={true}
                             fullWidth
                             id="email"
                         />
@@ -107,7 +107,7 @@ export default function StepperInformation() {
                         <GTextField
                             variant="filled"
                             label="Số điện thoại"
-                            requiredlabel
+                            requiredlabel={true}
                             fullWidth
                             id="phoneNumber"
                         />
@@ -144,7 +144,7 @@ export default function StepperInformation() {
                         <GTextField
                             variant="filled"
                             label="Số nhà"
-                            requiredlabel
+                            requiredlabel={true}
                             fullWidth
                             multiline
                         />

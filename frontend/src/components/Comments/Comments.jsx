@@ -45,7 +45,7 @@ function Comments() {
                                                 rows={"6"}
                                                 label={"Bình luận"}
                                                 id={"comment-textarea"}
-                                                requiredlabel
+                                                requiredlabel={true}
                                                 placeholder="Viết nhận xét của bạn tại đây..."
                                             />
                                         </div>
@@ -54,7 +54,7 @@ function Comments() {
                                 <Grid item lg={4} md={6} sm={12} xs={12}>
                                     <GTextField
                                         label="Họ và tên"
-                                        requiredlabel
+                                        requiredlabel={true}
                                         fullWidth
                                     />
                                 </Grid>
@@ -64,7 +64,7 @@ function Comments() {
                                 <Grid item lg={4} md={6} sm={12} xs={12}>
                                     <GTextField
                                         label="Số điện thoại"
-                                        requiredlabel
+                                        requiredlabel={true}
                                         fullWidth
                                     />
                                 </Grid>

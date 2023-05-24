@@ -9,6 +9,7 @@ import {
     logoutStart,
     logoutSuccess,
 } from "../slice/authSlice";
+import { resetApp } from "../store";
 
 export const loginUser = async (user, dispatch, navigate) => {
     dispatch(loginStart());

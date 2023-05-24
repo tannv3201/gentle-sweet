@@ -16,13 +16,14 @@ import { API_IMAGE_URL } from "../../../LocalConstants";
 import GTable from "../../../common/GTable/GTable";
 import GTextFieldNormal from "../../../components/GTextField/GTextFieldNormal";
 import ConfirmRemoveCartItem from "./ConfirmRemoveCartItem";
+import { getAllDiscountCustomer } from "../../../redux/api/apiDiscount";
+import { getProductLimit } from "../../../redux/api/apiProduct";
 
 const cx = classNames.bind(styles);
 
 function CartProductList() {
     const [productList, setProductList] = useState([]);
     const [selectedCartItem, setSelectedCartItem] = useState({});
-    const [newQuantity, setNewQuantity] = useState();
 
     // ============
     const user = useSelector((state) => state.auth.login?.currentUser);
@@ -30,13 +31,53 @@ function CartProductList() {
     const dispatch = useDispatch();
     let axiosJWT = createAxios(user, dispatch, loginSuccess);
 
+    const discountListCustomer = useSelector(
+        (state) => state.discount.discount?.discountListCustomer
+    );
+
+    const getProductList = useSelector(
+        (state) => state.product.product?.productListSearchLimit
+    );
+
     useEffect(() => {
-        getCartByUserId(user?.accessToken, dispatch, user?.id, axiosJWT);
+        const fetch = async () => {
+            await getAllDiscountCustomer(dispatch);
+            await getProductLimit(dispatch);
+        };
+        fetch();
     }, []);
 
     useEffect(() => {
+        if (user) {
+            getCartByUserId(user?.accessToken, dispatch, user?.id, axiosJWT);
+        }
+    }, [user?.id]);
+
+    useEffect(() => {
         if (cartList) {
-            setProductList(structuredClone(cartList));
+            const newCartList = cartList?.map((item) => {
+                let discount_percent;
+                const getProduct = getProductList?.find(
+                    (p) => p.id === parseInt(item?.product_id)
+                );
+                if (getProduct.discount_id) {
+                    const getDiscount = discountListCustomer?.find(
+                        (d) => d.id === parseInt(getProduct.discount_id)
+                    );
+
+                    discount_percent = getDiscount?.discount_percent;
+                }
+                return {
+                    ...item,
+                    unit_price_onsale:
+                        item?.unit_price -
+                        (item?.unit_price * discount_percent) / 100,
+                    discount_percent: discount_percent,
+                };
+            });
+
+            // console.log(newCartList);
+            setProductList(structuredClone(newCartList));
         }
     }, [cartList]);
     const handleDecrease = async (cartItem) => {
@@ -115,6 +156,7 @@ function CartProductList() {
             );
         }
     };
+
     return (
         <div className={cx("wrapper")}>
             <div className={cx("inner")}>
@@ -141,7 +183,6 @@ function CartProductList() {
                                     {
                                         title: "Hình ảnh",
                                         field: "image_url",
-                                        align: "center",
                                         render: (rowData) => (
                                             // eslint-disable-next-line jsx-a11y/alt-text
                                             <img
@@ -158,12 +199,10 @@ function CartProductList() {
                                     {
                                         title: "Sản phẩm",
                                         field: "product_name",
-                                        align: "center",
                                     },
                                     {
                                         title: "Số lượng",
                                         field: "product_quantity",
-                                        align: "center",
                                         render: (rowData) => {
                                             const rowId = rowData.tableData.id;
                                             return (
@@ -225,11 +264,43 @@ function CartProductList() {
                                         },
                                     },
                                     {
-                                        title: "Giá",
+                                        title: "Đơn giá",
                                         field: "unit_price",
-                                        align: "center",
-                                        render: (rowData) =>
-                                            FormatCurrency(rowData?.unit_price),
+                                        render: (rowData) => {
+                                            return (
+                                                <>
+                                                    <span
+                                                        className={
+                                                            rowData?.unit_price_onsale
+                                                                ? cx(
+                                                                      "unit_price",
+                                                                      "onsale"
+                                                                  )
+                                                                : cx(
+                                                                      "unit_price"
+                                                                  )
+                                                        }
+                                                    >
+                                                        {FormatCurrency(
+                                                            rowData?.unit_price
+                                                        )}
+                                                    </span>
+                                                    {rowData?.unit_price_onsale ? (
+                                                        <span
+                                                            className={cx(
+                                                                "unit_price_onsale"
+                                                            )}
+                                                        >
+                                                            {FormatCurrency(
+                                                                rowData?.unit_price_onsale
+                                                            )}
+                                                        </span>
+                                                    ) : (
+                                                        ""
+                                                    )}
+                                                </>
+                                            );
+                                        },
                                     },
                                     {
                                         title: "Xóa",
@@ -243,7 +314,13 @@ function CartProductList() {
                                                     alignItems: "center",
                                                 }}
                                             >
-                                                <IconButton>
+                                                <IconButton
+                                                    onClick={() =>
+                                                        handleOpenRemoveCartItem(
+                                                            rowData
+                                                        )
+                                                    }
+                                                >
                                                     <DeleteRounded color="error" />
                                                 </IconButton>
                                             </div>

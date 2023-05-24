@@ -50,21 +50,21 @@ function CheckoutInformation() {
                                 <Grid item lg={6} md={6} sm={12} xs={12}>
                                     <GTextField
                                         label={"Họ"}
-                                        requiredlabel
+                                        requiredlabel={true}
                                         fullWidth
                                     />
                                 </Grid>
                                 <Grid item lg={6} md={6} sm={12} xs={12}>
                                     <GTextField
                                         label={"Tên"}
-                                        requiredlabel
+                                        requiredlabel={true}
                                         fullWidth
                                     />
                                 </Grid>
                                 <Grid item lg={12} md={12} sm={12} xs={12}>
                                     <GTextField
                                         label={"Họ tên đầy đủ"}
-                                        requiredlabel
+                                        requiredlabel={true}
                                         fullWidth
                                         disabled
                                     />
@@ -72,14 +72,14 @@ function CheckoutInformation() {
                                 <Grid item lg={6} md={6} sm={12} xs={12}>
                                     <GTextField
                                         label={"Email"}
-                                        requiredlabel
+                                        requiredlabel={true}
                                         fullWidth
                                     />
                                 </Grid>
                                 <Grid item lg={6} md={6} sm={12} xs={12}>
                                     <GTextField
                                         label={"Số điện thoại"}
-                                        requiredlabel
+                                        requiredlabel={true}
                                         fullWidth
                                     />
                                 </Grid>

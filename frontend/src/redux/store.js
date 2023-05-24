@@ -73,3 +73,8 @@ export const store = configureStore({
 });
 
 export let persistor = persistStore(store);
+
+// Reset hết toàn bộ state khi logout
+export const resetApp = () => {
+    persistor.purge();
+};
