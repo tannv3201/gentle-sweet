@@ -1,0 +1,35 @@
+.method-e-wallet {
+    height: 0;
+    overflow: hidden;
+    transition: all 0.4s linear;
+    padding: 0 12px;
+    &.isChecked {
+        height: 564px;
+    }
+
+    .qr-code {
+        // width: 160px;
+        // height: 160px;
+        img {
+            height: 60%;
+            width: 60%;
+            object-fit: cover;
+        }
+    }
+    .e-wallet-information-title {
+        h3 {
+            font-size: 2rem;
+            font-weight: var(--fw-semi-bold);
+        }
+    }
+    .information-title {
+        font-size: 1.6rem;
+        font-weight: var(--fw-medium);
+        color: var(--gray);
+    }
+    .information-content {
+        font-size: 1.6rem;
+        font-weight: var(--fw-medium);
+        color: var(--text-primary);
+    }
+}

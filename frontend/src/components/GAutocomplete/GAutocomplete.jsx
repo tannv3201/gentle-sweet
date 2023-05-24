@@ -9,6 +9,7 @@ export default function GAutocomplete({
     id,
     data,
     onChange,
+    requiredlabel,
     value,
     ...props
 }) {

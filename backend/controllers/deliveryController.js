@@ -36,6 +36,7 @@ const deliveryController = {
                 province: req.body.province,
                 district: req.body.district,
                 ward: req.body.ward,
+                payment_method: req.body.payment_method,
                 detail_address: req.body.detail_address,
                 status: 1,
             });

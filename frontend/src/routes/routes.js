@@ -81,17 +81,17 @@ export const publicRoutes = [
         component: ProductDetail,
     },
     {
-        path: "/thu-tuc-thanh-toan",
+        path: "/thanh-toan",
         component: Checkout,
     },
     {
         path: "/gio-hang",
         component: Cart,
     },
-    {
-        path: "/thanh-toan",
-        component: Payment,
-    },
+    // {
+    //     path: "/thanh-toan",
+    //     component: Payment,
+    // },
     {
         path: "/dang-nhap",
         component: Login,

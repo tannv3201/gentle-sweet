@@ -79,7 +79,7 @@ function SummaryPayment() {
                                     <span
                                         className={cx("payment-summary-title")}
                                     >
-                                        <h2>Đơn hàng của bạn</h2>
+                                        <h3>Đơn hàng của bạn</h3>
                                     </span>
                                 </Grid>
                                 {productListCart?.map((product, idx) => (

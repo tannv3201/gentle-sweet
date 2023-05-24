@@ -18,13 +18,14 @@ import GTextFieldNormal from "../../../components/GTextField/GTextFieldNormal";
 import ConfirmRemoveCartItem from "./ConfirmRemoveCartItem";
 import { getAllDiscountCustomer } from "../../../redux/api/apiDiscount";
 import { getProductLimit } from "../../../redux/api/apiProduct";
+import CartProductSummary from "./CartProductSummary/CartProductSummary";
 
 const cx = classNames.bind(styles);
 
 function CartProductList() {
     const [productList, setProductList] = useState([]);
-    const [selectedCartItem, setSelectedCartItem] = useState({});
-
+    const [selectedProduct, setSelectedProduct] = useState({});
+    const [selectedProductCartList, setSelectedProductCartList] = useState([]);
     // ============
     const user = useSelector((state) => state.auth.login?.currentUser);
     const cartList = useSelector((state) => state.cart.cart?.cartList);
@@ -115,12 +116,12 @@ function CartProductList() {
     const [isOpenRemoveCartItem, setIsOpenRemoveCartItem] = useState(false);
 
     const handleOpenRemoveCartItem = (cartItem) => {
-        setSelectedCartItem(cartItem);
+        setSelectedProduct(cartItem);
         setIsOpenRemoveCartItem(true);
     };
 
     const handleCloseRemoveCartItem = (cartItem) => {
-        setSelectedCartItem({});
+        setSelectedProduct({});
         setIsOpenRemoveCartItem(false);
     };
 
@@ -158,189 +159,216 @@ function CartProductList() {
     };
 
     return (
-        <div className={cx("wrapper")}>
-            <div className={cx("inner")}>
-                <Grid container spacing={2}>
-                    <Grid item xs={12}>
-                        <div className={cx("cart-header")}>
-                            <span>
-                                <h2>Giỏ hàng</h2>
-                            </span>
-                            <GButton
-                                startIcon={<DeleteRounded />}
-                                variant="text"
-                                color="error"
-                            >
-                                Xóa
-                            </GButton>
-                        </div>
-                    </Grid>
-                    <Grid item xs={12}>
-                        <div className={cx("table-product-list")}>
-                            <GTable
-                                title={"DANH SÁCH GIẢM GIÁ"}
-                                columns={[
-                                    {
-                                        title: "Hình ảnh",
-                                        field: "image_url",
-                                        render: (rowData) => (
-                                            // eslint-disable-next-line jsx-a11y/alt-text
-                                            <img
-                                                src={`${API_IMAGE_URL}/${rowData?.image_url}`}
-                                                style={{
-                                                    width: 60,
-                                                    height: 60,
-                                                    objectFit: "cover",
-                                                    borderRadius: "50%",
-                                                }}
-                                            />
-                                        ),
-                                    },
-                                    {
-                                        title: "Sản phẩm",
-                                        field: "product_name",
-                                    },
-                                    {
-                                        title: "Số lượng",
-                                        field: "product_quantity",
-                                        render: (rowData) => {
-                                            const rowId = rowData.tableData.id;
-                                            return (
-                                                <div
-                                                    style={{
-                                                        display: "flex",
-                                                        width: "148px",
-                                                    }}
-                                                >
-                                                    <IconButton
-                                                        onClick={() =>
-                                                            handleDecrease(
-                                                                rowData
-                                                            )
-                                                        }
-                                                    >
-                                                        <RemoveRounded />
-                                                    </IconButton>
-                                                    <GTextFieldNormal
-                                                        onBlur={() =>
-                                                            handleUpdateQuantityWhenBlur(
-                                                                rowId
-                                                            )
-                                                        }
-                                                        inputProps={{
-                                                            inputMode:
-                                                                "numeric",
-                                                            pattern: "[0-9]*",
-                                                            maxLength: 2, // Giới hạn chiều dài của số nhập vào (ví dụ 99)
-                                                        }}
-                                                        fullWidth
-                                                        value={
-                                                            tempQuantity[
-                                                                rowId
-                                                            ] !== undefined
-                                                                ? tempQuantity[
-                                                                      rowId
-                                                                  ]
-                                                                : rowData?.product_quantity
-                                                        }
-                                                        onChange={(e) =>
-                                                            handleQuantityChange(
-                                                                e.target.value,
-                                                                rowId
-                                                            )
-                                                        }
-                                                    />
-                                                    <IconButton
-                                                        onClick={() =>
-                                                            handleIncrease(
-                                                                rowData
-                                                            )
-                                                        }
-                                                    >
-                                                        <AddRounded />
-                                                    </IconButton>
-                                                </div>
-                                            );
-                                        },
-                                    },
-                                    {
-                                        title: "Đơn giá",
-                                        field: "unit_price",
-                                        render: (rowData) => {
-                                            return (
-                                                <>
-                                                    <span
-                                                        className={
-                                                            rowData?.unit_price_onsale
-                                                                ? cx(
-                                                                      "unit_price",
-                                                                      "onsale"
-                                                                  )
-                                                                : cx(
-                                                                      "unit_price"
-                                                                  )
-                                                        }
-                                                    >
-                                                        {FormatCurrency(
-                                                            rowData?.unit_price
-                                                        )}
-                                                    </span>
-                                                    {rowData?.unit_price_onsale ? (
-                                                        <span
-                                                            className={cx(
-                                                                "unit_price_onsale"
-                                                            )}
+        <>
+            <Grid container spacing={2}>
+                <Grid item xs={9}>
+                    <div className={cx("wrapper")}>
+                        <div className={cx("inner")}>
+                            <Grid container spacing={2}>
+                                <Grid item xs={12}>
+                                    <div className={cx("cart-header")}>
+                                        <span>
+                                            <h2>Giỏ hàng</h2>
+                                        </span>
+                                        <GButton
+                                            startIcon={<DeleteRounded />}
+                                            variant="text"
+                                            color="error"
+                                        >
+                                            Xóa
+                                        </GButton>
+                                    </div>
+                                </Grid>
+                                <Grid item xs={12}>
+                                    <div className={cx("table-product-list")}>
+                                        <GTable
+                                            paging={false}
+                                            onSelectionChange={(rows) =>
+                                                setSelectedProductCartList(rows)
+                                            }
+                                            title={"DANH SÁCH GIẢM GIÁ"}
+                                            columns={[
+                                                {
+                                                    title: "Hình ảnh",
+                                                    field: "image_url",
+                                                    render: (rowData) => (
+                                                        // eslint-disable-next-line jsx-a11y/alt-text
+                                                        <img
+                                                            src={`${API_IMAGE_URL}/${rowData?.image_url}`}
+                                                            style={{
+                                                                width: 60,
+                                                                height: 60,
+                                                                objectFit:
+                                                                    "cover",
+                                                                borderRadius:
+                                                                    "50%",
+                                                            }}
+                                                        />
+                                                    ),
+                                                },
+                                                {
+                                                    title: "Sản phẩm",
+                                                    field: "product_name",
+                                                },
+                                                {
+                                                    title: "Số lượng",
+                                                    field: "product_quantity",
+                                                    render: (rowData) => {
+                                                        const rowId =
+                                                            rowData.tableData
+                                                                .id;
+                                                        return (
+                                                            <div
+                                                                style={{
+                                                                    display:
+                                                                        "flex",
+                                                                    width: "148px",
+                                                                }}
+                                                            >
+                                                                <IconButton
+                                                                    onClick={() =>
+                                                                        handleDecrease(
+                                                                            rowData
+                                                                        )
+                                                                    }
+                                                                >
+                                                                    <RemoveRounded />
+                                                                </IconButton>
+                                                                <GTextFieldNormal
+                                                                    onBlur={() =>
+                                                                        handleUpdateQuantityWhenBlur(
+                                                                            rowId
+                                                                        )
+                                                                    }
+                                                                    inputProps={{
+                                                                        inputMode:
+                                                                            "numeric",
+                                                                        pattern:
+                                                                            "[0-9]*",
+                                                                        maxLength: 2, // Giới hạn chiều dài của số nhập vào (ví dụ 99)
+                                                                    }}
+                                                                    fullWidth
+                                                                    value={
+                                                                        tempQuantity[
+                                                                            rowId
+                                                                        ] !==
+                                                                        undefined
+                                                                            ? tempQuantity[
+                                                                                  rowId
+                                                                              ]
+                                                                            : rowData?.product_quantity
+                                                                    }
+                                                                    onChange={(
+                                                                        e
+                                                                    ) =>
+                                                                        handleQuantityChange(
+                                                                            e
+                                                                                .target
+                                                                                .value,
+                                                                            rowId
+                                                                        )
+                                                                    }
+                                                                />
+                                                                <IconButton
+                                                                    onClick={() =>
+                                                                        handleIncrease(
+                                                                            rowData
+                                                                        )
+                                                                    }
+                                                                >
+                                                                    <AddRounded />
+                                                                </IconButton>
+                                                            </div>
+                                                        );
+                                                    },
+                                                },
+                                                {
+                                                    title: "Đơn giá",
+                                                    field: "unit_price",
+                                                    render: (rowData) => {
+                                                        return (
+                                                            <>
+                                                                <span
+                                                                    className={
+                                                                        rowData?.unit_price_onsale
+                                                                            ? cx(
+                                                                                  "unit_price",
+                                                                                  "onsale"
+                                                                              )
+                                                                            : cx(
+                                                                                  "unit_price"
+                                                                              )
+                                                                    }
+                                                                >
+                                                                    {FormatCurrency(
+                                                                        rowData?.unit_price
+                                                                    )}
+                                                                </span>
+                                                                {rowData?.unit_price_onsale ? (
+                                                                    <span
+                                                                        className={cx(
+                                                                            "unit_price_onsale"
+                                                                        )}
+                                                                    >
+                                                                        {FormatCurrency(
+                                                                            rowData?.unit_price_onsale
+                                                                        )}
+                                                                    </span>
+                                                                ) : (
+                                                                    ""
+                                                                )}
+                                                            </>
+                                                        );
+                                                    },
+                                                },
+                                                {
+                                                    title: "Xóa",
+                                                    field: "actions",
+                                                    sorting: false,
+                                                    export: false,
+                                                    render: (rowData) => (
+                                                        <div
+                                                            style={{
+                                                                display: "flex",
+                                                                alignItems:
+                                                                    "center",
+                                                            }}
                                                         >
-                                                            {FormatCurrency(
-                                                                rowData?.unit_price_onsale
-                                                            )}
-                                                        </span>
-                                                    ) : (
-                                                        ""
-                                                    )}
-                                                </>
-                                            );
-                                        },
-                                    },
-                                    {
-                                        title: "Xóa",
-                                        field: "actions",
-                                        sorting: false,
-                                        export: false,
-                                        render: (rowData) => (
-                                            <div
-                                                style={{
-                                                    display: "flex",
-                                                    alignItems: "center",
-                                                }}
-                                            >
-                                                <IconButton
-                                                    onClick={() =>
-                                                        handleOpenRemoveCartItem(
-                                                            rowData
-                                                        )
-                                                    }
-                                                >
-                                                    <DeleteRounded color="error" />
-                                                </IconButton>
-                                            </div>
-                                        ),
-                                    },
-                                ]}
-                                data={productList}
-                                exportFileName={"DanhSachNguoiDung"}
-                            />
+                                                            <IconButton
+                                                                onClick={() =>
+                                                                    handleOpenRemoveCartItem(
+                                                                        rowData
+                                                                    )
+                                                                }
+                                                            >
+                                                                <DeleteRounded color="error" />
+                                                            </IconButton>
+                                                        </div>
+                                                    ),
+                                                },
+                                            ]}
+                                            data={productList}
+                                            exportFileName={"DanhSachNguoiDung"}
+                                        />
+                                    </div>
+                                </Grid>
+                            </Grid>
                         </div>
-                    </Grid>
+                        <ConfirmRemoveCartItem
+                            isOpen={isOpenRemoveCartItem}
+                            handleClose={handleCloseRemoveCartItem}
+                            handleOpen={handleOpenRemoveCartItem}
+                            selectedCartItem={selectedProduct}
+                        />
+                    </div>
                 </Grid>
-            </div>
-            <ConfirmRemoveCartItem
-                isOpen={isOpenRemoveCartItem}
-                handleClose={handleCloseRemoveCartItem}
-                handleOpen={handleOpenRemoveCartItem}
-                selectedCartItem={selectedCartItem}
-            />
-        </div>
+                <Grid item xs={3}>
+                    <CartProductSummary
+                        selectedProductCartList={selectedProductCartList}
+                    />
+                </Grid>
+            </Grid>
+        </>
     );
 }
 

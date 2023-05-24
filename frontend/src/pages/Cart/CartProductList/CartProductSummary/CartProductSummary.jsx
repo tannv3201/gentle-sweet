@@ -2,54 +2,28 @@ import React, { useEffect, useState } from "react";
 import classNames from "classnames/bind";
 import styles from "./CartProductSummary.module.scss";
 import { Grid } from "@mui/material";
-import GButton from "../../../components/MyButton/MyButton";
-import { FormatCurrency } from "../../../components/FormatCurrency/FormatCurrency";
+import GButton from "../../../../components/MyButton/MyButton";
+import { FormatCurrency } from "../../../../components/FormatCurrency/FormatCurrency";
 import { useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 
 const cx = classNames.bind(styles);
 
-function CartProductSummary() {
+function CartProductSummary({ selectedProductCartList }) {
     const navigate = useNavigate();
     const handleCheckoutButtonClick = () => {
-        navigate("/thu-tuc-thanh-toan");
+        navigate("/thanh-toan", {
+            state: {
+                selectedProductCartList: selectedProductCartList,
+            },
+        });
     };
 
-    const cartList = useSelector((state) => state.cart.cart?.cartList);
     const [priceTotal, setPriceTotal] = useState(0);
-    const discountListCustomer = useSelector(
-        (state) => state.discount.discount?.discountListCustomer
-    );
-
-    const getProductList = useSelector(
-        (state) => state.product.product?.productListSearchLimit
-    );
 
     useEffect(() => {
-        if (cartList) {
-            const newCartList = cartList?.map((item) => {
-                let discount_percent;
-                const getProduct = getProductList?.find(
-                    (p) => p.id === parseInt(item?.product_id)
-                );
-
-                if (getProduct.discount_id) {
-                    const getDiscount = discountListCustomer?.find(
-                        (d) => d.id === parseInt(getProduct.discount_id)
-                    );
-
-                    discount_percent = getDiscount?.discount_percent;
-                }
-                return {
-                    ...item,
-                    unit_price_onsale:
-                        item?.unit_price -
-                        (item?.unit_price * discount_percent) / 100,
-                    discount_percent: discount_percent,
-                };
-            });
-
-            const priceTotal = newCartList.reduce(
+        if (selectedProductCartList) {
+            const priceTotal = selectedProductCartList.reduce(
                 (accumulator, currentValue) => {
                     if (currentValue?.discount_percent) {
                         const discountedPrice =
@@ -75,7 +49,7 @@ function CartProductSummary() {
             );
             setPriceTotal(priceTotal);
         }
-    }, [cartList]);
+    }, [selectedProductCartList]);
 
     return (
         <div className={cx("wrapper")}>

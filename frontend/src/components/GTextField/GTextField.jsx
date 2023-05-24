@@ -113,7 +113,7 @@ export const RequiredLabel = () => {
 const GTextField = ({
     label,
     groupLabel,
-    requiredlabel,
+    requiredlabel = false,
     name,
     multiline,
     rows,
@@ -169,7 +169,8 @@ const GTextField = ({
                 label={
                     label ? (
                         <>
-                            {label} {requiredlabel && <RequiredLabel />}
+                            {label}{" "}
+                            {requiredlabel === true && <RequiredLabel />}
                         </>
                     ) : (
                         ""

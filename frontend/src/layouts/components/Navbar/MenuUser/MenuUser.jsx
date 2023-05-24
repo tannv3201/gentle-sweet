@@ -63,7 +63,7 @@ export default function MenuUser() {
                     </div>
                 </IconButton>
             ) : (
-                <IconButton onClick={handleNavigateLogin}>
+                <IconButton title="Đăng nhập" onClick={handleNavigateLogin}>
                     <Person />
                 </IconButton>
             )}

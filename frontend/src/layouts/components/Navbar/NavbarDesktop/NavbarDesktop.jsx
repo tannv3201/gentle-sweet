@@ -5,23 +5,16 @@ import classNames from "classnames/bind";
 import { Grid, IconButton } from "@mui/material";
 import images from "../../../../assets/images";
 import { NavLink } from "react-router-dom";
-import {
-    PersonRounded,
-    SearchRounded,
-    ShoppingCartRounded,
-} from "@mui/icons-material";
-import { useMediaQuery } from "@mui/material";
-import { useTheme } from "@mui/material/styles";
+import { SearchRounded } from "@mui/icons-material";
 import { MenuList } from "../navigation";
 import InfoSaleSlider from "../InfoSaleSlider/InforSaleSlider";
 import MenuUser from "../MenuUser/MenuUser";
-import { useEffect } from "react";
+import { useSelector } from "react-redux";
+import MenuCart from "../MenuCart/MenuCart";
 
 const cx = classNames.bind(styles);
 
 function NavbarDesktop() {
-    const theme = useTheme();
-
     return (
         <div className={cx("wrapper")}>
             <div
@@ -163,11 +156,7 @@ function NavbarDesktop() {
                                 <IconButton title="Tìm kiếm" size="large">
                                     <SearchRounded />
                                 </IconButton>
-                                <NavLink to={"/gio-hang"}>
-                                    <IconButton title="Giỏ hàng" size="large">
-                                        <ShoppingCartRounded />
-                                    </IconButton>
-                                </NavLink>
+                                <MenuCart />
                                 <MenuUser />
                                 <span>
                                     <NavLink
