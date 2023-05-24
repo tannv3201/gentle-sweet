@@ -49,8 +49,6 @@ function CartProductSummary() {
                 };
             });
 
-            console.log(newCartList);
-
             const priceTotal = newCartList.reduce(
                 (accumulator, currentValue) => {
                     if (currentValue?.discount_percent) {
@@ -78,7 +76,7 @@ function CartProductSummary() {
             setPriceTotal(priceTotal);
         }
     }, [cartList]);
-    console.log(priceTotal);
+
     return (
         <div className={cx("wrapper")}>
             <div className={cx("inner")}>
