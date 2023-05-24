@@ -21,7 +21,7 @@ function PaymentInformation() {
     };
     useEffect(() => {
         if (methodChecked) {
-            setFieldValue("payment", methodChecked);
+            setFieldValue("payment_method", methodChecked);
         }
     }, [methodChecked, setFieldValue]);
 

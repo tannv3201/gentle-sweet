@@ -33,6 +33,7 @@ import {
 import PaymentInformation from "../PaymentInformation/PaymentInformation";
 import { createInvoice } from "../../../redux/api/apiInvoice";
 import { createInvoiceDetail } from "../../../redux/api/apiInvoiceDetail";
+import { createDelivery } from "../../../redux/api/apiDelivery";
 const cx = classNames.bind(styles);
 
 function SummaryCheckout() {
@@ -152,8 +153,6 @@ function SummaryCheckout() {
             return restData;
         });
 
-        console.log(productList);
-
         for (const item of productList) {
             await createInvoiceDetail(
                 newInvoice,
@@ -163,6 +162,21 @@ function SummaryCheckout() {
                 axiosJWT
             );
         }
+
+        const delivery = await createDelivery(
+            user?.accessToken,
+            dispatch,
+            {
+                invoice_id: newInvoice,
+                customer_user_id: user?.id,
+                province: values?.province,
+                district: values?.district,
+                ward: values?.ward,
+                detail_address: values?.detail_address,
+                payment_method: values?.payment_method,
+            },
+            axiosJWT
+        );
     };
     return (
         <div className={cx("wrapper")}>

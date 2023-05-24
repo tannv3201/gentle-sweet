@@ -14,6 +14,14 @@ const getDeliveryById = async (id) => {
     return rows[0];
 };
 
+const getDeliveryByUserId = async (id) => {
+    const [rows, fields] = await pool.query(
+        "SELECT * FROM tbl_delivery WHERE customer_user_id = (?)",
+        [id]
+    );
+    return rows;
+};
+
 const createDelivery = async (delivery) => {
     const [result, fields] = await pool.query(
         "INSERT INTO tbl_delivery SET ?",
@@ -41,6 +49,7 @@ const deleteDeliveryById = async (id) => {
 module.exports = {
     getAllDelivery,
     getDeliveryById,
+    getDeliveryByUserId,
     createDelivery,
     updateDeliveryById,
     deleteDeliveryById,

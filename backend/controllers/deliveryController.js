@@ -13,6 +13,22 @@ const deliveryController = {
         }
     },
 
+    // GET DISCOUNT BY USERID
+    getDeliveryByUserId: async (req, res) => {
+        try {
+            const delivery = await DeliveryModel.getDeliveryByUserId(
+                req.params.id
+            );
+            if (!delivery) {
+                return res.status(404).json("Giao hàng không tồn tại");
+            } else {
+                return res.status(200).json(delivery);
+            }
+        } catch (error) {
+            res.status(500).json(error);
+        }
+    },
+
     // GET DISCOUNT BY ID
     getDeliveryById: async (req, res) => {
         try {
@@ -32,7 +48,7 @@ const deliveryController = {
         try {
             const newDelivery = await DeliveryModel.createDelivery({
                 invoice_id: req.body.invoice_id,
-                customer_name: req.body.customer_name,
+                customer_user_id: req.body.customer_user_id,
                 province: req.body.province,
                 district: req.body.district,
                 ward: req.body.ward,

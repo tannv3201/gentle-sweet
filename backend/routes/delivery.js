@@ -16,6 +16,12 @@ router.get(
 );
 
 router.get(
+    "/:id/customer",
+    middlewareController.verifyToken,
+    deliveryController.getDeliveryByUserId
+);
+
+router.get(
     "/:id",
     middlewareController.verifyToken,
     deliveryController.getDeliveryById
