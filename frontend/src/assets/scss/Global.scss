@@ -10,7 +10,6 @@
     --orange: #fb6340;
     --yellow: #ffd600;
     --secondary: #f4f5f7;
-    --success: #00f2c3;
     --neutral: #ffffff;
     --darker: black;
     --green: #2dce89;
@@ -37,6 +36,7 @@
     // --primary: #f0570b;
     // --primary: #f15e2c;
     // --primary-bold: #ab003c;
+    --success: #2e7d32;
     --primary: #f50057;
     --primary-500: #f73378;
     --primary-400: #f3a4b5;
@@ -689,6 +689,8 @@ span.MuiChip-label {
 .MuiToolbar-root.MuiToolbar-gutters.MuiToolbar-regular {
     .MuiTypography-root.MuiTypography-h6 {
         font-size: 1.6rem !important;
+        font-family: var(--font-family) !important;
+        font-weight: var(--fw-semi-bold) !important;
     }
 }
 
@@ -696,4 +698,19 @@ span.MuiChip-label {
     box-shadow: unset !important;
     border-radius: 4px !important;
     border: 1px solid var(--border-color) !important;
+}
+
+// Tab success (Purchase order)
+.MuiButtonBase-root.MuiTab-root.MuiTab-textColorInherit {
+    font-family: var(--font-family) !important;
+    font-weight: var(--fw-medium) !important;
+    font-size: 1.6rem !important;
+    text-transform: unset !important;
+}
+
+.MuiButtonBase-root.MuiTab-root.MuiTab-textColorInherit.Mui-selected {
+    color: var(--primary-500) !important;
+}
+.MuiTabs-indicator {
+    background-color: var(--primary-500) !important;
 }

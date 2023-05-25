@@ -40,6 +40,7 @@ import Invoice from "../pages/Admin/Invoice/Invoice";
 import InvoiceDetail from "../pages/Admin/Invoice/InvoiceDetail/InvoiceDetail";
 import BookingAdmin from "../pages/Admin/Booking/Booking";
 import BookingDetail from "../pages/Admin/Booking/BookingDetail/BookingDetail";
+import PurchaseOrder from "../pages/PurchaseOrder/PurchaseOrder";
 
 // public routes
 
@@ -87,6 +88,10 @@ export const publicRoutes = [
     {
         path: "/gio-hang",
         component: Cart,
+    },
+    {
+        path: "/don-mua",
+        component: PurchaseOrder,
     },
     // {
     //     path: "/thanh-toan",

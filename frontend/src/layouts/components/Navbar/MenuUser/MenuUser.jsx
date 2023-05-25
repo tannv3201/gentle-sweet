@@ -33,6 +33,10 @@ export default function MenuUser() {
     const handleClose = () => {
         setAnchorEl(null);
     };
+    const handleNavigatePurchaseOrder = () => {
+        navigate("/don-mua");
+        handleClose();
+    };
     const handleLogout = async () => {
         await logout(dispatch, id, navigate, accessToken, axiosJWT).then(() =>
             handleClose()
@@ -79,7 +83,9 @@ export default function MenuUser() {
                 <div className={cx("menu-title")}>
                     <span>{currentUser?.username}</span>
                 </div>
-                <MenuItem onClick={handleClose}>Thông tin</MenuItem>
+                <MenuItem onClick={handleNavigatePurchaseOrder}>
+                    Đơn mua
+                </MenuItem>
                 <MenuItem onClick={handleClose}>Tài khoản</MenuItem>
                 <MenuItem onClick={handleLogout}>Đăng xuất</MenuItem>
             </Menu>

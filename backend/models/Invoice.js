@@ -55,7 +55,7 @@ const getInvoiceByCustomerUserId = async (id) => {
         "SELECT * FROM tbl_invoice WHERE customer_user_id = (?)",
         [id]
     );
-    return rows[0];
+    return rows;
 };
 
 const createInvoice = async (invoice) => {

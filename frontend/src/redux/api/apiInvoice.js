@@ -13,9 +13,9 @@ import {
     deleteInvoiceFailed,
     deleteInvoiceStart,
     deleteInvoiceSuccess,
-    getAllInvoiceByStatusFailed,
-    getAllInvoiceByStatusStart,
-    getAllInvoiceByStatusSuccess,
+    getAllInvoiceByUserFailed,
+    getAllInvoiceByUserStart,
+    getAllInvoiceByUserSuccess,
     getAllInvoiceFailed,
     getAllInvoiceStart,
     getAllInvoiceSuccess,
@@ -29,6 +29,8 @@ import {
     updateInvoiceStart,
     updateInvoiceSuccess,
 } from "../slice/invoiceSlice";
+
+import { getInvoiceDetailByInvoiceId } from "./apiInvoiceDetail";
 
 export const getAllInvoice = async (accessToken, dispatch, axiosJWT) => {
     dispatch(getAllInvoiceStart());
@@ -45,23 +47,43 @@ export const getAllInvoice = async (accessToken, dispatch, axiosJWT) => {
     }
 };
 
-export const getAllInvoiceByStatus = async (
+export const getAllInvoiceByUser = async (
     id,
     accessToken,
     dispatch,
     axiosJWT
 ) => {
-    dispatch(getAllInvoiceByStatusStart());
+    dispatch(getAllInvoiceByUserStart());
     try {
-        const res = await axiosJWT.get("/v1/invoice/status/" + id, {
+        const res = await axiosJWT.get("/v1/invoice/" + id + "/customer", {
             headers: {
                 token: `Bearer ${accessToken}`,
             },
         });
-        dispatch(getAllInvoiceByStatusSuccess(res?.data));
+        dispatch(getAllInvoiceByUserSuccess(res?.data));
         return res?.data?.length;
     } catch (error) {
-        dispatch(getAllInvoiceByStatusFailed());
+        dispatch(getAllInvoiceByUserFailed());
+    }
+};
+
+export const getOwnInvoiceCustomer = async (
+    id,
+    accessToken,
+    dispatch,
+    axiosJWT
+) => {
+    dispatch(getAllInvoiceByUserStart());
+    try {
+        const res = await axiosJWT.get("/v1/invoice/" + id + "/customer", {
+            headers: {
+                token: `Bearer ${accessToken}`,
+            },
+        });
+        dispatch(getAllInvoiceByUserSuccess(res?.data));
+        return res?.data?.length;
+    } catch (error) {
+        dispatch(getAllInvoiceByUserFailed());
     }
 };
 

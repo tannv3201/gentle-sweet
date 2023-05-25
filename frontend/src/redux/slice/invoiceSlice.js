@@ -6,7 +6,7 @@ const invoiceSlice = createSlice({
         invoice: {
             invoiceList: [],
             invoice: null,
-            invoiceListByStatus: [],
+            invoiceListByUser: [],
             invoiceListSearch: [],
             isFetching: false,
             error: false,
@@ -31,14 +31,14 @@ const invoiceSlice = createSlice({
         },
 
         // Get all invoice by status
-        getAllInvoiceByStatusStart: (state) => {
+        getAllInvoiceByUserStart: (state) => {
             state.invoice.isFetching = true;
         },
-        getAllInvoiceByStatusSuccess: (state, action) => {
+        getAllInvoiceByUserSuccess: (state, action) => {
             state.invoice.isFetching = false;
-            state.invoice.invoiceListByStatus = action.payload;
+            state.invoice.invoiceListByUser = action.payload;
         },
-        getAllInvoiceByStatusFailed: (state) => {
+        getAllInvoiceByUserFailed: (state) => {
             state.invoice.isFetching = false;
             state.invoice.error = true;
         },
@@ -148,9 +148,9 @@ export const {
     getAllInvoiceSuccess,
     getAllInvoiceFailed,
 
-    getAllInvoiceByStatusStart,
-    getAllInvoiceByStatusSuccess,
-    getAllInvoiceByStatusFailed,
+    getAllInvoiceByUserStart,
+    getAllInvoiceByUserSuccess,
+    getAllInvoiceByUserFailed,
 
     invoiceSearchStart,
     invoiceSearchSuccess,

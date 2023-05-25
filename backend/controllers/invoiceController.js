@@ -51,6 +51,21 @@ const invoiceController = {
         }
     },
 
+    getInvoiceByUserId: async (req, res) => {
+        try {
+            const invoices = await InvoiceModel.getInvoiceByCustomerUserId(
+                req.params.id
+            );
+            if (!invoices) {
+                return res.status(404).json("Hóa đơn không tồn tại");
+            } else {
+                return res.status(200).json(invoices);
+            }
+        } catch (error) {
+            res.status(500).json(error);
+        }
+    },
+
     // GET INVOICE BY STATUS
     getInvoiceByStatus: async (req, res) => {
         try {

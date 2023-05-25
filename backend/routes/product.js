@@ -37,7 +37,7 @@ router.get(
 
 router.get(
     "/:id",
-    middlewareController.verifyTokenAndSystemUserAuth,
+    middlewareController.verifyToken,
     productController.getProductById
 );
 
