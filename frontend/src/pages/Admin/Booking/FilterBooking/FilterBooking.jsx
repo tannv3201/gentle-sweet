@@ -16,6 +16,7 @@ import GDatePicker, {
     GFormatDate,
 } from "../../../../components/GDatePicker/GDatePicker";
 import dayjs from "dayjs";
+import { bookingSearch } from "../../../../redux/api/apiBooking";
 
 const cx = classNames.bind(styles);
 
@@ -70,7 +71,7 @@ export default function FilterBooking({ isFiltering, setIsFiltering }) {
     useEffect(() => {
         const fetch = async () => {
             if (location.search || submitClicked) {
-                await invoiceSearch(
+                await bookingSearch(
                     user?.accessToken,
                     {
                         status: status,

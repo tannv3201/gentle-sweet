@@ -54,7 +54,6 @@ export default function InvoiceList() {
         if (customerUserList?.length === 0) {
             getAllCustomerUser(user?.accessToken, dispatch, axiosJWT);
         }
-        // dispatch(clearInvoiceListSearch());
     }, []);
 
     const invoiceList = useSelector(
