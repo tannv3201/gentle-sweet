@@ -70,7 +70,7 @@ export default function BookingList() {
                 navigate("/dang-nhap");
             }
 
-            if (bookingList?.length === 0) {
+            if (bookingList) {
                 await getAllBooking(user?.accessToken, dispatch, axiosJWT);
             }
             if (serviceList?.length === 0) {

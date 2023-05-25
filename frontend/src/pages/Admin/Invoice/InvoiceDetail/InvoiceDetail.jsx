@@ -293,7 +293,7 @@ export default function InvoiceDetail() {
                                                 "invoice-info-content"
                                             )}
                                         >
-                                            {currInvoice?.customer_user_id
+                                            {currInvoice?.admin_user_id
                                                 ? `STAFF - ${
                                                       currInvoiceCreator?.last_name +
                                                       " " +

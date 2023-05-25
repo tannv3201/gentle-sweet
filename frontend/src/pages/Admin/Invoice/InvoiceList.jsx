@@ -77,7 +77,7 @@ export default function InvoiceList() {
                 navigate("/dang-nhap");
             }
 
-            if (invoiceList?.length === 0) {
+            if (invoiceList?.length) {
                 await getAllInvoice(user?.accessToken, dispatch, axiosJWT);
             }
             if (productList?.length === 0) {
