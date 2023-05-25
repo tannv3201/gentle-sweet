@@ -11,7 +11,6 @@ import { useLocation, useSearchParams } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { createAxios } from "../../../../createInstance";
 import { loginSuccess } from "../../../../redux/slice/authSlice";
-import { invoiceSearch } from "../../../../redux/api/apiInvoice";
 import GDatePicker, {
     GFormatDate,
 } from "../../../../components/GDatePicker/GDatePicker";
@@ -151,7 +150,6 @@ export default function FilterBooking({ isFiltering, setIsFiltering }) {
                                 renderInput={(params) => (
                                     <GTextFieldNormal
                                         {...params}
-                                        name="id"
                                         fullWidth
                                         label="Trạng thái"
                                     />
@@ -186,7 +184,9 @@ export default function FilterBooking({ isFiltering, setIsFiltering }) {
                                                   customerUserList?.find(
                                                       (i) =>
                                                           i.id ===
-                                                          customerUserId
+                                                          parseInt(
+                                                              customerUserId
+                                                          )
                                                   )?.first_name,
                                           }
                                         : null
@@ -194,7 +194,6 @@ export default function FilterBooking({ isFiltering, setIsFiltering }) {
                                 renderInput={(params) => (
                                     <GTextFieldNormal
                                         {...params}
-                                        name="id"
                                         fullWidth
                                         label="Chọn khách hàng"
                                     />

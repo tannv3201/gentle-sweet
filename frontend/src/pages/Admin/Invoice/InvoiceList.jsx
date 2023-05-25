@@ -3,7 +3,7 @@ import DeleteRoundedIcon from "@mui/icons-material/DeleteRounded";
 import { useEffect } from "react";
 import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
-import { useLocation, useNavigate, useSearchParams } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { loginSuccess } from "../../../redux/slice/authSlice";
 import { createAxios } from "../../../createInstance";
 import { useState } from "react";
@@ -14,20 +14,17 @@ import GButton from "../../../components/MyButton/MyButton";
 import { LightTooltip } from "../../../components/GTooltip/GTooltip";
 import { FormatCurrency } from "../../../components/FormatCurrency/FormatCurrency";
 
-import { API_IMAGE_URL } from "../../../LocalConstants";
 import styles from "./Invoice.module.scss";
 import classNames from "classnames/bind";
 import { InfoRounded } from "@mui/icons-material";
 import DeleteInvoicePopup from "./DeleteInvoicePopup";
-import { getAllInvoice, invoiceSearch } from "../../../redux/api/apiInvoice";
+import { getAllInvoice } from "../../../redux/api/apiInvoice";
 import CreateInvoiceModal from "./CreateInvoiceModal";
 import dayjs from "dayjs";
 import utc from "dayjs/plugin/utc";
-import moment from "moment/moment";
 import { getAllCustomerUser } from "../../../redux/api/apiCustomerUser";
 import { getAllProduct } from "../../../redux/api/apiProduct";
 import FilterInvoice from "./FilterInvoice/FilterInvoice";
-import { clearInvoiceListSearch } from "../../../redux/slice/invoiceSlice";
 
 const cx = classNames.bind(styles);
 
@@ -39,9 +36,7 @@ export default function InvoiceList() {
     const navigate = useNavigate();
     // Check is filtering
     const [isFiltering, setIsFiltering] = useState(false);
-    const handleFilter = (newStatus) => {
-        setIsFiltering(newStatus);
-    };
+
     const [selectedInvoice, setSelectedInvoice] = useState({});
 
     let axiosJWT = createAxios(user, dispatch, loginSuccess);
@@ -63,8 +58,6 @@ export default function InvoiceList() {
     const invoiceListSearch = useSelector(
         (state) => state.invoice.invoice?.invoiceListSearch
     );
-    const [searchParams, setSearchParams] = useSearchParams();
-    const invoiceParamSearch = searchParams.get("status") || "";
 
     const productList = useSelector(
         (state) => state.product.product?.productList
@@ -76,7 +69,7 @@ export default function InvoiceList() {
                 navigate("/dang-nhap");
             }
 
-            if (invoiceList?.length) {
+            if (invoiceList) {
                 await getAllInvoice(user?.accessToken, dispatch, axiosJWT);
             }
             if (productList?.length === 0) {
@@ -88,7 +81,6 @@ export default function InvoiceList() {
     }, []);
 
     const location = useLocation();
-
     useEffect(() => {
         if (location.search) {
             const newInvoiceList = invoiceListSearch?.map((invoice) => {

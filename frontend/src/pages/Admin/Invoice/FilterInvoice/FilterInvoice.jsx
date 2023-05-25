@@ -185,7 +185,9 @@ function FilterInvoice({ isFiltering, setIsFiltering }) {
                                                   customerUserList?.find(
                                                       (i) =>
                                                           i.id ===
-                                                          customerUserId
+                                                          parseInt(
+                                                              customerUserId
+                                                          )
                                                   )?.first_name,
                                           }
                                         : null
