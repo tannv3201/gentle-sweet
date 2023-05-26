@@ -163,7 +163,10 @@ function CheckoutInformation() {
 
     const handleInfoSame = (e) => {
         if (e.target.checked) {
-            setFieldValue("fullName", user?.last_name + " " + user?.first_name);
+            setFieldValue(
+                "fullName",
+                user?.last_name + " " + user?.first_name || ""
+            );
             setFieldValue("phone_number", user?.phone_number);
             setSelectedProvince(selectedCurrProvince);
             setSelectedDistrict(selectedCurrDistrict);

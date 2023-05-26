@@ -49,6 +49,7 @@ import GDatePicker from "../../components/GDatePicker/GDatePicker";
 // } from "../../../../redux/api/apiCustomerUser";
 import { useMediaQuery } from "@mui/material";
 import { useTheme } from "@mui/material/styles";
+import { toast } from "react-hot-toast";
 const cx = classNames.bind(styles);
 export default function Account() {
     dayjs.extend(utc);
@@ -218,9 +219,15 @@ export default function Account() {
             formik.setFieldValue("ward", null);
         }
     };
-
+    const navigate = useNavigate();
     // Set selected province/district/ward into states & Formik field
     useEffect(() => {
+        if (!user) {
+            navigate("/dang-nhap");
+            toast("Vui lòng đăng nhập để sử dụng chức năng này.", {
+                icon: "😅",
+            });
+        }
         if (cloneData) {
             const provinceSelected = getProvinceById(
                 cloneData?.province,

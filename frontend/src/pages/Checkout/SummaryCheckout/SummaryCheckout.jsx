@@ -34,19 +34,24 @@ import PaymentInformation from "../PaymentInformation/PaymentInformation";
 import { createInvoice } from "../../../redux/api/apiInvoice";
 import { createInvoiceDetail } from "../../../redux/api/apiInvoiceDetail";
 import { createDelivery } from "../../../redux/api/apiDelivery";
+import { toast } from "react-hot-toast";
 const cx = classNames.bind(styles);
 
 function SummaryCheckout() {
     const navigate = useNavigate();
-    const handleCheckoutButtonClick = () => {
-        navigate("/thanh-toan");
-    };
+
     const [priceTotal, setPriceTotal] = useState(0);
     const [deliveryPrice, setDeliveryPrice] = useState(15000);
     const location = useLocation();
     const selectedProductCartList = location.state?.selectedProductCartList;
 
     useEffect(() => {
+        if (!user) {
+            navigate("/dang-nhap");
+            toast("Vui lòng đăng nhập để sử dụng chức năng này.", {
+                icon: "😅",
+            });
+        }
         if (selectedProductCartList) {
             const priceTotal = selectedProductCartList.reduce(
                 (accumulator, currentValue) => {
@@ -494,8 +499,8 @@ function SummaryCheckout() {
                                                                 // }
                                                                 type={"submit"}
                                                             >
-                                                                Tiếp tục thanh
-                                                                toán
+                                                                Xác nhận đơn
+                                                                hàng
                                                             </GButton>
                                                         </Grid>
                                                     </Grid>

@@ -3,7 +3,6 @@ import classNames from "classnames/bind";
 import styles from "./Payment.module.scss";
 import { Grid } from "@mui/material";
 
-import SummaryPayment from "./SummaryPayment/SummaryPayment";
 import PaymentInformation from "./PaymentInformation/PaymentInformation";
 const cx = classNames.bind(styles);
 
@@ -18,7 +17,7 @@ function Payment() {
                         </Grid>
                         <Grid item lg={4} md={12} sm={12} xs={12}>
                             <div style={{ height: "100%", width: "100%" }}>
-                                <SummaryPayment />
+                                {/* <SummaryPayment /> */}
                             </div>
                         </Grid>
                     </Grid>

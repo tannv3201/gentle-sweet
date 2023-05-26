@@ -20,6 +20,7 @@ import OrderAll from "./OrderAll";
 import OrderPending from "./OrderPending";
 import OrderReceived from "./OrderReceived";
 import OrderCancel from "./OrderPending";
+import { toast } from "react-hot-toast";
 
 const cx = classNames.bind(styles);
 
@@ -44,10 +45,21 @@ function PurchaseOrder() {
     const productInvoiceDetail = [];
 
     useState(() => {
-        if (!user) {
-            navigate("/dang-nhap");
-        }
-        getAllInvoiceByUser(user?.id, user?.accessToken, dispatch, axiosJWT);
+        const fetch = async () => {
+            if (!user) {
+                navigate("/dang-nhap");
+                toast("Vui lòng đăng nhập để sử dụng chức năng này.", {
+                    icon: "😅",
+                });
+            }
+            await getAllInvoiceByUser(
+                user?.id,
+                user?.accessToken,
+                dispatch,
+                axiosJWT
+            );
+        };
+        fetch();
     }, []);
 
     // useEffect(() => {
@@ -133,6 +145,12 @@ function PurchaseOrder() {
 
     useEffect(() => {
         const fetchData = async () => {
+            if (!user) {
+                navigate("/dang-nhap");
+                toast("Vui lòng đăng nhập để sử dụng chức năng này.", {
+                    icon: "😅",
+                });
+            }
             if (getInvoiceListByUser) {
                 const newInvoiceList = getInvoiceListByUser?.map((i) => {
                     const list = {

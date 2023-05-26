@@ -20,6 +20,8 @@ import { getProductLimit } from "../../../redux/api/apiProduct";
 import CartProductSummary from "./CartProductSummary/CartProductSummary";
 import { useMediaQuery } from "@mui/material";
 import { useTheme } from "@mui/material/styles";
+import { useNavigate } from "react-router-dom";
+import { toast } from "react-hot-toast";
 
 const cx = classNames.bind(styles);
 
@@ -209,9 +211,15 @@ function CartProductList() {
     const getProductList = useSelector(
         (state) => state.product.product?.productListSearchLimit
     );
-
+    const navigate = useNavigate();
     useEffect(() => {
         const fetch = async () => {
+            if (!user) {
+                navigate("/dang-nhap");
+                toast("Vui lòng đăng nhập để sử dụng chức năng này.", {
+                    icon: "😅",
+                });
+            }
             await getAllDiscountCustomer(dispatch);
             await getProductLimit(dispatch);
         };

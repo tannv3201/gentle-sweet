@@ -162,7 +162,7 @@ function OutstandingProduct() {
                     ))}
                 </Grid>
                 <div className={cx("outstanding-product-see-more")}>
-                    <NavLink to={"/product/all"} className={cx("see-more-btn")}>
+                    <NavLink to={"/san-pham"} className={cx("see-more-btn")}>
                         <span>Xem thêm</span> <ArrowForwardRounded />
                     </NavLink>
                 </div>
