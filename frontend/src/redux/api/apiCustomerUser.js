@@ -87,6 +87,34 @@ export const updateCustomerUser = async (
         dispatch(updateCustomerSuccess(res?.data));
         if (res?.data?.status === 200) {
             toast.success(res?.data?.msg);
+            await getCustomerUserById(dispatch, id, accessToken, axiosJWT);
+        }
+    } catch (error) {
+        dispatch(updateCustomerFailed(error.response?.data));
+    }
+};
+
+export const updateCustomerUserByAdmin = async (
+    accessToken,
+    dispatch,
+    id,
+    customerUserData,
+    axiosJWT
+) => {
+    dispatch(updateCustomerStart());
+    try {
+        const res = await axiosJWT.put(
+            "/v1/customerUser/" + id,
+            customerUserData,
+            {
+                headers: {
+                    token: `Bearer ${accessToken}`,
+                },
+            }
+        );
+        dispatch(updateCustomerSuccess(res?.data));
+        if (res?.data?.status === 200) {
+            toast.success(res?.data?.msg);
             await getAllCustomerUser(accessToken, dispatch, axiosJWT);
         }
     } catch (error) {
@@ -94,7 +122,7 @@ export const updateCustomerUser = async (
     }
 };
 
-export const passwordChange = async (
+export const customerUserPasswordChange = async (
     accessToken,
     dispatch,
     id,
@@ -125,7 +153,12 @@ export const passwordChange = async (
     }
 };
 
-export const resetPassword = async (dispatch, id, accessToken, axiosJWT) => {
+export const customerUserResetPassword = async (
+    dispatch,
+    id,
+    accessToken,
+    axiosJWT
+) => {
     dispatch(resetPasswordStart());
     try {
         const res = await axiosJWT.put(

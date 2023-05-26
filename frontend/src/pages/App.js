@@ -10,11 +10,14 @@ import { privateRoutes, publicRoutes } from "../routes";
 import DefaultLayout from "../layouts/DefaultLayout/DefaultLayout";
 import { Fragment } from "react";
 import { Toaster } from "react-hot-toast";
-
+import { useMediaQuery } from "@mui/material";
+import { useTheme } from "@mui/material/styles";
 import { useSelector } from "react-redux";
 import GProgress from "../components/GProgress/GProgress";
 
 function App() {
+    const theme = useTheme();
+    const isMedium = useMediaQuery(theme.breakpoints.down("md"));
     const isFetching = useSelector((state) => {
         return (
             state.adminUser.adminUser?.isFetching ||
@@ -30,7 +33,7 @@ function App() {
     return (
         <Router>
             <div className="App">
-                <Toaster position="top-right" />
+                <Toaster position={isMedium ? "top-center" : "top-right"} />
                 <GProgress isLoading={isFetching} />
                 <Routes>
                     {publicRoutes?.map((route, index) => {

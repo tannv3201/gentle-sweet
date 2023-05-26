@@ -31,7 +31,7 @@ import utc from "dayjs/plugin/utc";
 import PasswordMenu from "./PasswordMenu/PasswordMenu";
 import {
     getCustomerUserById,
-    updateCustomerUser,
+    updateCustomerUserByAdmin,
 } from "../../../../redux/api/apiCustomerUser";
 
 const cx = classNames.bind(styles);
@@ -78,7 +78,7 @@ export default function CustomerUserDetail() {
     let axiosJWT = createAxios(user, dispatch, loginSuccess);
 
     const handleUpdateCustomerUser = (customerUser) => {
-        updateCustomerUser(
+        updateCustomerUserByAdmin(
             user?.accessToken,
             dispatch,
             cloneData?.id,

@@ -11,7 +11,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { createAxios } from "../../../../../createInstance";
 import { loginSuccess } from "../../../../../redux/slice/authSlice";
 import { useState } from "react";
-import { passwordChange } from "../../../../../redux/api/apiCustomerUser";
+import { customerUserPasswordChange } from "../../../../../redux/api/apiCustomerUser";
 
 function PasswordChangePopup({
     handleClose,
@@ -29,7 +29,7 @@ function PasswordChangePopup({
             toast.error("Mật khẩu mới phải giống nhau");
             return;
         } else {
-            passwordChange(
+            customerUserPasswordChange(
                 user?.accessToken,
                 dispatch,
                 selectedUser?.id,

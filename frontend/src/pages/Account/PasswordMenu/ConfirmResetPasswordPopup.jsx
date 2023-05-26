@@ -1,10 +1,9 @@
 import React from "react";
-import GButton from "../../../../components/MyButton/MyButton";
-import GModal from "../../../../common/GModal/GModal";
 import { useDispatch, useSelector } from "react-redux";
-import { createAxios } from "../../../../createInstance";
-import { loginSuccess } from "../../../../redux/slice/authSlice";
-import { resetPassword } from "../../../../redux/api/apiAdminUser";
+import { createAxios } from "../../../createInstance";
+import { loginSuccess } from "../../../redux/slice/authSlice";
+import GModal from "../../../common/GModal/GModal";
+import GButton from "../../../components/MyButton/MyButton";
 
 function ConfirmResetPasswordPopup({
     handleClose,
@@ -17,14 +16,14 @@ function ConfirmResetPasswordPopup({
     let axiosJWT = createAxios(user, dispatch, loginSuccess);
 
     const handleResetPassword = () => {
-        resetPassword(
-            dispatch,
-            selectedUser.id,
-            user?.accessToken,
-            axiosJWT
-        ).then(() => {
-            handleClose();
-        });
+        // resetPassword(
+        //     dispatch,
+        //     selectedUser.id,
+        //     user?.accessToken,
+        //     axiosJWT
+        // ).then(() => {
+        //     handleClose();
+        // });
     };
 
     return (

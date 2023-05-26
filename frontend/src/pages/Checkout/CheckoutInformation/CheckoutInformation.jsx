@@ -29,6 +29,7 @@ import {
 } from "../../../redux/api/apiProvince";
 import GTextFieldNormal from "../../../components/GTextField/GTextFieldNormal";
 import PaymentInformation from "../PaymentInformation/PaymentInformation";
+import { getCustomerUserById } from "../../../redux/api/apiCustomerUser";
 const cx = classNames.bind(styles);
 
 function CheckoutInformation() {
@@ -36,6 +37,22 @@ function CheckoutInformation() {
     const { setFieldValue, values, errors, touched, handleBlur } =
         useFormikContext();
     const user = useSelector((state) => state.auth.login?.currentUser);
+    const getCustomerUser = useSelector(
+        (state) => state.customerUser.customerUser?.customerUser
+    );
+
+    const [customerUser, setCustomerUser] = useState({});
+
+    useEffect(() => {
+        if (user) {
+            getCustomerUserById(
+                dispatch,
+                user?.id,
+                user?.accessToken,
+                axiosJWT
+            );
+        }
+    }, []);
 
     const [selectedCurrProvince, setSelectedCurrProvince] = useState(null);
     const [selectedCurrDistrict, setSelectedCurrDistrict] = useState(null);
@@ -44,14 +61,6 @@ function CheckoutInformation() {
     const [selectedProvince, setSelectedProvince] = useState(null);
     const [selectedDistrict, setSelectedDistrict] = useState(null);
     const [selectedWard, setSelectedWard] = useState(null);
-
-    const [cloneData, setCloneData] = useState([]);
-
-    useEffect(() => {
-        if (user) {
-            setCloneData(structuredClone(user));
-        }
-    }, [user]);
 
     let axiosJWT = createAxios(user, dispatch, loginSuccess);
 
@@ -73,34 +82,38 @@ function CheckoutInformation() {
         setProvinces(getProvinceList);
     }, []);
 
+    useEffect(() => {
+        if (getCustomerUser) setCustomerUser(getCustomerUser);
+    }, [getCustomerUser]);
+
     // Fn handle province onChange event
 
     // Set selected province/district/ward into states & Formik field
     useEffect(() => {
-        if (cloneData) {
+        if (customerUser) {
             const provinceSelected = getProvinceById(
-                cloneData?.province,
+                customerUser?.province,
                 provinces
             );
             setSelectedCurrProvince(provinceSelected);
 
             // District
-            getDistrict(cloneData?.province).then((districtList) => {
+            getDistrict(customerUser?.province).then((districtList) => {
                 const districtSelected = getDistrictById(
-                    cloneData?.district,
+                    customerUser?.district,
                     districtList
                 );
                 setSelectedCurrDistrict(districtSelected);
                 setDistricts(districtList);
             });
 
-            getWard(cloneData?.district).then((wardList) => {
-                const wardSelected = getWardById(cloneData?.ward, wardList);
+            getWard(customerUser?.district).then((wardList) => {
+                const wardSelected = getWardById(customerUser?.ward, wardList);
                 setSelectedCurrWard(wardSelected);
                 setWards(wardList);
             });
         }
-    }, [cloneData]);
+    }, [customerUser]);
 
     // Fn handle province onChange event
     const handleProvinceChange = (event, value) => {
@@ -181,7 +194,11 @@ function CheckoutInformation() {
                     <Grid item xs={12}>
                         <GTextFieldNormal
                             disabled
-                            value={user?.last_name + " " + user?.first_name}
+                            value={
+                                customerUser?.last_name +
+                                " " +
+                                customerUser?.first_name
+                            }
                             label="Họ và tên"
                             fullWidth
                             name="last_name"
@@ -190,7 +207,7 @@ function CheckoutInformation() {
                     <Grid item lg={6} md={12} sm={12} xs={12}>
                         <GTextFieldNormal
                             disabled
-                            value={user?.email}
+                            value={customerUser?.email}
                             label="Email"
                             fullWidth
                             name="email"
@@ -206,7 +223,7 @@ function CheckoutInformation() {
                     <Grid item lg={6} md={12} sm={12} xs={12}>
                         <GTextFieldNormal
                             disabled
-                            value={user?.phone_number}
+                            value={customerUser?.phone_number}
                             label="Số điện thoại"
                             fullWidth
                             name="phone_number"
@@ -275,7 +292,7 @@ function CheckoutInformation() {
                     <Grid item xs={12}>
                         <GTextFieldNormal
                             disabled
-                            value={user?.detail_address}
+                            value={customerUser?.detail_address}
                             label="Địa chỉ chi tiết"
                             fullWidth
                             name="detail_address"
@@ -316,9 +333,11 @@ function CheckoutInformation() {
 
                     <Grid item lg={6} md={12} sm={12} xs={12}>
                         <TextField
+                            onBlur={handleBlur}
                             InputLabelProps={{ shrink: true }}
                             color="secondary"
                             size="small"
+                            type="number"
                             value={values?.phone_number || ""}
                             onChange={(e) =>
                                 setFieldValue("phone_number", e.target.value)

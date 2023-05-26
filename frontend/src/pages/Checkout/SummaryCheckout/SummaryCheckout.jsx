@@ -102,8 +102,6 @@ function SummaryCheckout() {
         }
     }, [selectedProductCartList]);
 
-    console.log(selectedProductCartList);
-
     const phoneRegExp = /(84|0[3|5|7|8|9])+([0-9]{8})\b/;
     const validationSchema = Yup.object().shape({
         fullName: Yup.string().required("Vui lòng không để trống"),

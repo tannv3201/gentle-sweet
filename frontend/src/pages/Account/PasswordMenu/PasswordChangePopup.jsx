@@ -1,18 +1,18 @@
-import React from "react";
+import React, { useState } from "react";
 import { useFormik } from "formik";
 
 import { Grid } from "@mui/material";
 import * as Yup from "yup";
-import GModal from "../../../../common/GModal/GModal";
-import GTextFieldNormal from "../../../../components/GTextField/GTextFieldNormal";
-import GButton from "../../../../components/MyButton/MyButton";
-import { toast } from "react-hot-toast";
-import { useDispatch, useSelector } from "react-redux";
-import { createAxios } from "../../../../createInstance";
-import { loginSuccess } from "../../../../redux/slice/authSlice";
-import { passwordChange } from "../../../../redux/api/apiAdminUser";
-import { useState } from "react";
 
+import { toast } from "react-hot-toast";
+import { useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
+import { createAxios } from "../../../createInstance";
+import { loginSuccess } from "../../../redux/slice/authSlice";
+import GModal from "../../../common/GModal/GModal";
+import GTextFieldNormal from "../../../components/GTextField/GTextFieldNormal";
+import GButton from "../../../components/MyButton/MyButton";
+import { customerUserPasswordChange } from "../../../redux/api/apiCustomerUser";
 function PasswordChangePopup({
     handleClose,
     handleOpen,
@@ -29,10 +29,10 @@ function PasswordChangePopup({
             toast.error("Mật khẩu mới phải giống nhau");
             return;
         } else {
-            passwordChange(
+            customerUserPasswordChange(
                 user?.accessToken,
                 dispatch,
-                selectedUser?.id,
+                user?.id,
                 data,
                 axiosJWT
             ).then((res) => {

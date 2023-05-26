@@ -58,10 +58,11 @@ export const signup = async (customerData, dispatch, navigate) => {
         const res = await axios.post("/v1/auth/register", customerData);
         dispatch(signupSuccess());
         navigate("/dang-nhap");
-        if (res?.insertId) {
+        if (res?.data?.insertId) {
             toast.success("Đăng ký thành công");
         }
     } catch (error) {
         dispatch(signupFailded());
+        toast.success("Có lỗi xảy ra");
     }
 };

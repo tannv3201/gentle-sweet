@@ -63,6 +63,11 @@ export default function MenuUser() {
         handleClose();
     };
 
+    const handleNavigateAccount = () => {
+        navigate("/tai-khoan");
+        handleClose();
+    };
+
     return (
         <div>
             {currentUser ? (
@@ -92,8 +97,20 @@ export default function MenuUser() {
                         }}
                     >
                         <div className={cx("menu-title")}>
-                            <span>{currentUser?.username}</span>
+                            <span
+                                style={{
+                                    paddingBottom: "8px",
+                                    display: "block",
+                                }}
+                            >
+                                {currentUser?.last_name +
+                                    " " +
+                                    currentUser?.first_name}
+                            </span>
                         </div>
+                        <MenuItem onClick={handleNavigateAccount}>
+                            Tài khoản
+                        </MenuItem>
                         {isMedium && (
                             <MenuItem onClick={handleNavigateCart}>
                                 Giỏ hàng
@@ -102,7 +119,7 @@ export default function MenuUser() {
                         <MenuItem onClick={handleNavigatePurchaseOrder}>
                             Đơn mua
                         </MenuItem>
-                        <MenuItem onClick={handleClose}>Tài khoản</MenuItem>
+
                         <MenuItem onClick={handleLogout}>Đăng xuất</MenuItem>
                     </Menu>
                 </>

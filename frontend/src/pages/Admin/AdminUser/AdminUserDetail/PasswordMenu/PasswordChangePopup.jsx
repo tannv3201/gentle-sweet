@@ -10,8 +10,8 @@ import { toast } from "react-hot-toast";
 import { useDispatch, useSelector } from "react-redux";
 import { createAxios } from "../../../../../createInstance";
 import { loginSuccess } from "../../../../../redux/slice/authSlice";
-import { passwordChange } from "../../../../../redux/api/apiAdminUser";
 import { useState } from "react";
+import { adminUserPasswordChange } from "../../../../../redux/api/apiAdminUser";
 
 function PasswordChangePopup({
     handleClose,
@@ -29,7 +29,7 @@ function PasswordChangePopup({
             toast.error("Mật khẩu mới phải giống nhau");
             return;
         } else {
-            passwordChange(
+            adminUserPasswordChange(
                 user?.accessToken,
                 dispatch,
                 selectedUser?.id,

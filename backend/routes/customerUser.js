@@ -35,13 +35,13 @@ router.delete(
 
 router.put(
     "/passwordChange/:id",
-    middlewareController.verifyTokenAndSuperAdminAuth,
+    middlewareController.verifyToken,
     customerUserController.passwordChangeByAdmin
 );
 
 router.put(
     "/resetPassword/:id",
-    middlewareController.verifyTokenAndSuperAdminAuth,
+    middlewareController.verifyToken,
     customerUserController.resetPassword
 );
 

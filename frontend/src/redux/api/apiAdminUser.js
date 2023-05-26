@@ -86,7 +86,7 @@ export const updateAdminUser = async (
     }
 };
 
-export const passwordChange = async (
+export const adminUserPasswordChange = async (
     accessToken,
     dispatch,
     id,
@@ -117,7 +117,12 @@ export const passwordChange = async (
     }
 };
 
-export const resetPassword = async (dispatch, id, accessToken, axiosJWT) => {
+export const adminUserResetPassword = async (
+    dispatch,
+    id,
+    accessToken,
+    axiosJWT
+) => {
     dispatch(resetPasswordStart());
     try {
         const res = await axiosJWT.put(

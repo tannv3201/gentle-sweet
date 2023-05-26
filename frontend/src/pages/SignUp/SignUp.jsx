@@ -101,6 +101,7 @@ function SignUp() {
             }
         },
     });
+
     return (
         <div className={cx("wrapper")}>
             <div className={cx("inner")}>

@@ -1,14 +1,13 @@
 import * as React from "react";
 import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
-import { IconButton } from "@mui/material";
 import { PasswordRounded } from "@mui/icons-material";
 import classNames from "classnames/bind";
 import styles from "./PasswordMenu.module.scss";
 
-import { LightTooltip } from "../../../../components/GTooltip/GTooltip";
 import PasswordChangePopup from "./PasswordChangePopup";
 import { useState } from "react";
+import GButton from "../../../components/MyButton/MyButton";
 import ConfirmResetPasswordPopup from "./ConfirmResetPasswordPopup";
 
 const cx = classNames.bind(styles);
@@ -47,17 +46,17 @@ export default function PasswordMenu({ selectedUser }) {
 
     return (
         <div>
-            <LightTooltip placement="bottom" title="Mật khẩu">
-                <IconButton
-                    id="basic-button"
-                    aria-controls={open ? "basic-menu" : undefined}
-                    aria-haspopup="true"
-                    aria-expanded={open ? "true" : undefined}
-                    onClick={handleClick}
-                >
-                    <PasswordRounded />
-                </IconButton>
-            </LightTooltip>
+            <GButton
+                id="basic-button"
+                aria-controls={open ? "basic-menu" : undefined}
+                aria-haspopup="true"
+                aria-expanded={open ? "true" : undefined}
+                onClick={handleClick}
+                startIcon={<PasswordRounded />}
+                color={"error"}
+            >
+                Mật khẩu
+            </GButton>
             <Menu
                 id="basic-menu"
                 anchorEl={anchorEl}

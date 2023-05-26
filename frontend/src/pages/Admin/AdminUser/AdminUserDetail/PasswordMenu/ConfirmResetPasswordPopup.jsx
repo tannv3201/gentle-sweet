@@ -4,7 +4,7 @@ import GModal from "../../../../../common/GModal/GModal";
 import GButton from "../../../../../components/MyButton/MyButton";
 import { createAxios } from "../../../../../createInstance";
 import { loginSuccess } from "../../../../../redux/slice/authSlice";
-import { resetPassword } from "../../../../../redux/api/apiAdminUser";
+import { adminUserResetPassword } from "../../../../../redux/api/apiAdminUser";
 
 function ConfirmResetPasswordPopup({
     handleClose,
@@ -17,7 +17,7 @@ function ConfirmResetPasswordPopup({
     let axiosJWT = createAxios(user, dispatch, loginSuccess);
 
     const handleResetPassword = () => {
-        resetPassword(
+        adminUserResetPassword(
             dispatch,
             selectedUser.id,
             user?.accessToken,

@@ -40,8 +40,9 @@ import InvoiceDetail from "../pages/Admin/Invoice/InvoiceDetail/InvoiceDetail";
 import BookingAdmin from "../pages/Admin/Booking/Booking";
 import BookingDetail from "../pages/Admin/Booking/BookingDetail/BookingDetail";
 import PurchaseOrder from "../pages/PurchaseOrder/PurchaseOrder";
-import SignUp from "../pages/SignIn/SignUp";
+import SignUp from "../pages/SignUp/SignUp";
 import NoLayout from "../layouts/NoLayout/NoLayout";
+import Account from "../pages/Account/Account";
 
 // public routes
 
@@ -93,6 +94,10 @@ export const publicRoutes = [
     {
         path: "/don-mua",
         component: PurchaseOrder,
+    },
+    {
+        path: "/tai-khoan",
+        component: Account,
     },
     {
         path: "/dang-nhap",
