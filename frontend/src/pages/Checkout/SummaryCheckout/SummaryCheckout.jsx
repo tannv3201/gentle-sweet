@@ -52,6 +52,16 @@ function SummaryCheckout() {
                 icon: "😅",
             });
         }
+        if (!selectedProductCartList) {
+            navigate("/gio-hang");
+            toast("Vui lòng chọn sản phẩm cần mua", {
+                icon: "😅",
+                style: {
+                    border: "1px solid var(--red)",
+                    fontWeight: "var(--fw-medium)",
+                },
+            });
+        }
         if (selectedProductCartList) {
             const priceTotal = selectedProductCartList.reduce(
                 (accumulator, currentValue) => {
@@ -81,11 +91,6 @@ function SummaryCheckout() {
         }
     }, [selectedProductCartList]);
     dayjs.extend(utc);
-
-    const [selectedProvince, setSelectedProvince] = useState(null);
-    const [selectedDistrict, setSelectedDistrict] = useState(null);
-    const [selectedWard, setSelectedWard] = useState(null);
-    const [cloneData, setCloneData] = useState([]);
 
     const dispatch = useDispatch();
     const user = useSelector((state) => state.auth.login?.currentUser);

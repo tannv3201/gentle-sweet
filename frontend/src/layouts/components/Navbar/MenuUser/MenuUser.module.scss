@@ -11,8 +11,12 @@
     }
 }
 
-.menu-title {
+.user-fullName {
     padding: 0 16px;
     font-weight: var(--fw-semi-bold);
     border-bottom: 1px solid var(--border-color);
+}
+
+.menu-label {
+    margin-left: 8px;
 }

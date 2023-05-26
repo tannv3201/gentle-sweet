@@ -2,7 +2,12 @@ import * as React from "react";
 import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
 import { IconButton } from "@mui/material";
-import { Person } from "@mui/icons-material";
+import {
+    ListAltRounded,
+    LogoutRounded,
+    Person,
+    ShoppingCartRounded,
+} from "@mui/icons-material";
 import images from "../../../../assets/images";
 import classNames from "classnames/bind";
 import styles from "./MenuUser.module.scss";
@@ -80,8 +85,8 @@ export default function MenuUser() {
                         onClick={handleClick}
                     >
                         <div className={cx("user-avatar")}>
-                            {currentUser?.image ? (
-                                <img src={currentUser?.image} alt="" />
+                            {currentUser?.image_url ? (
+                                <img src={currentUser?.image_url} alt="" />
                             ) : (
                                 <img src={images?.user_vector} alt="" />
                             )}
@@ -96,7 +101,7 @@ export default function MenuUser() {
                             "aria-labelledby": "basic-button",
                         }}
                     >
-                        <div className={cx("menu-title")}>
+                        <div className={cx("user-fullName")}>
                             <span
                                 style={{
                                     paddingBottom: "8px",
@@ -109,18 +114,26 @@ export default function MenuUser() {
                             </span>
                         </div>
                         <MenuItem onClick={handleNavigateAccount}>
-                            Tài khoản
+                            <Person />{" "}
+                            <span className={cx("menu-label")}>Tài khoản</span>
                         </MenuItem>
                         {isMedium && (
                             <MenuItem onClick={handleNavigateCart}>
-                                Giỏ hàng
+                                <ShoppingCartRounded />{" "}
+                                <span className={cx("menu-label")}>
+                                    Giỏ hàng
+                                </span>
                             </MenuItem>
                         )}
                         <MenuItem onClick={handleNavigatePurchaseOrder}>
-                            Đơn mua
+                            <ListAltRounded />{" "}
+                            <span className={cx("menu-label")}>Đơn mua</span>
                         </MenuItem>
 
-                        <MenuItem onClick={handleLogout}>Đăng xuất</MenuItem>
+                        <MenuItem onClick={handleLogout}>
+                            <LogoutRounded />
+                            <span className={cx("menu-label")}> Đăng xuất</span>
+                        </MenuItem>
                     </Menu>
                 </>
             ) : (
