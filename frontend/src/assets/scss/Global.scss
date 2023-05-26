@@ -714,3 +714,7 @@ span.MuiChip-label {
 .MuiTabs-indicator {
     background-color: var(--primary-500) !important;
 }
+
+.MuiTabs-scrollButtons.Mui-disabled {
+    opacity: 0.3;
+}

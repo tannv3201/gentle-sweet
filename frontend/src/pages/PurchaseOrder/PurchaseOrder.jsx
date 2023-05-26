@@ -225,6 +225,9 @@ function PurchaseOrder() {
                 <TabContext value={value}>
                     <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
                         <TabList
+                            variant="scrollable"
+                            scrollButtons
+                            allowScrollButtonsMobile
                             textColor="inherit"
                             onChange={handleChange}
                             aria-label="lab API tabs example"

@@ -1,3 +1,82 @@
+@media only screen and (max-width: 600px) {
+    .status-content {
+        &.pending {
+            background-color: #f57c00;
+            color: var(--white);
+            padding: 2px 8px !important;
+            border-radius: 4px;
+        }
+
+        &.received {
+            background-color: #0288d1;
+            color: var(--white);
+            padding: 2px 8px !important;
+            border-radius: 4px;
+        }
+
+        &.cancel {
+            background-color: #d32f2f;
+            color: var(--white);
+            padding: 2px 8px !important;
+            border-radius: 4px;
+        }
+
+        &.delivering {
+            background-color: #ab47bc;
+            color: var(--white);
+            padding: 2px 8px !important;
+            border-radius: 4px;
+        }
+
+        &.delivered {
+            background-color: #388e3c;
+            color: var(--white);
+            padding: 2px 8px !important;
+            border-radius: 4px;
+        }
+    }
+
+    .prod-wrapper {
+        // flex: 1;
+        display: unset !important;
+    }
+
+    .prod-image {
+        width: 40px !important;
+        height: 40px !important;
+        border-radius: 100px;
+        overflow: hidden;
+        border: 1px solid var(--primary-400);
+        margin-right: 12px;
+        img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+    }
+    .prod-invoice-detail {
+        align-items: unset !important;
+    }
+    .invoice-item-footer {
+        padding: 8px !important;
+    }
+
+    .prod-label {
+        font-size: 1.5rem !important;
+    }
+    .prod-price {
+        font-size: 1.5rem !important;
+    }
+
+    .prod-name {
+        font-size: 1.5rem !important;
+    }
+
+    .prod-quantity {
+        font-size: 1.5rem !important;
+    }
+}
+
 .wrapper {
 }
 
@@ -15,7 +94,7 @@
             .createdAt-label {
             }
             .createdAt-content {
-                font-weight: var(--fw-semi-bold);
+                font-weight: var(--fw-medium);
                 color: var(--success);
             }
         }
@@ -90,6 +169,11 @@
             display: flex;
             justify-content: space-between;
             .prod-price {
+                span {
+                    font-size: 1.5rem;
+                    margin-right: 4px;
+                    font-weight: var(--fw-normal);
+                }
                 font-weight: var(--fw-medium);
                 margin-right: 36px;
             }

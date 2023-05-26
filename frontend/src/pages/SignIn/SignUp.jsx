@@ -3,7 +3,7 @@ import React, { useState } from "react";
 import styles from "./SignUp.module.scss";
 import classNames from "classnames/bind";
 import images from "../../assets/images";
-import { Grid } from "@mui/material";
+import { Checkbox, FormControlLabel, FormGroup, Grid } from "@mui/material";
 import GTextField from "../../components/GTextField/GTextField";
 import GButton from "../../components/MyButton/MyButton";
 import { Google } from "@mui/icons-material";
@@ -21,7 +21,7 @@ const cx = classNames.bind(styles);
 
 function SignUp() {
     dayjs.extend(utc);
-
+    const [checkedPolicy, setCheckedPolicy] = useState(false);
     const dispatch = useDispatch();
     const navigate = useNavigate();
 
@@ -40,7 +40,6 @@ function SignUp() {
     // Fn Create new Customer User
     const handleCreateCustomerUser = async (customerUser) => {
         await signup(customerUser, dispatch, navigate);
-        console.log(customerUser);
     };
 
     // Fn compare password when create
@@ -50,6 +49,10 @@ function SignUp() {
         } else {
             return false;
         }
+    };
+
+    const handleAgreePolicy = (e) => {
+        setCheckedPolicy(e.target?.checked);
     };
 
     // Validation formik
@@ -88,7 +91,11 @@ function SignUp() {
                 data?.confirmPassword
             );
             if (passwordCompare) {
-                await handleCreateCustomerUser(restData);
+                if (!checkedPolicy) {
+                    toast.error("Vui Lòng kiểm tra điều khoản & bảo mật");
+                } else {
+                    await handleCreateCustomerUser(restData);
+                }
             } else {
                 toast.error("Mật khẩu phải giống nhau");
             }
@@ -100,52 +107,43 @@ function SignUp() {
                 <div className={cx("sign-up-form")}>
                     <Grid container spacing={2}>
                         <Grid item xs={12}>
-                            <div className={cx("logo-wrapper")}>
-                                <img src={images.logo} alt="" />
+                            <div className={cx("form-header")}>
+                                <span className={cx("form-title")}>
+                                    Đăng ký
+                                </span>
+                                <div
+                                    title="Trang chủ"
+                                    className={cx("logo-wrapper")}
+                                    onClick={() => navigate("/")}
+                                >
+                                    <img src={images.logo} alt="" />
+                                </div>
                             </div>
                         </Grid>
                         <Grid item xs={12}>
                             <form onSubmit={formik.handleSubmit}>
                                 <Grid container spacing={2}>
-                                    <Grid item xs={6}>
+                                    <Grid item lg={6} md={12} sm={12} xs={12}>
                                         <GTextFieldNormal
                                             formik={formik}
                                             onChange={formik.handleChange}
                                             value={formik.values.last_name}
                                             name="last_name"
-                                            size="medium"
                                             fullWidth
                                             label={"Họ"}
                                             placeholder="Nhập họ"
                                             InputLabelProps={{ shrink: true }}
                                         />
                                     </Grid>
-                                    <Grid item xs={6}>
+                                    <Grid item lg={6} md={12} sm={12} xs={12}>
                                         <GTextFieldNormal
                                             formik={formik}
                                             onChange={formik.handleChange}
                                             value={formik.values.first_name}
                                             name="first_name"
-                                            size="medium"
                                             fullWidth
                                             label={"Tên"}
                                             placeholder="Nhập tên"
-                                            InputLabelProps={{ shrink: true }}
-                                        />
-                                    </Grid>
-                                    <Grid item xs={12}>
-                                        <GTextFieldNormal
-                                            disabled
-                                            size="medium"
-                                            fullWidth
-                                            value={
-                                                formik.values.last_name +
-                                                    " " +
-                                                    formik.values.first_name ||
-                                                ""
-                                            }
-                                            label={"Tên hiển thị"}
-                                            placeholder="Tên hiển thị của bạn"
                                             InputLabelProps={{ shrink: true }}
                                         />
                                     </Grid>
@@ -155,54 +153,50 @@ function SignUp() {
                                             onChange={formik.handleChange}
                                             value={formik.values.username}
                                             name="username"
-                                            size="medium"
                                             fullWidth
                                             label={"Tên đăng nhập"}
                                             placeholder="Nhập tên đăng nhập"
                                             InputLabelProps={{ shrink: true }}
                                         />
                                     </Grid>
-                                    <Grid item xs={6}>
+                                    <Grid item lg={6} md={12} sm={12} xs={12}>
                                         <GTextFieldNormal
                                             formik={formik}
                                             onChange={formik.handleChange}
                                             value={formik.values.phone_number}
                                             name="phone_number"
-                                            size="medium"
                                             fullWidth
                                             label={"Số điện thoại"}
                                             placeholder="Nhập số điện thoại"
                                             InputLabelProps={{ shrink: true }}
                                         />
                                     </Grid>
-                                    <Grid item xs={6}>
+                                    <Grid item lg={6} md={12} sm={12} xs={12}>
                                         <GTextFieldNormal
                                             formik={formik}
                                             onChange={formik.handleChange}
                                             value={formik.values.email}
                                             name="email"
-                                            size="medium"
                                             fullWidth
                                             label={"Email"}
                                             placeholder="Nhập email"
                                             InputLabelProps={{ shrink: true }}
                                         />
                                     </Grid>
-                                    <Grid item xs={6}>
+                                    <Grid item lg={6} md={12} sm={12} xs={12}>
                                         <GTextFieldNormal
                                             formik={formik}
                                             onChange={formik.handleChange}
                                             value={formik.values.password}
                                             name="password"
                                             password={true}
-                                            size="medium"
                                             fullWidth
                                             label={"Mật khẩu"}
                                             placeholder="Nhập mật khẩu"
                                             InputLabelProps={{ shrink: true }}
                                         />
                                     </Grid>
-                                    <Grid item xs={6}>
+                                    <Grid item lg={6} md={12} sm={12} xs={12}>
                                         <GTextFieldNormal
                                             formik={formik}
                                             onChange={formik.handleChange}
@@ -211,7 +205,6 @@ function SignUp() {
                                             }
                                             name="confirmPassword"
                                             password={true}
-                                            size="medium"
                                             fullWidth
                                             label={"Xác nhận mật khẩu"}
                                             placeholder="Nhập lại mật khẩu"
@@ -219,20 +212,44 @@ function SignUp() {
                                         />
                                     </Grid>
                                     <Grid item xs={12}>
-                                        <span className={cx("policy-privacy")}>
-                                            Bằng việc đăng ký, bạn đã đồng ý với{" "}
-                                            <span className={cx("highlight")}>
-                                                Gentle Beauty
-                                            </span>{" "}
-                                            về{" "}
-                                            <span className={cx("link")}>
-                                                Điều khoản dịch vụ
-                                            </span>{" "}
-                                            &{" "}
-                                            <span className={cx("link")}>
-                                                Chính sách bảo mật
-                                            </span>
-                                        </span>
+                                        <FormGroup
+                                            style={{ marginBottom: "12px" }}
+                                        >
+                                            <FormControlLabel
+                                                control={
+                                                    <Checkbox
+                                                        onChange={
+                                                            handleAgreePolicy
+                                                        }
+                                                    />
+                                                }
+                                                label={
+                                                    <span
+                                                        className={cx(
+                                                            "policy-privacy"
+                                                        )}
+                                                    >
+                                                        {" "}
+                                                        Đồng ý với{" "}
+                                                        <span
+                                                            className={cx(
+                                                                "link"
+                                                            )}
+                                                        >
+                                                            Điều khoản
+                                                        </span>{" "}
+                                                        &{" "}
+                                                        <span
+                                                            className={cx(
+                                                                "link"
+                                                            )}
+                                                        >
+                                                            Chính sách bảo mật
+                                                        </span>{" "}
+                                                    </span>
+                                                }
+                                            />
+                                        </FormGroup>
                                         <GButton
                                             type="submit"
                                             size="medium"
@@ -242,7 +259,14 @@ function SignUp() {
                                         </GButton>
                                         <span className={cx("login-question")}>
                                             Bạn đã có tài khoản?{" "}
-                                            <span>Đăng nhập ngay</span>.
+                                            <span
+                                                onClick={() =>
+                                                    navigate("/dang-nhap")
+                                                }
+                                            >
+                                                Đăng nhập ngay
+                                            </span>
+                                            .
                                         </span>
                                     </Grid>
                                 </Grid>

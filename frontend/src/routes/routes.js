@@ -41,6 +41,7 @@ import BookingAdmin from "../pages/Admin/Booking/Booking";
 import BookingDetail from "../pages/Admin/Booking/BookingDetail/BookingDetail";
 import PurchaseOrder from "../pages/PurchaseOrder/PurchaseOrder";
 import SignUp from "../pages/SignIn/SignUp";
+import NoLayout from "../layouts/NoLayout/NoLayout";
 
 // public routes
 
@@ -93,10 +94,6 @@ export const publicRoutes = [
         path: "/don-mua",
         component: PurchaseOrder,
     },
-    // {
-    //     path: "/thanh-toan",
-    //     component: Payment,
-    // },
     {
         path: "/dang-nhap",
         component: Login,
@@ -105,7 +102,7 @@ export const publicRoutes = [
     {
         path: "/dang-ky",
         component: SignUp,
-        layout: null,
+        layout: NoLayout,
     },
 ];
 

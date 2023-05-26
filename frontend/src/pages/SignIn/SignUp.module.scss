@@ -1,8 +1,23 @@
+@media only screen and (max-width: 600px) {
+    .policy-privacy {
+        font-size: 1.4rem !important;
+    }
+    .logo-wrapper {
+        img {
+            width: 60px !important;
+        }
+    }
+    .sign-up-form {
+        padding: 8px 20px !important;
+    }
+}
+
 .wrapper {
     position: relative;
     display: flex;
     justify-content: center;
     height: 100vh;
+    padding: 0 24px;
     background-image: url("../../assets/images/repeat-background.jpg");
     &::before {
         content: "";
@@ -24,21 +39,30 @@
         z-index: 10;
         background-color: var(--white);
         border: 1px solid var(--border-color);
-        padding: 0 24px 12px 24px;
+        padding: 12px 24px;
         border-radius: 4px;
+
+        .form-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        .form-title {
+            font-size: 1.8rem;
+            font-weight: var(--fw-semi-bold);
+            text-transform: uppercase;
+        }
     }
     .logo-wrapper {
-        margin-top: 24px;
         display: flex;
         justify-content: center;
+        cursor: pointer;
         img {
             width: 100px;
         }
     }
 
     .policy-privacy {
-        display: block;
-        margin-bottom: 8px;
         font-size: 1.5rem;
         .highlight {
         }

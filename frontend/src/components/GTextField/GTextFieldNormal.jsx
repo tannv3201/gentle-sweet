@@ -3,7 +3,8 @@ import TextField from "@mui/material/TextField";
 import { IconButton, InputAdornment } from "@mui/material";
 import { Visibility, VisibilityOff } from "@mui/icons-material";
 import { useFormikContext } from "formik";
-
+import { useMediaQuery } from "@mui/material";
+import { useTheme } from "@mui/material/styles";
 export const RequiredLabel = () => {
     return <span style={{ color: "red" }}>*</span>;
 };
@@ -27,6 +28,9 @@ function GTextFieldNormal({
     onBlur,
     ...otherProps
 }) {
+    const theme = useTheme();
+    const isMedium = useMediaQuery(theme.breakpoints.down("md"));
+
     const configTextfield = {
         name: name,
         fullWidth: fullWidth,
@@ -84,6 +88,7 @@ function GTextFieldNormal({
                                     onClick={handleClickShowPassword}
                                     onMouseDown={handleMouseDownPassword}
                                     edge="end"
+                                    size={isMedium ? "large" : "medium"}
                                 >
                                     {showPassword ? (
                                         <VisibilityOff />

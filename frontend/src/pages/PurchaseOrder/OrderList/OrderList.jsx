@@ -1,5 +1,6 @@
 import React from "react";
-
+import { useMediaQuery } from "@mui/material";
+import { useTheme } from "@mui/material/styles";
 import classNames from "classnames/bind";
 import styles from "./OrderList.module.scss";
 import { Grid } from "@mui/material";
@@ -11,6 +12,8 @@ import { API_IMAGE_URL } from "../../../LocalConstants";
 const cx = classNames.bind(styles);
 
 function OrderList({ invoiceListByUser }) {
+    const theme = useTheme();
+    const isMedium = useMediaQuery(theme.breakpoints.down("md"));
     return (
         <>
             {invoiceListByUser?.length !== 0 ? (
@@ -179,6 +182,11 @@ function OrderList({ invoiceListByUser }) {
                                                                         "prod-price"
                                                                     )}
                                                                 >
+                                                                    {isMedium && (
+                                                                        <span>
+                                                                            Giá:
+                                                                        </span>
+                                                                    )}
                                                                     {FormatCurrency(
                                                                         invoiceDetail?.unit_price
                                                                     )}
