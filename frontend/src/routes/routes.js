@@ -20,7 +20,6 @@ import Checkout from "../pages/Checkout/Checkout";
 import Cart from "../pages/Cart/Cart";
 import Payment from "../pages/Payment/Payment";
 import Login from "../pages/Login/Login";
-import SignIn from "../pages/SignIn/SignIn";
 import Dashboard from "../pages/Admin/Dashboard/Dashboard";
 import Products from "../pages/Admin/Products/Products";
 import AdminLayout from "../layouts/AdminLayout/AdminLayout";
@@ -41,6 +40,7 @@ import InvoiceDetail from "../pages/Admin/Invoice/InvoiceDetail/InvoiceDetail";
 import BookingAdmin from "../pages/Admin/Booking/Booking";
 import BookingDetail from "../pages/Admin/Booking/BookingDetail/BookingDetail";
 import PurchaseOrder from "../pages/PurchaseOrder/PurchaseOrder";
+import SignUp from "../pages/SignIn/SignUp";
 
 // public routes
 
@@ -104,7 +104,7 @@ export const publicRoutes = [
     },
     {
         path: "/dang-ky",
-        component: SignIn,
+        component: SignUp,
         layout: null,
     },
 ];

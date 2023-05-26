@@ -8,6 +8,9 @@ import {
     logoutFailded,
     logoutStart,
     logoutSuccess,
+    signupFailded,
+    signupStart,
+    signupSuccess,
 } from "../slice/authSlice";
 import { resetApp } from "../store";
 
@@ -46,5 +49,19 @@ export const logout = async (dispatch, id, navigate, accessToken, axiosJWT) => {
         navigate("/");
     } catch (error) {
         dispatch(logoutFailded());
+    }
+};
+
+export const signup = async (customerData, dispatch, navigate) => {
+    dispatch(signupStart());
+    try {
+        const res = await axios.post("/v1/auth/register", customerData);
+        dispatch(signupSuccess());
+        navigate("/dang-nhap");
+        if (res?.insertId) {
+            toast.success("Đăng ký thành công");
+        }
+    } catch (error) {
+        dispatch(signupFailded());
     }
 };

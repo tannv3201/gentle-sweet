@@ -35,10 +35,6 @@ const authController = {
                 status: 1,
             });
 
-            // await cartModel.createCart({
-            //     customer_user_id: newCustomerUser.insertId,
-            // });
-
             res.status(201).json(newCustomerUser);
         } catch (error) {
             res.status(500).json(error);

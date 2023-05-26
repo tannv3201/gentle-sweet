@@ -48,47 +48,79 @@ export default function MenuUser() {
         handleClose();
     };
 
+    const handleNavigateSignUp = () => {
+        navigate("/dang-ky");
+        handleClose();
+    };
+
     return (
         <div>
             {currentUser ? (
-                <IconButton
-                    id="basic-button"
-                    aria-controls={open ? "basic-menu" : undefined}
-                    aria-haspopup="true"
-                    aria-expanded={open ? "true" : undefined}
-                    onClick={handleClick}
-                >
-                    <div className={cx("user-avatar")}>
-                        {currentUser?.image ? (
-                            <img src={currentUser?.image} alt="" />
-                        ) : (
-                            <img src={images?.user_vector} alt="" />
-                        )}
-                    </div>
-                </IconButton>
+                <>
+                    <IconButton
+                        id="basic-button"
+                        aria-controls={open ? "basic-menu" : undefined}
+                        aria-haspopup="true"
+                        aria-expanded={open ? "true" : undefined}
+                        onClick={handleClick}
+                    >
+                        <div className={cx("user-avatar")}>
+                            {currentUser?.image ? (
+                                <img src={currentUser?.image} alt="" />
+                            ) : (
+                                <img src={images?.user_vector} alt="" />
+                            )}
+                        </div>
+                    </IconButton>
+                    <Menu
+                        id="basic-menu"
+                        anchorEl={anchorEl}
+                        open={open}
+                        onClose={handleClose}
+                        MenuListProps={{
+                            "aria-labelledby": "basic-button",
+                        }}
+                    >
+                        <div className={cx("menu-title")}>
+                            <span>{currentUser?.username}</span>
+                        </div>
+                        <MenuItem onClick={handleNavigatePurchaseOrder}>
+                            Đơn mua
+                        </MenuItem>
+                        <MenuItem onClick={handleClose}>Tài khoản</MenuItem>
+                        <MenuItem onClick={handleLogout}>Đăng xuất</MenuItem>
+                    </Menu>
+                </>
             ) : (
-                <IconButton title="Đăng nhập" onClick={handleNavigateLogin}>
-                    <Person />
-                </IconButton>
+                <>
+                    <IconButton
+                        title="Đăng nhập"
+                        id="basic-button"
+                        aria-controls={open ? "basic-menu" : undefined}
+                        aria-haspopup="true"
+                        aria-expanded={open ? "true" : undefined}
+                        onClick={handleClick}
+                    >
+                        <Person />
+                    </IconButton>
+                    <Menu
+                        id="basic-menu"
+                        anchorEl={anchorEl}
+                        open={open}
+                        onClose={handleClose}
+                        MenuListProps={{
+                            "aria-labelledby": "basic-button",
+                        }}
+                    >
+                        <MenuItem onClick={handleNavigateSignUp}>
+                            Đăng ký
+                        </MenuItem>
+                        <MenuItem onClick={handleNavigateLogin}>
+                            Đăng nhập
+                        </MenuItem>
+                    </Menu>
+                </>
             )}
-            <Menu
-                id="basic-menu"
-                anchorEl={anchorEl}
-                open={open}
-                onClose={handleClose}
-                MenuListProps={{
-                    "aria-labelledby": "basic-button",
-                }}
-            >
-                <div className={cx("menu-title")}>
-                    <span>{currentUser?.username}</span>
-                </div>
-                <MenuItem onClick={handleNavigatePurchaseOrder}>
-                    Đơn mua
-                </MenuItem>
-                <MenuItem onClick={handleClose}>Tài khoản</MenuItem>
-                <MenuItem onClick={handleLogout}>Đăng xuất</MenuItem>
-            </Menu>
         </div>
     );
 }

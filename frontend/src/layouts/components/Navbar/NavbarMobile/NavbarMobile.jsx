@@ -17,6 +17,7 @@ import {
 
 import GTextFieldNormal from "../../../../components/GTextField/GTextFieldNormal";
 import { MenuList } from "../navigation";
+import MenuUser from "../MenuUser/MenuUser";
 
 function NavbarMobile() {
     const cx = classNames.bind(styles);
@@ -68,6 +69,7 @@ function NavbarMobile() {
                             <img src={images.logo} alt="" />
                         </a>
                     </div>
+                    <MenuUser />
                 </div>
                 <SwipeableDrawer
                     anchor={"left"}
