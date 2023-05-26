@@ -191,10 +191,10 @@ function SummaryCheckout() {
                     {({ handleSubmit }) => (
                         <form onSubmit={handleSubmit}>
                             <Grid container spacing={2}>
-                                <Grid item xs={7}>
+                                <Grid item lg={7} md={12} sm={12} xs={12}>
                                     <CheckoutInformation />
                                 </Grid>
-                                <Grid item xs={5}>
+                                <Grid item lg={5} md={12} sm={12} xs={12}>
                                     <div className={cx("summary")}>
                                         <div className={cx("checkout-summary")}>
                                             <Grid container spacing={2}>

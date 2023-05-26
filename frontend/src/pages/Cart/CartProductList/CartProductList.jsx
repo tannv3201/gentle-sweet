@@ -3,8 +3,7 @@ import classNames from "classnames/bind";
 import styles from "./CartProductList.module.scss";
 import { Grid, IconButton } from "@mui/material";
 import GButton from "../../../components/MyButton/MyButton";
-import { DeleteRounded, EditRounded, RemoveRounded } from "@mui/icons-material";
-import MyCheckbox from "../../../components/MyCheckbox/MyCheckbox";
+import { DeleteRounded, RemoveRounded } from "@mui/icons-material";
 import { FormatCurrency } from "../../../components/FormatCurrency/FormatCurrency";
 import { AddRounded } from "@mui/icons-material";
 import { getCartByUserId, updateCart } from "../../../redux/api/apiCart";
@@ -19,13 +18,184 @@ import ConfirmRemoveCartItem from "./ConfirmRemoveCartItem";
 import { getAllDiscountCustomer } from "../../../redux/api/apiDiscount";
 import { getProductLimit } from "../../../redux/api/apiProduct";
 import CartProductSummary from "./CartProductSummary/CartProductSummary";
+import { useMediaQuery } from "@mui/material";
+import { useTheme } from "@mui/material/styles";
 
 const cx = classNames.bind(styles);
 
 function CartProductList() {
+    const theme = useTheme();
+    const isMedium = useMediaQuery(theme.breakpoints.down("md"));
     const [productList, setProductList] = useState([]);
     const [selectedProduct, setSelectedProduct] = useState({});
     const [selectedProductCartList, setSelectedProductCartList] = useState([]);
+
+    const columns = [
+        {
+            title: "Ảnh",
+            field: "image_url",
+            render: (rowData) => (
+                // eslint-disable-next-line jsx-a11y/alt-text
+                <img
+                    src={`${API_IMAGE_URL}/${rowData?.image_url}`}
+                    style={{
+                        width: 60,
+                        height: 60,
+                        objectFit: "cover",
+                        borderRadius: "50%",
+                    }}
+                />
+            ),
+        },
+        {
+            title: "Sản phẩm",
+            field: "product_name",
+            render: (rowData) => {
+                const rowId = rowData.tableData.id;
+
+                return (
+                    <>
+                        <span className={cx("prod-name-mobile")}>
+                            {rowData?.product_name}
+                        </span>
+                        {isMedium && (
+                            <div
+                                style={{
+                                    display: "flex",
+                                    width: "130px",
+                                    marginTop: "4px",
+                                }}
+                            >
+                                <IconButton
+                                    onClick={() => handleDecrease(rowData)}
+                                >
+                                    <RemoveRounded />
+                                </IconButton>
+                                <GTextFieldNormal
+                                    onBlur={() =>
+                                        handleUpdateQuantityWhenBlur(rowId)
+                                    }
+                                    inputProps={{
+                                        inputMode: "numeric",
+                                        pattern: "[0-9]*",
+                                        maxLength: 3, // Giới hạn chiều dài của số nhập vào (ví dụ 99)
+                                    }}
+                                    fullWidth
+                                    value={
+                                        tempQuantity[rowId] !== undefined
+                                            ? tempQuantity[rowId]
+                                            : rowData?.product_quantity
+                                    }
+                                    onChange={(e) =>
+                                        handleQuantityChange(
+                                            e.target.value,
+                                            rowId
+                                        )
+                                    }
+                                />
+                                <IconButton
+                                    onClick={() => handleIncrease(rowData)}
+                                >
+                                    <AddRounded />
+                                </IconButton>
+                            </div>
+                        )}
+                        <span className={cx("prod-price-mobile")}>
+                            Giá: {FormatCurrency(rowData?.unit_price)}
+                        </span>
+                    </>
+                );
+            },
+        },
+        {
+            title: "Số lượng",
+            field: "product_quantity",
+            hidden: isMedium ? true : false,
+            render: (rowData) => {
+                const rowId = rowData.tableData.id;
+                return (
+                    <div
+                        style={{
+                            display: "flex",
+                            width: "148px",
+                        }}
+                    >
+                        <IconButton onClick={() => handleDecrease(rowData)}>
+                            <RemoveRounded />
+                        </IconButton>
+                        <GTextFieldNormal
+                            onBlur={() => handleUpdateQuantityWhenBlur(rowId)}
+                            inputProps={{
+                                inputMode: "numeric",
+                                pattern: "[0-9]*",
+                                maxLength: 2, // Giới hạn chiều dài của số nhập vào (ví dụ 99)
+                            }}
+                            fullWidth
+                            value={
+                                tempQuantity[rowId] !== undefined
+                                    ? tempQuantity[rowId]
+                                    : rowData?.product_quantity
+                            }
+                            onChange={(e) =>
+                                handleQuantityChange(e.target.value, rowId)
+                            }
+                        />
+                        <IconButton onClick={() => handleIncrease(rowData)}>
+                            <AddRounded />
+                        </IconButton>
+                    </div>
+                );
+            },
+        },
+        {
+            title: "Đơn giá",
+            field: "unit_price",
+            hidden: isMedium ? true : false,
+            render: (rowData) => {
+                return (
+                    <>
+                        <span
+                            className={
+                                rowData?.unit_price_onsale
+                                    ? cx("unit_price", "onsale")
+                                    : cx("unit_price")
+                            }
+                        >
+                            {FormatCurrency(rowData?.unit_price)}
+                        </span>
+                        {rowData?.unit_price_onsale ? (
+                            <span className={cx("unit_price_onsale")}>
+                                {FormatCurrency(rowData?.unit_price_onsale)}
+                            </span>
+                        ) : (
+                            ""
+                        )}
+                    </>
+                );
+            },
+        },
+        {
+            title: "Xóa",
+            field: "actions",
+            sorting: false,
+            export: false,
+            render: (rowData) => (
+                <div
+                    style={{
+                        display: "flex",
+                        alignItems: "center",
+                    }}
+                >
+                    <IconButton
+                        onClick={() => handleOpenRemoveCartItem(rowData)}
+                    >
+                        <DeleteRounded color="error" />
+                    </IconButton>
+                </div>
+            ),
+        },
+    ];
+
     // ============
     const user = useSelector((state) => state.auth.login?.currentUser);
     const cartList = useSelector((state) => state.cart.cart?.cartList);
@@ -161,7 +331,7 @@ function CartProductList() {
     return (
         <>
             <Grid container spacing={2}>
-                <Grid item xs={9}>
+                <Grid item lg={9} md={12} sm={12} xs={12}>
                     <div className={cx("wrapper")}>
                         <div className={cx("inner")}>
                             <Grid container spacing={2}>
@@ -187,166 +357,7 @@ function CartProductList() {
                                                 setSelectedProductCartList(rows)
                                             }
                                             title={"DANH SÁCH GIẢM GIÁ"}
-                                            columns={[
-                                                {
-                                                    title: "Hình ảnh",
-                                                    field: "image_url",
-                                                    render: (rowData) => (
-                                                        // eslint-disable-next-line jsx-a11y/alt-text
-                                                        <img
-                                                            src={`${API_IMAGE_URL}/${rowData?.image_url}`}
-                                                            style={{
-                                                                width: 60,
-                                                                height: 60,
-                                                                objectFit:
-                                                                    "cover",
-                                                                borderRadius:
-                                                                    "50%",
-                                                            }}
-                                                        />
-                                                    ),
-                                                },
-                                                {
-                                                    title: "Sản phẩm",
-                                                    field: "product_name",
-                                                },
-                                                {
-                                                    title: "Số lượng",
-                                                    field: "product_quantity",
-                                                    render: (rowData) => {
-                                                        const rowId =
-                                                            rowData.tableData
-                                                                .id;
-                                                        return (
-                                                            <div
-                                                                style={{
-                                                                    display:
-                                                                        "flex",
-                                                                    width: "148px",
-                                                                }}
-                                                            >
-                                                                <IconButton
-                                                                    onClick={() =>
-                                                                        handleDecrease(
-                                                                            rowData
-                                                                        )
-                                                                    }
-                                                                >
-                                                                    <RemoveRounded />
-                                                                </IconButton>
-                                                                <GTextFieldNormal
-                                                                    onBlur={() =>
-                                                                        handleUpdateQuantityWhenBlur(
-                                                                            rowId
-                                                                        )
-                                                                    }
-                                                                    inputProps={{
-                                                                        inputMode:
-                                                                            "numeric",
-                                                                        pattern:
-                                                                            "[0-9]*",
-                                                                        maxLength: 2, // Giới hạn chiều dài của số nhập vào (ví dụ 99)
-                                                                    }}
-                                                                    fullWidth
-                                                                    value={
-                                                                        tempQuantity[
-                                                                            rowId
-                                                                        ] !==
-                                                                        undefined
-                                                                            ? tempQuantity[
-                                                                                  rowId
-                                                                              ]
-                                                                            : rowData?.product_quantity
-                                                                    }
-                                                                    onChange={(
-                                                                        e
-                                                                    ) =>
-                                                                        handleQuantityChange(
-                                                                            e
-                                                                                .target
-                                                                                .value,
-                                                                            rowId
-                                                                        )
-                                                                    }
-                                                                />
-                                                                <IconButton
-                                                                    onClick={() =>
-                                                                        handleIncrease(
-                                                                            rowData
-                                                                        )
-                                                                    }
-                                                                >
-                                                                    <AddRounded />
-                                                                </IconButton>
-                                                            </div>
-                                                        );
-                                                    },
-                                                },
-                                                {
-                                                    title: "Đơn giá",
-                                                    field: "unit_price",
-                                                    render: (rowData) => {
-                                                        return (
-                                                            <>
-                                                                <span
-                                                                    className={
-                                                                        rowData?.unit_price_onsale
-                                                                            ? cx(
-                                                                                  "unit_price",
-                                                                                  "onsale"
-                                                                              )
-                                                                            : cx(
-                                                                                  "unit_price"
-                                                                              )
-                                                                    }
-                                                                >
-                                                                    {FormatCurrency(
-                                                                        rowData?.unit_price
-                                                                    )}
-                                                                </span>
-                                                                {rowData?.unit_price_onsale ? (
-                                                                    <span
-                                                                        className={cx(
-                                                                            "unit_price_onsale"
-                                                                        )}
-                                                                    >
-                                                                        {FormatCurrency(
-                                                                            rowData?.unit_price_onsale
-                                                                        )}
-                                                                    </span>
-                                                                ) : (
-                                                                    ""
-                                                                )}
-                                                            </>
-                                                        );
-                                                    },
-                                                },
-                                                {
-                                                    title: "Xóa",
-                                                    field: "actions",
-                                                    sorting: false,
-                                                    export: false,
-                                                    render: (rowData) => (
-                                                        <div
-                                                            style={{
-                                                                display: "flex",
-                                                                alignItems:
-                                                                    "center",
-                                                            }}
-                                                        >
-                                                            <IconButton
-                                                                onClick={() =>
-                                                                    handleOpenRemoveCartItem(
-                                                                        rowData
-                                                                    )
-                                                                }
-                                                            >
-                                                                <DeleteRounded color="error" />
-                                                            </IconButton>
-                                                        </div>
-                                                    ),
-                                                },
-                                            ]}
+                                            columns={columns}
                                             data={productList}
                                             exportFileName={"DanhSachNguoiDung"}
                                         />
@@ -362,7 +373,7 @@ function CartProductList() {
                         />
                     </div>
                 </Grid>
-                <Grid item xs={3}>
+                <Grid item lg={3} md={12} sm={12} xs={12}>
                     <CartProductSummary
                         selectedProductCartList={selectedProductCartList}
                     />

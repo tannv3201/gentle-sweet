@@ -6,17 +6,22 @@ import GButton from "../../../../components/MyButton/MyButton";
 import { FormatCurrency } from "../../../../components/FormatCurrency/FormatCurrency";
 import { useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
+import { toast } from "react-hot-toast";
 
 const cx = classNames.bind(styles);
 
 function CartProductSummary({ selectedProductCartList }) {
     const navigate = useNavigate();
     const handleCheckoutButtonClick = () => {
-        navigate("/thanh-toan", {
-            state: {
-                selectedProductCartList: selectedProductCartList,
-            },
-        });
+        if (selectedProductCartList?.length === 0) {
+            toast.error("Vui lòng chọn sản phẩm");
+        } else {
+            navigate("/thanh-toan", {
+                state: {
+                    selectedProductCartList: selectedProductCartList,
+                },
+            });
+        }
     };
 
     const [priceTotal, setPriceTotal] = useState(0);

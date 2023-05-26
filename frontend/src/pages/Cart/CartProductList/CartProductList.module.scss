@@ -75,5 +75,16 @@
         .unit_price_onsale {
             font-weight: var(--fw-medium);
         }
+
+        .prod-name-mobile {
+            display: -webkit-box;
+            -webkit-box-orient: vertical;
+            -webkit-line-clamp: 1; /* Giới hạn chỉ nằm trên 2 dòng */
+            overflow: hidden;
+        }
+        .prod-price-mobile {
+            display: block;
+            margin-top: 4px;
+        }
     }
 }

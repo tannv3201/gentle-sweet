@@ -187,7 +187,7 @@ function CheckoutInformation() {
                             name="last_name"
                         />
                     </Grid>
-                    <Grid item xs={6}>
+                    <Grid item lg={6} md={12} sm={12} xs={12}>
                         <GTextFieldNormal
                             disabled
                             value={user?.email}
@@ -203,7 +203,7 @@ function CheckoutInformation() {
                             }}
                         />
                     </Grid>
-                    <Grid item xs={6}>
+                    <Grid item lg={6} md={12} sm={12} xs={12}>
                         <GTextFieldNormal
                             disabled
                             value={user?.phone_number}
@@ -212,7 +212,7 @@ function CheckoutInformation() {
                             name="phone_number"
                         />
                     </Grid>
-                    <Grid item xs={4}>
+                    <Grid item lg={4} md={12} sm={12} xs={12}>
                         <Autocomplete
                             disabled
                             options={provinces}
@@ -232,7 +232,7 @@ function CheckoutInformation() {
                             )}
                         />
                     </Grid>
-                    <Grid item xs={4}>
+                    <Grid item lg={4} md={12} sm={12} xs={12}>
                         <Autocomplete
                             disabled
                             options={districts}
@@ -252,7 +252,7 @@ function CheckoutInformation() {
                             )}
                         />
                     </Grid>
-                    <Grid item xs={4}>
+                    <Grid item lg={4} md={12} sm={12} xs={12}>
                         <Autocomplete
                             options={wards}
                             disabled
@@ -294,7 +294,7 @@ function CheckoutInformation() {
                             />
                         </FormGroup>
                     </Grid>
-                    <Grid item xs={6}>
+                    <Grid item lg={6} md={12} sm={12} xs={12}>
                         <TextField
                             onBlur={handleBlur}
                             InputLabelProps={{ shrink: true }}
@@ -314,7 +314,7 @@ function CheckoutInformation() {
                         />
                     </Grid>
 
-                    <Grid item xs={6}>
+                    <Grid item lg={6} md={12} sm={12} xs={12}>
                         <TextField
                             InputLabelProps={{ shrink: true }}
                             color="secondary"
@@ -335,7 +335,7 @@ function CheckoutInformation() {
                             }
                         />
                     </Grid>
-                    <Grid item xs={4}>
+                    <Grid item lg={4} md={12} sm={12} xs={12}>
                         <Autocomplete
                             options={provinces}
                             getOptionLabel={(option) => option.province_name}
@@ -365,7 +365,7 @@ function CheckoutInformation() {
                             )}
                         />
                     </Grid>
-                    <Grid item xs={4}>
+                    <Grid item lg={4} md={12} sm={12} xs={12}>
                         <Autocomplete
                             options={districts}
                             getOptionLabel={(option) => option.district_name}
@@ -395,7 +395,7 @@ function CheckoutInformation() {
                             )}
                         />
                     </Grid>
-                    <Grid item xs={4}>
+                    <Grid item lg={4} md={12} sm={12} xs={12}>
                         <Autocomplete
                             options={wards}
                             getOptionLabel={(option) => option.ward_name}

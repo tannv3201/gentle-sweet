@@ -14,9 +14,13 @@ import { createAxios } from "../../../../createInstance";
 import { logoutSuccess } from "../../../../redux/slice/authSlice";
 import { resetApp } from "../../../../redux/store";
 
+import { useMediaQuery } from "@mui/material";
+import { useTheme } from "@mui/material/styles";
 const cx = classNames.bind(styles);
 
 export default function MenuUser() {
+    const theme = useTheme();
+    const isMedium = useMediaQuery(theme.breakpoints.down("md"));
     const navigate = useNavigate();
     const dispatch = useDispatch();
     const [anchorEl, setAnchorEl] = React.useState(null);
@@ -37,6 +41,12 @@ export default function MenuUser() {
         navigate("/don-mua");
         handleClose();
     };
+
+    const handleNavigateCart = () => {
+        navigate("/gio-hang");
+        handleClose();
+    };
+
     const handleLogout = async () => {
         await logout(dispatch, id, navigate, accessToken, axiosJWT).then(() =>
             handleClose()
@@ -84,6 +94,11 @@ export default function MenuUser() {
                         <div className={cx("menu-title")}>
                             <span>{currentUser?.username}</span>
                         </div>
+                        {isMedium && (
+                            <MenuItem onClick={handleNavigateCart}>
+                                Giỏ hàng
+                            </MenuItem>
+                        )}
                         <MenuItem onClick={handleNavigatePurchaseOrder}>
                             Đơn mua
                         </MenuItem>
