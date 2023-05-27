@@ -294,12 +294,12 @@ export default function BookingDetail() {
                                             )}
                                         >
                                             {currBooking?.customer_user_id
-                                                ? `STAFF - ${
+                                                ? `CUSTOMER - ${currCustomerUser?.last_name} ${currCustomerUser?.first_name}`
+                                                : `STAFF - ${
                                                       currBookingCreator?.last_name +
                                                       " " +
                                                       currBookingCreator?.first_name
-                                                  }`
-                                                : `CUSTOMER - ${currCustomerUser?.last_name} ${currCustomerUser?.first_name}`}
+                                                  }`}
                                         </span>
                                     </Grid>
                                 </Grid>

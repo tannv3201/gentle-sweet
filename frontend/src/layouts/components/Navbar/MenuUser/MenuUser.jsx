@@ -6,6 +6,7 @@ import {
     ListAltRounded,
     LogoutRounded,
     Person,
+    RecentActorsRounded,
     ShoppingCartRounded,
 } from "@mui/icons-material";
 import images from "../../../../assets/images";
@@ -73,6 +74,10 @@ export default function MenuUser() {
         handleClose();
     };
 
+    const handleNavigateBooked = () => {
+        navigate("/quan-ly-lich-dat");
+        handleClose();
+    };
     return (
         <div>
             {currentUser ? (
@@ -125,11 +130,14 @@ export default function MenuUser() {
                                 </span>
                             </MenuItem>
                         )}
+                        <MenuItem onClick={handleNavigateBooked}>
+                            <RecentActorsRounded />{" "}
+                            <span className={cx("menu-label")}>Lịch đặt</span>
+                        </MenuItem>
                         <MenuItem onClick={handleNavigatePurchaseOrder}>
                             <ListAltRounded />{" "}
                             <span className={cx("menu-label")}>Đơn mua</span>
                         </MenuItem>
-
                         <MenuItem onClick={handleLogout}>
                             <LogoutRounded />
                             <span className={cx("menu-label")}> Đăng xuất</span>

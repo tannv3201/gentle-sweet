@@ -10,6 +10,9 @@ import {
     getAllServiceCategoryFailed,
     getAllServiceCategoryStart,
     getAllServiceCategorySuccess,
+    getServiceCategoryByIdFailed,
+    getServiceCategoryByIdStart,
+    getServiceCategoryByIdSuccess,
     updateServiceCategoryFailed,
     updateServiceCategoryStart,
     updateServiceCategorySuccess,
@@ -31,6 +34,29 @@ export const getAllServiceCategory = async (
         return res?.data?.length;
     } catch (error) {
         dispatch(getAllServiceCategoryFailed());
+    }
+};
+
+export const getServiceCategoryById = async (
+    serviceCategoryId,
+    accessToken,
+    dispatch,
+    axiosJWT
+) => {
+    dispatch(getServiceCategoryByIdStart());
+    try {
+        const res = await axiosJWT.get(
+            "/v1/serviceCategory/" + serviceCategoryId,
+            {
+                headers: {
+                    token: `Bearer ${accessToken}`,
+                },
+            }
+        );
+        dispatch(getServiceCategoryByIdSuccess(res?.data));
+        return res?.data?.length;
+    } catch (error) {
+        dispatch(getServiceCategoryByIdFailed());
     }
 };
 

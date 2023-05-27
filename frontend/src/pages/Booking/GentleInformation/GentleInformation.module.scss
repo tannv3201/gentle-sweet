@@ -1,13 +1,14 @@
 .wrapper {
+    border: 1px solid var(--border-color);
+    border-radius: 6px;
+    overflow: hidden;
 }
 
 .inner {
     background-color: var(--white);
     padding: 12px;
-    border-radius: 6px;
 
     .contact-wrapper {
-        border: 1px solid var(--border-color);
         padding: 12px;
         border-radius: 6px;
 

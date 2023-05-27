@@ -57,6 +57,22 @@ const bookingController = {
         }
     },
 
+    // GET INVOICE BY ID
+    getBookingByUserId: async (req, res) => {
+        try {
+            const bookings = await BookingModel.getBookingByCustomerUserId(
+                req.params.id
+            );
+            if (!bookings) {
+                return res.status(404).json("Lịch đặt không tồn tại");
+            } else {
+                return res.status(200).json(bookings);
+            }
+        } catch (error) {
+            res.status(500).json(error);
+        }
+    },
+
     // Create Product Category
     createBooking: async (req, res, next) => {
         try {

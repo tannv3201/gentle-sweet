@@ -11,13 +11,13 @@ router.post(
 
 router.get(
     "/",
-    middlewareController.verifyTokenAndSystemUserAuth,
+    middlewareController.verifyToken,
     serviceCategoryController.getAllServiceCategory
 );
 
 router.get(
     "/:id",
-    middlewareController.verifyTokenAndSystemUserAuth,
+    middlewareController.verifyToken,
     serviceCategoryController.getServiceCategoryById
 );
 

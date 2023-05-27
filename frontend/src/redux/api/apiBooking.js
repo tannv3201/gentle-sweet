@@ -16,6 +16,9 @@ import {
     deleteBookingFailed,
     deleteBookingStart,
     deleteBookingSuccess,
+    getAllBookingByUserFailed,
+    getAllBookingByUserStart,
+    getAllBookingByUserSuccess,
     getAllBookingFailed,
     getAllBookingStart,
     getAllBookingSuccess,
@@ -42,6 +45,26 @@ export const getAllBooking = async (accessToken, dispatch, axiosJWT) => {
     }
 };
 
+export const getAllBookingByUser = async (
+    id,
+    accessToken,
+    dispatch,
+    axiosJWT
+) => {
+    dispatch(getAllBookingByUserStart());
+    try {
+        const res = await axiosJWT.get("/v1/booking/" + id + "/customer", {
+            headers: {
+                token: `Bearer ${accessToken}`,
+            },
+        });
+        dispatch(getAllBookingByUserSuccess(res?.data));
+        return res?.data?.length;
+    } catch (error) {
+        dispatch(getAllBookingByUserFailed());
+    }
+};
+
 export const createBooking = async (
     accessToken,
     dispatch,
@@ -61,7 +84,6 @@ export const createBooking = async (
             toast.success("Thêm lịch đặt thành công");
             getAllBooking(accessToken, dispatch, axiosJWT);
         }
-        console.log(res?.data?.data);
 
         return res?.data?.data?.insertId;
     } catch (error) {

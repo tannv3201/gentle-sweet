@@ -43,7 +43,9 @@ import PurchaseOrder from "../pages/PurchaseOrder/PurchaseOrder";
 import SignUp from "../pages/SignUp/SignUp";
 import NoLayout from "../layouts/NoLayout/NoLayout";
 import Account from "../pages/Account/Account";
-
+import ServiceDetailCustomer from "../pages/ServicePage/ServiceDetail/ServiceDetail";
+import BookedSchedule from "../pages/BookedSchedule/BookedSchedule";
+import DetailBookedSchedule from "../pages/BookedSchedule/DetailBookedSchedule/DetailBookedSchedule";
 // public routes
 
 export const publicRoutes = [
@@ -84,6 +86,10 @@ export const publicRoutes = [
         component: ProductDetail,
     },
     {
+        path: "/dich-vu/:serviceId",
+        component: ServiceDetailCustomer,
+    },
+    {
         path: "/thanh-toan",
         component: Checkout,
     },
@@ -94,6 +100,14 @@ export const publicRoutes = [
     {
         path: "/don-mua",
         component: PurchaseOrder,
+    },
+    {
+        path: "/quan-ly-lich-dat",
+        component: BookedSchedule,
+    },
+    {
+        path: "/quan-ly-lich-dat/:bookingId",
+        component: DetailBookedSchedule,
     },
     {
         path: "/tai-khoan",

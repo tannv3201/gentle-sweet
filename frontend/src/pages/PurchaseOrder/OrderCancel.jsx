@@ -1,8 +1,8 @@
 import React from "react";
 import OrderList from "./OrderList/OrderList";
 
-function OrderReceived({ invoiceListByUser }) {
+function OrderCancel({ invoiceListByUser }) {
     return <OrderList invoiceListByUser={invoiceListByUser} />;
 }
 
-export default OrderReceived;
+export default OrderCancel;

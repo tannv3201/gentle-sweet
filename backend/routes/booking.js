@@ -40,6 +40,12 @@ router.get(
     bookingController.getBookingById
 );
 
+router.get(
+    "/:id/customer",
+    middlewareController.verifyToken,
+    bookingController.getBookingByUserId
+);
+
 router.put(
     "/:id",
     middlewareController.verifyToken,

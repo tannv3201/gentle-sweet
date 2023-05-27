@@ -137,7 +137,7 @@ export const deleteService = async (dispatch, id, accessToken, axiosJWT) => {
 export const getServiceById = async (dispatch, id, accessToken, axiosJWT) => {
     dispatch(getServiceByIdStart());
     try {
-        const res = await axiosJWT.get("/v1/Service/" + id, {
+        const res = await axiosJWT.get("/v1/service/" + id, {
             headers: {
                 token: `Bearer ${accessToken}`,
             },

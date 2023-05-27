@@ -52,14 +52,14 @@ const getBookingByCustomerUserId = async (id) => {
         "SELECT * FROM tbl_booking WHERE customer_user_id = (?)",
         [id]
     );
-    return rows[0];
+    return rows;
 };
 
 const createBooking = async (booking) => {
     const [result, fields] = await pool.query("INSERT INTO tbl_booking SET ?", [
         booking,
     ]);
-    return booking;
+    return result;
 };
 
 const updateBookingById = async (id, booking) => {

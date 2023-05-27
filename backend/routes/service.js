@@ -19,13 +19,13 @@ router.get(
 
 router.get(
     "/",
-    middlewareController.verifyTokenAndSystemUserAuth,
+    middlewareController.verifyToken,
     serviceController.getAllService
 );
 
 router.get(
     "/:id",
-    middlewareController.verifyTokenAndSystemUserAuth,
+    middlewareController.verifyToken,
     serviceController.getServiceById
 );
 

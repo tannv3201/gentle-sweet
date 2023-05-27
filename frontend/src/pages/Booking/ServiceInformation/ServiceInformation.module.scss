@@ -1,4 +1,4 @@
-@import "../../../../assets/scss/Global.scss";
+@import "../../../assets/scss/Global.scss";
 
 @include responsive(mobile) {
     .selected-service {
@@ -15,6 +15,7 @@
     border: 1px solid var(--border-color);
     padding: 12px;
     border-radius: 6px;
+    background-color: var(--white);
 }
 
 .inner {

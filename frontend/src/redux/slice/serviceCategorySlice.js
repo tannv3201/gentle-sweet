@@ -5,6 +5,7 @@ const serviceCategorySlice = createSlice({
     initialState: {
         serviceCategory: {
             serviceCategoryList: [],
+            serviceCategory: null,
             isFetching: false,
             error: false,
         },
@@ -25,6 +26,19 @@ const serviceCategorySlice = createSlice({
             state.serviceCategory.error = true;
         },
 
+        // Get all Product Category
+        getServiceCategoryByIdStart: (state) => {
+            state.serviceCategory.isFetching = true;
+        },
+        getServiceCategoryByIdSuccess: (state, action) => {
+            state.serviceCategory.isFetching = false;
+            state.serviceCategory.serviceCategory = action.payload;
+        },
+
+        getServiceCategoryByIdFailed: (state) => {
+            state.serviceCategory.isFetching = false;
+            state.serviceCategory.error = true;
+        },
         // Create Product Category
         createServiceCategoryStart: (state) => {
             state.serviceCategory.isFetching = true;
@@ -73,6 +87,10 @@ export const {
     getAllServiceCategoryStart,
     getAllServiceCategorySuccess,
     getAllServiceCategoryFailed,
+
+    getServiceCategoryByIdStart,
+    getServiceCategoryByIdSuccess,
+    getServiceCategoryByIdFailed,
 
     createServiceCategoryStart,
     createServiceCategorySuccess,

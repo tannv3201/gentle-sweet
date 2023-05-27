@@ -6,7 +6,7 @@ const bookingDetailSlice = createSlice({
         bookingDetail: {
             bookingDetailList: [],
             bookingDetail: null,
-            bookingDetailByBooking: [],
+            bookingDetailByBooking: null,
             isFetching: false,
             error: false,
         },

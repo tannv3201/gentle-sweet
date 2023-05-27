@@ -136,7 +136,7 @@ function CartProductList() {
                             value={
                                 tempQuantity[rowId] !== undefined
                                     ? tempQuantity[rowId]
-                                    : rowData?.product_quantity
+                                    : rowData?.product_quantity || ""
                             }
                             onChange={(e) =>
                                 handleQuantityChange(e.target.value, rowId)
@@ -239,7 +239,7 @@ function CartProductList() {
                 const getProduct = getProductList?.find(
                     (p) => p.id === parseInt(item?.product_id)
                 );
-                if (getProduct.discount_id) {
+                if (getProduct?.discount_id) {
                     const getDiscount = discountListCustomer?.find(
                         (d) => d.id === parseInt(getProduct.discount_id)
                     );
