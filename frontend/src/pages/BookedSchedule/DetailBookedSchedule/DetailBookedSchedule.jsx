@@ -130,14 +130,16 @@ function DetailBookedSchedule() {
                                             Hủy lịch
                                         </GButton>
                                     )}
-                                    {!isEditting && !isSmall && (
-                                        <GButton
-                                            color={"success"}
-                                            onClick={handleStateIsEditting}
-                                        >
-                                            Chỉnh sửa
-                                        </GButton>
-                                    )}
+                                    {!isEditting &&
+                                        !isSmall &&
+                                        booking?.status !== 5 && (
+                                            <GButton
+                                                color={"success"}
+                                                onClick={handleStateIsEditting}
+                                            >
+                                                Chỉnh sửa
+                                            </GButton>
+                                        )}
                                 </div>
                             </div>
                         </Grid>

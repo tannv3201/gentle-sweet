@@ -39,6 +39,8 @@ function ServiceInfo({ isEditting, setIsEditting }) {
         (state) => state.serviceCategory.serviceCategory?.serviceCategory
     );
     let axiosJWT = createAxios(user, dispatch, loginSuccess);
+    const getBooking = useSelector((state) => state.booking.booking?.booking);
+
     const { handleBlur, handleChange, setFieldValue, values, handleSubmit } =
         useFormikContext();
 
@@ -180,7 +182,7 @@ function ServiceInfo({ isEditting, setIsEditting }) {
         <div className={cx("service-info-wrapper")}>
             <div className={cx("service-info-title")}>
                 <h3 onClick={handleStateOpen}>Thông tin dịch vụ</h3>
-                {isSmall && !isEditting && (
+                {isSmall && !isEditting && getBooking?.status !== 5 && (
                     <GButton
                         onClick={() => setIsEditting(!isEditting)}
                         startIcon={<EditRounded />}
