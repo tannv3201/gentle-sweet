@@ -14,6 +14,9 @@ import { createAxios } from "../../../createInstance";
 import { loginSuccess } from "../../../redux/slice/authSlice";
 import { useDispatch } from "react-redux";
 import { getCustomerUserById } from "../../../redux/api/apiCustomerUser";
+import styles from "./DetailBookedSchedule.module.scss";
+import classNames from "classnames/bind";
+const cx = classNames.bind(styles);
 
 function CustomerInfo() {
     const user = useSelector((state) => state.auth.login?.currentUser);
@@ -96,11 +99,11 @@ function CustomerInfo() {
         }
     }, [customerUser]);
     return (
-        <>
+        <div className={cx("customer-info-wrapper")}>
+            <div className={cx("customer-info-title")}>
+                <h3>Thông tin cá nhân</h3>
+            </div>
             <Grid container spacing={2}>
-                <Grid item xs={12}>
-                    <h3>Thông tin cá nhân</h3>
-                </Grid>
                 <Grid item xs={12}>
                     <GTextFieldNormal
                         disabled
@@ -208,7 +211,7 @@ function CustomerInfo() {
                     />
                 </Grid>
             </Grid>
-        </>
+        </div>
     );
 }
 

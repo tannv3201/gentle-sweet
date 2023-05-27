@@ -9,6 +9,9 @@ function ConfirmDeletePopup({
     deleteQuestion,
     deleteLabel,
     handleDelete,
+    confimQuestion1,
+    confimQuestion2,
+    title,
 }) {
     return (
         <>
@@ -18,12 +21,15 @@ function ConfirmDeletePopup({
                 }}
                 handleOpen={handleOpen}
                 isOpen={isOpen}
-                title="Xác nhận"
+                title={title ? title : "Xác nhận"}
             >
                 <div>
                     <div style={{ padding: "12px 0" }}>
                         {deleteQuestion}
                         {"  "}
+                        {confimQuestion1 && <span>{confimQuestion1}</span>}
+                        {confimQuestion1 && confimQuestion2 && <br />}
+                        {confimQuestion2 && <span>{confimQuestion2}</span>}
                         <span
                             style={{
                                 fontWeight: "var(--fw-semi-bold)",

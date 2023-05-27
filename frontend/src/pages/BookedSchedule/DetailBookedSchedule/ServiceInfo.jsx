@@ -16,14 +16,17 @@ import { getServiceCategoryById } from "../../../redux/api/apiServiceCategory";
 import styles from "./DetailBookedSchedule.module.scss";
 import classNames from "classnames/bind";
 import GButton from "../../../components/MyButton/MyButton";
-import { SaveAsRounded } from "@mui/icons-material";
-
-function ServiceInfo({ isEditting }) {
+import { CloseRounded, EditRounded, SaveAsRounded } from "@mui/icons-material";
+import { useMediaQuery } from "@mui/material";
+import { useTheme } from "@mui/material/styles";
+const cx = classNames.bind(styles);
+function ServiceInfo({ isEditting, setIsEditting }) {
     dayjs.extend(utc);
     const location = useLocation();
+    const theme = useTheme();
+    const isSmall = useMediaQuery(theme.breakpoints.down("sm"));
     const { bookingId } = useParams();
     const dispatch = useDispatch();
-    const navigate = useNavigate();
     const [selectedBooking, setSelectedBooking] = useState({});
     const user = useSelector((state) => state.auth.login?.currentUser);
     const bookingDetailByBooking = useSelector(
@@ -62,7 +65,7 @@ function ServiceInfo({ isEditting }) {
     useEffect(() => {
         if (bookingDetailByBooking)
             setSelectedBooking(bookingDetailByBooking[0]);
-        setFieldValue("booking_detail_id", bookingDetailByBooking[0].id);
+        setFieldValue("booking_detail_id", bookingDetailByBooking[0]?.id);
     }, [bookingDetailByBooking]);
 
     useEffect(() => {
@@ -89,7 +92,6 @@ function ServiceInfo({ isEditting }) {
             setFieldValue("service_name", serviceInBooking?.name);
         }
     }, [selectedBooking, isEditting]);
-    console.log(selectedBooking);
 
     useEffect(() => {
         const fetch = async () => {
@@ -169,157 +171,179 @@ function ServiceInfo({ isEditting }) {
         }
     };
 
-    // console.log(serviceInBooking);
-    // console.log(serviceCategoryInBooking);
+    const [stateOpen, setStateOpen] = useState(true);
+    const handleStateOpen = () => {
+        setStateOpen((prev) => !prev);
+    };
+
     return (
-        <div>
-            <Grid container spacing={2}>
-                <Grid item xs={12}>
-                    <h3>Thông tin dịch vụ</h3>
-                </Grid>
-                <Grid item xs={6}>
-                    <Autocomplete
-                        disabled
-                        options={[]}
-                        onBlur={handleBlur}
-                        getOptionLabel={(option) => `${option?.name}` || ""}
-                        onChange={(e, value) => {}}
-                        isOptionEqualToValue={(option, value) =>
-                            value === null ||
-                            value === "" ||
-                            option?.id === value?.id
-                        }
-                        value={
-                            (serviceCategoryInBooking.id && {
-                                id: serviceCategoryInBooking.id,
-                                name: serviceCategoryInBooking.name,
-                            }) ||
-                            null
-                        }
-                        renderInput={(params) => (
-                            <TextField
-                                {...params}
-                                disabled
-                                size="small"
-                                color="secondary"
-                                name="service_category_id"
-                                fullWidth
-                                label="Danh mục dịch vụ"
-                            />
-                        )}
-                    />
-                </Grid>
-                <Grid item xs={6}>
-                    <Autocomplete
-                        disabled
-                        options={[]}
-                        onBlur={handleBlur}
-                        getOptionLabel={(option) => `${option?.name}` || ""}
-                        onChange={(e, value) => {}}
-                        isOptionEqualToValue={(option, value) =>
-                            value === null ||
-                            value === "" ||
-                            option?.id === value?.id
-                        }
-                        value={
-                            (serviceInBooking?.id && {
-                                id: serviceInBooking?.id,
-                                name: serviceInBooking?.name,
-                            }) ||
-                            null
-                        }
-                        renderInput={(params) => (
-                            <TextField
-                                disabled
-                                {...params}
-                                size="small"
-                                color="secondary"
-                                name="service_id"
-                                fullWidth
-                                label="Dịch vụ"
-                            />
-                        )}
-                    />
-                </Grid>
-                <Grid item xs={6}>
-                    <GDatePicker
-                        disabled={!isEditting}
-                        size={"small"}
-                        label={"Ngày đặt"}
-                        fullWidth
-                        name="date"
-                        onBlur={handleBlur}
-                        onChange={(date) => handleChangeBookingDate(date)}
-                        value={values?.date || null}
-                    />
-                </Grid>
-                <Grid item xs={6}>
-                    <Autocomplete
-                        disabled={!isEditting}
-                        options={bookingTimeDefault}
-                        getOptionLabel={(option) => `${option?.name}` || ""}
-                        onChange={(e, value) => {
-                            handleChangeBookingTime(value);
-                        }}
-                        value={
-                            values?.bookingTime_id
-                                ? {
-                                      id: values?.bookingTime_id,
-                                      name: values?.bookingTime_name,
-                                  }
-                                : null
-                        }
-                        isOptionEqualToValue={(option, value) =>
-                            value === null ||
-                            value === "" ||
-                            option?.id === value?.id
-                        }
-                        renderInput={(params) => (
-                            <TextField
-                                disabled={!isEditting}
-                                {...params}
-                                color="secondary"
-                                size="small"
-                                fullWidth
-                                label="Khung thời gian"
-                            />
-                        )}
-                    />
-                </Grid>
-                <Grid item xs={12}>
-                    <TextField
-                        disabled={!isEditting}
-                        color="secondary"
-                        fullWidth
-                        label="Ghi chú"
-                        size="large"
-                        multiline
-                        rows={2}
-                        onChange={(e) => {
-                            setFieldValue("description", e.target.value);
-                        }}
-                        value={values?.description}
-                        InputLabelProps={{ shrink: true }}
-                    />
-                </Grid>
-                {isEditting && (
-                    <Grid
-                        item
-                        xs={12}
-                        display={"flex"}
-                        justifyContent={"flex-end"}
+        <div className={cx("service-info-wrapper")}>
+            <div className={cx("service-info-title")}>
+                <h3 onClick={handleStateOpen}>Thông tin dịch vụ</h3>
+                {isSmall && !isEditting && (
+                    <GButton
+                        onClick={() => setIsEditting(!isEditting)}
+                        startIcon={<EditRounded />}
                     >
-                        <GButton
-                            startIcon={<SaveAsRounded />}
-                            color={"success"}
-                            type={"submit"}
-                            onClick={handleSubmit}
-                        >
-                            Lưu
-                        </GButton>
-                    </Grid>
+                        Sửa
+                    </GButton>
                 )}
-            </Grid>
+            </div>
+            <div className={stateOpen ? cx("form", "isOpen") : cx("form")}>
+                <Grid container spacing={2}>
+                    <Grid item lg={6} md={6} sm={12} xs={12}>
+                        <Autocomplete
+                            disabled
+                            options={[]}
+                            onBlur={handleBlur}
+                            getOptionLabel={(option) => `${option?.name}` || ""}
+                            onChange={(e, value) => {}}
+                            isOptionEqualToValue={(option, value) =>
+                                value === null ||
+                                value === "" ||
+                                option?.id === value?.id
+                            }
+                            value={
+                                (serviceCategoryInBooking?.id && {
+                                    id: serviceCategoryInBooking?.id,
+                                    name: serviceCategoryInBooking?.name,
+                                }) ||
+                                null
+                            }
+                            renderInput={(params) => (
+                                <TextField
+                                    {...params}
+                                    disabled
+                                    size="small"
+                                    color="secondary"
+                                    name="service_category_id"
+                                    fullWidth
+                                    label="Danh mục dịch vụ"
+                                />
+                            )}
+                        />
+                    </Grid>
+                    <Grid item lg={6} md={6} sm={12} xs={12}>
+                        <Autocomplete
+                            disabled
+                            options={[]}
+                            onBlur={handleBlur}
+                            getOptionLabel={(option) => `${option?.name}` || ""}
+                            onChange={(e, value) => {}}
+                            isOptionEqualToValue={(option, value) =>
+                                value === null ||
+                                value === "" ||
+                                option?.id === value?.id
+                            }
+                            value={
+                                (serviceInBooking?.id && {
+                                    id: serviceInBooking?.id,
+                                    name: serviceInBooking?.name,
+                                }) ||
+                                null
+                            }
+                            renderInput={(params) => (
+                                <TextField
+                                    disabled
+                                    {...params}
+                                    size="small"
+                                    color="secondary"
+                                    name="service_id"
+                                    fullWidth
+                                    label="Dịch vụ"
+                                />
+                            )}
+                        />
+                    </Grid>
+                    <Grid item lg={6} md={6} sm={12} xs={12}>
+                        <GDatePicker
+                            disabled={!isEditting}
+                            size={"small"}
+                            label={"Ngày đặt"}
+                            fullWidth
+                            name="date"
+                            onBlur={handleBlur}
+                            onChange={(date) => handleChangeBookingDate(date)}
+                            value={values?.date || null}
+                        />
+                    </Grid>
+                    <Grid item lg={6} md={6} sm={12} xs={12}>
+                        <Autocomplete
+                            disabled={!isEditting}
+                            options={bookingTimeDefault}
+                            getOptionLabel={(option) => `${option?.name}` || ""}
+                            onChange={(e, value) => {
+                                handleChangeBookingTime(value);
+                            }}
+                            value={
+                                values?.bookingTime_id
+                                    ? {
+                                          id: values?.bookingTime_id,
+                                          name: values?.bookingTime_name,
+                                      }
+                                    : null
+                            }
+                            isOptionEqualToValue={(option, value) =>
+                                value === null ||
+                                value === "" ||
+                                option?.id === value?.id
+                            }
+                            renderInput={(params) => (
+                                <TextField
+                                    disabled={!isEditting}
+                                    {...params}
+                                    color="secondary"
+                                    size="small"
+                                    fullWidth
+                                    label="Khung thời gian"
+                                />
+                            )}
+                        />
+                    </Grid>
+                    <Grid item xs={12}>
+                        <TextField
+                            disabled={!isEditting}
+                            color="secondary"
+                            fullWidth
+                            label="Ghi chú"
+                            size="large"
+                            multiline
+                            rows={2}
+                            onChange={(e) => {
+                                setFieldValue("description", e.target.value);
+                            }}
+                            value={values?.description}
+                            InputLabelProps={{ shrink: true }}
+                        />
+                    </Grid>
+                    {isEditting && (
+                        <Grid
+                            item
+                            xs={12}
+                            display={"flex"}
+                            justifyContent={"flex-end"}
+                        >
+                            <GButton
+                                startIcon={<CloseRounded />}
+                                color={"error"}
+                                variant="outlined"
+                                onClick={() => setIsEditting(!isEditting)}
+                            >
+                                Hủy
+                            </GButton>
+                            <GButton
+                                style={{ marginLeft: 12 }}
+                                startIcon={<SaveAsRounded />}
+                                color={"success"}
+                                type={"submit"}
+                                onClick={handleSubmit}
+                            >
+                                Lưu
+                            </GButton>
+                        </Grid>
+                    )}
+                </Grid>
+            </div>
         </div>
     );
 }

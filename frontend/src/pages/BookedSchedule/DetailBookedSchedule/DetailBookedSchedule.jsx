@@ -10,11 +10,19 @@ import ServiceInfo from "./ServiceInfo";
 import { Formik } from "formik";
 import { useSelector } from "react-redux";
 import ConfirmUpdateBookingPopup from "./ConfirmUpdateBookingPopup";
+import { useMediaQuery } from "@mui/material";
+import { useTheme } from "@mui/material/styles";
+import ConfirmCancelBookingPopup from "./ConfirmCancelBookingPopup";
 const cx = classNames.bind(styles);
 
 function DetailBookedSchedule() {
+    const theme = useTheme();
+    const isSmall = useMediaQuery(theme.breakpoints.down("sm"));
     const navigate = useNavigate();
     const getBooking = useSelector((state) => state.booking.booking?.booking);
+    const serviceInBooking = useSelector(
+        (state) => state.service.service?.service
+    );
     const [booking, setBooking] = useState();
     useEffect(() => {
         if (getBooking) {
@@ -57,6 +65,21 @@ function DetailBookedSchedule() {
         setIsOpenUpdateBookingPopup(false);
     };
 
+    // Handle Cancel booking detail
+    const [bookingCancel, setBookingCancel] = useState({});
+
+    const [isOpenCancelBookingPopup, setIsOpenCancelBookingPopup] =
+        useState(false);
+
+    const handleOpenCancelBookingPopup = (data) => {
+        setBookingCancel(serviceInBooking);
+        setIsOpenCancelBookingPopup(true);
+    };
+
+    const handleCloseCancelBookingPopup = () => {
+        setIsOpenCancelBookingPopup(false);
+    };
+
     return (
         <div className={cx("wrapper")}>
             <div className={cx("inner")}>
@@ -97,21 +120,22 @@ function DetailBookedSchedule() {
                                     </span>
                                 </span>
                                 <div className={cx("action-btn")}>
-                                    <GButton color={"error"}>Hủy</GButton>
-                                    {!isEditting ? (
+                                    {booking?.status !== 5 && (
+                                        <GButton
+                                            color={"error"}
+                                            onClick={
+                                                handleOpenCancelBookingPopup
+                                            }
+                                        >
+                                            Hủy lịch
+                                        </GButton>
+                                    )}
+                                    {!isEditting && !isSmall && (
                                         <GButton
                                             color={"success"}
                                             onClick={handleStateIsEditting}
                                         >
                                             Chỉnh sửa
-                                        </GButton>
-                                    ) : (
-                                        <GButton
-                                            variant="outlined"
-                                            color={"success"}
-                                            onClick={handleStateIsEditting}
-                                        >
-                                            Hủy
                                         </GButton>
                                     )}
                                 </div>
@@ -131,12 +155,27 @@ function DetailBookedSchedule() {
                                 >
                                     <div>
                                         <Grid container spacing={2}>
-                                            <Grid item xs={6}>
+                                            <Grid
+                                                item
+                                                lg={6}
+                                                md={6}
+                                                sm={12}
+                                                xs={12}
+                                            >
                                                 <CustomerInfo />
                                             </Grid>
-                                            <Grid item xs={6}>
+                                            <Grid
+                                                item
+                                                lg={6}
+                                                md={6}
+                                                sm={12}
+                                                xs={12}
+                                            >
                                                 <ServiceInfo
                                                     isEditting={isEditting}
+                                                    setIsEditting={
+                                                        setIsEditting
+                                                    }
                                                 />
                                             </Grid>
                                         </Grid>
@@ -152,6 +191,12 @@ function DetailBookedSchedule() {
                 handleOpen={handleOpenUpdateBookingPopup}
                 handleClose={handleCloseUpdateBookingPopup}
                 selectedBookingDetail={bookingUpdate}
+            />
+            <ConfirmCancelBookingPopup
+                isOpen={isOpenCancelBookingPopup}
+                handleOpen={handleOpenCancelBookingPopup}
+                handleClose={handleCloseCancelBookingPopup}
+                selectedBooking={bookingCancel}
             />
         </div>
     );

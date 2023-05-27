@@ -119,7 +119,6 @@ function BookedList({ bookingListByUser }) {
                                                             </span>
                                                         </div>
                                                     </div>
-
                                                     <div
                                                         className={cx(
                                                             "col-right"
@@ -136,7 +135,7 @@ function BookedList({ bookingListByUser }) {
                                                             }
                                                             variant="outlined"
                                                         >
-                                                            Xem chi tiết
+                                                            Xem
                                                         </GButton>
                                                     </div>
                                                 </div>
