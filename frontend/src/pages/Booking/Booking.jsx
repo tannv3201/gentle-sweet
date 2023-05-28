@@ -12,7 +12,10 @@ import ServiceInformation from "./ServiceInformation/ServiceInformation";
 import GentleInformation from "./GentleInformation/GentleInformation";
 import { Formik } from "formik";
 import { useSelector } from "react-redux";
-import { createBooking } from "../../redux/api/apiBooking";
+import {
+    createBooking,
+    createBookingByCustomer,
+} from "../../redux/api/apiBooking";
 import { useDispatch } from "react-redux";
 import { createAxios } from "../../createInstance";
 import { loginSuccess } from "../../redux/slice/authSlice";
@@ -32,6 +35,8 @@ function Booking() {
         district: "",
         ward: "",
         detail_address: "",
+        date: "",
+        bookingTime_id: "",
     });
     const phoneRegExp = /(84|0[3|5|7|8|9])+([0-9]{8})\b/;
     const validationSchema = Yup.object().shape({
@@ -44,6 +49,8 @@ function Booking() {
         district: Yup.string().required("Vui lòng không để trống"),
         ward: Yup.string().required("Vui lòng không để trống"),
         detail_address: Yup.string().required("Vui lòng không để trống"),
+        bookingTime_id: Yup.string().required("Vui lòng chọn khung giờ"),
+        date: Yup.string().required("Vui lòng chọn ngày"),
     });
 
     const user = useSelector((state) => state.auth.login?.currentUser);
@@ -53,7 +60,8 @@ function Booking() {
     const location = useLocation();
     const navigate = useNavigate();
     const handleSubmit = async (values) => {
-        const newBooking = await createBooking(
+        const newBooking = await createBookingByCustomer(
+            user?.id,
             user?.accessToken,
             dispatch,
             {
@@ -83,6 +91,7 @@ function Booking() {
             axiosJWT
         ).then(() => navigate("/quan-ly-lich-dat"));
     };
+
     return (
         <main>
             <div className={cx("booking-banner")}>

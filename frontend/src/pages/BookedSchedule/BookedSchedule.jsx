@@ -50,12 +50,14 @@ function BookedSchedule() {
                     icon: "😅",
                 });
             }
-            await getAllBookingByUser(
-                user?.id,
-                user?.accessToken,
-                dispatch,
-                axiosJWT
-            );
+            if (!getBookingListByUser) {
+                await getAllBookingByUser(
+                    user?.id,
+                    user?.accessToken,
+                    dispatch,
+                    axiosJWT
+                );
+            }
         };
         fetch();
     }, []);
