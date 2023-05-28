@@ -91,6 +91,33 @@ export const createBooking = async (
     }
 };
 
+export const createBookingByCustomer = async (
+    userId,
+    accessToken,
+    dispatch,
+    bookingData,
+    axiosJWT
+) => {
+    dispatch(createBookingStart());
+    try {
+        const res = await axiosJWT.post("/v1/booking", bookingData, {
+            headers: {
+                token: `Bearer ${accessToken}`,
+            },
+        });
+        dispatch(createBookingSuccess(res?.data));
+        if (res?.data?.status === 201) {
+            // toast.success(res?.data?.msg);
+            toast.success("Thêm lịch đặt thành công");
+            getAllBookingByUser(userId, accessToken, dispatch, axiosJWT);
+        }
+
+        return res?.data?.data?.insertId;
+    } catch (error) {
+        dispatch(createBookingFailed(error.response?.data));
+    }
+};
+
 export const updateBooking = async (
     accessToken,
     dispatch,

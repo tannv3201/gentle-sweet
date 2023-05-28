@@ -73,6 +73,42 @@ export const createBookingDetail = async (
     }
 };
 
+export const createBookingDetailByCustomer = async (
+    bookingId,
+    accessToken,
+    dispatch,
+    bookingDetailData,
+    axiosJWT
+) => {
+    dispatch(createBookingDetailStart());
+    try {
+        const res = await axiosJWT.post(
+            "/v1/bookingDetail",
+            bookingDetailData,
+            {
+                headers: {
+                    token: `Bearer ${accessToken}`,
+                },
+            }
+        );
+        dispatch(createBookingDetailSuccess(res?.data));
+        if (res?.data?.status === 201) {
+            // toast.success(res?.data?.msg);
+            toast.success("Thêm chi tiết hóa đơn thành công");
+            await getBookingDetailByBookingId(
+                dispatch,
+                bookingId,
+                accessToken,
+                axiosJWT
+            );
+            // await getBooking(accessToken, dispatch, axiosJWT);
+        }
+        return res?.data?.data?.insertId;
+    } catch (error) {
+        dispatch(createBookingDetailFailed(error.response?.data));
+    }
+};
+
 export const updateBookingDetail = async (
     accessToken,
     dispatch,
