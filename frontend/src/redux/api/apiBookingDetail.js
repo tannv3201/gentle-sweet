@@ -7,6 +7,9 @@ import {
     deleteBookingDetailFailed,
     deleteBookingDetailStart,
     deleteBookingDetailSuccess,
+    getAllBookingDetailByBookingIdFailed,
+    getAllBookingDetailByBookingIdStart,
+    getAllBookingDetailByBookingIdSuccess,
     getAllBookingDetailFailed,
     getAllBookingDetailStart,
     getAllBookingDetailSuccess,
@@ -250,5 +253,31 @@ export const getBookingDetailByBookingId = async (
         return res?.data;
     } catch (error) {
         dispatch(getBookingDetailByBookingIdFailed(error.response?.data));
+    }
+};
+
+export const getAllBookingDetailByBookingId = async (
+    dispatch,
+    bookingId,
+    accessToken,
+    axiosJWT
+) => {
+    dispatch(getAllBookingDetailByBookingIdStart());
+    try {
+        const res = await axiosJWT.get(
+            "/v1/bookingDetail/" + bookingId + "/bookingDetail",
+            {
+                headers: {
+                    token: `Bearer ${accessToken}`,
+                },
+            }
+        );
+        dispatch(getAllBookingDetailByBookingIdSuccess(res?.data));
+        if (res?.data?.status === 200) {
+            toast.success(res?.data?.msg);
+        }
+        return res?.data;
+    } catch (error) {
+        dispatch(getAllBookingDetailByBookingIdFailed(error.response?.data));
     }
 };

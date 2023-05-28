@@ -2,14 +2,16 @@
 import * as React from "react";
 import classNames from "classnames/bind";
 import styles from "./ServiceInformation.module.scss";
-import { Autocomplete, Grid, TextField } from "@mui/material";
+import { Autocomplete, Grid, TextField, useForkRef } from "@mui/material";
 
 import { useState } from "react";
 
 import ModalPolycyGuideline from "./ModalPolycyGuideline/ModalPolycyGuideline";
 import { useFormikContext } from "formik";
 import { useLocation, useNavigate } from "react-router-dom";
-import GDatePicker from "../../../components/GDatePicker/GDatePicker";
+import GDatePicker, {
+    GFormatDate,
+} from "../../../components/GDatePicker/GDatePicker";
 import { useSelector } from "react-redux";
 import { createAxios } from "../../../createInstance";
 import { useDispatch } from "react-redux";
@@ -18,6 +20,8 @@ import { getAllServiceCategory } from "../../../redux/api/apiServiceCategory";
 import { useEffect } from "react";
 import { getAllService } from "../../../redux/api/apiService";
 import { toast } from "react-hot-toast";
+import { getAllBookingByUser } from "../../../redux/api/apiBooking";
+import { getBookingDetailByBookingId } from "../../../redux/api/apiBookingDetail";
 
 const cx = classNames.bind(styles);
 
@@ -34,7 +38,7 @@ export default function ServiceInformation() {
         setIsOpen(false);
     };
 
-    const { handleBlur, handleChange, setFieldValue, values } =
+    const { handleBlur, handleChange, setFieldValue, values, setFieldError } =
         useFormikContext();
     const [serviceCategoryClone, setServiceCategoryClone] = useState([]);
     const [serviceClone, setServiceClone] = useState([]);
@@ -69,11 +73,39 @@ export default function ServiceInformation() {
         const fetch = async () => {
             await getAllServiceCategory(user?.accessToken, dispatch, axiosJWT);
             await getAllService(user?.accessToken, dispatch, axiosJWT);
+            await getAllBookingByUser(
+                user?.id,
+                user?.accessToken,
+                dispatch,
+                axiosJWT
+            );
         };
-
         fetch();
     }, []);
 
+    const [bookingDetailListByUser, setBookingDetailListByUser] = useState([]);
+    const getBookingListByUser = useSelector(
+        (state) => state.booking.booking?.bookingListByUser
+    );
+    // console.log(getBookingListByUser);
+    useEffect(() => {
+        const fetch = async () => {
+            if (getBookingListByUser?.length !== 0) {
+                for (const item of getBookingListByUser) {
+                    const bookingDetailList = await getBookingDetailByBookingId(
+                        dispatch,
+                        item?.id,
+                        user?.accessToken,
+                        axiosJWT
+                    );
+                    bookingDetailListByUser.push(bookingDetailList);
+                }
+            }
+        };
+        fetch();
+    }, []);
+
+    console.log(bookingDetailListByUser);
     useEffect(() => {
         if (serviceCategoryList)
             setServiceCategoryClone(structuredClone(serviceCategoryList));
@@ -142,19 +174,27 @@ export default function ServiceInformation() {
     const handleChangeBookingDate = (value, index) => {
         if (value) {
             setFieldValue(`date`, value);
-            // const selectedDate = GFormatDate(value, "DD/MM/YYYY").toString();
+            const selectedDate = GFormatDate(value, "DD/MM/YYYY").toString();
 
-            // const filteredOptions = bookingTimeDefault.filter((option) => {
-            //     const matchingBooking = getBookingDetail.find(
-            //         (booking) =>
-            //             GFormatDate(booking.date, "DD/MM/YYYY").toString() ===
-            //                 selectedDate &&
-            //             booking.start_time === option.start_time
-            //     );
-            //     return !matchingBooking;
-            // });
+            const filteredOptions = bookingTimeDefault.filter((option) => {
+                const matchingBooking = bookingDetailListByUser
+                    .flat()
+                    .find(
+                        (booking) =>
+                            GFormatDate(
+                                booking.date,
+                                "DD/MM/YYYY"
+                            ).toString() === selectedDate &&
+                            booking.start_time === option.start_time
+                    );
+                return !matchingBooking;
+            });
 
-            // setBookingTime(filteredOptions);
+            // if(filteredOptions?.length ===0) {
+            //     setFieldError("")
+            // }
+
+            setBookingTime(filteredOptions);
         } else {
             setFieldValue(`date`, null);
             setBookingTime([]);
@@ -257,7 +297,7 @@ export default function ServiceInformation() {
                                 </Grid>
                                 <Grid item xs={6}>
                                     <Autocomplete
-                                        options={bookingTimeDefault}
+                                        options={bookingTime}
                                         getOptionLabel={(option) =>
                                             `${option?.name}` || ""
                                         }
@@ -301,6 +341,11 @@ export default function ServiceInformation() {
                                         </span>
                                         <div className={cx("note-description")}>
                                             <ol>
+                                                <li>
+                                                    Quý khách không thể đặt lịch
+                                                    có thời gian trùng với các
+                                                    lịch đặt trước đây.
+                                                </li>
                                                 <li>
                                                     Quý khách hàng vui lòng kiểm
                                                     tra đầy đủ thông tin cá

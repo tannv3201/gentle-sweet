@@ -70,8 +70,6 @@ function CustomerInfo() {
         if (getCustomerUser) setCustomerUser(getCustomerUser);
     }, [getCustomerUser]);
 
-    // Fn handle province onChange event
-
     // Set selected province/district/ward into states & Formik field
     useEffect(() => {
         if (customerUser) {
@@ -80,22 +78,28 @@ function CustomerInfo() {
                 provinces
             );
             setSelectedCurrProvince(provinceSelected);
-
             // District
-            getDistrict(customerUser?.province).then((districtList) => {
-                const districtSelected = getDistrictById(
-                    customerUser?.district,
-                    districtList
-                );
-                setSelectedCurrDistrict(districtSelected);
-                setDistricts(districtList);
-            });
+            if (customerUser.province) {
+                getDistrict(customerUser.province).then((districtList) => {
+                    const districtSelected = getDistrictById(
+                        customerUser?.district,
+                        districtList
+                    );
+                    setSelectedCurrDistrict(districtSelected);
+                    setDistricts(districtList);
+                });
+            }
 
-            getWard(customerUser?.district).then((wardList) => {
-                const wardSelected = getWardById(customerUser?.ward, wardList);
-                setSelectedCurrWard(wardSelected);
-                setWards(wardList);
-            });
+            if (customerUser.district) {
+                getWard(customerUser.district).then((wardList) => {
+                    const wardSelected = getWardById(
+                        customerUser?.ward,
+                        wardList
+                    );
+                    setSelectedCurrWard(wardSelected);
+                    setWards(wardList);
+                });
+            }
         }
     }, [customerUser]);
     return (

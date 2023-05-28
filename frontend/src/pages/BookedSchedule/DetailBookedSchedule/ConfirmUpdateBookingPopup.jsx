@@ -20,7 +20,7 @@ export default function ConfirmUpdateBookingPopup({
     const user = useSelector((state) => state.auth.login?.currentUser);
     const dispatch = useDispatch();
     const { bookingId } = useParams();
-
+    console.log(selectedBookingDetail);
     let axiosJWT = createAxios(user, dispatch, loginSuccess);
     const handleUpdateBooking = () => {
         const { booking_detail_id, start_time, end_time, date, description } =

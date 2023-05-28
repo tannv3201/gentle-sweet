@@ -50,7 +50,7 @@ function BookedSchedule() {
                     icon: "😅",
                 });
             }
-            if (!getBookingListByUser) {
+            if (getBookingListByUser?.length === 0) {
                 await getAllBookingByUser(
                     user?.id,
                     user?.accessToken,
