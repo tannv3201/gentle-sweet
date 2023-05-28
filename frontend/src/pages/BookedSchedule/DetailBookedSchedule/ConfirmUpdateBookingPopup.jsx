@@ -14,6 +14,8 @@ export default function ConfirmUpdateBookingPopup({
     handleOpen,
     isOpen,
     selectedBookingDetail,
+    isEditting,
+    setIsEditting,
 }) {
     const user = useSelector((state) => state.auth.login?.currentUser);
     const dispatch = useDispatch();
@@ -39,6 +41,7 @@ export default function ConfirmUpdateBookingPopup({
             axiosJWT
         ).then(() => {
             handleClose();
+            setIsEditting(!isEditting);
         });
     };
 

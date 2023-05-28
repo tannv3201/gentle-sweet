@@ -193,6 +193,8 @@ function DetailBookedSchedule() {
                 handleOpen={handleOpenUpdateBookingPopup}
                 handleClose={handleCloseUpdateBookingPopup}
                 selectedBookingDetail={bookingUpdate}
+                setIsEditting={setIsEditting}
+                isEditting={isEditting}
             />
             <ConfirmCancelBookingPopup
                 isOpen={isOpenCancelBookingPopup}
