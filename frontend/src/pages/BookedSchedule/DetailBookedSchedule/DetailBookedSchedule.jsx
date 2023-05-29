@@ -4,7 +4,7 @@ import styles from "./DetailBookedSchedule.module.scss";
 import classNames from "classnames/bind";
 import GButton from "../../../components/MyButton/MyButton";
 import { ArrowBackIosNewRounded } from "@mui/icons-material";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import CustomerInfo from "./CustomerInfo";
 import ServiceInfo from "./ServiceInfo";
 import { Formik } from "formik";
@@ -13,9 +13,18 @@ import ConfirmUpdateBookingPopup from "./ConfirmUpdateBookingPopup";
 import { useMediaQuery } from "@mui/material";
 import { useTheme } from "@mui/material/styles";
 import ConfirmCancelBookingPopup from "./ConfirmCancelBookingPopup";
+import { getBookingById } from "../../../redux/api/apiBooking";
+import { useDispatch } from "react-redux";
+import { createAxios } from "../../../createInstance";
+import { loginSuccess } from "../../../redux/slice/authSlice";
 const cx = classNames.bind(styles);
 
 function DetailBookedSchedule() {
+    const { bookingId } = useParams();
+    const dispatch = useDispatch();
+    const user = useSelector((state) => state.auth.login?.currentUser);
+    let axiosJWT = createAxios(user, dispatch, loginSuccess);
+
     const theme = useTheme();
     const isSmall = useMediaQuery(theme.breakpoints.down("sm"));
     const navigate = useNavigate();
@@ -23,6 +32,11 @@ function DetailBookedSchedule() {
     const serviceInBooking = useSelector(
         (state) => state.service.service?.service
     );
+
+    useEffect(() => {
+        getBookingById(dispatch, bookingId, user?.accessToken, axiosJWT);
+    }, [user?.id]);
+    console.log(getBooking);
     const [booking, setBooking] = useState();
     useEffect(() => {
         if (getBooking) {
