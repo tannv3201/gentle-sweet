@@ -266,13 +266,35 @@ function ServiceInfo({ isEditting, setIsEditting }) {
             setBookingTime(filteredOptions);
         } else {
             setFieldValue(`date`, null);
-            setBookingTime([]);
             setFieldValue(`bookingTime_id`, null);
             setFieldValue(`bookingTime_name`, null);
             setFieldValue(`start_time`, null);
             setFieldValue(`end_time`, null);
         }
     };
+    useEffect(() => {
+        if (values.date) {
+            const selectedDate = GFormatDate(
+                values?.date,
+                "DD/MM/YYYY"
+            ).toString();
+
+            const filteredOptions = bookingTimeDefault.filter((option) => {
+                const matchingBooking = bookingDetailListByUserClone
+                    .flat()
+                    .find(
+                        (booking) =>
+                            GFormatDate(
+                                booking.date,
+                                "DD/MM/YYYY"
+                            ).toString() === selectedDate &&
+                            booking.start_time === option.start_time
+                    );
+                return !matchingBooking;
+            });
+            setBookingTime(filteredOptions);
+        }
+    }, [values.date]);
     const [stateOpen, setStateOpen] = useState(true);
     const handleStateOpen = () => {
         setStateOpen((prev) => !prev);
