@@ -99,6 +99,7 @@ function Login() {
                                 <Grid container spacing={2}>
                                     <Grid item xs={12}>
                                         <GTextFieldNormal
+                                            autoFocus
                                             formik={formik}
                                             onChange={formik.handleChange}
                                             value={formik.values.username}
