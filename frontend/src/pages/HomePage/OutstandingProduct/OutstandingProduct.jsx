@@ -104,7 +104,7 @@ function OutstandingProduct() {
             await getAllProductCategoryCustomer(dispatch);
             await getAllDiscountCustomer(dispatch);
 
-            await getProductLimit(dispatch);
+            // await getProductLimit(dispatch);
         };
         fetch();
     }, []);

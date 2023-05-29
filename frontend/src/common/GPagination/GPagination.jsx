@@ -1,16 +1,35 @@
-import * as React from "react";
+import React, { useEffect } from "react";
+
 import Typography from "@mui/material/Typography";
 import Pagination from "@mui/material/Pagination";
 import Stack from "@mui/material/Stack";
+import { useState } from "react";
+import { useLocation, useSearchParams } from "react-router-dom";
 
 export default function GPagination({
     showFirstButton,
     showLastButton,
     count,
+    currentPage,
+    setCurrentPage,
 }) {
-    const [page, setPage] = React.useState(1);
+    const [searchParams, setSearchParams] = useSearchParams();
+    const location = useLocation();
+    const [searchPage, setSearchPage] = useState(
+        searchParams.get("page") || null
+    );
+
+    // useEffect(() => {
+    //     if (location.search) {
+    //         setCurrentPage(searchPage);
+    //     }
+    // }, [searchPage]);
+
     const handleChange = (event, value) => {
-        setPage(value);
+        setCurrentPage(value);
+        const newSearchParams = new URLSearchParams(location.search);
+        newSearchParams.set("page", value);
+        setSearchParams(newSearchParams);
     };
 
     return (
@@ -26,7 +45,7 @@ export default function GPagination({
                 showFirstButton={showFirstButton}
                 showLastButton={showLastButton}
                 count={count}
-                page={page}
+                page={currentPage}
                 onChange={handleChange}
             />
         </div>

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import classNames from "classnames/bind";
 import styles from "./ShopPage.module.scss";
 import { Grid } from "@mui/material";
@@ -16,6 +16,13 @@ import {
 } from "./CategoryFilterDrawer/CategoryFilterDrawer";
 import FilterGroup from "./FilterGroup/FilterGroup";
 import ProductList from "./Product/ProductList";
+import { useSelector } from "react-redux";
+import { getAllProduct } from "../../redux/api/apiProduct";
+import { useDispatch } from "react-redux";
+import { createAxios } from "../../createInstance";
+import { loginSuccess } from "../../redux/slice/authSlice";
+import { getCurrentPage } from "../../redux/api/apiPagination";
+import { useSearchParams } from "react-router-dom";
 
 const cx = classNames.bind(styles);
 
@@ -34,17 +41,21 @@ function ShopPage() {
         }
     };
 
-    // const handleToggleCategoryDrawer = React.useCallback(
-    //     () => setIsOpenCategoryDrawer((prevOpen) => !prevOpen),
-    //     [setIsOpenCategoryDrawer]
-    // );
-
     const [isOpenFilterDrawer, setIsOpenFilterDrawer] = React.useState(false);
 
-    // const handleToggleFilterDrawer = React.useCallback(
-    //     () => setIsOpenFilterDrawer((prevOpen) => !prevOpen),
-    //     [setIsOpenFilterDrawer]
-    // );
+    // Call api
+    const dispatch = useDispatch();
+    const user = useSelector((state) => state.auth.login?.currentUser);
+    const [productList, setProductList] = useState([]);
+
+    let axiosJWT = createAxios(user, dispatch, loginSuccess);
+
+    useEffect(() => {
+        const fetch = async () => {
+            await getAllProduct(user?.accessToken, dispatch, axiosJWT);
+        };
+        fetch();
+    }, []);
 
     return (
         <div className={cx("shop-page-wrapper")}>

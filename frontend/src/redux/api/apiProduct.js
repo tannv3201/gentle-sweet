@@ -28,11 +28,14 @@ import axios from "axios";
 export const getAllProduct = async (accessToken, dispatch, axiosJWT) => {
     dispatch(getAllProductStart());
     try {
-        const res = await axiosJWT.get("/v1/product", {
-            headers: {
-                token: `Bearer ${accessToken}`,
-            },
-        });
+        const res = await axios.get(
+            "/v1/product"
+            //  {
+            //     headers: {
+            //         token: `Bearer ${accessToken}`,
+            //     },
+            // }
+        );
         dispatch(getAllProductSuccess(res?.data));
         return res?.data?.length;
     } catch (error) {

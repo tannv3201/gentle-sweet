@@ -13,7 +13,8 @@ import { getAllProductCategoryCustomer } from "../../../redux/api/apiProductCate
 import { getAllDiscountCustomer } from "../../../redux/api/apiDiscount";
 import { getProductLimit } from "../../../redux/api/apiProduct";
 import { API_IMAGE_URL } from "../../../LocalConstants";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate, useSearchParams } from "react-router-dom";
+import { getCurrentPage } from "../../../redux/api/apiPagination";
 
 const cx = classNames.bind(styles);
 
@@ -63,26 +64,56 @@ function ProductList() {
         }
     }, [getProductLimit4]);
 
-    useEffect(() => {
-        const fetch = async () => {
-            await getAllProductCategoryCustomer(dispatch);
-            await getAllDiscountCustomer(dispatch);
-            await getProductLimit(dispatch);
-        };
-        fetch();
-    }, []);
+    const getProductList = useSelector(
+        (state) => state.product.product?.productList
+    );
+    // useEffect(() => {
+    //     if (getProductList) {
+    //         const currentPageData = getCurrentPage(getProductList, 1, 8);
+    //         setProductList(structuredClone(currentPageData));
+    //         console.log("1", currentPageData);
+    //     }
+    // }, [getProductList]);
+    const location = useLocation();
 
+    const [searchParams, setSearchParams] = useSearchParams();
+    const [searchPage, setSearchPage] = useState(
+        searchParams.get("page") || null
+    );
+
+    const [page, setPage] = useState(1);
+    useEffect(() => {
+        const currentPageData = getCurrentPage(getProductList, page, 8);
+        setProductList(currentPageData);
+    }, [page]);
+
+    console.log("re-render");
+
+    useEffect(() => {
+        if (location.search) {
+            const currentPageData = getCurrentPage(
+                getProductList,
+                searchPage,
+                8
+            );
+            setProductList(structuredClone(currentPageData));
+            setPage(parseInt(searchPage));
+        } else {
+            const currentPageData = getCurrentPage(getProductList, 1, 8);
+            setProductList(structuredClone(currentPageData));
+        }
+    }, [searchPage]);
     const handleNavigateToProductDetail = (productId) => {
         navigate(`/san-pham/${productId}`);
     };
-
+    console.log(page);
     return (
         <div className={cx("product-wrapper")}>
             <div className={cx("product-inner")}>
                 <ProductSkeleton isLoadingSkeleton={isLoadingSkeleton} />
                 <GProgress isLoading={isLoading} />
                 <Grid container spacing={3}>
-                    {productLimit?.map((product, index) => (
+                    {productList?.map((product, index) => (
                         <Grid key={index} item lg={3} md={6} sm={6} xs={6}>
                             <ProductCard
                                 // boxShadow={true}
@@ -102,7 +133,11 @@ function ProductList() {
                     ))}
 
                     <Grid item xs={12}>
-                        <GPagination count={10} />
+                        <GPagination
+                            count={Math.ceil((getProductList?.length + 1) / 12)}
+                            setCurrentPage={setPage}
+                            currentPage={page}
+                        />
                     </Grid>
                 </Grid>
             </div>
