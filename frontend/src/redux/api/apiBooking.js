@@ -59,7 +59,7 @@ export const getAllBookingByUser = async (
             },
         });
         dispatch(getAllBookingByUserSuccess(res?.data));
-        return res?.data?.length;
+        return res?.data;
     } catch (error) {
         dispatch(getAllBookingByUserFailed());
     }

@@ -33,15 +33,15 @@ function BookedSchedule() {
     const dispatch = useDispatch();
     const user = useSelector((state) => state.auth.login?.currentUser);
     let axiosJWT = createAxios(user, dispatch, loginSuccess);
-    const getBookingListByUser = useSelector(
-        (state) => state.booking.booking.bookingListByUser
-    );
+    // const getBookingListByUser = useSelector(
+    //     (state) => state.booking.booking.bookingListByUser
+    // );
     const navigate = useNavigate();
     const [bookingList, setBookingList] = useState([]);
     const [bookingListStatus1, setBookingListStatus1] = useState([]);
     const [bookingListStatus2, setBookingListStatus2] = useState([]);
     const [bookingListStatus5, setBookingListStatus5] = useState([]);
-
+    const [getBookingListByUser, setGetBookingListByUser] = useState([]);
     useState(() => {
         const fetch = async () => {
             if (!user) {
@@ -50,18 +50,16 @@ function BookedSchedule() {
                     icon: "😅",
                 });
             }
-            if (getBookingListByUser?.length === 0) {
-                await getAllBookingByUser(
-                    user?.id,
-                    user?.accessToken,
-                    dispatch,
-                    axiosJWT
-                );
-            }
+            const res = await getAllBookingByUser(
+                user?.id,
+                user?.accessToken,
+                dispatch,
+                axiosJWT
+            );
+            setGetBookingListByUser(res);
         };
         fetch();
-    }, []);
-
+    }, [user?.id]);
     useEffect(() => {
         const fetchData = async () => {
             if (!user) {
@@ -152,6 +150,8 @@ function BookedSchedule() {
                 // find booking status = 5: Đã hủy
                 const bookingStatus5 = finalList.filter((i) => i?.status === 5);
                 setBookingListStatus5(bookingStatus5);
+            } else {
+                setBookingList([]);
             }
         };
 
