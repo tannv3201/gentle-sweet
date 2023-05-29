@@ -61,7 +61,7 @@ export const getAllInvoiceByUser = async (
             },
         });
         dispatch(getAllInvoiceByUserSuccess(res?.data));
-        return res?.data?.length;
+        return res?.data;
     } catch (error) {
         dispatch(getAllInvoiceByUserFailed());
     }

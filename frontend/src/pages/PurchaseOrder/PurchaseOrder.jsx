@@ -33,9 +33,9 @@ function PurchaseOrder() {
     const dispatch = useDispatch();
     const user = useSelector((state) => state.auth.login?.currentUser);
     let axiosJWT = createAxios(user, dispatch, loginSuccess);
-    const getInvoiceListByUser = useSelector(
-        (state) => state.invoice.invoice.invoiceListByUser
-    );
+    // const getInvoiceListByUser = useSelector(
+    //     (state) => state.invoice.invoice.invoiceListByUser
+    // );
     const navigate = useNavigate();
     const [invoiceList, setInvoiceList] = useState([]);
     const [invoiceListStatus1, setInvoiceListStatus1] = useState([]);
@@ -43,7 +43,7 @@ function PurchaseOrder() {
     const [invoiceListStatus5, setInvoiceListStatus5] = useState([]);
     const invoiceDetailList = [];
     const productInvoiceDetail = [];
-
+    const [getInvoiceListByUser, setGetInvoiceListByUser] = useState([]);
     useState(() => {
         const fetch = async () => {
             if (!user) {
@@ -52,15 +52,17 @@ function PurchaseOrder() {
                     icon: "😅",
                 });
             }
-            await getAllInvoiceByUser(
+            const res = await getAllInvoiceByUser(
                 user?.id,
                 user?.accessToken,
                 dispatch,
                 axiosJWT
             );
+
+            setGetInvoiceListByUser(res);
         };
         fetch();
-    }, []);
+    }, [user?.id]);
 
     // useEffect(() => {
     //     const fetch = async () => {
