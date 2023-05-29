@@ -143,6 +143,10 @@ export default function BookingDetailList({ isEditting }) {
                                 },
                             },
                             {
+                                title: "Ghi chú",
+                                field: "description",
+                            },
+                            {
                                 title: "Thao tác",
                                 field: "actions",
                                 sorting: false,
