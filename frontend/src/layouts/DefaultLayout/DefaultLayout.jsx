@@ -31,7 +31,7 @@ function DefaultLayout({ children }) {
                                 : { marginTop: "110px" }
                         }
                     >
-                        {!isMedium && <CartFixedRight />}
+                        {/* {!isMedium && <CartFixedRight />} */}
                         <GBreadcrumb />
                         {children}
                     </div>
