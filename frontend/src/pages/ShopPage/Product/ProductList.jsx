@@ -37,6 +37,7 @@ function ProductList() {
     );
 
     const location = useLocation();
+    const [searchParams, setSearchParams] = useSearchParams();
 
     const [page, setPage] = useState(1);
     useEffect(() => {
@@ -44,18 +45,57 @@ function ProductList() {
         setProductList(currentPageData);
     }, [page]);
 
+    const [productCategoryId, setProductCategoryId] = useState(null);
+    const [locationPage, setLocationPage] = useState(null);
+    const [locationSort, setLocationSort] = useState(null);
+    const [locationMinPrice, setLocationMinPrice] = useState(null);
+    const [locationMaxPrice, setLocationMaxPrice] = useState(null);
+
     useEffect(() => {
-        if (location.search) {
+        const params = searchParams.toString();
+        const paramsObj = Object.fromEntries(searchParams.entries());
+        const categoryId = paramsObj.product_category_id;
+        const page = paramsObj.page;
+        const sort = paramsObj.sort;
+        const minPrice = paramsObj.minPrice;
+        const maxPrice = paramsObj.maxPrice;
+
+        setLocationPage(page);
+        setLocationSort(sort);
+        setLocationMinPrice(minPrice);
+        setLocationMaxPrice(maxPrice);
+        setProductCategoryId(categoryId);
+    }, [searchParams]);
+
+    useEffect(() => {
+        if (
+            productCategoryId ||
+            locationSort ||
+            locationMinPrice ||
+            locationMaxPrice
+        ) {
             const currentPageData = getCurrentPage(getProductListSearch, 1, 8);
             setProductList(structuredClone(currentPageData));
             setPage(parseInt(1));
             setCountPage(Math.ceil((getProductListSearch?.length + 1) / 12));
+        } else if (locationPage) {
+            const currentPageData = getCurrentPage(
+                getProductList,
+                locationPage,
+                8
+            );
+            setProductList(structuredClone(currentPageData));
+            setCountPage(Math.ceil((getProductList?.length + 1) / 12));
+            setPage(parseInt(locationPage));
         } else {
             const currentPageData = getCurrentPage(getProductList, 1, 8);
             setProductList(structuredClone(currentPageData));
             setCountPage(Math.ceil((getProductList?.length + 1) / 12));
+            console.log("lọt 2");
         }
-    }, [getProductList, getProductListSearch]);
+    }, [getProductList, getProductListSearch, productCategoryId]);
+
+    console.log(productList);
 
     const handleNavigateToProductDetail = (productId) => {
         navigate(`/san-pham/${productId}`);

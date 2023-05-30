@@ -26,21 +26,6 @@ function ProductCategory() {
             setCategoryList(structuredClone(productCategoryList));
     }, [productCategoryList]);
 
-    const handleToggleCategory = (i) => {
-        const updateList = categoryList.map((category, index) => {
-            if (i === index) {
-                return {
-                    ...category,
-                    isOpen: !category.isOpen,
-                };
-            } else {
-                return {
-                    ...category,
-                };
-            }
-        });
-        setCategoryList(updateList);
-    };
     const [searchParams, setSearchParams] = useSearchParams();
     const user = useSelector((state) => state.auth.login?.currentUser);
     const dispatch = useDispatch();
