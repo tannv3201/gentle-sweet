@@ -24,7 +24,11 @@ function ProductDescription({ productDetail }) {
                         justifyContent={"center"}
                     >
                         <GImage
-                            imgSrc={`${API_IMAGE_URL}/${productDetail?.image_url}`}
+                            imgSrc={
+                                productDetail?.image_url
+                                    ? `${API_IMAGE_URL}/${productDetail?.image_url}`
+                                    : ""
+                            }
                             caption={productDetail?.name}
                         />
                     </Grid>

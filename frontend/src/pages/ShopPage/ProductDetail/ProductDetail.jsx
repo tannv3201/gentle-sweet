@@ -139,7 +139,11 @@ function ProductDetail() {
                                             )}
                                         >
                                             <img
-                                                src={`${API_IMAGE_URL}/${productDetail?.image_url}`}
+                                                src={
+                                                    productDetail?.image_url
+                                                        ? `${API_IMAGE_URL}/${productDetail?.image_url}`
+                                                        : ""
+                                                }
                                                 alt=""
                                             />
                                         </div>

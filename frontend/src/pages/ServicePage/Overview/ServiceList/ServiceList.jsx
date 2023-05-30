@@ -94,7 +94,11 @@ function ServiceList() {
                             >
                                 <div className={cx("service-img")}>
                                     <img
-                                        src={`${API_IMAGE_URL}/${service?.image_url}`}
+                                        src={
+                                            service?.image_url
+                                                ? `${API_IMAGE_URL}/${service?.image_url}`
+                                                : ""
+                                        }
                                         alt=""
                                     />
                                 </div>

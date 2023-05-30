@@ -157,7 +157,11 @@ function BookedList({ bookingListByUser }) {
                                                                 )}
                                                             >
                                                                 <img
-                                                                    src={`${API_IMAGE_URL}/${bookingDetail?.image_url}`}
+                                                                    src={
+                                                                        bookingDetail?.image_url
+                                                                            ? `${API_IMAGE_URL}/${bookingDetail?.image_url}`
+                                                                            : ""
+                                                                    }
                                                                     alt=""
                                                                 />
                                                             </div>

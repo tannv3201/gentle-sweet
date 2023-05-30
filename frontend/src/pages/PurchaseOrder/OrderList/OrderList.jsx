@@ -123,7 +123,11 @@ function OrderList({ invoiceListByUser }) {
                                                                 )}
                                                             >
                                                                 <img
-                                                                    src={`${API_IMAGE_URL}/${invoiceDetail?.image_url}`}
+                                                                    src={
+                                                                        invoiceDetail?.image_url
+                                                                            ? `${API_IMAGE_URL}/${invoiceDetail?.image_url}`
+                                                                            : ""
+                                                                    }
                                                                     alt=""
                                                                 />
                                                             </div>

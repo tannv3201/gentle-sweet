@@ -150,7 +150,11 @@ function OutstandingProduct() {
                             <ProductCard
                                 // boxShadow={true}
                                 key={index}
-                                imageSrc={`${API_IMAGE_URL}/${product?.image_url}`}
+                                imageSrc={
+                                    product?.image_url
+                                        ? `${API_IMAGE_URL}/${product?.image_url}`
+                                        : ""
+                                }
                                 categoryName={product?.product_category_name}
                                 productName={product?.name}
                                 productPrice={product?.price}

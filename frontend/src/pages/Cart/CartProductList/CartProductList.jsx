@@ -39,7 +39,11 @@ function CartProductList() {
             render: (rowData) => (
                 // eslint-disable-next-line jsx-a11y/alt-text
                 <img
-                    src={`${API_IMAGE_URL}/${rowData?.image_url}`}
+                    src={
+                        rowData?.image_url
+                            ? `${API_IMAGE_URL}/${rowData?.image_url}`
+                            : ""
+                    }
                     style={{
                         width: 60,
                         height: 60,

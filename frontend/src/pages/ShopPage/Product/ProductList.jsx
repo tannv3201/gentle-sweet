@@ -73,7 +73,11 @@ function ProductList() {
                                 <ProductCard
                                     // boxShadow={true}
                                     key={product?.id}
-                                    imageSrc={`${API_IMAGE_URL}/${product?.image_url}`}
+                                    imageSrc={
+                                        product?.image_url
+                                            ? `${API_IMAGE_URL}/${product?.image_url}`
+                                            : ""
+                                    }
                                     categoryName={
                                         product?.product_category_name
                                     }
