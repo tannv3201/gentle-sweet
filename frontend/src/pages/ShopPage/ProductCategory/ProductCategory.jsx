@@ -1,3 +1,4 @@
+/* eslint-disable jsx-a11y/anchor-is-valid */
 import React, { useEffect } from "react";
 import classNames from "classnames/bind";
 import styles from "./ProductCategory.module.scss";
@@ -7,11 +8,12 @@ import { useTheme } from "@mui/material/styles";
 import { useState } from "react";
 import { ExpandMoreRounded } from "@mui/icons-material";
 import { useSelector } from "react-redux";
-import { useSearchParams } from "react-router-dom";
+import { useLocation, useSearchParams } from "react-router-dom";
 import { productSearch } from "../../../redux/api/apiProduct";
 import { useDispatch } from "react-redux";
 import { createAxios } from "../../../createInstance";
 import { loginSuccess } from "../../../redux/slice/authSlice";
+import { productSearchSuccess } from "../../../redux/slice/productSlice";
 const cx = classNames.bind(styles);
 
 function ProductCategory() {
@@ -19,6 +21,9 @@ function ProductCategory() {
     const isMedium = useMediaQuery(theme.breakpoints.down("md"));
     const productCategoryList = useSelector(
         (state) => state.productCategory.productCategory?.productCategoryList
+    );
+    const getProductList = useSelector(
+        (state) => state.product.product?.productList
     );
     const [categoryList, setCategoryList] = useState([]);
     useEffect(() => {
@@ -30,6 +35,28 @@ function ProductCategory() {
     const user = useSelector((state) => state.auth.login?.currentUser);
     const dispatch = useDispatch();
     let axiosJWT = createAxios(user, dispatch, loginSuccess);
+    const [productCategoryId, setProductCategoryId] = useState(null);
+    const [locationPage, setLocationPage] = useState(null);
+    const [locationSort, setLocationSort] = useState(null);
+    const [locationMinPrice, setLocationMinPrice] = useState("");
+    const [locationMaxPrice, setLocationMaxPrice] = useState("");
+
+    useEffect(() => {
+        const params = searchParams.toString();
+        const paramsObj = Object.fromEntries(searchParams.entries());
+        const categoryId = paramsObj.product_category_id;
+        const page = paramsObj.page;
+        const sort = paramsObj.sort;
+        const minPrice = paramsObj.minPrice;
+        const maxPrice = paramsObj.maxPrice;
+
+        setLocationPage(page);
+        setLocationSort(sort);
+        setLocationMinPrice(minPrice);
+        setLocationMaxPrice(maxPrice);
+        setProductCategoryId(categoryId);
+    }, [searchParams]);
+
     const handleFilter = async (id) => {
         const newSearchParams = new URLSearchParams();
         if (id) {
@@ -44,6 +71,20 @@ function ProductCategory() {
             newSearchParams.set("product_category_id", id);
         }
         setSearchParams(newSearchParams);
+        setIsViewAll(false);
+    };
+    const location = useLocation();
+
+    const [isViewAll, setIsViewAll] = useState(false);
+    const handleViewAll = () => {
+        const emptySearchParams = new URLSearchParams();
+        dispatch(productSearchSuccess(structuredClone(getProductList)));
+        setSearchParams(emptySearchParams);
+        setIsViewAll(true);
+        setLocationSort(null);
+        setLocationMinPrice("");
+        setLocationMaxPrice("");
+        setProductCategoryId(null);
     };
 
     return (
@@ -60,6 +101,32 @@ function ProductCategory() {
                             <div className={cx("fixed-height")}>
                                 <div className={cx("category-list")}>
                                     <Grid container spacing={0.5}>
+                                        <Grid
+                                            item
+                                            xs={12}
+                                            onClick={handleViewAll}
+                                        >
+                                            <div
+                                                className={
+                                                    location.search === ""
+                                                        ? cx(
+                                                              "category-link-wrapper",
+                                                              "isActive"
+                                                          )
+                                                        : cx(
+                                                              "category-link-wrapper"
+                                                          )
+                                                }
+                                            >
+                                                <a
+                                                    className={cx(
+                                                        "category-link"
+                                                    )}
+                                                >
+                                                    Tất cả
+                                                </a>
+                                            </div>
+                                        </Grid>
                                         {categoryList?.map((category, idx) => (
                                             <Grid
                                                 key={category?.id}
@@ -71,7 +138,10 @@ function ProductCategory() {
                                             >
                                                 <div
                                                     className={
-                                                        idx === 0
+                                                        category?.id ===
+                                                        parseInt(
+                                                            productCategoryId
+                                                        )
                                                             ? cx(
                                                                   "category-link-wrapper",
                                                                   "isActive"

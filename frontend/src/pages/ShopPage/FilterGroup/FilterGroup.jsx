@@ -58,6 +58,12 @@ export const FilterGroupList = () => {
     const [productCategoryId, setProductCategoryId] = useState(
         searchParams.get("product_category_id") || null
     );
+    useEffect(() => {
+        const params = searchParams.toString();
+        const paramsObj = Object.fromEntries(searchParams.entries());
+        const categoryId = paramsObj.product_category_id;
+        setProductCategoryId(categoryId);
+    }, [searchParams]);
     const [minPrice, setMinPrice] = useState(
         searchParams.get("minPrice") || ""
     );

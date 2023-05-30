@@ -45,7 +45,8 @@ function ProductList() {
         setProductList(currentPageData);
     }, [page]);
 
-    const [productCategoryId, setProductCategoryId] = useState(null);
+    const [locationProductCategoryId, setLocationProductCategoryId] =
+        useState(null);
     const [locationPage, setLocationPage] = useState(null);
     const [locationSort, setLocationSort] = useState(null);
     const [locationMinPrice, setLocationMinPrice] = useState(null);
@@ -64,12 +65,12 @@ function ProductList() {
         setLocationSort(sort);
         setLocationMinPrice(minPrice);
         setLocationMaxPrice(maxPrice);
-        setProductCategoryId(categoryId);
+        setLocationProductCategoryId(categoryId);
     }, [searchParams]);
 
     useEffect(() => {
         if (
-            productCategoryId ||
+            locationProductCategoryId ||
             locationSort ||
             locationMinPrice ||
             locationMaxPrice
@@ -91,11 +92,16 @@ function ProductList() {
             const currentPageData = getCurrentPage(getProductList, 1, 8);
             setProductList(structuredClone(currentPageData));
             setCountPage(Math.ceil((getProductList?.length + 1) / 12));
-            console.log("lọt 2");
         }
-    }, [getProductList, getProductListSearch, productCategoryId]);
-
-    console.log(productList);
+    }, [
+        getProductList,
+        getProductListSearch,
+        locationProductCategoryId,
+        locationSort,
+        locationMaxPrice,
+        locationMinPrice,
+        locationPage,
+    ]);
 
     const handleNavigateToProductDetail = (productId) => {
         navigate(`/san-pham/${productId}`);
