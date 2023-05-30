@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import classNames from "classnames/bind";
 import styles from "./ProductCategory.module.scss";
 import { Grid, IconButton } from "@mui/material";
@@ -6,93 +6,25 @@ import { useMediaQuery } from "@mui/material";
 import { useTheme } from "@mui/material/styles";
 import { useState } from "react";
 import { ExpandMoreRounded } from "@mui/icons-material";
+import { useSelector } from "react-redux";
+import { useSearchParams } from "react-router-dom";
+import { productSearch } from "../../../redux/api/apiProduct";
+import { useDispatch } from "react-redux";
+import { createAxios } from "../../../createInstance";
+import { loginSuccess } from "../../../redux/slice/authSlice";
 const cx = classNames.bind(styles);
 
 function ProductCategory() {
     const theme = useTheme();
     const isMedium = useMediaQuery(theme.breakpoints.down("md"));
-    const [categoryList, setCategoryList] = useState([
-        {
-            id: 1,
-            title: "Tất cả",
-            href: "#",
-            isOpen: true,
-        },
-        {
-            id: 2,
-            title: "Chăm sóc tóc",
-            href: "#",
-            children: [
-                {
-                    id: 22,
-                    title: "Dầu gội",
-                    href: "#",
-                },
-                {
-                    id: 23,
-                    title: "Mặt nạ/Kem ủ",
-                    href: "#",
-                },
-                {
-                    id: 24,
-                    title: "Tinh dầu dưỡng",
-                    href: "#",
-                },
-                {
-                    id: 25,
-                    title: "Sơn móng",
-                    href: "#",
-                },
-                {
-                    id: 26,
-                    title: "Xịt mọc tóc/dưỡng tóc",
-                    href: "#",
-                },
-            ],
-            isOpen: true,
-        },
-        {
-            id: 3,
-            title: "Chăm sóc móng",
-            href: "#",
-            children: [
-                {
-                    id: 31,
-                    title: "Kem dưỡng",
-                    href: "#",
-                },
-                {
-                    id: 32,
-                    title: "Kem tẩy biểu bì",
-                    href: "#",
-                },
-            ],
-            isOpen: true,
-        },
-        {
-            id: 4,
-            title: "Dụng cụ",
-            href: "#",
-            children: [
-                {
-                    id: 41,
-                    title: "Sơn móng tay",
-                    href: "#",
-                },
-                {
-                    id: 42,
-                    title: "Trang trí móng",
-                    href: "#",
-                },
-                {
-                    id: 23,
-                    title: "Dụng cụ làm nails",
-                    href: "#",
-                },
-            ],
-            isOpen: true,
-        },
-    ]);
+    const productCategoryList = useSelector(
+        (state) => state.productCategory.productCategory?.productCategoryList
+    );
+    const [categoryList, setCategoryList] = useState([]);
+    useEffect(() => {
+        if (productCategoryList)
+            setCategoryList(structuredClone(productCategoryList));
+    }, [productCategoryList]);
 
     const handleToggleCategory = (i) => {
         const updateList = categoryList.map((category, index) => {
@@ -108,6 +40,25 @@ function ProductCategory() {
             }
         });
         setCategoryList(updateList);
+    };
+    const [searchParams, setSearchParams] = useSearchParams();
+    const user = useSelector((state) => state.auth.login?.currentUser);
+    const dispatch = useDispatch();
+    let axiosJWT = createAxios(user, dispatch, loginSuccess);
+    const handleFilter = async (id) => {
+        const newSearchParams = new URLSearchParams();
+        if (id) {
+            await productSearch(
+                user?.accessToken,
+                {
+                    product_category_id: id,
+                },
+                dispatch,
+                axiosJWT
+            );
+            newSearchParams.set("product_category_id", id);
+        }
+        setSearchParams(newSearchParams);
     };
 
     return (
@@ -125,7 +76,14 @@ function ProductCategory() {
                                 <div className={cx("category-list")}>
                                     <Grid container spacing={0.5}>
                                         {categoryList?.map((category, idx) => (
-                                            <Grid key={idx} item xs={12}>
+                                            <Grid
+                                                key={category?.id}
+                                                item
+                                                xs={12}
+                                                onClick={() =>
+                                                    handleFilter(category?.id)
+                                                }
+                                            >
                                                 <div
                                                     className={
                                                         idx === 0
@@ -133,19 +91,7 @@ function ProductCategory() {
                                                                   "category-link-wrapper",
                                                                   "isActive"
                                                               )
-                                                            : // : category?.isOpen
-                                                              // ? cx(
-                                                              //       "category-link-wrapper",
-                                                              //       "isOpen"
-                                                              //   )
-                                                              // : idx === 0 &&
-                                                              //   category?.isOpen
-                                                              // ? cx(
-                                                              //       "category-link-wrapper",
-                                                              //       "isOpen",
-                                                              //       "isActive"
-                                                              //   )
-                                                              cx(
+                                                            : cx(
                                                                   "category-link-wrapper"
                                                               )
                                                     }
@@ -156,63 +102,9 @@ function ProductCategory() {
                                                         )}
                                                         href={category?.href}
                                                     >
-                                                        {category?.title}
+                                                        {category?.name}
                                                     </a>
-                                                    {category?.children && (
-                                                        <IconButton
-                                                            className={
-                                                                category?.isOpen
-                                                                    ? cx(
-                                                                          "category-link-btn",
-                                                                          "isOpen"
-                                                                      )
-                                                                    : cx(
-                                                                          "category-link-btn"
-                                                                      )
-                                                            }
-                                                            onClick={() =>
-                                                                handleToggleCategory(
-                                                                    idx
-                                                                )
-                                                            }
-                                                        >
-                                                            <ExpandMoreRounded />
-                                                        </IconButton>
-                                                    )}
                                                 </div>
-                                                <ul
-                                                    className={
-                                                        category?.isOpen
-                                                            ? cx(
-                                                                  "category-child-list",
-                                                                  "isOpen"
-                                                              )
-                                                            : cx(
-                                                                  "category-child-list"
-                                                              )
-                                                    }
-                                                >
-                                                    {category?.children?.map(
-                                                        (child, idx) => (
-                                                            <li
-                                                                className={cx(
-                                                                    "category-child"
-                                                                )}
-                                                                key={idx}
-                                                            >
-                                                                <a
-                                                                    href={
-                                                                        child?.href
-                                                                    }
-                                                                >
-                                                                    {
-                                                                        child?.title
-                                                                    }
-                                                                </a>
-                                                            </li>
-                                                        )
-                                                    )}
-                                                </ul>
                                             </Grid>
                                         ))}
                                     </Grid>
