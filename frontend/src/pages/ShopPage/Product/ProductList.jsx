@@ -26,10 +26,14 @@ function ProductList() {
     const dispatch = useDispatch();
     const [productLimit, setProductLimit] = useState([]);
     const [productCategoryList, setProductCategoryList] = useState([]);
-
+    const [countPage, setCountPage] = useState();
     const getProductLimit4 = useSelector(
         (state) => state.product.product?.productListSearchLimit
     );
+    const getProductListSearch = useSelector(
+        (state) => state.product.product?.productListSearch
+    );
+
     const productCategoryListCustomer = useSelector(
         (state) =>
             state.productCategory.productCategory?.productCategoryListCustomer
@@ -38,47 +42,25 @@ function ProductList() {
         (state) => state.discount.discount?.discountListCustomer
     );
 
-    useEffect(() => {
-        if (getProductLimit4) {
-            const newProductLimit = getProductLimit4?.map((p) => {
-                let getDiscount;
-                const getProductCategory = productCategoryListCustomer?.find(
-                    (pc) => pc?.id === p?.product_category_id
-                );
-
-                if (p?.discount_id) {
-                    const discount = discountListCustomer?.find(
-                        (d) => d.id === parseInt(p.discount_id)
-                    );
-                    getDiscount = discount;
-                }
-
-                return {
-                    ...p,
-                    product_category_name: getProductCategory?.name,
-                    discount_percent: getDiscount?.discount_percent,
-                };
-            });
-
-            setProductLimit(structuredClone(newProductLimit));
-        }
-    }, [getProductLimit4]);
-
     const getProductList = useSelector(
         (state) => state.product.product?.productList
     );
-    // useEffect(() => {
-    //     if (getProductList) {
-    //         const currentPageData = getCurrentPage(getProductList, 1, 8);
-    //         setProductList(structuredClone(currentPageData));
-    //         console.log("1", currentPageData);
-    //     }
-    // }, [getProductList]);
+
     const location = useLocation();
 
     const [searchParams, setSearchParams] = useSearchParams();
     const [searchPage, setSearchPage] = useState(
         searchParams.get("page") || null
+    );
+    const [productCategoryId, setProductCategoryId] = useState(
+        searchParams.get("product_category_id") || null
+    );
+    const [sort, setSort] = useState(searchParams.get("sort") || null);
+    const [minPrice, setMinPrice] = useState(
+        searchParams.get("minPrice") || null
+    );
+    const [maxPrice, setMaxPrice] = useState(
+        searchParams.get("maxPrice") || null
     );
 
     const [page, setPage] = useState(1);
@@ -87,54 +69,67 @@ function ProductList() {
         setProductList(currentPageData);
     }, [page]);
 
-    console.log("re-render");
-
     useEffect(() => {
         if (location.search) {
-            const currentPageData = getCurrentPage(
-                getProductList,
-                searchPage,
-                8
-            );
+            const currentPageData = getCurrentPage(getProductListSearch, 1, 8);
             setProductList(structuredClone(currentPageData));
-            setPage(parseInt(searchPage));
+            setPage(parseInt(1));
+            setCountPage(Math.ceil((getProductListSearch?.length + 1) / 12));
         } else {
             const currentPageData = getCurrentPage(getProductList, 1, 8);
             setProductList(structuredClone(currentPageData));
+            setCountPage(Math.ceil((getProductList?.length + 1) / 12));
         }
-    }, [searchPage]);
+    }, [
+        searchPage,
+        sort,
+        productCategoryId,
+        getProductList,
+        getProductListSearch,
+    ]);
+
     const handleNavigateToProductDetail = (productId) => {
         navigate(`/san-pham/${productId}`);
     };
-    console.log(page);
+
     return (
         <div className={cx("product-wrapper")}>
             <div className={cx("product-inner")}>
                 <ProductSkeleton isLoadingSkeleton={isLoadingSkeleton} />
                 <GProgress isLoading={isLoading} />
                 <Grid container spacing={3}>
-                    {productList?.map((product, index) => (
-                        <Grid key={index} item lg={3} md={6} sm={6} xs={6}>
-                            <ProductCard
-                                // boxShadow={true}
-                                key={product?.id}
-                                imageSrc={`${API_IMAGE_URL}/${product?.image_url}`}
-                                categoryName={product?.product_category_name}
-                                productName={product?.name}
-                                productPrice={product?.price}
-                                productSold={20}
-                                valueRating={5}
-                                onSale={product?.discount_percent}
-                                onClick={() =>
-                                    handleNavigateToProductDetail(product?.id)
-                                }
-                            />
+                    {productList?.length > 0 ? (
+                        productList?.map((product, index) => (
+                            <Grid key={index} item lg={3} md={6} sm={6} xs={6}>
+                                <ProductCard
+                                    // boxShadow={true}
+                                    key={product?.id}
+                                    imageSrc={`${API_IMAGE_URL}/${product?.image_url}`}
+                                    categoryName={
+                                        product?.product_category_name
+                                    }
+                                    productName={product?.name}
+                                    productPrice={product?.price}
+                                    productSold={20}
+                                    valueRating={5}
+                                    onSale={product?.discount_percent}
+                                    onClick={() =>
+                                        handleNavigateToProductDetail(
+                                            product?.id
+                                        )
+                                    }
+                                />
+                            </Grid>
+                        ))
+                    ) : (
+                        <Grid item xs={12}>
+                            Không có sản phẩm
                         </Grid>
-                    ))}
+                    )}
 
                     <Grid item xs={12}>
                         <GPagination
-                            count={Math.ceil((getProductList?.length + 1) / 12)}
+                            count={countPage}
                             setCurrentPage={setPage}
                             currentPage={page}
                         />

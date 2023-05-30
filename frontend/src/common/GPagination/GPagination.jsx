@@ -19,12 +19,6 @@ export default function GPagination({
         searchParams.get("page") || null
     );
 
-    // useEffect(() => {
-    //     if (location.search) {
-    //         setCurrentPage(searchPage);
-    //     }
-    // }, [searchPage]);
-
     const handleChange = (event, value) => {
         setCurrentPage(value);
         const newSearchParams = new URLSearchParams(location.search);

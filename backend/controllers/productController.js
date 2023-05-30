@@ -5,12 +5,21 @@ const { v4: uuidv4 } = require("uuid");
 const productsController = {
     productSearch: async (req, res) => {
         try {
-            const { product_category_id, limit } = req.query;
+            const {
+                product_category_id,
+                limit,
+                sort_by,
+                min_price,
+                max_price,
+            } = req.query;
 
             const params = {};
             if (product_category_id)
                 params.product_category_id = product_category_id;
             if (limit) params.limit = limit;
+            if (sort_by) params.sort_by = sort_by;
+            if (min_price) params.min_price = min_price;
+            if (max_price) params.max_price = max_price;
 
             const products = await ProductModel.productSearch(params);
             if (!products) {
@@ -27,7 +36,6 @@ const productsController = {
     getAllProduct: async (req, res) => {
         try {
             const products = await ProductModel.getAllProduct();
-            console.log(products);
             return res.status(200).json(products);
         } catch (error) {
             res.status(500).json(error);

@@ -48,6 +48,22 @@ const productSearch = async (params) => {
         values.push(params.product_category_id);
     }
 
+    if (params.min_price && params.max_price) {
+        query += " AND price BETWEEN ? AND ?";
+        values.push(params.min_price);
+        values.push(params.max_price);
+    }
+
+    if (params.sort_by === "name_asc") {
+        query += " ORDER BY name ASC";
+    } else if (params.sort_by === "name_desc") {
+        query += " ORDER BY name DESC";
+    } else if (params.sort_by === "price_asc") {
+        query += " ORDER BY price ASC";
+    } else if (params.sort_by === "price_desc") {
+        query += " ORDER BY price DESC";
+    }
+
     if (params.limit) {
         query += " LIMIT ?";
         values.push(parseInt(params.limit));
