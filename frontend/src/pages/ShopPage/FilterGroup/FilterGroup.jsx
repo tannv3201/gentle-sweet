@@ -1,5 +1,5 @@
 import * as React from "react";
-import { Checkbox } from "@mui/material";
+import { Checkbox, TextField } from "@mui/material";
 import Autocomplete from "@mui/material/Autocomplete";
 import styles from "./FilterGroup.module.scss";
 import classNames from "classnames/bind";
@@ -22,9 +22,17 @@ import { createAxios } from "../../../createInstance";
 import { useDispatch } from "react-redux";
 import { loginSuccess } from "../../../redux/slice/authSlice";
 import { productSearchSuccess } from "../../../redux/slice/productSlice";
+import * as Yup from "yup";
 
-const icon = <CheckBoxOutlineBlank fontSize="small" />;
-const checkedIcon = <CheckBox fontSize="small" />;
+const validationSchema = Yup.object().shape({
+    minPrice: Yup.number().required("Vui lòng nhập giá nhỏ nhất"),
+    maxPrice: Yup.number()
+        .required("Vui lòng nhập giá lớn nhất")
+        .min(
+            Yup.ref("minPrice"),
+            "Giá lớn nhất phải lớn hơn hoặc bằng giá nhỏ nhất"
+        ),
+});
 
 const cx = classNames.bind(styles);
 
@@ -34,18 +42,11 @@ const sortList = [
     { id: "price_asc", name: "Giá tăng dần" },
     { id: "price_desc", name: "Giá giảm dần" },
 ];
-const DisplayLabel = ({ label, icon }) => {
-    return (
-        <div style={{ display: "flex", alignItems: "center" }}>
-            <span style={{ marginRight: "4px" }}>{label}</span>
-            {icon}
-        </div>
-    );
-};
 
 export const FilterGroupList = () => {
     const theme = useTheme();
     const isMedium = useMediaQuery(theme.breakpoints.down("md"));
+    const isSmall = useMediaQuery(theme.breakpoints.down("sm"));
     const productCategoryList = structuredClone(
         useSelector(
             (state) =>
@@ -64,19 +65,17 @@ export const FilterGroupList = () => {
         searchParams.get("maxPrice") || ""
     );
     const [sort, setSort] = useState(searchParams.get("sort") || null);
-
     const [submitClicked, setSubmitClicked] = useState(false);
     const dispatch = useDispatch();
     let axiosJWT = createAxios(user, dispatch, loginSuccess);
 
-    const handleSearch = () => {
+    const handleSearch = (e) => {
         setSubmitClicked(true);
     };
 
     const getProductList = useSelector(
         (state) => state.product.product?.productList
     );
-
     useEffect(() => {
         const fetch = async () => {
             if (
@@ -169,6 +168,7 @@ export const FilterGroupList = () => {
                             }
                             renderInput={(params) => (
                                 <GTextFieldNormal
+                                    InputLabelProps={{ shrink: true }}
                                     {...params}
                                     name="product_category_id"
                                     fullWidth
@@ -203,6 +203,7 @@ export const FilterGroupList = () => {
                             }
                             renderInput={(params) => (
                                 <GTextFieldNormal
+                                    InputLabelProps={{ shrink: true }}
                                     {...params}
                                     name="sort"
                                     fullWidth
@@ -213,31 +214,46 @@ export const FilterGroupList = () => {
                     </Grid>
 
                     <Grid item lg={6} md={12} sm={12} xs={12}>
-                        <GTextFieldNormal
+                        <TextField
                             fullWidth
                             InputLabelProps={{ shrink: true }}
                             color="secondary"
+                            size="small"
                             value={minPrice}
-                            onChange={(e) => setMinPrice(e.target.value)}
+                            onChange={(e) => {
+                                if (e.target.value >= 0) {
+                                    setMinPrice(e.target.value);
+                                }
+                            }}
                             label={"Giá từ"}
                             placeholder={"Chọn giá..."}
+                            // error={Boolean(errors.minPrice)}
+                            // helperText={errors.minPrice}
                         />
                     </Grid>
                     <Grid item lg={6} md={12} sm={12} xs={12}>
-                        <GTextFieldNormal
+                        <TextField
                             fullWidth
+                            size="small"
+                            disabled={!minPrice}
                             InputLabelProps={{ shrink: true }}
                             placeholder={"Chọn giá..."}
                             value={maxPrice}
-                            onChange={(e) => setMaxPrice(e.target.value)}
+                            onChange={(e) => {
+                                if (e.target.value >= 0) {
+                                    setMaxPrice(e.target.value);
+                                }
+                            }}
                             color="secondary"
                             label={"Đến giá"}
+                            // helperText={errors.maxPrice}
                         />
                     </Grid>
                 </Grid>
             </div>
             <div className={cx("filter-clear")}>
                 <GButton
+                    fullWidth={isSmall ? true : false}
                     color="error"
                     className={cx("filter-clear-btn")}
                     variant="outlined"
@@ -246,6 +262,7 @@ export const FilterGroupList = () => {
                     Xóa bộ lọc
                 </GButton>
                 <GButton
+                    fullWidth={isSmall ? true : false}
                     onClick={handleSearch}
                     color="success"
                     className={cx("filter-clear-btn")}

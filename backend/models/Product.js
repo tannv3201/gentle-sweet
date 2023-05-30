@@ -52,6 +52,9 @@ const productSearch = async (params) => {
         query += " AND price BETWEEN ? AND ?";
         values.push(params.min_price);
         values.push(params.max_price);
+    } else if (params.min_price) {
+        query += " AND price >= ?";
+        values.push(params.min_price);
     }
 
     if (params.sort_by === "name_asc") {

@@ -27,19 +27,9 @@ function ProductList() {
     const [productLimit, setProductLimit] = useState([]);
     const [productCategoryList, setProductCategoryList] = useState([]);
     const [countPage, setCountPage] = useState();
-    const getProductLimit4 = useSelector(
-        (state) => state.product.product?.productListSearchLimit
-    );
+
     const getProductListSearch = useSelector(
         (state) => state.product.product?.productListSearch
-    );
-
-    const productCategoryListCustomer = useSelector(
-        (state) =>
-            state.productCategory.productCategory?.productCategoryListCustomer
-    );
-    const discountListCustomer = useSelector(
-        (state) => state.discount.discount?.discountListCustomer
     );
 
     const getProductList = useSelector(
@@ -47,21 +37,6 @@ function ProductList() {
     );
 
     const location = useLocation();
-
-    const [searchParams, setSearchParams] = useSearchParams();
-    const [searchPage, setSearchPage] = useState(
-        searchParams.get("page") || null
-    );
-    const [productCategoryId, setProductCategoryId] = useState(
-        searchParams.get("product_category_id") || null
-    );
-    const [sort, setSort] = useState(searchParams.get("sort") || null);
-    const [minPrice, setMinPrice] = useState(
-        searchParams.get("minPrice") || null
-    );
-    const [maxPrice, setMaxPrice] = useState(
-        searchParams.get("maxPrice") || null
-    );
 
     const [page, setPage] = useState(1);
     useEffect(() => {
@@ -80,13 +55,7 @@ function ProductList() {
             setProductList(structuredClone(currentPageData));
             setCountPage(Math.ceil((getProductList?.length + 1) / 12));
         }
-    }, [
-        searchPage,
-        sort,
-        productCategoryId,
-        getProductList,
-        getProductListSearch,
-    ]);
+    }, [getProductList, getProductListSearch]);
 
     const handleNavigateToProductDetail = (productId) => {
         navigate(`/san-pham/${productId}`);
