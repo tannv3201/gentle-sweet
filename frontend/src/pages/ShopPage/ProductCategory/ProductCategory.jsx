@@ -71,22 +71,18 @@ function ProductCategory() {
             newSearchParams.set("product_category_id", id);
         }
         setSearchParams(newSearchParams);
-        setIsViewAll(false);
     };
     const location = useLocation();
 
-    const [isViewAll, setIsViewAll] = useState(false);
     const handleViewAll = () => {
         const emptySearchParams = new URLSearchParams();
         dispatch(productSearchSuccess(structuredClone(getProductList)));
         setSearchParams(emptySearchParams);
-        setIsViewAll(true);
         setLocationSort(null);
         setLocationMinPrice("");
         setLocationMaxPrice("");
         setProductCategoryId(null);
     };
-
     return (
         <div className={cx("wrapper")}>
             <div className={cx("inner")}>
@@ -108,7 +104,10 @@ function ProductCategory() {
                                         >
                                             <div
                                                 className={
-                                                    location.search === ""
+                                                    location.search === "" ||
+                                                    location.search.includes(
+                                                        "page"
+                                                    )
                                                         ? cx(
                                                               "category-link-wrapper",
                                                               "isActive"

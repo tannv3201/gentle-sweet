@@ -82,6 +82,16 @@ export const FilterGroupList = () => {
     const getProductList = useSelector(
         (state) => state.product.product?.productList
     );
+    const location = useLocation();
+    useEffect(() => {
+        if (location.search === "") {
+            setProductCategoryId(null);
+            setSort(null);
+            setMinPrice("");
+            setMaxPrice("");
+        }
+    }, [location.search]);
+
     useEffect(() => {
         const fetch = async () => {
             if (
