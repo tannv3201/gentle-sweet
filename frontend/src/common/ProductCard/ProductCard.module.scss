@@ -45,22 +45,28 @@
                 }
             }
             .product-name {
-                font-size: 1.6rem !important;
-                font-weight: 500;
-                min-height: 58px !important;
-                @include mt(1, true);
-                padding: 8px 0;
-                transition: all 0.2s linear;
-                a {
-                    display: block;
+                min-height: 40px !important;
+                h3 {
+                    font-size: 1.4rem !important;
+                    display: -webkit-box;
+                    -webkit-box-orient: vertical;
+                    -webkit-line-clamp: 2;
+                    overflow: hidden !important;
+                    font-weight: 500;
+                    height: unset !important;
+
+                    @include mt(1, true);
+                    padding: unset !important;
+                    transition: all 0.2s linear;
                 }
+
                 &:hover {
                     color: var(--primary-500);
                 }
             }
             .product-price-container {
                 font-weight: var(--fw-semi-bold) !important;
-                font-size: 1.6rem !important;
+                font-size: 1.4rem !important;
 
                 &.onSale {
                     .product-price-default {
@@ -166,14 +172,13 @@
             }
         }
         .product-name {
-            height: 60px;
-            font-size: 1.6rem;
-            font-weight: var(--fw-semi-bold);
-            margin-top: 8px;
-            padding: 8px 0;
-            transition: all 0.2s linear;
-            a {
-                display: block;
+            h3 {
+                height: 60px;
+                font-size: 1.6rem;
+                font-weight: var(--fw-semi-bold);
+                margin-top: 8px;
+                padding: 8px 0;
+                transition: all 0.2s linear;
             }
             &:hover {
                 color: var(--primary-500);

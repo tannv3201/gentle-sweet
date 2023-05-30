@@ -41,9 +41,9 @@ export default function ProductCard({
                 <div className={cx("product-category")}>
                     <span>{categoryName}</span>
                 </div>
-                <h3 className={cx("product-name")} onClick={onClick}>
-                    <a href={href}>{productName}</a>
-                </h3>
+                <div className={cx("product-name")}>
+                    <h3 onClick={onClick}>{productName}</h3>
+                </div>
                 <div
                     className={
                         onSale > 0
