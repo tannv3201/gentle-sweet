@@ -78,6 +78,10 @@ export default function MenuUser() {
         navigate("/quan-ly-lich-dat");
         handleClose();
     };
+
+    const nameAvatar =
+        currentUser?.first_name?.charAt(0) + currentUser?.last_name?.charAt(0);
+
     return (
         <div>
             {currentUser ? (
@@ -93,7 +97,9 @@ export default function MenuUser() {
                             {currentUser?.image_url ? (
                                 <img src={currentUser?.image_url} alt="" />
                             ) : (
-                                <img src={images?.user_vector} alt="" />
+                                <span className={cx("name-avatar")}>
+                                    {nameAvatar}
+                                </span>
                             )}
                         </div>
                     </IconButton>
