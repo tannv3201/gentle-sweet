@@ -1,10 +1,10 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import MenuItem from "./MenuItem";
 import styles from "./NavbarDesktop.module.scss";
 import classNames from "classnames/bind";
 import { Grid, IconButton } from "@mui/material";
 import images from "../../../../assets/images";
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import { SearchRounded } from "@mui/icons-material";
 import { MenuList } from "../navigation";
 import InfoSaleSlider from "../InfoSaleSlider/InforSaleSlider";
@@ -16,18 +16,58 @@ import ServiceMenuDropdown from "../ServiceMenuDropdown/ServiceMenuDropdown";
 const cx = classNames.bind(styles);
 
 function NavbarDesktop() {
+    const serviceCategoryList = useSelector(
+        (state) => state.serviceCategory.serviceCategory?.serviceCategoryList
+    );
+    const serviceList = useSelector(
+        (state) => state.service.service?.serviceList
+    );
+
+    const [menuList, setMenuList] = useState([]);
+
+    useEffect(() => {
+        const newList = serviceCategoryList?.map((category) => {
+            const serviceByCategory = serviceList?.filter(
+                (service) => service?.service_category_id === category?.id
+            );
+            return {
+                serviceCategoryId: category?.id,
+                name:
+                    category?.name.toLocaleLowerCase() ===
+                    "Danh mục dịch vụ chăm sóc tóc".toLocaleLowerCase()
+                        ? "Dịch vụ tóc"
+                        : category?.name.toLocaleLowerCase() ===
+                          "Danh mục dịch vụ chăm sóc móng".toLocaleLowerCase()
+                        ? "Dịch vụ nails"
+                        : "",
+                serviceList: serviceByCategory,
+            };
+        });
+        setMenuList(
+            structuredClone([
+                ...MenuList,
+                { name: "Dịch vụ", children: newList, to: "/danh-muc-dich-vu" },
+            ])
+        );
+    }, [serviceCategoryList, serviceList]);
+    console.log(menuList);
+    const navigate = useNavigate();
+    const handleNavigateServiceDetail = (serviceId) => {
+        navigate(`/danh-muc-dich-vu/dich-vu/${serviceId}`);
+    };
+    const handleNavigateServiceCategory = (to, serviceCategoryId) => {
+        if (to) {
+            navigate(to);
+            return;
+        }
+        navigate(`/danh-muc-dich-vu/${serviceCategoryId}`);
+    };
     return (
         <div className={cx("wrapper")}>
-            <div
-                style={{
-                    width: "100%",
-                    display: "flex",
-                    justifyContent: "center",
-                }}
-            >
-                <div className={cx("content-inner-navbar")}>
+            <div className={cx("navbar-container")}>
+                <div className={cx("navbar-content")}>
                     <Grid container>
-                        <Grid item lg={2} md={2}>
+                        <Grid item xs={2}>
                             <div
                                 title="Trang chủ"
                                 className={cx("logo-wrapper")}
@@ -41,107 +81,123 @@ function NavbarDesktop() {
                                 </a>
                             </div>
                         </Grid>
-                        <Grid item lg={7} md={7}>
+                        <Grid item xs={7}>
                             <div className={cx("menu-list")}>
-                                {MenuList?.filter(
-                                    (menu) => menu.title !== "Đặt lịch"
-                                )?.map((navbar, index) => (
+                                {menuList?.map((menu, idx) => (
                                     <MenuItem
-                                        key={index}
-                                        title={navbar?.title}
-                                        to={navbar?.href}
+                                        key={idx}
+                                        name={menu?.name}
+                                        to={menu?.to}
+                                        multiLevel={idx === 4}
                                         menuDropDown={
-                                            navbar?.children && (
+                                            menu?.children && (
                                                 <Grid container spacing={2}>
-                                                    {navbar?.children?.map(
-                                                        (
-                                                            navbarParent,
-                                                            index
-                                                        ) => (
+                                                    {menu?.children?.map(
+                                                        (children, idx) => (
                                                             <Grid
-                                                                key={index}
+                                                                key={
+                                                                    children.id
+                                                                        ? children.id
+                                                                        : idx
+                                                                }
                                                                 item
-                                                                container
                                                                 className={cx(
                                                                     "menu-dropdown-item-container"
                                                                 )}
                                                                 xs={
-                                                                    navbarParent?.children
+                                                                    children?.serviceList
                                                                         ? 6
                                                                         : 12
                                                                 }
                                                             >
-                                                                <Grid
-                                                                    item
-                                                                    xs={12}
-                                                                >
-                                                                    <NavLink
-                                                                        title={
-                                                                            navbarParent?.title
-                                                                        }
-                                                                        className={
-                                                                            navbarParent?.children
-                                                                                ? cx(
-                                                                                      "menu-parent-item",
-                                                                                      "hasChild"
-                                                                                  )
-                                                                                : cx(
-                                                                                      "menu-parent-item"
-                                                                                  )
-                                                                        }
-                                                                        to={
-                                                                            navbarParent?.href
-                                                                        }
-                                                                    >
-                                                                        {
-                                                                            navbarParent?.title
-                                                                        }
-                                                                    </NavLink>
-                                                                </Grid>
-                                                                <Grid
-                                                                    item
-                                                                    xs={12}
-                                                                    container
-                                                                    className={cx(
-                                                                        "menu-children-list"
-                                                                    )}
-                                                                >
+                                                                <div>
                                                                     <Grid
-                                                                        item
                                                                         container
-                                                                        xs={12}
                                                                     >
-                                                                        {navbarParent?.children?.map(
-                                                                            (
-                                                                                child,
-                                                                                index
-                                                                            ) => (
-                                                                                <Grid
-                                                                                    key={
+                                                                        <Grid
+                                                                            item
+                                                                            xs={
+                                                                                12
+                                                                            }
+                                                                        >
+                                                                            <div
+                                                                                title={
+                                                                                    children?.name
+                                                                                }
+                                                                                onClick={() => {
+                                                                                    handleNavigateServiceCategory(
+                                                                                        children?.to,
+                                                                                        children?.serviceCategoryId
+                                                                                    );
+                                                                                }}
+                                                                                className={
+                                                                                    children?.serviceList
+                                                                                        ? cx(
+                                                                                              "menu-parent-item",
+                                                                                              "hasChild"
+                                                                                          )
+                                                                                        : cx(
+                                                                                              "menu-parent-item"
+                                                                                          )
+                                                                                }
+                                                                            >
+                                                                                {
+                                                                                    children?.name
+                                                                                }
+                                                                            </div>
+                                                                        </Grid>
+                                                                        <Grid
+                                                                            item
+                                                                            xs={
+                                                                                12
+                                                                            }
+                                                                            container
+                                                                            className={cx(
+                                                                                "menu-children-list"
+                                                                            )}
+                                                                        >
+                                                                            <Grid
+                                                                                item
+                                                                                container
+                                                                                xs={
+                                                                                    12
+                                                                                }
+                                                                            >
+                                                                                {children?.serviceList?.map(
+                                                                                    (
+                                                                                        service,
                                                                                         index
-                                                                                    }
-                                                                                    item
-                                                                                    xs={
-                                                                                        12
-                                                                                    }
-                                                                                >
-                                                                                    <NavLink
-                                                                                        className={cx(
-                                                                                            "menu-children-item"
-                                                                                        )}
-                                                                                        to={
-                                                                                            child?.href
-                                                                                        }
-                                                                                    >
-                                                                                        {
-                                                                                            child?.title
-                                                                                        }
-                                                                                    </NavLink>
-                                                                                </Grid>
-                                                                            )
-                                                                        )}
+                                                                                    ) => (
+                                                                                        <Grid
+                                                                                            key={
+                                                                                                service?.id
+                                                                                            }
+                                                                                            item
+                                                                                            xs={
+                                                                                                12
+                                                                                            }
+                                                                                            onClick={() =>
+                                                                                                handleNavigateServiceDetail(
+                                                                                                    service?.id
+                                                                                                )
+                                                                                            }
+                                                                                        >
+                                                                                            <span
+                                                                                                className={cx(
+                                                                                                    "menu-children-item"
+                                                                                                )}
+                                                                                            >
+                                                                                                {
+                                                                                                    service?.name
+                                                                                                }
+                                                                                            </span>
+                                                                                        </Grid>
+                                                                                    )
+                                                                                )}
+                                                                            </Grid>
+                                                                        </Grid>
                                                                     </Grid>
-                                                                </Grid>
+                                                                </div>
                                                             </Grid>
                                                         )
                                                     )}
@@ -150,14 +206,9 @@ function NavbarDesktop() {
                                         }
                                     />
                                 ))}
-                                <MenuItem
-                                    title={"Dịch vụ"}
-                                    to={"/danh-muc-dich-vu"}
-                                    menuDropDown={<ServiceMenuDropdown />}
-                                />
                             </div>
                         </Grid>
-                        <Grid item lg={3} md={3} sm={3}>
+                        <Grid item xs={3}>
                             <div className={cx("action-group")}>
                                 <IconButton title="Tìm kiếm" size="large">
                                     <SearchRounded />

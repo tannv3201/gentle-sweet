@@ -6,7 +6,14 @@ import { ExpandMoreRounded } from "@mui/icons-material";
 
 const cx = classNames.bind(styles);
 
-function MenuItem({ title, to, isDropDown, menuDropDown, ...props }) {
+function MenuItem({
+    name,
+    to,
+    isDropDown,
+    menuDropDown,
+    multiLevel,
+    ...props
+}) {
     return (
         <div
             className={
@@ -22,7 +29,7 @@ function MenuItem({ title, to, isDropDown, menuDropDown, ...props }) {
                         : cx("menu-item-wrapper")
                 }
                 to={to}
-                title={title}
+                name={name}
             >
                 {({ isActive }) => (
                     <div className={cx("menu-item")}>
@@ -31,7 +38,7 @@ function MenuItem({ title, to, isDropDown, menuDropDown, ...props }) {
                                 isActive ? cx("title", "active") : cx("title")
                             }
                         >
-                            {title}
+                            {name}
                             {menuDropDown && (
                                 <span
                                     style={{
@@ -48,7 +55,15 @@ function MenuItem({ title, to, isDropDown, menuDropDown, ...props }) {
                     </div>
                 )}
             </NavLink>
-            <div className={cx("menu-dropdown")}>{menuDropDown}</div>
+            <div
+                className={
+                    multiLevel
+                        ? cx("menu-dropdown", "multiLevel")
+                        : cx("menu-dropdown")
+                }
+            >
+                {menuDropDown}
+            </div>
         </div>
     );
 }

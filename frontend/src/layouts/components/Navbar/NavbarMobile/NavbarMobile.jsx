@@ -18,6 +18,7 @@ import {
 import GTextFieldNormal from "../../../../components/GTextField/GTextFieldNormal";
 import { MenuList } from "../navigation";
 import MenuUser from "../MenuUser/MenuUser";
+import NavbarMenu from "./NavbarMenu/NavbarMenu";
 
 function NavbarMobile() {
     const cx = classNames.bind(styles);
@@ -99,119 +100,7 @@ function NavbarMobile() {
                                     />
                                 </IconButton>
                             </div>
-                            <ul className={cx("menu-list")}>
-                                {MenuList.map((item, idx) => (
-                                    <div key={idx}>
-                                        <li
-                                            className={cx(
-                                                "menu-item-container"
-                                            )}
-                                        >
-                                            <div
-                                                className={
-                                                    item.title ===
-                                                    selectedNavItem
-                                                        ? cx(
-                                                              "menu-item",
-                                                              "isOpen"
-                                                          )
-                                                        : cx("menu-item")
-                                                }
-                                            >
-                                                <a href={item?.href}>
-                                                    {item.title}
-                                                </a>
-                                                {item.children ? (
-                                                    <IconButton
-                                                        className={
-                                                            item.title ===
-                                                            selectedNavItem
-                                                                ? cx(
-                                                                      "open-menu-btn",
-                                                                      "rotate"
-                                                                  )
-                                                                : cx(
-                                                                      "open-menu-btn"
-                                                                  )
-                                                        }
-                                                        onClick={(e) =>
-                                                            handleClickNavItem(
-                                                                e,
-                                                                item
-                                                            )
-                                                        }
-                                                        size="large"
-                                                    >
-                                                        <ExpandMore
-                                                            className={
-                                                                item.title ===
-                                                                selectedNavItem
-                                                                    ? cx(
-                                                                          "icon-arrow",
-                                                                          "rotate"
-                                                                      )
-                                                                    : cx(
-                                                                          "icon-arrow"
-                                                                      )
-                                                            }
-                                                        />
-                                                    </IconButton>
-                                                ) : (
-                                                    ""
-                                                )}
-                                            </div>
-                                        </li>
-                                        <ul
-                                            className={
-                                                item.title === selectedNavItem
-                                                    ? cx(
-                                                          "sub-menu-list",
-                                                          "isOpen"
-                                                      )
-                                                    : cx("sub-menu-list")
-                                            }
-                                        >
-                                            {item.children?.map(
-                                                (subItem, i) => (
-                                                    <div key={i}>
-                                                        <li
-                                                            className={cx(
-                                                                "sub-menu-item-container"
-                                                            )}
-                                                            key={subItem.title}
-                                                        >
-                                                            <div
-                                                                className={
-                                                                    selectedSubItem.includes(
-                                                                        subItem.title
-                                                                    )
-                                                                        ? cx(
-                                                                              "sub-menu-item",
-                                                                              "isOpen"
-                                                                          )
-                                                                        : cx(
-                                                                              "sub-menu-item"
-                                                                          )
-                                                                }
-                                                            >
-                                                                <a
-                                                                    href={
-                                                                        subItem?.href
-                                                                    }
-                                                                >
-                                                                    {
-                                                                        subItem.title
-                                                                    }
-                                                                </a>
-                                                            </div>
-                                                        </li>
-                                                    </div>
-                                                )
-                                            )}
-                                        </ul>
-                                    </div>
-                                ))}
-                            </ul>
+                            <NavbarMenu />
                         </div>
                         <div className={cx("footer-actions")}>
                             <Grid container spacing={3}>

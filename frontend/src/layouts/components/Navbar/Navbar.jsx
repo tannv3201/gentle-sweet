@@ -4,7 +4,7 @@ import { useMediaQuery } from "@mui/material";
 import { useTheme } from "@mui/material/styles";
 
 import InfoSaleSlider from "./InfoSaleSlider/InforSaleSlider";
-import NavbarDesktop from "./NavbarDesktop2/NavbarDesktop";
+import NavbarDesktop from "./NavbarDesktop/NavbarDesktop";
 import NavbarMobile from "./NavbarMobile/NavbarMobile";
 
 const Navbar = memo(() => {
