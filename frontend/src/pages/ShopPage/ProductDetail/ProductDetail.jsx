@@ -163,9 +163,9 @@ function ProductDetail() {
                                                         "product-briefing-title"
                                                     )}
                                                 >
-                                                    <h2>
+                                                    <h3>
                                                         {productDetail?.name}
-                                                    </h2>
+                                                    </h3>
                                                 </span>
                                             </Grid>
                                             <Grid item xs={12}>

@@ -5,10 +5,14 @@
         margin-right: 8px !important;
     }
     .rating-count {
+        span {
+            font-size: 1.4rem;
+        }
         padding: 0 6px !important;
         margin-left: 0 !important;
         .unit-name {
             margin-left: 8px !important;
+            font-size: 1.4rem !important;
         }
     }
 }
@@ -19,7 +23,8 @@
     color: var(--text-primary);
     margin-right: 16px;
 
-    &.isMedium {
+    &.isSmall {
+        font-size: 1.4rem;
     }
 }
 
@@ -28,6 +33,7 @@
     margin-left: 12px;
     position: relative;
     font-weight: var(--fw-medium);
+
     .unit-name {
         margin-left: 16px;
     }

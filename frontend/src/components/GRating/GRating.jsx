@@ -24,6 +24,7 @@ function getLabelText(value) {
 export default function GRrating({ quantitylabel = false }) {
     const theme = useTheme();
     const isMedium = useMediaQuery(theme.breakpoints.down("md"));
+    const isSmall = useMediaQuery(theme.breakpoints.down("sm"));
 
     const [value, setValue] = React.useState(5);
     const [hover, setHover] = React.useState(-1);
@@ -38,7 +39,7 @@ export default function GRrating({ quantitylabel = false }) {
             <span
                 className={
                     isMedium
-                        ? cx("label-rating", "isMedium")
+                        ? cx("label-rating", "isSmall")
                         : cx("label-rating")
                 }
             >
@@ -65,7 +66,15 @@ export default function GRrating({ quantitylabel = false }) {
                 {quantitylabel && (
                     <span>
                         20,3k
-                        <span className={cx("unit-name")}>Đánh giá</span>
+                        <span
+                            className={
+                                isSmall
+                                    ? cx("unit-name", "isSmall")
+                                    : cx("unit-name")
+                            }
+                        >
+                            Đánh giá
+                        </span>
                     </span>
                 )}
             </div>
