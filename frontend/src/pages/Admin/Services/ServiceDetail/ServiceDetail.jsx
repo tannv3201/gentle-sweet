@@ -103,7 +103,6 @@ export default function ServiceDetail() {
 
     const onChangeImage = (imageList, addUpdateIndex) => {
         // data for submit
-        console.log(imageList, addUpdateIndex);
         setImageFileSeleted(imageList);
     };
     useEffect(() => {

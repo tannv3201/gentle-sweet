@@ -36,7 +36,6 @@ function DetailBookedSchedule() {
     useEffect(() => {
         getBookingById(dispatch, bookingId, user?.accessToken, axiosJWT);
     }, [user?.id]);
-    console.log(getBooking);
     const [booking, setBooking] = useState();
     useEffect(() => {
         if (getBooking) {

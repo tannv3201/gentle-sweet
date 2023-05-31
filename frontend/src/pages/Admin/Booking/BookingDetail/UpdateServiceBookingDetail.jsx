@@ -178,8 +178,6 @@ export default function UpdateServiceBookingDetail({
                 return !matchingBooking;
             });
 
-            // console.log(getBookingDetail?.find((b) => b?.date === ""));
-
             setBookingTime(filteredOptions);
         } else {
             formik.setFieldValue("date", null);

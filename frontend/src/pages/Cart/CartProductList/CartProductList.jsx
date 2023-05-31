@@ -259,7 +259,6 @@ function CartProductList() {
                 };
             });
 
-            // console.log(newCartList);
             setProductList(structuredClone(newCartList));
         }
     }, [cartList]);

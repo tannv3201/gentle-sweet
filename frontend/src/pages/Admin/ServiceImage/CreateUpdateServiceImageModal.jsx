@@ -21,8 +21,6 @@ export default function CreateUpdateServiceImageModal({
 }) {
     const { serviceId } = useParams();
 
-    console.log(serviceId);
-
     const user = useSelector((state) => state.auth.login?.currentUser);
     const dispatch = useDispatch();
     const [serviceCategory, setServiceCategory] = useState({
@@ -73,7 +71,6 @@ export default function CreateUpdateServiceImageModal({
     const [imageFileSeleted, setImageFileSeleted] = useState([]);
     const onChangeImage = (imageList, addUpdateIndex) => {
         // data for submit
-        console.log(imageList, addUpdateIndex);
         setImageFileSeleted(imageList);
     };
 

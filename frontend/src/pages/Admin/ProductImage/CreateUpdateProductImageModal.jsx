@@ -72,7 +72,6 @@ export default function CreateUpdateProductImageModal({
     const [imageUrls, setImageUrls] = useState([]);
     const onChangeImage = (imageList, addUpdateIndex) => {
         // data for submit
-        console.log(imageList, addUpdateIndex);
         setImageFileSeleted(imageList);
     };
 

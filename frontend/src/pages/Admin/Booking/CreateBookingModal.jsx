@@ -106,7 +106,6 @@ export default function CreateInvoiceModal({
                 admin_user_id: user?.id,
                 customer_user_id: id,
             };
-            console.log(bookingData);
             handleCreateInvoice(bookingData);
         },
     });
@@ -140,7 +139,6 @@ export default function CreateInvoiceModal({
                                         }
                                         onChange={(e, value) => {
                                             handleChangeCustomerUser(value);
-                                            console.log(value);
                                         }}
                                         isOptionEqualToValue={(option, value) =>
                                             value === null ||

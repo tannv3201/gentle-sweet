@@ -102,7 +102,6 @@ export default function ProductDetail() {
 
     const onChangeImage = (imageList, addUpdateIndex) => {
         // data for submit
-        console.log(imageList, addUpdateIndex);
         setImageFileSeleted(imageList);
     };
     useEffect(() => {

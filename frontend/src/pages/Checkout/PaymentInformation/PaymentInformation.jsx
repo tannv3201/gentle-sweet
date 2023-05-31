@@ -25,8 +25,6 @@ function PaymentInformation() {
         }
     }, [methodChecked, setFieldValue]);
 
-    console.log(methodChecked);
-
     return (
         <div className={cx("wrapper")}>
             <div className={cx("inner")}>

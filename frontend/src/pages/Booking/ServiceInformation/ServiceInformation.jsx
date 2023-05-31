@@ -48,7 +48,6 @@ export default function ServiceInformation() {
         setSelectedServiceCategoryLocation,
     ] = useState({});
     const selectedService = location.state?.selectedService;
-    // console.log(selectedService);
     const serviceCategoryList = useSelector(
         (state) => state.serviceCategory.serviceCategory?.serviceCategoryList
     );
@@ -87,7 +86,6 @@ export default function ServiceInformation() {
     const getBookingListByUser = useSelector(
         (state) => state.booking.booking?.bookingListByUser
     );
-    // console.log(getBookingListByUser);
     useEffect(() => {
         const fetch = async () => {
             if (getBookingListByUser?.length !== 0) {
@@ -105,7 +103,6 @@ export default function ServiceInformation() {
         fetch();
     }, []);
 
-    console.log(bookingDetailListByUser);
     useEffect(() => {
         if (serviceCategoryList)
             setServiceCategoryClone(structuredClone(serviceCategoryList));

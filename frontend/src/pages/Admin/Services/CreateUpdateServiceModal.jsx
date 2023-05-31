@@ -37,7 +37,6 @@ export default function CreateUpdateServiceModal({
     const [imageUrls, setImageUrls] = useState([]);
     const onChangeImage = (imageList, addUpdateIndex) => {
         // data for submit
-        console.log(imageList, addUpdateIndex);
         setImageFileSeleted(imageList);
     };
     // Product category

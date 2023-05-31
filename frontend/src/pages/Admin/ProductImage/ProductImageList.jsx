@@ -124,7 +124,6 @@ export default function ProductImageList({ data }) {
                                 <LightTooltip placement="bottom" title="Xóa">
                                     <IconButton
                                         onClick={() => {
-                                            console.log(rowData);
                                             handleOpenDeleteConfirmPopup(
                                                 rowData
                                             );
