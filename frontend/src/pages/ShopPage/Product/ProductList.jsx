@@ -142,17 +142,21 @@ function ProductList() {
                         ))
                     ) : (
                         <Grid item xs={12}>
-                            Không có sản phẩm
+                            <div className={cx("no-product")}>
+                                Không có sản phẩm
+                            </div>
                         </Grid>
                     )}
 
-                    <Grid item xs={12}>
-                        <GPagination
-                            count={countPage}
-                            setCurrentPage={setPage}
-                            currentPage={page}
-                        />
-                    </Grid>
+                    {productList?.length > 0 && (
+                        <Grid item xs={12}>
+                            <GPagination
+                                count={countPage}
+                                setCurrentPage={setPage}
+                                currentPage={page}
+                            />
+                        </Grid>
+                    )}
                 </Grid>
             </div>
         </div>
