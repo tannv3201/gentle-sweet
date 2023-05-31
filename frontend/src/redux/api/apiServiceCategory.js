@@ -26,11 +26,14 @@ export const getAllServiceCategory = async (
 ) => {
     dispatch(getAllServiceCategoryStart());
     try {
-        const res = await axiosJWT.get("/v1/serviceCategory", {
-            headers: {
-                token: `Bearer ${accessToken}`,
-            },
-        });
+        const res = await axios.get(
+            "/v1/serviceCategory"
+            // {
+            //     headers: {
+            //         token: `Bearer ${accessToken}`,
+            //     },
+            // }
+        );
         dispatch(getAllServiceCategorySuccess(res?.data));
         return res?.data?.length;
     } catch (error) {

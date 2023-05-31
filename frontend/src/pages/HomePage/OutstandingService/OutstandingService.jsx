@@ -4,9 +4,32 @@ import classNames from "classnames/bind";
 import { Grid } from "@mui/material";
 import { ArrowForwardRounded, FormatQuoteRounded } from "@mui/icons-material";
 import images from "../../../assets/images";
+import { useEffect } from "react";
+import { getAllService } from "../../../redux/api/apiService";
+import { getAllServiceCategory } from "../../../redux/api/apiServiceCategory";
+import { useDispatch } from "react-redux";
+import { useSelector } from "react-redux";
 const cx = classNames.bind(styles);
 
 function ServiceItem({ imageSrc, title }) {
+    const dispatch = useDispatch();
+    const serviceList = useSelector(
+        (state) => state.service.service?.serviceList
+    );
+    const serviceCategoryList = useSelector(
+        (state) => state.serviceCategory.serviceCategory?.serviceCategoryList
+    );
+    useEffect(() => {
+        const fetch = async () => {
+            if (serviceList?.length === 0) {
+                await getAllService(null, dispatch, null);
+            }
+            if (serviceCategoryList?.length === 0) {
+                await getAllServiceCategory(null, dispatch, null);
+            }
+        };
+        fetch();
+    }, []);
     return (
         <div className={cx("service-wrapper")}>
             <div className={cx("service-img")}>

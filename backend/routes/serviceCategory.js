@@ -11,7 +11,7 @@ router.post(
 
 router.get(
     "/",
-    middlewareController.verifyToken,
+    // middlewareController.verifyToken,
     serviceCategoryController.getAllServiceCategory
 );
 
