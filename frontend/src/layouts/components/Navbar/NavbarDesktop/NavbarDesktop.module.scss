@@ -156,11 +156,11 @@
     z-index: 1;
     display: none;
     padding: 12px;
-    background-color: var(--white);
-    border: 1px solid var(--primary-500);
-    border-radius: 6px;
-    position: absolute;
-    top: 100%;
+    // background-color: var(--white);
+    // border: 1px solid var(--primary-500);
+    // border-radius: 6px;
+    // position: absolute;
+    // top: 100%;
     &:hover {
         .title {
             color: var(--primary-500);

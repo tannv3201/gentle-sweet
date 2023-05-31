@@ -17,6 +17,7 @@ import {
     updateServiceCategoryStart,
     updateServiceCategorySuccess,
 } from "../slice/serviceCategorySlice";
+import axios from "axios";
 
 export const getAllServiceCategory = async (
     accessToken,
@@ -45,13 +46,13 @@ export const getServiceCategoryById = async (
 ) => {
     dispatch(getServiceCategoryByIdStart());
     try {
-        const res = await axiosJWT.get(
-            "/v1/serviceCategory/" + serviceCategoryId,
-            {
-                headers: {
-                    token: `Bearer ${accessToken}`,
-                },
-            }
+        const res = await axios.get(
+            "/v1/serviceCategory/" + serviceCategoryId
+            // {
+            //     headers: {
+            //         token: `Bearer ${accessToken}`,
+            //     },
+            // }
         );
         dispatch(getServiceCategoryByIdSuccess(res?.data));
         return res?.data?.length;

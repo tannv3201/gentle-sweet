@@ -116,7 +116,7 @@ export const MenuList = [
             },
         ],
         isOpen: false,
-        href: "/dich-vu",
+        href: "/danh-muc-dich-vu",
     },
     {
         title: "Tin tức",

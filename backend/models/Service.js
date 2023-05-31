@@ -48,6 +48,11 @@ const serviceSearch = async (params) => {
         values.push(params.service_category_id);
     }
 
+    if (params.limit) {
+        query += " LIMIT ?";
+        values.push(parseInt(params.limit));
+    }
+
     const [rows, fields] = await pool.query(query, values);
     return rows;
 };

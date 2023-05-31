@@ -13,7 +13,7 @@ router.post(
 
 router.get(
     "/search",
-    middlewareController.verifyTokenAndSystemUserAuth,
+    // middlewareController.verifyTokenAndSystemUserAuth,
     serviceController.serviceSearch
 );
 

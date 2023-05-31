@@ -11,6 +11,7 @@ import { getAllServiceCategory } from "../../../../redux/api/apiServiceCategory"
 import { getAllService } from "../../../../redux/api/apiService";
 import { API_IMAGE_URL } from "../../../../LocalConstants";
 import { useNavigate } from "react-router-dom";
+import ServiceItem from "../../ServiceItem/ServiceItem";
 
 const cx = classNames.bind(styles);
 
@@ -28,7 +29,7 @@ function ServiceList() {
     const serviceList = useSelector(
         (state) => state.service.service?.serviceList
     );
-
+    console.log(serviceList);
     useEffect(() => {
         const fetch = async () => {
             await getAllService(user?.accessToken, dispatch, axiosJWT);
@@ -47,7 +48,10 @@ function ServiceList() {
                     );
                     return {
                         ...category,
-                        serviceList: services,
+                        serviceList:
+                            services?.length >= 4
+                                ? services?.slice(0, 4)
+                                : services,
                     };
                 });
 
@@ -59,7 +63,11 @@ function ServiceList() {
 
     const navigate = useNavigate();
     const handleNavigateServiceDetail = (serviceId) => {
-        navigate(`/dich-vu/${serviceId}`);
+        navigate(`/danh-muc-dich-vu/dich-vu/${serviceId}`);
+    };
+
+    const handleNavigateServiceCategory = (serviceCategoryId) => {
+        navigate(`/danh-muc-dich-vu/${serviceCategoryId}`);
     };
     return (
         <>
@@ -88,26 +96,26 @@ function ServiceList() {
                                 handleNavigateServiceDetail(service?.id)
                             }
                         >
-                            <a
-                                href={service?.href}
-                                className={cx("service-item")}
-                            >
-                                <div className={cx("service-img")}>
-                                    <img
-                                        src={
-                                            service?.image_url
-                                                ? `${API_IMAGE_URL}/${service?.image_url}`
-                                                : ""
-                                        }
-                                        alt=""
-                                    />
-                                </div>
-                                <div className={cx("service-title")}>
-                                    <h5>{service?.name}</h5>
-                                </div>
-                            </a>
+                            <ServiceItem
+                                imgUrl={
+                                    service?.image_url
+                                        ? `${API_IMAGE_URL}/${service?.image_url}`
+                                        : ""
+                                }
+                                name={service?.name}
+                            />
                         </Grid>
                     ))}
+                    <Grid item xs={12}>
+                        <div
+                            onClick={() =>
+                                handleNavigateServiceCategory(category?.id)
+                            }
+                            className={cx("view-all-navigate")}
+                        >
+                            <span> Xem tất cả</span>
+                        </div>
+                    </Grid>
                 </Grid>
             ))}
         </>

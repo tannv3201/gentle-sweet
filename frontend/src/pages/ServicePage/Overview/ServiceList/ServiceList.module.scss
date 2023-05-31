@@ -22,6 +22,22 @@
 .service-wrapper {
     margin-top: 24px !important;
     margin-bottom: 24px !important;
+    .view-all-navigate {
+        margin-top: 8px;
+        text-align: center;
+        span {
+            font-style: italic;
+            color: var(--info);
+            cursor: pointer;
+            transition: color 0.2s linear;
+            font-weight: var(--fw-medium);
+            &:hover {
+                color: var(--primary-500);
+                transition: color 0.2s linear;
+                text-decoration: underline;
+            }
+        }
+    }
 }
 
 .title {

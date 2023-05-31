@@ -6,6 +6,7 @@ const serviceSlice = createSlice({
         service: {
             serviceList: [],
             serviceListSearch: [],
+            serviceListLimit: [],
             service: null,
             isFetching: false,
             error: false,
@@ -35,6 +36,19 @@ const serviceSlice = createSlice({
             state.service.serviceListSearch = action.payload;
         },
         serviceSearchFailed: (state) => {
+            state.service.isFetching = false;
+            state.service.error = true;
+        },
+
+        // Search
+        serviceLimitStart: (state) => {
+            state.service.isFetching = true;
+        },
+        serviceLimitSuccess: (state, action) => {
+            state.service.isFetching = false;
+            state.service.serviceListLimit = action.payload;
+        },
+        serviceLimitFailed: (state) => {
             state.service.isFetching = false;
             state.service.error = true;
         },
@@ -103,6 +117,10 @@ export const {
     serviceSearchStart,
     serviceSearchSuccess,
     serviceSearchFailed,
+
+    serviceLimitStart,
+    serviceLimitSuccess,
+    serviceLimitFailed,
 
     getServiceByIdStart,
     getServiceByIdSuccess,

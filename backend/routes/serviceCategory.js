@@ -17,7 +17,7 @@ router.get(
 
 router.get(
     "/:id",
-    middlewareController.verifyToken,
+    // middlewareController.verifyToken,
     serviceCategoryController.getServiceCategoryById
 );
 

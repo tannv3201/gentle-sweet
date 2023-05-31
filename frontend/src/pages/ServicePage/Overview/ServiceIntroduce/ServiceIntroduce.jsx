@@ -3,6 +3,7 @@ import classNames from "classnames/bind";
 import styles from "./ServiceIntroduce.module.scss";
 import images from "../../../../assets/images";
 import { Grid } from "@mui/material";
+import GImage from "../../../../common/GImage/GImage";
 
 const cx = classNames.bind(styles);
 
@@ -22,9 +23,10 @@ function ServiceIntroduce() {
                 </p>
             </Grid>
             <Grid item xs={12}>
-                <div className={cx("img")}>
-                    <img src={images.photo_realistic} alt="" />
-                </div>
+                <GImage
+                    imgSrc={images.photo_realistic}
+                    caption={"Hình ảnh một chi nhánh GentleBeauty"}
+                />
             </Grid>
         </Grid>
     );

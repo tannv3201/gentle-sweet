@@ -3,11 +3,12 @@ const ServiceModel = require("../models/Service");
 const serviceController = {
     serviceSearch: async (req, res) => {
         try {
-            const { service_category_id } = req.query;
+            const { service_category_id, limit } = req.query;
 
             const params = {};
             if (service_category_id)
                 params.service_category_id = service_category_id;
+            if (limit) params.limit = limit;
 
             const services = await ServiceModel.serviceSearch(params);
             if (!services) {

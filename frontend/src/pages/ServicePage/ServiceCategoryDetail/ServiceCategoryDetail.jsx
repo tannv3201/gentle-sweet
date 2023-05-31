@@ -1,6 +1,6 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
-import React, { useEffect } from "react";
-import styles from "./Service.module.scss";
+import React, { useEffect, useState } from "react";
+import styles from "./ServiceCategoryDetail.module.scss";
 import { Grid } from "@mui/material";
 import classNames from "classnames/bind";
 import images from "../../../assets/images";
@@ -9,6 +9,14 @@ import ArticleCategory from "../ArticleCategory/ArticleCategory";
 import Comments from "../../../components/Comments/Comments";
 import GRrating from "../../../components/GRating/GRating";
 import Related from "./Related/Related";
+import { getServiceCategoryById } from "../../../redux/api/apiServiceCategory";
+import { useNavigate, useParams } from "react-router-dom";
+import { useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
+import { serviceSearch } from "../../../redux/api/apiService";
+import GTextFieldNormal from "../../../components/GTextField/GTextFieldNormal";
+import { API_IMAGE_URL } from "../../../LocalConstants";
+import ServiceItem from "../ServiceItem/ServiceItem";
 
 const cx = classNames.bind(styles);
 
@@ -162,26 +170,51 @@ const tips = {
     ],
 };
 
-function Service() {
-    // const [hairServiceList, setHairServiceList] = useState([]);
+function ServiceCategoryDetail() {
+    const { serviceCategoryId } = useParams();
+    const user = useSelector((state) => state.auth.login.currentUser);
+    const serviceCategory = useSelector(
+        (state) => state.serviceCategory.serviceCategory.serviceCategory
+    );
+    const serviceList = useSelector(
+        (state) => state.service.service.serviceListSearch
+    );
+    const dispatch = useDispatch();
+    const [serviceCategoryClone, setServiceCategoryClone] = useState({});
+    const [serviceListClone, setServiceListClone] = useState([]);
+    useEffect(() => {
+        const fetch = async () => {
+            await getServiceCategoryById(
+                serviceCategoryId,
+                null,
+                dispatch,
+                null
+            );
+            await serviceSearch(
+                null,
+                { service_category_id: serviceCategoryId },
+                dispatch,
+                null
+            );
+        };
 
-    // const hairServicesFn = () => {
-    //     const findService = MenuList.find((menu) => {
-    //         return menu.title === "Dịch vụ";
-    //     });
-    //     const hairSv = findService?.children?.find((child) => {
-    //         return child?.title === "Dịch vụ tóc";
-    //     });
-
-    //     return hairSv?.children;
-    // };
+        fetch();
+    }, [serviceCategoryId]);
 
     useEffect(() => {
-        // Thiết lập tiêu đề của trang
-        document.title = "Dịch vụ làm tóc";
-        // const hairServiceFnRun = hairServicesFn();
-        // setHairServiceList(hairServiceFnRun);
-    }, []);
+        if (serviceCategory)
+            setServiceCategoryClone(structuredClone(serviceCategory));
+        document.title = serviceCategory?.name;
+    }, [serviceCategory]);
+
+    useEffect(() => {
+        if (serviceList) setServiceListClone(structuredClone(serviceList));
+    }, [serviceList]);
+    const navigate = useNavigate();
+    const handleNavigateServiceDetail = (serviceId) => {
+        navigate(`/danh-muc-dich-vu/dich-vu/${serviceId}`);
+    };
+    console.log("hehe");
     return (
         <div className={cx("wrapper")}>
             <div className={cx("wrapper-service")}>
@@ -204,8 +237,9 @@ function Service() {
                                                         )}
                                                     >
                                                         <h1>
-                                                            Các dịch vụ chăm sóc
-                                                            tóc tại Gentle
+                                                            {
+                                                                serviceCategoryClone?.name
+                                                            }
                                                         </h1>
                                                     </span>
                                                 </Grid>
@@ -239,25 +273,74 @@ function Service() {
                                                     </blockquote>
                                                 </Grid>
                                                 <Grid item xs={12}>
-                                                    <div
-                                                        className={cx(
-                                                            "service-img"
-                                                        )}
-                                                    >
-                                                        <img
-                                                            src={
-                                                                images.service_1
-                                                            }
-                                                            alt=""
-                                                        />
+                                                    <div>
+                                                        <Grid
+                                                            container
+                                                            spacing={2}
+                                                        >
+                                                            <Grid item xs={12}>
+                                                                <div>
+                                                                    <Grid
+                                                                        container
+                                                                        spacing={
+                                                                            2
+                                                                        }
+                                                                    >
+                                                                        {serviceListClone?.map(
+                                                                            (
+                                                                                service
+                                                                            ) => (
+                                                                                <Grid
+                                                                                    item
+                                                                                    lg={
+                                                                                        3
+                                                                                    }
+                                                                                    md={
+                                                                                        3
+                                                                                    }
+                                                                                    sm={
+                                                                                        6
+                                                                                    }
+                                                                                    xs={
+                                                                                        6
+                                                                                    }
+                                                                                    key={
+                                                                                        service?.id
+                                                                                    }
+                                                                                    onClick={() =>
+                                                                                        handleNavigateServiceDetail(
+                                                                                            service?.id
+                                                                                        )
+                                                                                    }
+                                                                                >
+                                                                                    <ServiceItem
+                                                                                        imgUrl={
+                                                                                            service?.image_url
+                                                                                                ? `${API_IMAGE_URL}/${service?.image_url}`
+                                                                                                : ""
+                                                                                        }
+                                                                                        name={
+                                                                                            service?.name
+                                                                                        }
+                                                                                    />
+                                                                                </Grid>
+                                                                            )
+                                                                        )}
+                                                                    </Grid>
+                                                                </div>
+                                                            </Grid>
+                                                            <Grid item xs={12}>
+                                                                <div>
+                                                                    <Grid
+                                                                        container
+                                                                        spacing={
+                                                                            2
+                                                                        }
+                                                                    ></Grid>
+                                                                </div>
+                                                            </Grid>
+                                                        </Grid>
                                                     </div>
-                                                    <span
-                                                        className={cx(
-                                                            "caption-img"
-                                                        )}
-                                                    >
-                                                        Chăm sóc tóc với Gentle
-                                                    </span>
                                                 </Grid>
                                                 <Grid item xs={12}>
                                                     <ArticleCategory />
@@ -711,4 +794,4 @@ function Service() {
     );
 }
 
-export default Service;
+export default ServiceCategoryDetail;

@@ -10,7 +10,7 @@ import {
 import { useMediaQuery } from "@mui/material";
 import { useTheme } from "@mui/material/styles";
 import Box from "@mui/material/Box";
-import { LightTooltip } from "../GTooltip/GTooltip";
+import { LightTooltip } from "../../../components/GTooltip/GTooltip";
 import { SwipeableDrawer } from "@mui/material";
 const cx = classNames.bind(styles);
 
@@ -18,7 +18,7 @@ function ArticleCategory({ h2Nodes }) {
     const theme = useTheme();
     const isSmall = useMediaQuery(theme.breakpoints.down("sm"));
     const isMedium = useMediaQuery(theme.breakpoints.down("md"));
-    const [isOpenCategory, setIsOpenCategory] = useState(true);
+    const [isOpenCategory, setIsOpenCategory] = useState(false);
     const [isOpenDrawer, setIsOpenDrawer] = React.useState(false);
     const [isActiveTitle, setIsActiveTitle] = useState("");
 

@@ -88,7 +88,7 @@ function ServiceDetail() {
             await getAllDiscountCustomer(dispatch);
         };
         fetch();
-    }, []);
+    }, [serviceId]);
 
     useEffect(() => {
         if (getService) {

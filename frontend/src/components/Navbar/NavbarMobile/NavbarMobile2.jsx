@@ -37,7 +37,7 @@ function NavbarMobile() {
         {
             name: "Dịch vụ",
             isOpen: false,
-            href: "/dich-vu",
+            href: "/danh-muc-dich-vu",
         },
         {
             name: "Dịch vụ tóc",
@@ -76,7 +76,7 @@ function NavbarMobile() {
         {
             name: "Store",
             isOpen: false,
-            href: "/dich-vu",
+            href: "/danh-muc-dich-vu",
         },
     ]);
 

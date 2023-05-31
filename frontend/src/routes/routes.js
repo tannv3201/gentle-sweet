@@ -46,6 +46,7 @@ import Account from "../pages/Account/Account";
 import ServiceDetailCustomer from "../pages/ServicePage/ServiceDetail/ServiceDetail";
 import BookedSchedule from "../pages/BookedSchedule/BookedSchedule";
 import DetailBookedSchedule from "../pages/BookedSchedule/DetailBookedSchedule/DetailBookedSchedule";
+import ServiceCategoryDetail from "../pages/ServicePage/ServiceCategoryDetail/ServiceCategoryDetail";
 // public routes
 
 export const publicRoutes = [
@@ -58,8 +59,12 @@ export const publicRoutes = [
         component: ShopPage,
     },
     {
-        path: "/dich-vu",
+        path: "/danh-muc-dich-vu",
         component: ServiceOverviewIndex,
+    },
+    {
+        path: "/danh-muc-dich-vu/:serviceCategoryId",
+        component: ServiceCategoryDetail,
     },
     {
         path: "/cham-soc-toc",
@@ -86,7 +91,7 @@ export const publicRoutes = [
         component: ProductDetail,
     },
     {
-        path: "/dich-vu/:serviceId",
+        path: "/danh-muc-dich-vu/dich-vu/:serviceId",
         component: ServiceDetailCustomer,
     },
     {

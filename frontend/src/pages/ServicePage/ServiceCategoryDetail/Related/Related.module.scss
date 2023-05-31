@@ -1,0 +1,92 @@
+.wrapper {
+    width: 100%;
+    position: relative;
+    height: 100%;
+}
+
+.inner {
+    position: relative;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+
+    .wrapper-each-related {
+        margin-bottom: 24px;
+        background-color: var(--white);
+        padding: 12px;
+        border-radius: 6px;
+    }
+    .related-title {
+        h1 {
+            font-size: 2rem;
+            font-weight: var(--fw-semi-bold);
+            color: var(--primary-500);
+            margin-top: 6px;
+        }
+    }
+
+    .related-item {
+        display: flex;
+        .related-item-img {
+            flex-shrink: 0;
+            width: 70px;
+            height: 70px;
+            border-radius: 6px;
+            overflow: hidden;
+            margin-right: 8px;
+            img {
+                width: 100%;
+                height: 100%;
+                object-fit: cover;
+            }
+        }
+        .related-item-content {
+            .related-item-content-title {
+                h5 {
+                    font-size: 1.6rem;
+                    font-weight: var(--fw-semi-bold);
+                }
+            }
+            .related-item-content-description {
+                display: -webkit-box; /* Đặt kiểu hiển thị là box */
+                -webkit-box-orient: vertical; /* Đặt hướng của box là dọc */
+                overflow: hidden; /* Ẩn dòng vượt quá số dòng được chỉ định */
+                text-overflow: ellipsis; /* Sử dụng dấu "..." để ẩn dòng còn lại */
+                -webkit-line-clamp: 2; /* Chỉ hiển thị tối đa 3 dòng */
+            }
+        }
+    }
+    .advise-form-wrapper {
+        background-color: var(--white);
+        padding: 12px;
+        border-radius: 6px;
+    }
+    .advise-form {
+        background-color: var(--white);
+        padding: 12px;
+        border: 1px solid var(--primary-500);
+        padding: 12px;
+        border-radius: 6px;
+        background-color: var(--primary-200);
+
+        .advise-img {
+            width: 100%;
+            height: 100%;
+            img {
+                width: 100%;
+                height: 100%;
+                object-fit: cover;
+            }
+        }
+        .signin-advise {
+            display: flex;
+            justify-content: center;
+            .signin-advise-btn {
+                background-color: var(--white);
+                color: var(--primary-500);
+                border: 1px solid var(--primary-500);
+                font-weight: var(--fw-semi-bold) !important;
+            }
+        }
+    }
+}

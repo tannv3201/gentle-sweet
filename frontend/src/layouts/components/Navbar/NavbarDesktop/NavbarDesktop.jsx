@@ -11,6 +11,7 @@ import InfoSaleSlider from "../InfoSaleSlider/InforSaleSlider";
 import MenuUser from "../MenuUser/MenuUser";
 import { useSelector } from "react-redux";
 import MenuCart from "../MenuCart/MenuCart";
+import ServiceMenuDropdown from "../ServiceMenuDropdown/ServiceMenuDropdown";
 
 const cx = classNames.bind(styles);
 
@@ -149,6 +150,11 @@ function NavbarDesktop() {
                                         }
                                     />
                                 ))}
+                                <MenuItem
+                                    title={"Dịch vụ"}
+                                    to={"/danh-muc-dich-vu"}
+                                    menuDropDown={<ServiceMenuDropdown />}
+                                />
                             </div>
                         </Grid>
                         <Grid item lg={3} md={3} sm={3}>

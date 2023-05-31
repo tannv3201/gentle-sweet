@@ -13,6 +13,9 @@ import {
     getServiceByIdFailed,
     getServiceByIdStart,
     getServiceByIdSuccess,
+    serviceLimitFailed,
+    serviceLimitStart,
+    serviceLimitSuccess,
     serviceSearchFailed,
     serviceSearchStart,
     serviceSearchSuccess,
@@ -20,6 +23,7 @@ import {
     updateServiceStart,
     updateServiceSuccess,
 } from "../slice/serviceSlice";
+import axios from "axios";
 
 export const getAllService = async (accessToken, dispatch, axiosJWT) => {
     dispatch(getAllServiceStart());
@@ -160,15 +164,31 @@ export const serviceSearch = async (
 ) => {
     dispatch(serviceSearchStart());
     try {
+        const res = await axios.get("/v1/service/search", {
+            params: params,
+            // headers: {
+            //     token: `Bearer ${accessToken}`,
+            // },
+        });
+        dispatch(serviceSearchSuccess(res?.data));
+        return res?.data?.length;
+    } catch (error) {
+        dispatch(serviceSearchFailed());
+    }
+};
+
+export const serviceLimit = async (accessToken, params, dispatch, axiosJWT) => {
+    dispatch(serviceLimitStart());
+    try {
         const res = await axiosJWT.get("/v1/service/search", {
             params: params,
             headers: {
                 token: `Bearer ${accessToken}`,
             },
         });
-        dispatch(serviceSearchSuccess(res?.data));
+        dispatch(serviceLimitSuccess(res?.data));
         return res?.data?.length;
     } catch (error) {
-        dispatch(serviceSearchFailed());
+        dispatch(serviceLimitFailed());
     }
 };
