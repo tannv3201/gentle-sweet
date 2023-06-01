@@ -30,6 +30,8 @@ const cartRoute = require("./routes/cart");
 
 const storageImageRoute = require("./routes/storageImage");
 
+const resetPasswordRoute = require("./routes/resetPassword");
+
 const app = express();
 app.use(cors());
 app.use(cookieParser());
@@ -63,6 +65,8 @@ app.use("/v1/bookingDetail", bookingDetailRoute);
 
 app.use("/v1/delivery", deliveryRoute);
 app.use("/v1/assets", storageImageRoute);
+
+app.use("/v1/resetPassword", resetPasswordRoute);
 
 app.listen(port, () => {
     console.log(`Server is running on port ${port}`);

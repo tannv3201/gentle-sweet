@@ -67,13 +67,6 @@
         display: block;
         margin-bottom: 8px;
         font-size: 1.5rem;
-        cursor: pointer;
-        padding: 2px 0;
-        font-weight: var(--fw-medium);
-        transition: color 0.2s linear;
-        &:hover {
-            color: var(--info);
-        }
         .highlight {
         }
         .link {
@@ -102,5 +95,34 @@
                 transition: color 0.2s linear;
             }
         }
+    }
+}
+
+// Verify code
+.enter-code-label {
+    display: flex;
+    align-items: center;
+    font-size: 1.6rem;
+    h3 {
+        margin-left: 8px;
+        font-size: 1.6rem;
+        color: var(--primary-500);
+        font-weight: var(--fw-medium);
+    }
+}
+
+.resend-code {
+    display: flex;
+    align-items: center;
+    .resend-time {
+        user-select: none;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        height: 30px;
+        width: 30px;
+        margin-left: 20px;
+        border-radius: 100px;
+        border: 1px solid var(--border-color);
     }
 }

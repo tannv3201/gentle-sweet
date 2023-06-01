@@ -24,6 +24,14 @@ const findCustomerUserByUsername = async (username) => {
     return rows[0];
 };
 
+// const findCustomerUserByEmail = async (email) => {
+//     const [rows, fields] = await pool.query(
+//         "SELECT * FROM tbl_customer_user WHERE email = (?)",
+//         [email]
+//     );
+//     return rows[0];
+// };
+
 const createCustomerUser = async (customerUserData) => {
     try {
         const [result, fields] = await pool.query(

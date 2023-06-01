@@ -47,6 +47,9 @@ import ServiceDetailCustomer from "../pages/ServicePage/ServiceDetail/ServiceDet
 import BookedSchedule from "../pages/BookedSchedule/BookedSchedule";
 import DetailBookedSchedule from "../pages/BookedSchedule/DetailBookedSchedule/DetailBookedSchedule";
 import ServiceCategoryDetail from "../pages/ServicePage/ServiceCategoryDetail/ServiceCategoryDetail";
+import ForgotPassword from "../pages/ForgotPassword/ForgotPassword";
+import VerifyCode from "../pages/ForgotPassword/VerifyCode";
+import PasswordChange from "../pages/ForgotPassword/PasswordChange";
 // public routes
 
 export const publicRoutes = [
@@ -127,6 +130,21 @@ export const publicRoutes = [
         path: "/dang-ky",
         component: SignUp,
         layout: NoLayout,
+    },
+    {
+        path: "/quen-mat-khau",
+        component: ForgotPassword,
+        layout: null,
+    },
+    {
+        path: "/quen-mat-khau/xac-nhan",
+        component: VerifyCode,
+        layout: null,
+    },
+    {
+        path: "/doi-mat-khau",
+        component: PasswordChange,
+        layout: null,
     },
 ];
 

@@ -75,6 +75,10 @@ function Login() {
             await handleLogin(data);
         },
     });
+
+    const handleNavigateForgotPassword = () => {
+        navigate("/quen-mat-khau");
+    };
     return (
         <div className={cx("wrapper")}>
             <div className={cx("inner")}>
@@ -125,7 +129,12 @@ function Login() {
                                     </Grid>
 
                                     <Grid item xs={12}>
-                                        <span className={cx("policy-privacy")}>
+                                        <span
+                                            onClick={
+                                                handleNavigateForgotPassword
+                                            }
+                                            className={cx("policy-privacy")}
+                                        >
                                             Quên mật khẩu?
                                         </span>
                                         <GButton

@@ -1,9 +1,5 @@
 const CartModel = require("../models/Cart");
 
-const pool = require("../config/database");
-
-const { v4: uuidv4 } = require("uuid");
-
 const cartController = {
     // GET ALL INVOICE
     getAllCart: async (req, res) => {
