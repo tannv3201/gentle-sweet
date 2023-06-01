@@ -27,7 +27,7 @@ function ForgotPassword() {
     const handleResetPassword = async (value) => {
         await resetPassword(value.email).then((res) => {
             if (res) {
-                toast.success("Email tồn tại");
+                toast.success("Gửi mã xác minh thành công!");
                 navigate("/quen-mat-khau/xac-nhan", {
                     state: {
                         email: res?.email,
