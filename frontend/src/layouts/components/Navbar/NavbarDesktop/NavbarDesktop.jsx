@@ -50,7 +50,6 @@ function NavbarDesktop() {
             ])
         );
     }, [serviceCategoryList, serviceList]);
-    console.log(menuList);
     const navigate = useNavigate();
     const handleNavigateServiceDetail = (serviceId) => {
         navigate(`/danh-muc-dich-vu/dich-vu/${serviceId}`);

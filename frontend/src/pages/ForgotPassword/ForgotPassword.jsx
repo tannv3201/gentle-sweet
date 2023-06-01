@@ -28,7 +28,6 @@ function ForgotPassword() {
         await resetPassword(value.email).then((res) => {
             if (res) {
                 toast.success("Email tồn tại");
-                console.log(res);
                 navigate("/quen-mat-khau/xac-nhan", {
                     state: {
                         email: res?.email,
