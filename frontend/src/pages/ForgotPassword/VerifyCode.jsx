@@ -33,6 +33,12 @@ function VerifyCode() {
     const [verifyCodeIdResend, setVerifyCodeIdResend] = useState();
 
     useEffect(() => {
+        if (!resetEmail) {
+            navigate("/dang-nhap");
+        }
+    }, [resetEmail]);
+
+    useEffect(() => {
         let countdown = setInterval(() => {
             setResendTime((prevTime) => prevTime - 1);
         }, 1000);
@@ -62,10 +68,13 @@ function VerifyCode() {
             }
         });
     };
-
+    const validationSchema = Yup.object().shape({
+        code: Yup.string().required("Vui lòng nhập mã"),
+    });
     // Create useFormik
     const formik = useFormik({
         enableReinitialize: true,
+        validationSchema: validationSchema,
         initialValues: {
             code: "",
         },
@@ -95,7 +104,6 @@ function VerifyCode() {
                         <Grid item xs={12}>
                             <GTextFieldNormal
                                 formik={formik}
-                                type={"number"}
                                 onChange={formik.handleChange}
                                 value={formik.values.code}
                                 name="code"
@@ -103,6 +111,11 @@ function VerifyCode() {
                                 label={"Mã xác nhận"}
                                 placeholder="Nhập code"
                                 InputLabelProps={{ shrink: true }}
+                                inputProps={{
+                                    inputMode: "numeric",
+                                    pattern: "[0-9]*",
+                                    maxLength: 6,
+                                }}
                             />
                         </Grid>
                         <Grid item xs={12}>
@@ -114,9 +127,11 @@ function VerifyCode() {
                                 >
                                     Gửi lại mã
                                 </GButton>
-                                <span className={cx("resend-time")}>
-                                    {resendTime}
-                                </span>
+                                {resendTime > 0 && (
+                                    <span className={cx("resend-time")}>
+                                        {resendTime}
+                                    </span>
+                                )}
                             </div>
                         </Grid>
                         <Grid item xs={12}>
