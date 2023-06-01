@@ -208,11 +208,11 @@ export const productSearch = async (
 ) => {
     dispatch(productSearchStart());
     try {
-        const res = await axiosJWT.get("/v1/product/search", {
+        const res = await axios.get("/v1/product/search", {
             params: params,
-            headers: {
-                token: `Bearer ${accessToken}`,
-            },
+            // headers: {
+            //     token: `Bearer ${accessToken}`,
+            // },
         });
         dispatch(productSearchSuccess(res?.data));
         return res?.data?.length;
