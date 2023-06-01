@@ -213,9 +213,7 @@ function SignUp() {
                                         />
                                     </Grid>
                                     <Grid item xs={12}>
-                                        <FormGroup
-                                            style={{ marginBottom: "12px" }}
-                                        >
+                                        <FormGroup>
                                             <FormControlLabel
                                                 control={
                                                     <Checkbox
@@ -251,6 +249,8 @@ function SignUp() {
                                                 }
                                             />
                                         </FormGroup>
+                                    </Grid>
+                                    <Grid item xs={12}>
                                         <GButton
                                             type="submit"
                                             size="medium"
@@ -258,6 +258,8 @@ function SignUp() {
                                         >
                                             Đăng ký
                                         </GButton>
+                                    </Grid>
+                                    <Grid item xs={12}>
                                         <span className={cx("login-question")}>
                                             Bạn đã có tài khoản?{" "}
                                             <span

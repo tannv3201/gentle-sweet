@@ -80,9 +80,9 @@
 
     .login-question {
         display: block;
-        margin-top: 12px;
         font-size: 1.5rem;
         span {
+            padding: 4px 0;
             font-weight: var(--fw-medium);
             color: var(--primary-500);
             transition: color 0.2s linear;

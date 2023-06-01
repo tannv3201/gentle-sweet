@@ -127,7 +127,6 @@ function Login() {
                                             InputLabelProps={{ shrink: true }}
                                         />
                                     </Grid>
-
                                     <Grid item xs={12}>
                                         <span
                                             onClick={
@@ -137,6 +136,8 @@ function Login() {
                                         >
                                             Quên mật khẩu?
                                         </span>
+                                    </Grid>
+                                    <Grid item xs={12}>
                                         <GButton
                                             type="submit"
                                             size="medium "
@@ -144,6 +145,8 @@ function Login() {
                                         >
                                             Đăng nhập
                                         </GButton>
+                                    </Grid>
+                                    <Grid item xs={12}>
                                         <span className={cx("login-question")}>
                                             Bạn chưa có tài khoản?{" "}
                                             <span

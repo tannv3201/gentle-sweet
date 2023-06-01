@@ -65,10 +65,9 @@
 
     .policy-privacy {
         display: block;
-        margin-bottom: 8px;
         font-size: 1.5rem;
         cursor: pointer;
-        padding: 2px 0;
+        padding: 4px 0;
         font-weight: var(--fw-medium);
         transition: color 0.2s linear;
         &:hover {
@@ -90,11 +89,11 @@
 
     .login-question {
         display: block;
-        margin-top: 12px;
         font-size: 1.5rem;
         span {
             font-weight: var(--fw-medium);
             color: var(--primary-500);
+            padding: 4px 0;
             transition: color 0.2s linear;
             cursor: pointer;
             &:hover {

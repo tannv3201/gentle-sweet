@@ -28,7 +28,6 @@ const resetPasswordController = {
                     customer_user_id: user?.id,
                     random_code: verifyCode,
                 });
-            console.log(verifyCode);
             let transporter = nodemailer.createTransport({
                 host: mailConfig.HOST,
                 port: mailConfig.PORT,
@@ -45,12 +44,11 @@ const resetPasswordController = {
                 subject: "Đặt lại mật khẩu 🔑", // Subject line
                 // text: "Hello world?", // plain text body
                 html: ` <div style="color: #000">
-                <p style="color: #000">Yêu cầu cấp lại mật khẩu.</p>
-                <p style="color: #000">Mã của bạn là <strong>${verifyCode}</strong></p>
+                <strong style="color: #000">Yêu cầu cấp lại mật khẩu.</strong>
+                <p style="color: #000">Mã của bạn là: <strong>${verifyCode}</strong></p>
                 <p style="color: #000">Mã này có hiệu lực <strong><i>15 phút</i></strong></p>
                 <p style="color: #000">Nếu bạn không phải người yêu cầu. Vui lòng bỏ qua tin nhắn này.</p>
                 <p>Trân trọng,</p>
-                <br/>
                 <strong style="color: #000">
                 Gentle Beauty.
                 </strong>
