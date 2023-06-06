@@ -47,7 +47,7 @@ export const createCart = async (accessToken, dispatch, cartData, axiosJWT) => {
         dispatch(createCartSuccess(res?.data));
         if (res?.data?.status === 201) {
             // toast.success(res?.data?.msg);
-            toast.success("Thêm cart thành công.");
+            toast.success("Đã thêm vào giỏ hàng.");
             await getAllCart(accessToken, dispatch, axiosJWT);
         }
 

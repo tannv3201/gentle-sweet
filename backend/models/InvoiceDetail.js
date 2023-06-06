@@ -33,7 +33,7 @@ const createInvoiceDetail = async (invoiceDetail) => {
 
 const updatePriceTotalInvoice = async (invoice_id) => {
     const [result, fields] = await pool.query(
-        "UPDATE tbl_invoice AS i JOIN ( SELECT invoice_id, SUM(product_quantity * unit_price) AS total FROM tbl_invoice_detail WHERE invoice_id = (?) GROUP BY invoice_id ) AS d ON i.id = d.invoice_id SET i.price_total = d.total",
+        "UPDATE tbl_invoice AS i JOIN ( SELECT invoice_id, SUM(product_quantity * unit_price) AS total FROM tbl_invoice_detail WHERE invoice_id = (?) GROUP BY invoice_id ) AS d ON i.id = d.invoice_id SET i.price_total = (d.total + 15000)",
         [invoice_id]
     );
     return result.affectedRows;

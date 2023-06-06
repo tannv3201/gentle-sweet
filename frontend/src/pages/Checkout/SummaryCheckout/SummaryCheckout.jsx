@@ -42,8 +42,14 @@ function SummaryCheckout() {
 
     const [priceTotal, setPriceTotal] = useState(0);
     const [deliveryPrice, setDeliveryPrice] = useState(15000);
+    const [productBuyNow, setProductBuyNow] = useState([]);
     const location = useLocation();
     const selectedProductCartList = location.state?.selectedProductCartList;
+    const selectedProductBuyNow = location.state?.selectedProductBuyNow;
+
+    useEffect(() => {
+        if (selectedProductBuyNow) productBuyNow.push(selectedProductBuyNow);
+    }, [selectedProductBuyNow]);
 
     useEffect(() => {
         if (!user) {
@@ -52,44 +58,45 @@ function SummaryCheckout() {
                 icon: "😅",
             });
         }
-        if (!selectedProductCartList) {
-            navigate("/gio-hang");
-            toast("Vui lòng chọn sản phẩm cần mua", {
-                icon: "😅",
-                style: {
-                    border: "1px solid var(--red)",
-                    fontWeight: "var(--fw-medium)",
-                },
-            });
-        }
-        if (selectedProductCartList) {
-            const priceTotal = selectedProductCartList.reduce(
-                (accumulator, currentValue) => {
-                    if (currentValue?.discount_percent) {
-                        const discountedPrice =
-                            parseFloat(currentValue?.unit_price) -
-                            (parseFloat(currentValue?.unit_price) *
-                                currentValue?.discount_percent) /
-                                100;
+        // if (!selectedProductCartList) {
+        //     navigate("/gio-hang");
+        //     toast("Vui lòng chọn sản phẩm cần mua", {
+        //         icon: "😅",
+        //         style: {
+        //             border: "1px solid var(--red)",
+        //             fontWeight: "var(--fw-medium)",
+        //         },
+        //     });
+        // }
+        let selectedProduct;
+        if (selectedProductCartList) selectedProduct = selectedProductCartList;
+        if (selectedProductBuyNow) selectedProduct = productBuyNow?.flat();
+        const priceTotal = selectedProduct?.reduce(
+            (accumulator, currentValue) => {
+                if (currentValue?.discount_percent) {
+                    const discountedPrice =
+                        parseFloat(currentValue?.unit_price) -
+                        (parseFloat(currentValue?.unit_price) *
+                            currentValue?.discount_percent) /
+                            100;
 
-                        return (
-                            accumulator +
-                            parseFloat(discountedPrice) *
-                                currentValue?.product_quantity
-                        );
-                    } else {
-                        return (
-                            accumulator +
-                            parseFloat(currentValue?.unit_price) *
-                                currentValue?.product_quantity
-                        );
-                    }
-                },
-                0
-            );
-            setPriceTotal(priceTotal);
-        }
-    }, [selectedProductCartList]);
+                    return (
+                        accumulator +
+                        parseFloat(discountedPrice) *
+                            currentValue?.product_quantity
+                    );
+                } else {
+                    return (
+                        accumulator +
+                        parseFloat(currentValue?.unit_price) *
+                            currentValue?.product_quantity
+                    );
+                }
+            },
+            0
+        );
+        setPriceTotal(priceTotal + deliveryPrice);
+    }, [selectedProductCartList, productBuyNow]);
     dayjs.extend(utc);
 
     const dispatch = useDispatch();
@@ -107,11 +114,13 @@ function SummaryCheckout() {
     });
 
     useEffect(() => {
-        if (selectedProductCartList) {
-            setCheckoutInfo(selectedProductCartList);
+        // if (selectedProductCartList) {
+        //     setCheckoutInfo(selectedProductCartList);
+        // }
+        if (productBuyNow) {
+            setCheckoutInfo(productBuyNow?.flat());
         }
-    }, [selectedProductCartList]);
-
+    }, [selectedProductCartList, productBuyNow]);
     const phoneRegExp = /(84|0[3|5|7|8|9])+([0-9]{8})\b/;
     const validationSchema = Yup.object().shape({
         fullName: Yup.string().required("Vui lòng không để trống"),
@@ -134,8 +143,10 @@ function SummaryCheckout() {
             },
             axiosJWT
         );
-
-        const productList = await selectedProductCartList?.map((p) => {
+        let selectedProduct;
+        if (selectedProductCartList) selectedProduct = selectedProductCartList;
+        if (selectedProductBuyNow) selectedProduct = productBuyNow?.flat();
+        const productList = await selectedProduct?.map((p) => {
             const data = {
                 ...p,
                 unit_price: p.unit_price_onsale
@@ -184,7 +195,9 @@ function SummaryCheckout() {
                 payment_method: values?.payment_method,
             },
             axiosJWT
-        );
+        ).then(() => {
+            navigate("/don-mua");
+        });
     };
     return (
         <div className={cx("wrapper")}>
@@ -297,7 +310,8 @@ function SummaryCheckout() {
                                                             },
                                                         ]}
                                                         data={
-                                                            selectedProductCartList
+                                                            selectedProductCartList ||
+                                                            productBuyNow?.flat()
                                                         }
                                                         exportFileName={
                                                             "DanhSachNguoiDung"
@@ -487,8 +501,7 @@ function SummaryCheckout() {
                                                                                 )}
                                                                             >
                                                                                 {FormatCurrency(
-                                                                                    priceTotal +
-                                                                                        deliveryPrice
+                                                                                    priceTotal
                                                                                 )}
                                                                             </span>
                                                                         </div>

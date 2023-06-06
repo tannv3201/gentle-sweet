@@ -19,7 +19,7 @@ import MyTabs from "../../../components/TabPanel/Tabs";
 import MyTab from "../../../components/TabPanel/Tab";
 import ProductDescription from "./ProductDescription/ProductDescription";
 import ProductRating from "./ProductRating/ProductRating";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { customerGetProductById } from "../../../redux/api/apiProduct";
 import { useDispatch } from "react-redux";
 import { useSelector } from "react-redux";
@@ -154,6 +154,23 @@ function ProductDetail() {
                 axiosJWT
             );
         }
+    };
+    const navigate = useNavigate();
+    const handleBuyNow = () => {
+        navigate("/thanh-toan", {
+            state: {
+                selectedProductBuyNow: [
+                    {
+                        customer_user_id: user?.id,
+                        product_id: productDetail?.id,
+                        product_name: productDetail?.name,
+                        product_quantity: buyQuantity,
+                        unit_price: parseFloat(productDetail?.price),
+                        image_url: productDetail?.image_url,
+                    },
+                ],
+            },
+        });
     };
 
     return (
@@ -380,6 +397,9 @@ function ProductDetail() {
                                                         </Grid>
                                                         <Grid item xs={6}>
                                                             <GButton
+                                                                onClick={
+                                                                    handleBuyNow
+                                                                }
                                                                 className={cx(
                                                                     "buy-now-btn"
                                                                 )}

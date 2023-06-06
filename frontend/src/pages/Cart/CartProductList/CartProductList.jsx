@@ -31,7 +31,7 @@ function CartProductList() {
     const [productList, setProductList] = useState([]);
     const [selectedProduct, setSelectedProduct] = useState({});
     const [selectedProductCartList, setSelectedProductCartList] = useState([]);
-
+    console.log(selectedProductCartList);
     const columns = [
         {
             title: "Ảnh",
