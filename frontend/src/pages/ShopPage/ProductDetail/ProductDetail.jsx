@@ -29,7 +29,11 @@ import { toast } from "react-hot-toast";
 import { createInvoice } from "../../../redux/api/apiInvoice";
 import { createAxios } from "../../../createInstance";
 import { loginSuccess, logoutSuccess } from "../../../redux/slice/authSlice";
-import { createCart } from "../../../redux/api/apiCart";
+import {
+    createCart,
+    getCartByUserId,
+    updateCart,
+} from "../../../redux/api/apiCart";
 const cx = classNames.bind(styles);
 
 function ProductDetail() {
@@ -97,10 +101,44 @@ function ProductDetail() {
             customerGetProductById(dispatch, productId);
         }
     }, [productId]);
+    const cartList = useSelector((state) => state.cart.cart?.cartList);
+
+    useEffect(() => {
+        const fetch = async () => {
+            if (user) {
+                await getCartByUserId(
+                    user?.accessToken,
+                    dispatch,
+                    user?.id,
+                    axiosJWT
+                );
+            }
+        };
+        fetch();
+    }, [user?.id]);
 
     const handleAddToCart = async () => {
         if (!user) {
-            toast.error("đăng nhập đi đcmm");
+            toast.error("Vui lòng đăng nhập để sử dụng chức năng này");
+            return;
+        }
+        const cartExist = cartList?.find(
+            (p) => p.product_id === productDetail?.id
+        );
+
+        if (cartExist) {
+            await updateCart(
+                user?.accessToken,
+                dispatch,
+                user?.id,
+                cartExist?.id,
+                {
+                    product_quantity:
+                        parseInt(cartExist?.product_quantity) +
+                        parseInt(buyQuantity),
+                },
+                axiosJWT
+            );
         } else {
             await createCart(
                 user?.accessToken,
@@ -114,9 +152,7 @@ function ProductDetail() {
                     image_url: productDetail?.image_url,
                 },
                 axiosJWT
-            ).then(() => {
-                toast.success("oke rồi em");
-            });
+            );
         }
     };
 

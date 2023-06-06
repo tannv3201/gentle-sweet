@@ -44,9 +44,7 @@ export default function CreateInvoiceModal({
     };
 
     useEffect(() => {
-        if (customerUserList?.length === 0) {
-            getAllCustomerUser(user?.accessToken, dispatch, axiosJWT);
-        }
+        getAllCustomerUser(user?.accessToken, dispatch, axiosJWT);
     }, []);
 
     const [invoice, setInvoice] = useState({
