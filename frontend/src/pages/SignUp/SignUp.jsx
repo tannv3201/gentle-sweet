@@ -47,7 +47,6 @@ function SignUp() {
         const findEmailExists = await checkEmailExists({
             email: customerUser?.email,
         });
-        console.log(findEmailExists?.email);
         if (findEmailExists?.email) {
             toast.error("Email đã tồn tại");
         } else {

@@ -63,7 +63,6 @@ function NavbarMenu() {
             return updatedState;
         });
     };
-    console.log(menuList);
     return (
         <>
             <div className={cx("wrapper")}>

@@ -29,7 +29,6 @@ function ServiceList() {
     const serviceList = useSelector(
         (state) => state.service.service?.serviceList
     );
-    console.log(serviceList);
     useEffect(() => {
         const fetch = async () => {
             await getAllService(user?.accessToken, dispatch, axiosJWT);
