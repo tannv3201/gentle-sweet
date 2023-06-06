@@ -78,7 +78,6 @@ export default function Account() {
         role_id: "",
         role_name: "",
         birth_date: "",
-        username: "",
         email: "",
         phone_number: "",
         first_name: "",
@@ -97,7 +96,7 @@ export default function Account() {
         updateCustomerUser(
             user?.accessToken,
             dispatch,
-            cloneData?.id,
+            user?.id,
             customerUser,
             axiosJWT
         ).then(() => setIsEditting(false));
@@ -106,10 +105,6 @@ export default function Account() {
     // Validate
     const phoneRegExp = /(84|0[3|5|7|8|9])+([0-9]{8})\b/;
     const validationSchema = Yup.object().shape({
-        username: Yup.string()
-            .required("Vui lòng không để trống")
-            .min(6, "Tên tài khoản phải có ít nhất 6 kí tự")
-            .max(20, "Tên tài khoản tối đa 20 kí tự"),
         first_name: Yup.string().required("Vui lòng không để trống"),
         phone_number: Yup.string()
             .matches(/^\d+$/, "Số điện thoại chỉ bao gồm các ký tự số")
@@ -359,17 +354,6 @@ export default function Account() {
                         <form onSubmit={formik.handleSubmit}>
                             <Grid container spacing={2}>
                                 <Grid item lg={6} md={12} sm={12} xs={12}>
-                                    <GTextFieldNormal
-                                        disabled={!isEditting}
-                                        onChange={formik.handleChange}
-                                        label="Tên đăng nhập"
-                                        fullWidth
-                                        name="username"
-                                        value={formik.values?.username || ""}
-                                        formik={formik}
-                                    />
-                                </Grid>
-                                <Grid item lg={6} md={12} sm={12} xs={12}>
                                     <GDatePicker
                                         disabled={!isEditting}
                                         label={"Ngày sinh"}
@@ -446,7 +430,7 @@ export default function Account() {
                                         formik={formik}
                                     />
                                 </Grid>
-                                <Grid item lg={4} md={12} sm={12} xs={12}>
+                                <Grid item lg={6} md={12} sm={12} xs={12}>
                                     <Autocomplete
                                         disabled={!isEditting}
                                         options={provinces}
@@ -474,7 +458,7 @@ export default function Account() {
                                         )}
                                     />
                                 </Grid>
-                                <Grid item lg={4} md={12} sm={12} xs={12}>
+                                <Grid item lg={6} md={12} sm={12} xs={12}>
                                     <Autocomplete
                                         disabled={!isEditting}
                                         options={districts}
@@ -500,7 +484,7 @@ export default function Account() {
                                         )}
                                     />
                                 </Grid>
-                                <Grid item lg={4} md={12} sm={12} xs={12}>
+                                <Grid item lg={6} md={12} sm={12} xs={12}>
                                     <Autocomplete
                                         disabled={!isEditting}
                                         options={wards}

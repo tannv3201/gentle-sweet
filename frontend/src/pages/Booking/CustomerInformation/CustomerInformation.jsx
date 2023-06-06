@@ -164,16 +164,16 @@ function CustomerInformation() {
         if (e.target.checked) {
             setFieldValue(
                 "fullName",
-                user?.last_name + " " + user?.first_name || ""
+                customerUser?.last_name + " " + customerUser?.first_name || ""
             );
-            setFieldValue("phone_number", user?.phone_number || "");
+            setFieldValue("phone_number", customerUser?.phone_number || "");
             setSelectedProvince(selectedCurrProvince);
             setSelectedDistrict(selectedCurrDistrict);
             setSelectedWard(selectedCurrWard);
-            setFieldValue("province", user?.province);
-            setFieldValue("district", user?.district);
-            setFieldValue("ward", user?.ward);
-            setFieldValue("detail_address", user?.detail_address || "");
+            setFieldValue("province", customerUser?.province);
+            setFieldValue("district", customerUser?.district);
+            setFieldValue("ward", customerUser?.ward);
+            setFieldValue("detail_address", customerUser?.detail_address || "");
         } else {
             setFieldValue("fullName", "");
             setFieldValue("phone_number", "");

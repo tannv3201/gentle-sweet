@@ -87,7 +87,13 @@ export const updateCustomerUser = async (
         dispatch(updateCustomerSuccess(res?.data));
         if (res?.data?.status === 200) {
             toast.success(res?.data?.msg);
-            await getCustomerUserById(dispatch, id, accessToken, axiosJWT);
+            const newUser = await getCustomerUserById(
+                dispatch,
+                id,
+                accessToken,
+                axiosJWT
+            );
+            console.log(newUser);
         }
     } catch (error) {
         dispatch(updateCustomerFailed(error.response?.data));

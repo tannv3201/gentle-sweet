@@ -26,7 +26,6 @@ function Login() {
     const navigate = useNavigate();
 
     const [customerUser, setCustomerUser] = useState({
-        username: "",
         password: "",
         confirmPassword: "",
         first_name: "",

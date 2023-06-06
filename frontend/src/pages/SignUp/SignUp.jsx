@@ -30,7 +30,6 @@ function SignUp() {
     const navigate = useNavigate();
 
     const [customerUser, setCustomerUser] = useState({
-        username: "",
         password: "",
         confirmPassword: "",
         first_name: "",
@@ -77,10 +76,6 @@ function SignUp() {
     // Validation formik
     const phoneRegExp = /(84|0[3|5|7|8|9])+([0-9]{8})\b/;
     const validationSchema = Yup.object().shape({
-        username: Yup.string()
-            .required("Vui lòng không để trống")
-            .min(6, "Tên tài khoản phải có ít nhất 6 kí tự")
-            .max(20, "Tên tài khoản tối đa 20 kí tự"),
         password: Yup.string()
             .required("Vui lòng không để trống")
             .min(8, "Mật khẩu phải có ít nhất 8 kí tự")
@@ -167,31 +162,7 @@ function SignUp() {
                                             InputLabelProps={{ shrink: true }}
                                         />
                                     </Grid>
-                                    <Grid item xs={12}>
-                                        <GTextFieldNormal
-                                            formik={formik}
-                                            onChange={formik.handleChange}
-                                            value={formik.values.username}
-                                            name="username"
-                                            fullWidth
-                                            label={"Tên đăng nhập"}
-                                            placeholder="Nhập tên đăng nhập"
-                                            InputLabelProps={{ shrink: true }}
-                                        />
-                                    </Grid>
-                                    <Grid item lg={6} md={12} sm={12} xs={12}>
-                                        <GTextFieldNormal
-                                            formik={formik}
-                                            onChange={formik.handleChange}
-                                            value={formik.values.phone_number}
-                                            name="phone_number"
-                                            fullWidth
-                                            label={"Số điện thoại"}
-                                            placeholder="Nhập số điện thoại"
-                                            InputLabelProps={{ shrink: true }}
-                                        />
-                                    </Grid>
-                                    <Grid item lg={6} md={12} sm={12} xs={12}>
+                                    <Grid item lg={12} md={12} sm={12} xs={12}>
                                         <GTextFieldNormal
                                             formik={formik}
                                             onChange={formik.handleChange}
@@ -200,6 +171,18 @@ function SignUp() {
                                             fullWidth
                                             label={"Email"}
                                             placeholder="Nhập email"
+                                            InputLabelProps={{ shrink: true }}
+                                        />
+                                    </Grid>
+                                    <Grid item lg={12} md={12} sm={12} xs={12}>
+                                        <GTextFieldNormal
+                                            formik={formik}
+                                            onChange={formik.handleChange}
+                                            value={formik.values.phone_number}
+                                            name="phone_number"
+                                            fullWidth
+                                            label={"Số điện thoại"}
+                                            placeholder="Nhập số điện thoại"
                                             InputLabelProps={{ shrink: true }}
                                         />
                                     </Grid>
