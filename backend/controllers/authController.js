@@ -21,7 +21,6 @@ const authController = {
             // Create new user
             const newCustomerUser = await customerUserModel.createCustomerUser({
                 role_id: 4,
-                username: req.body.username,
                 password: hashed,
                 first_name: req.body.first_name,
                 last_name: req.body.last_name,

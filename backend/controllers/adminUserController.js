@@ -13,7 +13,6 @@ const adminUserController = {
             const newAdminUser = await adminUserModel.createAdminUser({
                 role_id: req.body.role_id,
                 birth_date: req.body.birth_date,
-                username: req.body.username,
                 password: hashed,
                 first_name: req.body.first_name,
                 last_name: req.body.last_name,
@@ -139,7 +138,7 @@ const adminUserController = {
             const user = await adminUserModel.getAdminUserById(accountId);
 
             const salt = await bcrypt.genSalt(10);
-            const newPassword = await bcrypt.hash(user?.username, salt);
+            const newPassword = await bcrypt.hash(user?.email, salt);
 
             const affectedRows = await adminUserModel.updateAdminUserById(
                 accountId,
