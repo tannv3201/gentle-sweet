@@ -50,6 +50,7 @@ import ServiceCategoryDetail from "../pages/ServicePage/ServiceCategoryDetail/Se
 import ForgotPassword from "../pages/ForgotPassword/ForgotPassword";
 import VerifyCode from "../pages/ForgotPassword/VerifyCode";
 import PasswordChange from "../pages/ForgotPassword/PasswordChange";
+import VerifyEmail from "../pages/SignUp/VerifyEmail";
 // public routes
 
 export const publicRoutes = [
@@ -137,8 +138,13 @@ export const publicRoutes = [
         layout: null,
     },
     {
-        path: "/quen-mat-khau/xac-nhan",
+        path: "/quen-mat-khau/xac-thuc",
         component: VerifyCode,
+        layout: null,
+    },
+    {
+        path: "/dang-ky/xac-thuc",
+        component: VerifyEmail,
         layout: null,
     },
     {

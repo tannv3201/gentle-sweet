@@ -17,10 +17,10 @@ const getAdminUserById = async (adminUserId) => {
     return rows[0];
 };
 
-const findAdminUserByUsername = async (username) => {
+const findAdminUserByEmail = async (email) => {
     const [rows, fields] = await pool.query(
-        "SELECT * FROM tbl_admin_user WHERE username= (?)",
-        [username]
+        "SELECT * FROM tbl_admin_user WHERE email= (?)",
+        [email]
     );
     return rows[0];
 };
@@ -58,6 +58,6 @@ module.exports = {
     getAdminUserById,
     createAdminUser,
     updateAdminUserById,
-    findAdminUserByUsername,
+    findAdminUserByEmail,
     deleteAdminUserById,
 };

@@ -17,6 +17,10 @@ import dayjs from "dayjs";
 import utc from "dayjs/plugin/utc";
 import { toast } from "react-hot-toast";
 import { signup } from "../../redux/api/apiAuth";
+import {
+    checkEmailExists,
+    sendVerifyCode,
+} from "../../redux/api/apiRegisterVerify";
 const cx = classNames.bind(styles);
 
 function SignUp() {
@@ -39,7 +43,23 @@ function SignUp() {
 
     // Fn Create new Customer User
     const handleCreateCustomerUser = async (customerUser) => {
-        await signup(customerUser, dispatch, navigate);
+        // await signup(customerUser, dispatch, navigate);
+        const findEmailExists = await checkEmailExists({
+            email: customerUser?.email,
+        });
+        console.log(findEmailExists?.email);
+        if (findEmailExists?.email) {
+            toast.error("Email đã tồn tại");
+        } else {
+            await sendVerifyCode({ email: customerUser?.email }).then((res) => {
+                navigate("/dang-ky/xac-thuc", {
+                    state: {
+                        customerUser: customerUser,
+                        verifyCodeId: res?.codeId,
+                    },
+                });
+            });
+        }
     };
 
     // Fn compare password when create

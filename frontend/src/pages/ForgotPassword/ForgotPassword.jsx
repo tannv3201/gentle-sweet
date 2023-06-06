@@ -28,7 +28,7 @@ function ForgotPassword() {
         await resetPassword(value.email).then((res) => {
             if (res) {
                 toast.success("Gửi mã xác minh thành công!");
-                navigate("/quen-mat-khau/xac-nhan", {
+                navigate("/quen-mat-khau/xac-thuc", {
                     state: {
                         email: res?.email,
                         codeId: res?.codeId,

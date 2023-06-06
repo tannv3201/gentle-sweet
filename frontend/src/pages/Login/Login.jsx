@@ -53,10 +53,9 @@ function Login() {
 
     // Validation formik
     const validationSchema = Yup.object().shape({
-        username: Yup.string()
-            .required("Vui lòng không để trống")
-            .min(6, "Tên tài khoản phải có ít nhất 6 kí tự")
-            .max(20, "Tên tài khoản tối đa 20 kí tự"),
+        email: Yup.string()
+            .email("Vui lòng nhập địa chỉ email hợp lệ")
+            .required("Vui lòng không để trống"),
         password: Yup.string()
             .required("Vui lòng không để trống")
             .min(8, "Mật khẩu phải có ít nhất 8 kí tự")
@@ -67,7 +66,7 @@ function Login() {
     const formik = useFormik({
         enableReinitialize: true,
         initialValues: {
-            username: "",
+            email: "",
             password: "",
         },
         validationSchema: validationSchema,
@@ -106,11 +105,11 @@ function Login() {
                                             autoFocus
                                             formik={formik}
                                             onChange={formik.handleChange}
-                                            value={formik.values.username}
-                                            name="username"
+                                            value={formik.values.email}
+                                            name="email"
                                             fullWidth
-                                            label={"Tên đăng nhập"}
-                                            placeholder="Nhập tên đăng nhập"
+                                            label={"Email"}
+                                            placeholder="Nhập email"
                                             InputLabelProps={{ shrink: true }}
                                         />
                                     </Grid>

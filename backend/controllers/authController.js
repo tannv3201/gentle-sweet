@@ -68,14 +68,12 @@ const authController = {
     // LOGIN
     loginUser: async (req, res) => {
         try {
-            const adminUser = await adminUserModel.findAdminUserByUsername(
-                req.body.username
+            const adminUser = await adminUserModel.findAdminUserByEmail(
+                req.body.email
             );
 
             const customerUser =
-                await customerUserModel.findCustomerUserByUsername(
-                    req.body.username
-                );
+                await customerUserModel.findCustomerUserByEmail(req.body.email);
 
             let user = null;
 

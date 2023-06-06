@@ -1,15 +1,15 @@
 const pool = require("../config/database");
 const { v4: uuidv4 } = require("uuid");
 
-const findCustomerUserByEmail = async (email) => {
+const checkEmailExists = async (email) => {
     const [rows, fields] = await pool.query(
-        "SELECT * FROM tbl_customer_user WHERE email = (?)",
+        "SELECT email FROM tbl_customer_user WHERE email = ? ",
         [email]
     );
     return rows[0];
 };
 
-const createResetPassword = async (data) => {
+const sendVerifyCode = async (data) => {
     const [result, fields] = await pool.query(
         "INSERT INTO tbl_vefify_code SET ?",
         [data]
@@ -19,14 +19,14 @@ const createResetPassword = async (data) => {
 
 const checkVerifyCode = async (codeId) => {
     const [rows, fields] = await pool.query(
-        "SELECT vc.random_code,vc.created_at, cus.id FROM tbl_vefify_code AS vc JOIN tbl_customer_user AS cus ON vc.customer_user_id = cus.id WHERE vc.id = ? ",
+        "SELECT random_code,created_at FROM tbl_vefify_code WHERE id = ? ",
         [codeId]
     );
     return rows[0];
 };
 
 module.exports = {
-    findCustomerUserByEmail,
-    createResetPassword,
+    sendVerifyCode,
     checkVerifyCode,
+    checkEmailExists,
 };

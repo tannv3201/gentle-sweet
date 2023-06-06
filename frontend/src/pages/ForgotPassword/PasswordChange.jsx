@@ -80,6 +80,7 @@ function PasswordChange() {
                     <Grid container spacing={2}>
                         <Grid item xs={12}>
                             <GTextFieldNormal
+                                password
                                 formik={formik}
                                 onChange={formik.handleChange}
                                 value={formik.values.password}
@@ -92,6 +93,7 @@ function PasswordChange() {
                         </Grid>
                         <Grid item xs={12}>
                             <GTextFieldNormal
+                                password
                                 formik={formik}
                                 onChange={formik.handleChange}
                                 value={formik.values.confirmPassword}

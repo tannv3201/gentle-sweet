@@ -16,10 +16,10 @@ const getCustomerUserById = async (customerUserId) => {
     return rows[0];
 };
 
-const findCustomerUserByUsername = async (username) => {
+const findCustomerUserByEmail = async (email) => {
     const [rows, fields] = await pool.query(
-        "SELECT * FROM tbl_customer_user WHERE username= (?)",
-        [username]
+        "SELECT * FROM tbl_customer_user WHERE email= (?)",
+        [email]
     );
     return rows[0];
 };
@@ -57,5 +57,5 @@ module.exports = {
     getCustomerUserById,
     createCustomerUser,
     updateCustomerUserById,
-    findCustomerUserByUsername,
+    findCustomerUserByEmail,
 };
