@@ -51,6 +51,7 @@ import ForgotPassword from "../pages/ForgotPassword/ForgotPassword";
 import VerifyCode from "../pages/ForgotPassword/VerifyCode";
 import PasswordChange from "../pages/ForgotPassword/PasswordChange";
 import VerifyEmail from "../pages/SignUp/VerifyEmail";
+import OrderDetail from "../pages/PurchaseOrder/OrderDetail/OrderDetail";
 // public routes
 
 export const publicRoutes = [
@@ -109,6 +110,10 @@ export const publicRoutes = [
     {
         path: "/don-mua",
         component: PurchaseOrder,
+    },
+    {
+        path: "/don-mua/:invoiceId",
+        component: OrderDetail,
     },
     {
         path: "/quan-ly-lich-dat",

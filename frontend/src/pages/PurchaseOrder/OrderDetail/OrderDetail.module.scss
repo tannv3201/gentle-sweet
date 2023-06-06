@@ -1,0 +1,43 @@
+.wrapper {
+    display: flex;
+    justify-content: center;
+    padding: 24px;
+}
+
+.inner {
+    width: var(--default-layout-width);
+    border: 1px solid var(--border-color);
+    padding: 0 12px;
+
+    .invoice-header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 12px 0;
+        border-bottom: 1px solid var(--border-color);
+        .invoice-code {
+            font-size: 2rem;
+            text-transform: uppercase;
+            color: var(--text-primary);
+        }
+    }
+    .invoice-info {
+        padding: 0 12px;
+        border: 1px solid var(--border-color);
+        h3 {
+            font-weight: var(--fw-semi-bold);
+        }
+    }
+    .invoice-customer-info {
+        padding: 0 12px;
+        h3 {
+            font-weight: var(--fw-semi-bold);
+        }
+    }
+    .invoice-product-info {
+        padding: 0 12px;
+        h3 {
+            font-weight: var(--fw-semi-bold);
+        }
+    }
+}

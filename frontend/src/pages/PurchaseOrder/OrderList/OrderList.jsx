@@ -8,12 +8,18 @@ import { FormatCurrency } from "../../../components/FormatCurrency/FormatCurrenc
 import GButton from "../../../components/MyButton/MyButton";
 
 import { API_IMAGE_URL } from "../../../LocalConstants";
+import { useNavigate } from "react-router-dom";
+import { VisibilityOffRounded, VisibilityRounded } from "@mui/icons-material";
 
 const cx = classNames.bind(styles);
 
 function OrderList({ invoiceListByUser }) {
     const theme = useTheme();
+    const navigate = useNavigate();
     const isMedium = useMediaQuery(theme.breakpoints.down("md"));
+    const handleNavigateOrderDetail = (invoiceId) => {
+        navigate(`/don-mua/${invoiceId}`);
+    };
     return (
         <>
             {invoiceListByUser?.length !== 0 ? (
@@ -30,80 +36,95 @@ function OrderList({ invoiceListByUser }) {
                                                         "invoice-item-header"
                                                     )}
                                                 >
-                                                    <div
-                                                        className={cx(
-                                                            "invoice-item-createdAt"
-                                                        )}
-                                                    >
-                                                        <span
+                                                    <div>
+                                                        <div
                                                             className={cx(
-                                                                "createdAt-label"
+                                                                "invoice-item-createdAt"
                                                             )}
                                                         >
-                                                            Thời gian tạo:{" "}
-                                                        </span>
-                                                        <span
+                                                            <span
+                                                                className={cx(
+                                                                    "createdAt-label"
+                                                                )}
+                                                            >
+                                                                Thời gian tạo:{" "}
+                                                            </span>
+                                                            <span
+                                                                className={cx(
+                                                                    "createdAt-content"
+                                                                )}
+                                                            >
+                                                                {
+                                                                    invoice?.created_at
+                                                                }
+                                                            </span>
+                                                        </div>
+                                                        <div
                                                             className={cx(
-                                                                "createdAt-content"
+                                                                "invoice-item-status"
                                                             )}
                                                         >
-                                                            {
-                                                                invoice?.created_at
-                                                            }
-                                                        </span>
+                                                            <span
+                                                                className={cx(
+                                                                    "status-label"
+                                                                )}
+                                                            >
+                                                                Trạng thái:{" "}
+                                                            </span>
+                                                            <span
+                                                                className={
+                                                                    invoice?.status ===
+                                                                    5
+                                                                        ? cx(
+                                                                              "status-content",
+                                                                              "cancel"
+                                                                          )
+                                                                        : invoice?.status ===
+                                                                          1
+                                                                        ? cx(
+                                                                              "status-content",
+                                                                              "pending"
+                                                                          )
+                                                                        : invoice?.status ===
+                                                                          2
+                                                                        ? cx(
+                                                                              "status-content",
+                                                                              "received"
+                                                                          )
+                                                                        : invoice?.status ===
+                                                                          3
+                                                                        ? cx(
+                                                                              "status-content",
+                                                                              "delivering"
+                                                                          )
+                                                                        : invoice?.status ===
+                                                                          4
+                                                                        ? cx(
+                                                                              "status-content",
+                                                                              "delivered"
+                                                                          )
+                                                                        : ""
+                                                                }
+                                                            >
+                                                                {
+                                                                    invoice?.status_name
+                                                                }
+                                                            </span>
+                                                        </div>
                                                     </div>
-                                                    <div
-                                                        className={cx(
-                                                            "invoice-item-status"
-                                                        )}
+                                                    <GButton
+                                                        variant="outlined"
+                                                        startIcon={
+                                                            <VisibilityRounded />
+                                                        }
+                                                        onClick={() =>
+                                                            handleNavigateOrderDetail(
+                                                                invoice?.id
+                                                            )
+                                                        }
                                                     >
-                                                        <span
-                                                            className={cx(
-                                                                "status-label"
-                                                            )}
-                                                        >
-                                                            Trạng thái:{" "}
-                                                        </span>
-                                                        <span
-                                                            className={
-                                                                invoice?.status ===
-                                                                5
-                                                                    ? cx(
-                                                                          "status-content",
-                                                                          "cancel"
-                                                                      )
-                                                                    : invoice?.status ===
-                                                                      1
-                                                                    ? cx(
-                                                                          "status-content",
-                                                                          "pending"
-                                                                      )
-                                                                    : invoice?.status ===
-                                                                      2
-                                                                    ? cx(
-                                                                          "status-content",
-                                                                          "received"
-                                                                      )
-                                                                    : invoice?.status ===
-                                                                      3
-                                                                    ? cx(
-                                                                          "status-content",
-                                                                          "delivering"
-                                                                      )
-                                                                    : invoice?.status ===
-                                                                      4
-                                                                    ? cx(
-                                                                          "status-content",
-                                                                          "delivered"
-                                                                      )
-                                                                    : ""
-                                                            }
-                                                        >
-                                                            {
-                                                                invoice?.status_name
-                                                            }
-                                                        </span>
-                                                    </div>
+                                                        Xem chi tiết
+                                                    </GButton>
                                                 </div>
                                             </Grid>
                                             <Grid item xs={12}>
@@ -228,9 +249,6 @@ function OrderList({ invoiceListByUser }) {
                                                             )}
                                                         </span>
                                                     </div>
-                                                    <GButton size="small">
-                                                        Mua lại
-                                                    </GButton>
                                                 </div>
                                             </Grid>
                                         </Grid>

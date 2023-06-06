@@ -58,17 +58,18 @@ function SummaryCheckout() {
                 icon: "😅",
             });
         }
-        // if (!selectedProductCartList) {
-        //     navigate("/gio-hang");
-        //     toast("Vui lòng chọn sản phẩm cần mua", {
-        //         icon: "😅",
-        //         style: {
-        //             border: "1px solid var(--red)",
-        //             fontWeight: "var(--fw-medium)",
-        //         },
-        //     });
-        // }
         let selectedProduct;
+        if (!selectedProductCartList && !selectedProductBuyNow) {
+            navigate("/gio-hang");
+            toast("Vui lòng chọn sản phẩm cần mua", {
+                icon: "😅",
+                style: {
+                    border: "1px solid var(--red)",
+                    fontWeight: "var(--fw-medium)",
+                },
+            });
+        }
+
         if (selectedProductCartList) selectedProduct = selectedProductCartList;
         if (selectedProductBuyNow) selectedProduct = productBuyNow?.flat();
         const priceTotal = selectedProduct?.reduce(
@@ -187,7 +188,8 @@ function SummaryCheckout() {
             dispatch,
             {
                 invoice_id: newInvoice,
-                customer_user_id: user?.id,
+                customer_name: values?.fullName,
+                customer_phone_number: values?.phone_number,
                 province: values?.province,
                 district: values?.district,
                 ward: values?.ward,
