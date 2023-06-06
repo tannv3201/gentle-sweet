@@ -64,7 +64,7 @@ export default function ServiceInformation() {
 
     useEffect(() => {
         if (!selectedService) {
-            navigate("/dich-vu");
+            navigate("/danh-muc-dich-vu");
             toast("Vui lòng chọn dịch vụ để đặt lịch.", {
                 icon: "😅",
             });

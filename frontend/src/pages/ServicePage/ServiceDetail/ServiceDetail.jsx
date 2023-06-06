@@ -106,7 +106,7 @@ function ServiceDetail() {
     const navigate = useNavigate();
     const handleBooking = async () => {
         if (!user) {
-            toast.error("đăng nhập đi đcmm");
+            toast.error("Vui lòng đăng nhập");
         } else {
             navigate("/dat-lich", {
                 state: {

@@ -74,7 +74,6 @@ const registerVerifyController = {
             const submitTime = new Date();
             const allowTime = 15;
             const realTime = (submitTime - verifyCode?.created_at) / 60000;
-            console.log(verifyCode);
 
             if (realTime <= allowTime) {
                 if (
