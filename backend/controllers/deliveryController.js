@@ -43,6 +43,22 @@ const deliveryController = {
         }
     },
 
+    // GET DISCOUNT BY ID
+    getDeliveryByInvoiceId: async (req, res) => {
+        try {
+            const delivery = await DeliveryModel.getDeliveryByInvoiceId(
+                req.params.id
+            );
+            if (!delivery) {
+                return res.status(404).json("Giao hàng không tồn tại");
+            } else {
+                return res.status(200).json(delivery);
+            }
+        } catch (error) {
+            res.status(500).json(error);
+        }
+    },
+
     // Create Product Category
     createDelivery: async (req, res, next) => {
         try {

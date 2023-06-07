@@ -13,6 +13,9 @@ import {
     getDeliveryByIdFailed,
     getDeliveryByIdStart,
     getDeliveryByIdSuccess,
+    getDeliveryByInvoiceIdFailed,
+    getDeliveryByInvoiceIdStart,
+    getDeliveryByInvoiceIdSuccess,
     getDeliveryByUserIdFailed,
     getDeliveryByUserIdStart,
     getDeliveryByUserIdSuccess,
@@ -132,6 +135,29 @@ export const getDeliveryById = async (dispatch, id, accessToken, axiosJWT) => {
         return res?.data;
     } catch (error) {
         dispatch(getDeliveryByIdFailed(error.response?.data));
+    }
+};
+
+export const getDeliveryByInvoiceId = async (
+    dispatch,
+    invoiceId,
+    accessToken,
+    axiosJWT
+) => {
+    dispatch(getDeliveryByInvoiceIdStart());
+    try {
+        const res = await axiosJWT.get("/v1/delivery/invoice/" + invoiceId, {
+            headers: {
+                token: `Bearer ${accessToken}`,
+            },
+        });
+        dispatch(getDeliveryByInvoiceIdSuccess(res?.data));
+        if (res?.data?.status === 200) {
+            toast.success(res?.data?.msg);
+        }
+        return res?.data;
+    } catch (error) {
+        dispatch(getDeliveryByInvoiceIdFailed(error.response?.data));
     }
 };
 

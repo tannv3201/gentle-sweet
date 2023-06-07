@@ -6,6 +6,7 @@ const deliverySlice = createSlice({
         delivery: {
             deliveryList: [],
             delivery: null,
+            deliveryByInvoiceId: null,
             isFetching: false,
             error: false,
         },
@@ -26,14 +27,27 @@ const deliverySlice = createSlice({
         },
 
         // Get all ADMIN USER
-        getDeliveryByIdStart: (state) => {
+        getInvoiceStart: (state) => {
             state.delivery.isFetching = true;
         },
-        getDeliveryByIdSuccess: (state, action) => {
+        getInvoiceSuccess: (state, action) => {
             state.delivery.isFetching = false;
             state.delivery.delivery = action.payload;
         },
         getDeliveryByIdFailed: (state) => {
+            state.delivery.isFetching = false;
+            state.delivery.error = true;
+        },
+
+        // Get all ADMIN USER
+        getDeliveryByInvoiceIdStart: (state) => {
+            state.delivery.isFetching = true;
+        },
+        getDeliveryByInvoiceIdSuccess: (state, action) => {
+            state.delivery.isFetching = false;
+            state.delivery.deliveryByInvoiceId = action.payload;
+        },
+        getDeliveryByInvoiceIdFailed: (state) => {
             state.delivery.isFetching = false;
             state.delivery.error = true;
         },
@@ -103,6 +117,10 @@ export const {
     getDeliveryByIdStart,
     getDeliveryByIdSuccess,
     getDeliveryByIdFailed,
+
+    getDeliveryByInvoiceIdStart,
+    getDeliveryByInvoiceIdSuccess,
+    getDeliveryByInvoiceIdFailed,
 
     getDeliveryByUserIdStart,
     getDeliveryByUserIdSuccess,

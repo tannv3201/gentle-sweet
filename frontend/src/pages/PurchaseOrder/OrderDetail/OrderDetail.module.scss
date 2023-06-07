@@ -2,12 +2,15 @@
     display: flex;
     justify-content: center;
     padding: 24px;
+    background-color: var(--light-gray);
 }
 
 .inner {
     width: var(--default-layout-width);
     border: 1px solid var(--border-color);
-    padding: 0 12px;
+    border-radius: 6px;
+    padding: 0 12px 12px 12px;
+    background-color: var(--white);
 
     .invoice-header {
         display: flex;
@@ -21,23 +24,60 @@
             color: var(--text-primary);
         }
     }
-    .invoice-info {
-        padding: 0 12px;
+    .invoice-info,
+    .invoice-product-info,
+    .invoice-customer-info {
         border: 1px solid var(--border-color);
+        border-radius: 6px;
+
         h3 {
             font-weight: var(--fw-semi-bold);
         }
+        .info-item {
+            span {
+                color: #1976d2;
+                font-weight: var(--fw-medium);
+            }
+        }
+    }
+    .invoice-info {
+        padding: 8px 12px;
     }
     .invoice-customer-info {
-        padding: 0 12px;
-        h3 {
-            font-weight: var(--fw-semi-bold);
-        }
+        padding: 8px 12px;
     }
     .invoice-product-info {
-        padding: 0 12px;
-        h3 {
-            font-weight: var(--fw-semi-bold);
+        padding: 8px 12px 0 12px;
+
+        .product-item {
+            padding: 12px 0;
+            .product-image {
+                height: 40px;
+                width: 40px;
+                border-radius: 100px;
+                overflow: hidden;
+                outline: 1px solid var(--primary-300);
+                img {
+                    height: 100%;
+                    width: 100%;
+                    object-fit: cover;
+                }
+            }
+        }
+        .product-item:not(:first-child) {
+            border-top: 1px solid var(--border-color);
+        }
+        .price_total {
+            display: flex;
+            justify-content: flex-end;
+            align-items: center;
+            border-top: 1px solid var(--border-color);
+            padding: 4px 0;
+            span {
+                padding-left: 12px;
+                font-size: 1.8rem;
+                font-weight: var(--fw-medium);
+            }
         }
     }
 }

@@ -27,6 +27,12 @@ router.get(
     deliveryController.getDeliveryById
 );
 
+router.get(
+    "/invoice/:id",
+    middlewareController.verifyToken,
+    deliveryController.getDeliveryByInvoiceId
+);
+
 router.put(
     "/:id",
     middlewareController.verifyToken,

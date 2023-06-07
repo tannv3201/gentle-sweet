@@ -91,27 +91,35 @@ function CheckoutInformation() {
     // Set selected province/district/ward into states & Formik field
     useEffect(() => {
         if (customerUser) {
-            const provinceSelected = getProvinceById(
-                customerUser?.province,
-                provinces
-            );
-            setSelectedCurrProvince(provinceSelected);
-
-            // District
-            getDistrict(customerUser?.province).then((districtList) => {
-                const districtSelected = getDistrictById(
-                    customerUser?.district,
-                    districtList
+            const fetch = async () => {
+                const provinceSelected = await getProvinceById(
+                    customerUser?.province,
+                    provinces
                 );
-                setSelectedCurrDistrict(districtSelected);
-                setDistricts(districtList);
-            });
+                setSelectedCurrProvince(provinceSelected);
 
-            getWard(customerUser?.district).then((wardList) => {
-                const wardSelected = getWardById(customerUser?.ward, wardList);
-                setSelectedCurrWard(wardSelected);
-                setWards(wardList);
-            });
+                // District
+                await getDistrict(customerUser?.province).then(
+                    (districtList) => {
+                        const districtSelected = getDistrictById(
+                            customerUser?.district,
+                            districtList
+                        );
+                        setSelectedCurrDistrict(districtSelected);
+                        setDistricts(districtList);
+                    }
+                );
+
+                await getWard(customerUser?.district).then((wardList) => {
+                    const wardSelected = getWardById(
+                        customerUser?.ward,
+                        wardList
+                    );
+                    setSelectedCurrWard(wardSelected);
+                    setWards(wardList);
+                });
+            };
+            fetch();
         }
     }, [customerUser]);
 
@@ -160,7 +168,6 @@ function CheckoutInformation() {
             setFieldValue("ward", null);
         }
     };
-    console.log(customerUser);
     const handleInfoSame = (e) => {
         if (e.target.checked) {
             setFieldValue(

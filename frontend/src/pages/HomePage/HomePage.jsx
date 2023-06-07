@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 
 import HomeBanner from "./HomeBanner/HomeBanner";
 import PhotoModel from "./PhotoModel/PhotoModel";
@@ -11,10 +11,19 @@ import OutstandingProduct from "./OutstandingProduct/OutstandingProduct";
 import { useMediaQuery } from "@mui/material";
 import { useTheme } from "@mui/material/styles";
 import SalonSystem from "../../common/SalonSystem/SalonSystem";
+import { getAllProduct } from "../../redux/api/apiProduct";
+import { useDispatch } from "react-redux";
 
 function HomePage() {
     const theme = useTheme();
     const isMedium = useMediaQuery(theme.breakpoints.down("lg"));
+    const dispatch = useDispatch();
+    useEffect(() => {
+        const fetch = async () => {
+            await getAllProduct(null, dispatch, null);
+        };
+        fetch();
+    }, []);
     return (
         <>
             <HomeBanner />
