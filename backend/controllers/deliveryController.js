@@ -49,7 +49,7 @@ const deliveryController = {
             const newDelivery = await DeliveryModel.createDelivery({
                 invoice_id: req.body.invoice_id,
                 customer_name: req.body.customer_name,
-                customer_phone_number: req.body.customer_phone_number,
+                customer_phone: req.body.customer_phone,
                 province: req.body.province,
                 district: req.body.district,
                 ward: req.body.ward,

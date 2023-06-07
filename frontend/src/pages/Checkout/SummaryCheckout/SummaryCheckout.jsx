@@ -189,7 +189,7 @@ function SummaryCheckout() {
             {
                 invoice_id: newInvoice,
                 customer_name: values?.fullName,
-                customer_phone_number: values?.phone_number,
+                customer_phone: values?.phone_number,
                 province: values?.province,
                 district: values?.district,
                 ward: values?.ward,

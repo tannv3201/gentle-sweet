@@ -11,7 +11,7 @@ const findCustomerUserByEmail = async (email) => {
 
 const createResetPassword = async (data) => {
     const [result, fields] = await pool.query(
-        "INSERT INTO tbl_vefify_code SET ?",
+        "INSERT INTO tbl_verify_code SET ?",
         [data]
     );
     return result;
@@ -19,7 +19,7 @@ const createResetPassword = async (data) => {
 
 const checkVerifyCode = async (codeId) => {
     const [rows, fields] = await pool.query(
-        "SELECT vc.random_code,vc.created_at, cus.id FROM tbl_vefify_code AS vc JOIN tbl_customer_user AS cus ON vc.customer_user_id = cus.id WHERE vc.id = ? ",
+        "SELECT vc.random_code,vc.created_at, cus.id FROM tbl_verify_code AS vc JOIN tbl_customer_user AS cus ON vc.customer_user_id = cus.id WHERE vc.id = ? ",
         [codeId]
     );
     return rows[0];

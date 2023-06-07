@@ -11,7 +11,7 @@ const checkEmailExists = async (email) => {
 
 const sendVerifyCode = async (data) => {
     const [result, fields] = await pool.query(
-        "INSERT INTO tbl_vefify_code SET ?",
+        "INSERT INTO tbl_verify_code SET ?",
         [data]
     );
     return result;
@@ -19,7 +19,7 @@ const sendVerifyCode = async (data) => {
 
 const checkVerifyCode = async (codeId) => {
     const [rows, fields] = await pool.query(
-        "SELECT random_code,created_at FROM tbl_vefify_code WHERE id = ? ",
+        "SELECT random_code,created_at FROM tbl_verify_code WHERE id = ? ",
         [codeId]
     );
     return rows[0];
