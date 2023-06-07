@@ -80,6 +80,25 @@ function OrderDetail() {
     }, [invoiceId]);
 
     useEffect(() => {
+        if (productListClone) {
+            const price_total = productListClone?.reduce(
+                (accumulator, currentValue) => {
+                    return (
+                        accumulator +
+                        parseFloat(currentValue?.unit_price) *
+                            currentValue?.product_quantity
+                    );
+                },
+                0
+            );
+            setInvoiceClone({
+                ...invoiceClone,
+                provisional_price: price_total,
+            });
+        }
+    }, [productListClone]);
+
+    useEffect(() => {
         if (invoiceById) {
             setInvoiceClone({
                 ...invoiceById,
@@ -144,7 +163,7 @@ function OrderDetail() {
                         <div className={cx("invoice-info")}>
                             <Grid container spacing={2}>
                                 <Grid item xs={12}>
-                                    <div>
+                                    <div className={cx("info-item")}>
                                         <h3>Thông tin đơn hàng</h3>
                                     </div>
                                 </Grid>
@@ -237,7 +256,7 @@ function OrderDetail() {
                         <div className={cx("invoice-product-info")}>
                             <Grid container spacing={2}>
                                 <Grid item xs={12}>
-                                    <div>
+                                    <div className={cx("info-item")}>
                                         <h3>Thông tin sản phẩm</h3>
                                     </div>
                                 </Grid>{" "}
@@ -260,7 +279,13 @@ function OrderDetail() {
                                                         />
                                                     </div>
                                                 </Grid>
-                                                <Grid item xs={9}>
+                                                <Grid
+                                                    item
+                                                    xs={9}
+                                                    display={"flex"}
+                                                    flexDirection={"column"}
+                                                    justifyContent={"center"}
+                                                >
                                                     <div>
                                                         <Grid
                                                             container
@@ -321,12 +346,30 @@ function OrderDetail() {
                                 </Grid>
                                 <Grid item xs={12}>
                                     <div className={cx("price_total")}>
-                                        Tổng tiền:{" "}
-                                        <span>
-                                            {FormatCurrency(
-                                                invoiceClone?.price_total
-                                            )}
-                                        </span>
+                                        <div>
+                                            <div className={cx("sub-total")}>
+                                                Tạm tính:{" "}
+                                                <span>
+                                                    {FormatCurrency(
+                                                        invoiceClone?.provisional_price
+                                                    )}
+                                                </span>
+                                            </div>
+                                            <div className={cx("costs")}>
+                                                Phí vận chuyển:{" "}
+                                                <span>
+                                                    {FormatCurrency(15000)}
+                                                </span>
+                                            </div>
+                                            <div className={cx("total")}>
+                                                Tổng tiền:{" "}
+                                                <span>
+                                                    {FormatCurrency(
+                                                        invoiceClone?.price_total
+                                                    )}
+                                                </span>
+                                            </div>
+                                        </div>
                                     </div>
                                 </Grid>
                             </Grid>

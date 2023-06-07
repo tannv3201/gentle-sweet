@@ -1,3 +1,27 @@
+@media only screen and (max-width: 600px) {
+    .price_total {
+        display: block !important;
+        .sub-total,
+        .costs,
+        .total {
+            width: 100% !important;
+        }
+        font-size: 1.5rem !important;
+    }
+    .invoice-header {
+        .invoice-code {
+            font-size: 1.8rem !important;
+        }
+    }
+    .info-item {
+        font-size: 1.5rem !important;
+    }
+    .product-item {
+        font-size: 1.5rem !important;
+        font-weight: var(--fw-medium) !important;
+    }
+}
+
 .wrapper {
     display: flex;
     justify-content: center;
@@ -69,13 +93,21 @@
         }
         .price_total {
             display: flex;
-            justify-content: flex-end;
-            align-items: center;
+            flex-direction: column;
+            align-items: flex-end;
             border-top: 1px solid var(--border-color);
             padding: 4px 0;
-            span {
-                padding-left: 12px;
-                font-size: 1.8rem;
+            .sub-total,
+            .costs,
+            .total {
+                width: 240px;
+                display: flex;
+                justify-content: space-between;
+            }
+            .costs {
+            }
+            .total {
+                border-top: 1px solid var(--border-color);
                 font-weight: var(--fw-medium);
             }
         }
