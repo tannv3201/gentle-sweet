@@ -31,9 +31,13 @@
 
 .inner {
     width: var(--default-layout-width);
+}
+
+.invoice-wrapper {
+    margin-top: 12px;
     border: 1px solid var(--border-color);
-    border-radius: 6px;
     padding: 0 12px 12px 12px;
+    border-radius: 6px;
     background-color: var(--white);
 
     .invoice-header {
@@ -58,8 +62,52 @@
             font-weight: var(--fw-semi-bold);
         }
         .info-item {
+            // Đã hủy
+            .pending {
+                background-color: #f57c00;
+                color: var(--white);
+                padding: 2px 8px !important;
+                border-radius: 4px;
+            }
+
+            .product-waiting,
+            .received {
+                background-color: #0288d1;
+                color: var(--white);
+                padding: 2px 8px !important;
+                border-radius: 4px;
+            }
+
+            .cancel {
+                background-color: #d32f2f;
+                color: var(--white);
+                padding: 2px 8px !important;
+                border-radius: 4px;
+            }
+            .cancel-pending {
+                background-color: rgb(206, 147, 216);
+                color: var(--white);
+                padding: 2px 8px !important;
+                border-radius: 4px;
+            }
+
+            // Đang vận chuyển
+            .delivering {
+                background-color: #1769aa;
+                color: var(--white);
+                padding: 2px 8px !important;
+                border-radius: 4px;
+            }
+
+            // Đã hoàn thành
+            .delivered {
+                background-color: #2e7d32;
+                color: var(--white);
+                padding: 2px 8px !important;
+                border-radius: 4px;
+            }
             span {
-                color: #1976d2;
+                // color: #1976d2;
                 font-weight: var(--fw-medium);
             }
         }

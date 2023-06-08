@@ -30,8 +30,6 @@ import {
     updateInvoiceSuccess,
 } from "../slice/invoiceSlice";
 
-import { getInvoiceDetailByInvoiceId } from "./apiInvoiceDetail";
-
 export const getAllInvoice = async (accessToken, dispatch, axiosJWT) => {
     dispatch(getAllInvoiceStart());
     try {

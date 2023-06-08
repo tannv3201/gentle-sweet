@@ -15,10 +15,7 @@ import {
     getProvince,
     getWard,
 } from "../../../../../redux/api/apiProvince";
-import { createCustomerUser } from "../../../../../redux/api/apiCustomerUser";
-import { toast } from "react-hot-toast";
-import dayjs from "dayjs";
-import utc from "dayjs/plugin/utc";
+
 import { useParams } from "react-router-dom";
 import {
     createDelivery,

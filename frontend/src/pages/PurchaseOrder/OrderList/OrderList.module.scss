@@ -7,6 +7,7 @@
             border-radius: 4px;
         }
 
+        &.product-waiting,
         &.received {
             background-color: #0288d1;
             color: var(--white);
@@ -20,16 +21,24 @@
             padding: 2px 8px !important;
             border-radius: 4px;
         }
-
-        &.delivering {
-            background-color: #ab47bc;
+        &.cancel-pending {
+            background-color: rgb(206, 147, 216);
             color: var(--white);
             padding: 2px 8px !important;
             border-radius: 4px;
         }
 
+        // Đang vận chuyển
+        &.delivering {
+            background-color: #1769aa;
+            color: var(--white);
+            padding: 2px 8px !important;
+            border-radius: 4px;
+        }
+
+        // Đã hoàn thành
         &.delivered {
-            background-color: #388e3c;
+            background-color: #2e7d32;
             color: var(--white);
             padding: 2px 8px !important;
             border-radius: 4px;
@@ -138,6 +147,13 @@
 
                 &.delivered {
                     background-color: #388e3c;
+                    color: var(--white);
+                    padding: 4px 12px;
+                    border-radius: 4px;
+                }
+
+                &.cancel-pending {
+                    background-color: rgb(206, 147, 216);
                     color: var(--white);
                     padding: 4px 12px;
                     border-radius: 4px;

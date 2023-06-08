@@ -206,8 +206,8 @@ function CheckoutInformation() {
                             disabled
                             value={
                                 customerUser?.last_name +
-                                " " +
-                                customerUser?.first_name
+                                    " " +
+                                    customerUser?.first_name || ""
                             }
                             label="Họ và tên"
                             fullWidth
@@ -217,7 +217,7 @@ function CheckoutInformation() {
                     <Grid item lg={6} md={12} sm={12} xs={12}>
                         <GTextFieldNormal
                             disabled
-                            value={customerUser?.email}
+                            value={customerUser?.email || ""}
                             label="Email"
                             fullWidth
                             name="email"
@@ -233,7 +233,7 @@ function CheckoutInformation() {
                     <Grid item lg={6} md={12} sm={12} xs={12}>
                         <GTextFieldNormal
                             disabled
-                            value={customerUser?.phone_number}
+                            value={customerUser?.phone_number || ""}
                             label="Số điện thoại"
                             fullWidth
                             name="phone_number"

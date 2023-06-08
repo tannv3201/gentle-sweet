@@ -10,13 +10,13 @@ import GButton from "../../../components/MyButton/MyButton";
 import { API_IMAGE_URL } from "../../../LocalConstants";
 import { useNavigate } from "react-router-dom";
 import { VisibilityOffRounded, VisibilityRounded } from "@mui/icons-material";
-
 const cx = classNames.bind(styles);
 
 function OrderList({ invoiceListByUser }) {
     const theme = useTheme();
     const navigate = useNavigate();
     const isMedium = useMediaQuery(theme.breakpoints.down("md"));
+    const isSmall = useMediaQuery(theme.breakpoints.down("sm"));
     const handleNavigateOrderDetail = (invoiceId) => {
         navigate(`/don-mua/${invoiceId}`);
     };
@@ -74,13 +74,7 @@ function OrderList({ invoiceListByUser }) {
                                                             <span
                                                                 className={
                                                                     invoice?.status ===
-                                                                    5
-                                                                        ? cx(
-                                                                              "status-content",
-                                                                              "cancel"
-                                                                          )
-                                                                        : invoice?.status ===
-                                                                          1
+                                                                    1
                                                                         ? cx(
                                                                               "status-content",
                                                                               "pending"
@@ -95,13 +89,31 @@ function OrderList({ invoiceListByUser }) {
                                                                           3
                                                                         ? cx(
                                                                               "status-content",
-                                                                              "delivering"
+                                                                              "product-waiting"
                                                                           )
                                                                         : invoice?.status ===
                                                                           4
                                                                         ? cx(
                                                                               "status-content",
+                                                                              "delivering"
+                                                                          )
+                                                                        : invoice?.status ===
+                                                                          5
+                                                                        ? cx(
+                                                                              "status-content",
                                                                               "delivered"
+                                                                          )
+                                                                        : invoice?.status ===
+                                                                          6
+                                                                        ? cx(
+                                                                              "status-content",
+                                                                              "cancel"
+                                                                          )
+                                                                        : invoice?.status ===
+                                                                          7
+                                                                        ? cx(
+                                                                              "status-content",
+                                                                              "cancel-pending"
                                                                           )
                                                                         : ""
                                                                 }
@@ -113,6 +125,9 @@ function OrderList({ invoiceListByUser }) {
                                                         </div>
                                                     </div>
                                                     <GButton
+                                                        className={cx(
+                                                            "see-detail"
+                                                        )}
                                                         variant="outlined"
                                                         startIcon={
                                                             <VisibilityRounded />
@@ -123,7 +138,9 @@ function OrderList({ invoiceListByUser }) {
                                                             )
                                                         }
                                                     >
-                                                        Xem chi tiết
+                                                        {isSmall
+                                                            ? "Xem"
+                                                            : "Xem chi tiết"}
                                                     </GButton>
                                                 </div>
                                             </Grid>
