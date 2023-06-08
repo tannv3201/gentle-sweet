@@ -22,23 +22,31 @@ const cx = classNames.bind(styles);
 const invoiceStatus = [
     {
         id: 1,
-        name: "Chờ xác nhận",
+        name: "Chờ tiếp nhận",
     },
     {
         id: 2,
-        name: "Đã xác nhận",
+        name: "Đã tiếp nhận",
     },
     {
         id: 3,
-        name: "Đang giao hàng",
+        name: "Chờ lấy hàng",
     },
     {
         id: 4,
-        name: "Giao hàng thành công",
+        name: "Đang vận chuyển",
     },
     {
         id: 5,
+        name: "Đã giao",
+    },
+    {
+        id: 6,
         name: "Đã hủy",
+    },
+    {
+        id: 7,
+        name: "Yêu cầu hủy đơn",
     },
 ];
 
@@ -217,7 +225,7 @@ function FilterInvoice({ isFiltering, setIsFiltering }) {
                         </Grid>
                         <Grid item xs={3}>
                             <GDatePicker
-                                label={"Từ ngày"}
+                                label={"Đến ngày"}
                                 fullWidth
                                 name="birth_date"
                                 onChange={(date) =>
