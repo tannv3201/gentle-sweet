@@ -129,7 +129,6 @@ export const updateInvoice = async (
         });
         dispatch(updateInvoiceSuccess(res?.data));
         if (res?.data?.status === 200) {
-            toast.success(res?.data?.msg);
             await getInvoiceById(dispatch, id, accessToken, axiosJWT);
         }
         console.log(res?.data);
@@ -226,18 +225,20 @@ export const confirmInvoice = async (accessToken, dispatch, id, axiosJWT) => {
     }
 };
 
-export const cancelInvoice = async (accessToken, dispatch, id, axiosJWT) => {
+export const cancelInvoice = async (
+    accessToken,
+    dispatch,
+    id,
+    note,
+    axiosJWT
+) => {
     dispatch(cancelInvoiceStart());
     try {
-        const res = await axiosJWT.put(
-            "/v1/invoice/cancel/" + id,
-            {},
-            {
-                headers: {
-                    token: `Bearer ${accessToken}`,
-                },
-            }
-        );
+        const res = await axiosJWT.put("/v1/invoice/cancel/" + id, note, {
+            headers: {
+                token: `Bearer ${accessToken}`,
+            },
+        });
         dispatch(cancelInvoiceSuccess(res?.data));
         if (res?.data?.status === 200) {
             toast.success(res?.data?.msg);
