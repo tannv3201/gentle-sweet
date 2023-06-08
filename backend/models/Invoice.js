@@ -29,8 +29,11 @@ const invoiceSearch = async (params) => {
     }
 
     if (params.endDate) {
-        query += " AND created_at <= (?)";
-        values.push(params.endDate);
+        const endDate = new Date(params.endDate);
+        endDate.setDate(endDate.getDate() + 1);
+
+        query += " AND created_at < (?)";
+        values.push(endDate);
     }
 
     if (params.customer_user_id) {
