@@ -55,8 +55,7 @@ export const createDelivery = async (
         dispatch(createDeliverySuccess(res?.data));
         if (res?.data?.status === 201) {
             // toast.success(res?.data?.msg);
-            toast.success("Thêm delivery thành công.");
-            await getAllDelivery(accessToken, dispatch, axiosJWT);
+            toast.success("Thêm thông tin giao hàng thành công.");
         }
 
         return res?.data?.data;
@@ -68,10 +67,10 @@ export const createDelivery = async (
 export const updateDelivery = async (
     accessToken,
     dispatch,
-    userId,
     deliveryId,
     deliveryData,
-    axiosJWT
+    axiosJWT,
+    invoiceId
 ) => {
     dispatch(updateDeliveryStart());
     try {
@@ -87,8 +86,12 @@ export const updateDelivery = async (
         dispatch(updateDeliverySuccess(res?.data));
         if (res?.data?.status === 200) {
             toast.success(res?.data?.msg);
-            // getAllDelivery(accessToken, dispatch, axiosJWT);
-            await getDeliveryByUserId(accessToken, dispatch, userId, axiosJWT);
+            await getDeliveryByInvoiceId(
+                dispatch,
+                invoiceId,
+                accessToken,
+                axiosJWT
+            );
         }
         console.log(res?.data);
     } catch (error) {
