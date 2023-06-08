@@ -302,7 +302,7 @@ function CheckoutInformation() {
                     <Grid item xs={12}>
                         <GTextFieldNormal
                             disabled
-                            value={customerUser?.detail_address}
+                            value={customerUser?.detail_address || ""}
                             label="Địa chỉ chi tiết"
                             fullWidth
                             name="detail_address"
