@@ -8,11 +8,11 @@ import { updateInvoice } from "../../../../../redux/api/apiInvoice";
 import { useParams } from "react-router-dom";
 import { toast } from "react-hot-toast";
 
-function CofirmCancelInvoicePopup({
+function ConfirmCancelInvoicePopup({
     handleClose,
     handleOpen,
     isOpen,
-    selectedUser,
+    currInvoice,
 }) {
     const { invoiceId } = useParams();
     const user = useSelector((state) => state.auth.login?.currentUser);
@@ -73,4 +73,4 @@ function CofirmCancelInvoicePopup({
     );
 }
 
-export default CofirmCancelInvoicePopup;
+export default ConfirmCancelInvoicePopup;

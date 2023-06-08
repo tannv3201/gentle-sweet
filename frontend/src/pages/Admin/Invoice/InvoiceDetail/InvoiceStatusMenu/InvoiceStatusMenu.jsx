@@ -7,7 +7,7 @@ import styles from "./InvoiceStatusMenu.module.scss";
 
 import { useState } from "react";
 import GButton from "../../../../../components/MyButton/MyButton";
-import CofirmCancelInvoicePopup from "./CofirmCancelInvoicePopup";
+import CofirmCancelInvoicePopup from "./ConfirmCancelInvoiceRequestPopup";
 import { updateDelivery } from "../../../../../redux/api/apiDelivery";
 import { createAxios } from "../../../../../createInstance";
 import { useDispatch } from "react-redux";
@@ -16,6 +16,7 @@ import { loginSuccess } from "../../../../../redux/slice/authSlice";
 import { updateInvoice } from "../../../../../redux/api/apiInvoice";
 import { useParams } from "react-router-dom";
 import { toast } from "react-hot-toast";
+import ConfirmCancelInvoicePopup from "./ConfirmCancelInvoicePopup";
 
 const cx = classNames.bind(styles);
 
@@ -162,7 +163,7 @@ export default function InvoiceStatusMenu({ selectedUser }) {
                     Hủy
                 </MenuItem>
             </Menu>
-            <CofirmCancelInvoicePopup
+            <ConfirmCancelInvoicePopup
                 isOpen={isOpenConfirmCancelInvoicePopup}
                 handleOpen={handleOpenConfirmCancelInvoiceModal}
                 handleClose={handleCloseConfirmCancelInvoiceModal}

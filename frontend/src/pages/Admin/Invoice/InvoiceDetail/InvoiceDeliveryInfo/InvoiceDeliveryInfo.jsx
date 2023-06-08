@@ -4,12 +4,16 @@ import classNames from "classnames/bind";
 import { Grid } from "@mui/material";
 import { useSelector } from "react-redux";
 import { GFormatDate } from "../../../../../components/GDatePicker/GDatePicker";
-import { LocalShippingRounded, PriorityHighRounded } from "@mui/icons-material";
+import {
+    LocalShippingRounded,
+    PriorityHighRounded,
+    VisibilityRounded,
+} from "@mui/icons-material";
 import InvoiceStatusMenu from "../InvoiceStatusMenu/InvoiceStatusMenu";
 import DeliveryCodePopup from "../DeliveryCode/DeliveryCode";
 import GButton from "../../../../../components/MyButton/MyButton";
-import CofirmCancelInvoicePopup from "../InvoiceStatusMenu/CofirmCancelInvoicePopup";
-import ConfirmRejectCancelInvoicePopup from "../InvoiceStatusMenu/ConfirmRejectCancelInvoicePopup";
+import ConfirmCancelInvoiceRequestPopup from "../InvoiceStatusMenu/ConfirmCancelInvoiceRequestPopup";
+
 const cx = classNames.bind(styles);
 
 function InfoItem({ label, content }) {
@@ -68,28 +72,17 @@ function InvoiceDeliveryInfo({
     };
 
     const [
-        isOpenConfirmCancelInvoicePopup,
-        setIsOpenConfirmCancelInvoicePopup,
+        isOpenConfirmCancelInvoiceRequestPopup,
+        setIsOpenConfirmCancelInvoiceRequestPopup,
     ] = useState(false);
-    const handleOpenConfirmCancelInvoiceModal = () => {
-        setIsOpenConfirmCancelInvoicePopup(true);
+    const handleOpenConfirmCancelInvoiceRequestModal = () => {
+        setIsOpenConfirmCancelInvoiceRequestPopup(true);
     };
 
-    const handleCloseConfirmCancelInvoiceModal = () => {
-        setIsOpenConfirmCancelInvoicePopup(false);
+    const handleCloseConfirmCancelInvoiceRequestModal = () => {
+        setIsOpenConfirmCancelInvoiceRequestPopup(false);
     };
 
-    const [
-        isOpenConfirmRejectCancelInvoicePopup,
-        setIsOpenConfirmRejectCancelInvoicePopup,
-    ] = useState(false);
-    const handleOpenConfirmRejectCancelInvoiceModal = () => {
-        setIsOpenConfirmRejectCancelInvoicePopup(true);
-    };
-
-    const handleCloseConfirmRejectCancelInvoiceModal = () => {
-        setIsOpenConfirmRejectCancelInvoicePopup(false);
-    };
     return (
         <div className={cx("invoice-delivery-info-wrapper")}>
             <div className={cx("delivery-info-header")}>
@@ -114,19 +107,12 @@ function InvoiceDeliveryInfo({
                             <div className={cx("cancel-request-action")}>
                                 <GButton
                                     onClick={
-                                        handleOpenConfirmCancelInvoiceModal
+                                        handleOpenConfirmCancelInvoiceRequestModal
                                     }
-                                    color={"success"}
+                                    color={"info"}
+                                    startIcon={<VisibilityRounded />}
                                 >
-                                    Chấp nhận
-                                </GButton>
-                                <GButton
-                                    onClick={
-                                        handleOpenConfirmRejectCancelInvoiceModal
-                                    }
-                                    color={"error"}
-                                >
-                                    Từ chối
+                                    Xem
                                 </GButton>
                             </div>
                         </div>
@@ -253,15 +239,11 @@ function InvoiceDeliveryInfo({
                 handleOpen={handleOpenDeliveryCodePopup}
                 handleClose={handleCloseDeliveryCodePopup}
             />
-            <CofirmCancelInvoicePopup
-                isOpen={isOpenConfirmCancelInvoicePopup}
-                handleOpen={handleOpenConfirmCancelInvoiceModal}
-                handleClose={handleCloseConfirmCancelInvoiceModal}
-            />
-            <ConfirmRejectCancelInvoicePopup
-                isOpen={isOpenConfirmRejectCancelInvoicePopup}
-                handleOpen={handleOpenConfirmRejectCancelInvoiceModal}
-                handleClose={handleCloseConfirmRejectCancelInvoiceModal}
+            <ConfirmCancelInvoiceRequestPopup
+                isOpen={isOpenConfirmCancelInvoiceRequestPopup}
+                handleOpen={handleOpenConfirmCancelInvoiceRequestModal}
+                handleClose={handleCloseConfirmCancelInvoiceRequestModal}
+                currInvoice={currInvoice}
             />
         </div>
     );

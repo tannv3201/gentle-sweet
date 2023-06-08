@@ -1,8 +1,8 @@
 import React from "react";
 import OrderList from "./OrderList/OrderList";
 
-function OrderPending({ invoiceListByUser }) {
+function OrderCancelPending({ invoiceListByUser }) {
     return <OrderList invoiceListByUser={invoiceListByUser} />;
 }
 
-export default OrderPending;
+export default OrderCancelPending;

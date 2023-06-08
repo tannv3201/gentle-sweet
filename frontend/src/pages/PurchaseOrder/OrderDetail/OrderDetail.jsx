@@ -261,7 +261,9 @@ function OrderDetail() {
                                         <div className={cx("info-item")}>
                                             Đơn vị vận chuyển:{" "}
                                             <span>
-                                                {deliveryClone?.delivery_unit
+                                                {invoiceClone?.status === 6
+                                                    ? "--"
+                                                    : deliveryClone?.delivery_unit
                                                     ? deliveryClone?.delivery_unit
                                                     : "--"}
                                             </span>
@@ -271,7 +273,9 @@ function OrderDetail() {
                                         <div className={cx("info-item")}>
                                             Mã vận đơn:{" "}
                                             <span>
-                                                {deliveryClone?.delivery_code
+                                                {invoiceClone?.status === 6
+                                                    ? "--"
+                                                    : deliveryClone?.delivery_code
                                                     ? deliveryClone?.delivery_code
                                                     : "--"}
                                             </span>

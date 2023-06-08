@@ -21,6 +21,10 @@ import OrderPending from "./OrderPending";
 import OrderReceived from "./OrderReceived";
 import OrderCancel from "./OrderPending";
 import { toast } from "react-hot-toast";
+import OrderProductWaiting from "./OrderProductWaiting";
+import OrderDelivering from "./OrderDelivering";
+import OrderDelivered from "./OrderDelivered";
+import OrderCancelPending from "./OrderCancelPending";
 
 const cx = classNames.bind(styles);
 
@@ -40,7 +44,11 @@ function PurchaseOrder() {
     const [invoiceList, setInvoiceList] = useState([]);
     const [invoiceListStatus1, setInvoiceListStatus1] = useState([]);
     const [invoiceListStatus2, setInvoiceListStatus2] = useState([]);
+    const [invoiceListStatus3, setInvoiceListStatus3] = useState([]);
+    const [invoiceListStatus4, setInvoiceListStatus4] = useState([]);
     const [invoiceListStatus5, setInvoiceListStatus5] = useState([]);
+    const [invoiceListStatus6, setInvoiceListStatus6] = useState([]);
+    const [invoiceListStatus7, setInvoiceListStatus7] = useState([]);
     const invoiceDetailList = [];
     const productInvoiceDetail = [];
     const [getInvoiceListByUser, setGetInvoiceListByUser] = useState([]);
@@ -226,17 +234,26 @@ function PurchaseOrder() {
 
                 setInvoiceList(structuredClone(proList));
 
-                // find invoice status = 1: chờ xác nhận
                 const invoiceStatus1 = proList.filter((i) => i?.status === 1);
                 setInvoiceListStatus1(invoiceStatus1);
 
-                // find invoice status = 2: Đã xác nhận
                 const invoiceStatus2 = proList.filter((i) => i?.status === 2);
                 setInvoiceListStatus2(invoiceStatus2);
 
-                // find invoice status = 5: Đã hủy
+                const invoiceStatus3 = proList.filter((i) => i?.status === 3);
+                setInvoiceListStatus3(invoiceStatus3);
+
+                const invoiceStatus4 = proList.filter((i) => i?.status === 4);
+                setInvoiceListStatus4(invoiceStatus4);
+
                 const invoiceStatus5 = proList.filter((i) => i?.status === 5);
                 setInvoiceListStatus5(invoiceStatus5);
+
+                const invoiceStatus6 = proList.filter((i) => i?.status === 6);
+                setInvoiceListStatus6(invoiceStatus6);
+
+                const invoiceStatus7 = proList.filter((i) => i?.status === 7);
+                setInvoiceListStatus7(invoiceStatus7);
             }
         };
 
@@ -257,9 +274,13 @@ function PurchaseOrder() {
                             aria-label="lab API tabs example"
                         >
                             <Tab label="Tất cả" value="1" />
-                            <Tab label="Chờ xác nhận" value="2" />
-                            <Tab label="Đã xác nhận" value="3" />
-                            <Tab label="Đã hủy" value="4" />
+                            <Tab label="Chờ tiếp nhận" value="2" />
+                            <Tab label="Đã tiếp nhận" value="3" />
+                            <Tab label="Chờ lấy hàng" value="4" />
+                            <Tab label="Đang vận chuyển" value="5" />
+                            <Tab label="Đã giao" value="6" />
+                            <Tab label="Đã hủy" value="7" />
+                            <Tab label="Yêu cầu hủy đơn" value="8" />
                         </TabList>
                     </Box>
                     <TabPanel value="1">
@@ -272,7 +293,27 @@ function PurchaseOrder() {
                         <OrderReceived invoiceListByUser={invoiceListStatus2} />
                     </TabPanel>
                     <TabPanel value="4">
-                        <OrderCancel invoiceListByUser={invoiceListStatus5} />
+                        <OrderProductWaiting
+                            invoiceListByUser={invoiceListStatus3}
+                        />
+                    </TabPanel>
+                    <TabPanel value="5">
+                        <OrderDelivering
+                            invoiceListByUser={invoiceListStatus4}
+                        />
+                    </TabPanel>
+                    <TabPanel value="6">
+                        <OrderDelivered
+                            invoiceListByUser={invoiceListStatus5}
+                        />
+                    </TabPanel>
+                    <TabPanel value="7">
+                        <OrderCancel invoiceListByUser={invoiceListStatus6} />
+                    </TabPanel>
+                    <TabPanel value="8">
+                        <OrderCancelPending
+                            invoiceListByUser={invoiceListStatus7}
+                        />
                     </TabPanel>
                 </TabContext>
             </div>

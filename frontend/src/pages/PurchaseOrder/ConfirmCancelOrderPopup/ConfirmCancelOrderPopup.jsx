@@ -5,11 +5,12 @@ import { useFormik } from "formik";
 import GTextFieldNormal from "../../../components/GTextField/GTextFieldNormal";
 import { Grid } from "@mui/material";
 import * as Yup from "yup";
-import { cancelInvoice } from "../../../redux/api/apiInvoice";
+import { cancelInvoice, updateInvoice } from "../../../redux/api/apiInvoice";
 import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
 import { createAxios } from "../../../createInstance";
 import { loginSuccess } from "../../../redux/slice/authSlice";
+import { toast } from "react-hot-toast";
 
 function ConfirmCancelOrderPopup({ handleClose, handleOpen, isOpen, invoice }) {
     const validationSchema = Yup.object().shape({
@@ -20,14 +21,15 @@ function ConfirmCancelOrderPopup({ handleClose, handleOpen, isOpen, invoice }) {
     const dispatch = useDispatch();
     let axiosJWT = createAxios(user, dispatch, loginSuccess);
 
-    const handleCancelInvoice = async (data) => {
-        await cancelInvoice(
+    const handleCancelInvoice = async (data, msg) => {
+        await updateInvoice(
             user?.accessToken,
             dispatch,
             invoice?.invoiceId,
             data,
             axiosJWT
         ).then(() => {
+            toast.success(msg);
             handleClose();
         });
     };
@@ -39,12 +41,15 @@ function ConfirmCancelOrderPopup({ handleClose, handleOpen, isOpen, invoice }) {
         },
         onSubmit: async (data) => {
             let status;
-            if (invoice?.status === 2) {
+            let msg;
+            if (invoice?.status < 3) {
                 status = 6;
-            } else if (invoice?.status === 1) {
-                status = 5;
+                msg = "Hủy đơn hàng thành công";
+            } else if (invoice?.status === 3) {
+                status = 7;
+                msg = "Gửi yêu cầu hủy đơn hàng thành công";
             }
-            await handleCancelInvoice({ ...data, status: status });
+            await handleCancelInvoice({ ...data, status: status }, msg);
         },
     });
     return (

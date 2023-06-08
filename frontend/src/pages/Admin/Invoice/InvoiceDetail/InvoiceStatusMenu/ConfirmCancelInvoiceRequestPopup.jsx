@@ -8,17 +8,29 @@ import { updateInvoice } from "../../../../../redux/api/apiInvoice";
 import { useParams } from "react-router-dom";
 import { toast } from "react-hot-toast";
 
-function ConfirmRejectCancelInvoicePopup({
+function ConfirmCancelInvoiceRequestPopup({
     handleClose,
     handleOpen,
     isOpen,
-    selectedUser,
+    currInvoice,
 }) {
     const { invoiceId } = useParams();
     const user = useSelector((state) => state.auth.login?.currentUser);
     const dispatch = useDispatch();
     let axiosJWT = createAxios(user, dispatch, loginSuccess);
 
+    const handleCancelInvoice = async () => {
+        await updateInvoice(
+            user?.accessToken,
+            dispatch,
+            invoiceId,
+            { status: 6 },
+            axiosJWT
+        ).then(() => {
+            toast.success("Hủy đơn hàng thành công");
+            handleClose();
+        });
+    };
     const handleRejectCancelInvoice = async () => {
         await updateInvoice(
             user?.accessToken,
@@ -31,7 +43,6 @@ function ConfirmRejectCancelInvoicePopup({
             handleClose();
         });
     };
-
     return (
         <>
             <GModal
@@ -40,34 +51,36 @@ function ConfirmRejectCancelInvoicePopup({
                 }}
                 handleOpen={handleOpen}
                 isOpen={isOpen}
-                title="Xác nhận"
+                title="Yêu cầu hủy đơn hàng"
             >
                 <div>
-                    <div style={{ padding: "12px 0" }}>
-                        Bạn có muốn từ chối hủy đơn hàng{" "}
+                    <div style={{ padding: "12px 8px" }}>
+                        <span style={{ fontWeight: "var(--fw-medium)" }}>
+                            {" "}
+                            {`Lý do hủy đơn hàng #${invoiceId}: `} <br />
+                        </span>
                         <span
                             style={{
-                                fontWeight: "var(--fw-semi-bold)",
-                                color: "red",
+                                display: "block",
+                                fontStyle: "italic",
                             }}
                         >
-                            {`#${invoiceId}`}
-                        </span>{" "}
-                        không ?
+                            "{currInvoice?.note}"
+                        </span>
                     </div>
                     <div style={{ paddingTop: "24px" }}>
                         <GButton
-                            color={"error"}
-                            onClick={handleRejectCancelInvoice}
+                            color={"success"}
+                            onClick={handleCancelInvoice}
                         >
-                            Xác nhận
+                            Đồng ý
                         </GButton>
                         <GButton
-                            color={"text"}
+                            color={"error"}
                             style={{ marginLeft: "12px" }}
-                            onClick={handleClose}
+                            onClick={handleRejectCancelInvoice}
                         >
-                            Hủy
+                            Từ chối
                         </GButton>
                     </div>
                 </div>
@@ -76,4 +89,4 @@ function ConfirmRejectCancelInvoicePopup({
     );
 }
 
-export default ConfirmRejectCancelInvoicePopup;
+export default ConfirmCancelInvoiceRequestPopup;

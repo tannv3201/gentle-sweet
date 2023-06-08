@@ -436,7 +436,6 @@ export default function Account() {
                                         options={provinces}
                                         onBlur={formik.handleBlur}
                                         disableClearable={!isEditting}
-                                        disableOpenOnFocus={!isEditting}
                                         getOptionLabel={(option) =>
                                             option.province_name
                                         }
