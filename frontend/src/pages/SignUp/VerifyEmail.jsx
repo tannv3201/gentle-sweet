@@ -128,7 +128,7 @@ function VerifyEmail() {
                         </Grid>
                         <Grid item xs={12}>
                             <GButton type="submit" size="medium " fullWidth>
-                                Đặt lại mật khẩu
+                                Xác thực
                             </GButton>
                             <span className={cx("navigate-question")}>
                                 Trở lại{" "}
