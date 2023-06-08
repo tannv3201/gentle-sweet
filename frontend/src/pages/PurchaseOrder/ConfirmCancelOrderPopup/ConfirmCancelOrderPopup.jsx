@@ -11,8 +11,12 @@ import { useDispatch } from "react-redux";
 import { createAxios } from "../../../createInstance";
 import { loginSuccess } from "../../../redux/slice/authSlice";
 import { toast } from "react-hot-toast";
+import { useMediaQuery } from "@mui/material";
+import { useTheme } from "@mui/material/styles";
 
 function ConfirmCancelOrderPopup({ handleClose, handleOpen, isOpen, invoice }) {
+    const theme = useTheme();
+    const isSmall = useMediaQuery(theme.breakpoints.down("sm"));
     const validationSchema = Yup.object().shape({
         note: Yup.string().required("Vui lòng nhập lý do"),
     });
@@ -63,7 +67,9 @@ function ConfirmCancelOrderPopup({ handleClose, handleOpen, isOpen, invoice }) {
                 title={"Xác nhận hủy đơn hàng"}
             >
                 <div>
-                    <div style={{ padding: "12px 0", width: 400 }}>
+                    <div
+                        style={isSmall ? {} : { padding: "12px 0", width: 400 }}
+                    >
                         {` Bạn có chắc chắn muốn hủy đơn hàng #${invoice?.invoiceId} ?`}
                     </div>
                     <div style={{ paddingTop: "24px" }}>
