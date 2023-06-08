@@ -94,16 +94,20 @@ export default function InvoiceList() {
                         " " +
                         customerUser?.first_name,
                     status_name:
-                        invoice?.status === 5
-                            ? "Đã hủy"
-                            : invoice?.status === 1
-                            ? "Chờ xác nhận"
+                        invoice?.status === 1
+                            ? "Chờ tiếp nhận"
                             : invoice?.status === 2
-                            ? "Đã xác nhận"
+                            ? "Đã tiếp nhận"
                             : invoice?.status === 3
-                            ? "Đang giao hàng"
+                            ? "Chờ lấy hàng"
                             : invoice?.status === 4
-                            ? "Đã giao hàng"
+                            ? "Đang vận chuyển"
+                            : invoice?.status === 5
+                            ? "Đã giao"
+                            : invoice?.status === 6
+                            ? "Đã hủy"
+                            : invoice?.status === 7
+                            ? "Yêu cầu hủy đơn"
                             : "",
                     created_at: dayjs(invoice?.created_at).format("DD/MM/YYYY"),
                 };
@@ -121,16 +125,20 @@ export default function InvoiceList() {
                         " " +
                         customerUser?.first_name,
                     status_name:
-                        invoice?.status === 5
-                            ? "Đã hủy"
-                            : invoice?.status === 1
-                            ? "Chờ xác nhận"
+                        invoice?.status === 1
+                            ? "Chờ tiếp nhận"
                             : invoice?.status === 2
-                            ? "Đã xác nhận"
+                            ? "Đã tiếp nhận"
                             : invoice?.status === 3
-                            ? "Đang giao hàng"
+                            ? "Chờ lấy hàng"
                             : invoice?.status === 4
-                            ? "Đã giao hàng"
+                            ? "Đang vận chuyển"
+                            : invoice?.status === 5
+                            ? "Đã giao"
+                            : invoice?.status === 6
+                            ? "Đã hủy"
+                            : invoice?.status === 7
+                            ? "Yêu cầu hủy đơn"
                             : "",
                     created_at: dayjs(invoice?.created_at).format("DD/MM/YYYY"),
                 };
@@ -218,44 +226,63 @@ export default function InvoiceList() {
                                             Đã hủy
                                         </span>
                                     ) : rowData?.status_name ===
-                                      "Chờ xác nhận" ? (
+                                      "Chờ tiếp nhận" ? (
                                         <span
                                             className={cx(
                                                 "status_invoice",
                                                 "pending"
                                             )}
                                         >
-                                            Chờ xác nhận
+                                            Chờ tiếp nhận
                                         </span>
                                     ) : rowData?.status_name ===
-                                      "Đã xác nhận" ? (
+                                      "Đã tiếp nhận" ? (
                                         <span
                                             className={cx(
                                                 "status_invoice",
                                                 "received"
                                             )}
                                         >
-                                            Đã xác nhận
+                                            Đã tiếp nhận
                                         </span>
                                     ) : rowData?.status_name ===
-                                      "Đang giao hàng" ? (
+                                      "Đang vận chuyển" ? (
                                         <span
                                             className={cx(
                                                 "status_invoice",
                                                 "delivering"
                                             )}
                                         >
-                                            Đang giao hàng
+                                            Đang vận chuyển
                                         </span>
-                                    ) : rowData?.status_name ===
-                                      "Giao hàng thành công" ? (
+                                    ) : rowData?.status_name === "Đã giao" ? (
                                         <span
                                             className={cx(
                                                 "status_invoice",
                                                 "delivered"
                                             )}
                                         >
-                                            Giao hàng thành công
+                                            Đã giao
+                                        </span>
+                                    ) : rowData?.status_name ===
+                                      "Yêu cầu hủy đơn" ? (
+                                        <span
+                                            className={cx(
+                                                "status_invoice",
+                                                "cancel-pending"
+                                            )}
+                                        >
+                                            Yêu cầu hủy đơn
+                                        </span>
+                                    ) : rowData?.status_name ===
+                                      "Chờ lấy hàng" ? (
+                                        <span
+                                            className={cx(
+                                                "status_invoice",
+                                                "product-waiting"
+                                            )}
+                                        >
+                                            Chờ lấy hàng
                                         </span>
                                     ) : (
                                         ""

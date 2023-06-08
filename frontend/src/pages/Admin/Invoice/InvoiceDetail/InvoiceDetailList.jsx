@@ -9,7 +9,7 @@ import GButton from "../../../../components/MyButton/MyButton";
 import { LightTooltip } from "../../../../components/GTooltip/GTooltip";
 import styles from "./InvoiceDetail.module.scss";
 import classNames from "classnames/bind";
-import { EditRounded } from "@mui/icons-material";
+import { EditRounded, ReportProblemRounded } from "@mui/icons-material";
 import dayjs from "dayjs";
 import utc from "dayjs/plugin/utc";
 import { FormatCurrency } from "../../../../components/FormatCurrency/FormatCurrency";
@@ -31,6 +31,7 @@ export default function InvoiceDetailList({ isEditting }) {
     const getInvoiceDetail = useSelector(
         (state) => state.invoiceDetail.invoiceDetail?.invoiceDetailByInvoice
     );
+    const getInvoice = useSelector((state) => state.invoice.invoice?.invoice);
 
     useEffect(() => {
         const arr = getInvoiceDetail?.map((item) => {
@@ -95,8 +96,17 @@ export default function InvoiceDetailList({ isEditting }) {
         <div className={cx("wrapper-invoice_detail_list")}>
             <div className={cx("table-invoice-detail")}>
                 <div className={cx("header-table-invoice-detail")}>
-                    <span>CHI TIẾT HÓA ĐƠN</span>
-                    {isEditting && (
+                    <div className={cx("invoice-detail-title")}>
+                        <span>CHI TIẾT HÓA ĐƠN </span>
+                        {cloneData?.length === 0 && (
+                            <ReportProblemRounded
+                                className={cx("warning")}
+                                color="warning"
+                            />
+                        )}
+                    </div>
+                    {/* {isEditting && ( */}
+                    {getInvoice?.status < 3 && (
                         <GButton
                             onClick={handleOpenAddProductPopup}
                             color={"success"}
@@ -104,6 +114,7 @@ export default function InvoiceDetailList({ isEditting }) {
                             Thêm sản phẩm
                         </GButton>
                     )}
+                    {/* )} */}
                 </div>
                 {getInvoiceDetail?.length !== 0 ? (
                     <GTable
@@ -150,7 +161,9 @@ export default function InvoiceDetailList({ isEditting }) {
                                         >
                                             <span>
                                                 <IconButton
-                                                    disabled={!isEditting}
+                                                    disabled={
+                                                        getInvoice?.status > 2
+                                                    }
                                                     onClick={() =>
                                                         handleOpenUpdateProductPopup(
                                                             rowData
@@ -159,7 +172,8 @@ export default function InvoiceDetailList({ isEditting }) {
                                                 >
                                                     <EditRounded
                                                         color={
-                                                            !isEditting
+                                                            getInvoice?.status >
+                                                            2
                                                                 ? "neutral"
                                                                 : "primary"
                                                         }
@@ -173,7 +187,9 @@ export default function InvoiceDetailList({ isEditting }) {
                                         >
                                             <span>
                                                 <IconButton
-                                                    disabled={!isEditting}
+                                                    disabled={
+                                                        getInvoice?.status > 2
+                                                    }
                                                     onClick={() => {
                                                         handleOpenDeleteConfirmPopup(
                                                             rowData
@@ -182,7 +198,8 @@ export default function InvoiceDetailList({ isEditting }) {
                                                 >
                                                     <DeleteRoundedIcon
                                                         color={
-                                                            !isEditting
+                                                            getInvoice?.status >
+                                                            2
                                                                 ? "neutral"
                                                                 : "error"
                                                         }

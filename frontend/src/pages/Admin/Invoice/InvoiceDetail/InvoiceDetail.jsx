@@ -23,6 +23,9 @@ import InvoiceDetailList from "./InvoiceDetailList";
 import { getInvoiceDetailByInvoiceId } from "../../../../redux/api/apiInvoiceDetail";
 import ConfirmPopup from "./ConfirmInvoice/ConfirmPopup";
 import CancelPopup from "./ConfirmInvoice/CancelPopup";
+import { getDeliveryByInvoiceId } from "../../../../redux/api/apiDelivery";
+import InvoiceCustomerInfo from "./InvoiceCustomerInfo/InvoiceCustomerInfo";
+import InvoiceDeliveryInfo from "./InvoiceDeliveryInfo/InvoiceDeliveryInfo";
 
 const cx = classNames.bind(styles);
 
@@ -50,11 +53,27 @@ export default function InvoiceDetail() {
     );
 
     useEffect(() => {
-        setCurrInvoice(structuredClone(getInvoice));
-    }, [getInvoice]);
-
-    useEffect(() => {
-        setCurrInvoice(structuredClone(getInvoice));
+        setCurrInvoice(
+            structuredClone({
+                ...getInvoice,
+                statusName:
+                    getInvoice?.status === 1
+                        ? "Chờ tiếp nhận"
+                        : getInvoice?.status === 2
+                        ? "Đã tiếp nhận"
+                        : getInvoice?.status === 3
+                        ? "Chờ lấy hàng"
+                        : getInvoice?.status === 4
+                        ? "Đang vận chuyển"
+                        : getInvoice?.status === 5
+                        ? "Đã giao"
+                        : getInvoice?.status === 6
+                        ? "Đã hủy"
+                        : getInvoice?.status === 7
+                        ? "Yêu cầu hủy đơn"
+                        : "",
+            })
+        );
     }, [getInvoice]);
 
     useEffect(() => {
@@ -88,6 +107,13 @@ export default function InvoiceDetail() {
                     setCurrInvoiceCreator(structuredClone(invoiceCreator));
                 });
             }
+
+            await getDeliveryByInvoiceId(
+                dispatch,
+                invoiceId,
+                user?.accessToken,
+                axiosJWT
+            );
         };
 
         fetchData();
@@ -130,7 +156,7 @@ export default function InvoiceDetail() {
                         <Grid item xs={6}>
                             <div className={cx("invoice-title")}>
                                 <span className={cx("title")}>
-                                    THÔNG TIN HÓA ĐƠN
+                                    ĐƠN HÀNG #{invoiceId}
                                 </span>
                             </div>
                         </Grid>
@@ -153,160 +179,22 @@ export default function InvoiceDetail() {
                                             >
                                                 Xác nhận
                                             </GButton>
-                                            <GButton
-                                                onClick={
-                                                    handleOpenCancelInvoice
-                                                }
-                                                color={"error"}
-                                            >
-                                                Hủy
-                                            </GButton>
                                         </>
                                     )}
-                                {!isEditting ? (
-                                    <GButton
-                                        onClick={() => setIsEditting(true)}
-                                        startIcon={<ModeEditOutlineRounded />}
-                                        color={"info"}
-                                    >
-                                        Chỉnh sửa
-                                    </GButton>
-                                ) : (
-                                    <GButton
-                                        onClick={() => setIsEditting(false)}
-                                        startIcon={<ModeEditOutlineRounded />}
-                                        color={"success"}
-                                    >
-                                        Lưu lại
-                                    </GButton>
-                                )}
                             </div>
                         </Grid>
                     </Grid>
                 </div>
-                <div className={cx("invoice-info-body")}>
-                    <Grid container spacing={2}>
-                        <Grid item xs={12}>
-                            <div>
-                                <Grid container>
-                                    <Grid item xs={6}>
-                                        <span
-                                            className={cx("invoice-info-label")}
-                                        >
-                                            Khách hàng:{" "}
-                                        </span>
-                                        <span
-                                            className={cx(
-                                                "invoice-info-content"
-                                            )}
-                                        >
-                                            {currCustomerUser?.last_name +
-                                                " " +
-                                                currCustomerUser?.first_name}
-                                        </span>
-                                    </Grid>
-                                    <Grid item xs={6}>
-                                        <span
-                                            className={cx("invoice-info-label")}
-                                        >
-                                            Trạng thái:{" "}
-                                        </span>
-                                        {currInvoice?.status === 5 ? (
-                                            <span
-                                                className={cx(
-                                                    "invoice-info-content",
-                                                    "cancel"
-                                                )}
-                                            >
-                                                Đã hủy
-                                            </span>
-                                        ) : currInvoice?.status === 1 ? (
-                                            <span
-                                                className={cx(
-                                                    "invoice-info-content",
-                                                    "pending"
-                                                )}
-                                            >
-                                                Chờ xác nhận
-                                            </span>
-                                        ) : currInvoice?.status === 2 ? (
-                                            <span
-                                                className={cx(
-                                                    "invoice-info-content",
-                                                    "received"
-                                                )}
-                                            >
-                                                Đã đã xác nhận
-                                            </span>
-                                        ) : currInvoice?.status === 3 ? (
-                                            <span
-                                                className={cx(
-                                                    "invoice-info-content",
-                                                    "delivering"
-                                                )}
-                                            >
-                                                Đang giao hàng
-                                            </span>
-                                        ) : currInvoice?.status === 4 ? (
-                                            <span
-                                                className={cx(
-                                                    "invoice-info-content",
-                                                    "delivered"
-                                                )}
-                                            >
-                                                Giao hàng thành công
-                                            </span>
-                                        ) : (
-                                            ""
-                                        )}
-                                    </Grid>
-                                </Grid>
-                            </div>
-                        </Grid>
-                        <Grid item xs={12}>
-                            <div>
-                                <Grid container>
-                                    <Grid item xs={6}>
-                                        <span
-                                            className={cx("invoice-info-label")}
-                                        >
-                                            Ngày tạo:{" "}
-                                        </span>
-                                        <span
-                                            className={cx(
-                                                "invoice-info-content"
-                                            )}
-                                        >
-                                            {dayjs(
-                                                currInvoice?.created_at
-                                            ).format("DD/MM/YYYY")}
-                                        </span>
-                                    </Grid>
-                                    <Grid item xs={6}>
-                                        <span
-                                            className={cx("invoice-info-label")}
-                                        >
-                                            Người tạo:{" "}
-                                        </span>
-                                        <span
-                                            className={cx(
-                                                "invoice-info-content"
-                                            )}
-                                        >
-                                            {currInvoice?.admin_user_id
-                                                ? `STAFF - ${
-                                                      currInvoiceCreator?.last_name +
-                                                      " " +
-                                                      currInvoiceCreator?.first_name
-                                                  }`
-                                                : `CUSTOMER - ${currCustomerUser?.last_name} ${currCustomerUser?.first_name}`}
-                                        </span>
-                                    </Grid>
-                                </Grid>
-                            </div>
-                        </Grid>
-                    </Grid>
-                </div>
+
+                <InvoiceCustomerInfo
+                    currInvoice={currInvoice}
+                    currCustomerUser={currCustomerUser}
+                />
+                <InvoiceDeliveryInfo
+                    currInvoice={currInvoice}
+                    currCustomerUser={currCustomerUser}
+                    currInvoiceCreator={currInvoiceCreator}
+                />
                 <InvoiceDetailList isEditting={isEditting} />
                 <ConfirmPopup
                     isOpen={isOpenConfirmInvoice}
@@ -333,7 +221,6 @@ export default function InvoiceDetail() {
                             currCustomerUser?.first_name,
                     }}
                 />
-                {/* <InvoiceDetailForm /> */}
             </div>
         </>
     );

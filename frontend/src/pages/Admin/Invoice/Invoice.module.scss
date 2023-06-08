@@ -75,38 +75,50 @@
 .invoice-list-wrapper {
     .status_invoice {
         font-weight: var(--fw-medium);
-        &.pending {
-            background-color: #f57c00;
-            color: var(--white);
-            padding: 4px 12px;
-            border-radius: 4px;
-        }
-
-        &.received {
-            background-color: #0288d1;
-            color: var(--white);
-            padding: 4px 12px;
-            border-radius: 4px;
-        }
-
         &.cancel {
             background-color: #d32f2f;
             color: var(--white);
-            padding: 4px 12px;
+            padding: 2px 8px !important;
+            border-radius: 4px;
+        }
+        // Chờ xác nhận
+        &.pending {
+            background-color: #f57c00;
+            color: var(--white);
+            padding: 2px 8px !important;
             border-radius: 4px;
         }
 
+        // Đã xác nhận đơn hàng
+        &.product-waiting,
+        &.received {
+            background-color: #0288d1;
+            color: var(--white);
+            padding: 2px 8px !important;
+            border-radius: 4px;
+        }
+
+        // Chờ xác nhận hủy
+        &.cancel-pending {
+            background-color: rgb(206, 147, 216);
+            color: var(--white);
+            padding: 2px 8px !important;
+            border-radius: 4px;
+        }
+
+        // Đang vận chuyển
         &.delivering {
-            background-color: #ab47bc;
+            background-color: #1769aa;
             color: var(--white);
-            padding: 4px 12px;
+            padding: 2px 8px !important;
             border-radius: 4px;
         }
 
+        // Đã hoàn thành
         &.delivered {
-            background-color: #388e3c;
+            background-color: #2e7d32;
             color: var(--white);
-            padding: 4px 12px;
+            padding: 2px 8px !important;
             border-radius: 4px;
         }
     }

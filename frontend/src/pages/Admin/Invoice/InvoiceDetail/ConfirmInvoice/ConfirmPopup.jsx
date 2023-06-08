@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import ConfirmDeletePopup from "../../../components/ConfirmDeletePopup";
 import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
@@ -9,6 +9,7 @@ import {
     confirmInvoice,
     updateInvoice,
 } from "../../../../../redux/api/apiInvoice";
+import { toast } from "react-hot-toast";
 
 export default function ConfirmPopup({
     handleClose,
@@ -20,16 +21,29 @@ export default function ConfirmPopup({
     const dispatch = useDispatch();
 
     let axiosJWT = createAxios(user, dispatch, loginSuccess);
-
-    const handleConfirmInvoice = () => {
-        confirmInvoice(
-            user?.accessToken,
-            dispatch,
-            selectedInvoice?.invoice_id,
-            axiosJWT
-        ).then(() => {
+    const [deliveryClone, setDeliveryClone] = useState({});
+    const deliveryByInvoiceId = useSelector(
+        (state) => state.delivery.delivery?.deliveryByInvoiceId
+    );
+    useEffect(() => {
+        if (deliveryByInvoiceId) {
+            setDeliveryClone(deliveryByInvoiceId);
+        }
+    }, [deliveryByInvoiceId]);
+    const handleConfirmInvoice = async () => {
+        if (deliveryClone?.status === 404) {
+            toast.error("Vui lòng nhập thông tin khách hàng");
             handleClose();
-        });
+        } else {
+            await confirmInvoice(
+                user?.accessToken,
+                dispatch,
+                selectedInvoice?.invoice_id,
+                axiosJWT
+            ).then(() => {
+                handleClose();
+            });
+        }
     };
     return (
         <>

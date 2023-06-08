@@ -1,0 +1,105 @@
+// InvoicedeliveryInfo ----------------------------------------------------------------
+.invoice-delivery-info-wrapper {
+    padding: 20px;
+    .delivery-info-header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        background-color: lavender;
+        padding: 12px 24px;
+        font-weight: var(--fw-semi-bold);
+        border-top-left-radius: 4px;
+        border-top-right-radius: 4px;
+        h3 {
+            font-weight: var(--fw-semi-bold);
+            text-transform: uppercase;
+            font-size: 1.6rem;
+        }
+
+        .btn-group {
+            display: flex;
+            align-items: center;
+            button {
+                margin-left: 8px;
+            }
+        }
+        .cancel-request {
+            display: flex;
+            align-items: center;
+            font-weight: var(--fw-medium);
+        }
+    }
+
+    .delivery-info-body {
+        padding: 12px;
+        border-left: 1px solid var(--border-color);
+        border-right: 1px solid var(--border-color);
+        border-bottom: 1px solid var(--border-color);
+        border-bottom-left-radius: 4px;
+        border-bottom-right-radius: 4px;
+        .delivery-code {
+            display: flex;
+            align-items: center;
+            button {
+                margin-left: 12px;
+            }
+        }
+    }
+}
+
+// info item component
+.info-item {
+    .info-item-label {
+    }
+    .info-item-content {
+        font-weight: var(--fw-medium);
+        &.cancel {
+            background-color: #d32f2f;
+            color: var(--white);
+            padding: 2px 8px !important;
+            border-radius: 4px;
+        }
+        // Chờ xác nhận
+        &.pending {
+            background-color: #f57c00;
+            color: var(--white);
+            padding: 2px 8px !important;
+            border-radius: 4px;
+        }
+
+        // Đã xác nhận đơn hàng
+        &.product-waiting,
+        &.received {
+            background-color: #0288d1;
+            color: var(--white);
+            padding: 2px 8px !important;
+            border-radius: 4px;
+        }
+
+        // Chờ xác nhận hủy
+        &.cancel-pending {
+            background-color: rgb(206, 147, 216);
+            color: var(--white);
+            padding: 2px 8px !important;
+            border-radius: 4px;
+        }
+
+        // Đang vận chuyển
+        &.delivering {
+            background-color: #1769aa;
+            color: var(--white);
+            padding: 2px 8px !important;
+            border-radius: 4px;
+        }
+
+        // Đã hoàn thành
+        &.delivered {
+            background-color: #2e7d32;
+            color: var(--white);
+            padding: 2px 8px !important;
+            border-radius: 4px;
+        }
+    }
+}
+
+// ----------------------------------------------------------------

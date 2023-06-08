@@ -26,6 +26,7 @@ export default function CancelPopup({
             user?.accessToken,
             dispatch,
             selectedInvoice?.invoice_id,
+            { note: "Hủy bởi ADMIN", status: 5 },
             axiosJWT
         ).then(() => {
             handleClose();
