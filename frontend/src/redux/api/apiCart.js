@@ -78,7 +78,6 @@ export const updateCart = async (
             // getAllCart(accessToken, dispatch, axiosJWT);
             await getCartByUserId(accessToken, dispatch, userId, axiosJWT);
         }
-        console.log(res?.data);
     } catch (error) {
         dispatch(updateCartFailed(error.response?.data));
     }

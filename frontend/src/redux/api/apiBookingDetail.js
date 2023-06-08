@@ -143,7 +143,6 @@ export const updateBookingDetail = async (
             );
             await getAllBooking(accessToken, dispatch, axiosJWT);
         }
-        console.log(res?.data);
     } catch (error) {
         dispatch(updateBookingDetailFailed(error.response?.data));
     }

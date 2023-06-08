@@ -104,7 +104,6 @@ export const updateInvoiceDetail = async (
             );
             await getAllInvoice(accessToken, dispatch, axiosJWT);
         }
-        console.log(res?.data);
     } catch (error) {
         dispatch(updateInvoiceDetailFailed(error.response?.data));
     }

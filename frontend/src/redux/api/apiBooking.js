@@ -137,7 +137,6 @@ export const updateBooking = async (
             toast.success(res?.data?.msg);
             getBookingById(dispatch, id, accessToken, axiosJWT);
         }
-        console.log(res?.data);
     } catch (error) {
         dispatch(updateBookingFailed(error.response?.data));
     }

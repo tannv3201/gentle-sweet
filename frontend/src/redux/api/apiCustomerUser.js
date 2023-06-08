@@ -93,7 +93,6 @@ export const updateCustomerUser = async (
                 accessToken,
                 axiosJWT
             );
-            console.log(newUser);
         }
     } catch (error) {
         dispatch(updateCustomerFailed(error.response?.data));

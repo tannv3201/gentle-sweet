@@ -129,7 +129,6 @@ export const updateInvoice = async (
         if (res?.data?.status === 200) {
             await getInvoiceById(dispatch, id, accessToken, axiosJWT);
         }
-        console.log(res?.data);
     } catch (error) {
         dispatch(updateInvoiceFailed(error.response?.data));
     }
@@ -217,7 +216,6 @@ export const confirmInvoice = async (accessToken, dispatch, id, axiosJWT) => {
             await getInvoiceById(dispatch, id, accessToken, axiosJWT);
             await getAllInvoice(accessToken, dispatch, axiosJWT);
         }
-        console.log(res?.data);
     } catch (error) {
         dispatch(confirmInvoiceFailed(error.response?.data));
     }

@@ -93,7 +93,6 @@ export const updateDelivery = async (
                 axiosJWT
             );
         }
-        console.log(res?.data);
     } catch (error) {
         dispatch(updateDeliveryFailed(error.response?.data));
     }

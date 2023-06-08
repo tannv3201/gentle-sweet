@@ -115,7 +115,6 @@ export const updateProduct = async (
             await getProductById(dispatch, id, accessToken, axiosJWT);
             await getAllProduct(accessToken, dispatch, axiosJWT);
         }
-        console.log(res?.data);
     } catch (error) {
         dispatch(updateProductFailed(error.response?.data));
     }
