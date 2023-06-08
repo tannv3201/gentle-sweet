@@ -50,7 +50,10 @@ const deliveryController = {
                 req.params.id
             );
             if (!delivery) {
-                return res.status(404).json("Giao hàng không tồn tại");
+                return res.json({
+                    status: 404,
+                    msg: "Thông tin giao hàng không tồn tại",
+                });
             } else {
                 return res.status(200).json(delivery);
             }
@@ -73,7 +76,10 @@ const deliveryController = {
                 detail_address: req.body.detail_address,
                 status: 1,
             });
-            res.status(201).json(newDelivery);
+            res.status(201).json({
+                status: 201,
+                msg: "Thêm thông tin giao hàng thành công",
+            });
         } catch (error) {
             res.status(500).json(error);
         }
@@ -91,7 +97,9 @@ const deliveryController = {
             if (affectedRows === 0) {
                 return res.status(404).json({ message: "Cập nhật thất bại" });
             } else {
-                return res.status(200).json({ message: "Cập nhật thành công" });
+                return res
+                    .status(200)
+                    .json({ status: 200, msg: "Cập nhật thành công" });
             }
         } catch (error) {
             console.log(error);
