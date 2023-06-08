@@ -100,7 +100,7 @@ function NavbarMobile() {
                                     />
                                 </IconButton>
                             </div>
-                            <NavbarMenu />
+                            <NavbarMenu setIsOpenDrawer={setIsOpenDrawer} />
                         </div>
                         <div className={cx("footer-actions")}>
                             <Grid container spacing={3}>

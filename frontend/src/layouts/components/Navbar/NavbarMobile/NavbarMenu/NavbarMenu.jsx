@@ -10,7 +10,7 @@ import { ArrowBackIosNewRounded, ExpandMoreRounded } from "@mui/icons-material";
 
 const cx = classNames.bind(styles);
 
-function NavbarMenu() {
+function NavbarMenu({ setIsOpenDrawer }) {
     const serviceCategoryList = useSelector(
         (state) => state.serviceCategory.serviceCategory?.serviceCategoryList
     );
@@ -77,7 +77,10 @@ function NavbarMenu() {
                         >
                             <span
                                 className={cx("menu-name")}
-                                onClick={() => handleNavigate(menu?.to)}
+                                onClick={() => {
+                                    handleNavigate(menu?.to);
+                                    setIsOpenDrawer(false);
+                                }}
                             >
                                 {menu?.name}
                             </span>
@@ -109,11 +112,12 @@ function NavbarMenu() {
                                     <span
                                         className={cx("child-item-name")}
                                         key={idx}
-                                        onClick={() =>
+                                        onClick={() => {
+                                            setIsOpenDrawer(false);
                                             handleNavigateServiceCategory(
                                                 child?.serviceCategoryId
-                                            )
-                                        }
+                                            );
+                                        }}
                                     >
                                         {child?.name}
                                     </span>
