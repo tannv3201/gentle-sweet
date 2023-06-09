@@ -80,7 +80,6 @@ export const createBooking = async (
         });
         dispatch(createBookingSuccess(res?.data));
         if (res?.data?.status === 201) {
-            // toast.success(res?.data?.msg);
             toast.success("Thêm lịch đặt thành công");
             getAllBooking(accessToken, dispatch, axiosJWT);
         }
