@@ -62,7 +62,6 @@ export default function CustomerUserDetail() {
         role_id: "",
         role_name: "",
         birth_date: "",
-        username: "",
         email: "",
         phone_number: "",
         first_name: "",
@@ -90,10 +89,6 @@ export default function CustomerUserDetail() {
     // Validate
     const phoneRegExp = /(84|0[3|5|7|8|9])+([0-9]{8})\b/;
     const validationSchema = Yup.object().shape({
-        username: Yup.string()
-            .required("Vui lòng không để trống")
-            .min(6, "Tên tài khoản phải có ít nhất 6 kí tự")
-            .max(20, "Tên tài khoản tối đa 20 kí tự"),
         first_name: Yup.string().required("Vui lòng không để trống"),
         phone_number: Yup.string()
             .matches(/^\d+$/, "Số điện thoại chỉ bao gồm các ký tự số")
@@ -335,37 +330,22 @@ export default function CustomerUserDetail() {
                 <div className={cx("wrapper-body")}>
                     <form onSubmit={formik.handleSubmit}>
                         <Grid container spacing={2}>
-                            <Grid item xs={6}>
+                            <Grid item xs={12}>
                                 <GTextFieldNormal
                                     disabled={!isEditting}
                                     onChange={formik.handleChange}
-                                    label="Tên đăng nhập"
+                                    label="Email"
                                     fullWidth
-                                    name="username"
-                                    value={formik.values?.username || ""}
+                                    name="email"
+                                    value={formik.values?.email || ""}
                                     formik={formik}
-                                />
-                            </Grid>
-                            <Grid item xs={6}>
-                                <GDatePicker
-                                    disabled={!isEditting}
-                                    label={"Ngày sinh"}
-                                    onBlur={formik.handleBlur}
-                                    fullWidth
-                                    name="birth_date"
-                                    onChange={(date) =>
-                                        handleChangeBirthDate(date)
-                                    }
-                                    value={formik.values?.birth_date || null}
-                                    formik={formik}
-                                    error={
-                                        formik?.touched?.birth_date &&
-                                        Boolean(formik?.errors?.birth_date)
-                                    }
-                                    helperText={
-                                        formik?.touched?.birth_date &&
-                                        formik?.errors?.birth_date
-                                    }
+                                    InputProps={{
+                                        startAdornment: (
+                                            <InputAdornment position="start">
+                                                @
+                                            </InputAdornment>
+                                        ),
+                                    }}
                                 />
                             </Grid>
                             <Grid item xs={6}>
@@ -390,22 +370,27 @@ export default function CustomerUserDetail() {
                                     formik={formik}
                                 />
                             </Grid>
+
                             <Grid item xs={6}>
-                                <GTextFieldNormal
+                                <GDatePicker
                                     disabled={!isEditting}
-                                    onChange={formik.handleChange}
-                                    label="Email"
+                                    label={"Ngày sinh"}
+                                    onBlur={formik.handleBlur}
                                     fullWidth
-                                    name="email"
-                                    value={formik.values?.email || ""}
+                                    name="birth_date"
+                                    onChange={(date) =>
+                                        handleChangeBirthDate(date)
+                                    }
+                                    value={formik.values?.birth_date || null}
                                     formik={formik}
-                                    InputProps={{
-                                        startAdornment: (
-                                            <InputAdornment position="start">
-                                                @
-                                            </InputAdornment>
-                                        ),
-                                    }}
+                                    error={
+                                        formik?.touched?.birth_date &&
+                                        Boolean(formik?.errors?.birth_date)
+                                    }
+                                    helperText={
+                                        formik?.touched?.birth_date &&
+                                        formik?.errors?.birth_date
+                                    }
                                 />
                             </Grid>
                             <Grid item xs={6}>
