@@ -101,9 +101,9 @@ const bookingController = {
                 data
             );
             if (affectedRows === 0) {
-                return res.status(404).json({ message: "Cập nhật thất bại" });
+                return res.json({ status: 404, msg: "Cập nhật thất bại" });
             } else {
-                return res.status(200).json({ message: "Cập nhật thành công" });
+                return res.json({ status: 200, msg: "Cập nhật thành công" });
             }
         } catch (error) {
             console.log(error);
