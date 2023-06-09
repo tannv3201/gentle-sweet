@@ -19,26 +19,34 @@ import { bookingSearch } from "../../../../redux/api/apiBooking";
 
 const cx = classNames.bind(styles);
 
-const invoiceStatus = [
+const bookingStatus = [
     {
         id: 1,
-        name: "Chờ xác nhận",
+        name: "Chờ tiếp nhận",
     },
     {
         id: 2,
-        name: "Đã xác nhận",
+        name: "Đã tiếp nhận",
     },
     {
         id: 3,
-        name: "Đang giao hàng",
+        name: "Chờ lấy hàng",
     },
     {
         id: 4,
-        name: "Giao hàng thành công",
+        name: "Đang vận chuyển",
     },
     {
         id: 5,
+        name: "Đã giao",
+    },
+    {
+        id: 6,
         name: "Đã hủy",
+    },
+    {
+        id: 7,
+        name: "Yêu cầu hủy đơn",
     },
 ];
 
@@ -126,7 +134,7 @@ export default function FilterBooking({ isFiltering, setIsFiltering }) {
                     <Grid container spacing={2}>
                         <Grid item xs={3}>
                             <Autocomplete
-                                options={invoiceStatus}
+                                options={bookingStatus}
                                 getOptionLabel={(option) =>
                                     `${option?.name}` || null
                                 }
@@ -134,7 +142,7 @@ export default function FilterBooking({ isFiltering, setIsFiltering }) {
                                     status
                                         ? {
                                               id: status,
-                                              name: invoiceStatus?.find(
+                                              name: bookingStatus?.find(
                                                   (i) =>
                                                       i.id === parseInt(status)
                                               )?.name,

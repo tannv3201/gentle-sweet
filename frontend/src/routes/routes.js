@@ -45,13 +45,14 @@ import NoLayout from "../layouts/NoLayout/NoLayout";
 import Account from "../pages/Account/Account";
 import ServiceDetailCustomer from "../pages/ServicePage/ServiceDetail/ServiceDetail";
 import BookedSchedule from "../pages/BookedSchedule/BookedSchedule";
-import DetailBookedSchedule from "../pages/BookedSchedule/DetailBookedSchedule/DetailBookedSchedule";
+
 import ServiceCategoryDetail from "../pages/ServicePage/ServiceCategoryDetail/ServiceCategoryDetail";
 import ForgotPassword from "../pages/ForgotPassword/ForgotPassword";
 import VerifyCode from "../pages/ForgotPassword/VerifyCode";
 import PasswordChange from "../pages/ForgotPassword/PasswordChange";
 import VerifyEmail from "../pages/SignUp/VerifyEmail";
 import OrderDetail from "../pages/PurchaseOrder/OrderDetail/OrderDetail";
+import BookedDetail from "../pages/BookedSchedule/BookedDetail/BookedDetail";
 // public routes
 
 export const publicRoutes = [
@@ -121,7 +122,8 @@ export const publicRoutes = [
     },
     {
         path: "/quan-ly-lich-dat/:bookingId",
-        component: DetailBookedSchedule,
+        component: BookedDetail,
+        // component: DetailBookedSchedule,
     },
     {
         path: "/tai-khoan",

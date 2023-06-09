@@ -38,8 +38,15 @@ export default function ServiceInformation() {
         setIsOpen(false);
     };
 
-    const { handleBlur, handleChange, setFieldValue, values, setFieldError } =
-        useFormikContext();
+    const {
+        handleBlur,
+        handleChange,
+        setFieldValue,
+        values,
+        setFieldError,
+        touched,
+        errors,
+    } = useFormikContext();
     const [serviceCategoryClone, setServiceCategoryClone] = useState([]);
     const [serviceClone, setServiceClone] = useState([]);
     const [selectedServiceLocation, setSelectedServiceLocation] = useState({});
@@ -290,6 +297,13 @@ export default function ServiceInformation() {
                                             handleChangeBookingDate(date)
                                         }
                                         value={values?.date || null}
+                                        error={
+                                            touched?.date &&
+                                            Boolean(errors?.date)
+                                        }
+                                        helperText={
+                                            touched?.date && errors?.date
+                                        }
                                     />
                                 </Grid>
                                 <Grid item xs={6}>
@@ -309,10 +323,22 @@ export default function ServiceInformation() {
                                         renderInput={(params) => (
                                             <TextField
                                                 {...params}
+                                                onBlur={handleBlur}
                                                 color="secondary"
                                                 size="small"
                                                 fullWidth
                                                 label="Khung thời gian"
+                                                name="bookingTime_id"
+                                                error={
+                                                    touched?.bookingTime_id &&
+                                                    Boolean(
+                                                        errors?.bookingTime_id
+                                                    )
+                                                }
+                                                helperText={
+                                                    touched?.bookingTime_id &&
+                                                    errors?.bookingTime_id
+                                                }
                                             />
                                         )}
                                     />

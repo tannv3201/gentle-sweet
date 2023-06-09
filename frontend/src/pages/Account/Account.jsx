@@ -162,11 +162,13 @@ export default function Account() {
 
     // Get province list from API
     useEffect(() => {
-        if (getProvinceList?.length === 0) {
-            getProvince(dispatch);
-        }
-
-        setProvinces(getProvinceList);
+        const fetch = async () => {
+            if (getProvinceList?.length === 0) {
+                getProvince(dispatch);
+            }
+            setProvinces(getProvinceList);
+        };
+        fetch();
     }, []);
 
     // Fn handle province onChange event
@@ -223,32 +225,38 @@ export default function Account() {
                 icon: "😅",
             });
         }
-        if (cloneData) {
-            const provinceSelected = getProvinceById(
-                cloneData?.province,
-                provinces
-            );
-            setSelectedProvince(provinceSelected);
-            formik.setFieldValue("province", provinceSelected?.province_id);
-
-            // District
-            getDistrict(cloneData?.province).then((districtList) => {
-                const districtSelected = getDistrictById(
-                    cloneData?.district,
-                    districtList
+        const fetch = async () => {
+            if (cloneData) {
+                const provinceSelected = await getProvinceById(
+                    cloneData?.province,
+                    provinces
                 );
-                setSelectedDistrict(districtSelected);
-                setDistricts(districtList);
-                formik.setFieldValue("district", districtSelected?.district_id);
-            });
+                setSelectedProvince(provinceSelected);
+                formik.setFieldValue("province", provinceSelected?.province_id);
 
-            getWard(cloneData?.district).then((wardList) => {
-                const wardSelected = getWardById(cloneData?.ward, wardList);
-                setSelectedWard(wardSelected);
-                setWards(wardList);
-                formik.setFieldValue("ward", wardSelected?.ward_id);
-            });
-        }
+                // District
+                await getDistrict(cloneData?.province).then((districtList) => {
+                    const districtSelected = getDistrictById(
+                        cloneData?.district,
+                        districtList
+                    );
+                    setSelectedDistrict(districtSelected);
+                    setDistricts(districtList);
+                    formik.setFieldValue(
+                        "district",
+                        districtSelected?.district_id
+                    );
+                });
+
+                await getWard(cloneData?.district).then((wardList) => {
+                    const wardSelected = getWardById(cloneData?.ward, wardList);
+                    setSelectedWard(wardSelected);
+                    setWards(wardList);
+                    formik.setFieldValue("ward", wardSelected?.ward_id);
+                });
+            }
+        };
+        fetch();
     }, [cloneData]);
 
     // Fn handle birthdate onChange

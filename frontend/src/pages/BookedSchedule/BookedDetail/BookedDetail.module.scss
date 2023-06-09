@@ -8,15 +8,15 @@
         }
         font-size: 1.5rem !important;
     }
-    .invoice-header {
-        .invoice-code {
+    .booking-header {
+        .booking-code {
             font-size: 1.8rem !important;
         }
     }
     .info-item {
         font-size: 1.5rem !important;
     }
-    .product-item {
+    .service-item {
         font-size: 1.5rem !important;
         font-weight: var(--fw-medium) !important;
     }
@@ -33,29 +33,29 @@
     width: var(--default-layout-width);
 }
 
-.invoice-wrapper {
+.booking-wrapper {
     margin-top: 12px;
     padding-bottom: 12px;
     border: 1px solid var(--border-color);
     border-radius: 6px;
     background-color: var(--white);
 
-    .invoice-header {
+    .booking-header {
         background-color: lavender;
         display: flex;
         align-items: center;
         justify-content: space-between;
         padding: 12px;
         border-bottom: 1px solid var(--border-color);
-        .invoice-code {
+        .booking-code {
             font-size: 2rem;
             text-transform: uppercase;
             color: var(--text-primary);
         }
     }
-    .invoice-info,
-    .invoice-product-info,
-    .invoice-customer-info {
+    .booking-info,
+    .booking-service-info,
+    .booking-customer-info {
         border: 1px solid var(--border-color);
         border-radius: 6px;
         margin: 0 12px;
@@ -71,7 +71,7 @@
                 border-radius: 4px;
             }
 
-            .product-waiting,
+            .service-waiting,
             .received {
                 background-color: #0288d1;
                 color: var(--white);
@@ -113,18 +113,18 @@
             }
         }
     }
-    .invoice-info {
+    .booking-info {
         padding: 8px 12px;
     }
-    .invoice-customer-info {
+    .booking-customer-info {
         padding: 8px 12px;
     }
-    .invoice-product-info {
+    .booking-service-info {
         padding: 8px 12px 0 12px;
 
-        .product-item {
+        .service-item {
             padding: 12px 0;
-            .product-image {
+            .service-image {
                 height: 40px;
                 width: 40px;
                 border-radius: 100px;
@@ -137,7 +137,7 @@
                 }
             }
         }
-        .product-item:not(:first-child) {
+        .service-item:not(:first-child) {
             border-top: 1px solid var(--border-color);
         }
         .price_total {

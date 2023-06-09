@@ -4,17 +4,10 @@ import classNames from "classnames/bind";
 import { Grid } from "@mui/material";
 import { useSelector } from "react-redux";
 import { GFormatDate } from "../../../../../components/GDatePicker/GDatePicker";
-import {
-    LocalShippingRounded,
-    PriorityHighRounded,
-    VisibilityRounded,
-} from "@mui/icons-material";
-// import InvoiceStatusMenu from "../InvoiceStatusMenu/InvoiceStatusMenu";
-// import DeliveryCodePopup from "../DeliveryCode/DeliveryCode";
+import { PriorityHighRounded, VisibilityRounded } from "@mui/icons-material";
 import GButton from "../../../../../components/MyButton/MyButton";
 import BookingStatusMenu from "../BookingStatusMenu/BookingStatusMenu";
 import ConfirmCancelBookingRequestPopup from "../BookingStatusMenu/ConfirmCancelBookingRequestPopup";
-// import ConfirmCancelInvoiceRequestPopup from "../InvoiceStatusMenu/ConfirmCancelInvoiceRequestPopup";
 
 const cx = classNames.bind(styles);
 
@@ -34,7 +27,6 @@ function BookingServiceInfo({
     currCustomerUser,
     currBookingCreator,
 }) {
-    console.log(currBooking);
     const [bookingDetailClone, setBookingDetailClone] = useState({});
     const getBookingDetail = useSelector(
         (state) => state.bookingDetail.bookingDetail?.bookingDetailByBooking
@@ -44,15 +36,6 @@ function BookingServiceInfo({
             setBookingDetailClone(structuredClone(getBookingDetail));
         }
     }, [getBookingDetail]);
-
-    const [isOpenDeliveryCodePopup, setIsOpenDeliveryCodePopup] =
-        useState(false);
-    const handleOpenDeliveryCodePopup = () => {
-        setIsOpenDeliveryCodePopup(true);
-    };
-    const handleCloseDeliveryCodePopup = () => {
-        setIsOpenDeliveryCodePopup(false);
-    };
 
     const [
         isOpenConfirmCancelBookingRequestPopup,
@@ -150,34 +133,6 @@ function BookingServiceInfo({
                             </span>
                         </div>
                     </Grid>
-                    {/* <Grid item xs={6}>
-                        <div className={cx("info-item")}>
-                            <span className={cx("info-item-label")}>
-                                Trạng thái giao hàng
-                            </span>
-                            :{" "}
-                            <span
-                                className={
-                                    currBooking?.status !== 5 &&
-                                    currBooking?.status !== 6 &&
-                                    deliveryClone?.status === 1
-                                        ? cx("info-item-content", "pending")
-                                        : deliveryClone?.status === 2
-                                        ? cx("info-item-content", "prepare")
-                                        : deliveryClone?.status === 3
-                                        ? cx("info-item-content", "delivering")
-                                        : deliveryClone?.status === 4
-                                        ? cx("info-item-content", "completed")
-                                        : ""
-                                }
-                            >
-                                {currBooking?.status !== 5 &&
-                                currBooking?.status !== 6
-                                    ? deliveryClone?.statusName
-                                    : "--"}
-                            </span>
-                        </div>
-                    </Grid> */}
                 </Grid>
             </div>
 

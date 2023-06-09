@@ -40,15 +40,6 @@ function Booking() {
     });
     const phoneRegExp = /(84|0[3|5|7|8|9])+([0-9]{8})\b/;
     const validationSchema = Yup.object().shape({
-        fullName: Yup.string().required("Vui lòng không để trống"),
-        phone_number: Yup.string()
-            .matches(/^\d+$/, "Số điện thoại chỉ bao gồm các ký tự số")
-            .matches(phoneRegExp, "Số điện thoại không hợp lệ")
-            .required("Vui lòng nhập số điện thoại"),
-        province: Yup.string().required("Vui lòng không để trống"),
-        district: Yup.string().required("Vui lòng không để trống"),
-        ward: Yup.string().required("Vui lòng không để trống"),
-        detail_address: Yup.string().required("Vui lòng không để trống"),
         bookingTime_id: Yup.string().required("Vui lòng chọn khung giờ"),
         date: Yup.string().required("Vui lòng chọn ngày"),
     });
@@ -56,10 +47,16 @@ function Booking() {
     const user = useSelector((state) => state.auth.login?.currentUser);
     const dispatch = useDispatch();
     let axiosJWT = createAxios(user, dispatch, loginSuccess);
-
+    const getCustomerUser = useSelector(
+        (state) => state.customerUser.customerUser?.customerUser
+    );
     const location = useLocation();
     const navigate = useNavigate();
     const handleSubmit = async (values) => {
+        if (!user?.detail_address && !getCustomerUser?.detail_address) {
+            toast.error("Vui lòng cập nhật địa chỉ trong tài khoản của bạn");
+            return;
+        }
         const newBooking = await createBookingByCustomer(
             user?.id,
             user?.accessToken,

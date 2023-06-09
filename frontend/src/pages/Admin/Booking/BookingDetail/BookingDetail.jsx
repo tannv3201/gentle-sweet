@@ -60,7 +60,7 @@ export default function BookingDetail() {
                         : getBooking?.status === 2
                         ? "Đã tiếp nhận"
                         : getBooking?.status === 3
-                        ? "Đã lên lịch"
+                        ? "Đang lên lịch"
                         : getBooking?.status === 4
                         ? "Bắt đầu dịch vụ"
                         : getBooking?.status === 5

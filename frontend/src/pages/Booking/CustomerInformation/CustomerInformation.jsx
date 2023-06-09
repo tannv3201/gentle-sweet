@@ -74,11 +74,13 @@ function CustomerInformation() {
 
     // Get province list from API
     useEffect(() => {
-        if (getProvinceList?.length === 0) {
-            getProvince(dispatch);
-        }
-
-        setProvinces(getProvinceList);
+        const fetch = async () => {
+            if (getProvinceList?.length === 0) {
+                await getProvince(dispatch);
+            }
+            setProvinces(getProvinceList);
+        };
+        fetch();
     }, []);
 
     useEffect(() => {
@@ -89,109 +91,118 @@ function CustomerInformation() {
 
     // Set selected province/district/ward into states & Formik field
     useEffect(() => {
-        if (customerUser) {
-            const provinceSelected = getProvinceById(
-                customerUser?.province,
-                provinces
-            );
-            setSelectedCurrProvince(provinceSelected);
-
-            // District
-            getDistrict(customerUser?.province).then((districtList) => {
-                const districtSelected = getDistrictById(
-                    customerUser?.district,
-                    districtList
+        const fetch = async () => {
+            if (customerUser) {
+                const provinceSelected = await getProvinceById(
+                    customerUser?.province,
+                    provinces
                 );
-                setSelectedCurrDistrict(districtSelected);
-                setDistricts(districtList);
-            });
+                setSelectedCurrProvince(provinceSelected);
 
-            getWard(customerUser?.district).then((wardList) => {
-                const wardSelected = getWardById(customerUser?.ward, wardList);
-                setSelectedCurrWard(wardSelected);
-                setWards(wardList);
-            });
-        }
+                // District
+                await getDistrict(customerUser?.province).then(
+                    (districtList) => {
+                        const districtSelected = getDistrictById(
+                            customerUser?.district,
+                            districtList
+                        );
+                        setSelectedCurrDistrict(districtSelected);
+
+                        // setDistricts(districtList);
+                    }
+                );
+
+                await getWard(customerUser?.district).then((wardList) => {
+                    const wardSelected = getWardById(
+                        customerUser?.ward,
+                        wardList
+                    );
+                    setSelectedCurrWard(wardSelected);
+                    // setWards(wardList);
+                });
+            }
+        };
+        fetch();
     }, [customerUser]);
 
-    // Fn handle province onChange event
-    const handleProvinceChange = (event, value) => {
-        setSelectedProvince(value);
-        setSelectedDistrict(null);
-        setSelectedWard(null);
-        setFieldValue("province", value?.province_id);
+    // // Fn handle province onChange event
+    // const handleProvinceChange = (event, value) => {
+    //     setSelectedProvince(value);
+    //     setSelectedDistrict(null);
+    //     setSelectedWard(null);
+    //     setFieldValue("province", value?.province_id);
 
-        if (value) {
-            getDistrict(value?.province_id).then((districts) => {
-                setDistricts(districts);
-            });
-        } else {
-            setDistricts([]);
-            setFieldValue("province", null);
-            setFieldValue("district", null);
-            setFieldValue("ward", null);
-        }
-    };
+    //     if (value) {
+    //         getDistrict(value?.province_id).then((districts) => {
+    //             setDistricts(districts);
+    //         });
+    //     } else {
+    //         setDistricts([]);
+    //         setFieldValue("province", null);
+    //         setFieldValue("district", null);
+    //         setFieldValue("ward", null);
+    //     }
+    // };
 
-    // Fn handle district onChange event
-    const handleDistrictChange = (event, value) => {
-        setSelectedDistrict(value);
-        setSelectedWard(null);
-        setFieldValue("district", value?.district_id);
+    // // Fn handle district onChange event
+    // const handleDistrictChange = (event, value) => {
+    //     setSelectedDistrict(value);
+    //     setSelectedWard(null);
+    //     setFieldValue("district", value?.district_id);
 
-        if (value) {
-            getWard(value?.district_id).then((wards) => {
-                setWards(wards);
-            });
-        } else {
-            setWards([]);
-            setFieldValue("district", null);
-            setFieldValue("ward", null);
-        }
-    };
+    //     if (value) {
+    //         getWard(value?.district_id).then((wards) => {
+    //             setWards(wards);
+    //         });
+    //     } else {
+    //         setWards([]);
+    //         setFieldValue("district", null);
+    //         setFieldValue("ward", null);
+    //     }
+    // };
 
-    // Fn handle ward onChange event
-    const handleChangeWard = (value) => {
-        if (value) {
-            setSelectedWard(value);
-            setFieldValue("ward", value?.ward_id);
-        } else {
-            setFieldValue("ward", null);
-        }
-    };
+    // // Fn handle ward onChange event
+    // const handleChangeWard = (value) => {
+    //     if (value) {
+    //         setSelectedWard(value);
+    //         setFieldValue("ward", value?.ward_id);
+    //     } else {
+    //         setFieldValue("ward", null);
+    //     }
+    // };
 
-    const handleInfoSame = (e) => {
-        if (e.target.checked) {
-            setFieldValue(
-                "fullName",
-                customerUser?.last_name + " " + customerUser?.first_name || ""
-            );
-            setFieldValue("phone_number", customerUser?.phone_number || "");
-            setSelectedProvince(selectedCurrProvince);
-            setSelectedDistrict(selectedCurrDistrict);
-            setSelectedWard(selectedCurrWard);
-            setFieldValue("province", customerUser?.province);
-            setFieldValue("district", customerUser?.district);
-            setFieldValue("ward", customerUser?.ward);
-            setFieldValue("detail_address", customerUser?.detail_address || "");
-        } else {
-            setFieldValue("fullName", "");
-            setFieldValue("phone_number", "");
-            setSelectedProvince(null);
-            setSelectedDistrict(null);
-            setSelectedWard(null);
-            setFieldValue("province", null);
-            setFieldValue("district", null);
-            setFieldValue("ward", null);
-            setFieldValue("detail_address", "");
-        }
-    };
+    // const handleInfoSame = (e) => {
+    //     if (e.target.checked) {
+    //         setFieldValue(
+    //             "fullName",
+    //             customerUser?.last_name + " " + customerUser?.first_name || ""
+    //         );
+    //         setFieldValue("phone_number", customerUser?.phone_number || "");
+    //         setSelectedProvince(selectedCurrProvince);
+    //         setSelectedDistrict(selectedCurrDistrict);
+    //         setSelectedWard(selectedCurrWard);
+    //         setFieldValue("province", customerUser?.province);
+    //         setFieldValue("district", customerUser?.district);
+    //         setFieldValue("ward", customerUser?.ward);
+    //         setFieldValue("detail_address", customerUser?.detail_address || "");
+    //     } else {
+    //         setFieldValue("fullName", "");
+    //         setFieldValue("phone_number", "");
+    //         setSelectedProvince(null);
+    //         setSelectedDistrict(null);
+    //         setSelectedWard(null);
+    //         setFieldValue("province", null);
+    //         setFieldValue("district", null);
+    //         setFieldValue("ward", null);
+    //         setFieldValue("detail_address", "");
+    //     }
+    // };
     return (
         <div className={cx("wrapper")}>
             <div className={cx("information")}>
                 <Grid container spacing={2}>
                     <Grid item xs={12}>
-                        <h3>Thông tin cá nhân</h3>
+                        <h3>Thông tin khách hàng</h3>
                     </Grid>
                     <Grid item xs={12}>
                         <GTextFieldNormal
@@ -302,7 +313,7 @@ function CustomerInformation() {
                     </Grid>
                 </Grid>
             </div>
-            <div className={cx("delivery-information")}>
+            {/* <div className={cx("delivery-information")}>
                 <Grid container spacing={2}>
                     <Grid item xs={12}>
                         <h3>Thông tin đặt lịch</h3>
@@ -468,7 +479,7 @@ function CustomerInformation() {
                         />
                     </Grid>
                 </Grid>
-            </div>
+            </div> */}
         </div>
     );
 }
