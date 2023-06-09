@@ -45,7 +45,7 @@ const registerVerifyController = {
                 subject: "ĐĂNG KÝ TÀI KHOẢN🔑", // Subject line
                 // text: "Hello world?", // plain text body
                 html: ` <div style="color: #000">
-                <strong style="color: #000">Yêu cầu cấp lại mật khẩu.</strong>
+                <strong style="color: #000">Xác minh đăng ký tài khoản.</strong>
                 <p style="color: #000">Mã của bạn là: <strong>${verifyCode}</strong></p>
                 <p style="color: #000">Mã này có hiệu lực <strong><i>15 phút</i></strong></p>
                 <p style="color: #000">Nếu bạn không phải người yêu cầu. Vui lòng bỏ qua tin nhắn này.</p>
