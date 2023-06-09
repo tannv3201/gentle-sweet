@@ -150,7 +150,7 @@ export default function BookingStatusMenu({ selectedUser }) {
                         handleClose();
                     }}
                 >
-                    Kết thúc dịch vụ
+                    Đã hoàn thành
                 </MenuItem>
                 <MenuItem
                     onClick={() => {

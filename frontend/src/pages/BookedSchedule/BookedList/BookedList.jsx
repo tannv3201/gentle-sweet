@@ -81,13 +81,7 @@ function BookedList({ bookingListByUser }) {
                                                             <span
                                                                 className={
                                                                     booking?.status ===
-                                                                    5
-                                                                        ? cx(
-                                                                              "status-content",
-                                                                              "cancel"
-                                                                          )
-                                                                        : booking?.status ===
-                                                                          1
+                                                                    1
                                                                         ? cx(
                                                                               "status-content",
                                                                               "pending"
@@ -102,13 +96,31 @@ function BookedList({ bookingListByUser }) {
                                                                           3
                                                                         ? cx(
                                                                               "status-content",
-                                                                              "delivering"
+                                                                              "service-waiting"
                                                                           )
                                                                         : booking?.status ===
                                                                           4
                                                                         ? cx(
                                                                               "status-content",
-                                                                              "delivered"
+                                                                              "service-start"
+                                                                          )
+                                                                        : booking?.status ===
+                                                                          5
+                                                                        ? cx(
+                                                                              "status-content",
+                                                                              "service-end"
+                                                                          )
+                                                                        : booking?.status ===
+                                                                          6
+                                                                        ? cx(
+                                                                              "status-content",
+                                                                              "cancel"
+                                                                          )
+                                                                        : booking?.status ===
+                                                                          7
+                                                                        ? cx(
+                                                                              "status-content",
+                                                                              "cancel-pending"
                                                                           )
                                                                         : ""
                                                                 }

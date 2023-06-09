@@ -111,7 +111,7 @@ function BookedDetail() {
                         : bookingById?.status === 4
                         ? "Bắt đầu dịch vụ"
                         : bookingById?.status === 5
-                        ? "Kết thúc dịch vụ"
+                        ? "Đã hoàn thành"
                         : bookingById?.status === 6
                         ? "Đã hủy"
                         : bookingById?.status === 7
@@ -162,7 +162,7 @@ function BookedDetail() {
         setIsOpenConfirmCancelPopup(false);
     };
     const handleBack = () => {
-        navigate("/don-mua");
+        navigate("/quan-ly-lich-dat");
     };
     return (
         <div className={cx("wrapper")}>
@@ -228,10 +228,10 @@ function BookedDetail() {
                                                         ? cx("service-waiting")
                                                         : bookingClone?.status ===
                                                           4
-                                                        ? cx("delivering")
+                                                        ? cx("service-start")
                                                         : bookingClone?.status ===
                                                           5
-                                                        ? cx("delivered")
+                                                        ? cx("service-end")
                                                         : bookingClone?.status ===
                                                           6
                                                         ? cx("cancel")

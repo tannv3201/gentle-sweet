@@ -74,16 +74,20 @@ function BookedSchedule() {
                         ...i,
                         created_at: GFormatDate(i?.created_at, "DD-MM-YYYY"),
                         status_name:
-                            i?.status === 5
-                                ? "Đã hủy"
-                                : i?.status === 1
-                                ? "Chờ xác nhận"
+                            i?.status === 1
+                                ? "Chờ tiếp nhận"
                                 : i?.status === 2
-                                ? "Đã xác nhận"
+                                ? "Đã tiếp nhận"
                                 : i?.status === 3
-                                ? "Đang giao hàng"
+                                ? "Đang lên lịch"
                                 : i?.status === 4
-                                ? "Đã giao hàng"
+                                ? "Bắt đầu dịch vụ"
+                                : i?.status === 5
+                                ? "Đã hoàn thành"
+                                : i?.status === 6
+                                ? "Đã hủy"
+                                : i?.status === 7
+                                ? "Yêu cầu hủy lịch hẹn"
                                 : "",
                     };
                     return list;

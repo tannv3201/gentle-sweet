@@ -1,39 +1,5 @@
 @media only screen and (max-width: 600px) {
     .status-content {
-        &.pending {
-            background-color: #f57c00;
-            color: var(--white);
-            padding: 2px 8px !important;
-            border-radius: 4px;
-        }
-
-        &.received {
-            background-color: #0288d1;
-            color: var(--white);
-            padding: 2px 8px !important;
-            border-radius: 4px;
-        }
-
-        &.cancel {
-            background-color: #d32f2f;
-            color: var(--white);
-            padding: 2px 8px !important;
-            border-radius: 4px;
-        }
-
-        &.delivering {
-            background-color: #ab47bc;
-            color: var(--white);
-            padding: 2px 8px !important;
-            border-radius: 4px;
-        }
-
-        &.delivered {
-            background-color: #388e3c;
-            color: var(--white);
-            padding: 2px 8px !important;
-            border-radius: 4px;
-        }
     }
 
     .serv-wrapper {
@@ -116,35 +82,44 @@
                 &.pending {
                     background-color: #f57c00;
                     color: var(--white);
-                    padding: 4px 12px;
+                    padding: 2px 8px !important;
                     border-radius: 4px;
                 }
 
+                &.service-waiting,
                 &.received {
                     background-color: #0288d1;
                     color: var(--white);
-                    padding: 4px 12px;
+                    padding: 2px 8px !important;
                     border-radius: 4px;
                 }
 
                 &.cancel {
                     background-color: #d32f2f;
                     color: var(--white);
-                    padding: 4px 12px;
+                    padding: 2px 8px !important;
+                    border-radius: 4px;
+                }
+                &.cancel-pending {
+                    background-color: rgb(206, 147, 216);
+                    color: var(--white);
+                    padding: 2px 8px !important;
                     border-radius: 4px;
                 }
 
-                &.delivering {
-                    background-color: #ab47bc;
+                // Đang vận chuyển
+                &.service-start {
+                    background-color: #1769aa;
                     color: var(--white);
-                    padding: 4px 12px;
+                    padding: 2px 8px !important;
                     border-radius: 4px;
                 }
 
-                &.delivered {
-                    background-color: #388e3c;
+                // Đã hoàn thành
+                &.service-end {
+                    background-color: #2e7d32;
                     color: var(--white);
-                    padding: 4px 12px;
+                    padding: 2px 8px !important;
                     border-radius: 4px;
                 }
             }

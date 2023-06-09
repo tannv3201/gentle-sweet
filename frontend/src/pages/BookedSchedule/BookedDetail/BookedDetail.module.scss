@@ -93,7 +93,7 @@
             }
 
             // Đang vận chuyển
-            .delivering {
+            .service-start {
                 background-color: #1769aa;
                 color: var(--white);
                 padding: 2px 8px !important;
@@ -101,7 +101,7 @@
             }
 
             // Đã hoàn thành
-            .delivered {
+            .service-end {
                 background-color: #2e7d32;
                 color: var(--white);
                 padding: 2px 8px !important;
