@@ -134,7 +134,6 @@ export const updateBooking = async (
         });
         dispatch(updateBookingSuccess(res?.data));
         if (res?.data?.status === 200) {
-            toast.success(res?.data?.msg);
             getBookingById(dispatch, id, accessToken, axiosJWT);
         }
     } catch (error) {
