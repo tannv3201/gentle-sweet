@@ -23,6 +23,8 @@ import CancelPopup from "./ConfirmBooking/CancelPopup";
 import BookingDetailList from "./BookingDetailList";
 import { getBookingDetailByBookingId } from "../../../../redux/api/apiBookingDetail";
 import { getBookingById } from "../../../../redux/api/apiBooking";
+import BookingCustomerInfo from "./BookingCustomerInfo/BookingCustomerInfo";
+import BookingServiceInfo from "./BookingServiceInfo/BookingServiceInfo";
 
 const cx = classNames.bind(styles);
 
@@ -48,13 +50,28 @@ export default function BookingDetail() {
     const getBookingDetail = useSelector(
         (state) => state.bookingDetail.bookingDetail?.bookingDetailByBooking
     );
-
     useEffect(() => {
-        setCurrBooking(structuredClone(getBooking));
-    }, [getBooking]);
-
-    useEffect(() => {
-        setCurrBooking(structuredClone(getBooking));
+        setCurrBooking(
+            structuredClone({
+                ...getBooking,
+                statusName:
+                    getBooking?.status === 1
+                        ? "Chờ tiếp nhận"
+                        : getBooking?.status === 2
+                        ? "Đã tiếp nhận"
+                        : getBooking?.status === 3
+                        ? "Đã lên lịch"
+                        : getBooking?.status === 4
+                        ? "Bắt đầu dịch vụ"
+                        : getBooking?.status === 5
+                        ? "Đã hoàn thành"
+                        : getBooking?.status === 6
+                        ? "Đã hủy"
+                        : getBooking?.status === 7
+                        ? "Yêu cầu hủy lịch hẹn"
+                        : "",
+            })
+        );
     }, [getBooking]);
 
     useEffect(() => {
@@ -130,7 +147,7 @@ export default function BookingDetail() {
                         <Grid item xs={6}>
                             <div className={cx("invoice-title")}>
                                 <span className={cx("title")}>
-                                    THÔNG TIN LỊCH HẸN
+                                    LỊCH HẸN #{currBooking?.id}
                                 </span>
                             </div>
                         </Grid>
@@ -153,160 +170,22 @@ export default function BookingDetail() {
                                             >
                                                 Xác nhận
                                             </GButton>
-                                            <GButton
-                                                onClick={
-                                                    handleOpenCancelBooking
-                                                }
-                                                color={"error"}
-                                            >
-                                                Hủy
-                                            </GButton>
                                         </>
                                     )}
-                                {!isEditting ? (
-                                    <GButton
-                                        onClick={() => setIsEditting(true)}
-                                        startIcon={<ModeEditOutlineRounded />}
-                                        color={"info"}
-                                    >
-                                        Chỉnh sửa
-                                    </GButton>
-                                ) : (
-                                    <GButton
-                                        onClick={() => setIsEditting(false)}
-                                        startIcon={<ModeEditOutlineRounded />}
-                                        color={"success"}
-                                    >
-                                        Lưu lại
-                                    </GButton>
-                                )}
                             </div>
                         </Grid>
                     </Grid>
                 </div>
-                <div className={cx("invoice-info-body")}>
-                    <Grid container spacing={2}>
-                        <Grid item xs={12}>
-                            <div>
-                                <Grid container>
-                                    <Grid item xs={6}>
-                                        <span
-                                            className={cx("invoice-info-label")}
-                                        >
-                                            Khách hàng:{" "}
-                                        </span>
-                                        <span
-                                            className={cx(
-                                                "invoice-info-content"
-                                            )}
-                                        >
-                                            {currCustomerUser?.last_name +
-                                                " " +
-                                                currCustomerUser?.first_name}
-                                        </span>
-                                    </Grid>
-                                    <Grid item xs={6}>
-                                        <span
-                                            className={cx("invoice-info-label")}
-                                        >
-                                            Trạng thái:{" "}
-                                        </span>
-                                        {currBooking?.status === 5 ? (
-                                            <span
-                                                className={cx(
-                                                    "invoice-info-content",
-                                                    "cancel"
-                                                )}
-                                            >
-                                                Đã hủy
-                                            </span>
-                                        ) : currBooking?.status === 1 ? (
-                                            <span
-                                                className={cx(
-                                                    "invoice-info-content",
-                                                    "pending"
-                                                )}
-                                            >
-                                                Chờ xác nhận
-                                            </span>
-                                        ) : currBooking?.status === 2 ? (
-                                            <span
-                                                className={cx(
-                                                    "invoice-info-content",
-                                                    "received"
-                                                )}
-                                            >
-                                                Đã đã xác nhận
-                                            </span>
-                                        ) : currBooking?.status === 3 ? (
-                                            <span
-                                                className={cx(
-                                                    "invoice-info-content",
-                                                    "delivering"
-                                                )}
-                                            >
-                                                Đang giao hàng
-                                            </span>
-                                        ) : currBooking?.status === 4 ? (
-                                            <span
-                                                className={cx(
-                                                    "invoice-info-content",
-                                                    "delivered"
-                                                )}
-                                            >
-                                                Giao hàng thành công
-                                            </span>
-                                        ) : (
-                                            ""
-                                        )}
-                                    </Grid>
-                                </Grid>
-                            </div>
-                        </Grid>
-                        <Grid item xs={12}>
-                            <div>
-                                <Grid container>
-                                    <Grid item xs={6}>
-                                        <span
-                                            className={cx("invoice-info-label")}
-                                        >
-                                            Ngày tạo:{" "}
-                                        </span>
-                                        <span
-                                            className={cx(
-                                                "invoice-info-content"
-                                            )}
-                                        >
-                                            {dayjs(
-                                                currBooking?.created_at
-                                            ).format("DD/MM/YYYY")}
-                                        </span>
-                                    </Grid>
-                                    <Grid item xs={6}>
-                                        <span
-                                            className={cx("invoice-info-label")}
-                                        >
-                                            Người tạo:{" "}
-                                        </span>
-                                        <span
-                                            className={cx(
-                                                "invoice-info-content"
-                                            )}
-                                        >
-                                            {currBooking?.customer_user_id
-                                                ? `CUSTOMER - ${currCustomerUser?.last_name} ${currCustomerUser?.first_name}`
-                                                : `STAFF - ${
-                                                      currBookingCreator?.last_name +
-                                                      " " +
-                                                      currBookingCreator?.first_name
-                                                  }`}
-                                        </span>
-                                    </Grid>
-                                </Grid>
-                            </div>
-                        </Grid>
-                    </Grid>
-                </div>
+
+                <BookingCustomerInfo
+                    currBooking={currBooking}
+                    currCustomerUser={currCustomerUser}
+                />
+                <BookingServiceInfo
+                    currBooking={currBooking}
+                    currCustomerUser={currCustomerUser}
+                    currBookingCreator={currBookingCreator}
+                />
                 <BookingDetailList isEditting={isEditting} />
                 <ConfirmPopup
                     isOpen={isOpenConfirmBooking}
@@ -319,6 +198,7 @@ export default function BookingDetail() {
                             " " +
                             currCustomerUser?.first_name,
                     }}
+                    currCustomerUser={currCustomerUser}
                 />
 
                 <CancelPopup

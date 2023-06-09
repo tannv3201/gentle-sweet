@@ -6,12 +6,14 @@ import { createAxios } from "../../../../../createInstance";
 import { loginSuccess } from "../../../../../redux/slice/authSlice";
 
 import { confirmBooking } from "../../../../../redux/api/apiBooking";
+import { toast } from "react-hot-toast";
 
 export default function ConfirmPopup({
     handleClose,
     handleOpen,
     isOpen,
     selectedBooking,
+    currCustomerUser,
 }) {
     const user = useSelector((state) => state.auth.login?.currentUser);
     const dispatch = useDispatch();
@@ -19,14 +21,19 @@ export default function ConfirmPopup({
     let axiosJWT = createAxios(user, dispatch, loginSuccess);
 
     const handleConfirmBooking = () => {
-        confirmBooking(
-            user?.accessToken,
-            dispatch,
-            selectedBooking?.booking_id,
-            axiosJWT
-        ).then(() => {
-            handleClose();
-        });
+        if (!currCustomerUser?.detail_address) {
+            toast.error("Vui lòng cập nhật địa chỉ khách hàng");
+            return;
+        } else {
+            confirmBooking(
+                user?.accessToken,
+                dispatch,
+                selectedBooking?.booking_id,
+                axiosJWT
+            ).then(() => {
+                handleClose();
+            });
+        }
     };
     return (
         <>
@@ -34,7 +41,7 @@ export default function ConfirmPopup({
                 handleClose={handleClose}
                 handleOpen={handleOpen}
                 isOpen={isOpen}
-                deleteQuestion="Bạn có muốn xác nhận hóa đơn của khách hàng"
+                deleteQuestion="Bạn có muốn xác nhận lịch hẹn của khách hàng"
                 deleteLabel={selectedBooking?.customer_name}
                 handleDelete={handleConfirmBooking}
             />

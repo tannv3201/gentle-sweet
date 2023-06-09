@@ -3,11 +3,11 @@ import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
 import { AutorenewRounded, PasswordRounded } from "@mui/icons-material";
 import classNames from "classnames/bind";
-import styles from "./InvoiceStatusMenu.module.scss";
+import styles from "./BookingStatusMenu.module.scss";
 
 import { useState } from "react";
 import GButton from "../../../../../components/MyButton/MyButton";
-import CofirmCancelInvoicePopup from "./ConfirmCancelInvoiceRequestPopup";
+import CofirmCancelInvoicePopup from "./ConfirmCancelBookingRequestPopup";
 import { updateDelivery } from "../../../../../redux/api/apiDelivery";
 import { createAxios } from "../../../../../createInstance";
 import { useDispatch } from "react-redux";
@@ -16,19 +16,20 @@ import { loginSuccess } from "../../../../../redux/slice/authSlice";
 import { updateInvoice } from "../../../../../redux/api/apiInvoice";
 import { useParams } from "react-router-dom";
 import { toast } from "react-hot-toast";
-import ConfirmCancelInvoicePopup from "./ConfirmCancelInvoicePopup";
+import ConfirmCancelBookingPopup from "./ConfirmCancelBookingPopup";
+import { updateBooking } from "../../../../../redux/api/apiBooking";
 
 const cx = classNames.bind(styles);
 
-export default function InvoiceStatusMenu({ selectedUser }) {
-    const { invoiceId } = useParams();
+export default function BookingStatusMenu({ selectedUser }) {
+    const { bookingId } = useParams();
     const [anchorEl, setAnchorEl] = useState(null);
     const dispatch = useDispatch();
     const user = useSelector((state) => state.auth.login?.currentUser);
     const deliveryByInvoiceId = useSelector(
         (state) => state.delivery.delivery?.deliveryByInvoiceId
     );
-    const getInvoice = useSelector((state) => state.invoice.invoice?.invoice);
+    const getBooking = useSelector((state) => state.booking.booking?.booking);
 
     let axiosJWT = createAxios(user, dispatch, loginSuccess);
 
@@ -42,24 +43,24 @@ export default function InvoiceStatusMenu({ selectedUser }) {
     };
 
     const [
-        isOpenConfirmCancelInvoicePopup,
+        isOpenConfirmCancelBookingPopup,
         setIsOpenConfirmCancelInvoicePopup,
     ] = useState(false);
-    const handleOpenConfirmCancelInvoiceModal = () => {
+    const handleOpenConfirmCancelBookingModal = () => {
         setIsOpenConfirmCancelInvoicePopup(true);
     };
 
-    const handleCloseConfirmCancelInvoiceModal = () => {
+    const handleCloseConfirmCancelBookingModal = () => {
         setIsOpenConfirmCancelInvoicePopup(false);
     };
     const handleChangeStatusProductWaiting = async () => {
-        if (getInvoice?.status === 3) {
+        if (getBooking?.status === 3) {
             return;
         } else {
-            await updateInvoice(
+            await updateBooking(
                 user?.accessToken,
                 dispatch,
-                invoiceId,
+                bookingId,
                 { status: 3 },
                 axiosJWT
             );
@@ -67,17 +68,15 @@ export default function InvoiceStatusMenu({ selectedUser }) {
     };
 
     const handleChangeStatusDelivering = async () => {
-        if (getInvoice?.status === 4) {
+        if (getBooking?.status === 4) {
             return;
-        } else if (getInvoice?.status === 2) {
-            toast.error("Vui lòng chuẩn bị hàng");
-        } else if (!deliveryByInvoiceId?.delivery_unit) {
-            toast.error("Vui lòng thêm thông tin vận chuyển");
+        } else if (getBooking?.status === 2) {
+            toast.error("Vui lòng lên kế hoạch lịch hẹn");
         } else {
-            await updateInvoice(
+            await updateBooking(
                 user?.accessToken,
                 dispatch,
-                invoiceId,
+                bookingId,
                 { status: 4 },
                 axiosJWT
             );
@@ -85,17 +84,17 @@ export default function InvoiceStatusMenu({ selectedUser }) {
     };
 
     const handleChangeStatusDelivered = async () => {
-        if (getInvoice?.status === 5) {
+        if (getBooking?.status === 5) {
             return;
-        } else if (getInvoice?.status === 2) {
-            toast.error("Vui lòng chuẩn bị hàng");
-        } else if (getInvoice?.status === 3) {
-            toast.error("Vui lòng tuân theo trình tự giao hàng");
+        } else if (getBooking?.status === 2) {
+            toast.error("Vui lòng lên kế hoạch lịch hẹn");
+        } else if (getBooking?.status === 3) {
+            toast.error("Vui lòng tuân theo trình tự lịch hẹn");
         } else {
-            await updateInvoice(
+            await updateBooking(
                 user?.accessToken,
                 dispatch,
-                invoiceId,
+                bookingId,
                 { status: 5 },
                 axiosJWT
             );
@@ -132,18 +131,18 @@ export default function InvoiceStatusMenu({ selectedUser }) {
                         await handleChangeStatusProductWaiting();
                         handleClose();
                     }}
-                    disabled={getInvoice?.status > 2}
+                    disabled={getBooking?.status > 2}
                 >
-                    Chờ lấy hàng
+                    Đã lên lịch
                 </MenuItem>
                 <MenuItem
                     onClick={async () => {
                         await handleChangeStatusDelivering();
                         handleClose();
                     }}
-                    disabled={getInvoice?.status > 3}
+                    disabled={getBooking?.status > 3}
                 >
-                    Đang vận chuyển
+                    Bắt đầu dịch vụ
                 </MenuItem>
                 <MenuItem
                     onClick={async () => {
@@ -151,22 +150,22 @@ export default function InvoiceStatusMenu({ selectedUser }) {
                         handleClose();
                     }}
                 >
-                    Đã giao
+                    Kết thúc dịch vụ
                 </MenuItem>
                 <MenuItem
                     onClick={() => {
-                        handleOpenConfirmCancelInvoiceModal();
+                        handleOpenConfirmCancelBookingModal();
                         handleClose();
                     }}
-                    disabled={getInvoice?.status > 3}
+                    disabled={getBooking?.status > 3}
                 >
                     Hủy
                 </MenuItem>
             </Menu>
-            <ConfirmCancelInvoicePopup
-                isOpen={isOpenConfirmCancelInvoicePopup}
-                handleOpen={handleOpenConfirmCancelInvoiceModal}
-                handleClose={handleCloseConfirmCancelInvoiceModal}
+            <ConfirmCancelBookingPopup
+                isOpen={isOpenConfirmCancelBookingPopup}
+                handleOpen={handleOpenConfirmCancelBookingModal}
+                handleClose={handleCloseConfirmCancelBookingModal}
             />
         </div>
     );

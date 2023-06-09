@@ -9,7 +9,7 @@ import GButton from "../../../../components/MyButton/MyButton";
 import { LightTooltip } from "../../../../components/GTooltip/GTooltip";
 import styles from "./BookingDetail.module.scss";
 import classNames from "classnames/bind";
-import { EditRounded } from "@mui/icons-material";
+import { EditRounded, ReportProblemRounded } from "@mui/icons-material";
 import dayjs from "dayjs";
 import utc from "dayjs/plugin/utc";
 import { FormatCurrency } from "../../../../components/FormatCurrency/FormatCurrency";
@@ -32,6 +32,7 @@ export default function BookingDetailList({ isEditting }) {
     const getBookingDetail = useSelector(
         (state) => state.bookingDetail.bookingDetail?.bookingDetailByBooking
     );
+    const getBooking = useSelector((state) => state.booking.booking?.booking);
 
     useEffect(() => {
         const arr = getBookingDetail?.map((item) => {
@@ -95,8 +96,21 @@ export default function BookingDetailList({ isEditting }) {
         <div className={cx("wrapper-invoice_detail_list")}>
             <div className={cx("table-invoice-detail")}>
                 <div className={cx("header-table-invoice-detail")}>
-                    <span>CHI TIẾT LỊCH HẸN</span>
-                    {isEditting && (
+                    <div className={cx("invoice-detail-title")}>
+                        <span>DANH SÁCH DỊCH VỤ</span>
+                        {cloneData?.length === 0 && (
+                            <LightTooltip
+                                title="Vui lòng chọn dịch vụ"
+                                placement="right"
+                            >
+                                <ReportProblemRounded
+                                    className={cx("warning")}
+                                    color="warning"
+                                />
+                            </LightTooltip>
+                        )}
+                    </div>
+                    {getBooking?.status < 3 && (
                         <GButton
                             onClick={handleOpenAddServicePopup}
                             color={"success"}
@@ -164,7 +178,9 @@ export default function BookingDetailList({ isEditting }) {
                                         >
                                             <span>
                                                 <IconButton
-                                                    disabled={!isEditting}
+                                                    disabled={
+                                                        getBooking?.status > 2
+                                                    }
                                                     onClick={() =>
                                                         handleOpenUpdateServicePopup(
                                                             rowData
@@ -173,7 +189,8 @@ export default function BookingDetailList({ isEditting }) {
                                                 >
                                                     <EditRounded
                                                         color={
-                                                            !isEditting
+                                                            getBooking?.status >
+                                                            2
                                                                 ? "neutral"
                                                                 : "primary"
                                                         }
@@ -187,7 +204,9 @@ export default function BookingDetailList({ isEditting }) {
                                         >
                                             <span>
                                                 <IconButton
-                                                    disabled={!isEditting}
+                                                    disabled={
+                                                        getBooking?.status > 2
+                                                    }
                                                     onClick={() => {
                                                         handleOpenDeleteConfirmPopup(
                                                             rowData
@@ -196,7 +215,8 @@ export default function BookingDetailList({ isEditting }) {
                                                 >
                                                     <DeleteRoundedIcon
                                                         color={
-                                                            !isEditting
+                                                            getBooking?.status >
+                                                            2
                                                                 ? "neutral"
                                                                 : "error"
                                                         }

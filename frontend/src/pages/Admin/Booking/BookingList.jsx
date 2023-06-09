@@ -95,16 +95,20 @@ export default function BookingList() {
                         " " +
                         customerUser?.first_name,
                     status_name:
-                        booking?.status === 5
-                            ? "Đã hủy"
-                            : booking?.status === 1
-                            ? "Chờ xác nhận"
+                        booking?.status === 1
+                            ? "Chờ tiếp nhận"
                             : booking?.status === 2
-                            ? "Đã xác nhận"
+                            ? "Đã tiếp nhận"
                             : booking?.status === 3
-                            ? "Đang giao hàng"
+                            ? "Đã lên lịch"
                             : booking?.status === 4
-                            ? "Đã giao hàng"
+                            ? "Bắt đầu dịch vụ"
+                            : booking?.status === 5
+                            ? "Đã hoàn thành"
+                            : booking?.status === 6
+                            ? "Đã hủy"
+                            : booking?.status === 7
+                            ? "Yêu cầu hủy lịch hẹn"
                             : "",
                     created_at: dayjs(booking?.created_at).format("DD/MM/YYYY"),
                 };
@@ -122,16 +126,20 @@ export default function BookingList() {
                         " " +
                         customerUser?.first_name,
                     status_name:
-                        booking?.status === 5
-                            ? "Đã hủy"
-                            : booking?.status === 1
-                            ? "Chờ xác nhận"
+                        booking?.status === 1
+                            ? "Chờ tiếp nhận"
                             : booking?.status === 2
-                            ? "Đã xác nhận"
+                            ? "Đã tiếp nhận"
                             : booking?.status === 3
-                            ? "Đang giao hàng"
+                            ? "Đã lên lịch"
                             : booking?.status === 4
-                            ? "Đã giao hàng"
+                            ? "Bắt đầu dịch vụ"
+                            : booking?.status === 5
+                            ? "Đã hoàn thành"
+                            : booking?.status === 6
+                            ? "Đã hủy"
+                            : booking?.status === 7
+                            ? "Yêu cầu hủy lịch hẹn"
                             : "",
                     created_at: dayjs(booking?.created_at).format("DD/MM/YYYY"),
                 };
@@ -209,7 +217,52 @@ export default function BookingList() {
                         render: (rowData) => {
                             return (
                                 <>
-                                    {rowData?.status_name === "Đã hủy" ? (
+                                    {rowData?.status === 1 ? (
+                                        <span
+                                            className={cx(
+                                                "status_invoice",
+                                                "pending"
+                                            )}
+                                        >
+                                            Chờ tiếp nhận
+                                        </span>
+                                    ) : rowData?.status === 2 ? (
+                                        <span
+                                            className={cx(
+                                                "status_invoice",
+                                                "received"
+                                            )}
+                                        >
+                                            Đã tiếp nhận
+                                        </span>
+                                    ) : rowData?.status === 3 ? (
+                                        <span
+                                            className={cx(
+                                                "status_invoice",
+                                                "planned"
+                                            )}
+                                        >
+                                            Đã lên lịch
+                                        </span>
+                                    ) : rowData?.status === 4 ? (
+                                        <span
+                                            className={cx(
+                                                "status_invoice",
+                                                "service-start"
+                                            )}
+                                        >
+                                            Bắt đầu dịch vụ
+                                        </span>
+                                    ) : rowData?.status === 5 ? (
+                                        <span
+                                            className={cx(
+                                                "status_invoice",
+                                                "service-completed"
+                                            )}
+                                        >
+                                            Đã hoàn thành
+                                        </span>
+                                    ) : rowData?.status === 6 ? (
                                         <span
                                             className={cx(
                                                 "status_invoice",
@@ -218,45 +271,14 @@ export default function BookingList() {
                                         >
                                             Đã hủy
                                         </span>
-                                    ) : rowData?.status_name ===
-                                      "Chờ xác nhận" ? (
+                                    ) : rowData?.status === 7 ? (
                                         <span
                                             className={cx(
                                                 "status_invoice",
-                                                "pending"
+                                                "cancel-pending"
                                             )}
                                         >
-                                            Chờ xác nhận
-                                        </span>
-                                    ) : rowData?.status_name ===
-                                      "Đã xác nhận" ? (
-                                        <span
-                                            className={cx(
-                                                "status_invoice",
-                                                "received"
-                                            )}
-                                        >
-                                            Đã xác nhận
-                                        </span>
-                                    ) : rowData?.status_name ===
-                                      "Đang giao hàng" ? (
-                                        <span
-                                            className={cx(
-                                                "status_invoice",
-                                                "delivering"
-                                            )}
-                                        >
-                                            Đang giao hàng
-                                        </span>
-                                    ) : rowData?.status_name ===
-                                      "Giao hàng thành công" ? (
-                                        <span
-                                            className={cx(
-                                                "status_invoice",
-                                                "delivered"
-                                            )}
-                                        >
-                                            Giao hàng thành công
+                                            Yêu cầu hủy lịch hẹn
                                         </span>
                                     ) : (
                                         ""
