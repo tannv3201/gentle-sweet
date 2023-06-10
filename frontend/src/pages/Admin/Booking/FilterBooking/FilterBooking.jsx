@@ -30,15 +30,15 @@ const bookingStatus = [
     },
     {
         id: 3,
-        name: "Chờ lấy hàng",
+        name: "Đã lên lịch",
     },
     {
         id: 4,
-        name: "Đang vận chuyển",
+        name: "Bắt đầu dịch vụ",
     },
     {
         id: 5,
-        name: "Đã giao",
+        name: "Kết thúc dịch vụ",
     },
     {
         id: 6,
@@ -46,7 +46,7 @@ const bookingStatus = [
     },
     {
         id: 7,
-        name: "Yêu cầu hủy đơn",
+        name: "Yêu cầu hủy lịch hẹn",
     },
 ];
 
