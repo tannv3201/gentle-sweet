@@ -67,13 +67,15 @@ function Booking() {
             axiosJWT
         );
         const selectedService = location.state?.selectedService;
-        const { service_id, start_time, end_time, date, ...data } = values;
+        const { service_id, start_time, end_time, date, note, ...data } =
+            values;
         const newData = {
             booking_id: newBooking,
             service_id: service_id,
             start_time: start_time,
             end_time: end_time,
             date: GFormatDate(date, "YYYY-MM-DD"),
+            note: note,
             unit_price:
                 selectedService.price_onsale > 0
                     ? selectedService.price_onsale

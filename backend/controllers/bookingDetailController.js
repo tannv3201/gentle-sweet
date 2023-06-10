@@ -57,6 +57,7 @@ const bookingController = {
                     date: req.body.date,
                     end_time: req.body.end_time,
                     unit_price: req.body.unit_price,
+                    note: req.body.note,
                     status: 1,
                 });
 

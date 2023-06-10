@@ -22,6 +22,7 @@ import { getAllService } from "../../../redux/api/apiService";
 import { toast } from "react-hot-toast";
 import { getAllBookingByUser } from "../../../redux/api/apiBooking";
 import { getBookingDetailByBookingId } from "../../../redux/api/apiBookingDetail";
+import GTextFieldNormal from "../../../components/GTextField/GTextFieldNormal";
 
 const cx = classNames.bind(styles);
 
@@ -341,6 +342,17 @@ export default function ServiceInformation() {
                                                 }
                                             />
                                         )}
+                                    />
+                                </Grid>
+                                <Grid item xs={12}>
+                                    <GTextFieldNormal
+                                        fullWidth
+                                        label={"Ghi chú"}
+                                        multiline={true}
+                                        rows={2}
+                                        name={"note"}
+                                        onChange={handleChange}
+                                        value={values?.note}
                                     />
                                 </Grid>
                             </Grid>

@@ -148,15 +148,7 @@ export default function GentleInformation() {
                             </Grid>
                         </div>
                     </Grid>
-                    <Grid item xs={12}>
-                        <div className={cx("action-btn-wrapper")}>
-                            <GButton color="success" className={cx("save-btn")}>
-                                Lưu
-                            </GButton>
-                        </div>
-                    </Grid>
                 </Grid>
-                {/* <StepperConfirm /> */}
             </div>
         </div>
     );
