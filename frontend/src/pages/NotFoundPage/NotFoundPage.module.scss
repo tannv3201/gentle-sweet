@@ -1,12 +1,17 @@
+@media only screen and (max-width: 600px) {
+}
+
 .wrapper {
+    display: flex;
     .not-found-reminder {
         height: 100vh;
         display: flex;
+        margin: 0 24px;
         flex-direction: column;
         align-items: center;
         justify-content: center;
         span {
-            font-size: 2rem;
+            font-size: 2.4rem;
             font-weight: var(--fw-medium);
         }
 
@@ -19,6 +24,29 @@
         height: 100vh;
         img {
             height: 100%;
+            width: 100%;
+            object-fit: cover;
+        }
+    }
+
+    // For mobile
+    .not-found-page-mobile {
+        .not-found-img-mobile {
+            width: 100%;
+            img {
+                width: 100%;
+            }
+        }
+        .not-found-reminder-mobile {
+            background-color: var(--white);
+            margin: 0 24px;
+            font-size: 2rem;
+            font-weight: var(--fw-medium);
+        }
+        .back-to-home {
+            display: flex;
+            margin-top: 16px;
+            justify-content: center;
         }
     }
 }

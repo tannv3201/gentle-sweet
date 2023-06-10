@@ -45,6 +45,7 @@ const images = {
     login_bg: require("./bg.jpg"),
     user_vector: require("./user_vector.png"),
     notFoundPage: require("./notFoundPage.jpg"),
+    notFoundPageMobile: require("./notFoundPageMobile.png"),
 };
 
 export default images;
