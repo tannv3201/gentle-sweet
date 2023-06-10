@@ -21,6 +21,10 @@ import { toast } from "react-hot-toast";
 import { getAllBookingByUser } from "../../redux/api/apiBooking";
 import { getBookingDetailByBookingId } from "../../redux/api/apiBookingDetail";
 import { getServiceById } from "../../redux/api/apiService";
+import BookedScheduled from "./BookedScheduled";
+import ServiceStart from "./ServiceStart";
+import ServiceEnd from "./ServiceEnd";
+import BookedCancelPending from "./BookedCancelPending";
 
 const cx = classNames.bind(styles);
 
@@ -40,7 +44,11 @@ function BookedSchedule() {
     const [bookingList, setBookingList] = useState([]);
     const [bookingListStatus1, setBookingListStatus1] = useState([]);
     const [bookingListStatus2, setBookingListStatus2] = useState([]);
+    const [bookingListStatus3, setBookingListStatus3] = useState([]);
+    const [bookingListStatus4, setBookingListStatus4] = useState([]);
     const [bookingListStatus5, setBookingListStatus5] = useState([]);
+    const [bookingListStatus6, setBookingListStatus6] = useState([]);
+    const [bookingListStatus7, setBookingListStatus7] = useState([]);
     const [getBookingListByUser, setGetBookingListByUser] = useState([]);
     useState(() => {
         const fetch = async () => {
@@ -154,9 +162,23 @@ function BookedSchedule() {
                 const bookingStatus2 = finalList.filter((i) => i?.status === 2);
                 setBookingListStatus2(bookingStatus2);
 
+                const bookingStatus3 = finalList.filter((i) => i?.status === 3);
+                setBookingListStatus3(bookingStatus3);
+
+                const bookingStatus4 = finalList.filter((i) => i?.status === 4);
+                setBookingListStatus4(bookingStatus4);
+
                 // find booking status = 5: Đã hủy
                 const bookingStatus5 = finalList.filter((i) => i?.status === 5);
                 setBookingListStatus5(bookingStatus5);
+
+                // find booking status = 5: Đã hủy
+                const bookingStatus6 = finalList.filter((i) => i?.status === 6);
+                setBookingListStatus6(bookingStatus6);
+
+                // find booking status = 5: Đã hủy
+                const bookingStatus7 = finalList.filter((i) => i?.status === 7);
+                setBookingListStatus7(bookingStatus7);
             } else {
                 setBookingList([]);
             }
@@ -179,9 +201,13 @@ function BookedSchedule() {
                             aria-label="lab API tabs example"
                         >
                             <Tab label="Tất cả" value="1" />
-                            <Tab label="Chờ xác nhận" value="2" />
-                            <Tab label="Đã xác nhận" value="3" />
-                            <Tab label="Đã hủy" value="4" />
+                            <Tab label="Chờ tiếp nhận" value="2" />
+                            <Tab label="Đã tiếp nhận" value="3" />
+                            <Tab label="Đã lên lịch" value="4" />
+                            <Tab label="Bắt đầu dịch vụ" value="5" />
+                            <Tab label="Đã hoàn thành" value="6" />
+                            <Tab label="Đã hủy" value="7" />
+                            {/* <Tab label="Yêu cầu hủy lịch hẹn" value="8" /> */}
                         </TabList>
                     </Box>
                     <TabPanel value="1">
@@ -196,8 +222,24 @@ function BookedSchedule() {
                         />
                     </TabPanel>
                     <TabPanel value="4">
-                        <BookedCancel bookingListByUser={bookingListStatus5} />
+                        <BookedScheduled
+                            bookingListByUser={bookingListStatus3}
+                        />
                     </TabPanel>
+                    <TabPanel value="5">
+                        <ServiceStart bookingListByUser={bookingListStatus4} />
+                    </TabPanel>
+                    <TabPanel value="6">
+                        <ServiceEnd bookingListByUser={bookingListStatus5} />
+                    </TabPanel>
+                    <TabPanel value="7">
+                        <BookedCancel bookingListByUser={bookingListStatus6} />
+                    </TabPanel>
+                    {/* <TabPanel value="8">
+                        <BookedCancelPending
+                            bookingListByUser={bookingListStatus7}
+                        />
+                    </TabPanel> */}
                 </TabContext>
             </div>
         </div>

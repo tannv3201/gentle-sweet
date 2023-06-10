@@ -207,36 +207,15 @@ function BookedList({ bookingListByUser }) {
                                                                             }
                                                                         </span>
                                                                     </span>
-                                                                    <span>
-                                                                        <span
-                                                                            className={cx(
-                                                                                "serv-label"
-                                                                            )}
-                                                                        >
-                                                                            Số
-                                                                            lượng:{" "}
-                                                                        </span>
-                                                                        <span
-                                                                            className={cx(
-                                                                                "serv-quantity"
-                                                                            )}
-                                                                        >
-                                                                            {
-                                                                                bookingDetail?.service_quantity
-                                                                            }
-                                                                        </span>
-                                                                    </span>
                                                                 </div>
                                                                 <span
                                                                     className={cx(
                                                                         "serv-price"
                                                                     )}
                                                                 >
-                                                                    {isMedium && (
-                                                                        <span>
-                                                                            Giá:
-                                                                        </span>
-                                                                    )}
+                                                                    <span>
+                                                                        Giá:
+                                                                    </span>
                                                                     {FormatCurrency(
                                                                         bookingDetail?.unit_price
                                                                     )}
@@ -287,7 +266,7 @@ function BookedList({ bookingListByUser }) {
                     </div>
                 </div>
             ) : (
-                <div className={cx("no-booking")}>Không có đơn hàng</div>
+                <div className={cx("no-booking")}>Không có lịch hẹn</div>
             )}
         </>
     );
