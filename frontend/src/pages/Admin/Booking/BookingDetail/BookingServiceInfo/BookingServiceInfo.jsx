@@ -36,7 +36,6 @@ function BookingServiceInfo({
             setBookingDetailClone(structuredClone(getBookingDetail));
         }
     }, [getBookingDetail]);
-
     const [
         isOpenConfirmCancelBookingRequestPopup,
         setIsOpenConfirmCancelInvoiceRequestPopup,
@@ -130,6 +129,17 @@ function BookingServiceInfo({
                                 }
                             >
                                 {currBooking?.statusName}
+                            </span>
+                        </div>
+                    </Grid>
+                    <Grid item xs={12}>
+                        <div className={cx("info-item")}>
+                            <span className={cx("info-item-label")}>
+                                Ghi chú
+                            </span>
+                            :{" "}
+                            <span className={cx("info-item-content")}>
+                                {bookingDetailClone[0]?.note}
                             </span>
                         </div>
                     </Grid>
