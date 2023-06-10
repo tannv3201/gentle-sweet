@@ -14,6 +14,7 @@ import { useMediaQuery } from "@mui/material";
 import { useTheme } from "@mui/material/styles";
 import { useSelector } from "react-redux";
 import GProgress from "../components/GProgress/GProgress";
+import NotFoundPage from "./NotFoundPage/NotFoundPage";
 
 function App() {
     const theme = useTheme();
@@ -29,7 +30,8 @@ function App() {
             state.discount.discount?.isFetching
         );
     });
-
+    const user = useSelector((state) => state.auth.login?.currentUser);
+    console.log(user);
     return (
         <Router>
             <div className="App">
@@ -73,17 +75,18 @@ function App() {
                                 key={index}
                                 path={route?.path}
                                 element={
-                                    // currentUser?.role_name === "SUPER_ADMIN" ? (
-                                    <Layout>
-                                        <Page />
-                                    </Layout>
-                                    // ) : (
-                                    //     <Navigate to="/dang-nhap" replace />
-                                    // )
+                                    user?.role_name === "SUPER_ADMIN" ? (
+                                        <Layout>
+                                            <Page />
+                                        </Layout>
+                                    ) : (
+                                        <Navigate to="/" replace />
+                                    )
                                 }
                             />
                         );
                     })}
+                    <Route path="/*" element={<NotFoundPage />} />
                 </Routes>
             </div>
         </Router>

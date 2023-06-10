@@ -44,6 +44,7 @@ const images = {
     qr_momo: require("./qr_momo.jpg"),
     login_bg: require("./bg.jpg"),
     user_vector: require("./user_vector.png"),
+    notFoundPage: require("./notFoundPage.jpg"),
 };
 
 export default images;

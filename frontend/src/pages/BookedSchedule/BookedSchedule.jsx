@@ -37,9 +37,7 @@ function BookedSchedule() {
     const dispatch = useDispatch();
     const user = useSelector((state) => state.auth.login?.currentUser);
     let axiosJWT = createAxios(user, dispatch, loginSuccess);
-    // const getBookingListByUser = useSelector(
-    //     (state) => state.booking.booking.bookingListByUser
-    // );
+
     const navigate = useNavigate();
     const [bookingList, setBookingList] = useState([]);
     const [bookingListStatus1, setBookingListStatus1] = useState([]);
