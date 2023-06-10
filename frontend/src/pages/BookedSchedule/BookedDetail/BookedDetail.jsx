@@ -25,7 +25,6 @@ function BookedDetail() {
     const [serviceListClone, setServiceListClone] = useState([]);
     const user = useSelector((state) => state.auth.login?.currentUser);
     const bookingById = useSelector((state) => state.booking.booking?.booking);
-    console.log(serviceListClone);
     const deliveryByBookingId = useSelector(
         (state) => state.delivery.delivery?.deliveryByBookingId
     );
