@@ -133,7 +133,7 @@ export default function BookingStatusMenu({ selectedUser }) {
                     }}
                     disabled={getBooking?.status > 2}
                 >
-                    Đang lên lịch
+                    Đã lên lịch
                 </MenuItem>
                 <MenuItem
                     onClick={async () => {

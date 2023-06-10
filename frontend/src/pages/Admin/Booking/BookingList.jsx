@@ -100,7 +100,7 @@ export default function BookingList() {
                             : booking?.status === 2
                             ? "Đã tiếp nhận"
                             : booking?.status === 3
-                            ? "Đang lên lịch"
+                            ? "Đã lên lịch"
                             : booking?.status === 4
                             ? "Bắt đầu dịch vụ"
                             : booking?.status === 5
@@ -131,7 +131,7 @@ export default function BookingList() {
                             : booking?.status === 2
                             ? "Đã tiếp nhận"
                             : booking?.status === 3
-                            ? "Đang lên lịch"
+                            ? "Đã lên lịch"
                             : booking?.status === 4
                             ? "Bắt đầu dịch vụ"
                             : booking?.status === 5
@@ -242,7 +242,7 @@ export default function BookingList() {
                                                 "planned"
                                             )}
                                         >
-                                            Đang lên lịch
+                                            Đã lên lịch
                                         </span>
                                     ) : rowData?.status === 4 ? (
                                         <span

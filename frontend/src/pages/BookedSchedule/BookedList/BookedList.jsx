@@ -96,7 +96,7 @@ function BookedList({ bookingListByUser }) {
                                                                           3
                                                                         ? cx(
                                                                               "status-content",
-                                                                              "service-waiting"
+                                                                              "scheduled"
                                                                           )
                                                                         : booking?.status ===
                                                                           4

@@ -132,7 +132,7 @@ function BookingServiceInfo({
                             </span>
                         </div>
                     </Grid>
-                    <Grid item xs={12}>
+                    <Grid item xs={6}>
                         <div className={cx("info-item")}>
                             <span className={cx("info-item-label")}>
                                 Ghi chú

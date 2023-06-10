@@ -106,7 +106,7 @@ function BookedDetail() {
                         : bookingById?.status === 2
                         ? "Đã tiếp nhận"
                         : bookingById?.status === 3
-                        ? "Đang lên lịch"
+                        ? "Đã lên lịch"
                         : bookingById?.status === 4
                         ? "Bắt đầu dịch vụ"
                         : bookingById?.status === 5
@@ -176,7 +176,7 @@ function BookedDetail() {
                                 <h3
                                     className={cx("booking-code")}
                                 >{`Lịch hẹn #${bookingId}`}</h3>
-                                {bookingClone?.status < 4 && (
+                                {bookingClone?.status < 3 && (
                                     <GButton
                                         color={"error"}
                                         onClick={handleOpenConfirmCancelPopup}
@@ -209,38 +209,6 @@ function BookedDetail() {
                                             Ngày tạo:{" "}
                                             <span>
                                                 {bookingClone?.createdAt}
-                                            </span>
-                                        </div>
-                                    </Grid>
-                                    <Grid item xs={12}>
-                                        <div className={cx("info-item")}>
-                                            Trạng thái lịch hẹn:{" "}
-                                            <span
-                                                className={
-                                                    bookingClone?.status === 1
-                                                        ? cx("pending")
-                                                        : bookingClone?.status ===
-                                                          2
-                                                        ? cx("received")
-                                                        : bookingClone?.status ===
-                                                          3
-                                                        ? cx("service-waiting")
-                                                        : bookingClone?.status ===
-                                                          4
-                                                        ? cx("service-start")
-                                                        : bookingClone?.status ===
-                                                          5
-                                                        ? cx("service-end")
-                                                        : bookingClone?.status ===
-                                                          6
-                                                        ? cx("cancel")
-                                                        : bookingClone?.status ===
-                                                          7
-                                                        ? cx("cancel-pending")
-                                                        : ""
-                                                }
-                                            >
-                                                {bookingClone?.statusName}
                                             </span>
                                         </div>
                                     </Grid>
@@ -285,7 +253,39 @@ function BookedDetail() {
                                             </span>
                                         </div>
                                     </Grid>
-                                    <Grid item xs={12}>
+                                    <Grid item xs={6}>
+                                        <div className={cx("info-item")}>
+                                            Trạng thái lịch hẹn:{" "}
+                                            <span
+                                                className={
+                                                    bookingClone?.status === 1
+                                                        ? cx("pending")
+                                                        : bookingClone?.status ===
+                                                          2
+                                                        ? cx("received")
+                                                        : bookingClone?.status ===
+                                                          3
+                                                        ? cx("scheduled")
+                                                        : bookingClone?.status ===
+                                                          4
+                                                        ? cx("service-start")
+                                                        : bookingClone?.status ===
+                                                          5
+                                                        ? cx("service-end")
+                                                        : bookingClone?.status ===
+                                                          6
+                                                        ? cx("cancel")
+                                                        : bookingClone?.status ===
+                                                          7
+                                                        ? cx("cancel-pending")
+                                                        : ""
+                                                }
+                                            >
+                                                {bookingClone?.statusName}
+                                            </span>
+                                        </div>
+                                    </Grid>
+                                    <Grid item xs={6}>
                                         <div className={cx("info-item")}>
                                             Ghi chú:{" "}
                                             <span>
@@ -325,7 +325,7 @@ function BookedDetail() {
                                     </Grid>
                                     <Grid item xs={12}>
                                         <div className={cx("info-item")}>
-                                            Địa chỉ giao hàng:{" "}
+                                            Địa chỉ khách hàng:{" "}
                                             <span>
                                                 {user?.detail_address ||
                                                     getCustomerUser?.detail_address}
