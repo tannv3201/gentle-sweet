@@ -35,7 +35,10 @@ const discountController = {
                 discount_percent: req.body.discount_percent,
                 status: 1,
             });
-            res.json({ status: 201, msg: "Thêm mơi thành công" });
+            res.json({
+                status: 201,
+                msg: "Thêm chương trình giảm giá thành công",
+            });
         } catch (error) {
             res.status(500).json(error);
         }

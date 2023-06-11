@@ -39,7 +39,7 @@ export default function CancelPopup({
                 handleClose={handleClose}
                 handleOpen={handleOpen}
                 isOpen={isOpen}
-                deleteQuestion="Bạn có muốn hủy hóa đơn của khách hàng"
+                deleteQuestion="Bạn có muốn hủy đơn hàng của khách hàng"
                 deleteLabel={selectedInvoice?.customer_name}
                 handleDelete={handleCancelInvoice}
             />

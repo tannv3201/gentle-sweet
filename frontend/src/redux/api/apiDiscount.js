@@ -60,7 +60,7 @@ export const createDiscount = async (
         });
         dispatch(createDiscountSuccess(res?.data));
         if (res?.data?.status === 201) {
-            toast.success("Thêm sản phẩm thành công.");
+            toast.success("Thêm chương trình giảm giá thành công.");
             await getAllDiscount(accessToken, dispatch, axiosJWT);
         }
         return res?.data?.data;

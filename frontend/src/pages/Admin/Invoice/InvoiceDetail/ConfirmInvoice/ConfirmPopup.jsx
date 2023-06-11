@@ -51,7 +51,7 @@ export default function ConfirmPopup({
                 handleClose={handleClose}
                 handleOpen={handleOpen}
                 isOpen={isOpen}
-                deleteQuestion="Bạn có muốn xác nhận hóa đơn của khách hàng"
+                deleteQuestion="Bạn có muốn xác nhận đơn hàng của khách hàng"
                 deleteLabel={selectedInvoice?.customer_name}
                 handleDelete={handleConfirmInvoice}
             />

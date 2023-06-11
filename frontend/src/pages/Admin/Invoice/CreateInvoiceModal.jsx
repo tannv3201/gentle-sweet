@@ -120,7 +120,7 @@ export default function CreateInvoiceModal({
                 }}
                 handleOpen={handleOpen}
                 isOpen={isOpen}
-                title={"Thêm hóa đơn"}
+                title={"Tạo đơn hàng"}
             >
                 <div className={cx("create-invoice-form")}>
                     <form onSubmit={formik.handleSubmit}>

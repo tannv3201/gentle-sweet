@@ -23,7 +23,7 @@ function InfoSaleSlider() {
             <div className={cx("inner")}>
                 <Slider {...settings} className={cx("slider")}>
                     <div className={cx("slider-item")}>
-                        <h5>Free shipping với hóa đơn trên 500k!</h5>
+                        <h5>Free shipping với đơn hàng trên 500k!</h5>
                     </div>
                     <div className={cx("slider-item")}>
                         <h5>Ra mắt BST "Mùa hè rực rỡ"</h5>

@@ -59,7 +59,7 @@ export const createService = async (
         dispatch(createServiceSuccess(res?.data));
         if (res?.data?.status === 201) {
             // toast.success(res?.data?.msg);
-            toast.success("Thêm sản phẩm thành công.");
+            toast.success("Thêm dịch vụ thành công");
             await getAllService(accessToken, dispatch, axiosJWT);
         }
 

@@ -68,7 +68,7 @@ const bookingController = {
 
             return res.json({
                 status: 201,
-                msg: "Thêm mới thành công",
+                msg: "Thêm chi tiết lịch hẹn thành công",
                 data: newBookingDetail,
             });
         } catch (error) {

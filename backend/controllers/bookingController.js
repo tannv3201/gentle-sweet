@@ -83,7 +83,7 @@ const bookingController = {
             });
             res.json({
                 status: 201,
-                msg: "Thêm lịch đặt thành công",
+                msg: "Thêm lịch hẹn thành công",
                 data: newBooking,
             });
         } catch (error) {
@@ -144,7 +144,7 @@ const bookingController = {
             } else {
                 return res.json({
                     status: 200,
-                    msg: "Xác nhận lịch đặt thành công",
+                    msg: "Xác nhận lịch hẹn thành công",
                 });
             }
         } catch (error) {
@@ -168,7 +168,7 @@ const bookingController = {
             } else {
                 return res.json({
                     status: 200,
-                    msg: "Hủy lịch đặt thành công",
+                    msg: "Hủy lịch hẹn thành công",
                 });
             }
         } catch (error) {

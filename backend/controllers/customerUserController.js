@@ -27,7 +27,7 @@ const customerUserController = {
             return res.json({
                 newAdminUser,
                 status: 201,
-                msg: "Thêm thành công",
+                msg: "Thêm khách hàng thành công",
             });
         } catch (error) {
             res.status(500).json(error);

@@ -97,7 +97,7 @@ export default function InvoiceDetailList({ isEditting }) {
             <div className={cx("table-invoice-detail")}>
                 <div className={cx("header-table-invoice-detail")}>
                     <div className={cx("invoice-detail-title")}>
-                        <span>CHI TIẾT HÓA ĐƠN </span>
+                        <span>CHI TIẾT ĐƠN HÀNG</span>
                         {cloneData?.length === 0 && (
                             <ReportProblemRounded
                                 className={cx("warning")}

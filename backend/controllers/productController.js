@@ -71,7 +71,7 @@ const productsController = {
             });
             res.json({
                 status: 201,
-                msg: "Thêm mới thành công",
+                msg: "Thêm sản phẩm thành công",
                 data: newProduct,
             });
         } catch (error) {
@@ -94,7 +94,7 @@ const productsController = {
             });
             res.json({
                 status: 201,
-                msg: "Thêm mới thành công",
+                msg: "Thêm sản phẩm thành công",
                 data: newProduct,
             });
         } catch (error) {
@@ -122,12 +122,12 @@ const productsController = {
                 if (discount_id) {
                     return res.json({
                         status: 200,
-                        msg: "Thêm giảm giá thành công",
+                        msg: "Thêm chương trình giảm giá thành công",
                     });
                 } else {
                     return res.json({
                         status: 200,
-                        msg: "Xóa giảm giá thành công",
+                        msg: "Xóa chương trình giảm giá thành công",
                     });
                 }
             }

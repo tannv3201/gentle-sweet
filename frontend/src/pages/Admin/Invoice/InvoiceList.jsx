@@ -184,7 +184,7 @@ export default function InvoiceList() {
         <div className={cx("invoice-list-wrapper")}>
             <div className={cx("btn-list-header")}>
                 <GButton onClick={handleOpenCreateInvoiceModal}>
-                    Thêm hóa đơn
+                    Tạo đơn hàng
                 </GButton>
                 <FilterInvoice
                     isFiltering={isFiltering}

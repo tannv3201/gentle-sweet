@@ -20,7 +20,6 @@ import { getAllServiceCategory } from "../../../redux/api/apiServiceCategory";
 const validationSchema = Yup.object().shape({
     service_category_id: Yup.string().required("Vui lòng không để trống"),
     name: Yup.string().required("Vui lòng không để trống"),
-    quantity: Yup.string().required("Vui lòng không để trống"),
     price: Yup.string().required("Vui lòng không để trống"),
 });
 
@@ -57,7 +56,6 @@ export default function CreateUpdateServiceModal({
         service_category_name: "",
         name: "",
         description: "",
-        quantity: "",
         price: "",
         image_url: "",
     });
@@ -72,21 +70,20 @@ export default function CreateUpdateServiceModal({
 
     // Upload to server local
     const handleCreateService = async (data) => {
-        if (imageFileSeleted) {
+        if (imageFileSeleted.length > 0) {
             const formData = new FormData();
             formData.append("image", imageFileSeleted[0]?.file);
             formData.append("name", data?.name);
             formData.append("description", data?.description);
             formData.append("service_category_id", data?.service_category_id);
             formData.append("price", data?.price);
-            formData.append("quantity", data?.quantity);
             createService(user?.accessToken, dispatch, formData, axiosJWT).then(
                 () => {
                     handleCloseModal();
                 }
             );
         } else {
-            toast.error("Chưa có ảnh");
+            toast.error("Vui lòng chọn ảnh");
         }
     };
 
@@ -164,18 +161,7 @@ export default function CreateUpdateServiceModal({
                                 formik={formik}
                             />
                         </Grid>
-                        <Grid item xs={6}>
-                            <GTextFieldNormal
-                                onChange={formik.handleChange}
-                                label="Số lượng"
-                                type="number"
-                                fullWidth
-                                name="quantity"
-                                value={formik.values?.quantity || ""}
-                                formik={formik}
-                            />
-                        </Grid>
-                        <Grid item xs={6}>
+                        <Grid item xs={12}>
                             <GTextFieldNormal
                                 onChange={formik.handleChange}
                                 label="Giá"

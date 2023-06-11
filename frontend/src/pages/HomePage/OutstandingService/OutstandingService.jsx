@@ -93,7 +93,7 @@ function OutstandingService() {
                     <Grid item lg={4} md={6} sm={12} xs={12}>
                         <ServiceItem
                             imageSrc={images.service_2}
-                            title="Thiết kế & vẽ móng"
+                            title="Đắp móng & tạo hình"
                         />
                     </Grid>
                     <Grid item lg={4} md={6} sm={12} xs={12}>

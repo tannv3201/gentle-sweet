@@ -52,14 +52,13 @@ const serviceController = {
                 admin_user_id: req.user.id,
                 name: req.body.name,
                 description: req.body.description,
-                quantity: req.body.quantity,
                 price: req.body.price,
                 image_url: req?.file?.filename,
                 status: 1,
             });
             return res.json({
                 status: 201,
-                msg: "Thêm mới thành công",
+                msg: "Thêm dịch vụ thành công",
                 data: newService,
             });
         } catch (error) {
@@ -112,12 +111,12 @@ const serviceController = {
                 if (discount_id) {
                     return res.json({
                         status: 200,
-                        msg: "Thêm giảm giá thành công",
+                        msg: "Thêm chương trình giảm giá thành công",
                     });
                 } else {
                     return res.json({
                         status: 200,
-                        msg: "Xóa giảm giá thành công",
+                        msg: "Xóa chương trình giảm giá thành công",
                     });
                 }
             }

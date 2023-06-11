@@ -101,7 +101,7 @@ export const createInvoice = async (
         dispatch(createInvoiceSuccess(res?.data));
         if (res?.data?.status === 201) {
             // toast.success(res?.data?.msg);
-            toast.success("Thêm hóa đơn thành công");
+            toast.success("Tạo đơn hàng thành công");
             await getAllInvoice(accessToken, dispatch, axiosJWT);
         }
 

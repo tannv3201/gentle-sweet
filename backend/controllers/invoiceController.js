@@ -57,7 +57,7 @@ const invoiceController = {
                 req.params.id
             );
             if (!invoices) {
-                return res.status(404).json("Hóa đơn không tồn tại");
+                return res.status(404).json("Đơn hàng không tồn tại");
             } else {
                 return res.status(200).json(invoices);
             }
@@ -89,7 +89,7 @@ const invoiceController = {
             });
             res.json({
                 status: 201,
-                msg: "Thêm hóa đơn thành công",
+                msg: "Tạo đơn hàng thành công",
                 data: newInvoice,
             });
         } catch (error) {

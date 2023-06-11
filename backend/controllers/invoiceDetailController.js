@@ -21,7 +21,7 @@ const invoiceController = {
                 req.params.id
             );
             if (!invoiceDetail) {
-                return res.status(404).json("Chi tiết hóa đơn không tồn tại");
+                return res.status(404).json("Chi tiết đơn hàng không tồn tại");
             } else {
                 return res.status(200).json(invoiceDetail);
             }
@@ -38,7 +38,7 @@ const invoiceController = {
                     req.params.invoiceId
                 );
             if (!invoiceDetail) {
-                return res.status(404).json("Chi tiết hóa đơn không tồn tại");
+                return res.status(404).json("Chi tiết đơn hàng không tồn tại");
             } else {
                 return res.status(200).json(invoiceDetail);
             }

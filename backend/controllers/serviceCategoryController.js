@@ -41,7 +41,7 @@ const serviceCategoryController = {
                 });
             return res.json({
                 status: 201,
-                msg: "Thêm mới thành công",
+                msg: "Thêm danh mục dịch vụ thành công",
                 data: newServiceCategory,
             });
         } catch (error) {

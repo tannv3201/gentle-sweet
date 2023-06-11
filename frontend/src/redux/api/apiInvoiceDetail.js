@@ -58,7 +58,7 @@ export const createInvoiceDetail = async (
         dispatch(createInvoiceDetailSuccess(res?.data));
         if (res?.data?.status === 201) {
             // toast.success(res?.data?.msg);
-            toast.success("Thêm chi tiết hóa đơn thành công");
+            toast.success("Thêm chi tiết đơn hàng thành công");
             await getInvoiceDetailByInvoiceId(
                 dispatch,
                 invoiceId,

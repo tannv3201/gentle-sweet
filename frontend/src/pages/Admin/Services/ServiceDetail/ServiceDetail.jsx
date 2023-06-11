@@ -85,7 +85,6 @@ export default function ServiceDetail() {
         service_category_name: "",
         name: "",
         description: "",
-        quantity: "",
         price: "",
         image_url: "",
     });
@@ -141,7 +140,6 @@ export default function ServiceDetail() {
             formData.append("description", data?.description);
             formData.append("service_category_id", data?.service_category_id);
             formData.append("price", data?.price);
-            formData.append("quantity", data?.quantity);
             formData.append("price_onsale", discountPrice);
 
             await updateService(
@@ -186,7 +184,6 @@ export default function ServiceDetail() {
             service_category_id: cloneData?.service_category_id,
             service_category_name: cloneData?.service_category_name,
             description: cloneData?.description,
-            quantity: cloneData?.quantity,
             price: cloneData?.price,
             price_onsale: cloneData?.price_onsale,
             image_url: cloneData?.image_url,
@@ -303,7 +300,7 @@ export default function ServiceDetail() {
                                     )}
                                 />
                             </Grid>
-                            <Grid item xs={6}>
+                            <Grid item xs={12}>
                                 <GTextFieldNormal
                                     disabled={!isEditting}
                                     onChange={formik.handleChange}
@@ -311,18 +308,6 @@ export default function ServiceDetail() {
                                     fullWidth
                                     name="name"
                                     value={formik.values?.name || ""}
-                                    formik={formik}
-                                />
-                            </Grid>
-                            <Grid item xs={6}>
-                                <GTextFieldNormal
-                                    disabled={!isEditting}
-                                    onChange={formik.handleChange}
-                                    label="Số lượng"
-                                    type="number"
-                                    fullWidth
-                                    name="quantity"
-                                    value={formik.values?.quantity || ""}
                                     formik={formik}
                                 />
                             </Grid>
