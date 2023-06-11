@@ -46,6 +46,10 @@ const images = {
     user_vector: require("./user_vector.png"),
     notFoundPage: require("./notFoundPage.jpg"),
     notFoundPageMobile: require("./notFoundPageMobile.png"),
+    veSinhMongTay: require("./VeSinhMongTay.jpg"),
+    staff: require("./staff.png"),
+    varietyOfService: require("./varietyOfService.png"),
+    machineAndTool: require("./machineAndTool.png"),
 };
 
 export default images;

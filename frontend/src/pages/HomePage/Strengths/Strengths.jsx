@@ -16,17 +16,17 @@ const imgList = [
         title: "Không gian làm việc",
     },
     {
-        src: images.collection_1,
+        src: images.machineAndTool,
         alt: "Image 1",
         title: "Máy móc & công cụ",
     },
     {
-        src: images.collection_2,
+        src: images.staff,
         alt: "Image 1",
         title: "Đội ngũ nhân viên",
     },
     {
-        src: images.collection_3,
+        src: images.varietyOfService,
         alt: "Image 1",
         title: "Đa dạng dịch vụ",
     },
@@ -50,8 +50,8 @@ const subTitleList = [
 ];
 function Strengths() {
     const theme = useTheme();
-    const isMedium = useMediaQuery(theme.breakpoints.down('lg'));
-    const isSmall = useMediaQuery(theme.breakpoints.down('md'));
+    const isMedium = useMediaQuery(theme.breakpoints.down("lg"));
+    const isSmall = useMediaQuery(theme.breakpoints.down("md"));
 
     const [currentImage, setCurrentImage] = useState(0);
     const [isModalOpen, setIsModalOpen] = useState(false);

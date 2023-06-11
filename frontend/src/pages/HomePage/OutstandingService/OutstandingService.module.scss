@@ -8,11 +8,6 @@
         }
     }
 
-    .outstanding-service-inner {
-        h2 {
-        }
-    }
-
     .service-see-detail {
         font-size: 1.6rem !important;
     }
@@ -158,6 +153,7 @@
             border-radius: 6px;
             transition: all 0.2s linear;
             font-weight: var(--fw-medium);
+            cursor: pointer;
             span {
                 margin-right: 4px;
             }

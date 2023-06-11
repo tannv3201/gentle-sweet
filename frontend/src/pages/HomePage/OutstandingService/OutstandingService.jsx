@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import styles from "./OutstandingService.module.scss";
 import classNames from "classnames/bind";
 import { Grid } from "@mui/material";
@@ -9,10 +9,40 @@ import { getAllService } from "../../../redux/api/apiService";
 import { getAllServiceCategory } from "../../../redux/api/apiServiceCategory";
 import { useDispatch } from "react-redux";
 import { useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
+import { API_IMAGE_URL } from "../../../LocalConstants";
+
 const cx = classNames.bind(styles);
 
-function ServiceItem({ imageSrc, title }) {
+function ServiceItem({ imageSrc, title, serviceId }) {
+    const navigate = useNavigate();
+    const handleNavigateToServiceDetail = (serviceId) => {
+        navigate(`/danh-muc-dich-vu/dich-vu/${serviceId}`);
+    };
+    return (
+        <div
+            className={cx("service-wrapper")}
+            onClick={() => handleNavigateToServiceDetail(serviceId)}
+        >
+            <div className={cx("service-img")}>
+                <img src={imageSrc} alt="" />
+            </div>
+            <div className={cx("service-info")}>
+                <div className={cx("service-title")}>
+                    <h3>{title}</h3>
+                </div>
+                <a className={cx("service-see-detail")} href="#">
+                    Xem chi tiết
+                </a>
+            </div>
+        </div>
+    );
+}
+
+function OutstandingService() {
+    const [outstandingService, setOutstandingService] = useState([]);
     const dispatch = useDispatch();
+    const navigate = useNavigate();
     const serviceList = useSelector(
         (state) => state.service.service?.serviceList
     );
@@ -30,24 +60,20 @@ function ServiceItem({ imageSrc, title }) {
         };
         fetch();
     }, []);
-    return (
-        <div className={cx("service-wrapper")}>
-            <div className={cx("service-img")}>
-                <img src={imageSrc} alt="" />
-            </div>
-            <div className={cx("service-info")}>
-                <div className={cx("service-title")}>
-                    <h3>{title}</h3>
-                </div>
-                <a className={cx("service-see-detail")} href="#">
-                    Xem chi tiết
-                </a>
-            </div>
-        </div>
-    );
-}
-
-function OutstandingService() {
+    useEffect(() => {
+        if (serviceList) {
+            const hairService = serviceList?.filter(
+                (s) => s.service_category_id === 4
+            );
+            const nailService = serviceList?.filter(
+                (s) => s.service_category_id === 6
+            );
+            setOutstandingService([
+                ...hairService?.slice(0, 3),
+                ...nailService?.slice(0, 3),
+            ]);
+        }
+    }, [serviceList]);
     return (
         <div className={cx("outstanding-service-wrapper")}>
             <div className={cx("outstanding-service-inner")}>
@@ -84,47 +110,30 @@ function OutstandingService() {
                     </Grid>
                 </Grid>
                 <Grid container spacing={3}>
-                    <Grid item lg={4} md={6} sm={12} xs={12}>
-                        <ServiceItem
-                            imageSrc={images.service_1}
-                            title="Vệ sinh và chăm sóc móng"
-                        />
-                    </Grid>
-                    <Grid item lg={4} md={6} sm={12} xs={12}>
-                        <ServiceItem
-                            imageSrc={images.service_2}
-                            title="Đắp móng & tạo hình"
-                        />
-                    </Grid>
-                    <Grid item lg={4} md={6} sm={12} xs={12}>
-                        <ServiceItem
-                            imageSrc={images.hair_care_service}
-                            title="Phục hồi tóc"
-                        />
-                    </Grid>
-                    <Grid item lg={4} md={6} sm={12} xs={12}>
-                        <ServiceItem
-                            imageSrc={images.hair_design_service}
-                            title="Thiết kế & tạo mẫu tóc"
-                        />
-                    </Grid>
-                    <Grid item lg={4} md={6} sm={12} xs={12}>
-                        <ServiceItem
-                            imageSrc={images.hair_chemistry_service}
-                            title="Các dịch vụ hóa chất tóc"
-                        />
-                    </Grid>
-                    <Grid item lg={4} md={6} sm={12} xs={12}>
-                        <ServiceItem
-                            imageSrc={images.other_service}
-                            title="Dịch vụ khác"
-                        />
-                    </Grid>
+                    {outstandingService?.map((service, idx) => (
+                        <Grid
+                            item
+                            lg={4}
+                            md={6}
+                            sm={12}
+                            xs={12}
+                            key={service?.id}
+                        >
+                            <ServiceItem
+                                imageSrc={`${API_IMAGE_URL}/${service?.image_url}`}
+                                title={service?.name}
+                                serviceId={service?.id}
+                            />
+                        </Grid>
+                    ))}
                 </Grid>
                 <div className={cx("outstanding-service-see-more")}>
-                    <a href="#" className={cx("see-more-btn")}>
+                    <div
+                        onClick={() => navigate("/danh-muc-dich-vu")}
+                        className={cx("see-more-btn")}
+                    >
                         <span>Xem thêm</span> <ArrowForwardRounded />
-                    </a>
+                    </div>
                 </div>
             </div>
         </div>
