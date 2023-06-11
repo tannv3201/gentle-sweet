@@ -24,6 +24,10 @@ import { loginSuccess } from "../../redux/slice/authSlice";
 import { getCurrentPage } from "../../redux/api/apiPagination";
 import { useSearchParams } from "react-router-dom";
 import { getAllProductCategory } from "../../redux/api/apiProductCategory";
+import {
+    getAllDiscount,
+    getAllDiscountCustomer,
+} from "../../redux/api/apiDiscount";
 
 const cx = classNames.bind(styles);
 
@@ -55,6 +59,7 @@ function ShopPage() {
         const fetch = async () => {
             await getAllProduct(user?.accessToken, dispatch, axiosJWT);
             await getAllProductCategory(null, dispatch, null);
+            await getAllDiscount(null, dispatch, null);
         };
         fetch();
     }, []);

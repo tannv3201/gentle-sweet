@@ -11,7 +11,7 @@ router.post(
 
 router.get(
     "/",
-    middlewareController.verifyTokenAndSystemUserAuth,
+    // middlewareController.verifyTokenAndSystemUserAuth,
     discountController.getAllDiscount
 );
 

@@ -24,14 +24,20 @@ function ProductList() {
     const navigate = useNavigate();
     const [isLoadingSkeleton, setIsLoadingSkeleton] = useState(false);
     const dispatch = useDispatch();
-    const [productLimit, setProductLimit] = useState([]);
-    const [productCategoryList, setProductCategoryList] = useState([]);
     const [countPage, setCountPage] = useState();
-
+    const [productListUpdated, setProductListUpdated] = useState([]);
+    const [productListSearchUpdated, setProductListSearchUpdated] = useState(
+        []
+    );
     const getProductListSearch = useSelector(
         (state) => state.product.product?.productListSearch
     );
-
+    const discountList = useSelector(
+        (state) => state.discount.discount?.discountList
+    );
+    const productCategoryList = useSelector(
+        (state) => state.productCategory.productCategory?.productCategoryList
+    );
     const getProductList = useSelector(
         (state) => state.product.product?.productList
     );
@@ -40,8 +46,61 @@ function ProductList() {
     const [searchParams, setSearchParams] = useSearchParams();
 
     const [page, setPage] = useState(1);
+
     useEffect(() => {
-        const currentPageData = getCurrentPage(getProductList, page, 8);
+        if (getProductListSearch) {
+            const newProductList = getProductListSearch?.map((p) => {
+                let getDiscount;
+                const getProductCategory = productCategoryList?.find(
+                    (pc) => pc?.id === p?.product_category_id
+                );
+
+                if (p?.discount_id) {
+                    const discount = discountList?.find(
+                        (d) => d.id === parseInt(p.discount_id)
+                    );
+                    getDiscount = discount;
+                }
+
+                return {
+                    ...p,
+                    product_category_name: getProductCategory?.name,
+                    discount_percent: getDiscount?.discount_percent,
+                };
+            });
+
+            setProductListSearchUpdated(newProductList);
+        }
+    }, [getProductListSearch]);
+
+    useEffect(() => {
+        if (getProductList) {
+            const newProductList = getProductList?.map((p) => {
+                let getDiscount;
+                const getProductCategory = productCategoryList?.find(
+                    (pc) => pc?.id === p?.product_category_id
+                );
+
+                if (p?.discount_id) {
+                    const discount = discountList?.find(
+                        (d) => d.id === parseInt(p.discount_id)
+                    );
+                    getDiscount = discount;
+                }
+
+                return {
+                    ...p,
+                    product_category_name: getProductCategory?.name,
+                    discount_percent: getDiscount?.discount_percent,
+                };
+            });
+
+            setProductListUpdated(newProductList);
+        }
+    }, [getProductList]);
+
+    useEffect(() => {
+        const currentPageData = getCurrentPage(productListUpdated, page, 8);
         setProductList(currentPageData);
     }, [page]);
 
@@ -75,27 +134,33 @@ function ProductList() {
             locationMinPrice ||
             locationMaxPrice
         ) {
-            const currentPageData = getCurrentPage(getProductListSearch, 1, 8);
+            const currentPageData = getCurrentPage(
+                productListSearchUpdated,
+                1,
+                8
+            );
             setProductList(structuredClone(currentPageData));
             setPage(parseInt(1));
-            setCountPage(Math.ceil((getProductListSearch?.length + 1) / 12));
+            setCountPage(
+                Math.ceil((productListSearchUpdated?.length + 1) / 12)
+            );
         } else if (locationPage) {
             const currentPageData = getCurrentPage(
-                getProductList,
+                productListUpdated,
                 locationPage,
                 8
             );
             setProductList(structuredClone(currentPageData));
-            setCountPage(Math.ceil((getProductList?.length + 1) / 12));
+            setCountPage(Math.ceil((productListUpdated?.length + 1) / 12));
             setPage(parseInt(locationPage));
         } else {
-            const currentPageData = getCurrentPage(getProductList, 1, 8);
+            const currentPageData = getCurrentPage(productListUpdated, 1, 8);
             setProductList(structuredClone(currentPageData));
-            setCountPage(Math.ceil((getProductList?.length + 1) / 12));
+            setCountPage(Math.ceil((productListUpdated?.length + 1) / 12));
         }
     }, [
-        getProductList,
-        getProductListSearch,
+        productListUpdated,
+        productListSearchUpdated,
         locationProductCategoryId,
         locationSort,
         locationMaxPrice,
@@ -106,7 +171,7 @@ function ProductList() {
     const handleNavigateToProductDetail = (productId) => {
         navigate(`/san-pham/${productId}`);
     };
-
+    console.log(productList);
     return (
         <div className={cx("product-wrapper")}>
             <div className={cx("product-inner")}>

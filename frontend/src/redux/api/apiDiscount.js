@@ -22,11 +22,14 @@ import axios from "axios";
 export const getAllDiscount = async (accessToken, dispatch, axiosJWT) => {
     dispatch(getAllDiscountStart());
     try {
-        const res = await axiosJWT.get("/v1/discount", {
-            headers: {
-                token: `Bearer ${accessToken}`,
-            },
-        });
+        const res = await axios.get(
+            "/v1/discount"
+            // {
+            //     headers: {
+            //         token: `Bearer ${accessToken}`,
+            //     },
+            // }
+        );
         dispatch(getAllDiscountSuccess(res?.data));
         return res?.data?.length;
     } catch (error) {
