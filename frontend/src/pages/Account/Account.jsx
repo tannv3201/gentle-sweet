@@ -72,7 +72,6 @@ export default function Account() {
             setCloneData(structuredClone(getCustomerUser));
         }
     }, [getCustomerUser]);
-    console.log("hehe");
     const [customerUser, setCustomerUser] = useState({
         id: "",
         role_id: "",

@@ -32,7 +32,6 @@ function ArticleCategory({ h2Nodes }) {
 
     React.useEffect(() => {
         const h2Nodes = document.querySelectorAll("h2");
-        console.log(h2Nodes);
         h2NodesRef.current = h2Nodes;
     }, [serviceCategoryId]);
     const scrollToElement = (id) => {

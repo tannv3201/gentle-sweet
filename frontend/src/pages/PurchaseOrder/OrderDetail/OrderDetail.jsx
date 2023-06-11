@@ -38,7 +38,6 @@ function OrderDetail() {
     const dispatch = useDispatch();
     const navigate = useNavigate();
     let axiosJWT = createAxios(user, dispatch, loginSuccess);
-
     useEffect(() => {
         if (getInvoiceDetail) {
             const newDetailList = getInvoiceDetail?.map((p) => {
@@ -81,22 +80,20 @@ function OrderDetail() {
     }, [invoiceId]);
 
     useEffect(() => {
-        if (productListClone) {
-            const price_total = productListClone?.reduce(
-                (accumulator, currentValue) => {
-                    return (
-                        accumulator +
-                        parseFloat(currentValue?.unit_price) *
-                            currentValue?.product_quantity
-                    );
-                },
-                0
-            );
-            setInvoiceClone({
-                ...invoiceClone,
-                provisional_price: price_total,
-            });
-        }
+        const price_total = productListClone?.reduce(
+            (accumulator, currentValue) => {
+                return (
+                    accumulator +
+                    parseFloat(currentValue?.unit_price) *
+                        currentValue?.product_quantity
+                );
+            },
+            0
+        );
+        setInvoiceClone({
+            ...invoiceClone,
+            provisional_price: price_total,
+        });
     }, [productListClone]);
 
     useEffect(() => {
@@ -125,7 +122,7 @@ function OrderDetail() {
                 ),
             });
         }
-    }, [invoiceById]);
+    }, [invoiceById, invoiceById?.status]);
     useEffect(() => {
         if (deliveryByInvoiceId) {
             setDeliveryClone({
@@ -446,7 +443,8 @@ function OrderDetail() {
                                                     Tạm tính:{" "}
                                                     <span>
                                                         {FormatCurrency(
-                                                            invoiceClone?.provisional_price
+                                                            invoiceClone?.price_total -
+                                                                15000
                                                         )}
                                                     </span>
                                                 </div>
