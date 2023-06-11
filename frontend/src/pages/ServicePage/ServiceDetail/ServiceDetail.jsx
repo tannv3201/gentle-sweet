@@ -37,6 +37,7 @@ const cx = classNames.bind(styles);
 function ServiceDetail() {
     const theme = useTheme();
     const isMedium = useMediaQuery(theme.breakpoints.down("md"));
+    const isSmall = useMediaQuery(theme.breakpoints.down("sm"));
     const dispatch = useDispatch();
     const [serviceDetailClone, setProductDetailClone] = useState({});
 
@@ -79,12 +80,7 @@ function ServiceDetail() {
 
     useEffect(() => {
         const fetch = async () => {
-            await getServiceById(
-                dispatch,
-                serviceId,
-                user?.accessToken,
-                axiosJWT
-            );
+            await getServiceById(dispatch, serviceId, null, null);
             await getAllDiscountCustomer(dispatch);
         };
         fetch();
@@ -130,7 +126,6 @@ function ServiceDetail() {
             // });
         }
     };
-
     return (
         <div className={cx("wrapper")}>
             <div className={cx("inner")}>
@@ -279,7 +274,13 @@ function ServiceDetail() {
                                                     )}
                                                 >
                                                     <Grid container spacing={1}>
-                                                        <Grid item xs={6}>
+                                                        <Grid
+                                                            item
+                                                            lg={6}
+                                                            md={6}
+                                                            sm={12}
+                                                            xs={12}
+                                                        >
                                                             <GButton
                                                                 onClick={
                                                                     handleBooking

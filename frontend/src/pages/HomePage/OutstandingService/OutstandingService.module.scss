@@ -94,8 +94,9 @@
             border-bottom-right-radius: 8px;
             padding: 16px 0;
             transition: all 0.2s linear;
+            cursor: pointer;
             h3 {
-                font-size: 2rem;
+                font-size: 1.8rem;
                 font-weight: var(--fw-semi-bold);
                 text-transform: uppercase;
             }
@@ -120,17 +121,16 @@
         }
 
         .service-see-detail {
-            display: block;
             border-radius: 6px;
             padding: 8px 12px;
             background-color: var(--primary-100);
             text-align: center;
-            font-size: 1.8rem;
+            font-size: 1.6rem;
             font-weight: var(--fw-medium);
             color: var(--primary-500);
             border: 1px solid var(--primary-500);
             transition: all 0.2s linear;
-
+            cursor: pointer;
             &:hover {
                 color: var(--primary-500);
                 background-color: var(--primary-200);

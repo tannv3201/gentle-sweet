@@ -20,20 +20,24 @@ function ServiceItem({ imageSrc, title, serviceId }) {
         navigate(`/danh-muc-dich-vu/dich-vu/${serviceId}`);
     };
     return (
-        <div
-            className={cx("service-wrapper")}
-            onClick={() => handleNavigateToServiceDetail(serviceId)}
-        >
+        <div className={cx("service-wrapper")}>
             <div className={cx("service-img")}>
                 <img src={imageSrc} alt="" />
             </div>
             <div className={cx("service-info")}>
                 <div className={cx("service-title")}>
-                    <h3>{title}</h3>
+                    <h3
+                        onClick={() => handleNavigateToServiceDetail(serviceId)}
+                    >
+                        {title}
+                    </h3>
                 </div>
-                <a className={cx("service-see-detail")} href="#">
+                <div
+                    onClick={() => handleNavigateToServiceDetail(serviceId)}
+                    className={cx("service-see-detail")}
+                >
                     Xem chi tiết
-                </a>
+                </div>
             </div>
         </div>
     );

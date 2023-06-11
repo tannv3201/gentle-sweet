@@ -1,3 +1,11 @@
+@media only screen and (max-width: 600px) {
+    .shop-page-inner {
+        .product-list {
+            padding-top: unset !important;
+        }
+    }
+}
+
 .shop-page-wrapper {
     display: flex;
     justify-content: center;
@@ -15,7 +23,7 @@
     .category-filter-mobile {
         display: flex;
         justify-content: space-between;
-
+        margin-top: 24px;
         .category-filter-btn {
             font-size: 1.4rem !important;
         }

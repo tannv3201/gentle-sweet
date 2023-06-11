@@ -184,7 +184,6 @@ function ProductList() {
     const handleNavigateToProductDetail = (productId) => {
         navigate(`/san-pham/${productId}`);
     };
-    console.log(productList);
     return (
         <div className={cx("product-wrapper")}>
             <div className={cx("product-inner")}>

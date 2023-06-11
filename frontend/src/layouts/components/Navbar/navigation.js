@@ -22,7 +22,7 @@ export const MenuList = [
         to: "/tin-tuc",
     },
     {
-        name: "Store",
+        name: "Sản phẩm",
         to: "/san-pham",
     },
 ];

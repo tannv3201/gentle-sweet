@@ -124,7 +124,7 @@ export const MenuList = [
         href: "/tin-tuc",
     },
     {
-        title: "Store",
+        title: "Sản phẩm",
         href: "/product",
         isOpen: false,
     },

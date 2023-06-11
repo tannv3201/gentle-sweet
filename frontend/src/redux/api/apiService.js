@@ -144,11 +144,14 @@ export const deleteService = async (dispatch, id, accessToken, axiosJWT) => {
 export const getServiceById = async (dispatch, id, accessToken, axiosJWT) => {
     dispatch(getServiceByIdStart());
     try {
-        const res = await axiosJWT.get("/v1/service/" + id, {
-            headers: {
-                token: `Bearer ${accessToken}`,
-            },
-        });
+        const res = await axios.get(
+            "/v1/service/" + id
+            // , {
+            //     headers: {
+            //         token: `Bearer ${accessToken}`,
+            //     },
+            // }
+        );
         dispatch(getServiceByIdSuccess(res?.data));
         if (res?.data?.status === 200) {
             toast.success(res?.data?.msg);

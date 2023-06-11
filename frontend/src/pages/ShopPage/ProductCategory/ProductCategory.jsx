@@ -16,7 +16,7 @@ import { loginSuccess } from "../../../redux/slice/authSlice";
 import { productSearchSuccess } from "../../../redux/slice/productSlice";
 const cx = classNames.bind(styles);
 
-function ProductCategory() {
+function ProductCategory({ onClose }) {
     const theme = useTheme();
     const isMedium = useMediaQuery(theme.breakpoints.down("md"));
     const productCategoryList = useSelector(
@@ -58,6 +58,7 @@ function ProductCategory() {
     }, [searchParams]);
 
     const handleFilter = async (id) => {
+        onClose();
         const newSearchParams = new URLSearchParams();
         if (id) {
             await productSearch(
