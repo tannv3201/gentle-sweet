@@ -72,7 +72,7 @@ export default function Account() {
             setCloneData(structuredClone(getCustomerUser));
         }
     }, [getCustomerUser]);
-
+    console.log("hehe");
     const [customerUser, setCustomerUser] = useState({
         id: "",
         role_id: "",
@@ -226,30 +226,35 @@ export default function Account() {
             });
         }
         const fetch = async () => {
-            if (cloneData) {
+            if (getCustomerUser) {
                 const provinceSelected = await getProvinceById(
-                    cloneData?.province,
+                    getCustomerUser?.province,
                     provinces
                 );
                 setSelectedProvince(provinceSelected);
                 formik.setFieldValue("province", provinceSelected?.province_id);
 
                 // District
-                await getDistrict(cloneData?.province).then((districtList) => {
-                    const districtSelected = getDistrictById(
-                        cloneData?.district,
-                        districtList
-                    );
-                    setSelectedDistrict(districtSelected);
-                    setDistricts(districtList);
-                    formik.setFieldValue(
-                        "district",
-                        districtSelected?.district_id
-                    );
-                });
+                await getDistrict(getCustomerUser?.province).then(
+                    (districtList) => {
+                        const districtSelected = getDistrictById(
+                            getCustomerUser?.district,
+                            districtList
+                        );
+                        setSelectedDistrict(districtSelected);
+                        setDistricts(districtList);
+                        formik.setFieldValue(
+                            "district",
+                            districtSelected?.district_id
+                        );
+                    }
+                );
 
-                await getWard(cloneData?.district).then((wardList) => {
-                    const wardSelected = getWardById(cloneData?.ward, wardList);
+                await getWard(getCustomerUser?.district).then((wardList) => {
+                    const wardSelected = getWardById(
+                        getCustomerUser?.ward,
+                        wardList
+                    );
                     setSelectedWard(wardSelected);
                     setWards(wardList);
                     formik.setFieldValue("ward", wardSelected?.ward_id);
@@ -257,7 +262,7 @@ export default function Account() {
             }
         };
         fetch();
-    }, [cloneData]);
+    }, [getCustomerUser]);
 
     // Fn handle birthdate onChange
     const handleChangeBirthDate = (value) => {
@@ -270,25 +275,25 @@ export default function Account() {
     };
 
     useEffect(() => {
-        if (cloneData)
+        if (getCustomerUser)
             setCustomerUser({
-                id: cloneData.id,
-                username: cloneData.username,
-                last_name: cloneData.last_name,
-                first_name: cloneData.first_name,
-                phone_number: cloneData?.phone_number,
-                province: cloneData?.province,
-                district: cloneData?.district,
-                ward: cloneData?.ward,
-                detail_address: cloneData?.detail_address,
-                birth_date: cloneData?.birth_date
-                    ? dayjs(cloneData?.birth_date)
+                id: getCustomerUser.id,
+                username: getCustomerUser.username,
+                last_name: getCustomerUser.last_name,
+                first_name: getCustomerUser.first_name,
+                phone_number: getCustomerUser?.phone_number,
+                province: getCustomerUser?.province,
+                district: getCustomerUser?.district,
+                ward: getCustomerUser?.ward,
+                detail_address: getCustomerUser?.detail_address,
+                birth_date: getCustomerUser?.birth_date
+                    ? dayjs(getCustomerUser?.birth_date)
                     : null,
-                email: cloneData.email,
+                email: getCustomerUser.email,
                 password: "",
                 confirmPassword: "",
             });
-    }, [cloneData]);
+    }, [getCustomerUser]);
 
     useEffect(() => {
         if (user?.accessToken) {
@@ -542,6 +547,8 @@ export default function Account() {
                                         }
                                         formik={formik}
                                         InputLabelProps={{ shrink: true }}
+                                        multiline={true}
+                                        rows={3}
                                     />
                                 </Grid>
                                 {isEditting && (
