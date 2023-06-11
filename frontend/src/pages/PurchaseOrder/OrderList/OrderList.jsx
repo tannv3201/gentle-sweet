@@ -130,7 +130,11 @@ function OrderList({ invoiceListByUser }) {
                                                         )}
                                                         variant="outlined"
                                                         startIcon={
-                                                            <VisibilityRounded />
+                                                            !isSmall ? (
+                                                                <VisibilityRounded />
+                                                            ) : (
+                                                                ""
+                                                            )
                                                         }
                                                         onClick={() =>
                                                             handleNavigateOrderDetail(

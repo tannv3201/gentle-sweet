@@ -118,7 +118,7 @@ function BookedDetail() {
                         : "",
                 createdAt: GFormatDate(
                     bookingById?.created_at,
-                    "DD-MM-YYYY HH:mm"
+                    "DD-MM-YYYY | HH:mm"
                 ),
             });
         }

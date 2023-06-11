@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import styles from "./ProductDetail.module.scss";
 import classNames from "classnames/bind";
-import { Grid } from "@mui/material";
+import { Button, Grid } from "@mui/material";
 import GRating from "../../../components/GRating/GRating";
 import { FormatCurrency } from "../../../components/FormatCurrency/FormatCurrency";
 import { useState } from "react";

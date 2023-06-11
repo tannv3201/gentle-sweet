@@ -15,7 +15,7 @@ const cx = classNames.bind(styles);
 
 function BookedList({ bookingListByUser }) {
     const theme = useTheme();
-    const isMedium = useMediaQuery(theme.breakpoints.down("md"));
+    const isSmall = useMediaQuery(theme.breakpoints.down("sm"));
     const navigate = useNavigate();
 
     // Navigate to view detail booking
@@ -143,11 +143,17 @@ function BookedList({ bookingListByUser }) {
                                                                 )
                                                             }
                                                             startIcon={
-                                                                <VisibilityRounded />
+                                                                !isSmall ? (
+                                                                    <VisibilityRounded />
+                                                                ) : (
+                                                                    ""
+                                                                )
                                                             }
                                                             variant="outlined"
                                                         >
-                                                            Xem
+                                                            {!isSmall
+                                                                ? "Xem chi tiết"
+                                                                : "Xem"}
                                                         </GButton>
                                                     </div>
                                                 </div>
@@ -253,9 +259,9 @@ function BookedList({ bookingListByUser }) {
                                                             )}
                                                         </span>
                                                     </div>
-                                                    <GButton size="small">
+                                                    {/* <GButton size="small">
                                                         Đặt lại
-                                                    </GButton>
+                                                    </GButton> */}
                                                 </div>
                                             </Grid>
                                         </Grid>

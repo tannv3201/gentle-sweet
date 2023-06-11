@@ -165,7 +165,10 @@ function PurchaseOrder() {
                 const newInvoiceList = getInvoiceListByUser?.map((i) => {
                     const list = {
                         ...i,
-                        created_at: GFormatDate(i?.created_at, "DD-MM-YYYY"),
+                        created_at: GFormatDate(
+                            i?.created_at,
+                            "DD-MM-YYYY | HH:mm"
+                        ),
                         status_name:
                             i?.status === 1
                                 ? "Chờ tiếp nhận"
