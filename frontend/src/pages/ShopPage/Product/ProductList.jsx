@@ -9,9 +9,15 @@ import ProductCard from "../../../common/ProductCard/ProductCard";
 import GPagination from "../../../common/GPagination/GPagination";
 import { useDispatch } from "react-redux";
 import { useSelector } from "react-redux";
-import { getAllProductCategoryCustomer } from "../../../redux/api/apiProductCategory";
-import { getAllDiscountCustomer } from "../../../redux/api/apiDiscount";
-import { getProductLimit } from "../../../redux/api/apiProduct";
+import {
+    getAllProductCategory,
+    getAllProductCategoryCustomer,
+} from "../../../redux/api/apiProductCategory";
+import {
+    getAllDiscount,
+    getAllDiscountCustomer,
+} from "../../../redux/api/apiDiscount";
+import { getAllProduct, getProductLimit } from "../../../redux/api/apiProduct";
 import { API_IMAGE_URL } from "../../../LocalConstants";
 import { useLocation, useNavigate, useSearchParams } from "react-router-dom";
 import { getCurrentPage } from "../../../redux/api/apiPagination";
@@ -46,7 +52,14 @@ function ProductList() {
     const [searchParams, setSearchParams] = useSearchParams();
 
     const [page, setPage] = useState(1);
-
+    useEffect(() => {
+        const fetch = async () => {
+            await getAllProduct(null, dispatch, null);
+            await getAllProductCategory(null, dispatch, null);
+            await getAllDiscount(null, dispatch, null);
+        };
+        fetch();
+    }, []);
     useEffect(() => {
         if (getProductListSearch) {
             const newProductList = getProductListSearch?.map((p) => {
@@ -71,7 +84,7 @@ function ProductList() {
 
             setProductListSearchUpdated(newProductList);
         }
-    }, [getProductListSearch]);
+    }, [discountList, getProductListSearch, productCategoryList]);
 
     useEffect(() => {
         if (getProductList) {
@@ -97,7 +110,7 @@ function ProductList() {
 
             setProductListUpdated(newProductList);
         }
-    }, [getProductList]);
+    }, [discountList, getProductList, productCategoryList]);
 
     useEffect(() => {
         const currentPageData = getCurrentPage(productListUpdated, page, 8);

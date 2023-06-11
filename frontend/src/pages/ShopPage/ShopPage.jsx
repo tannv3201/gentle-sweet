@@ -55,15 +55,6 @@ function ShopPage() {
 
     let axiosJWT = createAxios(user, dispatch, loginSuccess);
 
-    useEffect(() => {
-        const fetch = async () => {
-            await getAllProduct(user?.accessToken, dispatch, axiosJWT);
-            await getAllProductCategory(null, dispatch, null);
-            await getAllDiscount(null, dispatch, null);
-        };
-        fetch();
-    }, []);
-
     return (
         <div className={cx("shop-page-wrapper")}>
             <div className={cx("shop-page-inner")}>
