@@ -14,216 +14,6 @@ function Related() {
     return (
         <div className={cx("wrapper")}>
             <div className={cx("inner")}>
-                <div className={cx("wrapper-each-related")}>
-                    <Grid container spacing={2}>
-                        <Grid item xs={12}>
-                            <span className={cx("related-title")}>
-                                <h1>Dịch vụ liên quan</h1>
-                            </span>
-                        </Grid>
-                        <Grid item xs={12}>
-                            <div className={cx("related-item")}>
-                                <div className={cx("related-item-img")}>
-                                    <img src={images.other_service} alt="" />
-                                </div>
-                                <div className={cx("related-item-content")}>
-                                    <span
-                                        className={cx(
-                                            "related-item-content-title"
-                                        )}
-                                    >
-                                        <h5>Cắt tóc layer</h5>
-                                    </span>
-                                    <p
-                                        className={cx(
-                                            "related-item-content-description"
-                                        )}
-                                    >
-                                        Layer là một mẫu tóc được giới trẻ ưa
-                                        chuộng từ đầu năm 2021 đến nay.
-                                    </p>
-                                </div>
-                            </div>
-                        </Grid>
-                        <Grid item xs={12}>
-                            <div className={cx("related-item")}>
-                                <div className={cx("related-item-img")}>
-                                    <img src={images.other_service} alt="" />
-                                </div>
-                                <div className={cx("related-item-content")}>
-                                    <span
-                                        className={cx(
-                                            "related-item-content-title"
-                                        )}
-                                    >
-                                        <h5>Cắt tóc layer</h5>
-                                    </span>
-                                    <p
-                                        className={cx(
-                                            "related-item-content-description"
-                                        )}
-                                    >
-                                        Layer là một mẫu tóc được giới trẻ ưa
-                                        chuộng từ đầu năm 2021 đến nay.
-                                    </p>
-                                </div>
-                            </div>
-                        </Grid>
-                        <Grid item xs={12}>
-                            <div className={cx("related-item")}>
-                                <div className={cx("related-item-img")}>
-                                    <img src={images.other_service} alt="" />
-                                </div>
-                                <div className={cx("related-item-content")}>
-                                    <span
-                                        className={cx(
-                                            "related-item-content-title"
-                                        )}
-                                    >
-                                        <h5>Cắt tóc layer</h5>
-                                    </span>
-                                    <p
-                                        className={cx(
-                                            "related-item-content-description"
-                                        )}
-                                    >
-                                        Layer là một mẫu tóc được giới trẻ ưa
-                                        chuộng từ đầu năm 2021 đến nay.
-                                    </p>
-                                </div>
-                            </div>
-                        </Grid>
-                        <Grid item xs={12}>
-                            <div className={cx("related-item")}>
-                                <div className={cx("related-item-img")}>
-                                    <img src={images.other_service} alt="" />
-                                </div>
-                                <div className={cx("related-item-content")}>
-                                    <span
-                                        className={cx(
-                                            "related-item-content-title"
-                                        )}
-                                    >
-                                        <h5>Cắt tóc layer</h5>
-                                    </span>
-                                    <p
-                                        className={cx(
-                                            "related-item-content-description"
-                                        )}
-                                    >
-                                        Layer là một mẫu tóc được giới trẻ ưa
-                                        chuộng từ đầu năm 2021 đến nay.
-                                    </p>
-                                </div>
-                            </div>
-                        </Grid>
-                    </Grid>
-                </div>
-                <div className={cx("wrapper-each-related")}>
-                    <Grid container spacing={2}>
-                        <Grid item xs={12}>
-                            <span className={cx("related-title")}>
-                                <h1>Dịch vụ liên quan</h1>
-                            </span>
-                        </Grid>
-                        <Grid item xs={12}>
-                            <div className={cx("related-item")}>
-                                <div className={cx("related-item-img")}>
-                                    <img src={images.other_service} alt="" />
-                                </div>
-                                <div className={cx("related-item-content")}>
-                                    <span
-                                        className={cx(
-                                            "related-item-content-title"
-                                        )}
-                                    >
-                                        <h5>Cắt tóc layer</h5>
-                                    </span>
-                                    <p
-                                        className={cx(
-                                            "related-item-content-description"
-                                        )}
-                                    >
-                                        Layer là một mẫu tóc được giới trẻ ưa
-                                        chuộng từ đầu năm 2021 đến nay.
-                                    </p>
-                                </div>
-                            </div>
-                        </Grid>
-                        <Grid item xs={12}>
-                            <div className={cx("related-item")}>
-                                <div className={cx("related-item-img")}>
-                                    <img src={images.other_service} alt="" />
-                                </div>
-                                <div className={cx("related-item-content")}>
-                                    <span
-                                        className={cx(
-                                            "related-item-content-title"
-                                        )}
-                                    >
-                                        <h5>Cắt tóc layer</h5>
-                                    </span>
-                                    <p
-                                        className={cx(
-                                            "related-item-content-description"
-                                        )}
-                                    >
-                                        Layer là một mẫu tóc được giới trẻ ưa
-                                        chuộng từ đầu năm 2021 đến nay.
-                                    </p>
-                                </div>
-                            </div>
-                        </Grid>
-                        <Grid item xs={12}>
-                            <div className={cx("related-item")}>
-                                <div className={cx("related-item-img")}>
-                                    <img src={images.other_service} alt="" />
-                                </div>
-                                <div className={cx("related-item-content")}>
-                                    <span
-                                        className={cx(
-                                            "related-item-content-title"
-                                        )}
-                                    >
-                                        <h5>Cắt tóc layer</h5>
-                                    </span>
-                                    <p
-                                        className={cx(
-                                            "related-item-content-description"
-                                        )}
-                                    >
-                                        Layer là một mẫu tóc được giới trẻ ưa
-                                        chuộng từ đầu năm 2021 đến nay.
-                                    </p>
-                                </div>
-                            </div>
-                        </Grid>
-                        <Grid item xs={12}>
-                            <div className={cx("related-item")}>
-                                <div className={cx("related-item-img")}>
-                                    <img src={images.other_service} alt="" />
-                                </div>
-                                <div className={cx("related-item-content")}>
-                                    <span
-                                        className={cx(
-                                            "related-item-content-title"
-                                        )}
-                                    >
-                                        <h5>Cắt tóc layer</h5>
-                                    </span>
-                                    <p
-                                        className={cx(
-                                            "related-item-content-description"
-                                        )}
-                                    >
-                                        Layer là một mẫu tóc được giới trẻ ưa
-                                        chuộng từ đầu năm 2021 đến nay.
-                                    </p>
-                                </div>
-                            </div>
-                        </Grid>
-                    </Grid>
-                </div>
                 <div
                     style={{
                         position: "relative",
@@ -240,37 +30,152 @@ function Related() {
                             <div className={cx("advise-form")}>
                                 <Grid container spacing={2}>
                                     <Grid item xs={12}>
-                                        <div className={cx("advise-img")}>
-                                            <img
-                                                src={images.signin_advise}
-                                                alt=""
-                                            />
+                                        <span className={cx("related-title")}>
+                                            <h1>Dịch vụ liên quan</h1>
+                                        </span>
+                                    </Grid>
+                                    <Grid item xs={12}>
+                                        <div className={cx("related-item")}>
+                                            <div
+                                                className={cx(
+                                                    "related-item-img"
+                                                )}
+                                            >
+                                                <img
+                                                    src={images.other_service}
+                                                    alt=""
+                                                />
+                                            </div>
+                                            <div
+                                                className={cx(
+                                                    "related-item-content"
+                                                )}
+                                            >
+                                                <span
+                                                    className={cx(
+                                                        "related-item-content-title"
+                                                    )}
+                                                >
+                                                    <h5>Cắt tóc layer</h5>
+                                                </span>
+                                                <p
+                                                    className={cx(
+                                                        "related-item-content-description"
+                                                    )}
+                                                >
+                                                    Layer là một mẫu tóc được
+                                                    giới trẻ ưa chuộng từ đầu
+                                                    năm 2021 đến nay.
+                                                </p>
+                                            </div>
                                         </div>
                                     </Grid>
                                     <Grid item xs={12}>
-                                        <GTextField
-                                            label="Họ và tên"
-                                            fullWidth
-                                            requiredlabel={true}
-                                        />
-                                    </Grid>
-                                    <Grid item xs={12}>
-                                        <GTextField
-                                            label="Số điện thoại"
-                                            fullWidth
-                                            requiredlabel={true}
-                                        />
-                                    </Grid>
-                                    <Grid item xs={12}>
-                                        <div className={cx("signin-advise")}>
-                                            <GButton
-                                                variant="outlined"
+                                        <div className={cx("related-item")}>
+                                            <div
                                                 className={cx(
-                                                    "signin-advise-btn"
+                                                    "related-item-img"
                                                 )}
                                             >
-                                                Đăng ký
-                                            </GButton>
+                                                <img
+                                                    src={images.other_service}
+                                                    alt=""
+                                                />
+                                            </div>
+                                            <div
+                                                className={cx(
+                                                    "related-item-content"
+                                                )}
+                                            >
+                                                <span
+                                                    className={cx(
+                                                        "related-item-content-title"
+                                                    )}
+                                                >
+                                                    <h5>Cắt tóc layer</h5>
+                                                </span>
+                                                <p
+                                                    className={cx(
+                                                        "related-item-content-description"
+                                                    )}
+                                                >
+                                                    Layer là một mẫu tóc được
+                                                    giới trẻ ưa chuộng từ đầu
+                                                    năm 2021 đến nay.
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </Grid>
+                                    <Grid item xs={12}>
+                                        <div className={cx("related-item")}>
+                                            <div
+                                                className={cx(
+                                                    "related-item-img"
+                                                )}
+                                            >
+                                                <img
+                                                    src={images.other_service}
+                                                    alt=""
+                                                />
+                                            </div>
+                                            <div
+                                                className={cx(
+                                                    "related-item-content"
+                                                )}
+                                            >
+                                                <span
+                                                    className={cx(
+                                                        "related-item-content-title"
+                                                    )}
+                                                >
+                                                    <h5>Cắt tóc layer</h5>
+                                                </span>
+                                                <p
+                                                    className={cx(
+                                                        "related-item-content-description"
+                                                    )}
+                                                >
+                                                    Layer là một mẫu tóc được
+                                                    giới trẻ ưa chuộng từ đầu
+                                                    năm 2021 đến nay.
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </Grid>
+                                    <Grid item xs={12}>
+                                        <div className={cx("related-item")}>
+                                            <div
+                                                className={cx(
+                                                    "related-item-img"
+                                                )}
+                                            >
+                                                <img
+                                                    src={images.other_service}
+                                                    alt=""
+                                                />
+                                            </div>
+                                            <div
+                                                className={cx(
+                                                    "related-item-content"
+                                                )}
+                                            >
+                                                <span
+                                                    className={cx(
+                                                        "related-item-content-title"
+                                                    )}
+                                                >
+                                                    <h5>Cắt tóc layer</h5>
+                                                </span>
+                                                <p
+                                                    className={cx(
+                                                        "related-item-content-description"
+                                                    )}
+                                                >
+                                                    Layer là một mẫu tóc được
+                                                    giới trẻ ưa chuộng từ đầu
+                                                    năm 2021 đến nay.
+                                                </p>
+                                            </div>
                                         </div>
                                     </Grid>
                                 </Grid>

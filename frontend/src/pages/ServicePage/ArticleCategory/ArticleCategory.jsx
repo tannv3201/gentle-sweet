@@ -12,9 +12,11 @@ import { useTheme } from "@mui/material/styles";
 import Box from "@mui/material/Box";
 import { LightTooltip } from "../../../components/GTooltip/GTooltip";
 import { SwipeableDrawer } from "@mui/material";
+import { useParams } from "react-router-dom";
 const cx = classNames.bind(styles);
 
 function ArticleCategory({ h2Nodes }) {
+    const { serviceCategoryId } = useParams();
     const theme = useTheme();
     const isSmall = useMediaQuery(theme.breakpoints.down("sm"));
     const isMedium = useMediaQuery(theme.breakpoints.down("md"));
@@ -30,9 +32,9 @@ function ArticleCategory({ h2Nodes }) {
 
     React.useEffect(() => {
         const h2Nodes = document.querySelectorAll("h2");
-
+        console.log(h2Nodes);
         h2NodesRef.current = h2Nodes;
-    }, []);
+    }, [serviceCategoryId]);
     const scrollToElement = (id) => {
         const element = document.getElementById(id);
         const scrollOptions = {
@@ -114,7 +116,7 @@ function ArticleCategory({ h2Nodes }) {
     useEffect(() => {
         const result = renderLinks();
         setResultRender(result);
-    }, []);
+    }, [serviceCategoryId]);
     return (
         <div className={cx("wrapper")}>
             <div className={cx("inner")}>
@@ -187,7 +189,7 @@ function ArticleCategory({ h2Nodes }) {
                                     fontSize={isMedium ? "large" : "medium"}
                                 />
                             </IconButton>
-                            <h2>Chuyên mục bài viết</h2>
+                            <p>Chuyên mục bài viết</p>
                         </div>
                         <ul
                             id="article-category-link"
