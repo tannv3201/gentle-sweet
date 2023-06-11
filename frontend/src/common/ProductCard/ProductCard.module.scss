@@ -46,6 +46,7 @@
             }
             .product-name {
                 min-height: 40px !important;
+                cursor: pointer;
                 h3 {
                     font-size: 1.4rem !important;
                     display: -webkit-box;
@@ -136,6 +137,7 @@
         overflow: hidden;
         border-top-right-radius: 6px;
         border-top-left-radius: 6px;
+        cursor: pointer;
 
         .label-sale {
             position: absolute;
@@ -172,6 +174,7 @@
             }
         }
         .product-name {
+            cursor: pointer;
             h3 {
                 height: 60px;
                 font-size: 1.6rem;
@@ -231,7 +234,9 @@
 
     .product-add-to-cart {
         margin-top: 12px;
-        a {
+        .product-add-to-cart-btn {
+            cursor: pointer;
+            user-select: none;
             display: block;
             border: 1px solid var(--primary-400);
             text-align: center;

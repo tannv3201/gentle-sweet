@@ -55,7 +55,7 @@ const cartController = {
             });
             res.json({
                 status: 201,
-                msg: "Thêm giỏ hàng thành công",
+                msg: "Đã thêm sản phẩm vào giỏ hàng",
                 data: newCart,
             });
         } catch (error) {
@@ -72,7 +72,10 @@ const cartController = {
             if (affectedRows === 0) {
                 return res.json({ status: 404, msg: "Cập nhật thất bại" });
             } else {
-                return res.json({ status: 200, msg: "Cập nhật thành công" });
+                return res.json({
+                    status: 200,
+                    msg: "Cập nhật số lượng sản phẩm thành công",
+                });
             }
         } catch (error) {
             console.log(error);
@@ -87,7 +90,10 @@ const cartController = {
             if (affectedRows === 0) {
                 return res.json({ status: 404, msg: "Xóa thất bại" });
             } else {
-                return res.json({ status: 200, msg: "Xóa thành công" });
+                return res.json({
+                    status: 200,
+                    msg: "Đã xóa sản phẩm khỏi giỏ hàng",
+                });
             }
         } catch (error) {
             res.status(500).json({ message: error.message });

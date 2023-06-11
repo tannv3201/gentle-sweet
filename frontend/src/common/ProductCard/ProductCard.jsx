@@ -1,11 +1,21 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
-import React from "react";
+import React, { useEffect } from "react";
 import classNames from "classnames/bind";
 import styles from "./ProductCard.module.scss";
 
 import { Rating } from "@mui/material";
 
 import { FormatCurrency } from "../../components/FormatCurrency/FormatCurrency";
+import { useSelector } from "react-redux";
+import { createAxios } from "../../createInstance";
+import { loginSuccess } from "../../redux/slice/authSlice";
+import { useDispatch } from "react-redux";
+import {
+    createCart,
+    getCartByUserId,
+    updateCart,
+} from "../../redux/api/apiCart";
+import { toast } from "react-hot-toast";
 
 const cx = classNames.bind(styles);
 
@@ -20,7 +30,62 @@ export default function ProductCard({
     href,
     onSale,
     onClick,
+    product,
 }) {
+    const dispatch = useDispatch();
+    const user = useSelector((state) => state.auth.login?.currentUser);
+    let axiosJWT = createAxios(user, dispatch, loginSuccess);
+    const cartList = useSelector((state) => state.cart.cart?.cartList);
+
+    useEffect(() => {
+        const fetch = async () => {
+            if (user) {
+                await getCartByUserId(
+                    user?.accessToken,
+                    dispatch,
+                    user?.id,
+                    axiosJWT
+                );
+            }
+        };
+        fetch();
+    }, [user?.id]);
+
+    const handleAddToCart = async () => {
+        if (!user) {
+            toast.error("Vui lòng đăng nhập để sử dụng chức năng này");
+            return;
+        }
+        const cartExist = cartList?.find((p) => p.product_id === product?.id);
+
+        if (cartExist) {
+            await updateCart(
+                user?.accessToken,
+                dispatch,
+                user?.id,
+                cartExist?.id,
+                {
+                    product_quantity: parseInt(cartExist?.product_quantity) + 1,
+                },
+                axiosJWT
+            );
+        } else {
+            await createCart(
+                user?.accessToken,
+                dispatch,
+                {
+                    customer_user_id: user?.id,
+                    product_id: product?.id,
+                    product_name: product?.name,
+                    product_quantity: 1,
+                    unit_price: parseFloat(product?.price),
+                    image_url: product?.image_url,
+                },
+                axiosJWT
+            );
+        }
+    };
+
     return (
         <div
             className={
@@ -29,14 +94,14 @@ export default function ProductCard({
                     : cx("product-container")
             }
         >
-            <a onClick={onClick} href={href} className={cx("product-img")}>
+            <div onClick={onClick} href={href} className={cx("product-img")}>
                 <img src={imageSrc} alt="" />
                 {onSale > 0 && (
                     <span
                         className={cx("label-sale")}
                     >{`Giảm ${onSale}%`}</span>
                 )}
-            </a>
+            </div>
             <div className={cx("product-content")}>
                 <div className={cx("product-category")}>
                     <span>{categoryName}</span>
@@ -76,7 +141,13 @@ export default function ProductCard({
                     </div>
                 </div>
                 <div className={cx("product-add-to-cart")}>
-                    <a href="#">Thêm vào giỏ hàng</a>
+                    <div
+                        onClick={handleAddToCart}
+                        className={cx("product-add-to-cart-btn")}
+                        href="#"
+                    >
+                        Thêm vào giỏ hàng
+                    </div>
                 </div>
             </div>
         </div>

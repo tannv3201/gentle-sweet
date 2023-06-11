@@ -7,11 +7,11 @@ import { Rating } from "@mui/material";
 import { ArrowForwardRounded, FormatQuoteRounded } from "@mui/icons-material";
 import { useMediaQuery } from "@mui/material";
 import { useTheme } from "@mui/material/styles";
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import { FormatCurrency } from "../../../components/FormatCurrency/FormatCurrency";
 import ProductCard from "../../../common/ProductCard/ProductCard";
 import { useSelector } from "react-redux";
-import { getProductLimit } from "../../../redux/api/apiProduct";
+import { getAllProduct, getProductLimit } from "../../../redux/api/apiProduct";
 import { useDispatch } from "react-redux";
 import { API_IMAGE_URL } from "../../../LocalConstants";
 import {
@@ -22,48 +22,13 @@ import { getAllDiscountCustomer } from "../../../redux/api/apiDiscount";
 
 const cx = classNames.bind(styles);
 
-const productList = [
-    {
-        category: "Sơn móng tay",
-        name: "Sơn móng tay Golden Rose.",
-        price: "30000",
-        sold: 3,
-        image: images.nail_polish_bottle,
-        rating: 3,
-    },
-    {
-        category: "Sơn móng tay",
-        name: "Sơn móng tay Golden Rose.",
-        price: "30000",
-        sold: 3,
-        image: images.nail_polish_bottle,
-        rating: 5,
-    },
-    {
-        category: "Chăm sóc tóc",
-        name: "Dầu gội Extreme",
-        price: "150000",
-        sold: 10,
-        image: images.nail_polish_bottle,
-        rating: 3,
-    },
-    {
-        category: "Chăm sóc móng",
-        name: "Dưỡng móng Vaseline.",
-        price: "75000",
-        sold: 1,
-        image: images.nail_polish_bottle,
-        rating: 4,
-    },
-];
-
 function OutstandingProduct() {
     const dispatch = useDispatch();
-    const [productLimit, setProductLimit] = useState([]);
+    const [productListClone, setProductListClone] = useState([]);
     const [productCategoryList, setProductCategoryList] = useState([]);
-
-    const getProductLimit4 = useSelector(
-        (state) => state.product.product?.productListSearchLimit
+    const navigate = useNavigate();
+    const productList = useSelector(
+        (state) => state.product.product?.productList
     );
     const productCategoryListCustomer = useSelector(
         (state) =>
@@ -74,8 +39,8 @@ function OutstandingProduct() {
     );
 
     useEffect(() => {
-        if (getProductLimit4) {
-            const newProductLimit = getProductLimit4?.map((p) => {
+        if (productList) {
+            const newProductList = productList?.map((p) => {
                 let getDiscount;
                 const getProductCategory = productCategoryListCustomer?.find(
                     (pc) => pc?.id === p?.product_category_id
@@ -95,16 +60,22 @@ function OutstandingProduct() {
                 };
             });
 
-            setProductLimit(structuredClone(newProductLimit));
+            setProductListClone(structuredClone(newProductList?.slice(0, 4)));
         }
-    }, [getProductLimit4]);
+    }, [productList]);
 
     useEffect(() => {
         const fetch = async () => {
-            await getAllProductCategoryCustomer(dispatch);
-            await getAllDiscountCustomer(dispatch);
+            if (productCategoryListCustomer?.length === 0) {
+                await getAllProductCategoryCustomer(dispatch);
+            }
+            if (discountListCustomer?.length === 0) {
+                await getAllDiscountCustomer(dispatch);
+            }
 
-            // await getProductLimit(dispatch);
+            if (productList?.length === 0) {
+                await getAllProduct(null, dispatch, null);
+            }
         };
         fetch();
     }, []);
@@ -145,8 +116,15 @@ function OutstandingProduct() {
                     </Grid>
                 </Grid>
                 <Grid container spacing={3}>
-                    {productLimit?.map((product, index) => (
-                        <Grid key={index} item lg={3} md={6} sm={6} xs={6}>
+                    {productListClone?.map((product, index) => (
+                        <Grid
+                            key={product?.id}
+                            item
+                            lg={3}
+                            md={6}
+                            sm={6}
+                            xs={6}
+                        >
                             <ProductCard
                                 // boxShadow={true}
                                 key={index}
@@ -161,6 +139,10 @@ function OutstandingProduct() {
                                 productSold={20}
                                 valueRating={5}
                                 onSale={product?.discount_percent}
+                                onClick={() =>
+                                    navigate(`san-pham/${product?.id}`)
+                                }
+                                product={product}
                             />
                         </Grid>
                     ))}
