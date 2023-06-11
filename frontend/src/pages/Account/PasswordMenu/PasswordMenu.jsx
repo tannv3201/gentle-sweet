@@ -77,14 +77,14 @@ export default function PasswordMenu({ selectedUser }) {
                 >
                     Đổi mật khẩu
                 </MenuItem>
-                <MenuItem
+                {/* <MenuItem
                     onClick={() => {
                         handleOpenResetPasswordPopup();
                         handleClose();
                     }}
                 >
                     Reset
-                </MenuItem>
+                </MenuItem> */}
             </Menu>
 
             <PasswordChangePopup

@@ -405,6 +405,7 @@ export default function Account() {
                                         name="first_name"
                                         value={formik.values?.first_name || ""}
                                         formik={formik}
+                                        InputLabelProps={{ shrink: true }}
                                     />
                                 </Grid>
                                 <Grid item lg={6} md={12} sm={12} xs={12}>
@@ -423,6 +424,7 @@ export default function Account() {
                                                 </InputAdornment>
                                             ),
                                         }}
+                                        InputLabelProps={{ shrink: true }}
                                     />
                                 </Grid>
                                 <Grid item lg={6} md={12} sm={12} xs={12}>
@@ -436,6 +438,7 @@ export default function Account() {
                                             formik.values?.phone_number || ""
                                         }
                                         formik={formik}
+                                        InputLabelProps={{ shrink: true }}
                                     />
                                 </Grid>
                                 <Grid item lg={6} md={12} sm={12} xs={12}>
@@ -461,6 +464,9 @@ export default function Account() {
                                                 variant="outlined"
                                                 name="province"
                                                 formik={formik}
+                                                InputLabelProps={{
+                                                    shrink: true,
+                                                }}
                                             />
                                         )}
                                     />
@@ -487,6 +493,9 @@ export default function Account() {
                                                 variant="outlined"
                                                 name="district"
                                                 formik={formik}
+                                                InputLabelProps={{
+                                                    shrink: true,
+                                                }}
                                             />
                                         )}
                                     />
@@ -514,6 +523,9 @@ export default function Account() {
                                                 variant="outlined"
                                                 name="ward"
                                                 formik={formik}
+                                                InputLabelProps={{
+                                                    shrink: true,
+                                                }}
                                             />
                                         )}
                                     />
@@ -529,6 +541,7 @@ export default function Account() {
                                             formik.values?.detail_address || ""
                                         }
                                         formik={formik}
+                                        InputLabelProps={{ shrink: true }}
                                     />
                                 </Grid>
                                 {isEditting && (

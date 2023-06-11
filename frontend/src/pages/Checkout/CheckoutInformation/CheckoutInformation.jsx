@@ -476,7 +476,7 @@ function CheckoutInformation() {
                         />
                     </Grid>
                     <Grid item xs={12}>
-                        <TextField
+                        <GTextFieldNormal
                             InputLabelProps={{ shrink: true }}
                             color="secondary"
                             size="small"
