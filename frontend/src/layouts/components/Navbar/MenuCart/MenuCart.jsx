@@ -10,6 +10,7 @@ import { createAxios } from "../../../../createInstance";
 import { logoutSuccess } from "../../../../redux/slice/authSlice";
 import styles from "./MenuCart.module.scss";
 import classNames from "classnames/bind";
+import { LightTooltip } from "../../../../components/GTooltip/GTooltip";
 
 const cx = classNames.bind(styles);
 
@@ -40,15 +41,14 @@ export default function MenuCart() {
         <div>
             <NavLink to={currentUser ? "/gio-hang" : null}>
                 {currentUser ? (
-                    <IconButton
-                        style={{ userSelect: "none" }}
-                        title="Giỏ hàng"
-                        size="large"
-                    >
-                        <ShoppingCartRounded />
-                    </IconButton>
+                    <LightTooltip placement="bottom" title="Giỏ hàng">
+                        <IconButton style={{ userSelect: "none" }} size="large">
+                            <ShoppingCartRounded />
+                        </IconButton>
+                    </LightTooltip>
                 ) : (
                     <IconButton
+                        title="Giỏ hàng"
                         style={{ userSelect: "none" }}
                         id="basic-button"
                         aria-controls={open ? "basic-menu" : undefined}

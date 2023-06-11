@@ -2,6 +2,9 @@ import * as React from "react";
 import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
 import { IconButton } from "@mui/material";
+import GButton from "../../../../components/MyButton/MyButton";
+import { LightTooltip } from "../../../../components/GTooltip/GTooltip";
+
 import {
     ListAltRounded,
     LogoutRounded,
@@ -86,23 +89,25 @@ export default function MenuUser() {
         <div>
             {currentUser ? (
                 <>
-                    <IconButton
-                        id="basic-button"
-                        aria-controls={open ? "basic-menu" : undefined}
-                        aria-haspopup="true"
-                        aria-expanded={open ? "true" : undefined}
-                        onClick={handleClick}
-                    >
-                        <div className={cx("user-avatar")}>
-                            {currentUser?.image_url ? (
-                                <img src={currentUser?.image_url} alt="" />
-                            ) : (
-                                <span className={cx("name-avatar")}>
-                                    {nameAvatar}
-                                </span>
-                            )}
-                        </div>
-                    </IconButton>
+                    <LightTooltip placement="bottom" title="Tài khoản">
+                        <IconButton
+                            id="basic-button"
+                            aria-controls={open ? "basic-menu" : undefined}
+                            aria-haspopup="true"
+                            aria-expanded={open ? "true" : undefined}
+                            onClick={handleClick}
+                        >
+                            <div className={cx("user-avatar")}>
+                                {currentUser?.image_url ? (
+                                    <img src={currentUser?.image_url} alt="" />
+                                ) : (
+                                    <span className={cx("name-avatar")}>
+                                        {nameAvatar}
+                                    </span>
+                                )}
+                            </div>
+                        </IconButton>
+                    </LightTooltip>
                     <Menu
                         id="basic-menu"
                         anchorEl={anchorEl}
@@ -152,16 +157,18 @@ export default function MenuUser() {
                 </>
             ) : (
                 <>
-                    <IconButton
-                        title="Đăng nhập"
+                    <GButton
+                        title="Tài khoản"
+                        className={cx("account-btn")}
                         id="basic-button"
                         aria-controls={open ? "basic-menu" : undefined}
                         aria-haspopup="true"
                         aria-expanded={open ? "true" : undefined}
                         onClick={handleClick}
+                        size="small"
                     >
-                        <Person />
-                    </IconButton>
+                        Tài khoản
+                    </GButton>
                     <Menu
                         id="basic-menu"
                         anchorEl={anchorEl}

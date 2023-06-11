@@ -31,7 +31,6 @@ function App() {
         );
     });
     const user = useSelector((state) => state.auth.login?.currentUser);
-    console.log(user);
     return (
         <Router>
             <div className="App">
