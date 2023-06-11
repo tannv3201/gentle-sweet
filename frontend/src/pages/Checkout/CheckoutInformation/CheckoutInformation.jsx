@@ -34,7 +34,7 @@ const cx = classNames.bind(styles);
 
 function CheckoutInformation() {
     const dispatch = useDispatch();
-    const { setFieldValue, values, errors, touched, handleBlur } =
+    const { setFieldValue, values, errors, touched, handleBlur, handleChange } =
         useFormikContext();
     const user = useSelector((state) => state.auth.login?.currentUser);
     const getCustomerUser = useSelector(
@@ -473,6 +473,20 @@ function CheckoutInformation() {
                                 touched?.detail_address &&
                                 errors?.detail_address
                             }
+                        />
+                    </Grid>
+                    <Grid item xs={12}>
+                        <TextField
+                            InputLabelProps={{ shrink: true }}
+                            color="secondary"
+                            size="small"
+                            value={values?.note || ""}
+                            onChange={handleChange}
+                            label="Ghi chú"
+                            fullWidth
+                            name="note"
+                            multiline
+                            rows={2}
                         />
                     </Grid>
                 </Grid>

@@ -84,6 +84,7 @@ const invoiceController = {
             const newInvoice = await InvoiceModel.createInvoice({
                 customer_user_id: req.body.customer_user_id,
                 admin_user_id: req.body.admin_user_id,
+                note: req.body.note,
                 status: 1,
             });
             res.json({

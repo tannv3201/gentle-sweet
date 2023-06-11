@@ -141,6 +141,7 @@ function SummaryCheckout() {
             dispatch,
             {
                 customer_user_id: user?.id,
+                note: values?.note,
             },
             axiosJWT
         );

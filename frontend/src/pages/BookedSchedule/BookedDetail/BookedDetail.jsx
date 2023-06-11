@@ -253,7 +253,7 @@ function BookedDetail() {
                                             </span>
                                         </div>
                                     </Grid>
-                                    <Grid item xs={6}>
+                                    <Grid item lg={6} md={6} sm={12} xs={12}>
                                         <div className={cx("info-item")}>
                                             Trạng thái lịch hẹn:{" "}
                                             <span
@@ -285,7 +285,7 @@ function BookedDetail() {
                                             </span>
                                         </div>
                                     </Grid>
-                                    <Grid item xs={6}>
+                                    <Grid item lg={6} md={6} sm={12} xs={12}>
                                         <div className={cx("info-item")}>
                                             Ghi chú:{" "}
                                             <span>

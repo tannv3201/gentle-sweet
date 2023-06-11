@@ -281,6 +281,16 @@ function OrderDetail() {
                                             </span>
                                         </div>
                                     </Grid>
+                                    <Grid item xs={12}>
+                                        <div className={cx("info-item")}>
+                                            Ghi chú:{" "}
+                                            <span>
+                                                {invoiceClone?.note
+                                                    ? invoiceClone?.note
+                                                    : "--"}
+                                            </span>
+                                        </div>
+                                    </Grid>
                                 </Grid>
                             </div>
                         </Grid>
