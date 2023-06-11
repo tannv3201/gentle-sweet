@@ -137,6 +137,7 @@ function ProductList() {
                                             product?.id
                                         )
                                     }
+                                    product={product}
                                 />
                             </Grid>
                         ))

@@ -366,7 +366,7 @@ function CartProductList() {
                                             onSelectionChange={(rows) =>
                                                 setSelectedProductCartList(rows)
                                             }
-                                            title={"DANH SÁCH GIẢM GIÁ"}
+                                            title={"DANH SÁCH SẢN PHẨM"}
                                             columns={columns}
                                             data={productList}
                                             exportFileName={"DanhSachNguoiDung"}
