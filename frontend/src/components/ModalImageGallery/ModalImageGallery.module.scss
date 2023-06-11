@@ -65,8 +65,9 @@
 }
 .modal-image-container {
     position: relative;
-    width: calc(100vw - 256px);
-    height: 600px;
+    width: calc(100vw - 512px);
+    height: 540px;
+    margin-top: 78px;
     img {
         width: 100%;
         height: 100%;

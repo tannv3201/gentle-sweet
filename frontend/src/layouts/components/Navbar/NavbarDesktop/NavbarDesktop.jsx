@@ -214,14 +214,6 @@ function NavbarDesktop() {
                                 </IconButton>
                                 <MenuCart />
                                 <MenuUser />
-                                {/* <span>
-                                    <NavLink
-                                        className={cx("booking-btn")}
-                                        to="/dat-lich"
-                                    >
-                                        Đặt lịch
-                                    </NavLink>
-                                </span> */}
                             </div>
                         </Grid>
                     </Grid>

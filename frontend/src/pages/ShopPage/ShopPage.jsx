@@ -84,7 +84,7 @@ function ShopPage() {
                         )}
                     </Grid>
                     <Grid item lg={9} md={12} sm={12} xs={12}>
-                        <div className="">
+                        <div className={cx("product-list")}>
                             <Grid container>
                                 {!isMedium && (
                                     <Grid item xs={12}>

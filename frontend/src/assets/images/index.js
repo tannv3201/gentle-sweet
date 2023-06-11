@@ -50,6 +50,16 @@ const images = {
     staff: require("./staff.png"),
     varietyOfService: require("./varietyOfService.png"),
     machineAndTool: require("./machineAndTool.png"),
+    nailDraw1: require("./nail-draw-1.png"),
+    nailDraw2: require("./nail-draw-2.png"),
+    nailDraw3: require("./nail-draw-3.png"),
+    nailDraw4: require("./nail-draw-4.png"),
+    nailDraw5: require("./nail-draw-5.png"),
+    hairStyle1: require("./hair-style-1.png"),
+    hairStyle2: require("./hair-style-2.png"),
+    hairStyle3: require("./hair-style-3.png"),
+    hairStyle4: require("./hair-style-4.png"),
+    hairStyle5: require("./hair-style-5.png"),
 };
 
 export default images;

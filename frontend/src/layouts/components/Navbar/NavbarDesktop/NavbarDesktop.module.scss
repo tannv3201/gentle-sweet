@@ -13,14 +13,19 @@
     justify-content: center;
     .navbar-content {
         width: var(--default-layout-width);
-        padding: 8px 0;
+        padding: 4px 0;
         position: relative;
 
         .logo-wrapper {
             // padding: 8px 0;
-            .logo {
-                width: auto;
-                height: 56px;
+            user-select: none;
+            a {
+                display: flex;
+                align-items: center;
+                .logo {
+                    width: auto;
+                    height: 44px;
+                }
             }
         }
 

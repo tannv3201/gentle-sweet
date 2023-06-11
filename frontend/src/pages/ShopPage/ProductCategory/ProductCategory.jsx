@@ -87,7 +87,7 @@ function ProductCategory() {
         <div className={cx("wrapper")}>
             <div className={cx("inner")}>
                 <div className={cx("inner-sticky")}>
-                    <Grid container spacing={2}>
+                    <Grid container>
                         <Grid item xs={12}>
                             {!isMedium && (
                                 <span className={cx("category-title")}>

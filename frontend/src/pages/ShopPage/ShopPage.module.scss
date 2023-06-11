@@ -8,6 +8,10 @@
     width: calc(var(--default-layout-width) + 48px);
     padding: 0 24px 40px 24px;
 
+    .product-list {
+        padding-top: 34px;
+    }
+
     .category-filter-mobile {
         display: flex;
         justify-content: space-between;

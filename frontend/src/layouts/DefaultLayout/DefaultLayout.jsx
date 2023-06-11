@@ -17,7 +17,7 @@ const cx = classNames.bind(styles);
 
 function DefaultLayout({ children }) {
     const theme = useTheme();
-    const isMedium = useMediaQuery(theme.breakpoints.down("md"));
+    const isSmall = useMediaQuery(theme.breakpoints.down("sm"));
     return (
         <>
             <div className={cx("wrapper")}>
@@ -26,13 +26,14 @@ function DefaultLayout({ children }) {
                     <Navbar />
                     <div
                         style={
-                            isMedium
+                            isSmall
                                 ? { marginTop: "54px" }
-                                : { marginTop: "110px" }
+                                : { marginTop: "78px" }
                         }
+                        className={cx("inner")}
                     >
                         {/* {!isMedium && <CartFixedRight />} */}
-                        <GBreadcrumb />
+                        {/* <GBreadcrumb /> */}
                         {children}
                     </div>
                     <Footer />

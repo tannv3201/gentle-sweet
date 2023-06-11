@@ -6,7 +6,7 @@
 }
 .inner {
     width: 600px;
-    padding: 4px 0;
+    padding: 1px 0;
     .slider {
         display: flex;
         align-items: center;
@@ -14,7 +14,7 @@
             text-align: center;
             font-style: italic;
             h5 {
-                font-size: 1.6rem;
+                font-size: 1.5rem;
                 font-weight: var(--fw-normal);
             }
         }
