@@ -32,11 +32,6 @@ function ProductDescription({ productDetail }) {
                             caption={productDetail?.name}
                         />
                     </Grid>
-                    <Grid item xs={12}>
-                        <article className={cx("product-description-text")}>
-                            <p>{productDetail?.description}</p>
-                        </article>
-                    </Grid>
                 </Grid>
             </div>
         </div>

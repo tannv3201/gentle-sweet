@@ -332,8 +332,11 @@ function ServiceDetail() {
                                                                 "promotion-content-item"
                                                             )}
                                                         >
-                                                            Free gội đầu - mát
-                                                            xa đầu
+                                                            {parseInt(
+                                                                serviceDetailClone?.service_category_id
+                                                            ) === 4
+                                                                ? "Free gội đầu - mát xa đầu"
+                                                                : "Free vệ sinh móng"}
                                                         </li>
                                                     </ul>
                                                 </div>
