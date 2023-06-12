@@ -228,11 +228,9 @@ function OrderList({ invoiceListByUser }) {
                                                                         "prod-price"
                                                                     )}
                                                                 >
-                                                                    {isMedium && (
-                                                                        <span>
-                                                                            Giá:
-                                                                        </span>
-                                                                    )}
+                                                                    <span>
+                                                                        Giá:
+                                                                    </span>
                                                                     {FormatCurrency(
                                                                         invoiceDetail?.unit_price
                                                                     )}

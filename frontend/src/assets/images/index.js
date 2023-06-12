@@ -28,7 +28,7 @@ const images = {
     other_service: require("./other_service.png"),
     photo_realistic: require("./photo_realistic.png"),
     salon_system_1: require("./salon_system_1.jpg"),
-    banner_about_us: require("./banner_about_us.jpg"),
+    banner_about_us: require("./banner_about_us.png"),
     vision_destiny_left: require("./vision_destiny_left.jpg"),
     vision_destiny_right: require("./vision_destiny_right.jpg"),
     core_values: require("./core_values.png"),

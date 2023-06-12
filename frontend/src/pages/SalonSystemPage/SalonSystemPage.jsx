@@ -9,9 +9,9 @@ const cx = classNames.bind(styles);
 function SalonSystemPage() {
     return (
         <>
-            <div className={cx("banner-img")}>
+            {/* <div className={cx("banner-img")}>
                 <img src={images.banner_salon_system} alt="" />
-            </div>
+            </div> */}
             <div className={cx("wrapper")}>
                 <div className={cx("inner")}>
                     <Grid container spacing={1}>

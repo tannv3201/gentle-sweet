@@ -1,17 +1,21 @@
+@media only screen and (max-width: 600px) {
+}
+
 .photo-model-wrapper {
-    // background-size: contain;
-    width: 100%;
-    display: flex;
-    justify-content: center;
-    // padding-bottom: 80px;
     .photo-model-img {
+        width: 100%;
+        height: 200px !important;
+    }
+}
+.photo-model-inner {
+    // width: var(--default-layout-width);
+    .photo-model-img {
+        width: 100%;
+        height: 500px;
         img {
-            width: 100vw;
+            width: 100%;
             height: 100%;
             object-fit: cover;
         }
     }
-}
-.photo-model-inner {
-    width: var(--default-layout-width);
 }

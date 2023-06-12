@@ -95,37 +95,55 @@ export default function MenuUser() {
             {currentUser ? (
                 <>
                     <LightTooltip placement="bottom" title="Tài khoản">
-                        {/* <IconButton
-                            id="basic-button"
-                            aria-controls={open ? "basic-menu" : undefined}
-                            aria-haspopup="true"
-                            aria-expanded={open ? "true" : undefined}
-                            onClick={handleClick}
-                        > */}
-                        <div
-                            aria-controls={open ? "basic-menu" : undefined}
-                            aria-haspopup="true"
-                            aria-expanded={open ? "true" : undefined}
-                            onClick={handleClick}
-                            className={cx("user-wrapper")}
-                        >
-                            <div className={cx("user-avatar")}>
-                                {currentUser?.image_url ? (
-                                    <img src={currentUser?.image_url} alt="" />
-                                ) : (
-                                    <span className={cx("name-avatar")}>
-                                        {nameAvatar}
-                                    </span>
-                                )}
-                            </div>
-                            {!isSmall && (
+                        {!isSmall ? (
+                            <div
+                                aria-controls={open ? "basic-menu" : undefined}
+                                aria-haspopup="true"
+                                aria-expanded={open ? "true" : undefined}
+                                onClick={handleClick}
+                                className={cx("user-wrapper")}
+                            >
+                                <div className={cx("user-avatar")}>
+                                    {currentUser?.image_url ? (
+                                        <img
+                                            src={currentUser?.image_url}
+                                            alt=""
+                                        />
+                                    ) : (
+                                        <span className={cx("name-avatar")}>
+                                            {nameAvatar}
+                                        </span>
+                                    )}
+                                </div>
                                 <span className={cx("fullName")}>
                                     <span>{fullName}</span>
                                     <ExpandMoreRounded />
                                 </span>
-                            )}
-                        </div>
-                        {/* </IconButton> */}
+                            </div>
+                        ) : (
+                            <IconButton
+                                id="basic-button"
+                                aria-controls={open ? "basic-menu" : undefined}
+                                aria-haspopup="true"
+                                aria-expanded={open ? "true" : undefined}
+                                onClick={handleClick}
+                            >
+                                <div className={cx("user-wrapper")}>
+                                    <div className={cx("user-avatar")}>
+                                        {currentUser?.image_url ? (
+                                            <img
+                                                src={currentUser?.image_url}
+                                                alt=""
+                                            />
+                                        ) : (
+                                            <span className={cx("name-avatar")}>
+                                                {nameAvatar}
+                                            </span>
+                                        )}
+                                    </div>
+                                </div>
+                            </IconButton>
+                        )}
                     </LightTooltip>
                     <Menu
                         id="basic-menu"

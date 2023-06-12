@@ -27,6 +27,16 @@
 
     .related-item {
         display: flex;
+        cursor: pointer;
+        &:hover {
+            .related-item-content {
+                .related-item-content-title {
+                    h5 {
+                        color: var(--primary-500);
+                    }
+                }
+            }
+        }
         .related-item-img {
             flex-shrink: 0;
             width: 70px;
@@ -43,6 +53,7 @@
         .related-item-content {
             .related-item-content-title {
                 h5 {
+                    transition: color 0.16s linear;
                     font-size: 1.6rem;
                     font-weight: var(--fw-semi-bold);
                 }

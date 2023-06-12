@@ -66,6 +66,7 @@ function ServiceCategoryDetail() {
     const handleNavigateServiceDetail = (serviceId) => {
         navigate(`/danh-muc-dich-vu/dich-vu/${serviceId}`);
     };
+    console.log(serviceListClone);
     return (
         <div className={cx("wrapper")}>
             <div className={cx("wrapper-service")}>
@@ -613,64 +614,7 @@ function ServiceCategoryDetail() {
                                             <GRrating />
                                         </div>
                                     </Grid>
-                                    {/* <Grid item xs={12}>
-                                        <div
-                                            className={cx("recommend-wrapper")}
-                                        >
-                                            <Grid container spacing={2}>
-                                                <Grid item xs={12}>
-                                                    <span
-                                                        className={cx(
-                                                            "recommend-title"
-                                                        )}
-                                                    >
-                                                        <h2 id="heading-title-4">
-                                                            Có thể bạn quan tâm
-                                                        </h2>
-                                                    </span>
-                                                </Grid>
-                                                <Grid item xs={12}>
-                                                    <ul
-                                                        className={cx(
-                                                            "recommend-link-list"
-                                                        )}
-                                                    >
-                                                        <li>
-                                                            <a href="#">
-                                                                Nối tóc bao
-                                                                nhiêu tiền? Thời
-                                                                gian giữ được
-                                                                bao lâu?
-                                                            </a>
-                                                        </li>
-                                                        <li>
-                                                            <a href="#">
-                                                                Xu hướng tóc đẹp
-                                                                hot nhất Hàn
-                                                                Quốc 2019
-                                                            </a>
-                                                        </li>
-                                                        <li>
-                                                            <a href="#">
-                                                                35 kiểu tóc tỉa
-                                                                layer giúp bạn
-                                                                “lột xác” trong
-                                                                2022 (UPDATE)
-                                                            </a>
-                                                        </li>
-                                                        <li>
-                                                            <a href="#">
-                                                                20 kiểu tóc xoăn
-                                                                lọn to trẻ
-                                                                trung, nàng nhất
-                                                                định phải thử
-                                                            </a>
-                                                        </li>
-                                                    </ul>
-                                                </Grid>
-                                            </Grid>
-                                        </div>
-                                    </Grid> */}
+
                                     <Grid item xs={12}>
                                         <Comments />
                                     </Grid>

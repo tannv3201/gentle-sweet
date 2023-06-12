@@ -128,14 +128,17 @@ function HomeBlog() {
                         </div>
                     </Grid>
                     {isMedium && (
-                        <div
-                            style={{
-                                height: "1px",
-                                width: "100%",
-                                margin: "32px 0",
-                                backgroundColor: "var(--primary-box-shadow)",
-                            }}
-                        />
+                        <Grid item xs={12}>
+                            <div
+                                style={{
+                                    height: "1px",
+                                    width: "100%",
+                                    margin: "32px 0",
+                                    backgroundColor:
+                                        "var(--primary-box-shadow)",
+                                }}
+                            />
+                        </Grid>
                     )}
                     <Grid item lg={6} md={12} sm={12}>
                         <div>
