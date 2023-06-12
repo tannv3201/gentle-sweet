@@ -14,37 +14,37 @@ const cx = classNames.bind(styles);
 
 const newsList = [
     {
-        image: images.hair_care_service,
+        image: images.nailDraw6,
         label: 'Bộ sưu tập "Mùa hè rực rỡ"',
         desciption:
-            'Chúng tôi cho ra mắt bộ sưu tập "Mùa hè rực rỡ" từ ngày 01/04/2023',
+            'Gentle Beauty cho ra mắt bộ sưu tập "Mùa hè rực rỡ" với các tone màu chủ đạo..',
     },
     {
-        image: images.hair_care_service,
-        label: 'Bộ sưu tập "Mùa hè rực rỡ"',
+        image: images.nailMatMeo,
+        label: "Sơn nhũ mắt mèo",
         desciption:
-            'Chúng tôi cho ra mắt bộ sưu tập "Mùa hè rực rỡ" từ ngày 01/04/2024',
+            "Felina đã cho ra mắt mẫu sơn nhũ mắt mèo cực kì ảo diệu từ ngày 16/06/2023",
     },
 ];
 
 const tipsList = [
     {
-        image: images.hair_care_service,
+        image: images.thaoGelMong,
         label: "Cách dưỡng móng",
         desciption:
-            'Chúng tôi cho ra mắt bộ sưu tập "Mùa hè rực rỡ" từ ngày 01/04/2023',
+            "Chúng tôi chia sẻ cho bạn một số cách dưỡng móng của các bạn luôn khỏe và giữ màu lâu hơn",
     },
     {
-        image: images.hair_care_service,
+        image: images.dauNhieuGau,
         label: "Hướng dẫn trị gàu",
         desciption:
-            'Chúng tôi cho ra mắt bộ sưu tập "Mùa hè rực rỡ" từ ngày 01/04/2023',
+            "Gàu là vấn đề khiến phái đẹp đau đầu khi có sự xuất hiện của nó. Theo khoa học, gàu là một",
     },
 ];
 
 function BlogItem({ imageSrc, title, description }) {
     return (
-        <a href="#" className={cx("blog-item-container")}>
+        <div className={cx("blog-item-container")}>
             <div className={cx("blog-item-img")}>
                 <img src={imageSrc} alt="" />
             </div>
@@ -52,14 +52,14 @@ function BlogItem({ imageSrc, title, description }) {
                 <h3 className={cx("blog-item-label")}>{title}</h3>
                 <p className={cx("blog-item-description")}>{description}</p>
             </div>
-        </a>
+        </div>
     );
 }
 
 function HomeBlog() {
     const theme = useTheme();
-    const isMedium = useMediaQuery(theme.breakpoints.down('lg'));
-    const isSmall = useMediaQuery(theme.breakpoints.down('md'));
+    const isMedium = useMediaQuery(theme.breakpoints.down("lg"));
+    const isSmall = useMediaQuery(theme.breakpoints.down("md"));
     return (
         <div className={cx("home-blog-wrapper")}>
             <div className={cx("home-blog-inner")}>
@@ -118,13 +118,10 @@ function HomeBlog() {
                                             justifyContent: "center",
                                         }}
                                     >
-                                        <a
-                                            href="#"
-                                            className={cx("see-more-btn")}
-                                        >
+                                        <span className={cx("see-more-btn")}>
                                             <span>Xem thêm</span>
                                             <ArrowForwardRounded />
-                                        </a>
+                                        </span>
                                     </div>
                                 </Grid>
                             </Grid>
@@ -184,13 +181,10 @@ function HomeBlog() {
                                             justifyContent: "center",
                                         }}
                                     >
-                                        <a
-                                            href="#"
-                                            className={cx("see-more-btn")}
-                                        >
+                                        <span className={cx("see-more-btn")}>
                                             <span>Xem thêm</span>
                                             <ArrowForwardRounded />
-                                        </a>
+                                        </span>
                                     </div>
                                 </Grid>
                             </Grid>

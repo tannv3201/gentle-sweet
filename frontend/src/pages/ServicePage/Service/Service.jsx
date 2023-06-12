@@ -13,15 +13,15 @@ import Related from "./Related/Related";
 const cx = classNames.bind(styles);
 
 const services = {
-    title: "Zema đang cung cấp những dịch vụ chăm sóc tóc nào?",
+    title: "Gentle Beauty đang cung cấp những dịch vụ chăm sóc tóc nào?",
     description:
-        "Hiểu được nhu cầu làm đẹp của khách hàng, Zema đã và đang phát triển những dịch vụ chăm sóc tóc chuyên nghiệp và toàn diện nhất. Những dịch vụ thu hút nhiều sự quan tâm của khách hàng nhất phải kể đến là:",
+        "Hiểu được nhu cầu làm đẹp của khách hàng, Gentle Beauty đã và đang phát triển những dịch vụ chăm sóc tóc chuyên nghiệp và toàn diện nhất. Những dịch vụ thu hút nhiều sự quan tâm của khách hàng nhất phải kể đến là:",
     serviceList: [
         {
             id: 1,
             title: "Cắt tóc",
             partArticle1:
-                "Một mái tóc được cắt tỉa cẩn thận cũng đủ khiến bạn trở nên thu hút hơn nhiều. Tại Zema, mái tóc của bạn sẽ được tạo kiểu bởi những chuyên viên với nhiều năm kinh nghiệm. Dù sở hữu kiểu mặt nào, mặt tròn, mặt góc cạnh hay mặt dài, bạn cũng sẽ được tư vấn để chọn kiểu tóc phù hợp với bản thân nhất.",
+                "Một mái tóc được cắt tỉa cẩn thận cũng đủ khiến bạn trở nên thu hút hơn nhiều. Tại Gentle Beauty, mái tóc của bạn sẽ được tạo kiểu bởi những chuyên viên với nhiều năm kinh nghiệm. Dù sở hữu kiểu mặt nào, mặt tròn, mặt góc cạnh hay mặt dài, bạn cũng sẽ được tư vấn để chọn kiểu tóc phù hợp với bản thân nhất.",
             partArticle2:
                 "Đây là dịch vụ chăm sóc tóc phù hợp với những bạn muốn thay đổi phong cách hoặc chỉ đơn giản là muốn tỉa lại mái tóc cho gọn gàng. Dù mục tiêu của bạn là gì, chắc chắn sau khi soi gương bạn cũng sẽ hài lòng về kiểu tóc của mình.",
             image: images.service_2,
@@ -30,7 +30,7 @@ const services = {
             id: 2,
             title: "Uốn tóc",
             partArticle1:
-                "Tóc uốn luôn dẫn đầu xu hướng thời trang trong nhiều năm qua. Nếu muốn trải nghiệm việc uốn tóc hoặc muốn đổi kiểu tóc uốn khác, hãy đến với Zema Việt Nam. Những chuyên gia tại Zema luôn cập nhật xu hướng mới nhất sẽ tư vấn giúp bạn chọn được kiểu tóc uốn độc đáo và phù hợp nhất với cá tính của mình.",
+                "Tóc uốn luôn dẫn đầu xu hướng thời trang trong nhiều năm qua. Nếu muốn trải nghiệm việc uốn tóc hoặc muốn đổi kiểu tóc uốn khác, hãy đến với Gentle Beauty Việt Nam. Những chuyên gia tại Gentle Beauty luôn cập nhật xu hướng mới nhất sẽ tư vấn giúp bạn chọn được kiểu tóc uốn độc đáo và phù hợp nhất với cá tính của mình.",
             partArticle2:
                 "Với dụng cụ uốn tóc và sản phẩm chăm sóc tóc chuyên biệt, chuyên viên sẽ “hô biến” mái tóc thẳng thành tóc xoăn độc đáo. Có rất nhiều sự lựa chọn khi uốn tóc như: uốn phồng chân tóc,  uốn ngang vai, uốn xoăn dài, uốn xếp tầng… bạn sẽ tìm được kiểu tóc phù hợp nhất với cá tính của mình.",
             image: images.service_2,
@@ -39,7 +39,7 @@ const services = {
             id: 3,
             title: "Nhuộm tóc",
             partArticle1:
-                "Dù là nam hay nữ, cách đơn giản nhất để thay đổi bản thân đó là nhuộm tóc. Hãy đến Zema và trải nghiệm dịch vụ nhuộm tóc chuyên nghiệp với những kiểu tóc nhuộm độc đáo như: tóc màu hồng phấn, tóc màu xanh ombre, tóc màu bạch kim, tóc màu vàng kim…. Dù muốn nhuộm lại tóc, che đi khuyết điểm trên tóc hoặc tạo điểm nhấn cho khuôn mặt, bạn chắc chắn sẽ hài lòng với kết quả nhận được.",
+                "Dù là nam hay nữ, cách đơn giản nhất để thay đổi bản thân đó là nhuộm tóc. Hãy đến Gentle Beauty và trải nghiệm dịch vụ nhuộm tóc chuyên nghiệp với những kiểu tóc nhuộm độc đáo như: tóc màu hồng phấn, tóc màu xanh ombre, tóc màu bạch kim, tóc màu vàng kim…. Dù muốn nhuộm lại tóc, che đi khuyết điểm trên tóc hoặc tạo điểm nhấn cho khuôn mặt, bạn chắc chắn sẽ hài lòng với kết quả nhận được.",
             partArticle2: "",
             image: images.service_2,
         },
@@ -47,7 +47,7 @@ const services = {
             id: 4,
             title: "Duỗi tóc",
             partArticle1:
-                "Đây là dịch vụ chăm sóc tóc dành cho những bạn mong muốn sở hữu một mái tóc óng ả, thẳng mượt và vào nếp. Những kỹ thuật viên dày dặn kinh nghiệm tại Zema sẽ tư vấn và chăm sóc đúng cách giúp mang lại một mái tóc suôn mượt như mong đợi bằng những sản phẩm chăm sóc tóc cao cấp.",
+                "Đây là dịch vụ chăm sóc tóc dành cho những bạn mong muốn sở hữu một mái tóc óng ả, thẳng mượt và vào nếp. Những kỹ thuật viên dày dặn kinh nghiệm tại Gentle Beauty sẽ tư vấn và chăm sóc đúng cách giúp mang lại một mái tóc suôn mượt như mong đợi bằng những sản phẩm chăm sóc tóc cao cấp.",
             partArticle2: "",
             image: images.service_2,
         },
@@ -56,14 +56,14 @@ const services = {
             title: "Phục hồi tóc",
             partArticle1: "",
             partArticle2:
-                "Zema áp dụng những kỹ thuật hiện đại nhất để khôi phục lại kết cấu và hồi phục sợi tóc bị hư tổn. Bằng cách sử dụng những thiết bị chuyên dụng như máy sấy, máy nano… dưỡng chất từ những sản phẩm phục hồi tóc cao cấp sẽ thẩm thấu sâu giúp phục hồi tóc từ bên trong. Nhờ vậy, bạn sẽ có thể sở hữu một mái tóc chắc khỏe, suôn mượt và đầy sức sống. Zema sẽ giúp bạn có được một mái tóc khỏe mạnh và suôn mượt",
+                "Gentle Beauty áp dụng những kỹ thuật hiện đại nhất để khôi phục lại kết cấu và hồi phục sợi tóc bị hư tổn. Bằng cách sử dụng những thiết bị chuyên dụng như máy sấy, máy nano… dưỡng chất từ những sản phẩm phục hồi tóc cao cấp sẽ thẩm thấu sâu giúp phục hồi tóc từ bên trong. Nhờ vậy, bạn sẽ có thể sở hữu một mái tóc chắc khỏe, suôn mượt và đầy sức sống. Gentle Beauty sẽ giúp bạn có được một mái tóc khỏe mạnh và suôn mượt",
             image: images.service_2,
         },
         {
             id: 6,
             title: "Trị rụng tóc",
             partArticle1:
-                "Đây là một trong những dịch vụ chăm sóc tóc được yêu thích nhất tại Zema. Zema áp dụng công nghệ trị rụng tóc chuyên sâu giúp giải quyết vấn đề rụng tóc của khách hàng nhanh chóng và hiệu quả nhất. Bằng cách kết hợp dầu gội đặc trị, phương pháp massage và huyết thanh kích thích mọc tóc, mái tóc của bạn sẽ trở nên dày khỏe, bồng bềnh và tươi tắn trở lại. Hiệu quả này có thể nhận thấy ngay lập tức sau chỉ 1 liệu trình điều trị.",
+                "Đây là một trong những dịch vụ chăm sóc tóc được yêu thích nhất tại Gentle Beauty. Gentle Beauty áp dụng công nghệ trị rụng tóc chuyên sâu giúp giải quyết vấn đề rụng tóc của khách hàng nhanh chóng và hiệu quả nhất. Bằng cách kết hợp dầu gội đặc trị, phương pháp massage và huyết thanh kích thích mọc tóc, mái tóc của bạn sẽ trở nên dày khỏe, bồng bềnh và tươi tắn trở lại. Hiệu quả này có thể nhận thấy ngay lập tức sau chỉ 1 liệu trình điều trị.",
             partArticle2: "",
             image: images.service_2,
         },
@@ -71,9 +71,9 @@ const services = {
             id: 7,
             title: "Gội đầu massage",
             partArticle1:
-                "Bằng cách áp dụng phương pháp massage từ Ấn Độ, chuyên viên tại Zema sẽ mang đến cho bạn những phút giây thư giãn hiếm hoi giữa cuộc sống bận rộn. Không những thế, động tác massage da đầu còn giúp tăng cường lưu thông máu đến da dầu kích thích nang tóc phát triển. Chỉ một dịch vụ nhưng mang lại lợi ích kép.",
+                "Bằng cách áp dụng phương pháp massage từ Ấn Độ, chuyên viên tại Gentle Beauty sẽ mang đến cho bạn những phút giây thư giãn hiếm hoi giữa cuộc sống bận rộn. Không những thế, động tác massage da đầu còn giúp tăng cường lưu thông máu đến da dầu kích thích nang tóc phát triển. Chỉ một dịch vụ nhưng mang lại lợi ích kép.",
             partArticle2:
-                "Nếu muốn trải nghiệm những dịch vụ chăm sóc tóc tốt nhất, hãy đến với Zema. Bạn sẽ cảm nhận được hiệu quả tức thì và cảm giác được chăm sóc tận tình, chu đáo nhất.",
+                "Nếu muốn trải nghiệm những dịch vụ chăm sóc tóc tốt nhất, hãy đến với Gentle Beauty. Bạn sẽ cảm nhận được hiệu quả tức thì và cảm giác được chăm sóc tận tình, chu đáo nhất.",
             image: images.service_2,
         },
     ],
@@ -82,7 +82,7 @@ const services = {
 const tips = {
     title: "15 tips chăm sóc tóc cho tóc bạn luôn khỏe",
     description:
-        "Cuối năm, thời tiết vào mùa đông hanh khô, mất nước cộng thêm khí lạnh khiến tóc dễ gãy rụng, rối khô… Bỏ túi ngay 15 tips chăm sóc tóc đúng cách mà vô cùng dễ làm dưới đây nào! Chỉ cần thực hiện được ít nhất 4 tips dưới đây là nàng đã có mái tóc mềm mượt, óng ả rồi đấy! Cùng Zema tìm hiểu ngay nào :",
+        "Cuối năm, thời tiết vào mùa đông hanh khô, mất nước cộng thêm khí lạnh khiến tóc dễ gãy rụng, rối khô… Bỏ túi ngay 15 tips chăm sóc tóc đúng cách mà vô cùng dễ làm dưới đây nào! Chỉ cần thực hiện được ít nhất 4 tips dưới đây là nàng đã có mái tóc mềm mượt, óng ả rồi đấy! Cùng Gentle Beauty tìm hiểu ngay nào :",
     tipsList: [
         {
             title: "Gội đầu cũng phải đúng cách",
@@ -157,7 +157,7 @@ const tips = {
         {
             title: "Hấp dầu định kỳ cho tóc",
             description:
-                "1 – 2 lần trong 1 tuần nếu có điều kiện và thời gian sẽ là cách chăm sóc tóc hiệu quả nhất. Bạn có thể tự hấp dầu ở nhà với sản phẩm rõ nguồn gốc hoặc tự pha chế từ nguyên liệu thiên nhiên. Ở trên là 15 tips chăm sóc tóc dễ làm lại vô cùng hiệu quả mà Zema đã tổng hợp. Chỉ cần thực hiện thường xuyên là bạn sẽ có tóc đẹp đón xuân rồi! Chúc các nàng luôn xinh đẹp rạng ngời nhé!",
+                "1 – 2 lần trong 1 tuần nếu có điều kiện và thời gian sẽ là cách chăm sóc tóc hiệu quả nhất. Bạn có thể tự hấp dầu ở nhà với sản phẩm rõ nguồn gốc hoặc tự pha chế từ nguyên liệu thiên nhiên. Ở trên là 15 tips chăm sóc tóc dễ làm lại vô cùng hiệu quả mà Gentle Beauty đã tổng hợp. Chỉ cần thực hiện thường xuyên là bạn sẽ có tóc đẹp đón xuân rồi! Chúc các nàng luôn xinh đẹp rạng ngời nhé!",
         },
     ],
 };
@@ -230,11 +230,12 @@ function Service() {
                                                             bản thân ngày càng
                                                             tăng. Để đáp ứng tốt
                                                             nhất nhu cầu của
-                                                            khách hàng, Zema
-                                                            Việt Nam đã phát
-                                                            triển những dịch vụ
-                                                            chăm sóc tóc chuyên
-                                                            nghiệp và toàn diện.
+                                                            khách hàng, Gentle
+                                                            Beauty Việt Nam đã
+                                                            phát triển những
+                                                            dịch vụ chăm sóc tóc
+                                                            chuyên nghiệp và
+                                                            toàn diện.
                                                         </p>
                                                     </blockquote>
                                                 </Grid>

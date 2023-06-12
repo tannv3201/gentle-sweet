@@ -39,7 +39,7 @@ export const salonSystem = [
             },
             {
                 id: "TB3",
-                name: "Bài Kiện, Thụy Quỳnh, Thái Thụy, Thái bình",
+                name: "Bái Kiện, Thụy Quỳnh, Thái Thụy, Thái bình",
                 province: "Thái Bình",
                 district: "Thái Thụy",
                 wards: "Thụy Quỳnh",

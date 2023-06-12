@@ -26,11 +26,11 @@
     }
 
     .blog-item-container {
-        display: block;
         background-color: var(--white);
         border-radius: 6px;
         overflow: hidden;
         transition: all 0.2s linear;
+        cursor: pointer;
         &:hover {
             box-shadow: var(--box-shadow);
             transform: translateY(-2px);
@@ -72,6 +72,10 @@
         font-weight: var(--fw-medium);
         margin-top: 8px;
         transition: all 0.2s linear;
+        display: -webkit-box;
+        -webkit-box-orient: vertical;
+        -webkit-line-clamp: 2; /* Giới hạn chỉ nằm trên 2 dòng */
+        overflow: hidden;
     }
 }
 
@@ -85,7 +89,8 @@
     padding: 8px 16px;
     border-radius: 6px;
     transition: all 0.2s linear;
-
+    cursor: pointer;
+    user-select: none;
     span {
         margin-right: 4px;
         font-size: 1.6rem;
