@@ -6,6 +6,7 @@ import GButton from "../../../../components/MyButton/MyButton";
 import { LightTooltip } from "../../../../components/GTooltip/GTooltip";
 
 import {
+    ExpandMoreRounded,
     ListAltRounded,
     LogoutRounded,
     Person,
@@ -30,6 +31,7 @@ const cx = classNames.bind(styles);
 export default function MenuUser() {
     const theme = useTheme();
     const isMedium = useMediaQuery(theme.breakpoints.down("md"));
+    const isSmall = useMediaQuery(theme.breakpoints.down("sm"));
     const navigate = useNavigate();
     const dispatch = useDispatch();
     const [anchorEl, setAnchorEl] = React.useState(null);
@@ -85,17 +87,27 @@ export default function MenuUser() {
     const nameAvatar =
         currentUser?.first_name?.charAt(0) + currentUser?.last_name?.charAt(0);
 
+    const fullName =
+        currentUser?.first_name + " " + currentUser?.last_name?.split(" ")[0];
+
     return (
         <div>
             {currentUser ? (
                 <>
                     <LightTooltip placement="bottom" title="Tài khoản">
-                        <IconButton
+                        {/* <IconButton
                             id="basic-button"
                             aria-controls={open ? "basic-menu" : undefined}
                             aria-haspopup="true"
                             aria-expanded={open ? "true" : undefined}
                             onClick={handleClick}
+                        > */}
+                        <div
+                            aria-controls={open ? "basic-menu" : undefined}
+                            aria-haspopup="true"
+                            aria-expanded={open ? "true" : undefined}
+                            onClick={handleClick}
+                            className={cx("user-wrapper")}
                         >
                             <div className={cx("user-avatar")}>
                                 {currentUser?.image_url ? (
@@ -106,7 +118,14 @@ export default function MenuUser() {
                                     </span>
                                 )}
                             </div>
-                        </IconButton>
+                            {!isSmall && (
+                                <span className={cx("fullName")}>
+                                    <span>{fullName}</span>
+                                    <ExpandMoreRounded />
+                                </span>
+                            )}
+                        </div>
+                        {/* </IconButton> */}
                     </LightTooltip>
                     <Menu
                         id="basic-menu"
@@ -117,18 +136,7 @@ export default function MenuUser() {
                             "aria-labelledby": "basic-button",
                         }}
                     >
-                        <div className={cx("user-fullName")}>
-                            <span
-                                style={{
-                                    paddingBottom: "8px",
-                                    display: "block",
-                                }}
-                            >
-                                {currentUser?.last_name +
-                                    " " +
-                                    currentUser?.first_name}
-                            </span>
-                        </div>
+                        <div />
                         <MenuItem onClick={handleNavigateAccount}>
                             <Person />{" "}
                             <span className={cx("menu-label")}>Tài khoản</span>

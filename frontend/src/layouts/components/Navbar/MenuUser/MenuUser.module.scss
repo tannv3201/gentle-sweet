@@ -1,3 +1,28 @@
+.user-wrapper {
+    display: flex;
+    align-items: center;
+    user-select: none;
+    cursor: pointer;
+
+    &:hover {
+        .fullName {
+            span {
+                text-decoration: underline;
+            }
+        }
+    }
+
+    .fullName {
+        margin-left: 6px;
+        display: flex;
+        align-items: center;
+        span {
+            font-size: 1.5rem;
+            font-weight: var(--fw-medium);
+        }
+    }
+}
+
 .user-avatar {
     width: 36px;
     height: 36px;
@@ -19,7 +44,7 @@
         align-items: center;
         justify-content: center;
         font-family: var(--font-family) !important;
-        font-weight: var(--fw-bold);
+        font-weight: var(--fw-medium);
         color: var(--text-primary);
     }
 }
