@@ -172,7 +172,7 @@ export default function MenuUser() {
                             <MenuItem onClick={handleNavigateBooked}>
                                 <RecentActorsRounded />{" "}
                                 <span className={cx("menu-label")}>
-                                    Lịch đặt
+                                    Lịch hẹn
                                 </span>
                             </MenuItem>
                         )}
@@ -180,7 +180,7 @@ export default function MenuUser() {
                             <MenuItem onClick={handleNavigatePurchaseOrder}>
                                 <ListAltRounded />{" "}
                                 <span className={cx("menu-label")}>
-                                    Đơn mua
+                                    Đơn hàng
                                 </span>
                             </MenuItem>
                         )}

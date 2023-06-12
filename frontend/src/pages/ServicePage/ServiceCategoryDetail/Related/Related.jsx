@@ -23,7 +23,7 @@ function Related() {
                     <div
                         style={{
                             position: "sticky",
-                            top: "124px",
+                            top: "102px",
                         }}
                     >
                         <div className={cx("advise-form-wrapper")}>
