@@ -136,7 +136,22 @@ export default function MenuUser() {
                             "aria-labelledby": "basic-button",
                         }}
                     >
-                        <div />
+                        {isSmall ? (
+                            <div className={cx("user-fullName")}>
+                                <span
+                                    style={{
+                                        paddingBottom: "8px",
+                                        display: "block",
+                                    }}
+                                >
+                                    {currentUser?.last_name +
+                                        " " +
+                                        currentUser?.first_name}
+                                </span>
+                            </div>
+                        ) : (
+                            <div></div>
+                        )}
                         <MenuItem onClick={handleNavigateAccount}>
                             <Person />{" "}
                             <span className={cx("menu-label")}>Tài khoản</span>
