@@ -96,7 +96,7 @@ export default function AdminUserList({ data }) {
                 title={"DANH SÁCH NGƯỜI DÙNG HỆ THỐNG"}
                 columns={[
                     { title: "Họ và tên", field: "fullName" },
-                    { title: "Tên đăng nhập", field: "username" },
+                    { title: "Email", field: "email" },
                     { title: "Quyền hạn", field: "role_name" },
                     {
                         title: "Thao tác",

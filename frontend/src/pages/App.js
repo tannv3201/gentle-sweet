@@ -31,6 +31,7 @@ function App() {
         );
     });
     const user = useSelector((state) => state.auth.login?.currentUser);
+
     return (
         <Router>
             <div className="App">
@@ -61,6 +62,12 @@ function App() {
                     })}
                     {privateRoutes?.map((route, index) => {
                         const Page = route?.component;
+                        let accessRoute;
+                        if (user?.role_id <= route?.role) {
+                            accessRoute = true;
+                        } else {
+                            accessRoute = false;
+                        }
 
                         let Layout = DefaultLayout;
                         if (route?.layout) {
@@ -74,12 +81,14 @@ function App() {
                                 key={index}
                                 path={route?.path}
                                 element={
-                                    user?.role_name === "SUPER_ADMIN" ? (
+                                    accessRoute ? (
                                         <Layout>
                                             <Page />
                                         </Layout>
-                                    ) : (
+                                    ) : user?.role === 4 ? (
                                         <Navigate to="/" replace />
+                                    ) : (
+                                        <Navigate to="/admin" replace />
                                     )
                                 }
                             />

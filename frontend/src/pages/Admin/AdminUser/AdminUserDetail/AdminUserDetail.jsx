@@ -73,7 +73,6 @@ export default function AdminUserDetail() {
         role_id: "",
         role_name: "",
         birth_date: "",
-        username: "",
         email: "",
         phone_number: "",
         first_name: "",
@@ -110,10 +109,6 @@ export default function AdminUserDetail() {
     const phoneRegExp = /(84|0[3|5|7|8|9])+([0-9]{8})\b/;
     const validationSchema = Yup.object().shape({
         role_id: Yup.string().required("Vui lòng không để trống"),
-        username: Yup.string()
-            .required("Vui lòng không để trống")
-            .min(6, "Tên tài khoản phải có ít nhất 6 kí tự")
-            .max(20, "Tên tài khoản tối đa 20 kí tự"),
         first_name: Yup.string().required("Vui lòng không để trống"),
         phone_number: Yup.string()
             .matches(/^\d+$/, "Số điện thoại chỉ bao gồm các ký tự số")
@@ -426,17 +421,6 @@ export default function AdminUserDetail() {
                                         formik?.touched?.birth_date &&
                                         formik?.errors?.birth_date
                                     }
-                                />
-                            </Grid>
-                            <Grid item xs={12}>
-                                <GTextFieldNormal
-                                    disabled={!isEditting}
-                                    onChange={formik.handleChange}
-                                    label="Tên đăng nhập"
-                                    fullWidth
-                                    name="username"
-                                    value={formik.values?.username || ""}
-                                    formik={formik}
                                 />
                             </Grid>
                             <Grid item xs={6}>

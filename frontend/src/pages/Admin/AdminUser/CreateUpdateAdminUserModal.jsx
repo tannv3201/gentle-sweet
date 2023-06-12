@@ -45,7 +45,6 @@ export default function CreateUpdateAdminUserModal({
         role_id: "",
         role_name: "",
         birth_date: "",
-        username: "",
         email: "",
         phone_number: "",
         first_name: "",
@@ -72,10 +71,6 @@ export default function CreateUpdateAdminUserModal({
     const phoneRegExp = /(84|0[3|5|7|8|9])+([0-9]{8})\b/;
     const validationSchema = Yup.object().shape({
         role_id: Yup.string().required("Vui lòng không để trống"),
-        username: Yup.string()
-            .required("Vui lòng không để trống")
-            .min(6, "Tên tài khoản phải có ít nhất 6 kí tự")
-            .max(20, "Tên tài khoản tối đa 20 kí tự"),
         password: Yup.string()
             .required("Vui lòng không để trống")
             .min(8, "Mật khẩu phải có ít nhất 8 kí tự")
@@ -274,8 +269,8 @@ export default function CreateUpdateAdminUserModal({
                                 }}
                                 onBlur={formik.handleBlur}
                                 isOptionEqualToValue={(option, value) =>
-                                    value === null ||
-                                    value === "" ||
+                                    // value === null ||
+                                    // value === "" ||
                                     option?.role_id === value?.role_id
                                 }
                                 value={
@@ -313,16 +308,6 @@ export default function CreateUpdateAdminUserModal({
                                     formik?.touched?.birth_date &&
                                     formik?.errors?.birth_date
                                 }
-                            />
-                        </Grid>
-                        <Grid item xs={12}>
-                            <GTextFieldNormal
-                                onChange={formik.handleChange}
-                                label="Tên đăng nhập"
-                                fullWidth
-                                name="username"
-                                value={formik.values?.username || ""}
-                                formik={formik}
                             />
                         </Grid>
                         <Grid item xs={6}>

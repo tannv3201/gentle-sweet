@@ -152,11 +152,15 @@ export default function MenuUser() {
                         ) : (
                             <div></div>
                         )}
-                        <MenuItem onClick={handleNavigateAccount}>
-                            <Person />{" "}
-                            <span className={cx("menu-label")}>Tài khoản</span>
-                        </MenuItem>
-                        {isMedium && (
+                        {currentUser?.role_name === "CUSTOMER" && (
+                            <MenuItem onClick={handleNavigateAccount}>
+                                <Person />{" "}
+                                <span className={cx("menu-label")}>
+                                    Tài khoản
+                                </span>
+                            </MenuItem>
+                        )}
+                        {isMedium && currentUser?.role_name === "CUSTOMER" && (
                             <MenuItem onClick={handleNavigateCart}>
                                 <ShoppingCartRounded />{" "}
                                 <span className={cx("menu-label")}>
@@ -164,14 +168,22 @@ export default function MenuUser() {
                                 </span>
                             </MenuItem>
                         )}
-                        <MenuItem onClick={handleNavigateBooked}>
-                            <RecentActorsRounded />{" "}
-                            <span className={cx("menu-label")}>Lịch đặt</span>
-                        </MenuItem>
-                        <MenuItem onClick={handleNavigatePurchaseOrder}>
-                            <ListAltRounded />{" "}
-                            <span className={cx("menu-label")}>Đơn mua</span>
-                        </MenuItem>
+                        {currentUser?.role_name === "CUSTOMER" && (
+                            <MenuItem onClick={handleNavigateBooked}>
+                                <RecentActorsRounded />{" "}
+                                <span className={cx("menu-label")}>
+                                    Lịch đặt
+                                </span>
+                            </MenuItem>
+                        )}
+                        {currentUser?.role_name === "CUSTOMER" && (
+                            <MenuItem onClick={handleNavigatePurchaseOrder}>
+                                <ListAltRounded />{" "}
+                                <span className={cx("menu-label")}>
+                                    Đơn mua
+                                </span>
+                            </MenuItem>
+                        )}
                         <MenuItem onClick={handleLogout}>
                             <LogoutRounded />
                             <span className={cx("menu-label")}> Đăng xuất</span>

@@ -11,7 +11,7 @@ import IconButton from "@mui/material/IconButton";
 import Container from "@mui/material/Container";
 import MenuIcon from "@mui/icons-material/Menu";
 import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
-import { mainListItems, secondaryListItems } from "./ListItem";
+import { MainListItems, SecondaryListItems } from "./ListItem";
 import images from "../../assets/images";
 import classNames from "classnames/bind";
 import styles from "./DefaultLayout.module.scss";
@@ -126,9 +126,9 @@ export default function AdminLayout({ children }) {
                     </Toolbar>
                     <Divider />
                     <List component="nav">
-                        {mainListItems}
+                        <MainListItems />
                         <Divider sx={{ my: 1 }} />
-                        {secondaryListItems}
+                        <SecondaryListItems />
                     </List>
                 </Drawer>
                 <Box
