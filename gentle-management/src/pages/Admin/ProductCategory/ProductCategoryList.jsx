@@ -103,6 +103,7 @@ export default function ProductCategoryList({ data }) {
                                     height: 60,
                                     objectFit: "cover",
                                     borderRadius: "50%",
+                                    border: "1px solid var(--primary-400)",
                                 }}
                             />
                         ),

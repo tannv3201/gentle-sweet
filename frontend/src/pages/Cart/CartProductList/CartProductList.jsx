@@ -48,6 +48,7 @@ function CartProductList() {
                         height: 60,
                         objectFit: "cover",
                         borderRadius: "50%",
+                        border: "1px solid var(--primary-400)",
                     }}
                 />
             ),

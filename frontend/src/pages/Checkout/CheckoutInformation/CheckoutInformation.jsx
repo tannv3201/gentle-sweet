@@ -212,6 +212,7 @@ function CheckoutInformation() {
                             label="Họ và tên"
                             fullWidth
                             name="last_name"
+                            InputLabelProps={{ shrink: true }}
                         />
                     </Grid>
                     <Grid item lg={6} md={12} sm={12} xs={12}>
@@ -228,6 +229,7 @@ function CheckoutInformation() {
                                     </InputAdornment>
                                 ),
                             }}
+                            InputLabelProps={{ shrink: true }}
                         />
                     </Grid>
                     <Grid item lg={6} md={12} sm={12} xs={12}>
@@ -237,6 +239,7 @@ function CheckoutInformation() {
                             label="Số điện thoại"
                             fullWidth
                             name="phone_number"
+                            InputLabelProps={{ shrink: true }}
                         />
                     </Grid>
                     <Grid item lg={4} md={12} sm={12} xs={12}>
@@ -255,6 +258,7 @@ function CheckoutInformation() {
                                     variant="outlined"
                                     name="province"
                                     disabled
+                                    InputLabelProps={{ shrink: true }}
                                 />
                             )}
                         />
@@ -275,6 +279,7 @@ function CheckoutInformation() {
                                     variant="outlined"
                                     name="district"
                                     disabled
+                                    InputLabelProps={{ shrink: true }}
                                 />
                             )}
                         />
@@ -295,6 +300,7 @@ function CheckoutInformation() {
                                     label="Xã/Phường"
                                     variant="outlined"
                                     name="ward"
+                                    InputLabelProps={{ shrink: true }}
                                 />
                             )}
                         />
@@ -306,6 +312,7 @@ function CheckoutInformation() {
                             label="Địa chỉ chi tiết"
                             fullWidth
                             name="detail_address"
+                            InputLabelProps={{ shrink: true }}
                         />
                     </Grid>
                 </Grid>
@@ -322,7 +329,7 @@ function CheckoutInformation() {
                         </FormGroup>
                     </Grid>
                     <Grid item lg={6} md={12} sm={12} xs={12}>
-                        <TextField
+                        <GTextFieldNormal
                             onBlur={handleBlur}
                             InputLabelProps={{ shrink: true }}
                             color="secondary"
@@ -342,7 +349,7 @@ function CheckoutInformation() {
                     </Grid>
 
                     <Grid item lg={6} md={12} sm={12} xs={12}>
-                        <TextField
+                        <GTextFieldNormal
                             onBlur={handleBlur}
                             InputLabelProps={{ shrink: true }}
                             color="secondary"
@@ -375,7 +382,7 @@ function CheckoutInformation() {
                             value={selectedProvince || null}
                             size="small"
                             renderInput={(params) => (
-                                <TextField
+                                <GTextFieldNormal
                                     InputLabelProps={{ shrink: true }}
                                     color="secondary"
                                     size="small"
