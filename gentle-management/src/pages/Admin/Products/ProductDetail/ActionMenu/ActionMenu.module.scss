@@ -1,0 +1,22 @@
+.user-avatar {
+    width: 36px;
+    height: 36px;
+    overflow: hidden;
+    border-radius: 100px;
+    border: 1px solid var(--primary-500);
+    img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+}
+
+.menu-title {
+    padding: 0 16px;
+    font-weight: var(--fw-semi-bold);
+    border-bottom: 1px solid var(--border-color);
+}
+
+.basic-menu {
+    margin-top: 4px;
+}

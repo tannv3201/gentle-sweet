@@ -1,0 +1,16 @@
+.search-box-container {
+    height: 0;
+    overflow: hidden;
+    transition: all 0.2s linear;
+
+    &.isOpen {
+        height: 136px;
+        transition: all 0.2s linear;
+    }
+    .search-box {
+        margin-top: 16px;
+        border: 1px solid var(--border-color);
+        padding: 12px;
+        border-radius: 4px;
+    }
+}

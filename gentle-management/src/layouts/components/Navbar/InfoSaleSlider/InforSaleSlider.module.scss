@@ -1,0 +1,22 @@
+.wrapper {
+    background-color: var(--primary-200);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.inner {
+    width: 600px;
+    padding: 1px 0;
+    .slider {
+        display: flex;
+        align-items: center;
+        .slider-item {
+            text-align: center;
+            font-style: italic;
+            h5 {
+                font-size: 1.5rem;
+                font-weight: var(--fw-normal);
+            }
+        }
+    }
+}

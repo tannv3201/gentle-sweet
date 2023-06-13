@@ -1,0 +1,26 @@
+.service-price {
+    display: flex;
+    align-items: center;
+    .onsale-label {
+        font-size: 1.2rem;
+        color: var(--white);
+        background-color: red;
+        padding: 2px 4px;
+        border-radius: 2px;
+        margin-left: 4px;
+        font-weight: var(--fw-medium);
+    }
+
+    .service-default-price {
+        text-decoration: line-through;
+        margin-right: 4px;
+        font-size: 1.4rem;
+    }
+}
+
+.service-description {
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2; /* Giới hạn chỉ nằm trên 2 dòng */
+    overflow: hidden;
+}

@@ -1,0 +1,105 @@
+@media only screen and (max-width: 600px) {
+    .policy-privacy {
+        font-size: 1.4rem !important;
+    }
+    .logo-wrapper {
+        img {
+            width: 60px !important;
+        }
+    }
+    .sign-up-form {
+        padding: 8px 20px !important;
+    }
+}
+
+.wrapper {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    height: 100vh;
+    padding: 0 24px;
+    background-image: url("../../assets/images/repeat-background.jpg");
+    &::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.5); /* Màu nền và độ mờ (opacity) */
+    }
+}
+
+.inner {
+    width: 600px;
+    border-radius: 4px;
+    display: flex;
+    align-items: center;
+    .login-form {
+        z-index: 10;
+        background-color: var(--white);
+        border: 1px solid var(--border-color);
+        padding: 12px 24px;
+        border-radius: 4px;
+
+        .form-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        .form-title {
+            font-size: 1.8rem;
+            font-weight: var(--fw-semi-bold);
+            text-transform: uppercase;
+        }
+    }
+    .logo-wrapper {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        cursor: pointer;
+        img {
+            width: 100px;
+        }
+    }
+
+    .policy-privacy {
+        display: block;
+        font-size: 1.5rem;
+        cursor: pointer;
+        padding: 4px 0;
+        font-weight: var(--fw-medium);
+        transition: color 0.2s linear;
+        &:hover {
+            color: var(--info);
+        }
+        .highlight {
+        }
+        .link {
+            font-weight: var(--fw-medium);
+            color: var(--primary-500);
+            transition: color 0.2s linear;
+            cursor: pointer;
+            &:hover {
+                color: var(--info);
+                transition: color 0.2s linear;
+            }
+        }
+    }
+
+    .login-question {
+        display: block;
+        font-size: 1.5rem;
+        span {
+            font-weight: var(--fw-medium);
+            color: var(--primary-500);
+            padding: 4px 0;
+            transition: color 0.2s linear;
+            cursor: pointer;
+            &:hover {
+                color: var(--info);
+                transition: color 0.2s linear;
+            }
+        }
+    }
+}

@@ -1,0 +1,77 @@
+.wrapper {
+    .menu-item {
+        .menu-item-name {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            transition: all linear 0.2s;
+            user-select: none;
+            border-radius: 12px;
+            margin-top: 2px;
+            padding: 2px 8px;
+            height: 40px;
+            &.isOpen {
+                background-color: var(--primary-500);
+                color: var(--white);
+                .menu-btn {
+                    .btn-icon {
+                        color: var(--white) !important;
+                    }
+                }
+            }
+            &:hover {
+                background-color: var(--primary-500);
+                color: var(--white);
+                .menu-btn {
+                    .btn-icon {
+                        color: var(--white) !important;
+                    }
+                }
+            }
+
+            .menu-btn {
+                transition: all 0.2s linear;
+                &.rotate {
+                    transform: rotate(-180deg);
+                }
+            }
+            .menu-name {
+                display: block;
+                flex: 1;
+            }
+        }
+    }
+    .child-wrapper {
+        position: relative;
+        padding-left: 20px;
+        margin-top: 2px;
+        height: 0;
+        overflow: hidden;
+        transition: all 0.2s linear;
+        &.isOpen {
+            height: 86px;
+        }
+        &::before {
+            position: absolute;
+            content: "";
+            width: 1px;
+            top: 4px;
+            bottom: 4px;
+            left: 12px;
+            background-color: red;
+        }
+        .child-item-name {
+            font-size: 1.6rem;
+            user-select: none;
+            border-radius: 12px;
+            margin-top: 2px;
+            display: block;
+            padding: 8px;
+            transition: all linear 0.2s;
+            &:hover {
+                background-color: var(--primary-500);
+                color: var(--white);
+            }
+        }
+    }
+}

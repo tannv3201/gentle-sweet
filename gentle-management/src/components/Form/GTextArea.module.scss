@@ -1,0 +1,24 @@
+.mytext-area {
+    resize: none;
+    border-radius: 4px;
+    font-size: 1.6rem;
+    font-family: var(--font-family);
+    padding: 8px 14px;
+    border: 1px solid rgba(0, 0, 0, 0.23);
+    width: 100%;
+    font-weight: var(--fw-normal);
+    color: var(--text-primary);
+    transition: outline 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms,
+        box-shadow 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms !important;
+}
+
+textarea:focus-visible {
+    outline: 1px solid #1976d2;
+    // box-shadow: rgba(25, 118, 210, 0.25) 0 0 0 2px !important;
+}
+
+.label-textarea {
+    user-select: none;
+    font-size: 1.6rem;
+    font-weight: var(--fw-medium);
+}
