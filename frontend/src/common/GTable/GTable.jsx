@@ -77,6 +77,7 @@ export const GTableProductCheckout = ({
     actions,
     pagesize,
     paging,
+    layout,
     ...props
 }) => {
     const defaultMaterialTheme = createTheme();
@@ -102,6 +103,7 @@ export const GTableProductCheckout = ({
                         toolbar: false,
                         sorting: false,
                         search: false,
+                        tableLayout: layout,
                         searchFieldAlignment: "right",
                         searchAutoFocus: true,
                         searchFieldVariant: "standard",

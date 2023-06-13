@@ -10,6 +10,7 @@ import GButton from "../../../components/MyButton/MyButton";
 import { API_IMAGE_URL } from "../../../LocalConstants";
 import { VisibilityRounded } from "@mui/icons-material";
 import { useNavigate } from "react-router-dom";
+import { GTableProductCheckout } from "../../../common/GTable/GTable";
 
 const cx = classNames.bind(styles);
 
@@ -32,7 +33,7 @@ function BookedList({ bookingListByUser }) {
                             {bookingListByUser?.map((booking, idx) => (
                                 <Grid key={booking?.id} item xs={12}>
                                     <div className={cx("booking-item")}>
-                                        <Grid container spacing={2}>
+                                        <Grid container>
                                             <Grid item xs={12}>
                                                 <div
                                                     className={cx(
@@ -159,77 +160,151 @@ function BookedList({ bookingListByUser }) {
                                                 </div>
                                             </Grid>
                                             <Grid item xs={12}>
-                                                {booking?.detailList?.map(
-                                                    (bookingDetail) => (
-                                                        <div
-                                                            className={cx(
-                                                                "serv-booking-detail"
-                                                            )}
-                                                            key={
-                                                                bookingDetail?.id
-                                                            }
-                                                        >
-                                                            <div
-                                                                className={cx(
-                                                                    "serv-image"
-                                                                )}
-                                                            >
+                                                <GTableProductCheckout
+                                                    title={""}
+                                                    columns={[
+                                                        {
+                                                            title: "Ảnh",
+                                                            field: "image_url",
+                                                            cellStyle: {
+                                                                width: "20%",
+                                                            },
+                                                            render: (
+                                                                rowData
+                                                            ) => (
+                                                                // eslint-disable-next-line jsx-a11y/alt-text
                                                                 <img
                                                                     src={
-                                                                        bookingDetail?.image_url
-                                                                            ? `${API_IMAGE_URL}/${bookingDetail?.image_url}`
+                                                                        rowData?.image_url
+                                                                            ? `${API_IMAGE_URL}/${rowData?.image_url}`
                                                                             : ""
                                                                     }
-                                                                    alt=""
+                                                                    style={{
+                                                                        width: 60,
+                                                                        height: 60,
+                                                                        objectFit:
+                                                                            "cover",
+                                                                        borderRadius:
+                                                                            "50%",
+                                                                        border: "1px solid var(--primary-400)",
+                                                                    }}
                                                                 />
-                                                            </div>
-                                                            <div
-                                                                className={cx(
-                                                                    "serv-wrapper"
-                                                                )}
-                                                            >
-                                                                <div
-                                                                    className={cx(
-                                                                        "serv-content"
-                                                                    )}
-                                                                >
-                                                                    <span>
+                                                            ),
+                                                        },
+                                                        {
+                                                            title: "Tên",
+                                                            field: "service_name",
+                                                            hidden: isSmall
+                                                                ? true
+                                                                : false,
+                                                            render: (
+                                                                rowData
+                                                            ) => {
+                                                                return (
+                                                                    <>
                                                                         <span
                                                                             className={cx(
-                                                                                "serv-label"
-                                                                            )}
-                                                                        >
-                                                                            Tên
-                                                                            dịch
-                                                                            vụ:{" "}
-                                                                        </span>
-                                                                        <span
-                                                                            className={cx(
-                                                                                "serv-name"
+                                                                                "service_name"
                                                                             )}
                                                                         >
                                                                             {
-                                                                                bookingDetail?.service_name
+                                                                                rowData?.service_name
                                                                             }
                                                                         </span>
-                                                                    </span>
-                                                                </div>
-                                                                <span
-                                                                    className={cx(
-                                                                        "serv-price"
-                                                                    )}
-                                                                >
-                                                                    <span>
-                                                                        Giá:
-                                                                    </span>
-                                                                    {FormatCurrency(
-                                                                        bookingDetail?.unit_price
-                                                                    )}
-                                                                </span>
-                                                            </div>
-                                                        </div>
-                                                    )
-                                                )}
+                                                                    </>
+                                                                );
+                                                            },
+                                                        },
+                                                        {
+                                                            title: "Giá",
+                                                            field: "unit_price",
+                                                            hidden: isSmall
+                                                                ? true
+                                                                : false,
+                                                            render: (
+                                                                rowData
+                                                            ) => {
+                                                                return (
+                                                                    <>
+                                                                        <span
+                                                                            className={
+                                                                                rowData?.unit_price_onsale
+                                                                                    ? cx(
+                                                                                          "unit_price",
+                                                                                          "onsale"
+                                                                                      )
+                                                                                    : cx(
+                                                                                          "unit_price"
+                                                                                      )
+                                                                            }
+                                                                        >
+                                                                            {FormatCurrency(
+                                                                                rowData?.unit_price
+                                                                            )}
+                                                                        </span>
+                                                                        {rowData?.unit_price_onsale ? (
+                                                                            <span
+                                                                                className={cx(
+                                                                                    "unit_price_onsale"
+                                                                                )}
+                                                                            >
+                                                                                {FormatCurrency(
+                                                                                    rowData?.unit_price_onsale
+                                                                                )}
+                                                                            </span>
+                                                                        ) : (
+                                                                            ""
+                                                                        )}
+                                                                    </>
+                                                                );
+                                                            },
+                                                        },
+                                                        {
+                                                            title: "Thông tin",
+                                                            hidden: !isSmall
+                                                                ? true
+                                                                : false,
+                                                            render: (
+                                                                rowData
+                                                            ) => {
+                                                                return (
+                                                                    <div
+                                                                        className={cx(
+                                                                            "table_service_info"
+                                                                        )}
+                                                                    >
+                                                                        <span
+                                                                            className={cx(
+                                                                                "table_service_name"
+                                                                            )}
+                                                                        >
+                                                                            {
+                                                                                rowData?.service_name
+                                                                            }
+                                                                        </span>
+                                                                        <span
+                                                                            className={cx(
+                                                                                "table_service_price"
+                                                                            )}
+                                                                        >
+                                                                            Giá:{" "}
+                                                                            <span>
+                                                                                {FormatCurrency(
+                                                                                    rowData?.unit_price
+                                                                                )}
+                                                                            </span>
+                                                                        </span>
+                                                                    </div>
+                                                                );
+                                                            },
+                                                        },
+                                                    ]}
+                                                    layout={"auto"}
+                                                    data={booking?.detailList}
+                                                    exportFileName={
+                                                        "DanhSachSanPham"
+                                                    }
+                                                />
                                             </Grid>
                                             <Grid item xs={12}>
                                                 <div

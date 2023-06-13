@@ -94,11 +94,33 @@
         background-color: var(--white);
         border: 1px solid var(--border-color);
         border-radius: 4px;
+
+        .product_name {
+            display: -webkit-box;
+            -webkit-box-orient: vertical;
+            -webkit-line-clamp: 2; /* Giới hạn chỉ nằm trên 2 dòng */
+            overflow: hidden;
+        }
+        .table_product_info {
+            .table_product_name {
+                display: block;
+                font-weight: var(--fw-medium);
+                display: -webkit-box;
+                -webkit-box-orient: vertical;
+                -webkit-line-clamp: 2; /* Giới hạn chỉ nằm trên 2 dòng */
+                overflow: hidden;
+            }
+            .table_product_quantity {
+                display: block;
+            }
+            .table_product_price {
+                display: block;
+            }
+        }
     }
 
     .invoice-item-header {
         padding: 12px;
-        border-bottom: 1px solid var(--border-color);
         display: flex;
         align-items: center;
         justify-content: space-between;
@@ -165,7 +187,6 @@
     }
 
     .invoice-item-footer {
-        border-top: 1px solid var(--border-color);
         display: flex;
         flex-direction: column;
         align-items: flex-end;

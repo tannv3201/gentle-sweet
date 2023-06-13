@@ -56,11 +56,32 @@
         background-color: var(--white);
         border: 1px solid var(--border-color);
         border-radius: 4px;
+        .service_name {
+            display: -webkit-box;
+            -webkit-box-orient: vertical;
+            -webkit-line-clamp: 2; /* Giới hạn chỉ nằm trên 2 dòng */
+            overflow: hidden;
+        }
+        .table_service_info {
+            .table_service_name {
+                display: block;
+                font-weight: var(--fw-medium);
+                display: -webkit-box;
+                -webkit-box-orient: vertical;
+                -webkit-line-clamp: 2; /* Giới hạn chỉ nằm trên 2 dòng */
+                overflow: hidden;
+            }
+            .table_service_quantity {
+                display: block;
+            }
+            .table_service_price {
+                display: block;
+            }
+        }
     }
 
     .booking-item-header {
         padding: 12px;
-        border-bottom: 1px solid var(--border-color);
         display: flex;
         justify-content: space-between;
         align-items: center;
@@ -127,7 +148,6 @@
     }
 
     .booking-item-footer {
-        border-top: 1px solid var(--border-color);
         display: flex;
         flex-direction: column;
         align-items: flex-end;

@@ -16,11 +16,16 @@ import { FormatCurrency } from "../../../components/FormatCurrency/FormatCurrenc
 import { API_IMAGE_URL } from "../../../LocalConstants";
 import ConfirmCancelOrderPopup from "../ConfirmCancelOrderPopup/ConfirmCancelOrderPopup";
 import { ArrowBackIosNew } from "@mui/icons-material";
+import { GTableProductCheckout } from "../../../common/GTable/GTable";
+import { useMediaQuery } from "@mui/material";
+import { useTheme } from "@mui/material/styles";
 
 const cx = classNames.bind(styles);
 
 function OrderDetail() {
     const { invoiceId } = useParams();
+    const theme = useTheme();
+    const isSmall = useMediaQuery(theme.breakpoints.down("sm"));
     const [invoiceClone, setInvoiceClone] = useState({});
     const [deliveryClone, setDeliveryClone] = useState({});
     const [productListClone, setProductListClone] = useState([]);
@@ -336,103 +341,158 @@ function OrderDetail() {
                                         </div>
                                     </Grid>{" "}
                                     <Grid item xs={12}>
-                                        {productListClone?.map(
-                                            (product, idx) => (
-                                                <div
-                                                    key={idx}
-                                                    className={cx(
-                                                        "product-item"
-                                                    )}
-                                                >
-                                                    <Grid container spacing={2}>
-                                                        <Grid item lg={3}>
-                                                            <div
-                                                                className={cx(
-                                                                    "product-image"
-                                                                )}
-                                                            >
-                                                                <img
-                                                                    src={`${API_IMAGE_URL}/${product?.image_url}`}
-                                                                    alt=""
-                                                                />
-                                                            </div>
-                                                        </Grid>
-                                                        <Grid
-                                                            item
-                                                            xs={9}
-                                                            display={"flex"}
-                                                            flexDirection={
-                                                                "column"
+                                        <GTableProductCheckout
+                                            title={""}
+                                            columns={[
+                                                {
+                                                    title: "Ảnh",
+                                                    field: "image_url",
+                                                    cellStyle: { width: "20%" },
+                                                    render: (rowData) => (
+                                                        // eslint-disable-next-line jsx-a11y/alt-text
+                                                        <img
+                                                            src={
+                                                                rowData?.image_url
+                                                                    ? `${API_IMAGE_URL}/${rowData?.image_url}`
+                                                                    : ""
                                                             }
-                                                            justifyContent={
-                                                                "center"
-                                                            }
-                                                        >
-                                                            <div>
-                                                                <Grid
-                                                                    container
-                                                                    spacing={2}
+                                                            style={{
+                                                                width: 60,
+                                                                height: 60,
+                                                                objectFit:
+                                                                    "cover",
+                                                                borderRadius:
+                                                                    "50%",
+                                                                border: "1px solid var(--primary-400)",
+                                                            }}
+                                                        />
+                                                    ),
+                                                },
+                                                {
+                                                    title: "Tên",
+                                                    field: "product_name",
+                                                    hidden: isSmall
+                                                        ? true
+                                                        : false,
+                                                    render: (rowData) => {
+                                                        return (
+                                                            <>
+                                                                <span
+                                                                    className={cx(
+                                                                        "product_name"
+                                                                    )}
                                                                 >
-                                                                    <Grid
-                                                                        item
-                                                                        lg={6}
-                                                                        md={6}
-                                                                        sm={12}
-                                                                        xs={12}
-                                                                        display={
-                                                                            "flex"
-                                                                        }
-                                                                        alignItems={
-                                                                            "center"
-                                                                        }
-                                                                    >
-                                                                        {
-                                                                            product?.product_name
-                                                                        }
-                                                                    </Grid>
-                                                                    <Grid
-                                                                        item
-                                                                        lg={3}
-                                                                        md={3}
-                                                                        sm={6}
-                                                                        xs={6}
-                                                                        display={
-                                                                            "flex"
-                                                                        }
-                                                                        alignItems={
-                                                                            "center"
-                                                                        }
-                                                                    >
-                                                                        Số
-                                                                        lượng:{" "}
-                                                                        {
-                                                                            product?.product_quantity
-                                                                        }
-                                                                    </Grid>
-                                                                    <Grid
-                                                                        item
-                                                                        lg={3}
-                                                                        md={3}
-                                                                        sm={6}
-                                                                        xs={6}
-                                                                        display={
-                                                                            "flex"
-                                                                        }
-                                                                        alignItems={
-                                                                            "center"
-                                                                        }
+                                                                    {
+                                                                        rowData?.product_name
+                                                                    }
+                                                                </span>
+                                                            </>
+                                                        );
+                                                    },
+                                                },
+                                                {
+                                                    title: "Số lượng",
+                                                    field: "product_quantity",
+                                                    hidden: isSmall
+                                                        ? true
+                                                        : false,
+                                                },
+                                                {
+                                                    title: "Giá",
+                                                    field: "unit_price",
+                                                    hidden: isSmall
+                                                        ? true
+                                                        : false,
+                                                    render: (rowData) => {
+                                                        return (
+                                                            <>
+                                                                <span
+                                                                    className={
+                                                                        rowData?.unit_price_onsale
+                                                                            ? cx(
+                                                                                  "unit_price",
+                                                                                  "onsale"
+                                                                              )
+                                                                            : cx(
+                                                                                  "unit_price"
+                                                                              )
+                                                                    }
+                                                                >
+                                                                    {FormatCurrency(
+                                                                        rowData?.unit_price
+                                                                    )}
+                                                                </span>
+                                                                {rowData?.unit_price_onsale ? (
+                                                                    <span
+                                                                        className={cx(
+                                                                            "unit_price_onsale"
+                                                                        )}
                                                                     >
                                                                         {FormatCurrency(
-                                                                            product?.unit_price
+                                                                            rowData?.unit_price_onsale
                                                                         )}
-                                                                    </Grid>
-                                                                </Grid>
+                                                                    </span>
+                                                                ) : (
+                                                                    ""
+                                                                )}
+                                                            </>
+                                                        );
+                                                    },
+                                                },
+                                                {
+                                                    title: "Thông tin",
+                                                    hidden: !isSmall
+                                                        ? true
+                                                        : false,
+                                                    render: (rowData) => {
+                                                        return (
+                                                            <div
+                                                                className={cx(
+                                                                    "table_product_info"
+                                                                )}
+                                                            >
+                                                                <span
+                                                                    className={cx(
+                                                                        "table_product_name"
+                                                                    )}
+                                                                >
+                                                                    {
+                                                                        rowData?.product_name
+                                                                    }
+                                                                </span>
+                                                                <span
+                                                                    className={cx(
+                                                                        "table_product_quantity"
+                                                                    )}
+                                                                >
+                                                                    SL:{" "}
+                                                                    <span>
+                                                                        {
+                                                                            rowData?.product_quantity
+                                                                        }
+                                                                    </span>
+                                                                </span>
+                                                                <span
+                                                                    className={cx(
+                                                                        "table_product_price"
+                                                                    )}
+                                                                >
+                                                                    Giá:{" "}
+                                                                    <span>
+                                                                        {FormatCurrency(
+                                                                            rowData?.unit_price
+                                                                        )}
+                                                                    </span>
+                                                                </span>
                                                             </div>
-                                                        </Grid>
-                                                    </Grid>
-                                                </div>
-                                            )
-                                        )}
+                                                        );
+                                                    },
+                                                },
+                                            ]}
+                                            layout={"auto"}
+                                            data={productListClone}
+                                            exportFileName={"DanhSachSanPham"}
+                                        />
                                     </Grid>
                                     <Grid item xs={12}>
                                         <div className={cx("price_total")}>

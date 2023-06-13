@@ -15,11 +15,15 @@ import { FormatCurrency } from "../../../components/FormatCurrency/FormatCurrenc
 import { API_IMAGE_URL } from "../../../LocalConstants";
 import { ArrowBackIosNew } from "@mui/icons-material";
 import ConfirmCancelBookingPopup from "../ConfirmCancelBookingPopup/ConfirmCancelBookingPopup";
-
+import { GTableProductCheckout } from "../../../common/GTable/GTable";
+import { useMediaQuery } from "@mui/material";
+import { useTheme } from "@mui/material/styles";
 const cx = classNames.bind(styles);
 
 function BookedDetail() {
     const { bookingId } = useParams();
+    const theme = useTheme();
+    const isSmall = useMediaQuery(theme.breakpoints.down("sm"));
     const [bookingClone, setBookingClone] = useState({});
     const [deliveryClone, setDeliveryClone] = useState({});
     const [serviceListClone, setServiceListClone] = useState([]);
@@ -344,83 +348,139 @@ function BookedDetail() {
                                         </div>
                                     </Grid>{" "}
                                     <Grid item xs={12}>
-                                        {serviceListClone?.map(
-                                            (service, idx) => (
-                                                <div
-                                                    key={idx}
-                                                    className={cx(
-                                                        "service-item"
-                                                    )}
-                                                >
-                                                    <Grid container spacing={2}>
-                                                        <Grid item lg={3}>
+                                        <GTableProductCheckout
+                                            title={""}
+                                            columns={[
+                                                {
+                                                    title: "Ảnh",
+                                                    field: "image_url",
+                                                    cellStyle: { width: "20%" },
+                                                    render: (rowData) => (
+                                                        // eslint-disable-next-line jsx-a11y/alt-text
+                                                        <img
+                                                            src={
+                                                                rowData?.image_url
+                                                                    ? `${API_IMAGE_URL}/${rowData?.image_url}`
+                                                                    : ""
+                                                            }
+                                                            style={{
+                                                                width: 60,
+                                                                height: 60,
+                                                                objectFit:
+                                                                    "cover",
+                                                                borderRadius:
+                                                                    "50%",
+                                                                border: "1px solid var(--primary-400)",
+                                                            }}
+                                                        />
+                                                    ),
+                                                },
+                                                {
+                                                    title: "Tên",
+                                                    field: "service_name",
+                                                    hidden: isSmall
+                                                        ? true
+                                                        : false,
+                                                    render: (rowData) => {
+                                                        return (
+                                                            <>
+                                                                <span
+                                                                    className={cx(
+                                                                        "service_name"
+                                                                    )}
+                                                                >
+                                                                    {
+                                                                        rowData?.service_name
+                                                                    }
+                                                                </span>
+                                                            </>
+                                                        );
+                                                    },
+                                                },
+                                                {
+                                                    title: "Giá",
+                                                    field: "unit_price",
+                                                    hidden: isSmall
+                                                        ? true
+                                                        : false,
+                                                    render: (rowData) => {
+                                                        return (
+                                                            <>
+                                                                <span
+                                                                    className={
+                                                                        rowData?.unit_price_onsale
+                                                                            ? cx(
+                                                                                  "unit_price",
+                                                                                  "onsale"
+                                                                              )
+                                                                            : cx(
+                                                                                  "unit_price"
+                                                                              )
+                                                                    }
+                                                                >
+                                                                    {FormatCurrency(
+                                                                        rowData?.unit_price
+                                                                    )}
+                                                                </span>
+                                                                {rowData?.unit_price_onsale ? (
+                                                                    <span
+                                                                        className={cx(
+                                                                            "unit_price_onsale"
+                                                                        )}
+                                                                    >
+                                                                        {FormatCurrency(
+                                                                            rowData?.unit_price_onsale
+                                                                        )}
+                                                                    </span>
+                                                                ) : (
+                                                                    ""
+                                                                )}
+                                                            </>
+                                                        );
+                                                    },
+                                                },
+                                                {
+                                                    title: "Thông tin",
+                                                    hidden: !isSmall
+                                                        ? true
+                                                        : false,
+                                                    render: (rowData) => {
+                                                        return (
                                                             <div
                                                                 className={cx(
-                                                                    "service-image"
+                                                                    "table_service_info"
                                                                 )}
                                                             >
-                                                                <img
-                                                                    src={`${API_IMAGE_URL}/${service?.image_url}`}
-                                                                    alt=""
-                                                                />
-                                                            </div>
-                                                        </Grid>
-                                                        <Grid
-                                                            item
-                                                            xs={9}
-                                                            display={"flex"}
-                                                            flexDirection={
-                                                                "column"
-                                                            }
-                                                            justifyContent={
-                                                                "center"
-                                                            }
-                                                        >
-                                                            <div>
-                                                                <Grid
-                                                                    container
-                                                                    spacing={2}
+                                                                <span
+                                                                    className={cx(
+                                                                        "table_service_name"
+                                                                    )}
                                                                 >
-                                                                    <Grid
-                                                                        item
-                                                                        lg={9}
-                                                                        md={9}
-                                                                        sm={12}
-                                                                        xs={12}
-                                                                        display={
-                                                                            "flex"
-                                                                        }
-                                                                        alignItems={
-                                                                            "center"
-                                                                        }
-                                                                    >
-                                                                        {`Tên dịch vụ: ${service?.service_name}`}
-                                                                    </Grid>
-
-                                                                    <Grid
-                                                                        item
-                                                                        lg={3}
-                                                                        md={3}
-                                                                        sm={6}
-                                                                        xs={6}
-                                                                        display={
-                                                                            "flex"
-                                                                        }
-                                                                        alignItems={
-                                                                            "center"
-                                                                        }
-                                                                    >
-                                                                        {`Giá tiền: ${FormatCurrency(
-                                                                            service?.unit_price
-                                                                        )}`}
-                                                                    </Grid>
-                                                                </Grid>
+                                                                    {
+                                                                        rowData?.service_name
+                                                                    }
+                                                                </span>
+                                                                <span
+                                                                    className={cx(
+                                                                        "table_service_price"
+                                                                    )}
+                                                                >
+                                                                    Giá:{" "}
+                                                                    <span>
+                                                                        {FormatCurrency(
+                                                                            rowData?.unit_price
+                                                                        )}
+                                                                    </span>
+                                                                </span>
                                                             </div>
-                                                        </Grid>
-                                                    </Grid>
-                                                </div>
-                                            )
-                                        )}
+                                                        );
+                                                    },
+                                                },
+                                            ]}
+                                            layout={"auto"}
+                                            data={serviceListClone}
+                                            exportFileName={"DanhSachSanPham"}
+                                        />
                                     </Grid>
                                     <Grid item xs={12}>
                                         <div className={cx("price_total")}>

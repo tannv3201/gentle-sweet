@@ -10,6 +10,7 @@ import GButton from "../../../components/MyButton/MyButton";
 import { API_IMAGE_URL } from "../../../LocalConstants";
 import { useNavigate } from "react-router-dom";
 import { VisibilityOffRounded, VisibilityRounded } from "@mui/icons-material";
+import { GTableProductCheckout } from "../../../common/GTable/GTable";
 const cx = classNames.bind(styles);
 
 function OrderList({ invoiceListByUser }) {
@@ -29,7 +30,7 @@ function OrderList({ invoiceListByUser }) {
                             {invoiceListByUser?.map((invoice, idx) => (
                                 <Grid key={invoice?.id} item xs={12}>
                                     <div className={cx("invoice-item")}>
-                                        <Grid container spacing={2}>
+                                        <Grid container>
                                             <Grid item xs={12}>
                                                 <div
                                                     className={cx(
@@ -149,96 +150,170 @@ function OrderList({ invoiceListByUser }) {
                                                 </div>
                                             </Grid>
                                             <Grid item xs={12}>
-                                                {invoice?.detailList?.map(
-                                                    (invoiceDetail) => (
-                                                        <div
-                                                            className={cx(
-                                                                "prod-invoice-detail"
-                                                            )}
-                                                            key={
-                                                                invoiceDetail?.id
-                                                            }
-                                                        >
-                                                            <div
-                                                                className={cx(
-                                                                    "prod-image"
-                                                                )}
-                                                            >
+                                                <GTableProductCheckout
+                                                    title={""}
+                                                    columns={[
+                                                        {
+                                                            title: "Ảnh",
+                                                            field: "image_url",
+                                                            cellStyle: {
+                                                                width: "20%",
+                                                            },
+                                                            render: (
+                                                                rowData
+                                                            ) => (
+                                                                // eslint-disable-next-line jsx-a11y/alt-text
                                                                 <img
                                                                     src={
-                                                                        invoiceDetail?.image_url
-                                                                            ? `${API_IMAGE_URL}/${invoiceDetail?.image_url}`
+                                                                        rowData?.image_url
+                                                                            ? `${API_IMAGE_URL}/${rowData?.image_url}`
                                                                             : ""
                                                                     }
-                                                                    alt=""
+                                                                    style={{
+                                                                        width: 60,
+                                                                        height: 60,
+                                                                        objectFit:
+                                                                            "cover",
+                                                                        borderRadius:
+                                                                            "50%",
+                                                                        border: "1px solid var(--primary-400)",
+                                                                    }}
                                                                 />
-                                                            </div>
-                                                            <div
-                                                                className={cx(
-                                                                    "prod-wrapper"
-                                                                )}
-                                                            >
-                                                                <div
-                                                                    className={cx(
-                                                                        "prod-content"
-                                                                    )}
-                                                                >
-                                                                    <span>
+                                                            ),
+                                                        },
+                                                        {
+                                                            title: "Tên",
+                                                            field: "product_name",
+                                                            hidden: isSmall
+                                                                ? true
+                                                                : false,
+                                                            render: (
+                                                                rowData
+                                                            ) => {
+                                                                return (
+                                                                    <>
                                                                         <span
                                                                             className={cx(
-                                                                                "prod-label"
-                                                                            )}
-                                                                        >
-                                                                            Tên
-                                                                            sản
-                                                                            phẩm:{" "}
-                                                                        </span>
-                                                                        <span
-                                                                            className={cx(
-                                                                                "prod-name"
+                                                                                "product_name"
                                                                             )}
                                                                         >
                                                                             {
-                                                                                invoiceDetail?.product_name
+                                                                                rowData?.product_name
                                                                             }
                                                                         </span>
-                                                                    </span>
-                                                                    <span>
+                                                                    </>
+                                                                );
+                                                            },
+                                                        },
+                                                        {
+                                                            title: "Số lượng",
+                                                            field: "product_quantity",
+                                                            hidden: isSmall
+                                                                ? true
+                                                                : false,
+                                                        },
+                                                        {
+                                                            title: "Giá",
+                                                            field: "unit_price",
+                                                            hidden: isSmall
+                                                                ? true
+                                                                : false,
+                                                            render: (
+                                                                rowData
+                                                            ) => {
+                                                                return (
+                                                                    <>
                                                                         <span
-                                                                            className={cx(
-                                                                                "prod-label"
-                                                                            )}
+                                                                            className={
+                                                                                rowData?.unit_price_onsale
+                                                                                    ? cx(
+                                                                                          "unit_price",
+                                                                                          "onsale"
+                                                                                      )
+                                                                                    : cx(
+                                                                                          "unit_price"
+                                                                                      )
+                                                                            }
                                                                         >
-                                                                            Số
-                                                                            lượng:{" "}
+                                                                            {FormatCurrency(
+                                                                                rowData?.unit_price
+                                                                            )}
                                                                         </span>
+                                                                        {rowData?.unit_price_onsale ? (
+                                                                            <span
+                                                                                className={cx(
+                                                                                    "unit_price_onsale"
+                                                                                )}
+                                                                            >
+                                                                                {FormatCurrency(
+                                                                                    rowData?.unit_price_onsale
+                                                                                )}
+                                                                            </span>
+                                                                        ) : (
+                                                                            ""
+                                                                        )}
+                                                                    </>
+                                                                );
+                                                            },
+                                                        },
+                                                        {
+                                                            title: "Thông tin",
+                                                            hidden: !isSmall
+                                                                ? true
+                                                                : false,
+                                                            render: (
+                                                                rowData
+                                                            ) => {
+                                                                return (
+                                                                    <div
+                                                                        className={cx(
+                                                                            "table_product_info"
+                                                                        )}
+                                                                    >
                                                                         <span
                                                                             className={cx(
-                                                                                "prod-quantity"
+                                                                                "table_product_name"
                                                                             )}
                                                                         >
                                                                             {
-                                                                                invoiceDetail?.product_quantity
+                                                                                rowData?.product_name
                                                                             }
                                                                         </span>
-                                                                    </span>
-                                                                </div>
-                                                                <span
-                                                                    className={cx(
-                                                                        "prod-price"
-                                                                    )}
-                                                                >
-                                                                    <span>
-                                                                        Giá:
-                                                                    </span>
-                                                                    {FormatCurrency(
-                                                                        invoiceDetail?.unit_price
-                                                                    )}
-                                                                </span>
-                                                            </div>
-                                                        </div>
-                                                    )
-                                                )}
+                                                                        <span
+                                                                            className={cx(
+                                                                                "table_product_quantity"
+                                                                            )}
+                                                                        >
+                                                                            SL:{" "}
+                                                                            <span>
+                                                                                {
+                                                                                    rowData?.product_quantity
+                                                                                }
+                                                                            </span>
+                                                                        </span>
+                                                                        <span
+                                                                            className={cx(
+                                                                                "table_product_price"
+                                                                            )}
+                                                                        >
+                                                                            Giá:{" "}
+                                                                            <span>
+                                                                                {FormatCurrency(
+                                                                                    rowData?.unit_price
+                                                                                )}
+                                                                            </span>
+                                                                        </span>
+                                                                    </div>
+                                                                );
+                                                            },
+                                                        },
+                                                    ]}
+                                                    layout={"auto"}
+                                                    data={invoice?.detailList}
+                                                    exportFileName={
+                                                        "DanhSachSanPham"
+                                                    }
+                                                />
                                             </Grid>
                                             <Grid item xs={12}>
                                                 <div
