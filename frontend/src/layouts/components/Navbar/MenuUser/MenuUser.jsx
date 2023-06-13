@@ -59,9 +59,13 @@ export default function MenuUser() {
     };
 
     const handleLogout = async () => {
-        await logout(dispatch, id, navigate, accessToken, axiosJWT).then(() =>
-            handleClose()
-        );
+        await logout(
+            dispatch,
+            currentUser,
+            navigate,
+            accessToken,
+            axiosJWT
+        ).then(() => handleClose());
     };
 
     const handleNavigateLogin = () => {

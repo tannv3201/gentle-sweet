@@ -161,15 +161,15 @@ export default function Account() {
 
     // Get province list from API
     useEffect(() => {
-        const fetch = async () => {
-            if (getProvinceList?.length === 0) {
-                getProvince(dispatch);
-            }
-            setProvinces(getProvinceList);
-        };
-        fetch();
+        // const fetch = async () => {
+        //     if (getProvinceList?.length === 0) {
+        //         getProvince(dispatch);
+        //     }
+        setProvinces(getProvinceList);
+        // };
+        // fetch();
     }, []);
-
+    console.log("re-render");
     // Fn handle province onChange event
     const handleProvinceChange = (event, value) => {
         setSelectedProvince(value);

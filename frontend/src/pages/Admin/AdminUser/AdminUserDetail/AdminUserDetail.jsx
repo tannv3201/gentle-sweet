@@ -176,10 +176,6 @@ export default function AdminUserDetail() {
 
     // Get province list from API
     useEffect(() => {
-        if (getProvinceList?.length === 0) {
-            getProvince(dispatch);
-        }
-
         setProvinces(getProvinceList);
     }, []);
 

@@ -13,6 +13,7 @@ import { useTheme } from "@mui/material/styles";
 import SalonSystem from "../../common/SalonSystem/SalonSystem";
 import { getAllProduct } from "../../redux/api/apiProduct";
 import { useDispatch } from "react-redux";
+import { getProvince } from "../../redux/api/apiProvince";
 
 function HomePage() {
     const theme = useTheme();
@@ -21,6 +22,7 @@ function HomePage() {
     useEffect(() => {
         const fetch = async () => {
             await getAllProduct(null, dispatch, null);
+            await getProvince(dispatch);
         };
         fetch();
     }, []);

@@ -37,16 +37,28 @@ export const loginUser = async (user, dispatch, navigate) => {
     }
 };
 
-export const logout = async (dispatch, id, navigate, accessToken, axiosJWT) => {
+export const logout = async (
+    dispatch,
+    user,
+    navigate,
+    accessToken,
+    axiosJWT
+) => {
     dispatch(logoutStart());
     try {
-        await axiosJWT.post("/v1/auth/logout", id, {
+        await axiosJWT.post("/v1/auth/logout", user?.id, {
             headers: {
                 token: `Bearer ${accessToken}`,
             },
         });
         dispatch(logoutSuccess());
-        navigate("/");
+        if (parseInt(user?.role_id) === 4) {
+            navigate("/");
+            toast.success("Đăng xuất thành công");
+        } else if (parseInt(user?.role_id) < 4) {
+            navigate("/dang-nhap");
+            toast.success("Đăng xuất thành công");
+        }
     } catch (error) {
         dispatch(logoutFailded());
     }
