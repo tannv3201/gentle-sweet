@@ -17,10 +17,10 @@ export const MenuList = [
         ],
         to: "",
     },
-    {
-        name: "Tin tức",
-        to: "/tin-tuc",
-    },
+    // {
+    //     name: "Tin tức",
+    //     to: "/tin-tuc",
+    // },
     {
         name: "Sản phẩm",
         to: "/san-pham",
