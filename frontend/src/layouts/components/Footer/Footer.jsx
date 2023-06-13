@@ -1,5 +1,5 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
-import React from "react";
+import React, { useEffect, useState } from "react";
 import classNames from "classnames/bind";
 import styles from "./Footer.module.scss";
 import { Grid } from "@mui/material";
@@ -8,11 +8,46 @@ import GTextField from "../../../components/GTextField/GTextField";
 import { Facebook, Instagram, YouTube, SendRounded } from "@mui/icons-material";
 import { useMediaQuery } from "@mui/material";
 import { useTheme } from "@mui/material/styles";
+import { useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
 const cx = classNames.bind(styles);
 
 function Footer() {
     const theme = useTheme();
     const isSmall = useMediaQuery(theme.breakpoints.down("lg"));
+    const [productListClone, setProductListClone] = useState([]);
+    const [serviceListClone, setServiceListClone] = useState([]);
+    const productList = useSelector(
+        (state) => state.product.product?.productList
+    );
+    const serviceList = useSelector(
+        (state) => state.service.service?.serviceList
+    );
+
+    useEffect(() => {
+        setProductListClone(structuredClone(productList?.slice(0, 3)));
+    }, [productList]);
+
+    useEffect(() => {
+        setServiceListClone(structuredClone(serviceList?.slice(0, 3)));
+    }, [serviceList]);
+
+    const navigate = useNavigate();
+
+    const handleNavigateToProductDetail = (productId) => {
+        navigate(`/san-pham/${productId}`);
+    };
+    const handleNavigateToProductList = (productId) => {
+        navigate(`/san-pham`);
+    };
+
+    const handleNavigateToServiceDetail = (productId) => {
+        navigate(`/danh-muc-dich-vu/dich-vu/${productId}`);
+    };
+    const handleNavigateToServiceList = (productId) => {
+        navigate(`/danh-muc-dich-vu`);
+    };
+
     return (
         <>
             <div className={cx("home-footer-wrapper")}>
@@ -55,21 +90,33 @@ function Footer() {
                                 xs={6}
                                 className={cx("footer-component")}
                             >
-                                <a href="#" className={cx("component-title")}>
+                                <span
+                                    onClick={handleNavigateToProductList}
+                                    className={cx("component-title")}
+                                >
                                     <h4>Sản phẩm</h4>
-                                </a>
+                                </span>
                                 <ul className={cx("list-of-component")}>
-                                    <li className={cx("item-of-component")}>
-                                        <a href="#">Dụng cụ vệ sinh móng</a>
-                                    </li>
-                                    <li className={cx("item-of-component")}>
-                                        <a href="#">Dụng cụ trang trí móng</a>
-                                    </li>
-                                    <li className={cx("item-of-component")}>
-                                        <a href="#">Combo tools box</a>
-                                    </li>
-                                    <li className={cx("item-of-component")}>
-                                        <a href="#">Khác</a>
+                                    {productListClone?.map((product, idx) => (
+                                        <li
+                                            key={product?.id}
+                                            onClick={() =>
+                                                handleNavigateToProductDetail(
+                                                    product?.id
+                                                )
+                                            }
+                                            className={cx("item-of-component")}
+                                        >
+                                            <span href="#">
+                                                {product?.name}
+                                            </span>
+                                        </li>
+                                    ))}
+                                    <li
+                                        onClick={handleNavigateToProductList}
+                                        className={cx("item-of-component")}
+                                    >
+                                        <span href="#">Khác</span>
                                     </li>
                                 </ul>
                             </Grid>
@@ -81,18 +128,33 @@ function Footer() {
                                 xs={6}
                                 className={cx("footer-component")}
                             >
-                                <a href="#" className={cx("component-title")}>
+                                <span
+                                    onClick={handleNavigateToServiceList}
+                                    className={cx("component-title")}
+                                >
                                     <h4>Dịch vụ</h4>
-                                </a>
+                                </span>
                                 <ul className={cx("list-of-component")}>
-                                    <li className={cx("item-of-component")}>
-                                        <a href="#">Cắt và chăm sóc móng</a>
-                                    </li>
-                                    <li className={cx("item-of-component")}>
-                                        <a href="#">Sơn - vẽ - đắp gel</a>
-                                    </li>
-                                    <li className={cx("item-of-component")}>
-                                        <a href="#">Tháo gen/bột</a>
+                                    {serviceListClone?.map((service, idx) => (
+                                        <li
+                                            key={service?.id}
+                                            onClick={() =>
+                                                handleNavigateToServiceDetail(
+                                                    service?.id
+                                                )
+                                            }
+                                            className={cx("item-of-component")}
+                                        >
+                                            <span href="#">
+                                                {service?.name}
+                                            </span>
+                                        </li>
+                                    ))}
+                                    <li
+                                        onClick={handleNavigateToServiceList}
+                                        className={cx("item-of-component")}
+                                    >
+                                        <span href="#">Khác</span>
                                     </li>
                                 </ul>
                             </Grid>
@@ -104,21 +166,21 @@ function Footer() {
                                 xs={6}
                                 className={cx("footer-component")}
                             >
-                                <a href="#" className={cx("component-title")}>
+                                <span className={cx("component-title")}>
                                     <h4>Hỗ trợ</h4>
-                                </a>
+                                </span>
                                 <ul className={cx("list-of-component")}>
                                     <li className={cx("item-of-component")}>
-                                        <a href="#">FAQs</a>
+                                        <span>FAQs</span>
                                     </li>
                                     <li className={cx("item-of-component")}>
-                                        <a href="#">Bảo mật thông tin</a>
+                                        <span>Bảo mật thông tin</span>
                                     </li>
                                     <li className={cx("item-of-component")}>
-                                        <a href="#">Chính sách chung</a>
+                                        <span>Chính sách chung</span>
                                     </li>
                                     <li className={cx("item-of-component")}>
-                                        <a href="#">Tra cứu đơn hàng</a>
+                                        <span>Tra cứu đơn hàng</span>
                                     </li>
                                 </ul>
                             </Grid>
@@ -130,18 +192,18 @@ function Footer() {
                                 xs={6}
                                 className={cx("footer-component")}
                             >
-                                <a href="#" className={cx("component-title")}>
+                                <span className={cx("component-title")}>
                                     <h4>Liên hệ</h4>
-                                </a>
+                                </span>
                                 <ul className={cx("list-of-component")}>
                                     <li className={cx("item-of-component")}>
-                                        <a href="#">Email góp ý</a>
+                                        <span>Email góp ý</span>
                                     </li>
                                     <li className={cx("item-of-component")}>
-                                        <a href="#">Hotline</a>
+                                        <span>Hotline</span>
                                     </li>
                                     <li className={cx("item-of-component")}>
-                                        <a href="#">0386 653 766</a>
+                                        <span>0386 653 766</span>
                                     </li>
                                 </ul>
                             </Grid>
@@ -153,9 +215,9 @@ function Footer() {
                                 xs={6}
                                 className={cx("footer-component")}
                             >
-                                <a className={cx("component-title")}>
+                                <span className={cx("component-title")}>
                                     <h4>SOCIAL</h4>
-                                </a>
+                                </span>
                                 <div className={cx("social-list")}>
                                     <a
                                         href="https://www.facebook.com/nheoSoSweet/"
