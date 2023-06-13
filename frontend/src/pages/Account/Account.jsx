@@ -169,7 +169,6 @@ export default function Account() {
         // };
         // fetch();
     }, []);
-    console.log("re-render");
     // Fn handle province onChange event
     const handleProvinceChange = (event, value) => {
         setSelectedProvince(value);
@@ -387,6 +386,7 @@ export default function Account() {
                                             formik?.touched?.birth_date &&
                                             formik?.errors?.birth_date
                                         }
+                                        inputLabelProps={{ shrink: true }}
                                     />
                                 </Grid>
                                 <Grid item lg={6} md={12} sm={12} xs={12}>
@@ -398,6 +398,7 @@ export default function Account() {
                                         name="last_name"
                                         value={formik.values?.last_name || ""}
                                         formik={formik}
+                                        InputLabelProps={{ shrink: true }}
                                     />
                                 </Grid>
                                 <Grid item lg={6} md={12} sm={12} xs={12}>

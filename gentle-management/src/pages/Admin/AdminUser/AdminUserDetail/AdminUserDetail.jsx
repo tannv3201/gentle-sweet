@@ -176,10 +176,6 @@ export default function AdminUserDetail() {
 
     // Get province list from API
     useEffect(() => {
-        if (getProvinceList?.length === 0) {
-            getProvince(dispatch);
-        }
-
         setProvinces(getProvinceList);
     }, []);
 
@@ -397,6 +393,7 @@ export default function AdminUserDetail() {
                                             fullWidth
                                             label="Quyền hạn"
                                             formik={formik}
+                                            InputLabelProps={{ shrink: true }}
                                         />
                                     )}
                                 />
@@ -421,6 +418,7 @@ export default function AdminUserDetail() {
                                         formik?.touched?.birth_date &&
                                         formik?.errors?.birth_date
                                     }
+                                    inputLabelProps={{ shrink: true }}
                                 />
                             </Grid>
                             <Grid item xs={6}>
@@ -432,6 +430,7 @@ export default function AdminUserDetail() {
                                     name="last_name"
                                     value={formik.values?.last_name || ""}
                                     formik={formik}
+                                    InputLabelProps={{ shrink: true }}
                                 />
                             </Grid>
                             <Grid item xs={6}>
@@ -443,6 +442,7 @@ export default function AdminUserDetail() {
                                     name="first_name"
                                     value={formik.values?.first_name || ""}
                                     formik={formik}
+                                    InputLabelProps={{ shrink: true }}
                                 />
                             </Grid>
                             <Grid item xs={6}>
@@ -461,6 +461,7 @@ export default function AdminUserDetail() {
                                             </InputAdornment>
                                         ),
                                     }}
+                                    InputLabelProps={{ shrink: true }}
                                 />
                             </Grid>
                             <Grid item xs={6}>
@@ -472,6 +473,7 @@ export default function AdminUserDetail() {
                                     name="phone_number"
                                     value={formik.values?.phone_number || ""}
                                     formik={formik}
+                                    InputLabelProps={{ shrink: true }}
                                 />
                             </Grid>
                             <Grid item xs={4}>
@@ -496,6 +498,7 @@ export default function AdminUserDetail() {
                                             variant="outlined"
                                             name="province"
                                             formik={formik}
+                                            InputLabelProps={{ shrink: true }}
                                         />
                                     )}
                                 />
@@ -522,6 +525,7 @@ export default function AdminUserDetail() {
                                             variant="outlined"
                                             name="district"
                                             formik={formik}
+                                            InputLabelProps={{ shrink: true }}
                                         />
                                     )}
                                 />
@@ -549,6 +553,7 @@ export default function AdminUserDetail() {
                                             variant="outlined"
                                             name="ward"
                                             formik={formik}
+                                            InputLabelProps={{ shrink: true }}
                                         />
                                     )}
                                 />
@@ -562,6 +567,7 @@ export default function AdminUserDetail() {
                                     name="detail_address"
                                     value={formik.values?.detail_address || ""}
                                     formik={formik}
+                                    InputLabelProps={{ shrink: true }}
                                 />
                             </Grid>
                             {isEditting && (

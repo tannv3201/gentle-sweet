@@ -146,13 +146,8 @@ export default function CustomerUserDetail() {
 
     // Get province list from API
     useEffect(() => {
-        if (getProvinceList?.length === 0) {
-            getProvince(dispatch);
-        }
-
         setProvinces(getProvinceList);
     }, []);
-
     // Fn handle province onChange event
     const handleProvinceChange = (event, value) => {
         setSelectedProvince(value);
@@ -346,6 +341,7 @@ export default function CustomerUserDetail() {
                                             </InputAdornment>
                                         ),
                                     }}
+                                    InputLabelProps={{ shrink: true }}
                                 />
                             </Grid>
                             <Grid item xs={6}>
@@ -357,6 +353,7 @@ export default function CustomerUserDetail() {
                                     name="last_name"
                                     value={formik.values?.last_name || ""}
                                     formik={formik}
+                                    InputLabelProps={{ shrink: true }}
                                 />
                             </Grid>
                             <Grid item xs={6}>
@@ -368,9 +365,9 @@ export default function CustomerUserDetail() {
                                     name="first_name"
                                     value={formik.values?.first_name || ""}
                                     formik={formik}
+                                    InputLabelProps={{ shrink: true }}
                                 />
                             </Grid>
-
                             <Grid item xs={6}>
                                 <GDatePicker
                                     disabled={!isEditting}
@@ -391,6 +388,7 @@ export default function CustomerUserDetail() {
                                         formik?.touched?.birth_date &&
                                         formik?.errors?.birth_date
                                     }
+                                    inputLabelProps={{ shrink: true }}
                                 />
                             </Grid>
                             <Grid item xs={6}>
@@ -402,6 +400,7 @@ export default function CustomerUserDetail() {
                                     name="phone_number"
                                     value={formik.values?.phone_number || ""}
                                     formik={formik}
+                                    InputLabelProps={{ shrink: true }}
                                 />
                             </Grid>
                             <Grid item xs={4}>
@@ -426,6 +425,7 @@ export default function CustomerUserDetail() {
                                             variant="outlined"
                                             name="province"
                                             formik={formik}
+                                            InputLabelProps={{ shrink: true }}
                                         />
                                     )}
                                 />
@@ -452,6 +452,7 @@ export default function CustomerUserDetail() {
                                             variant="outlined"
                                             name="district"
                                             formik={formik}
+                                            InputLabelProps={{ shrink: true }}
                                         />
                                     )}
                                 />
@@ -479,6 +480,7 @@ export default function CustomerUserDetail() {
                                             variant="outlined"
                                             name="ward"
                                             formik={formik}
+                                            InputLabelProps={{ shrink: true }}
                                         />
                                     )}
                                 />
@@ -492,6 +494,7 @@ export default function CustomerUserDetail() {
                                     name="detail_address"
                                     value={formik.values?.detail_address || ""}
                                     formik={formik}
+                                    InputLabelProps={{ shrink: true }}
                                 />
                             </Grid>
                             {isEditting && (

@@ -22,6 +22,7 @@ export default function GDatePicker({
     formik,
     name,
     size,
+    inputLabelProps,
     ...props
 }) {
     return (
@@ -38,6 +39,7 @@ export default function GDatePicker({
                         helperText: helperText,
                         onBlur: onBlur,
                         color: "secondary",
+                        InputLabelProps: inputLabelProps,
                     },
                 }}
             />
