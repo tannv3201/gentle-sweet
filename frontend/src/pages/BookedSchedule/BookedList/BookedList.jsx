@@ -192,7 +192,7 @@ function BookedList({ bookingListByUser }) {
                                                             ),
                                                         },
                                                         {
-                                                            title: "Tên",
+                                                            title: "Tên dịch vụ",
                                                             field: "service_name",
                                                             hidden: isSmall
                                                                 ? true

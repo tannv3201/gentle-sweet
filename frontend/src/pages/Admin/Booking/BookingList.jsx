@@ -185,7 +185,7 @@ export default function BookingList() {
         <div className={cx("invoice-list-wrapper")}>
             <div className={cx("btn-list-header")}>
                 <GButton onClick={handleOpenCreateBookingModal}>
-                    Thêm lịch hẹn
+                    Tạo lịch hẹn
                 </GButton>
                 <FilterInvoice
                     isFiltering={isFiltering}
@@ -194,7 +194,7 @@ export default function BookingList() {
             </div>
             <br />
             <GTable
-                title={"DANH SÁCH ĐƠN HÀNG"}
+                title={"DANH SÁCH LỊCH HẸN"}
                 columns={[
                     {
                         title: "Khách hàng",

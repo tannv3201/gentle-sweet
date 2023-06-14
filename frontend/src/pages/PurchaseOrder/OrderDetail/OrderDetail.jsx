@@ -369,7 +369,7 @@ function OrderDetail() {
                                                     ),
                                                 },
                                                 {
-                                                    title: "Tên",
+                                                    title: "Tên sản phẩm",
                                                     field: "product_name",
                                                     hidden: isSmall
                                                         ? true

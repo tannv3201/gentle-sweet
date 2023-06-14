@@ -26,7 +26,7 @@ function Overview() {
                         <div className={cx("establish")}>
                             <HistoryRounded className={cx("establish-icon")} />
                             <h3 className={cx("establish-text")}>
-                                Thành lập năm 2016
+                                Thành lập năm 2019
                             </h3>
                         </div>
                     </Grid>
@@ -34,7 +34,7 @@ function Overview() {
                         <div className={cx("system")}>
                             <ApartmentRounded className={cx("system-icon")} />
                             <h3 className={cx("system-text")}>
-                                6 chi nhánh - 30 nhân sự
+                                3 chi nhánh - 30 nhân sự
                             </h3>
                         </div>
                     </Grid>

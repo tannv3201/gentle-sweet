@@ -376,7 +376,7 @@ function BookedDetail() {
                                                     ),
                                                 },
                                                 {
-                                                    title: "Tên",
+                                                    title: "Tên dịch vụ",
                                                     field: "service_name",
                                                     hidden: isSmall
                                                         ? true

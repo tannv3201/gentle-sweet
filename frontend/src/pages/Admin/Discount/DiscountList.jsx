@@ -81,12 +81,12 @@ export default function DiscountList() {
     return (
         <>
             <GButton onClick={handleOpenCreateUpdateModal}>
-                Thêm giảm giá
+                Thêm chương trình giảm giá
             </GButton>
             <br />
             <br />
             <GTable
-                title={"DANH SÁCH GIẢM GIÁ"}
+                title={"DANH SÁCH CHƯƠNG TRÌNH GIẢM GIÁ"}
                 columns={[
                     { title: "Tên chương trình", field: "name" },
                     { title: "Phần trăm giảm", field: "discount_percent" },
