@@ -36,7 +36,7 @@ function EWallet({ methodChecked }) {
                                                 "information-content"
                                             )}
                                         >
-                                            0386653766
+                                            0399.859.634
                                         </span>
                                     </span>
                                 </Grid>
@@ -48,7 +48,7 @@ function EWallet({ methodChecked }) {
                                                 "information-content"
                                             )}
                                         >
-                                            0386653766
+                                            0399.859.634
                                         </span>
                                     </span>
                                 </Grid>
