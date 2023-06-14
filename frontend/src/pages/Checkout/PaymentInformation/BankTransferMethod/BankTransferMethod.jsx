@@ -103,7 +103,7 @@ function BankTransferMethod({ methodChecked }) {
                             </Grid>
                         </div>
                     </Grid>
-                    <Grid item xs={12}>
+                    {/* <Grid item xs={12}>
                         <div className={cx("contact-information")}>
                             <Grid container spacing={1}>
                                 <Grid item xs={12}>
@@ -178,7 +178,7 @@ function BankTransferMethod({ methodChecked }) {
                                 </Grid>
                             </Grid>
                         </div>
-                    </Grid>
+                    </Grid> */}
                 </Grid>
             </div>
         </>

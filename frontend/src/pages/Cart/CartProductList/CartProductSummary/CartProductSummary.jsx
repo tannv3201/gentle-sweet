@@ -95,7 +95,7 @@ function CartProductSummary({ selectedProductCartList }) {
                             size="medium"
                             onClick={handleCheckoutButtonClick}
                         >
-                            Thanh toán ngay
+                            Tạo đơn hàng
                         </GButton>
                     </Grid>
                 </Grid>

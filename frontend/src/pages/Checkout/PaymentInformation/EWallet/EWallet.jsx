@@ -36,7 +36,7 @@ function EWallet({ methodChecked }) {
                                                 "information-content"
                                             )}
                                         >
-                                            0399859634
+                                            0399.859.634
                                         </span>
                                     </span>
                                 </Grid>
@@ -91,7 +91,7 @@ function EWallet({ methodChecked }) {
                             </Grid>
                         </div>
                     </Grid>
-                    <Grid item xs={12}>
+                    {/* <Grid item xs={12}>
                         <div className={cx("contact-information")}>
                             <Grid container spacing={1}>
                                 <Grid item xs={12}>
@@ -166,7 +166,7 @@ function EWallet({ methodChecked }) {
                                 </Grid>
                             </Grid>
                         </div>
-                    </Grid>
+                    </Grid> */}
                 </Grid>
             </div>
         </>
