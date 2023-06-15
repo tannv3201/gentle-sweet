@@ -1,7 +1,0 @@
-.slick-prev:before,
-.slick-next:before {
-    color: var(--primary-500) !important;
-    font-size: 24px;
-}
-
-.slick-arrow {}

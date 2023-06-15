@@ -18,7 +18,7 @@ router.get(
 
 router.get(
     "/:id",
-    middlewareController.verifyTokenAndSuperAdminAuth,
+    middlewareController.verifyTokenAndSystemUserAuth,
     adminUserController.getAdminUserById
 );
 

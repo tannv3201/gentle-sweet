@@ -223,7 +223,7 @@ export default function FilterBooking({ isFiltering, setIsFiltering }) {
                         </Grid>
                         <Grid item xs={3}>
                             <GDatePicker
-                                label={"Từ ngày"}
+                                label={"Đến ngày"}
                                 fullWidth
                                 name="birth_date"
                                 onChange={(date) =>
