@@ -24,7 +24,8 @@ import FilterInvoice from "./FilterBooking/FilterBooking";
 import CreateInvoiceModal from "./CreateBookingModal";
 import DeleteBookingPopup from "./DeleteBookingPopup";
 import { getAllBooking } from "../../../redux/api/apiBooking";
-import { getAllService } from "../../../redux/api/apiService";
+import { getAllService, getServiceById } from "../../../redux/api/apiService";
+import { getBookingDetailByBookingId } from "../../../redux/api/apiBookingDetail";
 
 const cx = classNames.bind(styles);
 
@@ -38,7 +39,6 @@ export default function BookingList() {
     const [isFiltering, setIsFiltering] = useState(false);
 
     const [selectedInvoice, setSelectedInvoice] = useState({});
-
     let axiosJWT = createAxios(user, dispatch, loginSuccess);
 
     const customerUserList = useSelector(
@@ -84,67 +84,162 @@ export default function BookingList() {
 
     useEffect(() => {
         if (location.search) {
-            const newBookingList = bookingListSearch?.map((booking) => {
-                const customerUser = customerUserList?.find(
-                    (item) => item.id === booking?.customer_user_id
+            const fetch = async () => {
+                const newBookingList = bookingListSearch?.map((booking) => {
+                    const customerUser = customerUserList?.find(
+                        (item) => item.id === booking?.customer_user_id
+                    );
+                    return {
+                        ...booking,
+                        fullName:
+                            customerUser?.last_name +
+                            " " +
+                            customerUser?.first_name,
+                        status_name:
+                            booking?.status === 1
+                                ? "Chờ tiếp nhận"
+                                : booking?.status === 2
+                                ? "Đã tiếp nhận"
+                                : booking?.status === 3
+                                ? "Đã lên lịch"
+                                : booking?.status === 4
+                                ? "Bắt đầu dịch vụ"
+                                : booking?.status === 5
+                                ? "Đã hoàn thành"
+                                : booking?.status === 6
+                                ? "Đã hủy"
+                                : booking?.status === 7
+                                ? "Yêu cầu hủy lịch hẹn"
+                                : "",
+                        created_at: dayjs(booking?.created_at).format(
+                            "DD/MM/YYYY"
+                        ),
+                    };
+                });
+                const bookingIds = newBookingList?.map((b) => b?.id);
+                const bookingDetailsPromise = bookingIds?.map((id) =>
+                    getBookingDetailByBookingId(
+                        dispatch,
+                        id,
+                        user?.accessToken,
+                        axiosJWT
+                    )
                 );
-                return {
-                    ...booking,
-                    fullName:
-                        customerUser?.last_name +
-                        " " +
-                        customerUser?.first_name,
-                    status_name:
-                        booking?.status === 1
-                            ? "Chờ tiếp nhận"
-                            : booking?.status === 2
-                            ? "Đã tiếp nhận"
-                            : booking?.status === 3
-                            ? "Đã lên lịch"
-                            : booking?.status === 4
-                            ? "Bắt đầu dịch vụ"
-                            : booking?.status === 5
-                            ? "Đã hoàn thành"
-                            : booking?.status === 6
-                            ? "Đã hủy"
-                            : booking?.status === 7
-                            ? "Yêu cầu hủy lịch hẹn"
-                            : "",
-                    created_at: dayjs(booking?.created_at).format("DD/MM/YYYY"),
-                };
-            });
-            setCloneData(structuredClone(newBookingList));
+                const bookingDetails = await Promise.all(bookingDetailsPromise);
+                const serviceIds = bookingDetails
+                    .flat()
+                    .map((item) => item?.service_id);
+                const servicesPromise = serviceIds.map((id) =>
+                    getServiceById(dispatch, id, user?.accessToken, axiosJWT)
+                );
+                const services = await Promise.all(servicesPromise);
+
+                const finalList = newBookingList.map((booking) => {
+                    const detailList = bookingDetails
+                        .flat()
+                        .filter((d) => parseInt(d?.booking_id) === booking?.id);
+
+                    const filterServiceDetail = detailList.map(
+                        (serviceDetail) => {
+                            const service = services.find(
+                                (p) => p?.id === serviceDetail?.service_id
+                            );
+
+                            return {
+                                // ...serviceDetail,
+                                // image_url: service ? service.image_url : null,
+                                service_name: service ? service.name : null,
+                            };
+                        }
+                    );
+
+                    return {
+                        ...booking,
+                        service_name: filterServiceDetail[0]?.service_name,
+                    };
+                });
+                setCloneData(structuredClone(finalList));
+            };
+            fetch();
         } else if (!location.search) {
-            const newBookingList = bookingList?.map((booking) => {
-                const customerUser = customerUserList?.find(
-                    (item) => item.id === booking?.customer_user_id
+            const fetch = async () => {
+                const newBookingList = bookingList?.map((booking) => {
+                    const customerUser = customerUserList?.find(
+                        (item) => item.id === booking?.customer_user_id
+                    );
+                    return {
+                        ...booking,
+                        fullName:
+                            customerUser?.last_name +
+                            " " +
+                            customerUser?.first_name,
+                        status_name:
+                            booking?.status === 1
+                                ? "Chờ tiếp nhận"
+                                : booking?.status === 2
+                                ? "Đã tiếp nhận"
+                                : booking?.status === 3
+                                ? "Đã lên lịch"
+                                : booking?.status === 4
+                                ? "Bắt đầu dịch vụ"
+                                : booking?.status === 5
+                                ? "Đã hoàn thành"
+                                : booking?.status === 6
+                                ? "Đã hủy"
+                                : booking?.status === 7
+                                ? "Yêu cầu hủy lịch hẹn"
+                                : "",
+                        created_at: dayjs(booking?.created_at).format(
+                            "DD/MM/YYYY"
+                        ),
+                    };
+                });
+                const bookingIds = newBookingList?.map((b) => b?.id);
+                const bookingDetailsPromise = bookingIds?.map((id) =>
+                    getBookingDetailByBookingId(
+                        dispatch,
+                        id,
+                        user?.accessToken,
+                        axiosJWT
+                    )
                 );
-                return {
-                    ...booking,
-                    fullName:
-                        customerUser?.last_name +
-                        " " +
-                        customerUser?.first_name,
-                    status_name:
-                        booking?.status === 1
-                            ? "Chờ tiếp nhận"
-                            : booking?.status === 2
-                            ? "Đã tiếp nhận"
-                            : booking?.status === 3
-                            ? "Đã lên lịch"
-                            : booking?.status === 4
-                            ? "Bắt đầu dịch vụ"
-                            : booking?.status === 5
-                            ? "Đã hoàn thành"
-                            : booking?.status === 6
-                            ? "Đã hủy"
-                            : booking?.status === 7
-                            ? "Yêu cầu hủy lịch hẹn"
-                            : "",
-                    created_at: dayjs(booking?.created_at).format("DD/MM/YYYY"),
-                };
-            });
-            setCloneData(structuredClone(newBookingList));
+                const bookingDetails = await Promise.all(bookingDetailsPromise);
+                const serviceIds = bookingDetails
+                    .flat()
+                    .map((item) => item?.service_id);
+                const servicesPromise = serviceIds.map((id) =>
+                    getServiceById(dispatch, id, user?.accessToken, axiosJWT)
+                );
+                const services = await Promise.all(servicesPromise);
+
+                const finalList = newBookingList.map((booking) => {
+                    const detailList = bookingDetails
+                        .flat()
+                        .filter((d) => parseInt(d?.booking_id) === booking?.id);
+
+                    const filterServiceDetail = detailList.map(
+                        (serviceDetail) => {
+                            const service = services.find(
+                                (p) => p?.id === serviceDetail?.service_id
+                            );
+
+                            return {
+                                // ...serviceDetail,
+                                // image_url: service ? service.image_url : null,
+                                service_name: service ? service.name : null,
+                            };
+                        }
+                    );
+
+                    return {
+                        ...booking,
+                        service_name: filterServiceDetail[0]?.service_name,
+                    };
+                });
+
+                setCloneData(structuredClone(finalList));
+            };
+            fetch();
         }
     }, [bookingList, bookingListSearch, isFiltering]);
 
@@ -163,7 +258,6 @@ export default function BookingList() {
     // Delete confirm modal
     const [isOpenDeleteConfirmPopup, setIsOpenDeleteConfirmPopup] =
         useState(false);
-
     const handleOpenDeleteConfirmPopup = (rowData) => {
         setSelectedInvoice({
             id: rowData.id,
@@ -184,9 +278,11 @@ export default function BookingList() {
     return (
         <div className={cx("invoice-list-wrapper")}>
             <div className={cx("btn-list-header")}>
-                <GButton onClick={handleOpenCreateBookingModal}>
-                    Thêm lịch hẹn
-                </GButton>
+                {user?.role_name === "SUPER_ADMIN" && (
+                    <GButton onClick={handleOpenCreateBookingModal}>
+                        Thêm lịch hẹn
+                    </GButton>
+                )}
                 <FilterInvoice
                     isFiltering={isFiltering}
                     setIsFiltering={setIsFiltering}
@@ -194,7 +290,7 @@ export default function BookingList() {
             </div>
             <br />
             <GTable
-                title={"DANH SÁCH ĐƠN HÀNG"}
+                title={"DANH SÁCH LỊCH HẸN"}
                 columns={[
                     {
                         title: "Khách hàng",
@@ -205,11 +301,8 @@ export default function BookingList() {
                         field: "created_at",
                     },
                     {
-                        title: "Tổng tiền",
-                        field: "price_total",
-                        render: (rowData) => {
-                            return FormatCurrency(rowData?.price_total);
-                        },
+                        title: "Tên dịch vụ",
+                        field: "service_name",
                     },
                     {
                         title: "Trạng thái",
@@ -313,17 +406,22 @@ export default function BookingList() {
                                         <InfoRounded color="primary" />
                                     </IconButton>
                                 </LightTooltip>
-                                <LightTooltip placement="bottom" title="Xóa">
-                                    <IconButton
-                                        onClick={() => {
-                                            handleOpenDeleteConfirmPopup(
-                                                rowData
-                                            );
-                                        }}
+                                {user?.role_id === 1 && (
+                                    <LightTooltip
+                                        placement="bottom"
+                                        title="Xóa"
                                     >
-                                        <DeleteRoundedIcon color="error" />
-                                    </IconButton>
-                                </LightTooltip>
+                                        <IconButton
+                                            onClick={() => {
+                                                handleOpenDeleteConfirmPopup(
+                                                    rowData
+                                                );
+                                            }}
+                                        >
+                                            <DeleteRoundedIcon color="error" />
+                                        </IconButton>
+                                    </LightTooltip>
+                                )}
                             </div>
                         ),
                     },

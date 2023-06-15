@@ -109,12 +109,14 @@ export default function ServiceList() {
     return (
         <>
             <div>
-                <GButton
-                    style={{ marginRight: 12 }}
-                    onClick={handleOpenCreateUpdateModal}
-                >
-                    Thêm dịch vụ
-                </GButton>
+                {user?.role_id <= 2 && (
+                    <GButton
+                        style={{ marginRight: 12 }}
+                        onClick={handleOpenCreateUpdateModal}
+                    >
+                        Thêm dịch vụ
+                    </GButton>
+                )}
                 <FilterService
                     isFiltering={isFiltering}
                     setIsFiltering={setIsFiltering}
@@ -122,7 +124,7 @@ export default function ServiceList() {
             </div>
             <br />
             <GTable
-                title={"DANH SÁCH SẢN PHẨM"}
+                title={"DANH SÁCH DỊCH VỤ"}
                 columns={[
                     {
                         title: "Hình ảnh",
@@ -219,17 +221,22 @@ export default function ServiceList() {
                                         <InfoRounded color="primary" />
                                     </IconButton>
                                 </LightTooltip>
-                                <LightTooltip placement="bottom" title="Xóa">
-                                    <IconButton
-                                        onClick={() => {
-                                            handleOpenDeleteConfirmPopup(
-                                                rowData
-                                            );
-                                        }}
+                                {user?.role_id === 1 && (
+                                    <LightTooltip
+                                        placement="bottom"
+                                        title="Xóa"
                                     >
-                                        <DeleteRoundedIcon color="error" />
-                                    </IconButton>
-                                </LightTooltip>
+                                        <IconButton
+                                            onClick={() => {
+                                                handleOpenDeleteConfirmPopup(
+                                                    rowData
+                                                );
+                                            }}
+                                        >
+                                            <DeleteRoundedIcon color="error" />
+                                        </IconButton>
+                                    </LightTooltip>
+                                )}
                             </div>
                         ),
                     },

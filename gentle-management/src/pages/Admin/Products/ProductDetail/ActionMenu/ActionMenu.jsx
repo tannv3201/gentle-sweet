@@ -11,10 +11,12 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import DiscountSelectPopup from "../DiscountSelectPopup";
 import GButton from "../../../../../components/MyButton/MyButton";
+import { useSelector } from "react-redux";
 const cx = classNames.bind(styles);
 
 export default function ActionMenu({ selectedProduct }) {
     const navigate = useNavigate();
+    const user = useSelector((state) => state.auth.login?.currentUser);
 
     const handleNavigateProductImage = (productId) => {
         navigate(`/productImage/${productId}/product`);
@@ -75,14 +77,16 @@ export default function ActionMenu({ selectedProduct }) {
                 >
                     Quản lý giảm giá
                 </MenuItem>
-                <MenuItem
-                    onClick={() => {
-                        handleNavigateProductImage(selectedProduct?.id);
-                        handleClose();
-                    }}
-                >
-                    Quản lý hình ảnh
-                </MenuItem>
+                {user?.role_id <= 2 && (
+                    <MenuItem
+                        onClick={() => {
+                            handleNavigateProductImage(selectedProduct?.id);
+                            handleClose();
+                        }}
+                    >
+                        Quản lý hình ảnh
+                    </MenuItem>
+                )}
             </Menu>
             <DiscountSelectPopup
                 isOpen={isOpenDiscountSelectPopup}

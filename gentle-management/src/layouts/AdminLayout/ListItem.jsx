@@ -26,14 +26,14 @@ export const MainListItems = () => {
                 icon={<Dashboard />}
                 end={true}
             />
-            {user?.role_id <= 2 && (
+            {user?.role_id === 1 && (
                 <MenuItem
                     to={"/admin-user"}
                     title={"Nhân viên"}
                     icon={<People />}
                 />
             )}
-            {user?.role_id <= 2 && (
+            {user?.role_id === 1 && (
                 <MenuItem
                     to={"/customer-user"}
                     title={"Khách hàng"}
@@ -73,13 +73,6 @@ export const MainListItems = () => {
                 title={"Đặt lịch"}
                 icon={<ShoppingCart />}
             />
-
-            <ListItemButton>
-                <ListItemIcon>
-                    <Layers />
-                </ListItemIcon>
-                <ListItemText primary="Integrations" />
-            </ListItemButton>
         </React.Fragment>
     );
 };

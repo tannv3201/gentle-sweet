@@ -33,6 +33,8 @@ export default function InvoiceDetailList({ isEditting }) {
     );
     const getInvoice = useSelector((state) => state.invoice.invoice?.invoice);
 
+    const user = useSelector((state) => state.auth.login?.currentUser);
+
     useEffect(() => {
         const arr = getInvoiceDetail?.map((item) => {
             const getProduct = productList?.find(
@@ -106,14 +108,15 @@ export default function InvoiceDetailList({ isEditting }) {
                         )}
                     </div>
                     {/* {isEditting && ( */}
-                    {getInvoice?.status < 3 && (
-                        <GButton
-                            onClick={handleOpenAddProductPopup}
-                            color={"success"}
-                        >
-                            Thêm sản phẩm
-                        </GButton>
-                    )}
+                    {getInvoice?.status < 3 &&
+                        user?.role_name === "SUPER_ADMIN" && (
+                            <GButton
+                                onClick={handleOpenAddProductPopup}
+                                color={"success"}
+                            >
+                                Thêm sản phẩm
+                            </GButton>
+                        )}
                     {/* )} */}
                 </div>
                 {getInvoiceDetail?.length !== 0 ? (
@@ -148,6 +151,10 @@ export default function InvoiceDetailList({ isEditting }) {
                                 field: "actions",
                                 sorting: false,
                                 export: false,
+                                hidden:
+                                    user?.role_name === "SUPER_ADMIN"
+                                        ? false
+                                        : true,
                                 render: (rowData) => (
                                     <div
                                         style={{

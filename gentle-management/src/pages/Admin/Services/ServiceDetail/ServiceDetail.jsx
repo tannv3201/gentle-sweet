@@ -243,13 +243,17 @@ export default function ServiceDetail() {
                         >
                             {!isEditting ? (
                                 <div className={cx("button-list")}>
-                                    <GButton
-                                        onClick={() => setIsEditting(true)}
-                                        startIcon={<ModeEditOutlineRounded />}
-                                        color={"success"}
-                                    >
-                                        Chỉnh sửa
-                                    </GButton>
+                                    {user?.role_id <= 2 && (
+                                        <GButton
+                                            onClick={() => setIsEditting(true)}
+                                            startIcon={
+                                                <ModeEditOutlineRounded />
+                                            }
+                                            color={"success"}
+                                        >
+                                            Chỉnh sửa
+                                        </GButton>
+                                    )}
                                     <ActionMenu selectedProduct={cloneData} />
                                 </div>
                             ) : (

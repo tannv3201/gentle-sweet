@@ -183,9 +183,11 @@ export default function InvoiceList() {
     return (
         <div className={cx("invoice-list-wrapper")}>
             <div className={cx("btn-list-header")}>
-                <GButton onClick={handleOpenCreateInvoiceModal}>
-                    Tạo đơn hàng
-                </GButton>
+                {user?.role_name === "SUPER_ADMIN" && (
+                    <GButton onClick={handleOpenCreateInvoiceModal}>
+                        Tạo đơn hàng
+                    </GButton>
+                )}
                 <FilterInvoice
                     isFiltering={isFiltering}
                     setIsFiltering={setIsFiltering}
@@ -317,17 +319,22 @@ export default function InvoiceList() {
                                         <InfoRounded color="primary" />
                                     </IconButton>
                                 </LightTooltip>
-                                <LightTooltip placement="bottom" title="Xóa">
-                                    <IconButton
-                                        onClick={() => {
-                                            handleOpenDeleteConfirmPopup(
-                                                rowData
-                                            );
-                                        }}
+                                {user?.role_id === 1 && (
+                                    <LightTooltip
+                                        placement="bottom"
+                                        title="Xóa"
                                     >
-                                        <DeleteRoundedIcon color="error" />
-                                    </IconButton>
-                                </LightTooltip>
+                                        <IconButton
+                                            onClick={() => {
+                                                handleOpenDeleteConfirmPopup(
+                                                    rowData
+                                                );
+                                            }}
+                                        >
+                                            <DeleteRoundedIcon color="error" />
+                                        </IconButton>
+                                    </LightTooltip>
+                                )}
                             </div>
                         ),
                     },

@@ -99,12 +99,14 @@ export default function ProductList() {
     return (
         <>
             <div>
-                <GButton
-                    style={{ marginRight: 12 }}
-                    onClick={handleOpenCreateUpdateModal}
-                >
-                    Thêm sản phẩm
-                </GButton>
+                {user?.role_id <= 2 && (
+                    <GButton
+                        style={{ marginRight: 12 }}
+                        onClick={handleOpenCreateUpdateModal}
+                    >
+                        Thêm sản phẩm
+                    </GButton>
+                )}
                 <FilterProduct
                     isFiltering={isFiltering}
                     setIsFiltering={setIsFiltering}
@@ -210,17 +212,22 @@ export default function ProductList() {
                                         <InfoRounded color="primary" />
                                     </IconButton>
                                 </LightTooltip>
-                                <LightTooltip placement="bottom" title="Xóa">
-                                    <IconButton
-                                        onClick={() => {
-                                            handleOpenDeleteConfirmPopup(
-                                                rowData
-                                            );
-                                        }}
+                                {user?.role_name === "SUPER_ADMIN" && (
+                                    <LightTooltip
+                                        placement="bottom"
+                                        title="Xóa"
                                     >
-                                        <DeleteRoundedIcon color="error" />
-                                    </IconButton>
-                                </LightTooltip>
+                                        <IconButton
+                                            onClick={() => {
+                                                handleOpenDeleteConfirmPopup(
+                                                    rowData
+                                                );
+                                            }}
+                                        >
+                                            <DeleteRoundedIcon color="error" />
+                                        </IconButton>
+                                    </LightTooltip>
+                                )}
                             </div>
                         ),
                     },

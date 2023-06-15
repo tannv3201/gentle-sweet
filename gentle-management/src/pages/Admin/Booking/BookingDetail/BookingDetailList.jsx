@@ -33,6 +33,7 @@ export default function BookingDetailList({ isEditting }) {
         (state) => state.bookingDetail.bookingDetail?.bookingDetailByBooking
     );
     const getBooking = useSelector((state) => state.booking.booking?.booking);
+    const user = useSelector((state) => state.auth.login?.currentUser);
 
     useEffect(() => {
         const arr = getBookingDetail?.map((item) => {
@@ -110,14 +111,15 @@ export default function BookingDetailList({ isEditting }) {
                             </LightTooltip>
                         )}
                     </div>
-                    {getBooking?.status < 3 && (
-                        <GButton
-                            onClick={handleOpenAddServicePopup}
-                            color={"success"}
-                        >
-                            Thêm dịch vụ
-                        </GButton>
-                    )}
+                    {getBooking?.status < 3 &&
+                        user?.role_name === "SUPER_ADMIN" && (
+                            <GButton
+                                onClick={handleOpenAddServicePopup}
+                                color={"success"}
+                            >
+                                Thêm dịch vụ
+                            </GButton>
+                        )}
                 </div>
                 {getBookingDetail?.length !== 0 ? (
                     <GTable
@@ -164,6 +166,10 @@ export default function BookingDetailList({ isEditting }) {
                                 title: "Thao tác",
                                 field: "actions",
                                 sorting: false,
+                                hidden:
+                                    user?.role_name === "SUPER_ADMIN"
+                                        ? false
+                                        : true,
                                 export: false,
                                 render: (rowData) => (
                                     <div
