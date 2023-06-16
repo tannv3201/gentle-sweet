@@ -21,16 +21,8 @@ import { useDispatch } from "react-redux";
 import { useSelector } from "react-redux";
 import { loginSuccess } from "../../../redux/slice/authSlice";
 import { createAxios } from "../../../createInstance";
-import { Formik, useFormik, useFormikContext } from "formik";
-import {
-    getDistrict,
-    getDistrictById,
-    getProvince,
-    getProvinceById,
-    getWard,
-    getWardById,
-} from "../../../redux/api/apiProvince";
-import PaymentInformation from "../PaymentInformation/PaymentInformation";
+import { Formik } from "formik";
+
 import { createInvoice } from "../../../redux/api/apiInvoice";
 import { createInvoiceDetail } from "../../../redux/api/apiInvoiceDetail";
 import { createDelivery } from "../../../redux/api/apiDelivery";

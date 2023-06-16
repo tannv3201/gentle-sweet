@@ -17,24 +17,20 @@ import { createAxios } from "../../../createInstance";
 import { useDispatch } from "react-redux";
 import { loginSuccess } from "../../../redux/slice/authSlice";
 import { useSelector } from "react-redux";
-import utc from "dayjs/plugin/utc";
-import dayjs from "dayjs";
-import {
-    getDistrict,
-    getDistrictById,
-    getProvince,
-    getProvinceById,
-    getWard,
-    getWardById,
-} from "../../../redux/api/apiProvince";
+
 import GTextFieldNormal from "../../../components/GTextField/GTextFieldNormal";
 import { getCustomerUserById } from "../../../redux/api/apiCustomerUser";
+import {
+    districtApi,
+    getDistrictById,
+    getProvinceById,
+    getWardById,
+    wardApi,
+} from "../../../redux/api/apiProvinceOpenAPI";
 const cx = classNames.bind(styles);
 
 function CustomerInformation() {
     const dispatch = useDispatch();
-    const { setFieldValue, values, errors, touched, handleBlur } =
-        useFormikContext();
     const user = useSelector((state) => state.auth.login?.currentUser);
     const getCustomerUser = useSelector(
         (state) => state.customerUser.customerUser?.customerUser
@@ -74,13 +70,7 @@ function CustomerInformation() {
 
     // Get province list from API
     useEffect(() => {
-        const fetch = async () => {
-            if (getProvinceList?.length === 0) {
-                await getProvince(dispatch);
-            }
-            setProvinces(getProvinceList);
-        };
-        fetch();
+        setProvinces(getProvinceList);
     }, []);
 
     useEffect(() => {
@@ -92,18 +82,18 @@ function CustomerInformation() {
     // Set selected province/district/ward into states & Formik field
     useEffect(() => {
         const fetch = async () => {
-            if (customerUser) {
+            if (getCustomerUser) {
                 const provinceSelected = await getProvinceById(
-                    customerUser?.province,
+                    getCustomerUser?.province,
                     provinces
                 );
                 setSelectedCurrProvince(provinceSelected);
 
                 // District
-                await getDistrict(customerUser?.province).then(
+                await districtApi(getCustomerUser?.province).then(
                     (districtList) => {
                         const districtSelected = getDistrictById(
-                            customerUser?.district,
+                            getCustomerUser?.district,
                             districtList
                         );
                         setSelectedCurrDistrict(districtSelected);
@@ -112,9 +102,9 @@ function CustomerInformation() {
                     }
                 );
 
-                await getWard(customerUser?.district).then((wardList) => {
+                await wardApi(getCustomerUser?.district).then((wardList) => {
                     const wardSelected = getWardById(
-                        customerUser?.ward,
+                        getCustomerUser?.ward,
                         wardList
                     );
                     setSelectedCurrWard(wardSelected);
@@ -123,17 +113,17 @@ function CustomerInformation() {
             }
         };
         fetch();
-    }, [customerUser]);
+    }, [getCustomerUser]);
 
     // // Fn handle province onChange event
     // const handleProvinceChange = (event, value) => {
     //     setSelectedProvince(value);
     //     setSelectedDistrict(null);
     //     setSelectedWard(null);
-    //     setFieldValue("province", value?.province_id);
+    //     setFieldValue("province", value?.code);
 
     //     if (value) {
-    //         getDistrict(value?.province_id).then((districts) => {
+    //         getDistrict(value?.code).then((districts) => {
     //             setDistricts(districts);
     //         });
     //     } else {
@@ -148,10 +138,10 @@ function CustomerInformation() {
     // const handleDistrictChange = (event, value) => {
     //     setSelectedDistrict(value);
     //     setSelectedWard(null);
-    //     setFieldValue("district", value?.district_id);
+    //     setFieldValue("district", value?.code);
 
     //     if (value) {
-    //         getWard(value?.district_id).then((wards) => {
+    //         getWard(value?.code).then((wards) => {
     //             setWards(wards);
     //         });
     //     } else {
@@ -165,7 +155,7 @@ function CustomerInformation() {
     // const handleChangeWard = (value) => {
     //     if (value) {
     //         setSelectedWard(value);
-    //         setFieldValue("ward", value?.ward_id);
+    //         setFieldValue("ward", value?.code);
     //     } else {
     //         setFieldValue("ward", null);
     //     }
@@ -246,9 +236,9 @@ function CustomerInformation() {
                         <Autocomplete
                             disabled
                             options={provinces}
-                            getOptionLabel={(option) => option.province_name}
+                            getOptionLabel={(option) => option.name}
                             isOptionEqualToValue={(option, value) =>
-                                value?.province_id === option?.province_id
+                                value?.code === option?.code
                             }
                             value={selectedCurrProvince || null}
                             renderInput={(params) => (
@@ -266,9 +256,9 @@ function CustomerInformation() {
                         <Autocomplete
                             disabled
                             options={districts}
-                            getOptionLabel={(option) => option.district_name}
+                            getOptionLabel={(option) => option.name}
                             isOptionEqualToValue={(option, value) =>
-                                value?.district_id === option?.district_id
+                                value?.code === option?.code
                             }
                             value={selectedCurrDistrict || null}
                             renderInput={(params) => (
@@ -286,9 +276,9 @@ function CustomerInformation() {
                         <Autocomplete
                             options={wards}
                             disabled
-                            getOptionLabel={(option) => option.ward_name}
+                            getOptionLabel={(option) => option.name}
                             isOptionEqualToValue={(option, value) =>
-                                value?.ward_id === option?.ward_id
+                                value?.code === option?.code
                             }
                             value={selectedCurrWard || null}
                             renderInput={(params) => (
@@ -372,7 +362,7 @@ function CustomerInformation() {
                             options={provinces}
                             getOptionLabel={(option) => option.province_name}
                             isOptionEqualToValue={(option, value) =>
-                                value?.province_id === option?.province_id
+                                value?.code === option?.code
                             }
                             onChange={handleProvinceChange}
                             value={selectedProvince || null}
@@ -400,9 +390,9 @@ function CustomerInformation() {
                     <Grid item lg={4} md={12} sm={12} xs={12}>
                         <Autocomplete
                             options={districts}
-                            getOptionLabel={(option) => option.district_name}
+                            getOptionLabel={(option) => option.name}
                             isOptionEqualToValue={(option, value) =>
-                                value?.district_id === option?.district_id
+                                value?.code === option?.code
                             }
                             size="small"
                             onChange={handleDistrictChange}
@@ -430,9 +420,9 @@ function CustomerInformation() {
                     <Grid item lg={4} md={12} sm={12} xs={12}>
                         <Autocomplete
                             options={wards}
-                            getOptionLabel={(option) => option.ward_name}
+                            getOptionLabel={(option) => option.name}
                             isOptionEqualToValue={(option, value) =>
-                                value?.ward_id === option?.ward_id
+                                value?.code === option?.code
                             }
                             size="small"
                             onChange={(event, value) => {

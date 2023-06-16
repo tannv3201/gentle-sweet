@@ -1,6 +1,5 @@
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
-// import { createAxios } from "../../../../createInstance";
 
 import { Autocomplete, Grid, InputAdornment } from "@mui/material";
 import styles from "./Account.module.scss";
@@ -10,46 +9,33 @@ import { useState } from "react";
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
-// import {
-//     getDistrict,
-//     getDistrictById,
-//     getProvince,
-//     getProvinceById,
-//     getWard,
-//     getWardById,
-// } from "../../../../redux/api/apiProvince";
-// import GButton from "../../../../components/MyButton/MyButton";
-import { ArrowBackIosNew, ModeEditOutlineRounded } from "@mui/icons-material";
+import { ModeEditOutlineRounded } from "@mui/icons-material";
 import { useFormik } from "formik";
 import * as Yup from "yup";
-import { useParams } from "react-router-dom";
 import utc from "dayjs/plugin/utc";
 import PasswordMenu from "./PasswordMenu/PasswordMenu";
 import {
     getCustomerUserById,
     updateCustomerUser,
 } from "../../redux/api/apiCustomerUser";
-import {
-    getDistrict,
-    getDistrictById,
-    getProvince,
-    getProvinceById,
-    getWard,
-    getWardById,
-} from "../../redux/api/apiProvince";
+
 import GButton from "../../components/MyButton/MyButton";
 import { createAxios } from "../../createInstance";
 import { loginSuccess } from "../../redux/slice/authSlice";
 import { API_IMAGE_URL } from "../../LocalConstants";
 import GTextFieldNormal from "../../components/GTextField/GTextFieldNormal";
 import GDatePicker from "../../components/GDatePicker/GDatePicker";
-// import {
-//     getCustomerUserById,
-//     updateCustomerUser,
-// } from "../../../../redux/api/apiCustomerUser";
+
 import { useMediaQuery } from "@mui/material";
 import { useTheme } from "@mui/material/styles";
 import { toast } from "react-hot-toast";
+import {
+    districtApi,
+    getDistrictById,
+    getProvinceById,
+    getWardById,
+    wardApi,
+} from "../../redux/api/apiProvinceOpenAPI";
 const cx = classNames.bind(styles);
 export default function Account() {
     dayjs.extend(utc);
@@ -65,13 +51,7 @@ export default function Account() {
     const [selectedProvince, setSelectedProvince] = useState(null);
     const [selectedDistrict, setSelectedDistrict] = useState(null);
     const [selectedWard, setSelectedWard] = useState(null);
-    const [cloneData, setCloneData] = useState([]);
 
-    useEffect(() => {
-        if (getCustomerUser) {
-            setCloneData(structuredClone(getCustomerUser));
-        }
-    }, [getCustomerUser]);
     const [customerUser, setCustomerUser] = useState({
         id: "",
         role_id: "",
@@ -161,23 +141,17 @@ export default function Account() {
 
     // Get province list from API
     useEffect(() => {
-        // const fetch = async () => {
-        //     if (getProvinceList?.length === 0) {
-        //         getProvince(dispatch);
-        //     }
         setProvinces(getProvinceList);
-        // };
-        // fetch();
     }, []);
     // Fn handle province onChange event
-    const handleProvinceChange = (event, value) => {
+    const handleProvinceChange = async (event, value) => {
         setSelectedProvince(value);
         setSelectedDistrict(null);
         setSelectedWard(null);
-        formik.setFieldValue("province", value?.province_id);
+        formik.setFieldValue("province", value?.code);
 
         if (value) {
-            getDistrict(value?.province_id).then((districts) => {
+            await districtApi(value?.code).then((districts) => {
                 setDistricts(districts);
             });
         } else {
@@ -189,13 +163,13 @@ export default function Account() {
     };
 
     // Fn handle district onChange event
-    const handleDistrictChange = (event, value) => {
+    const handleDistrictChange = async (event, value) => {
         setSelectedDistrict(value);
         setSelectedWard(null);
-        formik.setFieldValue("district", value?.district_id);
+        formik.setFieldValue("district", value?.code);
 
         if (value) {
-            getWard(value?.district_id).then((wards) => {
+            await wardApi(value?.code).then((wards) => {
                 setWards(wards);
             });
         } else {
@@ -209,7 +183,7 @@ export default function Account() {
     const handleChangeWard = (value) => {
         if (value) {
             setSelectedWard(value);
-            formik.setFieldValue("ward", value?.ward_id);
+            formik.setFieldValue("ward", value?.code);
         } else {
             formik.setFieldValue("ward", null);
         }
@@ -230,33 +204,29 @@ export default function Account() {
                     provinces
                 );
                 setSelectedProvince(provinceSelected);
-                formik.setFieldValue("province", provinceSelected?.province_id);
-
+                formik.setFieldValue("province", provinceSelected?.code);
                 // District
-                await getDistrict(getCustomerUser?.province).then(
-                    (districtList) => {
-                        const districtSelected = getDistrictById(
-                            getCustomerUser?.district,
-                            districtList
-                        );
-                        setSelectedDistrict(districtSelected);
-                        setDistricts(districtList);
-                        formik.setFieldValue(
-                            "district",
-                            districtSelected?.district_id
-                        );
-                    }
+                const districtList = await districtApi(
+                    getCustomerUser?.province
                 );
 
-                await getWard(getCustomerUser?.district).then((wardList) => {
-                    const wardSelected = getWardById(
-                        getCustomerUser?.ward,
-                        wardList
-                    );
-                    setSelectedWard(wardSelected);
-                    setWards(wardList);
-                    formik.setFieldValue("ward", wardSelected?.ward_id);
-                });
+                const districtSelected = getDistrictById(
+                    getCustomerUser?.district,
+                    districtList
+                );
+
+                setSelectedDistrict(districtSelected);
+                setDistricts(districtList);
+                formik.setFieldValue("district", districtSelected?.code);
+
+                const wardList = await wardApi(getCustomerUser?.district);
+                const wardSelected = getWardById(
+                    getCustomerUser?.ward,
+                    wardList
+                );
+                setSelectedWard(wardSelected);
+                setWards(wardList);
+                formik.setFieldValue("ward", wardSelected?.code);
             }
         };
         fetch();
@@ -350,7 +320,7 @@ export default function Account() {
                                             Chỉnh sửa
                                         </GButton>
                                         <PasswordMenu
-                                            selectedUser={cloneData}
+                                            selectedUser={getCustomerUser}
                                         />
                                     </div>
                                 ) : (
@@ -452,12 +422,9 @@ export default function Account() {
                                         options={provinces}
                                         onBlur={formik.handleBlur}
                                         disableClearable={!isEditting}
-                                        getOptionLabel={(option) =>
-                                            option.province_name
-                                        }
+                                        getOptionLabel={(option) => option.name}
                                         isOptionEqualToValue={(option, value) =>
-                                            value?.province_id ===
-                                            option?.province_id
+                                            value?.code === option?.code
                                         }
                                         onChange={handleProvinceChange}
                                         value={selectedProvince || null}
@@ -481,12 +448,9 @@ export default function Account() {
                                         disabled={!isEditting}
                                         options={districts}
                                         onBlur={formik.handleBlur}
-                                        getOptionLabel={(option) =>
-                                            option.district_name
-                                        }
+                                        getOptionLabel={(option) => option.name}
                                         isOptionEqualToValue={(option, value) =>
-                                            value?.district_id ===
-                                            option?.district_id
+                                            value?.code === option?.code
                                         }
                                         onChange={handleDistrictChange}
                                         value={selectedDistrict || null}
@@ -510,11 +474,9 @@ export default function Account() {
                                         disabled={!isEditting}
                                         options={wards}
                                         onBlur={formik.handleBlur}
-                                        getOptionLabel={(option) =>
-                                            option.ward_name
-                                        }
+                                        getOptionLabel={(option) => option.name}
                                         isOptionEqualToValue={(option, value) =>
-                                            value?.ward_id === option?.ward_id
+                                            value?.code === option?.code
                                         }
                                         onChange={(event, value) => {
                                             handleChangeWard(value);
