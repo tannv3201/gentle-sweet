@@ -4,7 +4,7 @@ import { useSelector } from "react-redux";
 import { loginSuccess } from "../../../redux/slice/authSlice";
 import { createAxios } from "../../../createInstance";
 import { deleteCart } from "../../../redux/api/apiCart";
-import ConfirmDeletePopup from "../../Admin/components/ConfirmDeletePopup";
+import ConfirmDeletePopup from "../../../components/ConfirmDeletePopup/ConfirmDeletePopup";
 
 export default function ConfirmRemoveCartItem({
     handleClose,
