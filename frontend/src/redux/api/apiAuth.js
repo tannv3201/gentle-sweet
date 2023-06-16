@@ -24,8 +24,7 @@ export const loginUser = async (user, dispatch, navigate) => {
             res.data?.role_name === "ADMIN" ||
             res.data?.role_name === "STAFF"
         ) {
-            navigate("/admin/");
-            toast.success(res.data.msg);
+            toast.error("Tài khoản không hợp lệ.");
         } else if (res.data?.status === 200) {
             navigate("/");
             toast.success(res.data.msg);
