@@ -19,6 +19,13 @@ import { ArrowBackIosNew } from "@mui/icons-material";
 import { GTableProductCheckout } from "../../../common/GTable/GTable";
 import { useMediaQuery } from "@mui/material";
 import { useTheme } from "@mui/material/styles";
+import {
+    districtApi,
+    getDistrictById,
+    getProvinceById,
+    getWardById,
+    wardApi,
+} from "../../../redux/api/apiProvinceOpenAPI";
 
 const cx = classNames.bind(styles);
 
@@ -37,6 +44,23 @@ function OrderDetail() {
     const getInvoiceDetail = useSelector(
         (state) => state.invoiceDetail.invoiceDetail?.invoiceDetailByInvoice
     );
+    const getProvinceList = structuredClone(
+        useSelector((state) => state.province.province.provinceList)
+    );
+
+    const [provinces, setProvinces] = useState([]);
+    const [districts, setDistricts] = useState([]);
+    const [wards, setWards] = useState([]);
+
+    const [selectedProvince, setSelectedProvince] = useState(null);
+    const [selectedDistrict, setSelectedDistrict] = useState(null);
+    const [selectedWard, setSelectedWard] = useState(null);
+
+    // Get province list from API
+    useEffect(() => {
+        setProvinces(getProvinceList);
+    }, []);
+
     const productList = useSelector(
         (state) => state.product.product?.productList
     );
@@ -129,30 +153,61 @@ function OrderDetail() {
         }
     }, [invoiceById, invoiceById?.status]);
     useEffect(() => {
-        if (deliveryByInvoiceId) {
-            setDeliveryClone({
-                ...deliveryByInvoiceId,
-                statusName:
-                    deliveryByInvoiceId?.status === 1
-                        ? "Chờ xác nhận"
-                        : deliveryByInvoiceId?.status === 2
-                        ? "Đang chuẩn bị hàng"
-                        : deliveryByInvoiceId?.status === 3
-                        ? "Đang giao hàng"
-                        : deliveryByInvoiceId?.status === 4
-                        ? "Đã giao thành công"
-                        : "",
-                paymentMethodName:
-                    deliveryByInvoiceId?.payment_method === 1
-                        ? "Thanh toán khi nhận hàng"
-                        : deliveryByInvoiceId?.payment_method === 2
-                        ? "Chuyển khoản ngân hàng"
-                        : deliveryByInvoiceId?.payment_method === 3
-                        ? "Ví điện tử"
-                        : "",
-            });
-        }
-    }, [deliveryByInvoiceId]);
+        const fetch = async () => {
+            if (deliveryByInvoiceId) {
+                const provinceSelected = await getProvinceById(
+                    deliveryByInvoiceId?.province,
+                    provinces
+                );
+                setSelectedProvince(provinceSelected);
+
+                await districtApi(parseInt(deliveryByInvoiceId?.province)).then(
+                    (districtList) => {
+                        const districtSelected = getDistrictById(
+                            deliveryByInvoiceId?.district,
+                            districtList
+                        );
+                        setSelectedDistrict(districtSelected);
+                        setDistricts(districtList);
+                    }
+                );
+
+                await wardApi(parseInt(deliveryByInvoiceId?.district)).then(
+                    (wardList) => {
+                        const wardSelected = getWardById(
+                            deliveryByInvoiceId?.ward,
+                            wardList
+                        );
+                        setSelectedWard(wardSelected);
+                        setWards(wardList);
+                    }
+                );
+
+                setDeliveryClone({
+                    ...deliveryByInvoiceId,
+                    statusName:
+                        deliveryByInvoiceId?.status === 1
+                            ? "Chờ xác nhận"
+                            : deliveryByInvoiceId?.status === 2
+                            ? "Đang chuẩn bị hàng"
+                            : deliveryByInvoiceId?.status === 3
+                            ? "Đang giao hàng"
+                            : deliveryByInvoiceId?.status === 4
+                            ? "Đã giao thành công"
+                            : "",
+                    paymentMethodName:
+                        deliveryByInvoiceId?.payment_method === 1
+                            ? "Thanh toán khi nhận hàng"
+                            : deliveryByInvoiceId?.payment_method === 2
+                            ? "Chuyển khoản ngân hàng"
+                            : deliveryByInvoiceId?.payment_method === 3
+                            ? "Ví điện tử"
+                            : "",
+                });
+            }
+        };
+        fetch();
+    }, [deliveryByInvoiceId, invoiceId]);
 
     // Delete confirm modal
     const [isOpenCancelConfirmPopup, setIsOpenCancelConfirmPopup] =
@@ -325,7 +380,19 @@ function OrderDetail() {
                                         <div className={cx("info-item")}>
                                             Địa chỉ giao hàng:{" "}
                                             <span>
-                                                {deliveryClone?.detail_address}
+                                                {invoiceClone?.status === 6
+                                                    ? "--"
+                                                    : `${selectedWard?.name}, ${selectedDistrict?.name}, ${selectedProvince?.name}`}
+                                            </span>
+                                        </div>
+                                    </Grid>
+                                    <Grid item xs={12}>
+                                        <div className={cx("info-item")}>
+                                            Địa chỉ giao hàng chi tiết:{" "}
+                                            <span>
+                                                {invoiceClone?.status === 6
+                                                    ? "--"
+                                                    : deliveryClone?.detail_address}
                                             </span>
                                         </div>
                                     </Grid>
