@@ -1,5 +1,7 @@
 const InvoiceDetailModel = require("../models/InvoiceDetail");
 const InvoiceModel = require("../models/Invoice");
+const ProductModel = require("../models/Product");
+
 const { v4: uuidv4 } = require("uuid");
 
 const invoiceController = {
@@ -63,6 +65,17 @@ const invoiceController = {
                 await InvoiceDetailModel.updatePriceTotalInvoice(
                     req.body.invoice_id
                 );
+
+            const getProductAddedInvoice = await ProductModel.getProductById(
+                req.body.product_id
+            );
+            // console.log(getProductAddedInvoice);
+            const updateProductAddedQuantity =
+                await ProductModel.updateProductById(req.body.product_id, {
+                    quantity:
+                        parseInt(getProductAddedInvoice?.quantity) -
+                        parseInt(req.body.product_quantity),
+                });
 
             return res.json({
                 status: 201,

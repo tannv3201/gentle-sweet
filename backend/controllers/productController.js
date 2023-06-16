@@ -36,7 +36,20 @@ const productsController = {
     getAllProduct: async (req, res) => {
         try {
             const products = await ProductModel.getAllProduct();
-            return res.status(200).json(products);
+
+            const newProductList = [];
+
+            for (const p of products) {
+                const sold = await ProductModel.getProductQuantitySold(
+                    parseInt(p?.id)
+                );
+
+                newProductList.push({
+                    ...p,
+                    productQuantitySold: sold?.total_quantity,
+                });
+            }
+            return res.status(200).json(newProductList);
         } catch (error) {
             res.status(500).json(error);
         }
@@ -46,10 +59,16 @@ const productsController = {
     getProductById: async (req, res) => {
         try {
             const product = await ProductModel.getProductById(req.params.id);
+            const sold = await ProductModel.getProductQuantitySold(
+                req.params.id
+            );
             if (!product) {
                 return res.status(404).json("Sản phẩm không tồn tại");
             } else {
-                return res.status(200).json(product);
+                return res.status(200).json({
+                    ...product,
+                    productQuantitySold: sold?.total_quantity,
+                });
             }
         } catch (error) {
             res.status(500).json(error);
@@ -63,7 +82,6 @@ const productsController = {
                 req.params.searchTerm
             );
 
-            console.log(products);
             if (!products) {
                 return res.status(404).json("Không tìm thấy sản phẩm");
             } else {

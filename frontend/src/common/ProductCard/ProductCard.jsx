@@ -137,7 +137,10 @@ export default function ProductCard({
                         />
                     </div>
                     <div className={cx("product-sold")}>
-                        Đã bán: {productSold}
+                        Đã bán:{" "}
+                        {product?.productQuantitySold
+                            ? product?.productQuantitySold
+                            : 0}
                     </div>
                 </div>
                 <div className={cx("product-add-to-cart")}>

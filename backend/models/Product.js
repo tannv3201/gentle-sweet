@@ -16,6 +16,14 @@ const getProductById = async (id) => {
     return rows[0];
 };
 
+const getProductQuantitySold = async (productId) => {
+    const [rows, fields] = await pool.query(
+        "SELECT SUM(tbl_invoice_detail.product_quantity) AS total_quantity FROM tbl_invoice_detail INNER JOIN tbl_invoice ON tbl_invoice_detail.invoice_id = tbl_invoice.id WHERE tbl_invoice.status = 5 AND tbl_invoice_detail.product_id = ?",
+        [productId]
+    );
+    return rows[0];
+};
+
 const createProduct = async (product) => {
     const [result, fields] = await pool.query("INSERT INTO tbl_product SET ?", [
         product,
@@ -85,6 +93,7 @@ const productSearch = async (params) => {
 
 module.exports = {
     productSearch,
+    getProductQuantitySold,
     searchTerm,
     getAllProduct,
     getProductById,
