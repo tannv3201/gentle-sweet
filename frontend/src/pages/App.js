@@ -60,40 +60,7 @@ function App() {
                             />
                         );
                     })}
-                    {privateRoutes?.map((route, index) => {
-                        const Page = route?.component;
-                        let accessRoute;
-                        if (user?.role_id <= route?.role) {
-                            accessRoute = true;
-                        } else {
-                            accessRoute = false;
-                        }
 
-                        let Layout = DefaultLayout;
-                        if (route?.layout) {
-                            Layout = route.layout;
-                        } else if (route?.layout === null) {
-                            Layout = Fragment;
-                        }
-
-                        return (
-                            <Route
-                                key={index}
-                                path={route?.path}
-                                element={
-                                    accessRoute ? (
-                                        <Layout>
-                                            <Page />
-                                        </Layout>
-                                    ) : user?.role === 4 ? (
-                                        <Navigate to="/" replace />
-                                    ) : (
-                                        <Navigate to="/admin" replace />
-                                    )
-                                }
-                            />
-                        );
-                    })}
                     <Route path="/*" element={<NotFoundPage />} />
                 </Routes>
             </div>

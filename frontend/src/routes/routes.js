@@ -12,33 +12,29 @@ import Service from "../pages/ServicePage/Service/Service";
 import Booking from "../pages/Booking/Booking";
 import ProductDetail from "../pages/ShopPage/ProductDetail/ProductDetail";
 
-// import { useMediaQuery } from "@mui/material";
-// import { useTheme } from "@mui/material/styles";
-// import Breadcrumb from "../components/GBreadcrumb/GBreadcrumb";
-// import ScrollToTopOnMouse from "../components/ScrollToTopOnMouse/ScrollToTopOnMouse";
 import Checkout from "../pages/Checkout/Checkout";
 import Cart from "../pages/Cart/Cart";
 import Payment from "../pages/Payment/Payment";
 import Login from "../pages/Login/Login";
-import Dashboard from "../pages/Admin/Dashboard/Dashboard";
-import Products from "../pages/Admin/Products/Products";
-import AdminLayout from "../layouts/AdminLayout/AdminLayout";
-import AdminUser from "../pages/Admin/AdminUser/AdminUser";
-import ProductCategory from "../pages/Admin/ProductCategory/ProductCategory";
-import CustomerUser from "../pages/Admin/CustomerUser/CustomerUser";
-import ProductImage from "../pages/Admin/ProductImage/ProductImage";
-import ServiceCategory from "../pages/Admin/ServiceCategory/ServiceCategory";
-import Services from "../pages/Admin/Services/Services";
-import ServiceImage from "../pages/Admin/ServiceImage/ServiceImage";
-import Discount from "../pages/Admin/Discount/Discount";
-import AdminUserDetail from "../pages/Admin/AdminUser/AdminUserDetail/AdminUserDetail";
-import CustomerUserDetail from "../pages/Admin/CustomerUser/CustomerUserDetail/CustomerUserDetail";
-import ProductDetailAdmin from "../pages/Admin/Products/ProductDetail/ProductDetail";
-import ServiceDetail from "../pages/Admin/Services/ServiceDetail/ServiceDetail";
-import Invoice from "../pages/Admin/Invoice/Invoice";
-import InvoiceDetail from "../pages/Admin/Invoice/InvoiceDetail/InvoiceDetail";
-import BookingAdmin from "../pages/Admin/Booking/Booking";
-import BookingDetail from "../pages/Admin/Booking/BookingDetail/BookingDetail";
+// import Dashboard from "../pages/Admin/Dashboard/Dashboard";
+// import Products from "../pages/Admin/Products/Products";
+// import AdminLayout from "../layouts/AdminLayout/AdminLayout";
+// import AdminUser from "../pages/Admin/AdminUser/AdminUser";
+// import ProductCategory from "../pages/Admin/ProductCategory/ProductCategory";
+// import CustomerUser from "../pages/Admin/CustomerUser/CustomerUser";
+// import ProductImage from "../pages/Admin/ProductImage/ProductImage";
+// import ServiceCategory from "../pages/Admin/ServiceCategory/ServiceCategory";
+// import Services from "../pages/Admin/Services/Services";
+// import ServiceImage from "../pages/Admin/ServiceImage/ServiceImage";
+// import Discount from "../pages/Admin/Discount/Discount";
+// import AdminUserDetail from "../pages/Admin/AdminUser/AdminUserDetail/AdminUserDetail";
+// import CustomerUserDetail from "../pages/Admin/CustomerUser/CustomerUserDetail/CustomerUserDetail";
+// import ProductDetailAdmin from "../pages/Admin/Products/ProductDetail/ProductDetail";
+// import ServiceDetail from "../pages/Admin/Services/ServiceDetail/ServiceDetail";
+// import Invoice from "../pages/Admin/Invoice/Invoice";
+// import InvoiceDetail from "../pages/Admin/Invoice/InvoiceDetail/InvoiceDetail";
+// import BookingAdmin from "../pages/Admin/Booking/Booking";
+// import BookingDetail from "../pages/Admin/Booking/BookingDetail/BookingDetail";
 import PurchaseOrder from "../pages/PurchaseOrder/PurchaseOrder";
 import SignUp from "../pages/SignUp/SignUp";
 import NoLayout from "../layouts/NoLayout/NoLayout";
@@ -162,112 +158,112 @@ export const publicRoutes = [
 ];
 
 export const privateRoutes = [
-    {
-        path: "/admin",
-        component: Dashboard,
-        layout: AdminLayout,
-        role: 3,
-    },
-    {
-        path: "/admin/admin-user",
-        component: AdminUser,
-        layout: AdminLayout,
-        role: 1,
-    },
-    {
-        path: "/admin/admin-user/:adminUserId",
-        component: AdminUserDetail,
-        layout: AdminLayout,
-        role: 1,
-    },
-    {
-        path: "/admin/customer-user/:customerUserId",
-        component: CustomerUserDetail,
-        layout: AdminLayout,
-        role: 2,
-    },
-    {
-        path: "/admin/customer-user",
-        component: CustomerUser,
-        layout: AdminLayout,
-        role: 2,
-    },
-    {
-        path: "/admin/product",
-        component: Products,
-        layout: AdminLayout,
-        role: 3,
-    },
-    {
-        path: "/admin/product/:productId",
-        component: ProductDetailAdmin,
-        layout: AdminLayout,
-        role: 3,
-    },
-    {
-        path: "/admin/service",
-        component: Services,
-        layout: AdminLayout,
-        role: 3,
-    },
-    {
-        path: "/admin/invoice",
-        component: Invoice,
-        layout: AdminLayout,
-        role: 3,
-    },
-    {
-        path: "/admin/booking",
-        component: BookingAdmin,
-        layout: AdminLayout,
-        role: 3,
-    },
-    {
-        path: "/admin/booking/:bookingId",
-        component: BookingDetail,
-        layout: AdminLayout,
-        role: 3,
-    },
-    {
-        path: "/admin/invoice/:invoiceId",
-        component: InvoiceDetail,
-        layout: AdminLayout,
-        role: 3,
-    },
-    {
-        path: "/admin/service/:serviceId",
-        component: ServiceDetail,
-        layout: AdminLayout,
-        role: 3,
-    },
-    {
-        path: "/admin/discount",
-        component: Discount,
-        layout: AdminLayout,
-        role: 2,
-    },
-    {
-        path: "/admin/productImage/:productId/product",
-        component: ProductImage,
-        layout: AdminLayout,
-        role: 2,
-    },
-    {
-        path: "/admin/serviceImage/:serviceId/service",
-        component: ServiceImage,
-        layout: AdminLayout,
-        role: 2,
-    },
-    {
-        path: "/admin/product-category",
-        component: ProductCategory,
-        layout: AdminLayout,
-        role: 2,
-    },
-    {
-        path: "/admin/service-category",
-        component: ServiceCategory,
-        layout: AdminLayout,
-        role: 2,
-    },
+    // {
+    //     path: "/admin",
+    //     component: Dashboard,
+    //     layout: AdminLayout,
+    //     role: 3,
+    // },
+    // {
+    //     path: "/admin/admin-user",
+    //     component: AdminUser,
+    //     layout: AdminLayout,
+    //     role: 1,
+    // },
+    // {
+    //     path: "/admin/admin-user/:adminUserId",
+    //     component: AdminUserDetail,
+    //     layout: AdminLayout,
+    //     role: 1,
+    // },
+    // {
+    //     path: "/admin/customer-user/:customerUserId",
+    //     component: CustomerUserDetail,
+    //     layout: AdminLayout,
+    //     role: 2,
+    // },
+    // {
+    //     path: "/admin/customer-user",
+    //     component: CustomerUser,
+    //     layout: AdminLayout,
+    //     role: 2,
+    // },
+    // {
+    //     path: "/admin/product",
+    //     component: Products,
+    //     layout: AdminLayout,
+    //     role: 3,
+    // },
+    // {
+    //     path: "/admin/product/:productId",
+    //     component: ProductDetailAdmin,
+    //     layout: AdminLayout,
+    //     role: 3,
+    // },
+    // {
+    //     path: "/admin/service",
+    //     component: Services,
+    //     layout: AdminLayout,
+    //     role: 3,
+    // },
+    // {
+    //     path: "/admin/invoice",
+    //     component: Invoice,
+    //     layout: AdminLayout,
+    //     role: 3,
+    // },
+    // {
+    //     path: "/admin/booking",
+    //     component: BookingAdmin,
+    //     layout: AdminLayout,
+    //     role: 3,
+    // },
+    // {
+    //     path: "/admin/booking/:bookingId",
+    //     component: BookingDetail,
+    //     layout: AdminLayout,
+    //     role: 3,
+    // },
+    // {
+    //     path: "/admin/invoice/:invoiceId",
+    //     component: InvoiceDetail,
+    //     layout: AdminLayout,
+    //     role: 3,
+    // },
+    // {
+    //     path: "/admin/service/:serviceId",
+    //     component: ServiceDetail,
+    //     layout: AdminLayout,
+    //     role: 3,
+    // },
+    // {
+    //     path: "/admin/discount",
+    //     component: Discount,
+    //     layout: AdminLayout,
+    //     role: 2,
+    // },
+    // {
+    //     path: "/admin/productImage/:productId/product",
+    //     component: ProductImage,
+    //     layout: AdminLayout,
+    //     role: 2,
+    // },
+    // {
+    //     path: "/admin/serviceImage/:serviceId/service",
+    //     component: ServiceImage,
+    //     layout: AdminLayout,
+    //     role: 2,
+    // },
+    // {
+    //     path: "/admin/product-category",
+    //     component: ProductCategory,
+    //     layout: AdminLayout,
+    //     role: 2,
+    // },
+    // {
+    //     path: "/admin/service-category",
+    //     component: ServiceCategory,
+    //     layout: AdminLayout,
+    //     role: 2,
+    // },
 ];
