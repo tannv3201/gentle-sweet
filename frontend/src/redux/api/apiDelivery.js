@@ -53,10 +53,10 @@ export const createDelivery = async (
             },
         });
         dispatch(createDeliverySuccess(res?.data));
-        if (res?.data?.status === 201) {
-            // toast.success(res?.data?.msg);
-            toast.success("Thêm thông tin giao hàng thành công.");
-        }
+        // if (res?.data?.status === 201) {
+        //     // toast.success(res?.data?.msg);
+        //     toast.success("Thêm thông tin giao hàng thành công.");
+        // }
 
         return res?.data?.data;
     } catch (error) {
