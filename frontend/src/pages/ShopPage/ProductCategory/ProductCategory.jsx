@@ -16,9 +16,10 @@ import { loginSuccess } from "../../../redux/slice/authSlice";
 import { productSearchSuccess } from "../../../redux/slice/productSlice";
 const cx = classNames.bind(styles);
 
-function ProductCategory({ onClose }) {
+function ProductCategory({ onClose, open }) {
     const theme = useTheme();
     const isMedium = useMediaQuery(theme.breakpoints.down("md"));
+    const isSmall = useMediaQuery(theme.breakpoints.down("sm"));
     const productCategoryList = useSelector(
         (state) => state.productCategory.productCategory?.productCategoryList
     );
@@ -57,8 +58,15 @@ function ProductCategory({ onClose }) {
         setProductCategoryId(categoryId);
     }, [searchParams]);
 
-    const handleFilter = async (id) => {
+    const [isOpenCategoryDrawer, setIsOpenCategoryDrawer] = useState(open);
+
+    const handleCloseDrawer = () => {
         onClose();
+    };
+    const handleFilter = async (id) => {
+        if (isSmall) {
+            handleCloseDrawer();
+        }
         const newSearchParams = new URLSearchParams();
         if (id) {
             await productSearch(

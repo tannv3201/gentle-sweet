@@ -32,7 +32,7 @@ export const CategoryDrawer = ({ onOpen, onClose, open }) => {
                             </IconButton>
                         </div>
                         <div className={cx("drawer-wrapper")}>
-                            <ProductCategory onClose={onClose} />
+                            <ProductCategory open={open} onClose={onClose} />
                         </div>
                     </>
                 </GDrawer>

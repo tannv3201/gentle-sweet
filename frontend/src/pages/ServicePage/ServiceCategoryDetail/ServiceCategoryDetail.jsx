@@ -66,7 +66,6 @@ function ServiceCategoryDetail() {
     const handleNavigateServiceDetail = (serviceId) => {
         navigate(`/danh-muc-dich-vu/dich-vu/${serviceId}`);
     };
-    console.log(serviceListClone);
     return (
         <div className={cx("wrapper")}>
             <div className={cx("wrapper-service")}>
