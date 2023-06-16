@@ -1,5 +1,5 @@
 import * as React from "react";
-import { Checkbox, TextField } from "@mui/material";
+import { Checkbox, IconButton, InputAdornment, TextField } from "@mui/material";
 import Autocomplete from "@mui/material/Autocomplete";
 import styles from "./FilterGroup.module.scss";
 import classNames from "classnames/bind";
@@ -7,6 +7,8 @@ import {
     CheckBoxOutlineBlank,
     CheckBox,
     FilterListRounded,
+    SearchRounded,
+    ClearRounded,
 } from "@mui/icons-material";
 import { Grid } from "@mui/material";
 import GTextFieldNormal from "../../../components/GTextField/GTextFieldNormal";
@@ -17,12 +19,19 @@ import { useTheme } from "@mui/material/styles";
 import { useSelector } from "react-redux";
 import { useLocation, useSearchParams } from "react-router-dom";
 import { useEffect } from "react";
-import { productSearch } from "../../../redux/api/apiProduct";
+import {
+    productSearch,
+    productSearchTerm,
+} from "../../../redux/api/apiProduct";
 import { createAxios } from "../../../createInstance";
 import { useDispatch } from "react-redux";
 import { loginSuccess } from "../../../redux/slice/authSlice";
-import { productSearchSuccess } from "../../../redux/slice/productSlice";
+import {
+    productSearchSuccess,
+    productSearchTermSuccess,
+} from "../../../redux/slice/productSlice";
 import * as Yup from "yup";
+import { toast } from "react-hot-toast";
 
 const validationSchema = Yup.object().shape({
     minPrice: Yup.number().required("Vui lòng nhập giá nhỏ nhất"),
@@ -285,7 +294,7 @@ export const FilterGroupList = () => {
                     color="success"
                     className={cx("filter-clear-btn")}
                 >
-                    Tìm kiếm
+                    {isSmall ? "Lọc" : "Lọc sản phẩm"}
                 </GButton>
             </div>
         </>
@@ -293,7 +302,59 @@ export const FilterGroupList = () => {
 };
 
 export default function FilterGroup() {
+    const dispatch = useDispatch();
+    const theme = useTheme();
+    const isSmall = useMediaQuery(theme.breakpoints.down("sm"));
     const [isOpenFilterGroup, setIsOpenFilterGroup] = useState(false);
+    const [searchTerm, setSearchTerm] = useState("");
+    const [isSearchPerformed, setIsSearchPerformed] = useState(false);
+
+    const handleOnChangeSearchTerm = (value) => {
+        setSearchTerm(value);
+    };
+    const getProductSearchTerm = useSelector(
+        (state) => state.product.product?.productSearchTerm
+    );
+    const handleSearchTerm = async () => {
+        if (!searchTerm) {
+            toast.error("Vui lòng nhập tên sản phẩm");
+            return;
+        }
+        await productSearchTerm(dispatch, searchTerm);
+        setIsSearchPerformed(true);
+    };
+    const getProductList = useSelector(
+        (state) => state.product.product?.productList
+    );
+    const [searchParams, setSearchParams] = useSearchParams();
+
+    const [productCategoryId, setProductCategoryId] = useState(null);
+    const [locationPage, setLocationPage] = useState(null);
+    const [locationSort, setLocationSort] = useState(null);
+    const [locationMinPrice, setLocationMinPrice] = useState("");
+    const [locationMaxPrice, setLocationMaxPrice] = useState("");
+
+    const handleClearSearchTerm = () => {
+        setSearchTerm("");
+
+        if (isSearchPerformed) {
+            dispatch(productSearchTermSuccess([]));
+            const emptySearchParams = new URLSearchParams();
+            setSearchParams(emptySearchParams);
+            setLocationSort(null);
+            setLocationMinPrice("");
+            setLocationMaxPrice("");
+            setProductCategoryId(null);
+            dispatch(productSearchSuccess(structuredClone(getProductList)));
+            setIsSearchPerformed(false);
+        }
+    };
+
+    const handleKeyDownSearchTerm = (e) => {
+        if (e.key === "Enter") {
+            handleSearchTerm();
+        }
+    };
     return (
         <>
             <div
@@ -303,21 +364,88 @@ export default function FilterGroup() {
                         : cx("wrapper")
                 }
             >
-                <GButton
-                    endIcon={<FilterListRounded />}
-                    onClick={() => setIsOpenFilterGroup(!isOpenFilterGroup)}
-                >
-                    Bộ lọc
-                </GButton>
-                <div
-                    className={
-                        isOpenFilterGroup
-                            ? cx("inner", "isOpenFilterGroup")
-                            : cx("inner")
-                    }
-                >
-                    <FilterGroupList />
-                </div>
+                <Grid container spacing={2}>
+                    {!isSmall && (
+                        <Grid item xs={6}>
+                            <GButton
+                                endIcon={<FilterListRounded />}
+                                onClick={() =>
+                                    setIsOpenFilterGroup(!isOpenFilterGroup)
+                                }
+                            >
+                                Bộ lọc
+                            </GButton>
+                        </Grid>
+                    )}
+                    <Grid item lg={6} md={6} sm={12} xs={12}>
+                        <div
+                            style={{
+                                display: "flex",
+                                justifyContent: "flex-end",
+                            }}
+                        >
+                            <Grid container spacing={1}>
+                                <Grid item xs={8}>
+                                    <GTextFieldNormal
+                                        onChange={(e) =>
+                                            handleOnChangeSearchTerm(
+                                                e.target.value
+                                            )
+                                        }
+                                        label={"Tìm kiếm"}
+                                        value={searchTerm}
+                                        InputLabelProps={{ shrink: true }}
+                                        placeholder="Nhập tên sản phẩm..."
+                                        onKeyDown={handleKeyDownSearchTerm}
+                                        fullWidth
+                                        InputProps={
+                                            searchTerm
+                                                ? {
+                                                      endAdornment: (
+                                                          <InputAdornment position="end">
+                                                              <IconButton
+                                                                  aria-label="toggle password visibility"
+                                                                  onClick={
+                                                                      handleClearSearchTerm
+                                                                  }
+                                                                  edge="end"
+                                                                  // size={isMedium ? "large" : "medium"}
+                                                              >
+                                                                  <ClearRounded />
+                                                              </IconButton>
+                                                          </InputAdornment>
+                                                      ),
+                                                  }
+                                                : {}
+                                        }
+                                    />
+                                </Grid>
+                                <Grid item xs={4}>
+                                    <GButton
+                                        startIcon={<SearchRounded />}
+                                        onClick={handleSearchTerm}
+                                        size="medium"
+                                        fullWidth
+                                        variant="outlined"
+                                    >
+                                        {!isSmall ? "Tìm kiếm" : "Tìm"}
+                                    </GButton>
+                                </Grid>
+                            </Grid>
+                        </div>
+                    </Grid>
+                </Grid>
+                {!isSmall && (
+                    <div
+                        className={
+                            isOpenFilterGroup
+                                ? cx("inner", "isOpenFilterGroup")
+                                : cx("inner")
+                        }
+                    >
+                        <FilterGroupList />
+                    </div>
+                )}
             </div>
         </>
     );

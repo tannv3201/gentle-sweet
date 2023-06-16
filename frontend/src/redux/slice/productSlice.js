@@ -7,6 +7,7 @@ const productSlice = createSlice({
             productList: [],
             productListSearch: [],
             productListSearchLimit: [],
+            productSearchTerm: [],
             product: null,
             isFetching: false,
             error: false,
@@ -49,6 +50,19 @@ const productSlice = createSlice({
             state.product.productListSearchLimit = action.payload;
         },
         productSearchLimitFailed: (state) => {
+            state.product.isFetching = false;
+            state.product.error = true;
+        },
+
+        // Search term
+        productSearchTermStart: (state) => {
+            state.product.isFetching = true;
+        },
+        productSearchTermSuccess: (state, action) => {
+            state.product.isFetching = false;
+            state.product.productSearchTerm = action.payload;
+        },
+        productSearchTermFailed: (state) => {
             state.product.isFetching = false;
             state.product.error = true;
         },
@@ -118,6 +132,10 @@ export const {
     productSearchStart,
     productSearchSuccess,
     productSearchFailed,
+
+    productSearchTermStart,
+    productSearchTermSuccess,
+    productSearchTermFailed,
 
     productSearchLimitStart,
     productSearchLimitSuccess,

@@ -19,6 +19,9 @@ import {
     productSearchLimitSuccess,
     productSearchStart,
     productSearchSuccess,
+    productSearchTermFailed,
+    productSearchTermStart,
+    productSearchTermSuccess,
     updateProductFailed,
     updateProductStart,
     updateProductSuccess,
@@ -196,6 +199,22 @@ export const customerGetProductById = async (dispatch, id) => {
         return res?.data;
     } catch (error) {
         dispatch(getProductByIdFailed(error.response?.data));
+    }
+};
+
+export const productSearchTerm = async (dispatch, searchTerm) => {
+    dispatch(productSearchTermStart());
+    try {
+        const res = await axios.get(
+            "/v1/product/" + searchTerm + "/searchTerm"
+        );
+        dispatch(productSearchTermSuccess(res?.data));
+        if (res?.data?.status === 200) {
+            toast.success(res?.data?.msg);
+        }
+        return res?.data;
+    } catch (error) {
+        dispatch(productSearchTermFailed(error.response?.data));
     }
 };
 

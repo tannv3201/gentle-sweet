@@ -37,8 +37,14 @@ router.get(
 
 router.get(
     "/:id",
-    middlewareController.verifyToken,
+    // middlewareController.verifyToken,
     productController.getProductById
+);
+
+router.get(
+    "/:searchTerm/searchTerm",
+    // middlewareController.verifyToken,
+    productController.searchTerm
 );
 
 router.get("/:id/customer", productController.getProductById);

@@ -86,11 +86,11 @@ function ShopPage() {
                     <Grid item lg={9} md={12} sm={12} xs={12}>
                         <div className={cx("product-list")}>
                             <Grid container>
-                                {!isMedium && (
-                                    <Grid item xs={12}>
-                                        <FilterGroup />
-                                    </Grid>
-                                )}
+                                {/* {!isMedium && ( */}
+                                <Grid item xs={12}>
+                                    <FilterGroup />
+                                </Grid>
+                                {/* )} */}
                                 <Grid item xs={12} width={"100%"}>
                                     <ProductList />
                                 </Grid>

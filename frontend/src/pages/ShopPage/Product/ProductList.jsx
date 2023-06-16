@@ -38,6 +38,9 @@ function ProductList() {
     const getProductListSearch = useSelector(
         (state) => state.product.product?.productListSearch
     );
+    const getProductSearchTerm = useSelector(
+        (state) => state.product.product?.productSearchTerm
+    );
     const discountList = useSelector(
         (state) => state.discount.discount?.discountList
     );
@@ -60,53 +63,62 @@ function ProductList() {
         };
         fetch();
     }, []);
+
+    const handleProductInfoList = (productList) => {
+        const newProductList = productList?.map((p) => {
+            let getDiscount;
+
+            const getProductCategory = productCategoryList?.find(
+                (pc) => pc?.id === p?.product_category_id
+            );
+
+            if (p?.discount_id) {
+                const discount = discountList?.find(
+                    (d) => d.id === parseInt(p.discount_id)
+                );
+                getDiscount = discount;
+            }
+
+            return {
+                ...p,
+                product_category_name: getProductCategory?.name,
+                discount_percent: getDiscount?.discount_percent,
+            };
+        });
+
+        return newProductList;
+    };
+
     useEffect(() => {
         if (getProductListSearch) {
-            const newProductList = getProductListSearch?.map((p) => {
-                let getDiscount;
-                const getProductCategory = productCategoryList?.find(
-                    (pc) => pc?.id === p?.product_category_id
-                );
+            // const newProductList = getProductListSearch?.map((p) => {
+            //     let getDiscount;
 
-                if (p?.discount_id) {
-                    const discount = discountList?.find(
-                        (d) => d.id === parseInt(p.discount_id)
-                    );
-                    getDiscount = discount;
-                }
+            //     const getProductCategory = productCategoryList?.find(
+            //         (pc) => pc?.id === p?.product_category_id
+            //     );
 
-                return {
-                    ...p,
-                    product_category_name: getProductCategory?.name,
-                    discount_percent: getDiscount?.discount_percent,
-                };
-            });
+            //     if (p?.discount_id) {
+            //         const discount = discountList?.find(
+            //             (d) => d.id === parseInt(p.discount_id)
+            //         );
+            //         getDiscount = discount;
+            //     }
 
+            //     return {
+            //         ...p,
+            //         product_category_name: getProductCategory?.name,
+            //         discount_percent: getDiscount?.discount_percent,
+            //     };
+            // });
+            const newProductList = handleProductInfoList(getProductListSearch);
             setProductListSearchUpdated(newProductList);
         }
     }, [discountList, getProductListSearch, productCategoryList]);
 
     useEffect(() => {
         if (getProductList) {
-            const newProductList = getProductList?.map((p) => {
-                let getDiscount;
-                const getProductCategory = productCategoryList?.find(
-                    (pc) => pc?.id === p?.product_category_id
-                );
-
-                if (p?.discount_id) {
-                    const discount = discountList?.find(
-                        (d) => d.id === parseInt(p.discount_id)
-                    );
-                    getDiscount = discount;
-                }
-
-                return {
-                    ...p,
-                    product_category_name: getProductCategory?.name,
-                    discount_percent: getDiscount?.discount_percent,
-                };
-            });
+            const newProductList = handleProductInfoList(getProductList);
 
             setProductListUpdated(newProductList);
         }
@@ -115,7 +127,12 @@ function ProductList() {
     useEffect(() => {
         const currentPageData = getCurrentPage(productListUpdated, page, 8);
         setProductList(currentPageData);
-    }, [page]);
+    }, [page, getProductSearchTerm]);
+
+    useEffect(() => {
+        const newProductList = handleProductInfoList(getProductSearchTerm);
+        setProductList(structuredClone(newProductList));
+    }, [getProductSearchTerm]);
 
     const [locationProductCategoryId, setLocationProductCategoryId] =
         useState(null);

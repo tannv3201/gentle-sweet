@@ -39,6 +39,13 @@ const deleteProductById = async (id) => {
     return result.affectedRows;
 };
 
+const searchTerm = async (searchTerm) => {
+    const [rows, fields] = await pool.query(
+        `SELECT * FROM tbl_product WHERE name LIKE "%${searchTerm}%"`
+    );
+    return rows;
+};
+
 const productSearch = async (params) => {
     let query = "SELECT * FROM tbl_product WHERE status > 0";
     const values = [];
@@ -78,6 +85,7 @@ const productSearch = async (params) => {
 
 module.exports = {
     productSearch,
+    searchTerm,
     getAllProduct,
     getProductById,
     createProduct,
