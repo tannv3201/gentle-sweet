@@ -189,6 +189,13 @@ function SummaryCheckout() {
             navigate("/don-mua");
         });
     };
+
+    const handleToastNull = (values) => {
+        if (!values.detail_address) {
+            toast.error("Vui lòng nhập đầy đủ thông tin");
+        }
+    };
+
     return (
         <div className={cx("wrapper")}>
             <div className={cx("inner")}>
@@ -199,7 +206,7 @@ function SummaryCheckout() {
                         await handleSubmit(values);
                     }}
                 >
-                    {({ handleSubmit }) => (
+                    {({ handleSubmit, errors, values }) => (
                         <form onSubmit={handleSubmit}>
                             <Grid container spacing={2}>
                                 <Grid item lg={7} md={12} sm={12} xs={12}>
@@ -581,9 +588,11 @@ function SummaryCheckout() {
                                                                 )}
                                                                 size="medium"
                                                                 fullWidth
-                                                                // onClick={
-                                                                //     handleCheckoutButtonClick
-                                                                // }
+                                                                onClick={() =>
+                                                                    handleToastNull(
+                                                                        values
+                                                                    )
+                                                                }
                                                                 type={"submit"}
                                                             >
                                                                 Xác nhận đơn
