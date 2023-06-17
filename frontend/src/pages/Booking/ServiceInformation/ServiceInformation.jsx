@@ -26,6 +26,9 @@ import { getBookingDetailByBookingId } from "../../../redux/api/apiBookingDetail
 import GTextFieldNormal from "../../../components/GTextField/GTextFieldNormal";
 import { useMediaQuery } from "@mui/material";
 import { useTheme } from "@mui/material/styles";
+import RequiredLabelWrapper, {
+    RequiredMark,
+} from "../../../components/RequiredLabel/RequiredLabel";
 const cx = classNames.bind(styles);
 
 export default function ServiceInformation() {
@@ -221,7 +224,9 @@ export default function ServiceInformation() {
                         <div>
                             <Grid container spacing={2}>
                                 <Grid item xs={12}>
-                                    <h3>Thông tin dịch vụ</h3>
+                                    <RequiredLabelWrapper
+                                        label={<h3>Thông tin dịch vụ</h3>}
+                                    />
                                 </Grid>
                                 <Grid item lg={6} md={6} sm={12} xs={12}>
                                     <Autocomplete
@@ -295,7 +300,11 @@ export default function ServiceInformation() {
                                     <Grid item lg={6} md={6} sm={12} xs={12}>
                                         <GDatePicker
                                             size={"small"}
-                                            label={"Chọn ngày"}
+                                            label={
+                                                <>
+                                                    Chọn ngày <RequiredMark />
+                                                </>
+                                            }
                                             fullWidth
                                             name="date"
                                             onBlur={handleBlur}
@@ -317,7 +326,11 @@ export default function ServiceInformation() {
                                     <Grid item lg={6} md={6} sm={12} xs={12}>
                                         <DateFieldMobile
                                             size={"small"}
-                                            label={"Chọn ngày"}
+                                            label={
+                                                <>
+                                                    Chọn ngày <RequiredMark />
+                                                </>
+                                            }
                                             fullWidth
                                             name="date"
                                             onBlur={handleBlur}
@@ -337,6 +350,7 @@ export default function ServiceInformation() {
                                 )}
                                 <Grid item lg={6} md={6} sm={12} xs={12}>
                                     <Autocomplete
+                                        onBlur={handleBlur}
                                         noOptionsText={
                                             values?.date
                                                 ? "Bạn đang có lịch hẹn trùng, vui lòng chọn ngày khác!"
@@ -361,7 +375,12 @@ export default function ServiceInformation() {
                                                 color="secondary"
                                                 size="small"
                                                 fullWidth
-                                                label="Khung thời gian"
+                                                label={
+                                                    <>
+                                                        Khung thời gian{" "}
+                                                        <RequiredMark />
+                                                    </>
+                                                }
                                                 name="bookingTime_id"
                                                 error={
                                                     touched?.bookingTime_id &&
