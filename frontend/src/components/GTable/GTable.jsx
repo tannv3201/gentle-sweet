@@ -9,6 +9,7 @@ export default function GTable({
     actions,
     pagesize,
     paging,
+    noRecordMessage = "",
     ...props
 }) {
     const defaultMaterialTheme = createTheme();
@@ -36,6 +37,11 @@ export default function GTable({
                             searchTooltip: "Tìm kiếm",
                             searchPlaceholder: "Nhập từ khóa...",
                         },
+                        body: {
+                            emptyDataSourceMessage: noRecordMessage
+                                ? noRecordMessage
+                                : "Không có bản ghi nào để hiển thị",
+                        },
                     }}
                     options={{
                         sorting: true,
@@ -43,7 +49,7 @@ export default function GTable({
                         searchFieldAlignment: "right",
                         searchAutoFocus: true,
                         searchFieldVariant: "standard",
-                        paging: true,
+                        paging: data?.length === 0 ? false : true,
                         pageSizeOptions: [2, 5, 10, 20, 25, 50, 100],
                         pageSize: pagesize ? pagesize : 5,
                         paginationType: "stepped",
