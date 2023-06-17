@@ -40,7 +40,6 @@ function BookedSchedule() {
 
     const navigate = useNavigate();
     const [bookingList, setBookingList] = useState([]);
-    console.log(bookingList);
     const [bookingListStatus1, setBookingListStatus1] = useState([]);
     const [bookingListStatus2, setBookingListStatus2] = useState([]);
     const [bookingListStatus3, setBookingListStatus3] = useState([]);

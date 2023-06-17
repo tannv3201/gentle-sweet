@@ -221,7 +221,6 @@ function PurchaseOrder() {
                         const product = products.find(
                             (p) => p?.id === detail?.product_id
                         );
-                        console.log(detail);
                         return {
                             ...detail,
                             image_url: product ? product.image_url : null,
