@@ -24,7 +24,21 @@ const serviceController = {
     getAllService: async (req, res) => {
         try {
             const services = await ServiceModel.getAllService();
-            return res.status(200).json(services);
+
+            const newServiceList = [];
+
+            for (const s of services) {
+                const booked = await ServiceModel.getServiceQuantityBooked(
+                    parseInt(s?.id)
+                );
+
+                newServiceList.push({
+                    ...s,
+                    serviceQuantityBooked: booked?.count,
+                });
+            }
+            console.log(newServiceList);
+            return res.status(200).json(newServiceList);
         } catch (error) {
             res.status(500).json(error);
         }
@@ -34,10 +48,15 @@ const serviceController = {
     getServiceById: async (req, res) => {
         try {
             const service = await ServiceModel.getServiceById(req.params.id);
+            const booked = await ServiceModel.getServiceQuantityBooked(
+                req.params.id
+            );
             if (!service) {
                 return res.status(404).json("Sản phẩm không tồn tại");
             } else {
-                return res.status(200).json(service);
+                return res
+                    .status(200)
+                    .json({ ...service, serviceQuantityBooked: booked?.count });
             }
         } catch (error) {
             res.status(500).json(error);

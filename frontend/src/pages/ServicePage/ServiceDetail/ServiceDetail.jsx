@@ -157,14 +157,9 @@ function ServiceDetail() {
                                                                         "service-sold-quantity"
                                                                     )}
                                                                 >
-                                                                    77,7k
-                                                                    <span
-                                                                        className={cx(
-                                                                            "unit-name"
-                                                                        )}
-                                                                    >
-                                                                        Lần
-                                                                    </span>
+                                                                    {
+                                                                        serviceDetailClone?.serviceQuantityBooked
+                                                                    }
                                                                 </span>
                                                             </div>
                                                         </Grid>

@@ -8,6 +8,14 @@ const getAllService = async () => {
     return rows;
 };
 
+const getServiceQuantityBooked = async (serviceId) => {
+    const [rows, fields] = await pool.query(
+        "SELECT COUNT(*) AS count FROM tbl_booking_detail JOIN tbl_service ON tbl_booking_detail.service_id = tbl_service.id JOIN tbl_booking ON tbl_booking_detail.booking_id = tbl_booking.id WHERE tbl_service.id = (?) AND tbl_booking.status = 5",
+        [serviceId]
+    );
+    return rows[0];
+};
+
 const getServiceById = async (id) => {
     const [rows, fields] = await pool.query(
         "SELECT * FROM tbl_service WHERE id= (?)",
@@ -59,6 +67,7 @@ const serviceSearch = async (params) => {
 
 module.exports = {
     getAllService,
+    getServiceQuantityBooked,
     getServiceById,
     createService,
     serviceSearch,
