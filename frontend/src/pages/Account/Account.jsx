@@ -209,27 +209,29 @@ export default function Account() {
                 setSelectedProvince(provinceSelected);
                 formik.setFieldValue("province", provinceSelected?.code);
                 // District
-                const districtList = await districtApi(
-                    getCustomerUser?.province
-                );
+                if (getCustomerUser?.province) {
+                    const districtList = await districtApi(
+                        getCustomerUser?.province
+                    );
 
-                const districtSelected = getDistrictById(
-                    getCustomerUser?.district,
-                    districtList
-                );
+                    const districtSelected = getDistrictById(
+                        getCustomerUser?.district,
+                        districtList
+                    );
 
-                setSelectedDistrict(districtSelected);
-                setDistricts(districtList);
-                formik.setFieldValue("district", districtSelected?.code);
+                    setSelectedDistrict(districtSelected);
+                    setDistricts(districtList);
+                    formik.setFieldValue("district", districtSelected?.code);
 
-                const wardList = await wardApi(getCustomerUser?.district);
-                const wardSelected = getWardById(
-                    getCustomerUser?.ward,
-                    wardList
-                );
-                setSelectedWard(wardSelected);
-                setWards(wardList);
-                formik.setFieldValue("ward", wardSelected?.code);
+                    const wardList = await wardApi(getCustomerUser?.district);
+                    const wardSelected = getWardById(
+                        getCustomerUser?.ward,
+                        wardList
+                    );
+                    setSelectedWard(wardSelected);
+                    setWards(wardList);
+                    formik.setFieldValue("ward", wardSelected?.code);
+                }
             }
         };
         fetch();
