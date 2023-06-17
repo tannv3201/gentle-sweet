@@ -31,7 +31,7 @@ import {
     provinceApi,
     wardApi,
 } from "../../../redux/api/apiProvinceOpenAPI";
-import RequiredLabel, {
+import RequiredLabelWrapper, {
     RequiredMark,
 } from "../../../components/RequiredLabel/RequiredLabel";
 const cx = classNames.bind(styles);
@@ -325,7 +325,9 @@ function CheckoutInformation() {
             <div className={cx("delivery-information")}>
                 <Grid container spacing={2}>
                     <Grid item xs={12}>
-                        <RequiredLabel label={<h3>Thông tin giao hàng</h3>} />
+                        <RequiredLabelWrapper
+                            label={<h3>Thông tin giao hàng</h3>}
+                        />
                         <FormGroup>
                             <FormControlLabel
                                 control={<Checkbox onChange={handleInfoSame} />}
