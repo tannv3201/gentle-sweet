@@ -191,7 +191,7 @@ function SummaryCheckout() {
     };
 
     const handleToastNull = (values) => {
-        if (!values.detail_address) {
+        if (!values?.detail_address) {
             toast.error("Vui lòng nhập đầy đủ thông tin");
         }
     };
