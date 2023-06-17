@@ -1,6 +1,6 @@
 import React from "react";
 
-function RequiredLabel({ label }) {
+function RequiredLabelWrapper({ label }) {
     return (
         <div style={{ display: "flex", alignItems: "center" }}>
             {label}{" "}
@@ -18,7 +18,7 @@ function RequiredLabel({ label }) {
     );
 }
 
-export default RequiredLabel;
+export default RequiredLabelWrapper;
 
 export const RequiredMark = () => {
     return (
