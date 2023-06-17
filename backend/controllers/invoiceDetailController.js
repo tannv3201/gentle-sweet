@@ -61,10 +61,16 @@ const invoiceController = {
                     status: 1,
                 });
             console.log(req.body.deliveryPrice);
+            const checkPriceTotal = await InvoiceDetailModel.checkPriceTotal(
+                req.body.invoice_id
+            );
+            console.log(parseInt(checkPriceTotal?.total_price) > 500000);
             const updateTotalPrice =
                 await InvoiceDetailModel.updatePriceTotalInvoice(
                     req.body.invoice_id,
-                    req.body.deliveryPrice
+                    parseInt(checkPriceTotal?.total_price) > 500000
+                        ? 0
+                        : req.body.deliveryPrice
                 );
 
             const getProductAddedInvoice = await ProductModel.getProductById(

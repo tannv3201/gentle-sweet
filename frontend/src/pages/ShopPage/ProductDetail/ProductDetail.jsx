@@ -155,6 +155,7 @@ function ProductDetail() {
             );
         }
     };
+
     const navigate = useNavigate();
     const handleBuyNow = () => {
         navigate("/thanh-toan", {
@@ -167,6 +168,7 @@ function ProductDetail() {
                         product_quantity: buyQuantity,
                         unit_price: parseFloat(productDetail?.price),
                         image_url: productDetail?.image_url,
+                        unit_price_onsale: productDetail?.price_onsale,
                     },
                 ],
             },

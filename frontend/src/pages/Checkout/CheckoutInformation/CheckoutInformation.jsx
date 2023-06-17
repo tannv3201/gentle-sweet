@@ -331,7 +331,7 @@ function CheckoutInformation() {
                         </FormGroup>
                     </Grid>
                     <Grid item lg={6} md={12} sm={12} xs={12}>
-                        <GTextFieldNormal
+                        <TextField
                             onBlur={handleBlur}
                             InputLabelProps={{ shrink: true }}
                             color="secondary"
@@ -349,9 +349,8 @@ function CheckoutInformation() {
                             helperText={touched?.fullName && errors?.fullName}
                         />
                     </Grid>
-
                     <Grid item lg={6} md={12} sm={12} xs={12}>
-                        <GTextFieldNormal
+                        <TextField
                             onBlur={handleBlur}
                             InputLabelProps={{ shrink: true }}
                             color="secondary"
@@ -384,7 +383,7 @@ function CheckoutInformation() {
                             value={selectedProvince || null}
                             size="small"
                             renderInput={(params) => (
-                                <GTextFieldNormal
+                                <TextField
                                     InputLabelProps={{ shrink: true }}
                                     color="secondary"
                                     size="small"

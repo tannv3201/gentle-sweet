@@ -223,35 +223,16 @@ function OrderList({ invoiceListByUser }) {
                                                             ) => {
                                                                 return (
                                                                     <>
-                                                                        <span
-                                                                            className={
-                                                                                rowData?.unit_price_onsale
-                                                                                    ? cx(
-                                                                                          "unit_price",
-                                                                                          "onsale"
-                                                                                      )
-                                                                                    : cx(
-                                                                                          "unit_price"
-                                                                                      )
-                                                                            }
-                                                                        >
-                                                                            {FormatCurrency(
-                                                                                rowData?.unit_price
-                                                                            )}
+                                                                        <span>
+                                                                            {rowData?.unit_price_onsale >
+                                                                            0
+                                                                                ? FormatCurrency(
+                                                                                      rowData?.unit_price_onsale
+                                                                                  )
+                                                                                : FormatCurrency(
+                                                                                      rowData?.unit_price
+                                                                                  )}
                                                                         </span>
-                                                                        {rowData?.unit_price_onsale ? (
-                                                                            <span
-                                                                                className={cx(
-                                                                                    "unit_price_onsale"
-                                                                                )}
-                                                                            >
-                                                                                {FormatCurrency(
-                                                                                    rowData?.unit_price_onsale
-                                                                                )}
-                                                                            </span>
-                                                                        ) : (
-                                                                            ""
-                                                                        )}
                                                                     </>
                                                                 );
                                                             },

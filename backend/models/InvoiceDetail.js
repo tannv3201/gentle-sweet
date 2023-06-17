@@ -39,6 +39,14 @@ const updatePriceTotalInvoice = async (invoice_id, deliveryPrice) => {
     return result.affectedRows;
 };
 
+const checkPriceTotal = async (invoice_id) => {
+    const [rows, fields] = await pool.query(
+        "SELECT SUM(product_quantity * unit_price) AS total_price FROM tbl_invoice_detail WHERE invoice_id = (?)",
+        [invoice_id]
+    );
+    return rows[0];
+};
+
 const updateInvoiceDetailById = async (id, invoiceDetail) => {
     const [result, fields] = await pool.query(
         "UPDATE tbl_invoice_detail SET ? WHERE id = ?",
@@ -58,6 +66,7 @@ const deleteInvoiceDetailById = async (id) => {
 module.exports = {
     getAllInvoiceDetail,
     getInvoiceDetailById,
+    checkPriceTotal,
     createInvoiceDetail,
     updateInvoiceDetailById,
     deleteInvoiceDetailById,

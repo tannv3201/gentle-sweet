@@ -40,7 +40,7 @@ function SummaryCheckout() {
 
     useEffect(() => {
         if (selectedProductBuyNow) productBuyNow.push(selectedProductBuyNow);
-    }, [selectedProductBuyNow]);
+    }, [productBuyNow, selectedProductBuyNow]);
 
     useEffect(() => {
         if (!user) {
@@ -60,12 +60,12 @@ function SummaryCheckout() {
                 },
             });
         }
-
         if (selectedProductCartList) selectedProduct = selectedProductCartList;
         if (selectedProductBuyNow) selectedProduct = productBuyNow?.flat();
+
         const priceTotal = selectedProduct?.reduce(
             (accumulator, currentValue) => {
-                if (currentValue?.discount_percent) {
+                if (currentValue?.unit_price_onsale > 0) {
                     const discountedPrice =
                         parseFloat(currentValue?.unit_price) -
                         (parseFloat(currentValue?.unit_price) *
@@ -74,7 +74,7 @@ function SummaryCheckout() {
 
                     return (
                         accumulator +
-                        parseFloat(discountedPrice) *
+                        parseFloat(currentValue?.unit_price_onsale) *
                             currentValue?.product_quantity
                     );
                 } else {
@@ -142,9 +142,10 @@ function SummaryCheckout() {
         const productList = await selectedProduct?.map((p) => {
             const data = {
                 ...p,
-                unit_price: p.unit_price_onsale
-                    ? parseFloat(p.unit_price_onsale)
-                    : parseFloat(p.unit_price),
+                unit_price:
+                    parseFloat(p.unit_price_onsale) > 0
+                        ? parseFloat(p.unit_price_onsale)
+                        : parseFloat(p.unit_price),
                 product_quantity: parseInt(p?.product_quantity),
                 product_id: p?.product_id,
                 invoice_id: newInvoice,
@@ -174,7 +175,6 @@ function SummaryCheckout() {
                 axiosJWT
             );
         }
-
         const delivery = await createDelivery(
             user?.accessToken,
             dispatch,
@@ -272,7 +272,8 @@ function SummaryCheckout() {
                                                                         <>
                                                                             <span
                                                                                 className={
-                                                                                    rowData?.unit_price_onsale
+                                                                                    rowData?.unit_price_onsale >
+                                                                                    0
                                                                                         ? cx(
                                                                                               "unit_price",
                                                                                               "onsale"
@@ -286,7 +287,8 @@ function SummaryCheckout() {
                                                                                     rowData?.unit_price
                                                                                 )}
                                                                             </span>
-                                                                            {rowData?.unit_price_onsale ? (
+                                                                            {rowData?.unit_price_onsale >
+                                                                            0 ? (
                                                                                 <span
                                                                                     className={cx(
                                                                                         "unit_price_onsale"
@@ -467,9 +469,14 @@ function SummaryCheckout() {
                                                                                     "shipment-price"
                                                                                 )}
                                                                             >
-                                                                                {FormatCurrency(
-                                                                                    deliveryPrice
-                                                                                )}
+                                                                                {priceTotal >
+                                                                                500000
+                                                                                    ? FormatCurrency(
+                                                                                          0
+                                                                                      )
+                                                                                    : FormatCurrency(
+                                                                                          deliveryPrice
+                                                                                      )}
                                                                             </span>
                                                                         </div>
                                                                     </Grid>
@@ -495,10 +502,15 @@ function SummaryCheckout() {
                                                                                     "grand-total-price"
                                                                                 )}
                                                                             >
-                                                                                {FormatCurrency(
-                                                                                    priceTotal +
-                                                                                        deliveryPrice
-                                                                                )}
+                                                                                {priceTotal >
+                                                                                500000
+                                                                                    ? FormatCurrency(
+                                                                                          priceTotal
+                                                                                      )
+                                                                                    : FormatCurrency(
+                                                                                          priceTotal +
+                                                                                              deliveryPrice
+                                                                                      )}
                                                                             </span>
                                                                         </div>
                                                                     </Grid>

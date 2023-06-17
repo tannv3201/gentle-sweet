@@ -36,6 +36,7 @@ function OrderDetail() {
     const [invoiceClone, setInvoiceClone] = useState({});
     const [deliveryClone, setDeliveryClone] = useState({});
     const [productListClone, setProductListClone] = useState([]);
+    const [priceTotal, setPriceTotal] = useState(0);
     const user = useSelector((state) => state.auth.login?.currentUser);
     const invoiceById = useSelector((state) => state.invoice.invoice?.invoice);
     const deliveryByInvoiceId = useSelector(
@@ -47,7 +48,19 @@ function OrderDetail() {
     const getProvinceList = structuredClone(
         useSelector((state) => state.province.province.provinceList)
     );
-
+    useEffect(() => {
+        const priceTotal = productListClone?.reduce(
+            (accumulator, currentValue) => {
+                return (
+                    accumulator +
+                    parseFloat(currentValue?.unit_price) *
+                        currentValue?.product_quantity
+                );
+            },
+            0
+        );
+        setPriceTotal(priceTotal);
+    }, [productListClone]);
     const [provinces, setProvinces] = useState([]);
     const [districts, setDistricts] = useState([]);
     const [wards, setWards] = useState([]);
@@ -81,7 +94,7 @@ function OrderDetail() {
             });
             setProductListClone(newDetailList);
         }
-    }, [getInvoiceDetail]);
+    }, [getInvoiceDetail, productList]);
 
     // Get invoice
     useEffect(() => {
@@ -570,15 +583,18 @@ function OrderDetail() {
                                                     Tạm tính:{" "}
                                                     <span>
                                                         {FormatCurrency(
-                                                            invoiceClone?.price_total -
-                                                                15000
+                                                            priceTotal
                                                         )}
                                                     </span>
                                                 </div>
                                                 <div className={cx("costs")}>
                                                     Phí vận chuyển:{" "}
                                                     <span>
-                                                        {FormatCurrency(15000)}
+                                                        {priceTotal > 500000
+                                                            ? FormatCurrency(0)
+                                                            : FormatCurrency(
+                                                                  30000
+                                                              )}
                                                     </span>
                                                 </div>
                                                 <div className={cx("total")}>
