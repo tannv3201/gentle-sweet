@@ -37,7 +37,6 @@ const serviceController = {
                     serviceQuantityBooked: booked?.count,
                 });
             }
-            console.log(newServiceList);
             return res.status(200).json(newServiceList);
         } catch (error) {
             res.status(500).json(error);
