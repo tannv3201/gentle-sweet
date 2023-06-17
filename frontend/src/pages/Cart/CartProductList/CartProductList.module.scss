@@ -1,8 +1,17 @@
 @import "../../../assets/scss/Global.scss";
 
 @include responsive(mobile) {
+    .inner {
+        padding: 12px 8px !important;
+    }
     .table-header-name {
         font-size: 1.4rem !important;
+    }
+    .prod-infor-wrapper {
+        display: flex;
+        div {
+            margin-right: 8px;
+        }
     }
     .cart-product-image {
         width: 80px;
@@ -83,9 +92,21 @@
             -webkit-line-clamp: 1; /* Giới hạn chỉ nằm trên 2 dòng */
             overflow: hidden;
         }
-        .prod-price-mobile {
-            display: block;
+        .price-wrapper {
             margin-top: 4px;
+
+            .prod-price-mobile {
+                margin-top: 4px;
+                font-size: 1.4rem;
+
+                &.onsale {
+                    text-decoration: line-through;
+                    font-size: 1.3rem;
+                    margin-right: 4px;
+                }
+            }
+            .prod-sale-price-mobile {
+            }
         }
     }
 }

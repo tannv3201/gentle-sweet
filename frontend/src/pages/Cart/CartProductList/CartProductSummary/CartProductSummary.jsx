@@ -25,21 +25,14 @@ function CartProductSummary({ selectedProductCartList }) {
     };
 
     const [priceTotal, setPriceTotal] = useState(0);
-
     useEffect(() => {
         if (selectedProductCartList) {
             const priceTotal = selectedProductCartList.reduce(
                 (accumulator, currentValue) => {
-                    if (currentValue?.discount_percent) {
-                        const discountedPrice =
-                            parseFloat(currentValue?.unit_price) -
-                            (parseFloat(currentValue?.unit_price) *
-                                currentValue?.discount_percent) /
-                                100;
-
+                    if (currentValue?.unit_price_onsale > 0) {
                         return (
                             accumulator +
-                            parseFloat(discountedPrice) *
+                            parseFloat(currentValue?.unit_price_onsale) *
                                 currentValue?.product_quantity
                         );
                     } else {

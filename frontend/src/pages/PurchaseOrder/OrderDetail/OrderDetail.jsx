@@ -62,8 +62,6 @@ function OrderDetail() {
         setPriceTotal(priceTotal);
     }, [productListClone]);
     const [provinces, setProvinces] = useState([]);
-    const [districts, setDistricts] = useState([]);
-    const [wards, setWards] = useState([]);
 
     const [selectedProvince, setSelectedProvince] = useState(null);
     const [selectedDistrict, setSelectedDistrict] = useState(null);
@@ -160,7 +158,7 @@ function OrderDetail() {
                         : "",
                 createdAt: GFormatDate(
                     invoiceById?.created_at,
-                    "DD-MM-YYYY HH:mm"
+                    "DD-MM-YYYY | HH:mm"
                 ),
             });
         }
@@ -181,7 +179,6 @@ function OrderDetail() {
                             districtList
                         );
                         setSelectedDistrict(districtSelected);
-                        setDistricts(districtList);
                     }
                 );
 
@@ -192,7 +189,6 @@ function OrderDetail() {
                             wardList
                         );
                         setSelectedWard(wardSelected);
-                        setWards(wardList);
                     }
                 );
 

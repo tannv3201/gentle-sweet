@@ -13,6 +13,7 @@
     .checkout-summary {
         padding: 12px;
         border-radius: 6px;
+
         .unit_price {
             font-weight: var(--fw-medium);
             &.onsale {
@@ -97,6 +98,12 @@
 
     .price-summary {
         padding: 12px;
+        .pricing {
+            border-top: 1px solid var(--border-color);
+            padding-top: 6px;
+            margin-top: 4px;
+        }
+
         .discount-code {
             .discount-code-btn {
                 height: 40px !important;

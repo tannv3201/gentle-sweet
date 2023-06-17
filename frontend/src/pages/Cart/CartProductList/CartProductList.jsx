@@ -28,6 +28,7 @@ const cx = classNames.bind(styles);
 function CartProductList() {
     const theme = useTheme();
     const isMedium = useMediaQuery(theme.breakpoints.down("md"));
+    const isSmall = useMediaQuery(theme.breakpoints.down("sm"));
     const [productList, setProductList] = useState([]);
     const [selectedProduct, setSelectedProduct] = useState({});
     const [selectedProductCartList, setSelectedProductCartList] = useState([]);
@@ -35,6 +36,7 @@ function CartProductList() {
         {
             title: "Ảnh",
             field: "image_url",
+            cellStyle: isSmall ? { width: "20%" } : {},
             render: (rowData) => (
                 // eslint-disable-next-line jsx-a11y/alt-text
                 <img
@@ -60,56 +62,92 @@ function CartProductList() {
                 const rowId = rowData.tableData.id;
 
                 return (
-                    <>
-                        <span className={cx("prod-name-mobile")}>
-                            {rowData?.product_name}
-                        </span>
-                        {isMedium && (
-                            <div
-                                style={{
-                                    display: "flex",
-                                    width: "130px",
-                                    marginTop: "4px",
-                                }}
-                            >
-                                <IconButton
-                                    onClick={() => handleDecrease(rowData)}
-                                >
-                                    <RemoveRounded />
-                                </IconButton>
-                                <GTextFieldNormal
-                                    onBlur={() =>
-                                        handleUpdateQuantityWhenBlur(rowId)
-                                    }
-                                    inputProps={{
-                                        inputMode: "numeric",
-                                        pattern: "[0-9]*",
-                                        maxLength: 3, // Giới hạn chiều dài của số nhập vào (ví dụ 99)
+                    <div className={cx("prod-infor-wrapper")}>
+                        <div>
+                            <span className={cx("prod-name-mobile")}>
+                                {rowData?.product_name}
+                            </span>
+                            {isSmall && (
+                                <div
+                                    style={{
+                                        display: "flex",
+                                        width: "130px",
+                                        marginTop: "4px",
                                     }}
-                                    fullWidth
-                                    value={
-                                        tempQuantity[rowId] !== undefined
-                                            ? tempQuantity[rowId]
-                                            : rowData?.product_quantity
-                                    }
-                                    onChange={(e) =>
-                                        handleQuantityChange(
-                                            e.target.value,
-                                            rowId
-                                        )
-                                    }
-                                />
-                                <IconButton
-                                    onClick={() => handleIncrease(rowData)}
                                 >
-                                    <AddRounded />
-                                </IconButton>
-                            </div>
+                                    <IconButton
+                                        onClick={() => handleDecrease(rowData)}
+                                    >
+                                        <RemoveRounded />
+                                    </IconButton>
+                                    <GTextFieldNormal
+                                        onBlur={() =>
+                                            handleUpdateQuantityWhenBlur(rowId)
+                                        }
+                                        inputProps={{
+                                            inputMode: "numeric",
+                                            pattern: "[0-9]*",
+                                            maxLength: 3, // Giới hạn chiều dài của số nhập vào (ví dụ 99)
+                                        }}
+                                        fullWidth
+                                        value={
+                                            tempQuantity[rowId] !== undefined
+                                                ? tempQuantity[rowId]
+                                                : rowData?.product_quantity
+                                        }
+                                        onChange={(e) =>
+                                            handleQuantityChange(
+                                                e.target.value,
+                                                rowId
+                                            )
+                                        }
+                                    />
+                                    <IconButton
+                                        onClick={() => handleIncrease(rowData)}
+                                    >
+                                        <AddRounded />
+                                    </IconButton>
+                                </div>
+                            )}
+                            {isSmall && (
+                                <div className={cx("price-wrapper")}>
+                                    <span
+                                        className={
+                                            rowData?.unit_price_onsale > 0
+                                                ? cx(
+                                                      "prod-price-mobile",
+                                                      "onsale"
+                                                  )
+                                                : cx("prod-price-mobile")
+                                        }
+                                    >
+                                        {FormatCurrency(rowData?.unit_price)}
+                                    </span>
+                                    {rowData?.unit_price_onsale > 0 && (
+                                        <span
+                                            className={cx(
+                                                "prod-sale-price-mobile"
+                                            )}
+                                        >
+                                            {FormatCurrency(
+                                                rowData?.unit_price_onsale
+                                            )}
+                                        </span>
+                                    )}
+                                </div>
+                            )}
+                        </div>
+                        {isSmall && (
+                            <IconButton
+                                size="large"
+                                onClick={() =>
+                                    handleOpenRemoveCartItem(rowData)
+                                }
+                            >
+                                <DeleteRounded color="error" />
+                            </IconButton>
                         )}
-                        <span className={cx("prod-price-mobile")}>
-                            Giá: {FormatCurrency(rowData?.unit_price)}
-                        </span>
-                    </>
+                    </div>
                 );
             },
         },
@@ -162,14 +200,14 @@ function CartProductList() {
                     <>
                         <span
                             className={
-                                rowData?.unit_price_onsale
+                                rowData?.unit_price_onsale > 0
                                     ? cx("unit_price", "onsale")
                                     : cx("unit_price")
                             }
                         >
                             {FormatCurrency(rowData?.unit_price)}
                         </span>
-                        {rowData?.unit_price_onsale ? (
+                        {rowData?.unit_price_onsale > 0 ? (
                             <span className={cx("unit_price_onsale")}>
                                 {FormatCurrency(rowData?.unit_price_onsale)}
                             </span>
@@ -185,6 +223,7 @@ function CartProductList() {
             field: "actions",
             sorting: false,
             export: false,
+            hidden: isSmall ? true : false,
             render: (rowData) => (
                 <div
                     style={{
@@ -208,10 +247,6 @@ function CartProductList() {
     const dispatch = useDispatch();
     let axiosJWT = createAxios(user, dispatch, loginSuccess);
 
-    const discountListCustomer = useSelector(
-        (state) => state.discount.discount?.discountListCustomer
-    );
-
     const getProductList = useSelector(
         (state) => state.product.product?.productListSearchLimit
     );
@@ -224,7 +259,6 @@ function CartProductList() {
                     icon: "😅",
                 });
             }
-            await getAllDiscountCustomer(dispatch);
             await getProductLimit(dispatch);
         };
         fetch();
@@ -243,18 +277,10 @@ function CartProductList() {
                 const getProduct = getProductList?.find(
                     (p) => p.id === parseInt(item?.product_id)
                 );
-                if (getProduct?.discount_id) {
-                    const getDiscount = discountListCustomer?.find(
-                        (d) => d.id === parseInt(getProduct.discount_id)
-                    );
 
-                    discount_percent = getDiscount?.discount_percent;
-                }
                 return {
                     ...item,
-                    unit_price_onsale:
-                        item?.unit_price -
-                        (item?.unit_price * discount_percent) / 100,
+                    unit_price_onsale: parseFloat(getProduct?.price_onsale),
                     discount_percent: discount_percent,
                 };
             });

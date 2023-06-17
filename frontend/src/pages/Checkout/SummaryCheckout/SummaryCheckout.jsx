@@ -21,7 +21,8 @@ import { useSelector } from "react-redux";
 import { loginSuccess } from "../../../redux/slice/authSlice";
 import { createAxios } from "../../../createInstance";
 import { Formik } from "formik";
-
+import { useMediaQuery } from "@mui/material";
+import { useTheme } from "@mui/material/styles";
 import { createInvoice } from "../../../redux/api/apiInvoice";
 import { createInvoiceDetail } from "../../../redux/api/apiInvoiceDetail";
 import { createDelivery } from "../../../redux/api/apiDelivery";
@@ -30,7 +31,8 @@ const cx = classNames.bind(styles);
 
 function SummaryCheckout() {
     const navigate = useNavigate();
-
+    const theme = useTheme();
+    const isSmall = useMediaQuery(theme.breakpoints.down("sm"));
     const [priceTotal, setPriceTotal] = useState(0);
     const [deliveryPrice, setDeliveryPrice] = useState(30000);
     const [productBuyNow, setProductBuyNow] = useState([]);
@@ -66,12 +68,6 @@ function SummaryCheckout() {
         const priceTotal = selectedProduct?.reduce(
             (accumulator, currentValue) => {
                 if (currentValue?.unit_price_onsale > 0) {
-                    const discountedPrice =
-                        parseFloat(currentValue?.unit_price) -
-                        (parseFloat(currentValue?.unit_price) *
-                            currentValue?.discount_percent) /
-                            100;
-
                     return (
                         accumulator +
                         parseFloat(currentValue?.unit_price_onsale) *
@@ -231,6 +227,12 @@ function SummaryCheckout() {
                                                             {
                                                                 title: "Ảnh",
                                                                 field: "image_url",
+                                                                cellStyle:
+                                                                    isSmall
+                                                                        ? {
+                                                                              width: "20%",
+                                                                          }
+                                                                        : {},
                                                                 render: (
                                                                     rowData
                                                                 ) => (
@@ -256,20 +258,32 @@ function SummaryCheckout() {
                                                             {
                                                                 title: "Tên",
                                                                 field: "product_name",
+                                                                hidden: isSmall
+                                                                    ? true
+                                                                    : false,
                                                             },
                                                             {
                                                                 title: "SL",
                                                                 field: "product_quantity",
+                                                                hidden: isSmall
+                                                                    ? true
+                                                                    : false,
                                                             },
-
                                                             {
                                                                 title: "Giá",
                                                                 field: "unit_price",
+                                                                hidden: isSmall
+                                                                    ? true
+                                                                    : false,
                                                                 render: (
                                                                     rowData
                                                                 ) => {
                                                                     return (
-                                                                        <>
+                                                                        <div
+                                                                            className={cx(
+                                                                                "prod-price-wrapper"
+                                                                            )}
+                                                                        >
                                                                             <span
                                                                                 className={
                                                                                     rowData?.unit_price_onsale >
@@ -301,7 +315,70 @@ function SummaryCheckout() {
                                                                             ) : (
                                                                                 ""
                                                                             )}
-                                                                        </>
+                                                                        </div>
+                                                                    );
+                                                                },
+                                                            },
+                                                            {
+                                                                title: "Thông tin",
+                                                                hidden: !isSmall
+                                                                    ? true
+                                                                    : false,
+                                                                render: (
+                                                                    rowData
+                                                                ) => {
+                                                                    return (
+                                                                        <div>
+                                                                            <p>
+                                                                                {
+                                                                                    rowData?.product_name
+                                                                                }
+                                                                            </p>
+                                                                            <p>
+                                                                                Số
+                                                                                lượng:{" "}
+                                                                                {
+                                                                                    rowData?.product_quantity
+                                                                                }
+                                                                            </p>
+                                                                            <div
+                                                                                className={cx(
+                                                                                    "prod-price-wrapper"
+                                                                                )}
+                                                                            >
+                                                                                <span
+                                                                                    className={
+                                                                                        rowData?.unit_price_onsale >
+                                                                                        0
+                                                                                            ? cx(
+                                                                                                  "unit_price",
+                                                                                                  "onsale"
+                                                                                              )
+                                                                                            : cx(
+                                                                                                  "unit_price"
+                                                                                              )
+                                                                                    }
+                                                                                >
+                                                                                    {FormatCurrency(
+                                                                                        rowData?.unit_price
+                                                                                    )}
+                                                                                </span>
+                                                                                {rowData?.unit_price_onsale >
+                                                                                0 ? (
+                                                                                    <span
+                                                                                        className={cx(
+                                                                                            "unit_price_onsale"
+                                                                                        )}
+                                                                                    >
+                                                                                        {FormatCurrency(
+                                                                                            rowData?.unit_price_onsale
+                                                                                        )}
+                                                                                    </span>
+                                                                                ) : (
+                                                                                    ""
+                                                                                )}
+                                                                            </div>
+                                                                        </div>
                                                                     );
                                                                 },
                                                             },
@@ -356,26 +433,6 @@ function SummaryCheckout() {
                                                                         </GButton>
                                                                     </Grid>
                                                                 </Grid>
-                                                            </div>
-                                                        </Grid>
-                                                        <Grid item xs={12}>
-                                                            <div
-                                                                className={cx(
-                                                                    "signup-recommend"
-                                                                )}
-                                                            >
-                                                                <span>
-                                                                    <a
-                                                                        className={cx(
-                                                                            "signup-recommend-link"
-                                                                        )}
-                                                                        href="#"
-                                                                    >
-                                                                        Đăng ký
-                                                                    </a>{" "}
-                                                                    ngay để nhận
-                                                                    ưu đãi !
-                                                                </span>
                                                             </div>
                                                         </Grid>
                                                         <Grid item xs={12}>

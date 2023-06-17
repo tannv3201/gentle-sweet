@@ -21,6 +21,7 @@ function OrderList({ invoiceListByUser }) {
     const handleNavigateOrderDetail = (invoiceId) => {
         navigate(`/don-mua/${invoiceId}`);
     };
+    console.log(invoiceListByUser);
     return (
         <>
             {invoiceListByUser?.length !== 0 ? (
@@ -279,9 +280,14 @@ function OrderList({ invoiceListByUser }) {
                                                                         >
                                                                             Giá:{" "}
                                                                             <span>
-                                                                                {FormatCurrency(
-                                                                                    rowData?.unit_price
-                                                                                )}
+                                                                                {rowData?.unit_price_onsale >
+                                                                                0
+                                                                                    ? FormatCurrency(
+                                                                                          rowData?.unit_price_onsale
+                                                                                      )
+                                                                                    : FormatCurrency(
+                                                                                          rowData?.unit_price
+                                                                                      )}
                                                                             </span>
                                                                         </span>
                                                                     </div>
