@@ -235,31 +235,7 @@ function ProductDetail() {
                                                                 quantitylabel
                                                             />
                                                         </Grid>
-                                                        <Grid item xs={12}>
-                                                            <div
-                                                                className={cx(
-                                                                    "product-briefing-sold"
-                                                                )}
-                                                            >
-                                                                <span
-                                                                    className={cx(
-                                                                        "product-sold-title"
-                                                                    )}
-                                                                >
-                                                                    Đã bán:
-                                                                </span>
-                                                                <span
-                                                                    className={cx(
-                                                                        "product-sold-quantity"
-                                                                    )}
-                                                                >
-                                                                    {productDetail?.productQuantitySold
-                                                                        ? productDetail?.productQuantitySold
-                                                                        : 0}
-                                                                </span>
-                                                            </div>
-                                                        </Grid>
-                                                        <Grid item xs={12}>
+                                                        <Grid item xs={6}>
                                                             <div
                                                                 className={cx(
                                                                     "product-briefing-sold"
@@ -280,6 +256,30 @@ function ProductDetail() {
                                                                     {
                                                                         productDetail?.quantity
                                                                     }
+                                                                </span>
+                                                            </div>
+                                                        </Grid>
+                                                        <Grid item xs={6}>
+                                                            <div
+                                                                className={cx(
+                                                                    "product-briefing-sold"
+                                                                )}
+                                                            >
+                                                                <span
+                                                                    className={cx(
+                                                                        "product-sold-title"
+                                                                    )}
+                                                                >
+                                                                    Đã bán:
+                                                                </span>
+                                                                <span
+                                                                    className={cx(
+                                                                        "product-sold-quantity"
+                                                                    )}
+                                                                >
+                                                                    {productDetail?.productQuantitySold
+                                                                        ? productDetail?.productQuantitySold
+                                                                        : 0}
                                                                 </span>
                                                             </div>
                                                         </Grid>

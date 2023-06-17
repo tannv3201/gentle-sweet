@@ -1,5 +1,6 @@
 @media only screen and (max-width: 600px) {
     .shop-page-inner {
+        width: 100% !important;
         .product-list {
             padding-top: unset !important;
         }
@@ -13,8 +14,8 @@
 }
 
 .shop-page-inner {
-    width: calc(var(--default-layout-width) + 48px);
-    padding: 0 24px 40px 24px;
+    width: calc(var(--default-layout-width) + 24px);
+    padding: 0 12px 40px 12px;
 
     .product-list {
         padding-top: 24px;

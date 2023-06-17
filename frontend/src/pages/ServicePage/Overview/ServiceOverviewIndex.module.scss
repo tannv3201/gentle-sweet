@@ -1,9 +1,15 @@
+@media only screen and (max-width: 600px) {
+    .inner {
+        width: 100% !important;
+    }
+}
+
 .wrapper {
     display: flex;
     justify-content: center;
 }
 
 .inner {
-    width: calc(var(--default-layout-width) + 48px);
-    padding: 12px 24px;
+    width: calc(var(--default-layout-width) + 24px);
+    padding: 12px;
 }

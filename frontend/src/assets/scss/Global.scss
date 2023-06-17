@@ -59,7 +59,8 @@
 
     // Default layout
     --default-layout-header-height: 60px;
-    --default-layout-width: 1280px;
+    // --default-layout-width: 1280px;
+    --default-layout-width: calc(100% - 256px);
     --default-layout-horizontal-spacer: 24px;
 }
 

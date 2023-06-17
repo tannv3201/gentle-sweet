@@ -1,3 +1,9 @@
+@media only screen and (max-width: 600px) {
+    .advantage-inner {
+        width: 100% !important;
+    }
+}
+
 .advantage-wrapper {
     background-color: var(--primary-100);
     // background-size: contain;
@@ -16,8 +22,8 @@ b {
 }
 
 .advantage-inner {
-    width: calc(var(--default-layout-width) + 48px);
-    padding: 0 24px;
+    width: calc(var(--default-layout-width) + 24px);
+    padding: 0 12px;
 
     .title {
         text-align: center;

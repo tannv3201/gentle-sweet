@@ -1,6 +1,8 @@
-@import "../../../assets/scss/Global.scss";
+@media only screen and (max-width: 600px) {
+    .inner {
+        width: 100% !important;
+    }
 
-@include responsive(mobile) {
     .overview-title {
         align-items: center;
         &::before {
@@ -36,8 +38,8 @@
     padding: 80px 0;
     background-color: var(--light-gray);
     .inner {
-        width: calc(var(--default-layout-width) + 48px);
-        padding: 0 24px;
+        width: calc(var(--default-layout-width) + 24px);
+        padding: 0 12px;
 
         .overview-title {
             position: relative;

@@ -1,6 +1,8 @@
-@import "../../../assets/scss/Global.scss";
+@media only screen and (max-width: 600px) {
+    .outstanding-service-inner {
+        width: 100% !important;
+    }
 
-@include responsive(mobile) {
     .service-title {
         h3 {
             font-size: 1.8rem !important;
@@ -22,8 +24,8 @@
 }
 
 .outstanding-service-inner {
-    width: calc(var(--default-layout-width) + 48px);
-    padding: 0 24px;
+    width: calc(var(--default-layout-width) + 24px);
+    padding: 0 12px;
     .title {
         text-align: center;
         text-transform: uppercase;

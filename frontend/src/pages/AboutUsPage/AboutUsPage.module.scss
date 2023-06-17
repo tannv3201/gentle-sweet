@@ -1,3 +1,9 @@
+@media only screen and (max-width: 600px) {
+    .breadcrumb {
+        width: 100% !important;
+    }
+}
+
 .breadcrumb-wrapper {
     display: flex;
     justify-content: center;
@@ -19,7 +25,7 @@
 .breadcrumb-wrapper {
     padding: 12px 0;
     .breadcrumb {
-        width: calc(var(--default-layout-width) + 48px);
-        padding: 0 24px;
+        width: calc(var(--default-layout-width) + 24px);
+        padding: 0 12px;
     }
 }

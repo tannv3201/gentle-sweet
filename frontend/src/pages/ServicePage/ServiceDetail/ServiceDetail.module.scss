@@ -1,5 +1,18 @@
-@import "../../../assets/scss/Global.scss";
-@include responsive(mobile) {
+@media only screen and (max-width: 600px) {
+    .inner {
+        width: 100% !important;
+    }
+
+    .buy-now-btn {
+        font-size: 1.4rem !important;
+        font-weight: var(--fw-semi-bold) !important;
+    }
+
+    .add-to-cart-btn {
+        font-size: 1.4rem !important;
+        font-weight: var(--fw-semi-bold) !important;
+    }
+
     .service-briefing-title {
         h2 {
             font-size: 2.4rem !important;
@@ -165,11 +178,7 @@
 
     .cart-action {
         .add-to-cart-btn {
-            font-size: 2rem !important;
-            @include responsive(mobile) {
-                font-size: 1.4rem !important;
-                font-weight: var(--fw-semi-bold) !important;
-            }
+            font-size: 2rem;
             color: var(--primary-500);
             border-color: var(--primary-500);
             transition: background-color 0.2s linear;
@@ -179,10 +188,6 @@
         }
         .buy-now-btn {
             font-size: 2rem !important;
-            @include responsive(mobile) {
-                font-size: 1.4rem !important;
-                font-weight: var(--fw-semi-bold) !important;
-            }
             background-color: var(--primary-500);
             box-shadow: unset !important;
             transition: opacity 0.2s linear;

@@ -1,3 +1,9 @@
+@media only screen and (max-width: 600px) {
+    .content-inner-navbar {
+        width: 100% !important;
+    }
+}
+
 .wrapper {
     background-color: var(--white);
     position: fixed;

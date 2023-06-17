@@ -1,3 +1,9 @@
+@media only screen and (max-width: 600px) {
+    .home-collection-inner {
+        width: 100% !important;
+    }
+}
+
 .home-collection-wrapper {
     width: 100%;
     display: flex;
