@@ -24,7 +24,10 @@ import { createAxios } from "../../createInstance";
 import { loginSuccess } from "../../redux/slice/authSlice";
 import { API_IMAGE_URL } from "../../LocalConstants";
 import GTextFieldNormal from "../../components/GTextField/GTextFieldNormal";
-import GDatePicker from "../../components/GDatePicker/GDatePicker";
+import GDatePicker, {
+    DateFieldMobile,
+    GDatePickerMobile,
+} from "../../components/GDatePicker/GDatePicker";
 
 import { useMediaQuery } from "@mui/material";
 import { useTheme } from "@mui/material/styles";
@@ -41,6 +44,7 @@ export default function Account() {
     dayjs.extend(utc);
     const theme = useTheme();
     const isMedium = useMediaQuery(theme.breakpoints.down("md"));
+    const isSmall = useMediaQuery(theme.breakpoints.down("sm"));
     const [isEditting, setIsEditting] = useState(false);
     const user = useSelector((state) => state.auth.login?.currentUser);
     const getCustomerUser = useSelector(
@@ -335,29 +339,62 @@ export default function Account() {
                         <form onSubmit={formik.handleSubmit}>
                             <Grid container spacing={2}>
                                 <Grid item lg={6} md={12} sm={12} xs={12}>
-                                    <GDatePicker
-                                        disabled={!isEditting}
-                                        label={"Ngày sinh"}
-                                        onBlur={formik.handleBlur}
-                                        fullWidth
-                                        name="birth_date"
-                                        onChange={(date) =>
-                                            handleChangeBirthDate(date)
-                                        }
-                                        value={
-                                            formik.values?.birth_date || null
-                                        }
-                                        formik={formik}
-                                        error={
-                                            formik?.touched?.birth_date &&
-                                            Boolean(formik?.errors?.birth_date)
-                                        }
-                                        helperText={
-                                            formik?.touched?.birth_date &&
-                                            formik?.errors?.birth_date
-                                        }
-                                        inputLabelProps={{ shrink: true }}
-                                    />
+                                    {!isSmall && (
+                                        <GDatePicker
+                                            disabled={!isEditting}
+                                            label={"Ngày sinh"}
+                                            onBlur={formik.handleBlur}
+                                            fullWidth
+                                            name="birth_date"
+                                            onChange={(date) =>
+                                                handleChangeBirthDate(date)
+                                            }
+                                            value={
+                                                formik.values?.birth_date ||
+                                                null
+                                            }
+                                            formik={formik}
+                                            error={
+                                                formik?.touched?.birth_date &&
+                                                Boolean(
+                                                    formik?.errors?.birth_date
+                                                )
+                                            }
+                                            helperText={
+                                                formik?.touched?.birth_date &&
+                                                formik?.errors?.birth_date
+                                            }
+                                            inputLabelProps={{ shrink: true }}
+                                        />
+                                    )}
+                                    {isSmall && (
+                                        <DateFieldMobile
+                                            fullWidth={true}
+                                            disabled={!isEditting}
+                                            label={"Ngày sinh"}
+                                            onBlur={formik.handleBlur}
+                                            name="birth_date"
+                                            onChange={(date) =>
+                                                handleChangeBirthDate(date)
+                                            }
+                                            value={
+                                                formik.values?.birth_date ||
+                                                null
+                                            }
+                                            formik={formik}
+                                            error={
+                                                formik?.touched?.birth_date &&
+                                                Boolean(
+                                                    formik?.errors?.birth_date
+                                                )
+                                            }
+                                            helperText={
+                                                formik?.touched?.birth_date &&
+                                                formik?.errors?.birth_date
+                                            }
+                                            inputLabelProps={{ shrink: true }}
+                                        />
+                                    )}
                                 </Grid>
                                 <Grid item lg={6} md={12} sm={12} xs={12}>
                                     <GTextFieldNormal
