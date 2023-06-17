@@ -31,6 +31,9 @@ import {
     provinceApi,
     wardApi,
 } from "../../../redux/api/apiProvinceOpenAPI";
+import RequiredLabel, {
+    RequiredMark,
+} from "../../../components/RequiredLabel/RequiredLabel";
 const cx = classNames.bind(styles);
 
 function CheckoutInformation() {
@@ -322,7 +325,7 @@ function CheckoutInformation() {
             <div className={cx("delivery-information")}>
                 <Grid container spacing={2}>
                     <Grid item xs={12}>
-                        <h3>Thông tin giao hàng</h3>
+                        <RequiredLabel label={<h3>Thông tin giao hàng</h3>} />
                         <FormGroup>
                             <FormControlLabel
                                 control={<Checkbox onChange={handleInfoSame} />}
@@ -340,7 +343,11 @@ function CheckoutInformation() {
                             onChange={(e) =>
                                 setFieldValue("fullName", e.target.value)
                             }
-                            label="Họ và tên"
+                            label={
+                                <>
+                                    Họ và tên <RequiredMark />
+                                </>
+                            }
                             fullWidth
                             name="fullName"
                             error={
@@ -360,7 +367,11 @@ function CheckoutInformation() {
                             onChange={(e) =>
                                 setFieldValue("phone_number", e.target.value)
                             }
-                            label="Số điện thoại"
+                            label={
+                                <>
+                                    Số điện thoại <RequiredMark />
+                                </>
+                            }
                             fullWidth
                             name="phone_number"
                             error={
@@ -388,8 +399,11 @@ function CheckoutInformation() {
                                     color="secondary"
                                     size="small"
                                     {...params}
-                                    label="Tỉnh/Thành phố"
-                                    variant="outlined"
+                                    label={
+                                        <>
+                                            Tỉnh/Thành phố <RequiredMark />
+                                        </>
+                                    }
                                     name="province"
                                     error={
                                         touched?.province &&
@@ -418,7 +432,11 @@ function CheckoutInformation() {
                                     color="secondary"
                                     size="small"
                                     {...params}
-                                    label="Quận/Huyện"
+                                    label={
+                                        <>
+                                            Quận/Huyện <RequiredMark />
+                                        </>
+                                    }
                                     variant="outlined"
                                     name="district"
                                     error={
@@ -450,7 +468,11 @@ function CheckoutInformation() {
                                     color="secondary"
                                     size="small"
                                     {...params}
-                                    label="Xã/Phường"
+                                    label={
+                                        <>
+                                            Xã/Phường <RequiredMark />
+                                        </>
+                                    }
                                     variant="outlined"
                                     name="ward"
                                     error={
@@ -470,7 +492,11 @@ function CheckoutInformation() {
                             onChange={(e) =>
                                 setFieldValue("detail_address", e.target.value)
                             }
-                            label="Địa chỉ chi tiết"
+                            label={
+                                <>
+                                    Địa chỉ chi tiết <RequiredMark />
+                                </>
+                            }
                             fullWidth
                             name="detail_address"
                             error={
