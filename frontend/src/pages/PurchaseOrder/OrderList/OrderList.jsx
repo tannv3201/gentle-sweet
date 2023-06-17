@@ -21,7 +21,6 @@ function OrderList({ invoiceListByUser }) {
     const handleNavigateOrderDetail = (invoiceId) => {
         navigate(`/don-mua/${invoiceId}`);
     };
-    console.log(invoiceListByUser);
     return (
         <>
             {invoiceListByUser?.length !== 0 ? (

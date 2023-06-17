@@ -46,7 +46,6 @@ function NavbarMenu({ setIsOpenDrawer }) {
         );
     }, [serviceCategoryList, serviceList]);
     const navigate = useNavigate();
-    console.log(menuList);
     const handleNavigateServiceCategory = (serviceCategoryId) => {
         navigate(`/danh-muc-dich-vu/${serviceCategoryId}`);
     };
