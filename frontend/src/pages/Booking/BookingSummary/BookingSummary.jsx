@@ -11,6 +11,7 @@ import { useFormikContext } from "formik";
 import { useLocation } from "react-router-dom";
 import { GFormatDate } from "../../../components/GDatePicker/GDatePicker";
 import { FormatCurrency } from "../../../utils/FormatCurrency/formatCurrency";
+import { toast } from "react-hot-toast";
 
 const cx = classNames.bind(styles);
 
@@ -18,7 +19,11 @@ function BookingSummary() {
     const location = useLocation();
     const selectedService = location.state?.selectedService;
     const { submitForm, values } = useFormikContext();
-
+    const handleToastNull = () => {
+        if (!values?.bookingTime_id) {
+            toast.error("Vui lòng nhập đầy đủ thông tin");
+        }
+    };
     return (
         <div className={cx("wrapper")}>
             <div className={cx("inner")}>
@@ -173,7 +178,10 @@ function BookingSummary() {
                                     <GButton
                                         fullWidth
                                         type={"submit"}
-                                        onClick={submitForm}
+                                        onClick={() => {
+                                            handleToastNull();
+                                            submitForm();
+                                        }}
                                     >
                                         Xác nhận đặt lịch
                                     </GButton>
