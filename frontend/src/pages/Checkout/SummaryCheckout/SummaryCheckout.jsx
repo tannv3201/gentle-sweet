@@ -8,7 +8,6 @@ import { FormatCurrency } from "../../../components/FormatCurrency/FormatCurrenc
 import * as Yup from "yup";
 import { useState } from "react";
 import { useEffect } from "react";
-import images from "../../../assets/images";
 import GTextFieldNormal from "../../../components/GTextField/GTextFieldNormal";
 import GButton from "../../../components/MyButton/MyButton";
 import { useLocation, useNavigate } from "react-router-dom";
@@ -33,7 +32,7 @@ function SummaryCheckout() {
     const navigate = useNavigate();
 
     const [priceTotal, setPriceTotal] = useState(0);
-    const [deliveryPrice, setDeliveryPrice] = useState(15000);
+    const [deliveryPrice, setDeliveryPrice] = useState(30000);
     const [productBuyNow, setProductBuyNow] = useState([]);
     const location = useLocation();
     const selectedProductCartList = location.state?.selectedProductCartList;
@@ -88,7 +87,7 @@ function SummaryCheckout() {
             },
             0
         );
-        setPriceTotal(priceTotal + deliveryPrice);
+        setPriceTotal(priceTotal);
     }, [selectedProductCartList, productBuyNow]);
     dayjs.extend(utc);
 
@@ -171,7 +170,7 @@ function SummaryCheckout() {
                 newInvoice,
                 user?.accessToken,
                 dispatch,
-                item,
+                { ...item, deliveryPrice: deliveryPrice },
                 axiosJWT
             );
         }
@@ -497,7 +496,8 @@ function SummaryCheckout() {
                                                                                 )}
                                                                             >
                                                                                 {FormatCurrency(
-                                                                                    priceTotal
+                                                                                    priceTotal +
+                                                                                        deliveryPrice
                                                                                 )}
                                                                             </span>
                                                                         </div>

@@ -60,10 +60,11 @@ const invoiceController = {
                     unit_price: req.body.unit_price,
                     status: 1,
                 });
-
+            console.log(req.body.deliveryPrice);
             const updateTotalPrice =
                 await InvoiceDetailModel.updatePriceTotalInvoice(
-                    req.body.invoice_id
+                    req.body.invoice_id,
+                    req.body.deliveryPrice
                 );
 
             const getProductAddedInvoice = await ProductModel.getProductById(
