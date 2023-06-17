@@ -66,7 +66,7 @@ const invoiceController = {
             const updateTotalPrice =
                 await InvoiceDetailModel.updatePriceTotalInvoice(
                     req.body.invoice_id,
-                    parseInt(checkPriceTotal?.total_price) > 500000
+                    parseInt(checkPriceTotal?.total_price) >= 500000
                         ? 0
                         : req.body.deliveryPrice
                 );

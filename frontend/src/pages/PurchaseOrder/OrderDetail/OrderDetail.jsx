@@ -586,7 +586,7 @@ function OrderDetail() {
                                                 <div className={cx("costs")}>
                                                     Phí vận chuyển:{" "}
                                                     <span>
-                                                        {priceTotal > 500000
+                                                        {priceTotal >= 500000
                                                             ? FormatCurrency(0)
                                                             : FormatCurrency(
                                                                   30000

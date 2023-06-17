@@ -533,7 +533,7 @@ function SummaryCheckout() {
                                                                                     "shipment-price"
                                                                                 )}
                                                                             >
-                                                                                {priceTotal >
+                                                                                {priceTotal >=
                                                                                 500000
                                                                                     ? FormatCurrency(
                                                                                           0
@@ -566,7 +566,7 @@ function SummaryCheckout() {
                                                                                     "grand-total-price"
                                                                                 )}
                                                                             >
-                                                                                {priceTotal >
+                                                                                {priceTotal >=
                                                                                 500000
                                                                                     ? FormatCurrency(
                                                                                           priceTotal
