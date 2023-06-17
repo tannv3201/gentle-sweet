@@ -66,24 +66,24 @@ export function DateFieldMobile({
 }) {
     return (
         <LocalizationProvider dateAdapter={AdapterDayjs}>
-            <DemoContainer components={["DateField", "DateField"]}>
-                <DateField
-                    {...props}
-                    format="DD/MM/YYYY"
-                    slotProps={{
-                        textField: {
-                            fullWidth: fullWidth,
-                            size: size ? size : "small",
-                            error: error,
-                            helperText: helperText,
-                            onBlur: onBlur,
-                            color: "secondary",
-                            InputLabelProps: inputLabelProps,
-                        },
-                    }}
-                    label={label}
-                />
-            </DemoContainer>
+            {/* <DemoContainer components={["DateField", "DateField"]}> */}
+            <DateField
+                {...props}
+                format="DD/MM/YYYY"
+                slotProps={{
+                    textField: {
+                        fullWidth: fullWidth,
+                        size: size ? size : "small",
+                        error: error,
+                        helperText: helperText,
+                        onBlur: onBlur,
+                        color: "secondary",
+                        InputLabelProps: inputLabelProps,
+                    },
+                }}
+                label={label}
+            />
+            {/* </DemoContainer> */}
         </LocalizationProvider>
     );
 }

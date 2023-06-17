@@ -26,7 +26,6 @@ import { API_IMAGE_URL } from "../../LocalConstants";
 import GTextFieldNormal from "../../components/GTextField/GTextFieldNormal";
 import GDatePicker, {
     DateFieldMobile,
-    GDatePickerMobile,
 } from "../../components/GDatePicker/GDatePicker";
 
 import { useMediaQuery } from "@mui/material";

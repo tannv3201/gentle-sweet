@@ -10,6 +10,7 @@ import ModalPolycyGuideline from "./ModalPolycyGuideline/ModalPolycyGuideline";
 import { useFormikContext } from "formik";
 import { useLocation, useNavigate } from "react-router-dom";
 import GDatePicker, {
+    DateFieldMobile,
     GFormatDate,
 } from "../../../components/GDatePicker/GDatePicker";
 import { useSelector } from "react-redux";
@@ -23,10 +24,13 @@ import { toast } from "react-hot-toast";
 import { getAllBookingByUser } from "../../../redux/api/apiBooking";
 import { getBookingDetailByBookingId } from "../../../redux/api/apiBookingDetail";
 import GTextFieldNormal from "../../../components/GTextField/GTextFieldNormal";
-
+import { useMediaQuery } from "@mui/material";
+import { useTheme } from "@mui/material/styles";
 const cx = classNames.bind(styles);
 
 export default function ServiceInformation() {
+    const theme = useTheme();
+    const isSmall = useMediaQuery(theme.breakpoints.down("sm"));
     const location = useLocation();
 
     const [isOpen, setIsOpen] = useState(false);
@@ -219,7 +223,7 @@ export default function ServiceInformation() {
                                 <Grid item xs={12}>
                                     <h3>Thông tin dịch vụ</h3>
                                 </Grid>
-                                <Grid item xs={6}>
+                                <Grid item lg={6} md={6} sm={12} xs={12}>
                                     <Autocomplete
                                         disabled
                                         options={serviceCategoryClone}
@@ -253,7 +257,7 @@ export default function ServiceInformation() {
                                         )}
                                     />
                                 </Grid>
-                                <Grid item xs={6}>
+                                <Grid item lg={6} md={6} sm={12} xs={12}>
                                     <Autocomplete
                                         disabled
                                         options={serviceClone}
@@ -287,28 +291,57 @@ export default function ServiceInformation() {
                                         )}
                                     />
                                 </Grid>
-                                <Grid item xs={6}>
-                                    <GDatePicker
-                                        size={"small"}
-                                        label={"Chọn ngày"}
-                                        fullWidth
-                                        name="date"
-                                        onBlur={handleBlur}
-                                        onChange={(date) =>
-                                            handleChangeBookingDate(date)
-                                        }
-                                        value={values?.date || null}
-                                        error={
-                                            touched?.date &&
-                                            Boolean(errors?.date)
-                                        }
-                                        helperText={
-                                            touched?.date && errors?.date
-                                        }
-                                    />
-                                </Grid>
-                                <Grid item xs={6}>
+                                {!isSmall && (
+                                    <Grid item lg={6} md={6} sm={12} xs={12}>
+                                        <GDatePicker
+                                            size={"small"}
+                                            label={"Chọn ngày"}
+                                            fullWidth
+                                            name="date"
+                                            onBlur={handleBlur}
+                                            onChange={(date) =>
+                                                handleChangeBookingDate(date)
+                                            }
+                                            value={values?.date || null}
+                                            error={
+                                                touched?.date &&
+                                                Boolean(errors?.date)
+                                            }
+                                            helperText={
+                                                touched?.date && errors?.date
+                                            }
+                                        />
+                                    </Grid>
+                                )}
+                                {isSmall && (
+                                    <Grid item lg={6} md={6} sm={12} xs={12}>
+                                        <DateFieldMobile
+                                            size={"small"}
+                                            label={"Chọn ngày"}
+                                            fullWidth
+                                            name="date"
+                                            onBlur={handleBlur}
+                                            onChange={(date) =>
+                                                handleChangeBookingDate(date)
+                                            }
+                                            value={values?.date || null}
+                                            error={
+                                                touched?.date &&
+                                                Boolean(errors?.date)
+                                            }
+                                            helperText={
+                                                touched?.date && errors?.date
+                                            }
+                                        />
+                                    </Grid>
+                                )}
+                                <Grid item lg={6} md={6} sm={12} xs={12}>
                                     <Autocomplete
+                                        noOptionsText={
+                                            values?.date
+                                                ? "Bạn đang có lịch hẹn trùng, vui lòng chọn ngày khác!"
+                                                : "Vui lòng chọn ngày."
+                                        }
                                         options={bookingTime}
                                         getOptionLabel={(option) =>
                                             `${option?.name}` || ""
