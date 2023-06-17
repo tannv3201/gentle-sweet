@@ -525,9 +525,10 @@ export default function Account() {
                                             <GButton
                                                 style={{ marginLeft: "12px" }}
                                                 color="text"
-                                                onClick={() =>
-                                                    setIsEditting(false)
-                                                }
+                                                onClick={() => {
+                                                    formik.resetForm();
+                                                    setIsEditting(false);
+                                                }}
                                             >
                                                 Hủy
                                             </GButton>
