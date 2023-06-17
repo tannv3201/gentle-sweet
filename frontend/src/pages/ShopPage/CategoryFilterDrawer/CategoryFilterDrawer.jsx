@@ -1,11 +1,11 @@
 import React from "react";
 import styles from "./CategoryFilterDrawer.module.scss";
 import classNames from "classnames/bind";
-import GDrawer from "../../../common/GDrawer/GDrawer";
 import { FilterGroupList } from "../FilterGroup/FilterGroup";
 import { IconButton } from "@mui/material";
 import { CloseRounded } from "@mui/icons-material";
 import ProductCategory from "../ProductCategory/ProductCategory";
+import GDrawer from "../../../components/GDrawer/GDrawer";
 
 const cx = classNames.bind(styles);
 

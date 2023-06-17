@@ -4,14 +4,13 @@ import React from "react";
 import classNames from "classnames/bind";
 import styles from "./BookingSummary.module.scss";
 import { Grid } from "@mui/material";
-import { FormatCurrency } from "../../../components/FormatCurrency/FormatCurrency";
-import Skeleton from "@mui/material/Skeleton";
-import { useState } from "react";
-import { GInfoGroup } from "../../../common/GInfoGroup/GInfoGroup";
+
+import { GInfoGroup } from "../../../components/GInfoGroup/GInfoGroup";
 import GButton from "../../../components/MyButton/MyButton";
 import { useFormikContext } from "formik";
 import { useLocation } from "react-router-dom";
 import { GFormatDate } from "../../../components/GDatePicker/GDatePicker";
+import { FormatCurrency } from "../../../utils/FormatCurrency/formatCurrency";
 
 const cx = classNames.bind(styles);
 

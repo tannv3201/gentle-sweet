@@ -1,5 +1,5 @@
 import React from "react";
-import GModal from "../../common/GModal/GModal";
+import GModal from "../../components/GModal/GModal";
 import GButton from "../MyButton/MyButton";
 
 function ConfirmDeletePopup({

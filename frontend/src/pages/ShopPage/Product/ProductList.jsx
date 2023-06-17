@@ -3,16 +3,11 @@ import classNames from "classnames/bind";
 import styles from "./Product.module.scss";
 import { Grid } from "@mui/material";
 import GProgress from "../../../components/GProgress/GProgress";
-import axios from "axios";
 import ProductSkeleton from "./ProductSkeleton";
-import ProductCard from "../../../common/ProductCard/ProductCard";
-import GPagination from "../../../common/GPagination/GPagination";
+import GPagination from "../../../components/GPagination/GPagination";
 import { useDispatch } from "react-redux";
 import { useSelector } from "react-redux";
-import {
-    getAllProductCategory,
-    getAllProductCategoryCustomer,
-} from "../../../redux/api/apiProductCategory";
+import { getAllProductCategory } from "../../../redux/api/apiProductCategory";
 import {
     getAllDiscount,
     getAllDiscountCustomer,
@@ -21,6 +16,7 @@ import { getAllProduct, getProductLimit } from "../../../redux/api/apiProduct";
 import { API_IMAGE_URL } from "../../../LocalConstants";
 import { useLocation, useNavigate, useSearchParams } from "react-router-dom";
 import { getCurrentPage } from "../../../redux/api/apiPagination";
+import ProductCard from "../../../components/ProductCard/ProductCard";
 
 const cx = classNames.bind(styles);
 

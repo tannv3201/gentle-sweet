@@ -4,7 +4,7 @@ import { MenuRounded } from "@mui/icons-material";
 import { useMediaQuery } from "@mui/material";
 import { useTheme } from "@mui/material/styles";
 import Box from "@mui/material/Box";
-import { LightTooltip } from "../../components/GTooltip/GTooltip";
+import { LightTooltip } from "../GTooltip/GTooltip";
 import { SwipeableDrawer } from "@mui/material";
 
 function GDrawer({

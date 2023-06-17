@@ -4,7 +4,6 @@ import React from "react";
 import classNames from "classnames/bind";
 import styles from "./SummaryCheckout.module.scss";
 import { Grid } from "@mui/material";
-import { FormatCurrency } from "../../../components/FormatCurrency/FormatCurrency";
 import * as Yup from "yup";
 import { useState } from "react";
 import { useEffect } from "react";
@@ -12,7 +11,7 @@ import GTextFieldNormal from "../../../components/GTextField/GTextFieldNormal";
 import GButton from "../../../components/MyButton/MyButton";
 import { useLocation, useNavigate } from "react-router-dom";
 import { API_IMAGE_URL } from "../../../LocalConstants";
-import GTable, { GTableProductCheckout } from "../../../common/GTable/GTable";
+import { GTableProductCheckout } from "../../../components/GTable/GTable";
 import CheckoutInformation from "../CheckoutInformation/CheckoutInformation";
 import utc from "dayjs/plugin/utc";
 import dayjs from "dayjs";
@@ -27,6 +26,7 @@ import { createInvoice } from "../../../redux/api/apiInvoice";
 import { createInvoiceDetail } from "../../../redux/api/apiInvoiceDetail";
 import { createDelivery } from "../../../redux/api/apiDelivery";
 import { toast } from "react-hot-toast";
+import { FormatCurrency } from "../../../utils/FormatCurrency/formatCurrency";
 const cx = classNames.bind(styles);
 
 function SummaryCheckout() {

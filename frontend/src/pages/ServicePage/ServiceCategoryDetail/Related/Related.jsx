@@ -50,7 +50,7 @@ function Related() {
                                         </span>
                                     </Grid>
                                     {serviceListClone?.map((service, idx) => (
-                                        <Grid item xs={12}>
+                                        <Grid item xs={12} key={idx}>
                                             <div
                                                 onClick={() =>
                                                     handleNavigateServiceDetail(

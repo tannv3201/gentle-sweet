@@ -4,7 +4,6 @@ import styles from "./CartProductList.module.scss";
 import { Grid, IconButton } from "@mui/material";
 import GButton from "../../../components/MyButton/MyButton";
 import { DeleteRounded, RemoveRounded } from "@mui/icons-material";
-import { FormatCurrency } from "../../../components/FormatCurrency/FormatCurrency";
 import { AddRounded } from "@mui/icons-material";
 import { getCartByUserId, updateCart } from "../../../redux/api/apiCart";
 import { useSelector } from "react-redux";
@@ -12,16 +11,16 @@ import { useDispatch } from "react-redux";
 import { createAxios } from "../../../createInstance";
 import { loginSuccess } from "../../../redux/slice/authSlice";
 import { API_IMAGE_URL } from "../../../LocalConstants";
-import GTable from "../../../common/GTable/GTable";
+import GTable from "../../../components/GTable/GTable";
 import GTextFieldNormal from "../../../components/GTextField/GTextFieldNormal";
 import ConfirmRemoveCartItem from "./ConfirmRemoveCartItem";
-import { getAllDiscountCustomer } from "../../../redux/api/apiDiscount";
 import { getProductLimit } from "../../../redux/api/apiProduct";
 import CartProductSummary from "./CartProductSummary/CartProductSummary";
 import { useMediaQuery } from "@mui/material";
 import { useTheme } from "@mui/material/styles";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-hot-toast";
+import { FormatCurrency } from "../../../utils/FormatCurrency/formatCurrency";
 
 const cx = classNames.bind(styles);
 

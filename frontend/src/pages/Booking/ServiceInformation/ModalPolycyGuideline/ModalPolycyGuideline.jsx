@@ -5,10 +5,10 @@ import { Grid } from "@mui/material";
 
 import { useMediaQuery } from "@mui/material";
 import { useTheme } from "@mui/material/styles";
-import GModal from "../../../../common/GModal/GModal";
+import GModal from "../../../../components/GModal/GModal";
 import { IconButton } from "@mui/material";
 
-import { MenuRounded, QuestionMarkRounded } from "@mui/icons-material";
+import { QuestionMarkRounded } from "@mui/icons-material";
 import Box from "@mui/material/Box";
 import { LightTooltip } from "../../../../components/GTooltip/GTooltip";
 const cx = classNames.bind(styles);

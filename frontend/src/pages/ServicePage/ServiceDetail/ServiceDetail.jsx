@@ -3,14 +3,8 @@ import styles from "./ServiceDetail.module.scss";
 import classNames from "classnames/bind";
 import { Grid } from "@mui/material";
 import GRating from "../../../components/GRating/GRating";
-import { FormatCurrency } from "../../../components/FormatCurrency/FormatCurrency";
 import { useState } from "react";
-import {
-    HorizontalRuleRounded,
-    AddRounded,
-    AddShoppingCartRounded,
-    ListAltRounded,
-} from "@mui/icons-material";
+import { ListAltRounded } from "@mui/icons-material";
 import GButton from "../../../components/MyButton/MyButton";
 import { useMediaQuery } from "@mui/material";
 import { useTheme } from "@mui/material/styles";
@@ -18,60 +12,32 @@ import AppBar from "@mui/material/AppBar";
 import TabPanel from "../../../components/TabPanel/TabPanel";
 import MyTabs from "../../../components/TabPanel/Tabs";
 import MyTab from "../../../components/TabPanel/Tab";
-import ProductRating from "./ProductRating/ProductRating";
 import { useNavigate, useParams } from "react-router-dom";
-import { customerGetProductById } from "../../../redux/api/apiProduct";
 import { useDispatch } from "react-redux";
 import { useSelector } from "react-redux";
 import { API_IMAGE_URL } from "../../../LocalConstants";
 import { getAllDiscountCustomer } from "../../../redux/api/apiDiscount";
 import { toast } from "react-hot-toast";
-import { createInvoice } from "../../../redux/api/apiInvoice";
-import { createAxios } from "../../../createInstance";
-import { loginSuccess, logoutSuccess } from "../../../redux/slice/authSlice";
-import { createCart } from "../../../redux/api/apiCart";
 import { getServiceById } from "../../../redux/api/apiService";
-import ServiceDescription from "./ServiceDescription/ServiceDescription";
+import Comments from "../../../components/Comments/Comments";
+import ItemDetailDescription from "../../../components/ItemDetailDescription/ItemDetailDescription";
+import { FormatCurrency } from "../../../utils/FormatCurrency/formatCurrency";
 const cx = classNames.bind(styles);
 
 function ServiceDetail() {
     const theme = useTheme();
     const isMedium = useMediaQuery(theme.breakpoints.down("md"));
-    const isSmall = useMediaQuery(theme.breakpoints.down("sm"));
     const dispatch = useDispatch();
     const [serviceDetailClone, setProductDetailClone] = useState({});
 
-    const [buyQuantity, setBuyQuantity] = useState(1);
     const [tabIndex, setTabIndex] = React.useState(0);
 
     const handleTabChange = (event, newTabIndex) => {
         setTabIndex(newTabIndex);
     };
 
-    const handleChangeBuyQuantity = (value) => {
-        setBuyQuantity(value);
-    };
-
-    const handleReduceBuyQuantity = () => {
-        if (buyQuantity > 1) {
-            setBuyQuantity(parseInt(buyQuantity, 10) - 1);
-        }
-    };
-
-    const handleIncreaseBuyQuantity = () => {
-        setBuyQuantity(parseInt(buyQuantity, 10) + 1);
-    };
-
-    const handleKeyDown = (e) => {
-        if (e.key === "e" || e.key === "E") {
-            // ngăn chặn kí tự "e" hoặc "E"
-            e.preventDefault();
-        }
-    };
-
     const { serviceId } = useParams();
     const user = useSelector((state) => state.auth.login?.currentUser);
-    let axiosJWT = createAxios(user, dispatch, loginSuccess);
 
     const getService = useSelector((state) => state.service.service.service);
     const discountListCustomer = useSelector(
@@ -109,21 +75,6 @@ function ServiceDetail() {
                     selectedService: serviceDetailClone,
                 },
             });
-            // await createCart(
-            //     user?.accessToken,
-            //     dispatch,
-            //     {
-            //         customer_user_id: user?.id,
-            //         service_id: serviceDetailClone?.id,
-            //         service_name: serviceDetailClone?.name,
-            //         service_quantity: buyQuantity,
-            //         unit_price: parseFloat(serviceDetailClone?.price),
-            //         image_url: serviceDetailClone?.image_url,
-            //     },
-            //     axiosJWT
-            // ).then(() => {
-            //     toast.success("oke rồi em");
-            // });
         }
     };
     return (
@@ -380,12 +331,12 @@ function ServiceDetail() {
                                 </AppBar>
                                 <div className={cx("tabpanel-container")}>
                                     <TabPanel value={tabIndex} index={0}>
-                                        <ServiceDescription
-                                            serviceDetail={serviceDetailClone}
+                                        <ItemDetailDescription
+                                            itemDetail={serviceDetailClone}
                                         />
                                     </TabPanel>
                                     <TabPanel value={tabIndex} index={1}>
-                                        <ProductRating />
+                                        <Comments />
                                     </TabPanel>
                                 </div>
                             </div>

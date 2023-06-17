@@ -46,7 +46,7 @@ function NavbarMenu({ setIsOpenDrawer }) {
         );
     }, [serviceCategoryList, serviceList]);
     const navigate = useNavigate();
-
+    console.log(menuList);
     const handleNavigateServiceCategory = (serviceCategoryId) => {
         navigate(`/danh-muc-dich-vu/${serviceCategoryId}`);
     };
@@ -113,10 +113,15 @@ function NavbarMenu({ setIsOpenDrawer }) {
                                         className={cx("child-item-name")}
                                         key={idx}
                                         onClick={() => {
-                                            setIsOpenDrawer(false);
-                                            handleNavigateServiceCategory(
-                                                child?.serviceCategoryId
-                                            );
+                                            if (child?.serviceCategoryId) {
+                                                setIsOpenDrawer(false);
+                                                handleNavigateServiceCategory(
+                                                    child?.serviceCategoryId
+                                                );
+                                            } else {
+                                                setIsOpenDrawer(false);
+                                                handleNavigate(child?.to);
+                                            }
                                         }}
                                     >
                                         {child?.name}

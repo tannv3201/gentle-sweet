@@ -9,7 +9,7 @@ import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
 import { createAxios } from "../../../createInstance";
 import { loginSuccess } from "../../../redux/slice/authSlice";
-import GModal from "../../../common/GModal/GModal";
+import GModal from "../../../components/GModal/GModal";
 import GTextFieldNormal from "../../../components/GTextField/GTextFieldNormal";
 import GButton from "../../../components/MyButton/MyButton";
 import { customerUserPasswordChange } from "../../../redux/api/apiCustomerUser";

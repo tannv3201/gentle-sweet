@@ -11,13 +11,13 @@ import { loginSuccess } from "../../../redux/slice/authSlice";
 import { getBookingById } from "../../../redux/api/apiBooking";
 import { GFormatDate } from "../../../components/GDatePicker/GDatePicker";
 import { getBookingDetailByBookingId } from "../../../redux/api/apiBookingDetail";
-import { FormatCurrency } from "../../../components/FormatCurrency/FormatCurrency";
 import { API_IMAGE_URL } from "../../../LocalConstants";
 import { ArrowBackIosNew } from "@mui/icons-material";
 import ConfirmCancelBookingPopup from "../ConfirmCancelBookingPopup/ConfirmCancelBookingPopup";
-import { GTableProductCheckout } from "../../../common/GTable/GTable";
+import { GTableProductCheckout } from "../../../components/GTable/GTable";
 import { useMediaQuery } from "@mui/material";
 import { useTheme } from "@mui/material/styles";
+import { FormatCurrency } from "../../../utils/FormatCurrency/formatCurrency";
 const cx = classNames.bind(styles);
 
 function BookedDetail() {

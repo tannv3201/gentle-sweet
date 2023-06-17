@@ -3,10 +3,9 @@ import classNames from "classnames/bind";
 import styles from "./CartProductSummary.module.scss";
 import { Grid } from "@mui/material";
 import GButton from "../../../../components/MyButton/MyButton";
-import { FormatCurrency } from "../../../../components/FormatCurrency/FormatCurrency";
 import { useNavigate } from "react-router-dom";
-import { useSelector } from "react-redux";
 import { toast } from "react-hot-toast";
+import { FormatCurrency } from "../../../../utils/FormatCurrency/formatCurrency";
 
 const cx = classNames.bind(styles);
 

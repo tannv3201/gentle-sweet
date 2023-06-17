@@ -12,11 +12,10 @@ import { getInvoiceById } from "../../../redux/api/apiInvoice";
 import { GFormatDate } from "../../../components/GDatePicker/GDatePicker";
 import { getDeliveryByInvoiceId } from "../../../redux/api/apiDelivery";
 import { getInvoiceDetailByInvoiceId } from "../../../redux/api/apiInvoiceDetail";
-import { FormatCurrency } from "../../../components/FormatCurrency/FormatCurrency";
 import { API_IMAGE_URL } from "../../../LocalConstants";
 import ConfirmCancelOrderPopup from "../ConfirmCancelOrderPopup/ConfirmCancelOrderPopup";
 import { ArrowBackIosNew } from "@mui/icons-material";
-import { GTableProductCheckout } from "../../../common/GTable/GTable";
+import { GTableProductCheckout } from "../../../components/GTable/GTable";
 import { useMediaQuery } from "@mui/material";
 import { useTheme } from "@mui/material/styles";
 import {
@@ -26,6 +25,7 @@ import {
     getWardById,
     wardApi,
 } from "../../../redux/api/apiProvinceOpenAPI";
+import { FormatCurrency } from "../../../utils/FormatCurrency/formatCurrency";
 
 const cx = classNames.bind(styles);
 

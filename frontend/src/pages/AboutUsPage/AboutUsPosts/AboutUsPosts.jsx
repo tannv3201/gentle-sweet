@@ -3,7 +3,7 @@ import classNames from "classnames/bind";
 import styles from "./AboutUsPosts.module.scss";
 import { Grid } from "@mui/material";
 import images from "../../../assets/images";
-import GImage from "../../../common/GImage/GImage";
+import GImage from "../../../components/GImage/GImage";
 const cx = classNames.bind(styles);
 
 function AboutUsPosts() {

@@ -10,7 +10,7 @@ import Advantage from "./Strengths/Strengths";
 import OutstandingProduct from "./OutstandingProduct/OutstandingProduct";
 import { useMediaQuery } from "@mui/material";
 import { useTheme } from "@mui/material/styles";
-import SalonSystem from "../../common/SalonSystem/SalonSystem";
+import SalonSystem from "../../components/SalonSystem/SalonSystem";
 import { getAllProduct } from "../../redux/api/apiProduct";
 import { useDispatch } from "react-redux";
 import { provinceApi } from "../../redux/api/apiProvinceOpenAPI";

@@ -1,11 +1,11 @@
 import React from "react";
 import GButton from "../../../components/MyButton/MyButton";
-import GModal from "../../../common/GModal/GModal";
+import GModal from "../../../components/GModal/GModal";
 import { useFormik } from "formik";
 import GTextFieldNormal from "../../../components/GTextField/GTextFieldNormal";
 import { Grid } from "@mui/material";
 import * as Yup from "yup";
-import { cancelInvoice, updateInvoice } from "../../../redux/api/apiInvoice";
+import { updateInvoice } from "../../../redux/api/apiInvoice";
 import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
 import { createAxios } from "../../../createInstance";

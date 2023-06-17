@@ -1,6 +1,6 @@
 import React from "react";
 import GButton from "../../../components/MyButton/MyButton";
-import GModal from "../../../common/GModal/GModal";
+import GModal from "../../../components/GModal/GModal";
 import { useFormik } from "formik";
 import GTextFieldNormal from "../../../components/GTextField/GTextFieldNormal";
 import { Grid } from "@mui/material";

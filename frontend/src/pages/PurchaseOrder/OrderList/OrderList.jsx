@@ -4,13 +4,13 @@ import { useTheme } from "@mui/material/styles";
 import classNames from "classnames/bind";
 import styles from "./OrderList.module.scss";
 import { Grid } from "@mui/material";
-import { FormatCurrency } from "../../../components/FormatCurrency/FormatCurrency";
 import GButton from "../../../components/MyButton/MyButton";
 
 import { API_IMAGE_URL } from "../../../LocalConstants";
 import { useNavigate } from "react-router-dom";
-import { VisibilityOffRounded, VisibilityRounded } from "@mui/icons-material";
-import { GTableProductCheckout } from "../../../common/GTable/GTable";
+import { VisibilityRounded } from "@mui/icons-material";
+import { GTableProductCheckout } from "../../../components/GTable/GTable";
+import { FormatCurrency } from "../../../utils/FormatCurrency/formatCurrency";
 const cx = classNames.bind(styles);
 
 function OrderList({ invoiceListByUser }) {

@@ -1,9 +1,8 @@
 import React, { useEffect } from "react";
 import styles from "./ProductDetail.module.scss";
 import classNames from "classnames/bind";
-import { Button, Grid } from "@mui/material";
+import { Grid } from "@mui/material";
 import GRating from "../../../components/GRating/GRating";
-import { FormatCurrency } from "../../../components/FormatCurrency/FormatCurrency";
 import { useState } from "react";
 import {
     HorizontalRuleRounded,
@@ -17,8 +16,7 @@ import AppBar from "@mui/material/AppBar";
 import TabPanel from "../../../components/TabPanel/TabPanel";
 import MyTabs from "../../../components/TabPanel/Tabs";
 import MyTab from "../../../components/TabPanel/Tab";
-import ProductDescription from "./ProductDescription/ProductDescription";
-import ProductRating from "./ProductRating/ProductRating";
+
 import { useNavigate, useParams } from "react-router-dom";
 import { customerGetProductById } from "../../../redux/api/apiProduct";
 import { useDispatch } from "react-redux";
@@ -26,14 +24,16 @@ import { useSelector } from "react-redux";
 import { API_IMAGE_URL } from "../../../LocalConstants";
 import { getAllDiscountCustomer } from "../../../redux/api/apiDiscount";
 import { toast } from "react-hot-toast";
-import { createInvoice } from "../../../redux/api/apiInvoice";
 import { createAxios } from "../../../createInstance";
-import { loginSuccess, logoutSuccess } from "../../../redux/slice/authSlice";
+import { loginSuccess } from "../../../redux/slice/authSlice";
 import {
     createCart,
     getCartByUserId,
     updateCart,
 } from "../../../redux/api/apiCart";
+import ItemDetailDescription from "../../../components/ItemDetailDescription/ItemDetailDescription";
+import Comments from "../../../components/Comments/Comments";
+import { FormatCurrency } from "../../../utils/FormatCurrency/formatCurrency";
 const cx = classNames.bind(styles);
 
 function ProductDetail() {
@@ -498,12 +498,12 @@ function ProductDetail() {
                                 </AppBar>
                                 <div className={cx("tabpanel-container")}>
                                     <TabPanel value={tabIndex} index={0}>
-                                        <ProductDescription
-                                            productDetail={productDetail}
+                                        <ItemDetailDescription
+                                            itemDetail={productDetail}
                                         />
                                     </TabPanel>
                                     <TabPanel value={tabIndex} index={1}>
-                                        <ProductRating />
+                                        <Comments />
                                     </TabPanel>
                                 </div>
                             </div>

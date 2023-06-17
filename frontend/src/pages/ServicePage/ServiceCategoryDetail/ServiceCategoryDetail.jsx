@@ -125,7 +125,8 @@ function ServiceCategoryDetail() {
                                                                     >
                                                                         {serviceListClone?.map(
                                                                             (
-                                                                                service
+                                                                                service,
+                                                                                idx
                                                                             ) => (
                                                                                 <Grid
                                                                                     item
@@ -142,7 +143,7 @@ function ServiceCategoryDetail() {
                                                                                         6
                                                                                     }
                                                                                     key={
-                                                                                        service?.id
+                                                                                        idx
                                                                                     }
                                                                                     onClick={() =>
                                                                                         handleNavigateServiceDetail(

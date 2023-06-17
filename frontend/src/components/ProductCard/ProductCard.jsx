@@ -5,7 +5,6 @@ import styles from "./ProductCard.module.scss";
 
 import { Rating } from "@mui/material";
 
-import { FormatCurrency } from "../../components/FormatCurrency/FormatCurrency";
 import { useSelector } from "react-redux";
 import { createAxios } from "../../createInstance";
 import { loginSuccess } from "../../redux/slice/authSlice";
@@ -16,6 +15,7 @@ import {
     updateCart,
 } from "../../redux/api/apiCart";
 import { toast } from "react-hot-toast";
+import { FormatCurrency } from "../../utils/FormatCurrency/formatCurrency";
 
 const cx = classNames.bind(styles);
 

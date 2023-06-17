@@ -1,31 +1,22 @@
 import React, { useEffect, useState } from "react";
 import classNames from "classnames/bind";
 import styles from "./OutstandingProduct.module.scss";
-import images from "../../../assets/images";
 import { Grid } from "@mui/material";
-import { Rating } from "@mui/material";
 import { ArrowForwardRounded, FormatQuoteRounded } from "@mui/icons-material";
-import { useMediaQuery } from "@mui/material";
-import { useTheme } from "@mui/material/styles";
 import { NavLink, useNavigate } from "react-router-dom";
-import { FormatCurrency } from "../../../components/FormatCurrency/FormatCurrency";
-import ProductCard from "../../../common/ProductCard/ProductCard";
 import { useSelector } from "react-redux";
-import { getAllProduct, getProductLimit } from "../../../redux/api/apiProduct";
+import { getAllProduct } from "../../../redux/api/apiProduct";
 import { useDispatch } from "react-redux";
 import { API_IMAGE_URL } from "../../../LocalConstants";
-import {
-    getAllProductCategory,
-    getAllProductCategoryCustomer,
-} from "../../../redux/api/apiProductCategory";
+import { getAllProductCategoryCustomer } from "../../../redux/api/apiProductCategory";
 import { getAllDiscountCustomer } from "../../../redux/api/apiDiscount";
+import ProductCard from "../../../components/ProductCard/ProductCard";
 
 const cx = classNames.bind(styles);
 
 function OutstandingProduct() {
     const dispatch = useDispatch();
     const [productListClone, setProductListClone] = useState([]);
-    const [productCategoryList, setProductCategoryList] = useState([]);
     const navigate = useNavigate();
     const productList = useSelector(
         (state) => state.product.product?.productList
