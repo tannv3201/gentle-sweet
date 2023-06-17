@@ -40,6 +40,7 @@ function BookedSchedule() {
 
     const navigate = useNavigate();
     const [bookingList, setBookingList] = useState([]);
+    console.log(bookingList);
     const [bookingListStatus1, setBookingListStatus1] = useState([]);
     const [bookingListStatus2, setBookingListStatus2] = useState([]);
     const [bookingListStatus3, setBookingListStatus3] = useState([]);
@@ -118,7 +119,6 @@ function BookedSchedule() {
                 const serviceIds = bookingDetails
                     .flat()
                     .map((item) => item?.service_id);
-
                 const productsPromise = serviceIds.map((id) =>
                     getServiceById(dispatch, id, user?.accessToken, axiosJWT)
                 );
@@ -205,7 +205,7 @@ function BookedSchedule() {
                             <Tab label="Bắt đầu dịch vụ" value="5" />
                             <Tab label="Đã hoàn thành" value="6" />
                             <Tab label="Đã hủy" value="7" />
-                            {/* <Tab label="Yêu cầu hủy lịch hẹn" value="8" /> */}
+                            <Tab label="Yêu cầu hủy lịch hẹn" value="8" />
                         </TabList>
                     </Box>
                     <TabPanel value="1">
@@ -233,11 +233,11 @@ function BookedSchedule() {
                     <TabPanel value="7">
                         <BookedCancel bookingListByUser={bookingListStatus6} />
                     </TabPanel>
-                    {/* <TabPanel value="8">
+                    <TabPanel value="8">
                         <BookedCancelPending
                             bookingListByUser={bookingListStatus7}
                         />
-                    </TabPanel> */}
+                    </TabPanel>
                 </TabContext>
             </div>
         </div>

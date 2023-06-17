@@ -29,6 +29,7 @@ function BookedDetail() {
     const [serviceListClone, setServiceListClone] = useState([]);
     const user = useSelector((state) => state.auth.login?.currentUser);
     const bookingById = useSelector((state) => state.booking.booking?.booking);
+
     const deliveryByBookingId = useSelector(
         (state) => state.delivery.delivery?.deliveryByBookingId
     );
@@ -44,7 +45,6 @@ function BookedDetail() {
     const dispatch = useDispatch();
     const navigate = useNavigate();
     let axiosJWT = createAxios(user, dispatch, loginSuccess);
-
     useEffect(() => {
         if (getBookingDetail) {
             const newDetailList = getBookingDetail?.map((p) => {
@@ -82,25 +82,6 @@ function BookedDetail() {
     }, [bookingId]);
 
     useEffect(() => {
-        if (serviceListClone) {
-            const price_total = serviceListClone?.reduce(
-                (accumulator, currentValue) => {
-                    return (
-                        accumulator +
-                        parseFloat(currentValue?.unit_price) *
-                            currentValue?.service_quantity
-                    );
-                },
-                0
-            );
-            setBookingClone({
-                ...bookingClone,
-                provisional_price: price_total,
-            });
-        }
-    }, [serviceListClone]);
-
-    useEffect(() => {
         if (bookingById) {
             setBookingClone({
                 ...bookingById,
@@ -127,6 +108,7 @@ function BookedDetail() {
             });
         }
     }, [bookingById]);
+
     useEffect(() => {
         if (deliveryByBookingId) {
             setDeliveryClone({
@@ -406,35 +388,11 @@ function BookedDetail() {
                                                     render: (rowData) => {
                                                         return (
                                                             <>
-                                                                <span
-                                                                    className={
-                                                                        rowData?.unit_price_onsale
-                                                                            ? cx(
-                                                                                  "unit_price",
-                                                                                  "onsale"
-                                                                              )
-                                                                            : cx(
-                                                                                  "unit_price"
-                                                                              )
-                                                                    }
-                                                                >
+                                                                <span>
                                                                     {FormatCurrency(
                                                                         rowData?.unit_price
                                                                     )}
                                                                 </span>
-                                                                {rowData?.unit_price_onsale ? (
-                                                                    <span
-                                                                        className={cx(
-                                                                            "unit_price_onsale"
-                                                                        )}
-                                                                    >
-                                                                        {FormatCurrency(
-                                                                            rowData?.unit_price_onsale
-                                                                        )}
-                                                                    </span>
-                                                                ) : (
-                                                                    ""
-                                                                )}
                                                             </>
                                                         );
                                                     },
@@ -491,7 +449,8 @@ function BookedDetail() {
                                                     Tạm tính:{" "}
                                                     <span>
                                                         {FormatCurrency(
-                                                            bookingClone?.price_total
+                                                            serviceListClone[0]
+                                                                ?.unit_price
                                                         )}
                                                     </span>
                                                 </div>
@@ -499,7 +458,8 @@ function BookedDetail() {
                                                     Tổng tiền:{" "}
                                                     <span>
                                                         {FormatCurrency(
-                                                            bookingClone?.price_total
+                                                            serviceListClone[0]
+                                                                ?.unit_price
                                                         )}
                                                     </span>
                                                 </div>

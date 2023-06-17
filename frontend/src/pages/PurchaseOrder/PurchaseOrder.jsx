@@ -221,17 +221,11 @@ function PurchaseOrder() {
                         const product = products.find(
                             (p) => p?.id === detail?.product_id
                         );
-
+                        console.log(detail);
                         return {
                             ...detail,
                             image_url: product ? product.image_url : null,
                             product_name: product ? product.name : null,
-                            unit_price: product
-                                ? parseFloat(product.price)
-                                : null,
-                            unit_price_onsale: product
-                                ? parseFloat(product.price_onsale)
-                                : null,
                         };
                     });
 

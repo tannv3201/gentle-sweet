@@ -224,14 +224,9 @@ function OrderList({ invoiceListByUser }) {
                                                                 return (
                                                                     <>
                                                                         <span>
-                                                                            {rowData?.unit_price_onsale >
-                                                                            0
-                                                                                ? FormatCurrency(
-                                                                                      rowData?.unit_price_onsale
-                                                                                  )
-                                                                                : FormatCurrency(
-                                                                                      rowData?.unit_price
-                                                                                  )}
+                                                                            {FormatCurrency(
+                                                                                rowData?.unit_price
+                                                                            )}
                                                                         </span>
                                                                     </>
                                                                 );
@@ -279,14 +274,9 @@ function OrderList({ invoiceListByUser }) {
                                                                         >
                                                                             Giá:{" "}
                                                                             <span>
-                                                                                {rowData?.unit_price_onsale >
-                                                                                0
-                                                                                    ? FormatCurrency(
-                                                                                          rowData?.unit_price_onsale
-                                                                                      )
-                                                                                    : FormatCurrency(
-                                                                                          rowData?.unit_price
-                                                                                      )}
+                                                                                {FormatCurrency(
+                                                                                    rowData?.unit_price
+                                                                                )}
                                                                             </span>
                                                                         </span>
                                                                     </div>
