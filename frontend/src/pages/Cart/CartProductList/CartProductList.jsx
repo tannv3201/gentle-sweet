@@ -388,6 +388,7 @@ function CartProductList() {
                                 <Grid item xs={12}>
                                     <div className={cx("table-product-list")}>
                                         <GTable
+                                            noRecordMessage="Chưa có sản phẩm"
                                             paging={false}
                                             onSelectionChange={(rows) =>
                                                 setSelectedProductCartList(rows)

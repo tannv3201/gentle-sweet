@@ -86,6 +86,7 @@ function CartProductSummary({ selectedProductCartList }) {
                             fullWidth
                             size="medium"
                             onClick={handleCheckoutButtonClick}
+                            disabled={selectedProductCartList?.length === 0}
                         >
                             Tạo đơn hàng
                         </GButton>
