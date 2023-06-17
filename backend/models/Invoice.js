@@ -14,6 +14,14 @@ const getAllInvoiceByStatus = async (status) => {
     return rows;
 };
 
+const getProductInvoiceCancel = async (invoiceId) => {
+    const [rows, fields] = await pool.query(
+        "SELECT tbl_product.id, tbl_product.quantity, tbl_invoice_detail.product_quantity as quantityPurchased FROM tbl_invoice INNER JOIN tbl_invoice_detail ON tbl_invoice.id = tbl_invoice_detail.invoice_id INNER JOIN tbl_product ON tbl_invoice_detail.product_id = tbl_product.id WHERE tbl_invoice.id = (?)",
+        [invoiceId]
+    );
+    return rows;
+};
+
 const invoiceSearch = async (params) => {
     let query = "SELECT * FROM tbl_invoice WHERE 1=1";
     const values = [];
@@ -87,6 +95,7 @@ const deleteInvoiceById = async (id) => {
 module.exports = {
     getAllInvoice,
     getInvoiceById,
+    getProductInvoiceCancel,
     getAllInvoiceByStatus,
     invoiceSearch,
     createInvoice,

@@ -106,6 +106,18 @@ const invoiceController = {
                 invoiceId,
                 data
             );
+
+            if (req.body.status === 6) {
+                const productInvoiceCancel =
+                    await InvoiceModel.getProductInvoiceCancel(req.params.id);
+
+                for (const p of productInvoiceCancel) {
+                    await ProductModel.updateProductById(p?.id, {
+                        quantity: p?.quantity + p?.quantityPurchased,
+                    });
+                }
+            }
+
             if (affectedRows === 0) {
                 return res.json({ status: 404, msg: "Cập nhật thất bại" });
             } else {
