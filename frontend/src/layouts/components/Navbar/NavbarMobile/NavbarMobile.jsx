@@ -8,9 +8,14 @@ import images from "../../../../assets/images";
 import {
     CloseRounded,
     DateRangeRounded,
+    EditRounded,
     ExpandMore,
     HeadsetMicRounded,
+    ListAltRounded,
+    LogoutRounded,
+    Person,
     PhoneInTalkRounded,
+    RecentActorsRounded,
     ReorderRounded,
     SearchRounded,
 } from "@mui/icons-material";
@@ -19,39 +24,51 @@ import GTextFieldNormal from "../../../../components/GTextField/GTextFieldNormal
 import { MenuList } from "../navigation";
 import MenuUser from "../MenuUser/MenuUser";
 import NavbarMenu from "./NavbarMenu/NavbarMenu";
+import { useSelector } from "react-redux";
+import GButton from "../../../../components/MyButton/MyButton";
+import { useNavigate } from "react-router-dom";
+import { logout } from "../../../../redux/api/apiAuth";
+import { useDispatch } from "react-redux";
+import { createAxios } from "../../../../createInstance";
+import { logoutSuccess } from "../../../../redux/slice/authSlice";
 
 function NavbarMobile() {
     const cx = classNames.bind(styles);
     const [isOpenDrawer, setIsOpenDrawer] = useState(false);
+    const user = useSelector((state) => state.auth.login?.currentUser);
 
     const toggleDrawer = useCallback(
         () => setIsOpenDrawer((prevOpen) => !prevOpen),
         [setIsOpenDrawer]
     );
-    const [selectedNavItem, setSelectedNavItem] = useState([]);
-    const [selectedSubItem, setSelectedSubItem] = useState([]);
 
-    const handleClickNavItem = (e, item) => {
-        // if (e.target !== e.currentTarget) return;
-        if (!item.children || selectedNavItem !== item.title) {
-            setSelectedSubItem([]);
-        }
-        if (!item.children || selectedNavItem === item.title) {
-            setSelectedNavItem(undefined);
-            setSelectedSubItem([]);
-        } else {
-            setSelectedNavItem(item.title);
-        }
+    const nameAvatar = user?.first_name?.charAt(0) + user?.last_name?.charAt(0);
+    const navigate = useNavigate();
+
+    const handleNavigateAccount = () => {
+        navigate("/tai-khoan");
+        setIsOpenDrawer(false);
     };
+    const handleNavigateOrderPurchase = () => {
+        navigate("/don-mua");
+        setIsOpenDrawer(false);
+    };
+    const handleNavigateBooked = () => {
+        navigate("/quan-ly-lich-dat");
+        setIsOpenDrawer(false);
+    };
+    const dispatch = useDispatch();
 
-    const handleClickSubItem = (item) => {
-        if (selectedSubItem.includes(item.title)) {
-            const newArr = selectedSubItem.filter((x) => x !== item.title);
-            setSelectedSubItem(newArr);
-            return;
-        }
+    let axiosJWT = createAxios(user, dispatch, logoutSuccess);
 
-        setSelectedSubItem([...selectedSubItem, item.title]);
+    const handleLogout = async () => {
+        await logout(
+            dispatch,
+            user,
+            navigate,
+            user?.accessToken,
+            axiosJWT
+        ).then(() => setIsOpenDrawer(false));
     };
 
     return (
@@ -92,39 +109,105 @@ function NavbarMobile() {
                             </IconButton>
                         </div>
                         <div className={cx("navbar-body")}>
-                            <div className={cx("navbar-search")}>
-                                <GTextFieldNormal />
-                                <IconButton size="large">
-                                    <SearchRounded
-                                        className={cx("search-icon")}
-                                    />
-                                </IconButton>
-                            </div>
+                            {user?.id && (
+                                <div className={cx("navbar-user")}>
+                                    <Grid container spacing={1.5}>
+                                        <Grid item xs={12}>
+                                            <div className={cx("user-avatar")}>
+                                                <span
+                                                    className={cx(
+                                                        "user-avatar-img"
+                                                    )}
+                                                >
+                                                    {nameAvatar}
+                                                </span>
+                                                <div
+                                                    className={cx(
+                                                        "user-fullName-wrapper"
+                                                    )}
+                                                >
+                                                    <span
+                                                        className={cx(
+                                                            "user-fullName"
+                                                        )}
+                                                    >
+                                                        {user?.last_name +
+                                                            " " +
+                                                            user?.first_name}
+                                                    </span>
+                                                    <IconButton
+                                                        onClick={
+                                                            handleNavigateAccount
+                                                        }
+                                                        size="large"
+                                                    >
+                                                        <EditRounded fontSize="medium" />
+                                                    </IconButton>
+                                                </div>
+                                            </div>
+                                        </Grid>
+                                        <Grid item xs={6}>
+                                            <GButton
+                                                startIcon={<ListAltRounded />}
+                                                color={"text"}
+                                                fullWidth
+                                                onClick={
+                                                    handleNavigateOrderPurchase
+                                                }
+                                            >
+                                                Đơn hàng
+                                            </GButton>
+                                        </Grid>
+                                        <Grid item xs={6}>
+                                            <GButton
+                                                color={"text"}
+                                                startIcon={
+                                                    <RecentActorsRounded />
+                                                }
+                                                fullWidth
+                                                onClick={handleNavigateBooked}
+                                            >
+                                                Lịch hẹn
+                                            </GButton>
+                                        </Grid>
+                                    </Grid>
+                                </div>
+                            )}
                             <NavbarMenu setIsOpenDrawer={setIsOpenDrawer} />
                         </div>
                         <div className={cx("footer-actions")}>
-                            <Grid container spacing={3}>
+                            <Grid container spacing={1.5}>
                                 <Grid item xs={6}>
-                                    <a
+                                    <GButton
                                         className={cx("call-action")}
                                         href="tel:0399859634"
+                                        startIcon={<PhoneInTalkRounded />}
+                                        fullWidth
+                                        variant="outlined"
                                     >
-                                        <PhoneInTalkRounded />
-                                        <span>0386.653.766</span>
-                                    </a>
+                                        0386.653.766
+                                    </GButton>
                                 </Grid>
                                 <Grid item xs={6}>
-                                    <a className={cx("advise-action")} href="">
-                                        <HeadsetMicRounded />
-                                        <span>Tư vấn</span>
-                                    </a>
+                                    <GButton
+                                        startIcon={<HeadsetMicRounded />}
+                                        className={cx("advise-action")}
+                                        fullWidth
+                                        variant="outlined"
+                                    >
+                                        Tư vấn
+                                    </GButton>
                                 </Grid>
-                                <Grid item xs={12}>
-                                    <a className={cx("book-action")} href="">
-                                        <DateRangeRounded />
-                                        <span>Đặt lịch</span>
-                                    </a>
-                                </Grid>
+                                {user?.id && (
+                                    <Grid item xs={12}>
+                                        <GButton
+                                            startIcon={<LogoutRounded />}
+                                            onClick={handleLogout}
+                                        >
+                                            Đăng xuất
+                                        </GButton>
+                                    </Grid>
+                                )}
                             </Grid>
                         </div>
                     </div>
