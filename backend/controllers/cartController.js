@@ -47,10 +47,7 @@ const cartController = {
             const newCart = await CartModel.createCart({
                 customer_user_id: req.body.customer_user_id,
                 product_id: req.body.product_id,
-                product_name: req.body.product_name,
                 product_quantity: req.body.product_quantity,
-                unit_price: req.body.unit_price,
-                image_url: req.body.image_url,
                 status: 1,
             });
             res.json({

@@ -16,7 +16,7 @@ const getCartById = async (id) => {
 
 const getCartByCustomerUserId = async (id) => {
     const [rows, fields] = await pool.query(
-        "SELECT * FROM tbl_cart WHERE customer_user_id = (?)",
+        "SELECT c.id, c.product_id, p.name AS product_name, c.product_quantity, p.image_url, p.price AS product_price, p.price_onsale AS product_price_onsale FROM tbl_cart c JOIN tbl_product p ON c.product_id = p.id WHERE c.customer_user_id = (?)",
         [id]
     );
     return rows;

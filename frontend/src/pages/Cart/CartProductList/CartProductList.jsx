@@ -28,7 +28,7 @@ function CartProductList() {
     const theme = useTheme();
     const isMedium = useMediaQuery(theme.breakpoints.down("md"));
     const isSmall = useMediaQuery(theme.breakpoints.down("sm"));
-    const [productList, setProductList] = useState([]);
+    const [productListByCart, setProductListByCart] = useState([]);
     const [selectedProduct, setSelectedProduct] = useState({});
     const [selectedProductCartList, setSelectedProductCartList] = useState([]);
     const columns = [
@@ -112,7 +112,7 @@ function CartProductList() {
                                 <div className={cx("price-wrapper")}>
                                     <span
                                         className={
-                                            rowData?.unit_price_onsale > 0
+                                            rowData?.product_price_onsale > 0
                                                 ? cx(
                                                       "prod-price-mobile",
                                                       "onsale"
@@ -120,16 +120,16 @@ function CartProductList() {
                                                 : cx("prod-price-mobile")
                                         }
                                     >
-                                        {FormatCurrency(rowData?.unit_price)}
+                                        {FormatCurrency(rowData?.product_price)}
                                     </span>
-                                    {rowData?.unit_price_onsale > 0 && (
+                                    {rowData?.product_price_onsale > 0 && (
                                         <span
                                             className={cx(
                                                 "prod-sale-price-mobile"
                                             )}
                                         >
                                             {FormatCurrency(
-                                                rowData?.unit_price_onsale
+                                                rowData?.product_price_onsale
                                             )}
                                         </span>
                                     )}
@@ -175,7 +175,7 @@ function CartProductList() {
                             }}
                             fullWidth
                             value={
-                                tempQuantity[rowId] !== undefined
+                                isTypingQuantity
                                     ? tempQuantity[rowId]
                                     : rowData?.product_quantity || ""
                             }
@@ -199,16 +199,16 @@ function CartProductList() {
                     <>
                         <span
                             className={
-                                rowData?.unit_price_onsale > 0
+                                rowData?.product_price_onsale > 0
                                     ? cx("unit_price", "onsale")
                                     : cx("unit_price")
                             }
                         >
-                            {FormatCurrency(rowData?.unit_price)}
+                            {FormatCurrency(rowData?.product_price)}
                         </span>
-                        {rowData?.unit_price_onsale > 0 ? (
+                        {rowData?.product_price_onsale > 0 ? (
                             <span className={cx("unit_price_onsale")}>
-                                {FormatCurrency(rowData?.unit_price_onsale)}
+                                {FormatCurrency(rowData?.product_price_onsale)}
                             </span>
                         ) : (
                             ""
@@ -246,9 +246,6 @@ function CartProductList() {
     const dispatch = useDispatch();
     let axiosJWT = createAxios(user, dispatch, loginSuccess);
 
-    const getProductList = useSelector(
-        (state) => state.product.product?.productListSearchLimit
-    );
     const navigate = useNavigate();
     useEffect(() => {
         const fetch = async () => {
@@ -258,7 +255,6 @@ function CartProductList() {
                     icon: "😅",
                 });
             }
-            await getProductLimit(dispatch);
         };
         fetch();
     }, []);
@@ -271,20 +267,7 @@ function CartProductList() {
 
     useEffect(() => {
         if (cartList) {
-            const newCartList = cartList?.map((item) => {
-                let discount_percent;
-                const getProduct = getProductList?.find(
-                    (p) => p.id === parseInt(item?.product_id)
-                );
-
-                return {
-                    ...item,
-                    unit_price_onsale: parseFloat(getProduct?.price_onsale),
-                    discount_percent: discount_percent,
-                };
-            });
-
-            setProductList(structuredClone(newCartList));
+            setProductListByCart(structuredClone(cartList));
         }
     }, [cartList]);
     const handleDecrease = async (cartItem) => {
@@ -332,7 +315,9 @@ function CartProductList() {
     };
 
     const [tempQuantity, setTempQuantity] = useState({});
+    const [isTypingQuantity, setIsTypingQuantity] = useState(false);
     const handleQuantityChange = (newQuantity, rowId) => {
+        setIsTypingQuantity(true);
         if (!isNaN(newQuantity)) {
             setTempQuantity((prevState) => ({
                 ...prevState,
@@ -340,9 +325,11 @@ function CartProductList() {
             }));
         }
     };
-
+    console.log("re-render");
     const handleUpdateQuantityWhenBlur = async (rowId) => {
-        const getCartItem = productList?.find(
+        setIsTypingQuantity(false);
+
+        const getCartItem = productListByCart?.find(
             (row) => row.tableData.id === rowId
         );
 
@@ -395,7 +382,7 @@ function CartProductList() {
                                             }
                                             title={"DANH SÁCH SẢN PHẨM"}
                                             columns={columns}
-                                            data={productList}
+                                            data={productListByCart}
                                             exportFileName={"DanhSachNguoiDung"}
                                         />
                                     </div>
