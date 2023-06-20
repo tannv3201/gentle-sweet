@@ -24,19 +24,22 @@ function PaymentInformation() {
     const [genBankTransferContent, setGenBankTransferContent] = useState("");
 
     useEffect(() => {
-        const transactionContent = generateBankTransferContent();
-        setGenBankTransferContent(transactionContent);
-        if (parseInt(methodChecked) !== 1) {
-            setFieldValue("bank_transfer_content", transactionContent);
-            return;
-        }
-    }, []);
+        const fetch = async () => {
+            const transactionContent = generateBankTransferContent();
 
+            setGenBankTransferContent(transactionContent);
+        };
+        fetch();
+    }, []);
     useEffect(() => {
         if (methodChecked) {
             setFieldValue("payment_method", methodChecked);
+            if (parseInt(methodChecked) !== 1) {
+                setFieldValue("bank_transfer_content", genBankTransferContent);
+                console.log(genBankTransferContent);
+            }
         }
-    }, [methodChecked, setFieldValue]);
+    }, [genBankTransferContent, methodChecked, setFieldValue]);
 
     return (
         <div className={cx("wrapper")}>

@@ -87,6 +87,7 @@ const invoiceController = {
                 note: req.body.note,
                 payment_method: req.body.payment_method,
                 bank_transfer_content: req.body.bank_transfer_content,
+                paid: req.body.paid,
                 status: 1,
             });
             res.json({

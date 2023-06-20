@@ -130,6 +130,7 @@ function SummaryCheckout() {
                 customer_user_id: user?.id,
                 payment_method: values?.payment_method,
                 bank_transfer_content: values?.bank_transfer_content,
+                paid: values?.payment_method === "1" ? 0 : 1,
                 note: values?.note,
             },
             axiosJWT

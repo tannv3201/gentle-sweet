@@ -46,10 +46,10 @@ function ConfirmCancelOrderPopup({ handleClose, handleOpen, isOpen, invoice }) {
         onSubmit: async (data) => {
             let status;
             let msg;
-            if (invoice?.status < 3) {
+            if (invoice?.status === 1) {
                 status = 6;
                 msg = "Hủy đơn hàng thành công";
-            } else if (invoice?.status === 3) {
+            } else if (invoice?.status === 2 || invoice?.status === 3) {
                 status = 7;
                 msg = "Gửi yêu cầu hủy đơn hàng thành công";
             }

@@ -119,6 +119,10 @@
     }
     .invoice-info {
         padding: 8px 12px;
+        .payment-method-wrapper {
+            display: flex;
+            align-items: center;
+        }
     }
     .invoice-customer-info {
         padding: 8px 12px;

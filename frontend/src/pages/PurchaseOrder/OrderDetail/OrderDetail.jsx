@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import styles from "./OrderDetail.module.scss";
 import classNames from "classnames/bind";
-import { Grid } from "@mui/material";
+import { Grid, IconButton } from "@mui/material";
 import GButton from "../../../components/MyButton/MyButton";
 import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
@@ -14,7 +14,11 @@ import { getDeliveryByInvoiceId } from "../../../redux/api/apiDelivery";
 import { getInvoiceDetailByInvoiceId } from "../../../redux/api/apiInvoiceDetail";
 import { API_IMAGE_URL } from "../../../LocalConstants";
 import ConfirmCancelOrderPopup from "../ConfirmCancelOrderPopup/ConfirmCancelOrderPopup";
-import { ArrowBackIosNew } from "@mui/icons-material";
+import {
+    ArrowBackIosNew,
+    CheckCircleRounded,
+    HourglassTopRounded,
+} from "@mui/icons-material";
 import { GTableProductCheckout } from "../../../components/GTable/GTable";
 import { useMediaQuery } from "@mui/material";
 import { useTheme } from "@mui/material/styles";
@@ -26,6 +30,7 @@ import {
     wardApi,
 } from "../../../redux/api/apiProvinceOpenAPI";
 import { FormatCurrency } from "../../../utils/FormatCurrency/formatCurrency";
+import { LightTooltip } from "../../../components/GTooltip/GTooltip";
 
 const cx = classNames.bind(styles);
 
@@ -160,9 +165,18 @@ function OrderDetail() {
                     invoiceById?.created_at,
                     "DD-MM-YYYY | HH:mm"
                 ),
+                paymentMethodName:
+                    invoiceById?.payment_method === 1
+                        ? "Thanh toán khi nhận hàng"
+                        : invoiceById?.payment_method === 2
+                        ? "Chuyển khoản ngân hàng"
+                        : invoiceById?.payment_method === 3
+                        ? "Ví điện tử"
+                        : "",
             });
         }
     }, [invoiceById, invoiceById?.status]);
+
     useEffect(() => {
         const fetch = async () => {
             if (deliveryByInvoiceId) {
@@ -314,12 +328,56 @@ function OrderDetail() {
                                         </div>
                                     </Grid>
                                     <Grid item lg={6} md={6} sm={12} xs={12}>
+                                        <div
+                                            className={cx(
+                                                "payment-method-wrapper"
+                                            )}
+                                        >
+                                            <div className={cx("info-item")}>
+                                                Phương thức thanh toán:{" "}
+                                                <span>
+                                                    {
+                                                        invoiceClone?.paymentMethodName
+                                                    }
+                                                </span>
+                                            </div>
+                                            {invoiceClone?.payment_method >
+                                                1 && (
+                                                <div>
+                                                    <LightTooltip
+                                                        title={
+                                                            invoiceClone?.paid ===
+                                                            1
+                                                                ? "Chờ thanh toán"
+                                                                : invoiceClone?.paid ===
+                                                                  2
+                                                                ? "Đã thanh toán"
+                                                                : ""
+                                                        }
+                                                        placement="right"
+                                                    >
+                                                        {invoiceClone?.paid ===
+                                                        1 ? (
+                                                            <IconButton>
+                                                                <HourglassTopRounded htmlColor="#f57c00" />
+                                                            </IconButton>
+                                                        ) : (
+                                                            <IconButton>
+                                                                <CheckCircleRounded htmlColor="#2e7d32" />
+                                                            </IconButton>
+                                                        )}
+                                                    </LightTooltip>
+                                                </div>
+                                            )}
+                                        </div>
+                                    </Grid>
+                                    <Grid item lg={6} md={6} sm={12} xs={12}>
                                         <div className={cx("info-item")}>
-                                            Phương thức thanh toán:{" "}
+                                            Nội dung chuyển khoản:{" "}
                                             <span>
-                                                {
-                                                    deliveryClone?.paymentMethodName
-                                                }
+                                                {invoiceClone?.bank_transfer_content
+                                                    ? invoiceClone?.bank_transfer_content
+                                                    : "--"}
                                             </span>
                                         </div>
                                     </Grid>
@@ -347,7 +405,7 @@ function OrderDetail() {
                                             </span>
                                         </div>
                                     </Grid>
-                                    <Grid item xs={12}>
+                                    <Grid item lg={6} md={6} sm={12} xs={12}>
                                         <div className={cx("info-item")}>
                                             Ghi chú:{" "}
                                             <span>
