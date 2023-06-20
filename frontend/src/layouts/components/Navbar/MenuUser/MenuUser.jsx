@@ -88,6 +88,11 @@ export default function MenuUser() {
         handleClose();
     };
 
+    const handleNavigateForgotPassword = () => {
+        navigate("/quen-mat-khau");
+        handleClose();
+    };
+
     const nameAvatar =
         currentUser?.first_name?.charAt(0) + currentUser?.last_name?.charAt(0);
 
@@ -227,6 +232,9 @@ export default function MenuUser() {
                         </MenuItem>
                         <MenuItem onClick={handleNavigateLogin}>
                             Đăng nhập
+                        </MenuItem>
+                        <MenuItem onClick={handleNavigateForgotPassword}>
+                            Quên mật khẩu
                         </MenuItem>
                     </Menu>
                 </>
