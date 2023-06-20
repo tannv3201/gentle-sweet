@@ -128,6 +128,8 @@ function SummaryCheckout() {
             dispatch,
             {
                 customer_user_id: user?.id,
+                payment_method: values?.payment_method,
+                bank_transfer_content: values?.bank_transfer_content,
                 note: values?.note,
             },
             axiosJWT
@@ -182,7 +184,6 @@ function SummaryCheckout() {
                 district: values?.district,
                 ward: values?.ward,
                 detail_address: values?.detail_address,
-                payment_method: values?.payment_method,
             },
             axiosJWT
         ).then(() => {

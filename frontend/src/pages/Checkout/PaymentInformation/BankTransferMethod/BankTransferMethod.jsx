@@ -6,7 +6,7 @@ import { Grid } from "@mui/material";
 import images from "../../../../assets/images";
 const cx = classNames.bind(styles);
 
-function BankTransferMethod({ methodChecked }) {
+function BankTransferMethod({ methodChecked, bankTransferContent }) {
     return (
         <>
             <div
@@ -110,7 +110,7 @@ function BankTransferMethod({ methodChecked }) {
                                                         "information-content"
                                                     )}
                                                 >
-                                                    HD282803
+                                                    {bankTransferContent}
                                                 </span>
                                             </Grid>
                                         </Grid>

@@ -85,6 +85,8 @@ const invoiceController = {
                 customer_user_id: req.body.customer_user_id,
                 admin_user_id: req.body.admin_user_id,
                 note: req.body.note,
+                payment_method: req.body.payment_method,
+                bank_transfer_content: req.body.bank_transfer_content,
                 status: 1,
             });
             res.json({
