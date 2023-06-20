@@ -188,6 +188,17 @@ export const getProductById = async (dispatch, id, accessToken, axiosJWT) => {
     }
 };
 
+export const checkQuantityAllow = async (productListSelected) => {
+    try {
+        const res = await axios.post(`/v1/product/checkQuantityAllow`, {
+            productListSelected: productListSelected,
+        });
+        return res?.data;
+    } catch (error) {
+        console.log(error);
+    }
+};
+
 export const customerGetProductById = async (dispatch, id) => {
     dispatch(getProductByIdStart());
     try {
