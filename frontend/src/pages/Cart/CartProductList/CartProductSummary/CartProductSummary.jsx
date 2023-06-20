@@ -59,7 +59,7 @@ function CartProductSummary({ selectedProductCartList }) {
     return (
         <div className={cx("wrapper")}>
             <div className={cx("inner")}>
-                <Grid container spacing={2}>
+                <Grid container spacing={1}>
                     <Grid item xs={12}>
                         <div className={cx("subtotal")}>
                             <span className={cx("subtotal-title")}>

@@ -466,7 +466,7 @@ function CartProductList() {
     return (
         <>
             <Grid container spacing={2}>
-                <Grid item lg={9} md={12} sm={12} xs={12}>
+                <Grid item xs={12}>
                     <div className={cx("wrapper")}>
                         <div className={cx("inner")}>
                             <Grid container spacing={2}>
@@ -544,7 +544,7 @@ function CartProductList() {
                                 <Grid item xs={12}>
                                     <div className={cx("table-product-list")}>
                                         <GTable
-                                            noRecordMessage="Chưa có sản phẩm"
+                                            noRecordMessage="Không có sản phẩm"
                                             paging={false}
                                             onSelectionChange={(rows) =>
                                                 setSelectedProductCartList(rows)
@@ -566,10 +566,12 @@ function CartProductList() {
                         />
                     </div>
                 </Grid>
-                <Grid item lg={3} md={12} sm={12} xs={12}>
-                    <CartProductSummary
-                        selectedProductCartList={selectedProductCartList}
-                    />
+                <Grid item xs={12}>
+                    <div className={cx("summary")}>
+                        <CartProductSummary
+                            selectedProductCartList={selectedProductCartList}
+                        />
+                    </div>
                 </Grid>
             </Grid>
         </>

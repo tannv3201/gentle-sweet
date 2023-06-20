@@ -16,11 +16,12 @@ const cx = classNames.bind(styles);
 function DefaultLayout({ children }) {
     const theme = useTheme();
     const isSmall = useMediaQuery(theme.breakpoints.down("sm"));
+    const currentPath = window.location.pathname;
     return (
         <>
             <div className={cx("wrapper")}>
                 <ScrollToTopOnMouse />
-                <ScrollBackToTop>
+                <ScrollBackToTop isHidden={currentPath === "/gio-hang"}>
                     <Navbar />
                     <div
                         style={
@@ -34,7 +35,7 @@ function DefaultLayout({ children }) {
                         {/* <GBreadcrumb /> */}
                         {children}
                     </div>
-                    <Footer />
+                    {currentPath !== "/gio-hang" && <Footer />}
                 </ScrollBackToTop>
             </div>
         </>

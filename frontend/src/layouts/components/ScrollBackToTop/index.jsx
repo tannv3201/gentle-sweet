@@ -61,32 +61,34 @@ ScrollTop.propTypes = {
     window: PropTypes.func,
 };
 
-export default function ScrollBackToTop({ children, ...props }) {
+export default function ScrollBackToTop({ isHidden, children, ...props }) {
     return (
         <>
             <div id="back-to-top-anchor" />
             {children}
-            <ScrollTop {...props}>
-                <LightTooltip
-                    title="Về đầu trang"
-                    placement="left"
-                    style={{
-                        fontSize: "1.6rem !important",
-                        fontFamily: "var(--font-family) !important",
-                    }}
-                >
-                    <Fab
-                        color="secondary"
-                        size="small"
-                        aria-label="scroll back to top"
+            {!isHidden && (
+                <ScrollTop {...props}>
+                    <LightTooltip
+                        title="Về đầu trang"
+                        placement="left"
                         style={{
-                            backgroundColor: "var(--primary-500)",
+                            fontSize: "1.6rem !important",
+                            fontFamily: "var(--font-family) !important",
                         }}
                     >
-                        <KeyboardArrowUpIcon />
-                    </Fab>
-                </LightTooltip>
-            </ScrollTop>
+                        <Fab
+                            color="secondary"
+                            size="small"
+                            aria-label="scroll back to top"
+                            style={{
+                                backgroundColor: "var(--primary-500)",
+                            }}
+                        >
+                            <KeyboardArrowUpIcon />
+                        </Fab>
+                    </LightTooltip>
+                </ScrollTop>
+            )}
         </>
     );
 }
