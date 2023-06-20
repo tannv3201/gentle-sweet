@@ -101,7 +101,8 @@ function CartProductList() {
                                         value={
                                             isTypingQuantity
                                                 ? tempQuantity[rowId]
-                                                : rowData?.product_quantity
+                                                : rowData?.product_quantity ||
+                                                  ""
                                         }
                                         onChange={(e) =>
                                             handleQuantityChange(
@@ -193,7 +194,7 @@ function CartProductList() {
                             value={
                                 isTypingQuantity
                                     ? tempQuantity[rowId]
-                                    : rowData?.product_quantity
+                                    : rowData?.product_quantity || ""
                             }
                             onChange={(e) =>
                                 handleQuantityChange(
