@@ -18,7 +18,6 @@ function CartProductSummary({ selectedProductCartList }) {
             return;
         }
         const isAllow = await checkQuantityAllow(selectedProductCartList);
-        console.log(isAllow);
         if (isAllow?.isAllow) {
             navigate("/thanh-toan", {
                 state: {
