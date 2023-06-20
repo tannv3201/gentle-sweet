@@ -155,7 +155,6 @@ function ProductDetail() {
             );
         }
     };
-
     const navigate = useNavigate();
     const handleBuyNow = () => {
         navigate("/thanh-toan", {
