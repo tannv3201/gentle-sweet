@@ -17,6 +17,12 @@ router.get(
 );
 
 router.post(
+    "/checkQuantityAllowList",
+    // middlewareController.verifyTokenAndSystemUserAuth,
+    productController.checkProductQuantityAllowList
+);
+
+router.post(
     "/checkQuantityAllow",
     // middlewareController.verifyTokenAndSystemUserAuth,
     productController.checkProductQuantityAllow

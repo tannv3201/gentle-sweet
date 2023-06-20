@@ -6,7 +6,7 @@ import GButton from "../../../../components/MyButton/MyButton";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-hot-toast";
 import { FormatCurrency } from "../../../../utils/FormatCurrency/formatCurrency";
-import { checkQuantityAllow } from "../../../../redux/api/apiProduct";
+import { checkQuantityAllowList } from "../../../../redux/api/apiProduct";
 
 const cx = classNames.bind(styles);
 
@@ -17,7 +17,7 @@ function CartProductSummary({ selectedProductCartList }) {
             toast.error("Vui lòng chọn sản phẩm");
             return;
         }
-        const isAllow = await checkQuantityAllow(selectedProductCartList);
+        const isAllow = await checkQuantityAllowList(selectedProductCartList);
         if (isAllow?.isAllow) {
             navigate("/thanh-toan", {
                 state: {

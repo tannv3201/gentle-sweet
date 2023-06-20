@@ -57,6 +57,36 @@ const productsController = {
 
     checkProductQuantityAllow: async (req, res) => {
         try {
+            let isAllow;
+            const product = await ProductModel.getProductById(
+                req.body.product_id
+            );
+            console.log(product?.quantity);
+            console.log(req.body?.product_quantity);
+            console.log(
+                parseInt(req.body?.product_quantity) <=
+                    parseInt(product?.quantity)
+            );
+            if (
+                parseInt(req.body?.product_quantity) <=
+                parseInt(product?.quantity)
+            ) {
+                isAllow = true;
+            } else {
+                isAllow = false;
+            }
+            return res.json({
+                status: 200,
+                msg: isAllow ? "" : "Không đủ số lượng",
+                isAllow: isAllow,
+            });
+        } catch (error) {
+            res.status(500).json(error);
+        }
+    },
+
+    checkProductQuantityAllowList: async (req, res) => {
+        try {
             // console.log(req.body.productListSelected);
             const checkEnoughQuantityList = [];
             let productQuantityError;
@@ -65,6 +95,7 @@ const productsController = {
                 const product = await ProductModel.getProductById(
                     item?.product_id
                 );
+
                 if (
                     parseInt(product?.quantity) >=
                     parseInt(item?.product_quantity)

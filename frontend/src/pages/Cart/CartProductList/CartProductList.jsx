@@ -14,7 +14,10 @@ import { API_IMAGE_URL } from "../../../LocalConstants";
 import GTable from "../../../components/GTable/GTable";
 import GTextFieldNormal from "../../../components/GTextField/GTextFieldNormal";
 import ConfirmRemoveCartItem from "./ConfirmRemoveCartItem";
-import { getProductLimit } from "../../../redux/api/apiProduct";
+import {
+    checkQuantityAllow,
+    getProductLimit,
+} from "../../../redux/api/apiProduct";
 import CartProductSummary from "./CartProductSummary/CartProductSummary";
 import { useMediaQuery } from "@mui/material";
 import { useTheme } from "@mui/material/styles";
@@ -81,7 +84,10 @@ function CartProductList() {
                                     </IconButton>
                                     <GTextFieldNormal
                                         onBlur={() =>
-                                            handleUpdateQuantityWhenBlur(rowId)
+                                            handleUpdateQuantityWhenBlur(
+                                                rowId,
+                                                rowData
+                                            )
                                         }
                                         inputProps={{
                                             inputMode: "numeric",
@@ -97,7 +103,8 @@ function CartProductList() {
                                         onChange={(e) =>
                                             handleQuantityChange(
                                                 e.target.value,
-                                                rowId
+                                                rowId,
+                                                rowData
                                             )
                                         }
                                     />
@@ -167,7 +174,9 @@ function CartProductList() {
                             <RemoveRounded />
                         </IconButton>
                         <GTextFieldNormal
-                            onBlur={() => handleUpdateQuantityWhenBlur(rowId)}
+                            onBlur={() =>
+                                handleUpdateQuantityWhenBlur(rowId, rowData)
+                            }
                             inputProps={{
                                 inputMode: "numeric",
                                 pattern: "[0-9]*",
@@ -180,7 +189,11 @@ function CartProductList() {
                                     : rowData?.product_quantity || ""
                             }
                             onChange={(e) =>
-                                handleQuantityChange(e.target.value, rowId)
+                                handleQuantityChange(
+                                    e.target.value,
+                                    rowId,
+                                    rowData
+                                )
                             }
                         />
                         <IconButton onClick={() => handleIncrease(rowData)}>
@@ -289,16 +302,26 @@ function CartProductList() {
 
     const handleIncrease = async (cartItem) => {
         if (cartItem?.product_quantity) {
-            await updateCart(
-                user?.accessToken,
-                dispatch,
-                user?.id,
-                cartItem?.id,
-                {
-                    product_quantity: cartItem.product_quantity + 1,
-                },
-                axiosJWT
+            const isCheckProductQuantity = await checkQuantityAllow(
+                cartItem?.product_id,
+                cartItem.product_quantity + 1
             );
+            if (isCheckProductQuantity?.isAllow) {
+                await updateCart(
+                    user?.accessToken,
+                    dispatch,
+                    user?.id,
+                    cartItem?.id,
+                    {
+                        product_quantity: cartItem.product_quantity + 1,
+                    },
+                    axiosJWT
+                );
+            } else {
+                toast.error(
+                    `Sản phẩm "${cartItem?.product_name}" không đủ số lượng.`
+                );
+            }
         }
     };
 
@@ -316,7 +339,7 @@ function CartProductList() {
 
     const [tempQuantity, setTempQuantity] = useState({});
     const [isTypingQuantity, setIsTypingQuantity] = useState(false);
-    const handleQuantityChange = (newQuantity, rowId) => {
+    const handleQuantityChange = (newQuantity, rowId, rowData) => {
         setIsTypingQuantity(true);
         if (!isNaN(newQuantity)) {
             setTempQuantity((prevState) => ({
@@ -325,20 +348,20 @@ function CartProductList() {
             }));
         }
     };
-    const handleUpdateQuantityWhenBlur = async (rowId) => {
+    const handleUpdateQuantityWhenBlur = async (rowId, rowData) => {
         setIsTypingQuantity(false);
-
         const getCartItem = productListByCart?.find(
             (row) => row.tableData.id === rowId
         );
-
         const { id, product_quantity, ...rest } = getCartItem;
-
         const updatedData = { product_quantity: tempQuantity[rowId] };
-
+        const isCheckProductQuantity = await checkQuantityAllow(
+            rowData?.product_id,
+            tempQuantity[rowId]
+        );
         if (parseInt(tempQuantity[rowId]) === 0) {
             handleOpenRemoveCartItem(getCartItem);
-        } else {
+        } else if (isCheckProductQuantity?.isAllow) {
             await updateCart(
                 user?.accessToken,
                 dispatch,
@@ -347,6 +370,15 @@ function CartProductList() {
                 updatedData,
                 axiosJWT
             );
+        } else {
+            toast.error(
+                `Sản phẩm "${rowData?.product_name}" không đủ số lượng.`
+            );
+
+            setTempQuantity((prevState) => ({
+                ...prevState,
+                [rowId]: rowData?.product_quantity,
+            }));
         }
     };
 
