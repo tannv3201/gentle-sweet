@@ -29,21 +29,7 @@ function BankTransferMethod({ methodChecked }) {
                                         <h3>Thông tin ngân hàng</h3>
                                     </span>
                                 </Grid>
-                                <Grid item xs={6}>
-                                    <div>
-                                        <Grid container spacing={2}>
-                                            <Grid item xs={12}>
-                                                <div className={cx("qr-code")}>
-                                                    <img
-                                                        src={images.qr_code}
-                                                        alt=""
-                                                    />
-                                                </div>
-                                            </Grid>
-                                        </Grid>
-                                    </div>
-                                </Grid>
-                                <Grid item xs={6}>
+                                <Grid item xs={12}>
                                     <div>
                                         <Grid container spacing={2}>
                                             <Grid item xs={12}>

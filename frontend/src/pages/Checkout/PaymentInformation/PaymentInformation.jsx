@@ -34,7 +34,7 @@ function PaymentInformation() {
                             <Grid container spacing={2}>
                                 <Grid item xs={12}>
                                     <span>
-                                        <h3>Lựa chọn phương thức thanh toán</h3>
+                                        <h3>Phương thức thanh toán</h3>
                                     </span>
                                 </Grid>
                                 <Grid item xs={12}>

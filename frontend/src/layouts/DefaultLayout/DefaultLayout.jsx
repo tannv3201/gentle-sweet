@@ -21,7 +21,12 @@ function DefaultLayout({ children }) {
         <>
             <div className={cx("wrapper")}>
                 <ScrollToTopOnMouse />
-                <ScrollBackToTop isHidden={currentPath === "/gio-hang"}>
+                <ScrollBackToTop
+                    isHidden={
+                        currentPath === "/gio-hang" ||
+                        currentPath === "/thanh-toan"
+                    }
+                >
                     <Navbar />
                     <div
                         style={
@@ -35,7 +40,8 @@ function DefaultLayout({ children }) {
                         {/* <GBreadcrumb /> */}
                         {children}
                     </div>
-                    {currentPath !== "/gio-hang" && <Footer />}
+                    {currentPath !== "/gio-hang" &&
+                        currentPath !== "/thanh-toan" && <Footer />}
                 </ScrollBackToTop>
             </div>
         </>

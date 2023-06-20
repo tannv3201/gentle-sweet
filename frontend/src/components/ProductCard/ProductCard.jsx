@@ -128,13 +128,8 @@ export default function ProductCard({
                     )}
                 </div>
                 <div className={cx("product-rating-container")}>
-                    <div className={cx("product-rating")}>
-                        <Rating
-                            readOnly
-                            value={valueRating}
-                            size="small"
-                            className={cx("product-rating-star")}
-                        />
+                    <div className={cx("product-sold")}>
+                        Số lượng: {product?.quantity ? product?.quantity : 0}
                     </div>
                     <div className={cx("product-sold")}>
                         Đã bán:{" "}
