@@ -17,6 +17,12 @@ router.get(
 );
 
 router.post(
+    "/checkQuantityAllow",
+    // middlewareController.verifyTokenAndSystemUserAuth,
+    productController.checkProductQuantityAllow
+);
+
+router.post(
     "/local",
     middlewareController.verifyTokenAndSystemUserAuth,
     upload.single("image"),

@@ -55,6 +55,41 @@ const productsController = {
         }
     },
 
+    checkProductQuantityAllow: async (req, res) => {
+        try {
+            // console.log(req.body.productListSelected);
+            const checkEnoughQuantityList = [];
+            let productQuantityError;
+            for (const item of req.body?.productListSelected) {
+                let enoughQuantity;
+                const product = await ProductModel.getProductById(
+                    item?.product_id
+                );
+                if (
+                    parseInt(product?.quantity) >=
+                    parseInt(item?.product_quantity)
+                ) {
+                    enoughQuantity = true;
+                } else {
+                    enoughQuantity = false;
+                    productQuantityError = product?.name;
+                }
+                checkEnoughQuantityList.push(enoughQuantity);
+            }
+
+            const isAllow = !checkEnoughQuantityList.includes(false);
+
+            return res.json({
+                status: 200,
+                msg: isAllow ? "" : "Không đủ số lượng",
+                isAllow: isAllow,
+                productQuantityError: productQuantityError,
+            });
+        } catch (error) {
+            res.status(500).json(error);
+        }
+    },
+
     // GET PRODUCT BY ID
     getProductById: async (req, res) => {
         try {
