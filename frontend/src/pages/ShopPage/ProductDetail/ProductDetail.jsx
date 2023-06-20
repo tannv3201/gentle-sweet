@@ -165,9 +165,11 @@ function ProductDetail() {
                         product_id: productDetail?.id,
                         product_name: productDetail?.name,
                         product_quantity: buyQuantity,
-                        unit_price: parseFloat(productDetail?.price),
+                        product_price: parseFloat(productDetail?.price),
                         image_url: productDetail?.image_url,
-                        unit_price_onsale: productDetail?.price_onsale,
+                        product_price_onsale: parseFloat(
+                            productDetail?.price_onsale
+                        ),
                     },
                 ],
             },
