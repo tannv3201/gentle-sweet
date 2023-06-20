@@ -67,16 +67,16 @@ function SummaryCheckout() {
 
         const priceTotal = selectedProduct?.reduce(
             (accumulator, currentValue) => {
-                if (currentValue?.unit_price_onsale > 0) {
+                if (currentValue?.product_price_onsale > 0) {
                     return (
                         accumulator +
-                        parseFloat(currentValue?.unit_price_onsale) *
+                        parseFloat(currentValue?.product_price_onsale) *
                             currentValue?.product_quantity
                     );
                 } else {
                     return (
                         accumulator +
-                        parseFloat(currentValue?.unit_price) *
+                        parseFloat(currentValue?.product_price) *
                             currentValue?.product_quantity
                     );
                 }
@@ -139,9 +139,9 @@ function SummaryCheckout() {
             const data = {
                 ...p,
                 unit_price:
-                    parseFloat(p.unit_price_onsale) > 0
-                        ? parseFloat(p.unit_price_onsale)
-                        : parseFloat(p.unit_price),
+                    parseFloat(p.product_price_onsale) > 0
+                        ? parseFloat(p.product_price_onsale)
+                        : parseFloat(p.product_price),
                 product_quantity: parseInt(p?.product_quantity),
                 product_id: p?.product_id,
                 invoice_id: newInvoice,
@@ -293,7 +293,7 @@ function SummaryCheckout() {
                                                                         >
                                                                             <span
                                                                                 className={
-                                                                                    rowData?.unit_price_onsale >
+                                                                                    rowData?.product_price_onsale >
                                                                                     0
                                                                                         ? cx(
                                                                                               "unit_price",
@@ -305,10 +305,10 @@ function SummaryCheckout() {
                                                                                 }
                                                                             >
                                                                                 {FormatCurrency(
-                                                                                    rowData?.unit_price
+                                                                                    rowData?.product_price
                                                                                 )}
                                                                             </span>
-                                                                            {rowData?.unit_price_onsale >
+                                                                            {rowData?.product_price_onsale >
                                                                             0 ? (
                                                                                 <span
                                                                                     className={cx(
@@ -316,7 +316,7 @@ function SummaryCheckout() {
                                                                                     )}
                                                                                 >
                                                                                     {FormatCurrency(
-                                                                                        rowData?.unit_price_onsale
+                                                                                        rowData?.product_price_onsale
                                                                                     )}
                                                                                 </span>
                                                                             ) : (
@@ -355,7 +355,7 @@ function SummaryCheckout() {
                                                                             >
                                                                                 <span
                                                                                     className={
-                                                                                        rowData?.unit_price_onsale >
+                                                                                        rowData?.product_price_onsale >
                                                                                         0
                                                                                             ? cx(
                                                                                                   "unit_price",
@@ -367,10 +367,10 @@ function SummaryCheckout() {
                                                                                     }
                                                                                 >
                                                                                     {FormatCurrency(
-                                                                                        rowData?.unit_price
+                                                                                        rowData?.product_price
                                                                                     )}
                                                                                 </span>
-                                                                                {rowData?.unit_price_onsale >
+                                                                                {rowData?.product_price_onsale >
                                                                                 0 ? (
                                                                                     <span
                                                                                         className={cx(
@@ -378,7 +378,7 @@ function SummaryCheckout() {
                                                                                         )}
                                                                                     >
                                                                                         {FormatCurrency(
-                                                                                            rowData?.unit_price_onsale
+                                                                                            rowData?.product_price_onsale
                                                                                         )}
                                                                                     </span>
                                                                                 ) : (
