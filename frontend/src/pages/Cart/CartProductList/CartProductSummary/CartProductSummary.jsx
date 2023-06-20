@@ -6,20 +6,29 @@ import GButton from "../../../../components/MyButton/MyButton";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-hot-toast";
 import { FormatCurrency } from "../../../../utils/FormatCurrency/formatCurrency";
+import { checkQuantityAllow } from "../../../../redux/api/apiProduct";
 
 const cx = classNames.bind(styles);
 
 function CartProductSummary({ selectedProductCartList }) {
     const navigate = useNavigate();
-    const handleCheckoutButtonClick = () => {
+    const handleCheckoutButtonClick = async () => {
         if (selectedProductCartList?.length === 0) {
             toast.error("Vui lòng chọn sản phẩm");
-        } else {
+            return;
+        }
+        const isAllow = await checkQuantityAllow(selectedProductCartList);
+        console.log(isAllow);
+        if (isAllow?.isAllow) {
             navigate("/thanh-toan", {
                 state: {
                     selectedProductCartList: selectedProductCartList,
                 },
             });
+        } else {
+            toast.error(
+                `Sản phẩm "${isAllow?.productQuantityError}" không đủ số lượng.`
+            );
         }
     };
 
@@ -28,16 +37,16 @@ function CartProductSummary({ selectedProductCartList }) {
         if (selectedProductCartList) {
             const priceTotal = selectedProductCartList.reduce(
                 (accumulator, currentValue) => {
-                    if (currentValue?.unit_price_onsale > 0) {
+                    if (currentValue?.product_price_onsale > 0) {
                         return (
                             accumulator +
-                            parseFloat(currentValue?.unit_price_onsale) *
+                            parseFloat(currentValue?.product_price_onsale) *
                                 currentValue?.product_quantity
                         );
                     } else {
                         return (
                             accumulator +
-                            parseFloat(currentValue?.unit_price) *
+                            parseFloat(currentValue?.product_price) *
                                 currentValue?.product_quantity
                         );
                     }

@@ -325,7 +325,6 @@ function CartProductList() {
             }));
         }
     };
-    console.log("re-render");
     const handleUpdateQuantityWhenBlur = async (rowId) => {
         setIsTypingQuantity(false);
 
