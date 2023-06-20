@@ -1,13 +1,21 @@
 import React, { useEffect, useState } from "react";
 import classNames from "classnames/bind";
 import styles from "./CartProductList.module.scss";
-import { Grid, IconButton } from "@mui/material";
+import {
+    Button,
+    ClickAwayListener,
+    Grid,
+    IconButton,
+    Tooltip,
+} from "@mui/material";
 import GButton from "../../../components/MyButton/MyButton";
 import {
     DeleteRounded,
+    FmdBadRounded,
     PriorityHighRounded,
     ProductionQuantityLimitsRounded,
     RemoveRounded,
+    WarningRounded,
 } from "@mui/icons-material";
 import { AddRounded } from "@mui/icons-material";
 import { getCartByUserId, updateCart } from "../../../redux/api/apiCart";
@@ -19,6 +27,11 @@ import { API_IMAGE_URL } from "../../../LocalConstants";
 import GTable from "../../../components/GTable/GTable";
 import GTextFieldNormal from "../../../components/GTextField/GTextFieldNormal";
 import ConfirmRemoveCartItem from "./ConfirmRemoveCartItem";
+import {
+    LightTooltip,
+    TooltipMobile,
+} from "../../../components/GTooltip/GTooltip";
+
 import {
     checkQuantityAllow,
     checkQuantityAllowList,
@@ -43,6 +56,15 @@ function CartProductList() {
     const [tempQuantity, setTempQuantity] = useState({});
     const [isTypingQuantity, setIsTypingQuantity] = useState(false);
     const [isQuantityError, setIsQuantityError] = useState(false);
+    const [open, setOpen] = React.useState(false);
+
+    const handleTooltipClose = () => {
+        setOpen(false);
+    };
+
+    const handleTooltipOpen = () => {
+        setOpen(!open);
+    };
 
     const columns = [
         {
@@ -51,20 +73,28 @@ function CartProductList() {
             cellStyle: isSmall ? { width: "20%" } : {},
             render: (rowData) => (
                 // eslint-disable-next-line jsx-a11y/alt-text
-                <img
-                    src={
-                        rowData?.image_url
-                            ? `${API_IMAGE_URL}/${rowData?.image_url}`
-                            : ""
-                    }
-                    style={{
-                        width: 60,
-                        height: 60,
-                        objectFit: "cover",
-                        borderRadius: "50%",
-                        border: "1px solid var(--primary-400)",
-                    }}
-                />
+                <div className={cx("prod-img")}>
+                    {!rowData?.isAllow && isSmall && (
+                        <span>
+                            <PriorityHighRounded htmlColor="#f57c00" />
+                        </span>
+                    )}
+
+                    <img
+                        src={
+                            rowData?.image_url
+                                ? `${API_IMAGE_URL}/${rowData?.image_url}`
+                                : ""
+                        }
+                        style={{
+                            width: 60,
+                            height: 60,
+                            objectFit: "cover",
+                            borderRadius: "50%",
+                            border: "1px solid var(--primary-400)",
+                        }}
+                    />
+                </div>
             ),
         },
         {
@@ -77,8 +107,9 @@ function CartProductList() {
                     <div className={cx("prod-infor-wrapper")}>
                         <div>
                             <span className={cx("prod-name-mobile")}>
-                                {rowData?.product_name}
+                                {rowData?.product_name}{" "}
                             </span>
+
                             {isSmall && (
                                 <div
                                     style={{
@@ -120,6 +151,7 @@ function CartProductList() {
                                             )
                                         }
                                     />
+
                                     <IconButton
                                         onClick={() => handleIncrease(rowData)}
                                         disabled={isTypingQuantity}
@@ -156,15 +188,18 @@ function CartProductList() {
                                 </div>
                             )}
                         </div>
+                        {/* {isSmall && <PriorityHighRounded />} */}
                         {isSmall && (
-                            <IconButton
-                                size="large"
-                                onClick={() =>
-                                    handleOpenRemoveCartItem(rowData)
-                                }
-                            >
-                                <DeleteRounded color="error" />
-                            </IconButton>
+                            <div>
+                                <IconButton
+                                    size="large"
+                                    onClick={() =>
+                                        handleOpenRemoveCartItem(rowData)
+                                    }
+                                >
+                                    <DeleteRounded color="error" />
+                                </IconButton>
+                            </div>
                         )}
                     </div>
                 );
@@ -220,7 +255,12 @@ function CartProductList() {
                             <AddRounded />
                         </IconButton>
                         {!rowData?.isAllow && (
-                            <PriorityHighRounded htmlColor="#f57c00" />
+                            <LightTooltip
+                                title="Số lượng sản phẩm trong giỏ vượt quá số lượng có sẵn"
+                                placement="right"
+                            >
+                                <PriorityHighRounded htmlColor="#f57c00" />
+                            </LightTooltip>
                         )}
                     </div>
                 );
@@ -436,25 +476,69 @@ function CartProductList() {
                                             className={cx("cart-header-title")}
                                         >
                                             <h2>Giỏ hàng</h2>
-                                            {isQuantityError && (
-                                                <div
-                                                    className={cx(
-                                                        "product-quantity-limit"
-                                                    )}
-                                                >
-                                                    <ProductionQuantityLimitsRounded htmlColor="#f57c00" />{" "}
-                                                    Có sản phẩm vượt quá số
-                                                    lượng
-                                                </div>
-                                            )}
                                         </div>
-                                        <GButton
-                                            startIcon={<DeleteRounded />}
-                                            variant="text"
-                                            color="error"
-                                        >
-                                            Xóa
-                                        </GButton>
+                                        {isQuantityError && !isSmall && (
+                                            <div
+                                                className={cx(
+                                                    "product-quantity-limit"
+                                                )}
+                                            >
+                                                <LightTooltip
+                                                    title="Có sản phẩm vượt quá số
+                                                                lượng có sẵn"
+                                                    placement="right"
+                                                >
+                                                    <span>
+                                                        <WarningRounded htmlColor="#f57c00" />
+                                                        Kiểm tra số lượng sản
+                                                        phẩm
+                                                    </span>
+                                                </LightTooltip>
+                                            </div>
+                                        )}
+                                        {isQuantityError && isSmall && (
+                                            <div
+                                                className={cx(
+                                                    "product-quantity-limit"
+                                                )}
+                                            >
+                                                <ClickAwayListener
+                                                    onClickAway={
+                                                        handleTooltipClose
+                                                    }
+                                                >
+                                                    <div>
+                                                        <TooltipMobile
+                                                            PopperProps={{
+                                                                disablePortal: true,
+                                                            }}
+                                                            onClose={
+                                                                handleTooltipClose
+                                                            }
+                                                            open={open}
+                                                            disableFocusListener
+                                                            disableHoverListener
+                                                            disableTouchListener
+                                                            title="Có sản phẩm vượt quá số
+                                                                lượng có sẵn"
+                                                            placement="left"
+                                                        >
+                                                            <IconButton
+                                                                onClick={
+                                                                    handleTooltipOpen
+                                                                }
+                                                                size="large"
+                                                            >
+                                                                <WarningRounded
+                                                                    fontSize="large"
+                                                                    htmlColor="#f57c00"
+                                                                />
+                                                            </IconButton>
+                                                        </TooltipMobile>
+                                                    </div>
+                                                </ClickAwayListener>
+                                            </div>
+                                        )}
                                     </div>
                                 </Grid>
                                 <Grid item xs={12}>

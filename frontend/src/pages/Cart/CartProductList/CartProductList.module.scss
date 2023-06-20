@@ -63,13 +63,13 @@
         .cart-header-title {
             display: flex;
             align-items: center;
-            .product-quantity-limit {
+        }
+
+        .product-quantity-limit {
+            span {
                 display: flex;
                 align-items: center;
-                border: 1px solid #f57c00;
-                border-radius: 4px;
-                margin-left: 6px;
-                padding: 4px;
+                font-style: italic;
             }
         }
     }
@@ -120,5 +120,16 @@
             .prod-sale-price-mobile {
             }
         }
+    }
+}
+
+.prod-img {
+    display: flex;
+    align-items: center;
+    position: relative;
+
+    span {
+        position: absolute;
+        right: -30%;
     }
 }

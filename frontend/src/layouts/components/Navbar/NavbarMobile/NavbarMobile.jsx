@@ -203,6 +203,7 @@ function NavbarMobile() {
                                         <GButton
                                             startIcon={<LogoutRounded />}
                                             onClick={handleLogout}
+                                            color={"text"}
                                         >
                                             Đăng xuất
                                         </GButton>
