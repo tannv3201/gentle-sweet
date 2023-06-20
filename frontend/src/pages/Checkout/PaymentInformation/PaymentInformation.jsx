@@ -86,7 +86,7 @@ function PaymentInformation() {
                                                             />
                                                         </div>
                                                     </Grid>
-                                                    <Grid item xs={12}>
+                                                    {/* <Grid item xs={12}>
                                                         <div
                                                             className={cx(
                                                                 "method-item"
@@ -106,7 +106,7 @@ function PaymentInformation() {
                                                                 }
                                                             />
                                                         </div>
-                                                    </Grid>
+                                                    </Grid> */}
                                                 </Grid>
                                             </RadioGroup>
                                         </FormControl>

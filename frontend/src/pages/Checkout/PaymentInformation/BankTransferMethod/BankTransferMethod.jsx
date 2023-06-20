@@ -30,75 +30,105 @@ function BankTransferMethod({ methodChecked }) {
                                     </span>
                                 </Grid>
                                 <Grid item xs={6}>
-                                    <span className={cx("information-title")}>
-                                        Ngân hàng:{" "}
-                                        <span
-                                            className={cx(
-                                                "information-content"
-                                            )}
-                                        >
-                                            Ngân hàng Quân đội(MB)
-                                        </span>
-                                    </span>
-                                </Grid>
-                                <Grid item xs={6}>
-                                    <span className={cx("information-title")}>
-                                        Số tài khoản:{" "}
-                                        <span
-                                            className={cx(
-                                                "information-content"
-                                            )}
-                                        >
-                                            789403022001
-                                        </span>
-                                    </span>
-                                </Grid>
-                                <Grid item xs={6}>
-                                    <span className={cx("information-title")}>
-                                        Chủ tài khoản:{" "}
-                                        <span
-                                            className={cx(
-                                                "information-content"
-                                            )}
-                                        >
-                                            NGUYỄN VĂN TÂN
-                                        </span>
-                                    </span>
-                                </Grid>
-                                <Grid item xs={6}>
-                                    <span className={cx("information-title")}>
-                                        Chi nhánh:{" "}
-                                        <span
-                                            className={cx(
-                                                "information-content"
-                                            )}
-                                        >
-                                            Chi nhánh Thái Thụy, Thái Bình.
-                                        </span>
-                                    </span>
-                                </Grid>
-                                <Grid item xs={6}>
-                                    <span className={cx("information-title")}>
-                                        Mã QR:{" "}
-                                        <span
-                                            className={cx(
-                                                "information-content"
-                                            )}
-                                        >
-                                            Ngân hàng MB
-                                        </span>
-                                    </span>
-                                    <div className={cx("qr-code")}>
-                                        <img src={images.qr_code} alt="" />
+                                    <div>
+                                        <Grid container spacing={2}>
+                                            <Grid item xs={12}>
+                                                <div className={cx("qr-code")}>
+                                                    <img
+                                                        src={images.qr_code}
+                                                        alt=""
+                                                    />
+                                                </div>
+                                            </Grid>
+                                        </Grid>
                                     </div>
                                 </Grid>
                                 <Grid item xs={6}>
-                                    <span className={cx("information-title")}>
-                                        Nội dung chuyển khoản:{" "}
-                                    </span>
-                                    <span className={cx("information-content")}>
-                                        HD282803
-                                    </span>
+                                    <div>
+                                        <Grid container spacing={2}>
+                                            <Grid item xs={12}>
+                                                <span
+                                                    className={cx(
+                                                        "information-title"
+                                                    )}
+                                                >
+                                                    Ngân hàng:{" "}
+                                                    <span
+                                                        className={cx(
+                                                            "information-content"
+                                                        )}
+                                                    >
+                                                        Ngân hàng Quân đội(MB)
+                                                    </span>
+                                                </span>
+                                            </Grid>
+                                            <Grid item xs={12}>
+                                                <span
+                                                    className={cx(
+                                                        "information-title"
+                                                    )}
+                                                >
+                                                    Số tài khoản:{" "}
+                                                    <span
+                                                        className={cx(
+                                                            "information-content"
+                                                        )}
+                                                    >
+                                                        789403022001
+                                                    </span>
+                                                </span>
+                                            </Grid>
+                                            <Grid item xs={12}>
+                                                <span
+                                                    className={cx(
+                                                        "information-title"
+                                                    )}
+                                                >
+                                                    Chủ tài khoản:{" "}
+                                                    <span
+                                                        className={cx(
+                                                            "information-content"
+                                                        )}
+                                                    >
+                                                        NGUYỄN VĂN TÂN
+                                                    </span>
+                                                </span>
+                                            </Grid>
+                                            <Grid item xs={12}>
+                                                <span
+                                                    className={cx(
+                                                        "information-title"
+                                                    )}
+                                                >
+                                                    Chi nhánh:{" "}
+                                                    <span
+                                                        className={cx(
+                                                            "information-content"
+                                                        )}
+                                                    >
+                                                        Chi nhánh Thái Thụy,
+                                                        Thái Bình.
+                                                    </span>
+                                                </span>
+                                            </Grid>
+                                            <Grid item xs={12}>
+                                                <span
+                                                    className={cx(
+                                                        "information-title"
+                                                    )}
+                                                >
+                                                    Nội dung chuyển khoản:{" "}
+                                                </span>
+                                                <span
+                                                    className={cx(
+                                                        "information-content"
+                                                    )}
+                                                >
+                                                    HD282803
+                                                </span>
+                                            </Grid>
+                                        </Grid>
+                                    </div>
                                 </Grid>
                             </Grid>
                         </div>
