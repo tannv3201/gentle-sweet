@@ -12,6 +12,7 @@ const cx = classNames.bind(styles);
 
 function CartProductSummary({ selectedProductCartList }) {
     const navigate = useNavigate();
+    const [productErrorList, setProductErrorList] = useState([]);
     const handleCheckoutButtonClick = async () => {
         if (selectedProductCartList?.length === 0) {
             toast.error("Vui lòng chọn sản phẩm");
@@ -26,7 +27,7 @@ function CartProductSummary({ selectedProductCartList }) {
             });
         } else {
             toast.error(
-                `Sản phẩm "${isAllow?.productError?.product_name}" không đủ số lượng.`
+                `Có ${productErrorList?.length} sản phẩm không đủ số lượng có sẵn.`
             );
         }
     };
@@ -52,6 +53,11 @@ function CartProductSummary({ selectedProductCartList }) {
                 },
                 0
             );
+
+            const filterProductError = selectedProductCartList?.filter(
+                (p) => p?.isAllow === false
+            );
+            setProductErrorList(filterProductError);
             setPriceTotal(priceTotal);
         }
     }, [selectedProductCartList]);
