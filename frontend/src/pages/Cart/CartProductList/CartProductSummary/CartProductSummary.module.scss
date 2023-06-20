@@ -42,6 +42,14 @@
             font-weight: var(--fw-semi-bold);
             color: var(--text-primary);
         }
+
+        .subtotal-price-wrapper {
+            display: flex;
+            align-items: center;
+            .product-quantity {
+                margin-right: 8px;
+            }
+        }
     }
     .discount {
         .discount-title {

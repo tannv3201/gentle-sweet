@@ -65,9 +65,18 @@ function CartProductSummary({ selectedProductCartList }) {
                             <span className={cx("subtotal-title")}>
                                 Tạm tính
                             </span>
-                            <span className={cx("subtotal-price")}>
-                                {FormatCurrency(priceTotal)}
-                            </span>
+                            <div className={cx("subtotal-price-wrapper")}>
+                                {selectedProductCartList?.length > 0 && (
+                                    <span className={cx("product-quantity")}>
+                                        &#40;
+                                        {selectedProductCartList?.length} sản
+                                        phẩm&#41;
+                                    </span>
+                                )}
+                                <div className={cx("subtotal-price")}>
+                                    {FormatCurrency(priceTotal)}
+                                </div>
+                            </div>
                         </div>
                     </Grid>
                     <Grid item xs={12}>
