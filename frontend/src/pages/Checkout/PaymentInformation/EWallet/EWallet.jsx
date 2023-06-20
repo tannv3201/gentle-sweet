@@ -5,7 +5,7 @@ import { Grid } from "@mui/material";
 import images from "../../../../assets/images";
 const cx = classNames.bind(styles);
 
-function EWallet({ methodChecked }) {
+function EWallet({ methodChecked, bankTransferContent }) {
     return (
         <>
             <div
@@ -28,7 +28,7 @@ function EWallet({ methodChecked }) {
                                         <h3>Thông tin ví điện tử</h3>
                                     </span>
                                 </Grid>
-                                <Grid item xs={6}>
+                                <Grid item lg={6} md={6} sm={12} xs={12}>
                                     <span className={cx("information-title")}>
                                         Zalo Pay:{" "}
                                         <span
@@ -40,7 +40,7 @@ function EWallet({ methodChecked }) {
                                         </span>
                                     </span>
                                 </Grid>
-                                <Grid item xs={6}>
+                                <Grid item lg={6} md={6} sm={12} xs={12}>
                                     <span className={cx("information-title")}>
                                         Momo:{" "}
                                         <span
@@ -52,7 +52,7 @@ function EWallet({ methodChecked }) {
                                         </span>
                                     </span>
                                 </Grid>
-                                <Grid item xs={6}>
+                                <Grid item lg={6} md={6} sm={12} xs={12}>
                                     <span className={cx("information-title")}>
                                         Chủ tài khoản:{" "}
                                         <span
@@ -64,29 +64,13 @@ function EWallet({ methodChecked }) {
                                         </span>
                                     </span>
                                 </Grid>
-                                <Grid item xs={6}>
+                                <Grid item lg={6} md={6} sm={12} xs={12}>
                                     <span className={cx("information-title")}>
                                         Nội dung chuyển khoản:{" "}
                                     </span>
                                     <span className={cx("information-content")}>
-                                        HD282803
+                                        {bankTransferContent}
                                     </span>
-                                </Grid>
-                                <Grid item xs={6}>
-                                    <span className={cx("information-title")}>
-                                        Mã QR Zalo Pay{" "}
-                                    </span>
-                                    <div className={cx("qr-code")}>
-                                        <img src={images.qr_zalopay} alt="" />
-                                    </div>
-                                </Grid>
-                                <Grid item xs={6}>
-                                    <span className={cx("information-title")}>
-                                        Mã QR Momo{" "}
-                                    </span>
-                                    <div className={cx("qr-code")}>
-                                        <img src={images.qr_momo} alt="" />
-                                    </div>
                                 </Grid>
                             </Grid>
                         </div>

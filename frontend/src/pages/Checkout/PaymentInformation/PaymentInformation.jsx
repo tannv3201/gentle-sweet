@@ -10,6 +10,7 @@ import FormControl from "@mui/material/FormControl";
 import BankTransferMethod from "./BankTransferMethod/BankTransferMethod";
 import EWallet from "./EWallet/EWallet";
 import { useFormikContext } from "formik";
+import { generateBankTransferContent } from "../../../utils/generateBankTransferContent";
 const cx = classNames.bind(styles);
 
 function PaymentInformation() {
@@ -23,24 +24,11 @@ function PaymentInformation() {
     const [genBankTransferContent, setGenBankTransferContent] = useState("");
 
     useEffect(() => {
-        function generateTransactionCode() {
-            const currentDate = new Date();
-            const year = String(currentDate.getFullYear()).slice(-2);
-            const month = String(currentDate.getMonth() + 1).padStart(2, "0");
-            const day = String(currentDate.getDate()).padStart(2, "0");
-            const hours = String(currentDate.getHours()).padStart(2, "0");
-            const minutes = String(currentDate.getMinutes()).padStart(2, "0");
-            const seconds = String(currentDate.getSeconds()).padStart(2, "0");
-
-            const transactionCode = `dh${day}${month}${year}${hours}${minutes}${seconds}`;
-            return transactionCode;
-        }
-
-        // Sử dụng hàm để lấy nội dung chuyển khoản
-        const transactionContent = generateTransactionCode();
+        const transactionContent = generateBankTransferContent();
         setGenBankTransferContent(transactionContent);
-        if (parseInt(methodChecked) === 2) {
+        if (parseInt(methodChecked) !== 1) {
             setFieldValue("bank_transfer_content", transactionContent);
+            return;
         }
     }, []);
 
@@ -114,7 +102,7 @@ function PaymentInformation() {
                                                             />
                                                         </div>
                                                     </Grid>
-                                                    {/* <Grid item xs={12}>
+                                                    <Grid item xs={12}>
                                                         <div
                                                             className={cx(
                                                                 "method-item"
@@ -132,9 +120,12 @@ function PaymentInformation() {
                                                                 methodChecked={
                                                                     methodChecked
                                                                 }
+                                                                bankTransferContent={
+                                                                    genBankTransferContent
+                                                                }
                                                             />
                                                         </div>
-                                                    </Grid> */}
+                                                    </Grid>
                                                 </Grid>
                                             </RadioGroup>
                                         </FormControl>
