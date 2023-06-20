@@ -3,7 +3,12 @@ import classNames from "classnames/bind";
 import styles from "./CartProductList.module.scss";
 import { Grid, IconButton } from "@mui/material";
 import GButton from "../../../components/MyButton/MyButton";
-import { DeleteRounded, RemoveRounded } from "@mui/icons-material";
+import {
+    DeleteRounded,
+    PriorityHighRounded,
+    ProductionQuantityLimitsRounded,
+    RemoveRounded,
+} from "@mui/icons-material";
 import { AddRounded } from "@mui/icons-material";
 import { getCartByUserId, updateCart } from "../../../redux/api/apiCart";
 import { useSelector } from "react-redux";
@@ -16,6 +21,7 @@ import GTextFieldNormal from "../../../components/GTextField/GTextFieldNormal";
 import ConfirmRemoveCartItem from "./ConfirmRemoveCartItem";
 import {
     checkQuantityAllow,
+    checkQuantityAllowList,
     getProductLimit,
 } from "../../../redux/api/apiProduct";
 import CartProductSummary from "./CartProductSummary/CartProductSummary";
@@ -36,6 +42,8 @@ function CartProductList() {
     const [selectedProductCartList, setSelectedProductCartList] = useState([]);
     const [tempQuantity, setTempQuantity] = useState({});
     const [isTypingQuantity, setIsTypingQuantity] = useState(false);
+    const [isQuantityError, setIsQuantityError] = useState(false);
+
     const columns = [
         {
             title: "Ảnh",
@@ -173,6 +181,7 @@ function CartProductList() {
                         style={{
                             display: "flex",
                             width: "148px",
+                            alignItems: "center",
                         }}
                     >
                         <IconButton
@@ -210,6 +219,9 @@ function CartProductList() {
                         >
                             <AddRounded />
                         </IconButton>
+                        {!rowData?.isAllow && (
+                            <PriorityHighRounded htmlColor="#f57c00" />
+                        )}
                     </div>
                 );
             },
@@ -282,6 +294,14 @@ function CartProductList() {
         };
         fetch();
     }, []);
+
+    useEffect(() => {
+        const fetch = async () => {
+            const checkQuantityError = await checkQuantityAllowList(cartList);
+            setIsQuantityError(!checkQuantityError?.isAllow);
+        };
+        fetch();
+    }, [cartList]);
 
     useEffect(() => {
         if (user) {
@@ -412,9 +432,22 @@ function CartProductList() {
                             <Grid container spacing={2}>
                                 <Grid item xs={12}>
                                     <div className={cx("cart-header")}>
-                                        <span>
+                                        <div
+                                            className={cx("cart-header-title")}
+                                        >
                                             <h2>Giỏ hàng</h2>
-                                        </span>
+                                            {isQuantityError && (
+                                                <div
+                                                    className={cx(
+                                                        "product-quantity-limit"
+                                                    )}
+                                                >
+                                                    <ProductionQuantityLimitsRounded htmlColor="#f57c00" />{" "}
+                                                    Có sản phẩm vượt quá số
+                                                    lượng
+                                                </div>
+                                            )}
+                                        </div>
                                         <GButton
                                             startIcon={<DeleteRounded />}
                                             variant="text"

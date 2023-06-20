@@ -61,12 +61,7 @@ const productsController = {
             const product = await ProductModel.getProductById(
                 req.body.product_id
             );
-            console.log(product?.quantity);
-            console.log(req.body?.product_quantity);
-            console.log(
-                parseInt(req.body?.product_quantity) <=
-                    parseInt(product?.quantity)
-            );
+
             if (
                 parseInt(req.body?.product_quantity) <=
                 parseInt(product?.quantity)
@@ -89,7 +84,7 @@ const productsController = {
         try {
             // console.log(req.body.productListSelected);
             const checkEnoughQuantityList = [];
-            let productQuantityError;
+            const productErrorList = [];
             for (const item of req.body?.productListSelected) {
                 let enoughQuantity;
                 const product = await ProductModel.getProductById(
@@ -103,18 +98,17 @@ const productsController = {
                     enoughQuantity = true;
                 } else {
                     enoughQuantity = false;
-                    productQuantityError = product?.name;
                 }
                 checkEnoughQuantityList.push(enoughQuantity);
+                productErrorList.push({ ...item, isAllow: enoughQuantity });
             }
-
             const isAllow = !checkEnoughQuantityList.includes(false);
 
             return res.json({
                 status: 200,
                 msg: isAllow ? "" : "Không đủ số lượng",
                 isAllow: isAllow,
-                productQuantityError: productQuantityError,
+                productErrorList: productErrorList,
             });
         } catch (error) {
             res.status(500).json(error);

@@ -1,10 +1,12 @@
 const CartModel = require("../models/Cart");
+const ProductModel = require("../models/Product");
 
 const cartController = {
     // GET ALL INVOICE
     getAllCart: async (req, res) => {
         try {
             const carts = await CartModel.getAllCart();
+
             return res.status(200).json(carts);
         } catch (error) {
             res.status(500).json(error);
@@ -31,10 +33,30 @@ const cartController = {
             const carts = await CartModel.getCartByCustomerUserId(
                 req.params.id
             );
+            const checkEnoughQuantityList = [];
+            const newCartList = [];
+            for (const item of carts) {
+                let enoughQuantity;
+                const product = await ProductModel.getProductById(
+                    item?.product_id
+                );
+
+                if (
+                    parseInt(product?.quantity) >=
+                    parseInt(item?.product_quantity)
+                ) {
+                    enoughQuantity = true;
+                } else {
+                    enoughQuantity = false;
+                }
+                checkEnoughQuantityList.push(enoughQuantity);
+                newCartList.push({ ...item, isAllow: enoughQuantity });
+            }
+            const isAllow = !checkEnoughQuantityList.includes(false);
             if (!carts) {
                 return res.status(404).json("Giỏ hàng không tồn tại");
             } else {
-                return res.status(200).json(carts);
+                return res.status(200).json(newCartList);
             }
         } catch (error) {
             res.status(500).json(error);
@@ -50,6 +72,7 @@ const cartController = {
                 product_quantity: req.body.product_quantity,
                 status: 1,
             });
+
             res.json({
                 status: 201,
                 msg: "Đã thêm sản phẩm vào giỏ hàng",

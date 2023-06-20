@@ -60,6 +60,18 @@
         display: flex;
         align-items: center;
         justify-content: space-between;
+        .cart-header-title {
+            display: flex;
+            align-items: center;
+            .product-quantity-limit {
+                display: flex;
+                align-items: center;
+                border: 1px solid #f57c00;
+                border-radius: 4px;
+                margin-left: 6px;
+                padding: 4px;
+            }
+        }
     }
 
     .cart-product-image {

@@ -26,7 +26,7 @@ function CartProductSummary({ selectedProductCartList }) {
             });
         } else {
             toast.error(
-                `Sản phẩm "${isAllow?.productQuantityError}" không đủ số lượng.`
+                `Sản phẩm "${isAllow?.productError?.product_name}" không đủ số lượng.`
             );
         }
     };
