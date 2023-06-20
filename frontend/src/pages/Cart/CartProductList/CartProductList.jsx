@@ -34,6 +34,8 @@ function CartProductList() {
     const [productListByCart, setProductListByCart] = useState([]);
     const [selectedProduct, setSelectedProduct] = useState({});
     const [selectedProductCartList, setSelectedProductCartList] = useState([]);
+    const [tempQuantity, setTempQuantity] = useState({});
+    const [isTypingQuantity, setIsTypingQuantity] = useState(false);
     const columns = [
         {
             title: "Ảnh",
@@ -79,6 +81,7 @@ function CartProductList() {
                                 >
                                     <IconButton
                                         onClick={() => handleDecrease(rowData)}
+                                        disabled={isTypingQuantity}
                                     >
                                         <RemoveRounded />
                                     </IconButton>
@@ -96,7 +99,7 @@ function CartProductList() {
                                         }}
                                         fullWidth
                                         value={
-                                            tempQuantity[rowId] !== undefined
+                                            isTypingQuantity
                                                 ? tempQuantity[rowId]
                                                 : rowData?.product_quantity
                                         }
@@ -110,6 +113,7 @@ function CartProductList() {
                                     />
                                     <IconButton
                                         onClick={() => handleIncrease(rowData)}
+                                        disabled={isTypingQuantity}
                                     >
                                         <AddRounded />
                                     </IconButton>
@@ -170,7 +174,10 @@ function CartProductList() {
                             width: "148px",
                         }}
                     >
-                        <IconButton onClick={() => handleDecrease(rowData)}>
+                        <IconButton
+                            disabled={isTypingQuantity}
+                            onClick={() => handleDecrease(rowData)}
+                        >
                             <RemoveRounded />
                         </IconButton>
                         <GTextFieldNormal
@@ -186,7 +193,7 @@ function CartProductList() {
                             value={
                                 isTypingQuantity
                                     ? tempQuantity[rowId]
-                                    : rowData?.product_quantity || ""
+                                    : rowData?.product_quantity
                             }
                             onChange={(e) =>
                                 handleQuantityChange(
@@ -196,7 +203,10 @@ function CartProductList() {
                                 )
                             }
                         />
-                        <IconButton onClick={() => handleIncrease(rowData)}>
+                        <IconButton
+                            disabled={isTypingQuantity}
+                            onClick={() => handleIncrease(rowData)}
+                        >
                             <AddRounded />
                         </IconButton>
                     </div>
@@ -337,8 +347,6 @@ function CartProductList() {
         setIsOpenRemoveCartItem(false);
     };
 
-    const [tempQuantity, setTempQuantity] = useState({});
-    const [isTypingQuantity, setIsTypingQuantity] = useState(false);
     const handleQuantityChange = (newQuantity, rowId, rowData) => {
         setIsTypingQuantity(true);
         if (!isNaN(newQuantity)) {
@@ -359,9 +367,21 @@ function CartProductList() {
             rowData?.product_id,
             tempQuantity[rowId]
         );
+
+        if (
+            parseInt(tempQuantity[rowId]) === rowData?.product_quantity ||
+            !isTypingQuantity
+        ) {
+            return;
+        }
+        if (tempQuantity[rowId] === "") {
+            return;
+        }
         if (parseInt(tempQuantity[rowId]) === 0) {
             handleOpenRemoveCartItem(getCartItem);
-        } else if (isCheckProductQuantity?.isAllow) {
+            return;
+        }
+        if (isCheckProductQuantity?.isAllow) {
             await updateCart(
                 user?.accessToken,
                 dispatch,
