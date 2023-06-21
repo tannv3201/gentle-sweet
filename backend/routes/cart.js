@@ -8,6 +8,12 @@ router.post("/", middlewareController.verifyToken, cartController.createCart);
 router.get("/", middlewareController.verifyToken, cartController.getAllCart);
 
 router.get(
+    "/search",
+    // middlewareController.verifyTokenAndSystemUserAuth,
+    cartController.cartSearch
+);
+
+router.get(
     "/:id",
     middlewareController.verifyToken,
     cartController.getCartById

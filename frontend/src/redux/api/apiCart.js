@@ -20,6 +20,24 @@ import {
     updateCartStart,
     updateCartSuccess,
 } from "../slice/cartSlice";
+import axios from "axios";
+
+export const cartSearch = async (product_id, customer_user_id) => {
+    try {
+        const res = await axios.get("/v1/cart/search", {
+            params: {
+                product_id: product_id,
+                customer_user_id: customer_user_id,
+            },
+            // headers: {
+            //     token: `Bearer ${accessToken}`,
+            // },
+        });
+        return res?.data;
+    } catch (error) {
+        console.log(error);
+    }
+};
 
 export const getAllCart = async (accessToken, dispatch, axiosJWT) => {
     dispatch(getAllCartStart());

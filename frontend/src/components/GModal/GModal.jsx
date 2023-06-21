@@ -42,11 +42,19 @@ export default function GModal({
                     <div className={cx("modal-wrapper")}>
                         <div className={cx("modal-header")}>
                             <h2
-                                style={{
-                                    fontSize: "2rem",
-                                    fontWeight: "var(--fw-bold)",
-                                    color: "var(--text-secondary)",
-                                }}
+                                style={
+                                    isSmall
+                                        ? {
+                                              fontSize: "1.8rem",
+                                              fontWeight: "var(--fw-bold)",
+                                              color: "var(--text-secondary)",
+                                          }
+                                        : {
+                                              fontSize: "2rem",
+                                              fontWeight: "var(--fw-bold)",
+                                              color: "var(--text-secondary)",
+                                          }
+                                }
                             >
                                 {title}
                             </h2>

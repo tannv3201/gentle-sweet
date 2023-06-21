@@ -27,6 +27,7 @@ import { toast } from "react-hot-toast";
 import { createAxios } from "../../../createInstance";
 import { loginSuccess } from "../../../redux/slice/authSlice";
 import {
+    cartSearch,
     createCart,
     getCartByUserId,
     updateCart,
@@ -35,6 +36,7 @@ import ItemDetailDescription from "../../../components/ItemDetailDescription/Ite
 import Comments from "../../../components/Comments/Comments";
 import { FormatCurrency } from "../../../utils/FormatCurrency/formatCurrency";
 import GTextFieldNormal from "../../../components/GTextField/GTextFieldNormal";
+import AlertProductQuantityLimit from "./AlertProductQuantityLimit";
 const cx = classNames.bind(styles);
 
 function ProductDetail() {
@@ -42,6 +44,20 @@ function ProductDetail() {
     const isMedium = useMediaQuery(theme.breakpoints.down("md"));
     const dispatch = useDispatch();
     const [productDetail, setProductDetail] = useState({});
+
+    // Alert product quantity limit
+    const [
+        isOpenAlertProductQuantityLimit,
+        setIsOpenAlertProductQuantityLimit,
+    ] = useState(false);
+
+    const handleOpenAlertProductQuantityLimit = () => {
+        setIsOpenAlertProductQuantityLimit(true);
+    };
+
+    const handleCloseAlertProductQuantityLimit = () => {
+        setIsOpenAlertProductQuantityLimit(false);
+    };
 
     const [buyQuantity, setBuyQuantity] = useState(1);
     const [tabIndex, setTabIndex] = React.useState(0);
@@ -51,13 +67,32 @@ function ProductDetail() {
     };
 
     const [isProductQuantityLimit, setIsProductQuantityLimit] = useState(false);
-    const handleChangeBuyQuantity = (value) => {
-        if (parseInt(value) > productDetail?.quantity) {
+    const [isProductQuantityLimitInCart, setIsProductQuantityLimitInCart] =
+        useState(false);
+    const [productQuantityInCart, setProductQuantityInCart] = useState(0);
+    const handleChangeBuyQuantity = async (value) => {
+        const getCart = await cartSearch(productDetail?.id, user?.id);
+        if (
+            parseInt(value) > productDetail?.quantity &&
+            getCart?.length === 0
+        ) {
             setIsProductQuantityLimit(true);
             setBuyQuantity(productDetail?.quantity);
             return;
         }
+        if (
+            getCart[0]?.product_quantity + parseInt(value) >
+            productDetail?.quantity
+        ) {
+            setIsProductQuantityLimit(true);
+            setBuyQuantity(
+                productDetail?.quantity - getCart[0]?.product_quantity
+            );
+            return;
+        }
+
         setBuyQuantity(value);
+        setIsProductQuantityLimitInCart(false);
         setIsProductQuantityLimit(false);
     };
 
@@ -77,16 +112,42 @@ function ProductDetail() {
             setBuyQuantity(parseInt(buyQuantity, 10) - 1);
         }
         setIsProductQuantityLimit(false);
+        setIsProductQuantityLimitInCart(false);
     };
 
-    const handleIncreaseBuyQuantity = () => {
-        if (parseInt(buyQuantity, 10) + 1 > productDetail?.quantity) {
-            setIsProductQuantityLimit(true);
-            setBuyQuantity(productDetail?.quantity);
+    const handleIncreaseBuyQuantity = async () => {
+        const getCart = await cartSearch(productDetail?.id, user?.id);
+        if (getCart[0]?.product_quantity === productDetail?.quantity) {
+            // setBuyQuantity(
+            //     productDetail?.quantity - getCart[0]?.product_quantity
+            // );
+            setProductQuantityInCart(getCart[0]?.product_quantity);
+            handleOpenAlertProductQuantityLimit();
             return;
         }
-        setBuyQuantity(parseInt(buyQuantity, 10) + 1);
+        if (
+            parseInt(buyQuantity, 10) + 1 > productDetail?.quantity &&
+            getCart?.length === 0
+        ) {
+            setBuyQuantity(productDetail?.quantity);
+            setIsProductQuantityLimit(true);
+
+            return;
+        }
+
+        if (
+            getCart[0]?.product_quantity + parseInt(buyQuantity, 10) + 1 >
+            productDetail?.quantity
+        ) {
+            setBuyQuantity(
+                productDetail?.quantity - getCart[0]?.product_quantity
+            );
+            setIsProductQuantityLimit(true);
+            return;
+        }
+
         setIsProductQuantityLimit(false);
+        setBuyQuantity(parseInt(buyQuantity, 10) + 1);
     };
 
     const handleKeyDown = (e) => {
@@ -148,6 +209,37 @@ function ProductDetail() {
             toast.error("Vui lòng đăng nhập để sử dụng chức năng này");
             return;
         }
+        const getCart = await cartSearch(productDetail?.id, user?.id);
+
+        if (getCart[0]?.product_quantity === productDetail?.quantity) {
+            setProductQuantityInCart(getCart[0]?.product_quantity);
+            setIsOpenAlertProductQuantityLimit(true);
+            setIsProductQuantityLimit(false);
+            return;
+        }
+        if (
+            getCart[0]?.product_quantity + parseInt(buyQuantity, 10) >
+            productDetail?.quantity
+        ) {
+            setBuyQuantity(
+                productDetail?.quantity - getCart[0]?.product_quantity
+            );
+            setProductQuantityInCart(getCart[0]?.product_quantity);
+            handleOpenAlertProductQuantityLimit();
+            return;
+        }
+        // if (
+        //     getCart[0]?.product_quantity + buyQuantity >
+        //     productDetail?.quantity
+        // ) {
+        //     setIsProductQuantityLimitInCart(true);
+        //     setIsProductQuantityLimit(false);
+        //     return;
+        // }
+
+        setIsProductQuantityLimitInCart(false);
+        setIsProductQuantityLimit(false);
+
         const cartExist = cartList?.find(
             (p) => p.product_id === productDetail?.id
         );
@@ -406,6 +498,9 @@ function ProductDetail() {
                                                         }}
                                                     />
                                                     <GButton
+                                                        disabled={
+                                                            isProductQuantityLimit
+                                                        }
                                                         className={cx(
                                                             "increase-btn"
                                                         )}
@@ -425,7 +520,17 @@ function ProductDetail() {
                                                     >
                                                         Số lượng bạn chọn đã đạt
                                                         mức tối đa của sản phẩm
-                                                        này
+                                                        này.
+                                                    </div>
+                                                )}
+                                                {isProductQuantityLimitInCart && (
+                                                    <div
+                                                        className={cx(
+                                                            "product-quantity-limit"
+                                                        )}
+                                                    >
+                                                        Sản phẩm đã đạt số lượng
+                                                        tối đa trong giỏ hàng.
                                                     </div>
                                                 )}
                                             </Grid>
@@ -568,6 +673,12 @@ function ProductDetail() {
                     </Grid>
                 </Grid>
             </div>
+            <AlertProductQuantityLimit
+                isOpen={isOpenAlertProductQuantityLimit}
+                handleClose={handleCloseAlertProductQuantityLimit}
+                handleOpen={handleOpenAlertProductQuantityLimit}
+                productQuantityInCart={productQuantityInCart}
+            />
         </div>
     );
 }

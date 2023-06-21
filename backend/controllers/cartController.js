@@ -2,6 +2,26 @@ const CartModel = require("../models/Cart");
 const ProductModel = require("../models/Product");
 
 const cartController = {
+    cartSearch: async (req, res) => {
+        try {
+            const { product_id, customer_user_id } = req.query;
+
+            const params = {};
+            if (product_id) params.product_id = product_id;
+            if (customer_user_id) params.customer_user_id = customer_user_id;
+
+            const cart = await CartModel.cartSearch(params);
+            console.log(cart[0]);
+            if (!cart) {
+                return res.status(404).json("Giỏ hàng không tồn tại");
+            } else {
+                return res.status(200).json(cart);
+            }
+        } catch (error) {
+            res.status(500).json(error);
+        }
+    },
+
     // GET ALL INVOICE
     getAllCart: async (req, res) => {
         try {

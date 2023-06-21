@@ -22,6 +22,24 @@ const getCartByCustomerUserId = async (id) => {
     return rows;
 };
 
+const cartSearch = async (params) => {
+    let query = "SELECT * FROM tbl_cart WHERE status > 0";
+    const values = [];
+
+    if (params.product_id) {
+        query += " AND product_id = (?)";
+        values.push(params.product_id);
+    }
+
+    if (params.customer_user_id) {
+        query += " AND customer_user_id = (?)";
+        values.push(params.customer_user_id);
+    }
+
+    const [rows, fields] = await pool.query(query, values);
+    return rows;
+};
+
 const createCart = async (cart) => {
     const [result, fields] = await pool.query("INSERT INTO tbl_cart SET ?", [
         cart,
@@ -47,6 +65,7 @@ const deleteCartById = async (id) => {
 
 module.exports = {
     getAllCart,
+    cartSearch,
     getCartById,
     createCart,
     updateCartById,
