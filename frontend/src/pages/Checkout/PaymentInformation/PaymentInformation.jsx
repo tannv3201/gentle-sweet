@@ -32,14 +32,13 @@ function PaymentInformation() {
         fetch();
     }, []);
     useEffect(() => {
-        if (methodChecked) {
-            setFieldValue("payment_method", methodChecked);
-            if (parseInt(methodChecked) !== 1) {
-                setFieldValue("bank_transfer_content", genBankTransferContent);
-            }
+        setFieldValue("payment_method", methodChecked);
+        if (parseInt(methodChecked) !== 1) {
+            setFieldValue("bank_transfer_content", genBankTransferContent);
+        } else {
+            setFieldValue("bank_transfer_content", "");
         }
     }, [genBankTransferContent, methodChecked, setFieldValue]);
-
     return (
         <div className={cx("wrapper")}>
             <div className={cx("inner")}>
