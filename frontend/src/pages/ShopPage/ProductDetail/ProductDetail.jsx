@@ -72,24 +72,19 @@ function ProductDetail() {
     const [productQuantityInCart, setProductQuantityInCart] = useState(0);
     const handleChangeBuyQuantity = async (value) => {
         const getCart = await cartSearch(productDetail?.id, user?.id);
-        if (
-            parseInt(value) > productDetail?.quantity &&
-            getCart?.length === 0
-        ) {
+        if (parseInt(value) > productDetail?.quantity) {
             setIsProductQuantityLimit(true);
             setBuyQuantity(productDetail?.quantity);
             return;
         }
-        if (
-            getCart[0]?.product_quantity + parseInt(value) >
-            productDetail?.quantity
-        ) {
-            setIsProductQuantityLimit(true);
-            setBuyQuantity(
-                productDetail?.quantity - getCart[0]?.product_quantity
-            );
-            return;
-        }
+        // if (
+        //     getCart[0]?.product_quantity + parseInt(value) >
+        //     productDetail?.quantity
+        // ) {
+        //     setIsProductQuantityLimit(true);
+        //     setBuyQuantity(productDetail?.quantity);
+        //     return;
+        // }
 
         setBuyQuantity(value);
         setIsProductQuantityLimitInCart(false);
@@ -125,26 +120,22 @@ function ProductDetail() {
             handleOpenAlertProductQuantityLimit();
             return;
         }
-        if (
-            parseInt(buyQuantity, 10) + 1 > productDetail?.quantity &&
-            getCart?.length === 0
-        ) {
+        if (parseInt(buyQuantity, 10) + 1 > productDetail?.quantity) {
             setBuyQuantity(productDetail?.quantity);
             setIsProductQuantityLimit(true);
-
             return;
         }
 
-        if (
-            getCart[0]?.product_quantity + parseInt(buyQuantity, 10) + 1 >
-            productDetail?.quantity
-        ) {
-            setBuyQuantity(
-                productDetail?.quantity - getCart[0]?.product_quantity
-            );
-            setIsProductQuantityLimit(true);
-            return;
-        }
+        // if (
+        //     getCart[0]?.product_quantity + parseInt(buyQuantity, 10) + 1 >
+        //     productDetail?.quantity
+        // ) {
+        //     setBuyQuantity(
+        //         productDetail?.quantity - getCart[0]?.product_quantity
+        //     );
+        //     setIsProductQuantityLimit(true);
+        //     return;
+        // }
 
         setIsProductQuantityLimit(false);
         setBuyQuantity(parseInt(buyQuantity, 10) + 1);
