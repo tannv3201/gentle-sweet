@@ -41,7 +41,21 @@ function Booking() {
     const phoneRegExp = /(84|0[3|5|7|8|9])+([0-9]{8})\b/;
     const validationSchema = Yup.object().shape({
         bookingTime_id: Yup.string().required("Vui lòng chọn khung giờ"),
-        date: Yup.string().required("Vui lòng chọn ngày"),
+        date: Yup.string()
+            .required("Vui lòng chọn ngày")
+            .test(
+                "is-future-date",
+                "Ngày đặt lịch không được trước ngày hiện tại",
+                function (value) {
+                    const selectedDate = new Date(value);
+                    const currentDate = new Date();
+                    // So sánh ngày được chọn với ngày hiện tại
+                    return (
+                        selectedDate.setHours(0, 0, 0, 0) >=
+                        currentDate.setHours(0, 0, 0, 0)
+                    );
+                }
+            ),
     });
 
     const user = useSelector((state) => state.auth.login?.currentUser);
