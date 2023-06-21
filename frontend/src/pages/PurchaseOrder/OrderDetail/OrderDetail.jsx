@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import styles from "./OrderDetail.module.scss";
 import classNames from "classnames/bind";
-import { Grid, IconButton } from "@mui/material";
+import { ClickAwayListener, Grid, IconButton } from "@mui/material";
 import GButton from "../../../components/MyButton/MyButton";
 import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
@@ -30,7 +30,10 @@ import {
     wardApi,
 } from "../../../redux/api/apiProvinceOpenAPI";
 import { FormatCurrency } from "../../../utils/FormatCurrency/formatCurrency";
-import { LightTooltip } from "../../../components/GTooltip/GTooltip";
+import {
+    LightTooltip,
+    TooltipMobile,
+} from "../../../components/GTooltip/GTooltip";
 
 const cx = classNames.bind(styles);
 
@@ -53,6 +56,15 @@ function OrderDetail() {
     const getProvinceList = structuredClone(
         useSelector((state) => state.province.province.provinceList)
     );
+    const [open, setOpen] = React.useState(false);
+
+    const handleTooltipClose = () => {
+        setOpen(false);
+    };
+
+    const handleTooltipOpen = () => {
+        setOpen(!open);
+    };
     useEffect(() => {
         const priceTotal = productListClone?.reduce(
             (accumulator, currentValue) => {
@@ -259,7 +271,7 @@ function OrderDetail() {
                                 <h3
                                     className={cx("invoice-code")}
                                 >{`Đơn hàng #${invoiceId}`}</h3>
-                                {invoiceClone?.status < 4 && (
+                                {invoiceClone?.status < 3 && (
                                     <GButton
                                         color={"error"}
                                         onClick={handleOpenCancelConfirmPopup}
@@ -341,34 +353,101 @@ function OrderDetail() {
                                                     }
                                                 </span>
                                             </div>
-                                            {invoiceClone?.payment_method >
-                                                1 && (
-                                                <div>
-                                                    <LightTooltip
-                                                        title={
-                                                            invoiceClone?.paid ===
-                                                            1
-                                                                ? "Chờ thanh toán"
-                                                                : invoiceClone?.paid ===
-                                                                  2
-                                                                ? "Đã thanh toán"
-                                                                : ""
+                                            {!isSmall &&
+                                                invoiceClone?.payment_method >
+                                                    1 && (
+                                                    <div>
+                                                        <LightTooltip
+                                                            title={
+                                                                invoiceClone?.paid ===
+                                                                1
+                                                                    ? "Chờ thanh toán"
+                                                                    : invoiceClone?.paid ===
+                                                                      2
+                                                                    ? "Đã thanh toán"
+                                                                    : invoiceClone?.paid ===
+                                                                      3
+                                                                    ? "Chờ hoàn tiền"
+                                                                    : invoiceClone?.paid ===
+                                                                      4
+                                                                    ? "Đã hoàn tiền"
+                                                                    : ""
+                                                            }
+                                                            placement="right"
+                                                        >
+                                                            {invoiceClone?.paid ===
+                                                            1 ? (
+                                                                <IconButton>
+                                                                    <HourglassTopRounded htmlColor="#f57c00" />
+                                                                </IconButton>
+                                                            ) : (
+                                                                <IconButton>
+                                                                    <CheckCircleRounded htmlColor="#2e7d32" />
+                                                                </IconButton>
+                                                            )}
+                                                        </LightTooltip>
+                                                    </div>
+                                                )}
+
+                                            {isSmall &&
+                                                invoiceClone?.payment_method >
+                                                    1 && (
+                                                    <ClickAwayListener
+                                                        onClickAway={
+                                                            handleTooltipClose
                                                         }
-                                                        placement="right"
                                                     >
-                                                        {invoiceClone?.paid ===
-                                                        1 ? (
-                                                            <IconButton>
-                                                                <HourglassTopRounded htmlColor="#f57c00" />
-                                                            </IconButton>
-                                                        ) : (
-                                                            <IconButton>
-                                                                <CheckCircleRounded htmlColor="#2e7d32" />
-                                                            </IconButton>
-                                                        )}
-                                                    </LightTooltip>
-                                                </div>
-                                            )}
+                                                        <div>
+                                                            <TooltipMobile
+                                                                PopperProps={{
+                                                                    disablePortal: true,
+                                                                }}
+                                                                onClose={
+                                                                    handleTooltipClose
+                                                                }
+                                                                open={open}
+                                                                disableFocusListener
+                                                                disableHoverListener
+                                                                disableTouchListener
+                                                                title={
+                                                                    invoiceClone?.paid ===
+                                                                    1
+                                                                        ? "Chờ thanh toán"
+                                                                        : invoiceClone?.paid ===
+                                                                          2
+                                                                        ? "Đã thanh toán"
+                                                                        : invoiceClone?.paid ===
+                                                                          3
+                                                                        ? "Chờ hoàn tiền"
+                                                                        : invoiceClone?.paid ===
+                                                                          4
+                                                                        ? "Đã hoàn tiền"
+                                                                        : ""
+                                                                }
+                                                                placement="left"
+                                                            >
+                                                                {invoiceClone?.paid ===
+                                                                1 ? (
+                                                                    <IconButton
+                                                                        onClick={
+                                                                            handleTooltipOpen
+                                                                        }
+                                                                    >
+                                                                        <HourglassTopRounded htmlColor="#f57c00" />
+                                                                    </IconButton>
+                                                                ) : (
+                                                                    <IconButton
+                                                                        onClick={
+                                                                            handleTooltipOpen
+                                                                        }
+                                                                    >
+                                                                        <CheckCircleRounded htmlColor="#2e7d32" />
+                                                                    </IconButton>
+                                                                )}
+                                                            </TooltipMobile>
+                                                        </div>
+                                                    </ClickAwayListener>
+                                                )}
                                         </div>
                                     </Grid>
                                     <Grid item lg={6} md={6} sm={12} xs={12}>
@@ -672,7 +751,12 @@ function OrderDetail() {
                 isOpen={isOpenCancelConfirmPopup}
                 handleClose={handleCloseCancelConfirmPopup}
                 handleOpen={handleOpenCancelConfirmPopup}
-                invoice={{ invoiceId: invoiceId, status: invoiceClone?.status }}
+                invoice={{
+                    invoiceId: invoiceId,
+                    status: invoiceClone?.status,
+                    paid: invoiceClone?.paid,
+                    payment_method: invoiceClone?.payment_method,
+                }}
             />
         </div>
     );
