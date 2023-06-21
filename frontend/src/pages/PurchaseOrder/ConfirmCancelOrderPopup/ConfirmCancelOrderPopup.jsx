@@ -20,7 +20,6 @@ function ConfirmCancelOrderPopup({ handleClose, handleOpen, isOpen, invoice }) {
     const validationSchema = Yup.object().shape({
         note: Yup.string().required("Vui lòng nhập lý do"),
     });
-
     const user = useSelector((state) => state.auth.login?.currentUser);
     const dispatch = useDispatch();
     let axiosJWT = createAxios(user, dispatch, loginSuccess);
@@ -46,14 +45,48 @@ function ConfirmCancelOrderPopup({ handleClose, handleOpen, isOpen, invoice }) {
         onSubmit: async (data) => {
             let status;
             let msg;
-            if (invoice?.status === 1) {
+            let paid;
+
+            // Chờ xác nhận - Thanh toán nhận hàng
+            if (invoice?.status === 1 && invoice?.payment_method === 1) {
                 status = 6;
                 msg = "Hủy đơn hàng thành công";
-            } else if (invoice?.status === 2 || invoice?.status === 3) {
+                paid = 0;
+            }
+
+            // Chờ xác nhận - Thanh toán CK - Chưa CK
+            if (
+                invoice?.status === 1 &&
+                invoice?.payment_method > 1 &&
+                invoice?.paid === 1
+            ) {
+                status = 6;
+                msg = "Hủy đơn hàng thành công";
+                paid = 1;
+            }
+
+            // Đã xác nhận - Thanh toán CK - Đã CK
+            if (invoice?.status === 2 && invoice?.paid === 2) {
                 status = 7;
+                paid = 3;
                 msg = "Gửi yêu cầu hủy đơn hàng thành công";
             }
-            await handleCancelInvoice({ ...data, status: status }, msg);
+
+            if (invoice?.status === 2 && invoice?.paid === 0) {
+                status = 7;
+                paid = 0;
+                msg = "Gửi yêu cầu hủy đơn hàng thành công";
+            }
+
+            if (invoice?.status === 1 && invoice?.paid === 2) {
+                status = 6;
+                paid = 3;
+                msg = "Hủy đơn hàng thành công, vui lòng đợi hoàn tiền";
+            }
+            await handleCancelInvoice(
+                { ...data, status: status, paid: paid },
+                msg
+            );
         },
     });
     return (
