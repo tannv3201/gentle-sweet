@@ -36,7 +36,6 @@ function PaymentInformation() {
             setFieldValue("payment_method", methodChecked);
             if (parseInt(methodChecked) !== 1) {
                 setFieldValue("bank_transfer_content", genBankTransferContent);
-                console.log(genBankTransferContent);
             }
         }
     }, [genBankTransferContent, methodChecked, setFieldValue]);

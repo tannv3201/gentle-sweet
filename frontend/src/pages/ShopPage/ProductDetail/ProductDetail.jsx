@@ -203,7 +203,9 @@ function ProductDetail() {
                                                 alt=""
                                             />
                                         </div>
-                                        <div className={cx("")}></div>
+                                        <div className={cx("sold-out")}>
+                                            Hết hàng
+                                        </div>
                                     </div>
                                 </Grid>
                                 <Grid item lg={7} md={12} sm={12} xs={12}>
@@ -390,6 +392,10 @@ function ProductDetail() {
                                                     <Grid container spacing={1}>
                                                         <Grid item xs={6}>
                                                             <GButton
+                                                                disabled={
+                                                                    productDetail?.quantity ===
+                                                                    0
+                                                                }
                                                                 onClick={
                                                                     handleAddToCart
                                                                 }
@@ -419,6 +425,10 @@ function ProductDetail() {
                                                         </Grid>
                                                         <Grid item xs={6}>
                                                             <GButton
+                                                                disabled={
+                                                                    productDetail?.quantity ===
+                                                                    0
+                                                                }
                                                                 onClick={
                                                                     handleBuyNow
                                                                 }

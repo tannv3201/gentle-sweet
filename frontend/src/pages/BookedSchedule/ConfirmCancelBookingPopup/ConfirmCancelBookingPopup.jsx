@@ -51,10 +51,10 @@ function ConfirmCancelBookingPopup({
         onSubmit: async (data) => {
             let status;
             let msg;
-            if (booking?.status < 3) {
+            if (booking?.status === 1) {
                 status = 6;
                 msg = "Hủy lịch hẹn thành công";
-            } else if (booking?.status === 3) {
+            } else if (booking?.status === 2) {
                 status = 7;
                 msg = "Gửi yêu cầu hủy lịch hẹn thành công";
             }

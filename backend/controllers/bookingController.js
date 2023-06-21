@@ -137,6 +137,7 @@ const bookingController = {
                 bookingId,
                 {
                     status: 2,
+                    admin_user_id: admin_user_id,
                 }
             );
             if (affectedRows === 0) {

@@ -2,6 +2,7 @@
 import React, { useEffect } from "react";
 import classNames from "classnames/bind";
 import styles from "./ProductCard.module.scss";
+import GButton from "../MyButton/MyButton";
 
 import { Rating } from "@mui/material";
 
@@ -96,6 +97,9 @@ export default function ProductCard({
         >
             <div onClick={onClick} href={href} className={cx("product-img")}>
                 <img src={imageSrc} alt="" />
+                {product?.quantity === 0 && (
+                    <span className={cx("sold-out")}>{`Hết hàng`}</span>
+                )}
                 {onSale > 0 && (
                     <span
                         className={cx("label-sale")}
@@ -139,13 +143,15 @@ export default function ProductCard({
                     </div>
                 </div>
                 <div className={cx("product-add-to-cart")}>
-                    <div
-                        onClick={handleAddToCart}
+                    <GButton
                         className={cx("product-add-to-cart-btn")}
-                        href="#"
+                        variant="rounded"
+                        onClick={handleAddToCart}
+                        fullWidth
+                        disabled={product?.quantity === 0}
                     >
                         Thêm vào giỏ hàng
-                    </div>
+                    </GButton>
                 </div>
             </div>
         </div>
