@@ -34,6 +34,7 @@ import {
 import ItemDetailDescription from "../../../components/ItemDetailDescription/ItemDetailDescription";
 import Comments from "../../../components/Comments/Comments";
 import { FormatCurrency } from "../../../utils/FormatCurrency/formatCurrency";
+import GTextFieldNormal from "../../../components/GTextField/GTextFieldNormal";
 const cx = classNames.bind(styles);
 
 function ProductDetail() {
@@ -49,18 +50,43 @@ function ProductDetail() {
         setTabIndex(newTabIndex);
     };
 
+    const [isProductQuantityLimit, setIsProductQuantityLimit] = useState(false);
     const handleChangeBuyQuantity = (value) => {
+        if (parseInt(value) > productDetail?.quantity) {
+            setIsProductQuantityLimit(true);
+            setBuyQuantity(productDetail?.quantity);
+            return;
+        }
         setBuyQuantity(value);
+        setIsProductQuantityLimit(false);
+    };
+
+    const handleInputBlur = () => {
+        if (
+            buyQuantity === undefined ||
+            buyQuantity === null ||
+            buyQuantity === "" ||
+            parseInt(buyQuantity) === 0
+        ) {
+            setBuyQuantity(1);
+        }
     };
 
     const handleReduceBuyQuantity = () => {
         if (buyQuantity > 1) {
             setBuyQuantity(parseInt(buyQuantity, 10) - 1);
         }
+        setIsProductQuantityLimit(false);
     };
 
     const handleIncreaseBuyQuantity = () => {
+        if (parseInt(buyQuantity, 10) + 1 > productDetail?.quantity) {
+            setIsProductQuantityLimit(true);
+            setBuyQuantity(productDetail?.quantity);
+            return;
+        }
         setBuyQuantity(parseInt(buyQuantity, 10) + 1);
+        setIsProductQuantityLimit(false);
     };
 
     const handleKeyDown = (e) => {
@@ -203,9 +229,11 @@ function ProductDetail() {
                                                 alt=""
                                             />
                                         </div>
-                                        <div className={cx("sold-out")}>
-                                            Hết hàng
-                                        </div>
+                                        {productDetail?.quantity === 0 && (
+                                            <div className={cx("sold-out")}>
+                                                Hết hàng
+                                            </div>
+                                        )}
                                     </div>
                                 </Grid>
                                 <Grid item lg={7} md={12} sm={12} xs={12}>
@@ -353,22 +381,29 @@ function ProductDetail() {
                                                     >
                                                         <HorizontalRuleRounded />
                                                     </GButton>
-                                                    <input
+                                                    <GTextFieldNormal
                                                         className={cx(
                                                             "quantity-input"
                                                         )}
-                                                        type="number"
+                                                        fullWidth
                                                         size="small"
                                                         onChange={(e) => {
                                                             handleChangeBuyQuantity(
                                                                 e.target.value
                                                             );
                                                         }}
+                                                        onBlur={handleInputBlur}
                                                         min={1}
                                                         value={buyQuantity}
                                                         onKeyDown={
                                                             handleKeyDown
                                                         }
+                                                        inputProps={{
+                                                            inputMode:
+                                                                "numeric",
+                                                            pattern: "[0-9]*",
+                                                            maxLength: 3, // Giới hạn chiều dài của số nhập vào (ví dụ 99)
+                                                        }}
                                                     />
                                                     <GButton
                                                         className={cx(
@@ -382,6 +417,17 @@ function ProductDetail() {
                                                         <AddRounded />
                                                     </GButton>
                                                 </div>
+                                                {isProductQuantityLimit && (
+                                                    <div
+                                                        className={cx(
+                                                            "product-quantity-limit"
+                                                        )}
+                                                    >
+                                                        Số lượng bạn chọn đã đạt
+                                                        mức tối đa của sản phẩm
+                                                        này
+                                                    </div>
+                                                )}
                                             </Grid>
                                             <Grid item xs={12}>
                                                 <div

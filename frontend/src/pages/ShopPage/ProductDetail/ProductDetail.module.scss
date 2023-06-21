@@ -176,7 +176,7 @@
         .quantity-input {
             height: 40px;
             width: 76px;
-            padding: 0 12px;
+            // padding: 0 12px;
             font-size: 1.8rem;
             font-family: var(--font-family);
             border-top: 1px solid var(--border-color);
@@ -188,6 +188,11 @@
                 margin: 0;
             }
         }
+    }
+
+    .product-quantity-limit {
+        margin-top: 4px;
+        color: #d32f2f;
     }
 
     .cart-action {

@@ -335,13 +335,13 @@ function CartProductList() {
         fetch();
     }, []);
 
-    // useEffect(() => {
-    //     const fetch = async () => {
-    //         const checkQuantityError = await checkQuantityAllowList(cartList);
-    //         setIsQuantityError(!checkQuantityError?.isAllow);
-    //     };
-    //     fetch();
-    // }, [cartList]);
+    useEffect(() => {
+        const fetch = async () => {
+            const checkQuantityError = await checkQuantityAllowList(cartList);
+            setIsQuantityError(!checkQuantityError?.isAllow);
+        };
+        fetch();
+    }, [cartList]);
 
     useEffect(() => {
         if (user) {
@@ -373,26 +373,26 @@ function CartProductList() {
 
     const handleIncrease = async (cartItem) => {
         if (cartItem?.product_quantity) {
-            // const isCheckProductQuantity = await checkQuantityAllow(
-            //     cartItem?.product_id,
-            //     cartItem.product_quantity + 1
-            // );
-            // if (isCheckProductQuantity?.isAllow) {
-            await updateCart(
-                user?.accessToken,
-                dispatch,
-                user?.id,
-                cartItem?.id,
-                {
-                    product_quantity: cartItem.product_quantity + 1,
-                },
-                axiosJWT
+            const isCheckProductQuantity = await checkQuantityAllow(
+                cartItem?.product_id,
+                cartItem.product_quantity + 1
             );
-            // } else {
-            //     toast.error(
-            //         `Sản phẩm "${cartItem?.product_name}" không đủ số lượng.`
-            //     );
-            // }
+            if (isCheckProductQuantity?.isAllow) {
+                await updateCart(
+                    user?.accessToken,
+                    dispatch,
+                    user?.id,
+                    cartItem?.id,
+                    {
+                        product_quantity: cartItem.product_quantity + 1,
+                    },
+                    axiosJWT
+                );
+            } else {
+                toast.error(
+                    `Số lượng bạn chọn đã đạt mức tối đa của sản phẩm này.`
+                );
+            }
         }
     };
 
@@ -425,34 +425,6 @@ function CartProductList() {
         const { id, product_quantity, ...rest } = getCartItem;
         const updatedData = { product_quantity: tempQuantity[rowId] };
 
-        if (
-            parseInt(tempQuantity[rowId]) === rowData?.product_quantity ||
-            !isTypingQuantity
-        ) {
-            return;
-        }
-        if (tempQuantity[rowId] === "") {
-            return;
-        }
-        if (parseInt(tempQuantity[rowId]) === 0) {
-            handleOpenRemoveCartItem(getCartItem);
-            return;
-        }
-
-        await updateCart(
-            user?.accessToken,
-            dispatch,
-            user?.id,
-            id,
-            updatedData,
-            axiosJWT
-        );
-
-        // const isCheckProductQuantity = await checkQuantityAllow(
-        //     rowData?.product_id,
-        //     tempQuantity[rowId]
-        // );
-
         // if (
         //     parseInt(tempQuantity[rowId]) === rowData?.product_quantity ||
         //     !isTypingQuantity
@@ -466,25 +438,53 @@ function CartProductList() {
         //     handleOpenRemoveCartItem(getCartItem);
         //     return;
         // }
-        // if (isCheckProductQuantity?.isAllow) {
-        //     await updateCart(
-        //         user?.accessToken,
-        //         dispatch,
-        //         user?.id,
-        //         id,
-        //         updatedData,
-        //         axiosJWT
-        //     );
-        // } else {
-        //     toast.error(
-        //         `Sản phẩm "${rowData?.product_name}" không đủ số lượng.`
-        //     );
 
-        //     setTempQuantity((prevState) => ({
-        //         ...prevState,
-        //         [rowId]: rowData?.product_quantity,
-        //     }));
-        // }
+        // await updateCart(
+        //     user?.accessToken,
+        //     dispatch,
+        //     user?.id,
+        //     id,
+        //     updatedData,
+        //     axiosJWT
+        // );
+
+        const isCheckProductQuantity = await checkQuantityAllow(
+            rowData?.product_id,
+            tempQuantity[rowId]
+        );
+
+        if (
+            parseInt(tempQuantity[rowId]) === rowData?.product_quantity ||
+            !isTypingQuantity
+        ) {
+            return;
+        }
+        if (tempQuantity[rowId] === "") {
+            return;
+        }
+        if (parseInt(tempQuantity[rowId]) === 0) {
+            handleOpenRemoveCartItem(getCartItem);
+            return;
+        }
+        if (isCheckProductQuantity?.isAllow) {
+            await updateCart(
+                user?.accessToken,
+                dispatch,
+                user?.id,
+                id,
+                updatedData,
+                axiosJWT
+            );
+        } else {
+            toast.error(
+                `Số lượng bạn chọn đã đạt mức tối đa của sản phẩm này.`
+            );
+
+            setTempQuantity((prevState) => ({
+                ...prevState,
+                [rowId]: rowData?.product_quantity,
+            }));
+        }
     };
 
     return (
