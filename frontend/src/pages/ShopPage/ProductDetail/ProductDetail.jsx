@@ -36,7 +36,7 @@ import ItemDetailDescription from "../../../components/ItemDetailDescription/Ite
 import Comments from "../../../components/Comments/Comments";
 import { FormatCurrency } from "../../../utils/FormatCurrency/formatCurrency";
 import GTextFieldNormal from "../../../components/GTextField/GTextFieldNormal";
-import AlertProductQuantityLimit from "./AlertProductQuantityLimit";
+import AlertProductQuantityLimit from "../../../components/AlertProductQuantityLimit/AlertProductQuantityLimit";
 const cx = classNames.bind(styles);
 
 function ProductDetail() {

@@ -72,6 +72,7 @@ const productsController = {
             }
             return res.json({
                 status: 200,
+                productCheck: product,
                 msg: isAllow ? "" : "Không đủ số lượng",
                 isAllow: isAllow,
             });

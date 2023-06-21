@@ -475,15 +475,15 @@ function CartProductList() {
                 updatedData,
                 axiosJWT
             );
-        } else {
+        } else if (
+            isCheckProductQuantity?.productCheck?.quantity ===
+            rowData?.product_quantity
+        ) {
             toast.error(
                 `Số lượng bạn chọn đã đạt mức tối đa của sản phẩm này.`
             );
-
-            setTempQuantity((prevState) => ({
-                ...prevState,
-                [rowId]: rowData?.product_quantity,
-            }));
+        } else {
+            toast.error(`Số lượng bạn chọn vượt mức tối đa của sản phẩm này.`);
         }
     };
 
