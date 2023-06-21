@@ -55,7 +55,7 @@ const invoiceSearch = async (params) => {
 
 const getInvoiceById = async (id) => {
     const [rows, fields] = await pool.query(
-        "SELECT * FROM tbl_invoice WHERE id= (?)",
+        "SELECT cu.first_name, cu.last_name, i.* FROM tbl_customer_user cu JOIN tbl_invoice i ON cu.id = i.customer_user_id WHERE i.id = (?)",
         [id]
     );
     return rows[0];
