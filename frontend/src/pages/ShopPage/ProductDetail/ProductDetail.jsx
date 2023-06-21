@@ -244,20 +244,7 @@ function ProductDetail() {
             (p) => p.product_id === productDetail?.id
         );
 
-        if (cartExist) {
-            await updateCart(
-                user?.accessToken,
-                dispatch,
-                user?.id,
-                cartExist?.id,
-                {
-                    product_quantity:
-                        parseInt(cartExist?.product_quantity) +
-                        parseInt(buyQuantity),
-                },
-                axiosJWT
-            );
-        } else {
+        if (getCart?.length === 0) {
             await createCart(
                 user?.accessToken,
                 dispatch,
@@ -268,6 +255,19 @@ function ProductDetail() {
                     product_quantity: buyQuantity,
                     unit_price: parseFloat(productDetail?.price),
                     image_url: productDetail?.image_url,
+                },
+                axiosJWT
+            );
+        } else {
+            await updateCart(
+                user?.accessToken,
+                dispatch,
+                user?.id,
+                getCart[0]?.id,
+                {
+                    product_quantity:
+                        parseInt(getCart[0]?.product_quantity) +
+                        parseInt(buyQuantity),
                 },
                 axiosJWT
             );
