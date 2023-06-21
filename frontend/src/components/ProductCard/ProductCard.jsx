@@ -76,27 +76,9 @@ export default function ProductCard({
         }
         const getCart = await cartSearch(product?.id, user?.id);
         const cartExist = cartList?.find((p) => p.product_id === product?.id);
-        // console.log(getCart);
         // console.log(product?.quantity);
-
-        if (cartExist) {
-            if (getCart[0]?.product_quantity + 1 <= product?.quantity) {
-                await updateCart(
-                    user?.accessToken,
-                    dispatch,
-                    user?.id,
-                    cartExist?.id,
-                    {
-                        product_quantity:
-                            parseInt(cartExist?.product_quantity) + 1,
-                    },
-                    axiosJWT
-                );
-            } else {
-                setProductQuantityInCart(getCart[0]?.product_quantity);
-                handleOpenAlertProductQuantityLimit();
-            }
-        } else {
+        console.log(getCart);
+        if (getCart?.length === 0) {
             await createCart(
                 user?.accessToken,
                 dispatch,
@@ -110,7 +92,56 @@ export default function ProductCard({
                 },
                 axiosJWT
             );
+        } else {
+            if (getCart[0]?.product_quantity + 1 <= product?.quantity) {
+                await updateCart(
+                    user?.accessToken,
+                    dispatch,
+                    user?.id,
+                    getCart[0]?.id,
+                    {
+                        product_quantity:
+                            parseInt(getCart[0]?.product_quantity) + 1,
+                    },
+                    axiosJWT
+                );
+            } else {
+                setProductQuantityInCart(getCart[0]?.product_quantity);
+                handleOpenAlertProductQuantityLimit();
+            }
         }
+        // if (getCart?.length === 0) {
+        //     if (getCart[0]?.product_quantity + 1 <= product?.quantity) {
+        //         await updateCart(
+        //             user?.accessToken,
+        //             dispatch,
+        //             user?.id,
+        //             getCart[0]?.id,
+        //             {
+        //                 product_quantity:
+        //                     parseInt(getCart[0]?.product_quantity) + 1,
+        //             },
+        //             axiosJWT
+        //         );
+        //     } else {
+        //         setProductQuantityInCart(getCart[0]?.product_quantity);
+        //         handleOpenAlertProductQuantityLimit();
+        //     }
+        // } else {
+        //     await createCart(
+        //         user?.accessToken,
+        //         dispatch,
+        //         {
+        //             customer_user_id: user?.id,
+        //             product_id: product?.id,
+        //             product_name: product?.name,
+        //             product_quantity: 1,
+        //             unit_price: parseFloat(product?.price),
+        //             image_url: product?.image_url,
+        //         },
+        //         axiosJWT
+        //     );
+        // }
     };
 
     return (
