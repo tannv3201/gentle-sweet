@@ -1,0 +1,37 @@
+@media only screen and (max-width: 600px) {
+    .inner {
+        width: 100% !important;
+    }
+}
+
+.wrapper {
+    display: flex;
+    justify-content: center;
+    padding: 32px 0;
+    background-color: var(--light-gray);
+}
+
+.inner {
+    width: 680px;
+    padding: 0 20px;
+
+    .sub-title {
+        font-size: 1.8rem;
+        font-weight: var(--fw-medium);
+        color: var(--primary-500);
+    }
+
+    .content-list {
+        padding-left: 24px;
+        text-align: justify;
+        li {
+            padding: 4px 0;
+        }
+        .children-content-list {
+            padding-left: 20px;
+            li {
+                padding: 4px 0;
+            }
+        }
+    }
+}

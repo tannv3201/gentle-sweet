@@ -27,6 +27,7 @@ import PasswordChange from "../pages/ForgotPassword/PasswordChange";
 import VerifyEmail from "../pages/SignUp/VerifyEmail";
 import OrderDetail from "../pages/PurchaseOrder/OrderDetail/OrderDetail";
 import BookedDetail from "../pages/BookedSchedule/BookedDetail/BookedDetail";
+import Policy from "../pages/Policy/Policy";
 // public routes
 
 export const publicRoutes = [
@@ -61,6 +62,10 @@ export const publicRoutes = [
     {
         path: "/ve-chung-toi",
         component: AboutUsPage,
+    },
+    {
+        path: "/chinh-sach",
+        component: Policy,
     },
     {
         path: "/dat-lich",

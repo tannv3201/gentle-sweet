@@ -11,6 +11,7 @@ import { IconButton } from "@mui/material";
 import { QuestionMarkRounded } from "@mui/icons-material";
 import Box from "@mui/material/Box";
 import { LightTooltip } from "../../../../components/GTooltip/GTooltip";
+import Policy from "../../../Policy/Policy";
 const cx = classNames.bind(styles);
 
 const guidelines = [
@@ -55,44 +56,10 @@ function ModalPolycyGuideline({ handleClose, handleOpen, isOpen }) {
                 title="Chính sách và hướng dẫn"
             >
                 <div className={cx("modal-wrapper")}>
-                    <Grid container spacing={3}>
-                        {guidelines
-                            ?.filter((policy) => policy?.epilogue !== true)
-                            .map((item, idx) => (
-                                <Grid key={idx} item xs={12}>
-                                    <div className="">
-                                        <Grid container>
-                                            <Grid item xs={12}>
-                                                <span
-                                                    className={cx(
-                                                        "policy-title"
-                                                    )}
-                                                >
-                                                    <h2>{item?.title}</h2>
-                                                </span>
-                                            </Grid>
-                                            <ol className={cx("policy-list")}>
-                                                {item?.content?.map(
-                                                    (child, idx) => (
-                                                        <li
-                                                            key={idx}
-                                                            className={cx(
-                                                                "policy-item"
-                                                            )}
-                                                        >
-                                                            <span>{child}</span>
-                                                        </li>
-                                                    )
-                                                )}
-                                            </ol>
-                                        </Grid>
-                                    </div>
-                                </Grid>
-                            ))}
-                    </Grid>
+                    <Policy />
                 </div>
             </GModal>
-            <Box
+            {/* <Box
                 sx={{
                     position: "fixed",
                     right: "16px",
@@ -114,7 +81,7 @@ function ModalPolycyGuideline({ handleClose, handleOpen, isOpen }) {
                         />
                     </IconButton>
                 </LightTooltip>
-            </Box>
+            </Box> */}
         </>
     );
 }

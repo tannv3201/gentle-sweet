@@ -48,6 +48,10 @@ function Footer() {
         navigate(`/danh-muc-dich-vu`);
     };
 
+    const handleNavigateToPolicy = () => {
+        navigate(`/chinh-sach`);
+    };
+
     return (
         <>
             <div className={cx("home-footer-wrapper")}>
@@ -177,7 +181,9 @@ function Footer() {
                                         <span>Bảo mật thông tin</span>
                                     </li>
                                     <li className={cx("item-of-component")}>
-                                        <span>Chính sách chung</span>
+                                        <span onClick={handleNavigateToPolicy}>
+                                            Chính sách chung
+                                        </span>
                                     </li>
                                     <li className={cx("item-of-component")}>
                                         <span>Tra cứu đơn hàng</span>
