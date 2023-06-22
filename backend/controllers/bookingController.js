@@ -13,6 +13,7 @@ const bookingController = {
                 endDate,
                 customer_user_id,
                 booking_time,
+                branch_id,
             } = req.query;
 
             const params = {};
@@ -20,11 +21,12 @@ const bookingController = {
             if (startDate) params.startDate = startDate;
             if (endDate) params.endDate = endDate;
             if (customer_user_id) params.customer_user_id = customer_user_id;
+            if (branch_id) params.branch_id = branch_id;
             if (booking_time) params.booking_time = booking_time;
 
             const bookings = await BookingModel.bookingSearch(params);
             if (!bookings) {
-                return res.status(404).json("Đơn hàng không tồn tại");
+                return res.status(404).json("Lịch hẹn không tồn tại");
             } else {
                 return res.status(200).json(bookings);
             }

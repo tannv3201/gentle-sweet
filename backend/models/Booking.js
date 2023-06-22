@@ -33,6 +33,11 @@ const bookingSearch = async (params) => {
         values.push(params.customer_user_id);
     }
 
+    if (params.branch_id) {
+        query += " AND branch_id = (?)";
+        values.push(params.branch_id);
+    }
+
     if (params.booking_time) {
         query += " AND booking_time = (?)";
         values.push(params.booking_time);
