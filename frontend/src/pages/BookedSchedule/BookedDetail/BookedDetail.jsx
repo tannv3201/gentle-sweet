@@ -62,63 +62,28 @@ function BookedDetail() {
     useEffect(() => {
         const fetch = async () => {
             if (getBookingDetail) {
-                const newList = [];
-
-                for (const item of getBookingDetail) {
-                    let provinceName;
-                    let districtName;
-                    let wardName;
-                    const branch = getBranchList?.find(
-                        (b) => b?.id === item?.branch_id
-                    );
-                    const provinceSelected = getProvinceById(
-                        branch?.province,
-                        getProvinceList
-                    );
-                    provinceName = provinceSelected?.name;
-                    // District
-
-                    await districtApi(parseInt(branch?.province)).then(
-                        (districtList) => {
-                            const districtSelected = getDistrictById(
-                                branch?.district,
-                                districtList
-                            );
-                            districtName = districtSelected?.name;
-                            console.log(districtName);
-                        }
-                    );
-
-                    await wardApi(parseInt(branch?.district)).then(
-                        (wardList) => {
-                            const wardSelected = getWardById(
-                                branch?.ward,
-                                wardList
-                            );
-                            wardName = wardSelected?.name;
-                        }
-                    );
-
+                const newList = getBookingDetail?.map((bd) => {
                     const serviceInfo = serviceList?.find(
-                        (service) => service.id === item?.service_id
+                        (service) => service.id === bd?.service_id
                     );
-
-                    newList.push({
-                        ...item,
+                    return {
+                        ...bd,
                         service_name: serviceInfo.name,
                         image_url: serviceInfo.image_url,
-                        branch_name: branch?.name,
-                        branch_address:
-                            branch?.detail_address +
-                            ", " +
-                            wardName +
-                            ", " +
-                            districtName +
-                            ", " +
-                            provinceName,
-                        branch_phone_number: branch?.phone_number,
-                    });
-                }
+                    };
+                });
+
+                // for (const item of getBookingDetail) {
+                //     const serviceInfo = serviceList?.find(
+                //         (service) => service.id === item?.service_id
+                //     );
+
+                //     newList.push({
+                //         ...item,
+                //         service_name: serviceInfo.name,
+                //         image_url: serviceInfo.image_url,
+                //     });
+                // }
                 setServiceListClone(newList);
             }
         };
@@ -150,32 +115,75 @@ function BookedDetail() {
     }, [bookingId]);
 
     useEffect(() => {
-        if (bookingById) {
-            setBookingClone({
-                ...bookingById,
-                statusName:
-                    bookingById?.status === 1
-                        ? "Chờ tiếp nhận"
-                        : bookingById?.status === 2
-                        ? "Đã tiếp nhận"
-                        : bookingById?.status === 3
-                        ? "Đã lên lịch"
-                        : bookingById?.status === 4
-                        ? "Bắt đầu dịch vụ"
-                        : bookingById?.status === 5
-                        ? "Đã hoàn thành"
-                        : bookingById?.status === 6
-                        ? "Đã hủy"
-                        : bookingById?.status === 7
-                        ? "Yêu cầu hủy lịch hẹn"
-                        : "",
-                createdAt: GFormatDate(
-                    bookingById?.created_at,
-                    "DD-MM-YYYY | HH:mm"
-                ),
-            });
-        }
+        const fetch = async () => {
+            if (bookingById) {
+                let provinceName;
+                let districtName;
+                let wardName;
+                const branch = getBranchList?.find(
+                    (b) => b?.id === bookingById?.branch_id
+                );
+                const provinceSelected = getProvinceById(
+                    branch?.province,
+                    getProvinceList
+                );
+                provinceName = provinceSelected?.name;
+                // District
+
+                await districtApi(parseInt(branch?.province)).then(
+                    (districtList) => {
+                        const districtSelected = getDistrictById(
+                            branch?.district,
+                            districtList
+                        );
+                        districtName = districtSelected?.name;
+                        console.log(districtName);
+                    }
+                );
+
+                await wardApi(parseInt(branch?.district)).then((wardList) => {
+                    const wardSelected = getWardById(branch?.ward, wardList);
+                    wardName = wardSelected?.name;
+                });
+                setBookingClone({
+                    ...bookingById,
+                    statusName:
+                        bookingById?.status === 1
+                            ? "Chờ tiếp nhận"
+                            : bookingById?.status === 2
+                            ? "Đã tiếp nhận"
+                            : bookingById?.status === 3
+                            ? "Đã lên lịch"
+                            : bookingById?.status === 4
+                            ? "Bắt đầu dịch vụ"
+                            : bookingById?.status === 5
+                            ? "Đã hoàn thành"
+                            : bookingById?.status === 6
+                            ? "Đã hủy"
+                            : bookingById?.status === 7
+                            ? "Yêu cầu hủy lịch hẹn"
+                            : "",
+                    createdAt: GFormatDate(
+                        bookingById?.created_at,
+                        "DD-MM-YYYY | HH:mm"
+                    ),
+                    branch_name: branch?.name,
+                    branch_address:
+                        branch?.detail_address +
+                        ", " +
+                        wardName +
+                        ", " +
+                        districtName +
+                        ", " +
+                        provinceName,
+                    branch_phone_number: branch?.phone_number,
+                });
+            }
+        };
+        fetch();
     }, [bookingById]);
+
+    // console.log(bookingClone);
 
     useEffect(() => {
         if (deliveryByBookingId) {
@@ -311,10 +319,7 @@ function BookedDetail() {
                                         <div className={cx("info-item")}>
                                             Tên chi nhánh:{" "}
                                             <span>
-                                                {
-                                                    serviceListClone[0]
-                                                        ?.branch_name
-                                                }
+                                                {bookingClone?.branch_name}
                                             </span>
                                         </div>
                                     </Grid>
@@ -322,10 +327,7 @@ function BookedDetail() {
                                         <div className={cx("info-item")}>
                                             Địa chỉ chi nhánh:{" "}
                                             <span>
-                                                {
-                                                    serviceListClone[0]
-                                                        ?.branch_address
-                                                }
+                                                {bookingClone?.branch_address}
                                             </span>
                                         </div>
                                     </Grid>
@@ -334,8 +336,7 @@ function BookedDetail() {
                                             Số điện thoại liên hệ:{" "}
                                             <span>
                                                 {
-                                                    serviceListClone[0]
-                                                        ?.branch_phone_number
+                                                    bookingClone?.branch_phone_number
                                                 }
                                             </span>
                                         </div>

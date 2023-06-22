@@ -78,7 +78,7 @@ const bookingController = {
         try {
             const newBooking = await BookingModel.createBooking({
                 customer_user_id: req.body.customer_user_id,
-                admin_user_id: req.body.admin_user_id,
+                branch_id: req.body.branch_id,
                 status: 1,
             });
             res.json({

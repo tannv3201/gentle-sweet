@@ -69,6 +69,15 @@ function Booking() {
     const location = useLocation();
     const navigate = useNavigate();
     const handleSubmit = async (values) => {
+        const {
+            service_id,
+            start_time,
+            end_time,
+            date,
+            note,
+            branch_id,
+            ...data
+        } = values;
         if (!user?.detail_address && !getCustomerUser?.detail_address) {
             toast.error("Vui lòng cập nhật địa chỉ trong tài khoản của bạn");
             return;
@@ -79,23 +88,15 @@ function Booking() {
             dispatch,
             {
                 customer_user_id: user?.id,
+                branch_id: branch_id,
             },
             axiosJWT
         );
         const selectedService = location.state?.selectedService;
-        const {
-            service_id,
-            start_time,
-            end_time,
-            date,
-            note,
-            branch_id,
-            ...data
-        } = values;
+
         const newData = {
             booking_id: newBooking,
             service_id: service_id,
-            branch_id: branch_id,
             start_time: start_time,
             end_time: end_time,
             date: GFormatDate(date, "YYYY-MM-DD"),
