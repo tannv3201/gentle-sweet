@@ -4,6 +4,8 @@ const cookieParser = require("cookie-parser");
 
 const roleRoute = require("./routes/role");
 
+const branchRoute = require("./routes/branch");
+
 const adminUserRoute = require("./routes/adminUser");
 const customerUserRoute = require("./routes/customerUser");
 
@@ -56,6 +58,8 @@ app.use("/v1/service", serviceRoute);
 app.use("/v1/serviceImage", serviceImageRoute);
 
 app.use("/v1/discount", discountRoute);
+
+app.use("/v1/branch", branchRoute);
 
 app.use("/v1/invoice", invoiceRoute);
 app.use("/v1/cart", cartRoute);

@@ -35,6 +35,7 @@ export default function ServiceInformation() {
     const theme = useTheme();
     const isSmall = useMediaQuery(theme.breakpoints.down("sm"));
     const location = useLocation();
+    const getBranch = useSelector((state) => state.branch.branch?.branchList);
 
     const [isOpen, setIsOpen] = useState(false);
 
@@ -153,6 +154,18 @@ export default function ServiceInformation() {
             setFieldValue(`bookingTime_name`, null);
             setFieldValue(`start_time`, null);
             setFieldValue(`end_time`, null);
+        }
+    };
+
+    const [selectedBranch, setSelectedBranch] = useState({});
+
+    const handleChangeBranch = (value) => {
+        if (value) {
+            setFieldValue("branch_id", value?.id);
+            setSelectedBranch(value);
+        } else {
+            setFieldValue("branch_id", null);
+            setSelectedBranch("");
         }
     };
 
@@ -292,6 +305,41 @@ export default function ServiceInformation() {
                                                 name="service_id"
                                                 fullWidth
                                                 label="Dịch vụ"
+                                            />
+                                        )}
+                                    />
+                                </Grid>
+                                <Grid item xs={12}>
+                                    <Autocomplete
+                                        options={getBranch}
+                                        onBlur={handleBlur}
+                                        getOptionLabel={(option) =>
+                                            option.name || ""
+                                        }
+                                        isOptionEqualToValue={(option, value) =>
+                                            value?.id === option?.id
+                                        }
+                                        onChange={(event, value) => {
+                                            handleChangeBranch(value);
+                                        }}
+                                        value={selectedBranch || null}
+                                        renderInput={(params) => (
+                                            <TextField
+                                                {...params}
+                                                fullWidth
+                                                color="secondary"
+                                                label="Chọn cơ sở"
+                                                variant="outlined"
+                                                name="branch_id"
+                                                size="small"
+                                                error={
+                                                    touched?.branch_id &&
+                                                    Boolean(errors?.branch_id)
+                                                }
+                                                helperText={
+                                                    touched?.branch_id &&
+                                                    errors?.branch_id
+                                                }
                                             />
                                         )}
                                     />

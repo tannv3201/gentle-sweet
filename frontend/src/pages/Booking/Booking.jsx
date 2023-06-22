@@ -29,6 +29,7 @@ function Booking() {
     const theme = useTheme();
     const [checkoutInfo, setCheckoutInfo] = useState({
         service_id: "",
+        branch_id: "",
         fullName: "",
         phone_number: "",
         province: "",
@@ -41,6 +42,7 @@ function Booking() {
     const phoneRegExp = /(84|0[3|5|7|8|9])+([0-9]{8})\b/;
     const validationSchema = Yup.object().shape({
         bookingTime_id: Yup.string().required("Vui lòng chọn khung giờ"),
+        branch_id: Yup.string().required("Vui lòng chọn cơ sở"),
         date: Yup.string()
             .required("Vui lòng chọn ngày")
             .test(
@@ -81,11 +83,19 @@ function Booking() {
             axiosJWT
         );
         const selectedService = location.state?.selectedService;
-        const { service_id, start_time, end_time, date, note, ...data } =
-            values;
+        const {
+            service_id,
+            start_time,
+            end_time,
+            date,
+            note,
+            branch_id,
+            ...data
+        } = values;
         const newData = {
             booking_id: newBooking,
             service_id: service_id,
+            branch_id: branch_id,
             start_time: start_time,
             end_time: end_time,
             date: GFormatDate(date, "YYYY-MM-DD"),

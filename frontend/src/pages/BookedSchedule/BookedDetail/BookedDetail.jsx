@@ -18,6 +18,14 @@ import { GTableProductCheckout } from "../../../components/GTable/GTable";
 import { useMediaQuery } from "@mui/material";
 import { useTheme } from "@mui/material/styles";
 import { FormatCurrency } from "../../../utils/FormatCurrency/formatCurrency";
+import { getAllBranch } from "../../../redux/api/apiBranch";
+import {
+    districtApi,
+    getDistrictById,
+    getProvinceById,
+    getWardById,
+    wardApi,
+} from "../../../redux/api/apiProvinceOpenAPI";
 const cx = classNames.bind(styles);
 
 function BookedDetail() {
@@ -42,23 +50,79 @@ function BookedDetail() {
     const serviceList = useSelector(
         (state) => state.service.service?.serviceList
     );
+    const getBranchList = useSelector(
+        (state) => state.branch.branch?.branchList
+    );
+    const getProvinceList = structuredClone(
+        useSelector((state) => state.province.province.provinceList)
+    );
     const dispatch = useDispatch();
     const navigate = useNavigate();
     let axiosJWT = createAxios(user, dispatch, loginSuccess);
     useEffect(() => {
-        if (getBookingDetail) {
-            const newDetailList = getBookingDetail?.map((p) => {
-                const serviceInfo = serviceList?.find(
-                    (service) => service.id === p?.service_id
-                );
-                return {
-                    ...p,
-                    service_name: serviceInfo.name,
-                    image_url: serviceInfo.image_url,
-                };
-            });
-            setServiceListClone(newDetailList);
-        }
+        const fetch = async () => {
+            if (getBookingDetail) {
+                const newList = [];
+
+                for (const item of getBookingDetail) {
+                    let provinceName;
+                    let districtName;
+                    let wardName;
+                    const branch = getBranchList?.find(
+                        (b) => b?.id === item?.branch_id
+                    );
+                    const provinceSelected = getProvinceById(
+                        branch?.province,
+                        getProvinceList
+                    );
+                    provinceName = provinceSelected?.name;
+                    // District
+
+                    await districtApi(parseInt(branch?.province)).then(
+                        (districtList) => {
+                            const districtSelected = getDistrictById(
+                                branch?.district,
+                                districtList
+                            );
+                            districtName = districtSelected?.name;
+                            console.log(districtName);
+                        }
+                    );
+
+                    await wardApi(parseInt(branch?.district)).then(
+                        (wardList) => {
+                            const wardSelected = getWardById(
+                                branch?.ward,
+                                wardList
+                            );
+                            wardName = wardSelected?.name;
+                        }
+                    );
+
+                    const serviceInfo = serviceList?.find(
+                        (service) => service.id === item?.service_id
+                    );
+
+                    newList.push({
+                        ...item,
+                        service_name: serviceInfo.name,
+                        image_url: serviceInfo.image_url,
+                        branch_name: branch?.name,
+                        branch_address:
+                            branch?.detail_address +
+                            ", " +
+                            wardName +
+                            ", " +
+                            districtName +
+                            ", " +
+                            provinceName,
+                        branch_phone_number: branch?.phone_number,
+                    });
+                }
+                setServiceListClone(newList);
+            }
+        };
+        fetch();
     }, [getBookingDetail]);
 
     // Get booking
@@ -77,6 +141,10 @@ function BookedDetail() {
                 user?.accessToken,
                 axiosJWT
             );
+
+            if (getBranchList?.length === 0) {
+                await getAllBranch(dispatch);
+            }
         };
         fetch();
     }, [bookingId]);
@@ -236,6 +304,39 @@ function BookedDetail() {
                                             Thời gian kết thúc:{" "}
                                             <span>
                                                 {serviceListClone[0]?.end_time}
+                                            </span>
+                                        </div>
+                                    </Grid>
+                                    <Grid item xs={12}>
+                                        <div className={cx("info-item")}>
+                                            Tên cơ sở:{" "}
+                                            <span>
+                                                {
+                                                    serviceListClone[0]
+                                                        ?.branch_name
+                                                }
+                                            </span>
+                                        </div>
+                                    </Grid>
+                                    <Grid item xs={12}>
+                                        <div className={cx("info-item")}>
+                                            Địa chỉ cơ sở:{" "}
+                                            <span>
+                                                {
+                                                    serviceListClone[0]
+                                                        ?.branch_address
+                                                }
+                                            </span>
+                                        </div>
+                                    </Grid>
+                                    <Grid item xs={12}>
+                                        <div className={cx("info-item")}>
+                                            Số điện thoại cơ sở:{" "}
+                                            <span>
+                                                {
+                                                    serviceListClone[0]
+                                                        ?.branch_phone_number
+                                                }
                                             </span>
                                         </div>
                                     </Grid>

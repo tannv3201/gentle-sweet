@@ -14,6 +14,7 @@ import SalonSystem from "../../components/SalonSystem/SalonSystem";
 import { getAllProduct } from "../../redux/api/apiProduct";
 import { useDispatch } from "react-redux";
 import { provinceApi } from "../../redux/api/apiProvinceOpenAPI";
+import { getAllBranch } from "../../redux/api/apiBranch";
 
 function HomePage() {
     const theme = useTheme();
@@ -23,6 +24,7 @@ function HomePage() {
         const fetch = async () => {
             await getAllProduct(null, dispatch, null);
             await provinceApi(dispatch);
+            await getAllBranch(dispatch);
         };
         fetch();
     }, []);
