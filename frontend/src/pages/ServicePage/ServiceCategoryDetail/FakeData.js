@@ -75,7 +75,7 @@ export const nailService = {
             id: 1,
             title: "Dịch vụ cắt, chăm sóc móng tay chân.",
             partArticle1:
-                "Đây là dịch vụ phổ biến mà ở bất cứ tiệm nail nào cũng có không chỉ riêng tại Trang Beauty. Với dịch vụ này chúng tôi sẽ giúp khách hàng làm sạch, cắt ngắn, lấy da thừa, lấy khóe của móng tay, chân. Với đôi bàn tay khéo léo, kỹ thuật cao, cộng thêm chút tỉ mỉ chúng tôi sẽ làm cho khách hàng hài lòng và ứng ý nhất. Đến với Trang Beauty ngoài việc được phục vụ tận tình bạn còn được đón tiếp niềm nở.",
+                "Đây là dịch vụ phổ biến mà ở bất cứ tiệm nail nào cũng có không chỉ riêng tại Gentle Beauty. Với dịch vụ này chúng tôi sẽ giúp khách hàng làm sạch, cắt ngắn, lấy da thừa, lấy khóe của móng tay, chân. Với đôi bàn tay khéo léo, kỹ thuật cao, cộng thêm chút tỉ mỉ chúng tôi sẽ làm cho khách hàng hài lòng và ứng ý nhất. Đến với Gentle Beauty ngoài việc được phục vụ tận tình bạn còn được đón tiếp niềm nở.",
             image: images.veSinhMongTay,
         },
         {
@@ -89,7 +89,7 @@ export const nailService = {
             id: 3,
             title: "Dịch vụ đắp móng gel",
             partArticle1:
-                "Đắp móng gel là một trong những kỹ thuật khá khó. Điều này hoàn toàn không làm khó được Trang Beauty vì chúng tôi có đội ngũ kỹ thuật viên lành nghề. Với kỹ thuật đắp móng “thượng thừa” họ sẽ giúp khách hàng có một bộ móng đẹp và giữ được bền lâu. Rất nhiều người yêu thích đắp móng vì nó giúp khách hàng sở hữu được đôi bàn tay đẹp.",
+                "Đắp móng gel là một trong những kỹ thuật khá khó. Điều này hoàn toàn không làm khó được Gentle Beauty vì chúng tôi có đội ngũ kỹ thuật viên lành nghề. Với kỹ thuật đắp móng “thượng thừa” họ sẽ giúp khách hàng có một bộ móng đẹp và giữ được bền lâu. Rất nhiều người yêu thích đắp móng vì nó giúp khách hàng sở hữu được đôi bàn tay đẹp.",
             image: images?.dapMongGel,
         },
         {
@@ -103,7 +103,7 @@ export const nailService = {
             id: 5,
             title: "Tháo gel đắp bột, phá bột.",
             partArticle1:
-                "Sau một thời gian đắp bột gắn móng tay, chân giả khách hàng sẽ thấy nhàm chán và muốn đổi kiểu khác. Việc tháo gel đắp bột, phá bột không đúng cách có thể làm hỏng móng, do vậy chị em thường ra tiệm để thực hiện. Đến với Trang Beauty bạn sẽ được tháo gel đắp bột, phá bột cẩn thận không làm xước, hư hỏng móng thật.",
+                "Sau một thời gian đắp bột gắn móng tay, chân giả khách hàng sẽ thấy nhàm chán và muốn đổi kiểu khác. Việc tháo gel đắp bột, phá bột không đúng cách có thể làm hỏng móng, do vậy chị em thường ra tiệm để thực hiện. Đến với Gentle Beauty bạn sẽ được tháo gel đắp bột, phá bột cẩn thận không làm xước, hư hỏng móng thật.",
             image: images?.thaoGelMong,
         },
     ],
