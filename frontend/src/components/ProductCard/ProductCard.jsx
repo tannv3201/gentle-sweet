@@ -76,8 +76,6 @@ export default function ProductCard({
         }
         const getCart = await cartSearch(product?.id, user?.id);
         const cartExist = cartList?.find((p) => p.product_id === product?.id);
-        // console.log(product?.quantity);
-        console.log(getCart);
         if (getCart?.length === 0) {
             await createCart(
                 user?.accessToken,
