@@ -62,7 +62,7 @@ export default function GModal({
                                 onClick={handleClose}
                                 size={isSmall ? "large" : "medium"}
                             >
-                                <CloseRounded />
+                                <CloseRounded fontSize={"medium"} />
                             </IconButton>
                         </div>
                         <div className={cx("modal-body")}> {children}</div>

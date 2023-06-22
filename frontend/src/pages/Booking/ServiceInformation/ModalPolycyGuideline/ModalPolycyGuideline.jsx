@@ -17,17 +17,17 @@ const guidelines = [
     {
         title: "Hướng dẫn đặt lịch",
         content: [
-            "Để đặt lịch, bạn cần thực hiện qua hệ thống đặt lịch trực tuyến của chúng tôi hoặc gửi yêu cầu đặt lịch qua biểu mẫu liên hệ trên trang web của chúng tôi.",
+            "Để đặt lịch, bạn cần đăng nhập và thực hiện qua hệ thống đặt lịch trực tuyến của chúng tôi.",
             "Yêu cầu đặt lịch cần được gửi trước ít nhất 24 giờ trước ngày hẹn dự kiến để đảm bảo khả năng xếp lịch của chúng tôi.",
             "Sau khi xác nhận đặt lịch thành công, bạn sẽ nhận được xác nhận đặt lịch qua email hoặc tin nhắn.",
         ],
     },
     {
-        title: "Hướng dẫn hủy lịch",
+        title: "Chính sách hủy lịch",
         content: [
             "Nếu bạn cần hủy lịch, vui lòng thông báo cho chúng tôi ít nhất 24 giờ trước ngày hẹn dự kiến.",
-            "Hủy lịch muộn hơn 24 giờ có thể dẫn đến mất phí hủy hoặc không hoàn lại tiền đặt cọc (nếu có).",
-            "Trong trường hợp không xuất hiện (no-show) mà không thông báo trước, chúng tôi có thể áp dụng phí hủy lịch hoặc không hoàn lại tiền đặt cọc (nếu có).",
+            "Chúng tôi dành 24h để chắc chắn lịch hẹn có thể được tiến hành. Sau 24h và trạng thái lịch hẹn là Đã lên lịch thì sẽ không thể hủy",
+            "Trong trường hợp bất đắc dĩ, hãy liên hệ trực tiếp qua số điện thoại của chúng tôi để được hỗ trợ",
         ],
     },
     {
