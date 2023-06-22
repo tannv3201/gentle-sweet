@@ -309,7 +309,7 @@ function BookedDetail() {
                                     </Grid>
                                     <Grid item xs={12}>
                                         <div className={cx("info-item")}>
-                                            Tên cơ sở:{" "}
+                                            Tên chi nhánh:{" "}
                                             <span>
                                                 {
                                                     serviceListClone[0]
@@ -320,7 +320,7 @@ function BookedDetail() {
                                     </Grid>
                                     <Grid item xs={12}>
                                         <div className={cx("info-item")}>
-                                            Địa chỉ cơ sở:{" "}
+                                            Địa chỉ chi nhánh:{" "}
                                             <span>
                                                 {
                                                     serviceListClone[0]
@@ -331,7 +331,7 @@ function BookedDetail() {
                                     </Grid>
                                     <Grid item xs={12}>
                                         <div className={cx("info-item")}>
-                                            Số điện thoại cơ sở:{" "}
+                                            Số điện thoại liên hệ:{" "}
                                             <span>
                                                 {
                                                     serviceListClone[0]
