@@ -162,10 +162,39 @@ export default function ServiceInformation() {
     const handleChangeBranch = (value) => {
         if (value) {
             setFieldValue("branch_id", value?.id);
+            setFieldValue(`bookingTime_id`, null);
+            setFieldValue(`bookingTime_name`, null);
+            setFieldValue(`start_time`, null);
+            setFieldValue(`end_time`, null);
+
             setSelectedBranch(value);
+
+            if (values?.date) {
+                const selectedDate = GFormatDate(
+                    values?.date,
+                    "DD/MM/YYYY"
+                ).toString();
+                const filteredOptions = bookingTimeDefault.filter((option) => {
+                    const matchingBooking = bookingDetailListByUser
+                        .flat()
+                        .find(
+                            (booking) =>
+                                GFormatDate(
+                                    booking.date,
+                                    "DD/MM/YYYY"
+                                ).toString() === selectedDate &&
+                                booking.start_time === option.start_time &&
+                                value?.id === booking?.branch_id
+                        );
+                    return !matchingBooking;
+                });
+
+                setBookingTime(filteredOptions);
+            }
         } else {
             setFieldValue("branch_id", null);
             setSelectedBranch("");
+            setBookingTime([]);
         }
     };
 
@@ -201,25 +230,28 @@ export default function ServiceInformation() {
             setFieldValue(`date`, value);
             const selectedDate = GFormatDate(value, "DD/MM/YYYY").toString();
 
-            const filteredOptions = bookingTimeDefault.filter((option) => {
-                const matchingBooking = bookingDetailListByUser
-                    .flat()
-                    .find(
-                        (booking) =>
-                            GFormatDate(
-                                booking.date,
-                                "DD/MM/YYYY"
-                            ).toString() === selectedDate &&
-                            booking.start_time === option.start_time
-                    );
-                return !matchingBooking;
-            });
+            if (values?.branch_id) {
+                const filteredOptions = bookingTimeDefault.filter((option) => {
+                    const matchingBooking = bookingDetailListByUser
+                        .flat()
+                        .find(
+                            (booking) =>
+                                GFormatDate(
+                                    booking.date,
+                                    "DD/MM/YYYY"
+                                ).toString() === selectedDate &&
+                                booking.start_time === option.start_time &&
+                                values?.branch_id === booking?.branch_id
+                        );
+                    return !matchingBooking;
+                });
 
-            // if(filteredOptions?.length ===0) {
-            //     setFieldError("")
-            // }
+                // if(filteredOptions?.length ===0) {
+                //     setFieldError("")
+                // }
 
-            setBookingTime(filteredOptions);
+                setBookingTime(filteredOptions);
+            }
         } else {
             setFieldValue(`date`, null);
             setBookingTime([]);
@@ -229,6 +261,7 @@ export default function ServiceInformation() {
             setFieldValue(`end_time`, null);
         }
     };
+
     return (
         <div className={cx("wrapper")}>
             <div className={cx("inner")}>
@@ -400,8 +433,10 @@ export default function ServiceInformation() {
                                     <Autocomplete
                                         onBlur={handleBlur}
                                         noOptionsText={
-                                            values?.date
-                                                ? "Bạn đang có lịch hẹn trùng, vui lòng chọn ngày khác!"
+                                            !values?.branch_id
+                                                ? "Vui lòng chọn cơ sở"
+                                                : values?.date
+                                                ? "Bạn đang có lịch hẹn trùng, vui lòng chọn ngày khác hoặc chọn cơ sở khác."
                                                 : "Vui lòng chọn ngày."
                                         }
                                         options={bookingTime}
@@ -411,6 +446,14 @@ export default function ServiceInformation() {
                                         onChange={(e, value) => {
                                             handleChangeBookingTime(value);
                                         }}
+                                        value={
+                                            values?.bookingTime_id
+                                                ? {
+                                                      id: values?.bookingTime_id,
+                                                      name: values?.bookingTime_name,
+                                                  }
+                                                : null
+                                        }
                                         isOptionEqualToValue={(option, value) =>
                                             value === null ||
                                             value === "" ||
