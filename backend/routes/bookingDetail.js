@@ -22,6 +22,12 @@ router.get(
 );
 
 router.get(
+    "/:id/user",
+    middlewareController.verifyToken,
+    bookingDetailController.getBookingDetailByUser
+);
+
+router.get(
     "/:bookingId/bookingDetail",
     middlewareController.verifyToken,
     bookingDetailController.getBookingDetailByBookingId

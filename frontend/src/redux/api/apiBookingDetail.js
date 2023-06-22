@@ -19,6 +19,9 @@ import {
     getBookingDetailByIdFailed,
     getBookingDetailByIdStart,
     getBookingDetailByIdSuccess,
+    getBookingDetailByUserFailed,
+    getBookingDetailByUserStart,
+    getBookingDetailByUserSuccess,
     updateBookingDetailFailed,
     updateBookingDetailStart,
     updateBookingDetailSuccess,
@@ -277,5 +280,31 @@ export const getAllBookingDetailByBookingId = async (
         return res?.data;
     } catch (error) {
         dispatch(getAllBookingDetailByBookingIdFailed(error.response?.data));
+    }
+};
+
+export const getAllBookingDetailByUser = async (
+    dispatch,
+    userId,
+    accessToken,
+    axiosJWT
+) => {
+    dispatch(getBookingDetailByUserStart());
+    try {
+        const res = await axiosJWT.get(
+            "/v1/bookingDetail/" + userId + "/user",
+            {
+                headers: {
+                    token: `Bearer ${accessToken}`,
+                },
+            }
+        );
+        dispatch(getBookingDetailByUserSuccess(res?.data));
+        if (res?.data?.status === 200) {
+            toast.success(res?.data?.msg);
+        }
+        return res?.data;
+    } catch (error) {
+        dispatch(getBookingDetailByUserFailed(error.response?.data));
     }
 };

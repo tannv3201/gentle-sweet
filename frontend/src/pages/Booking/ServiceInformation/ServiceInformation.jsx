@@ -22,7 +22,10 @@ import { useEffect } from "react";
 import { getAllService } from "../../../redux/api/apiService";
 import { toast } from "react-hot-toast";
 import { getAllBookingByUser } from "../../../redux/api/apiBooking";
-import { getBookingDetailByBookingId } from "../../../redux/api/apiBookingDetail";
+import {
+    getAllBookingDetailByUser,
+    getBookingDetailByBookingId,
+} from "../../../redux/api/apiBookingDetail";
 import GTextFieldNormal from "../../../components/GTextField/GTextFieldNormal";
 import { useMediaQuery } from "@mui/material";
 import { useTheme } from "@mui/material/styles";
@@ -98,23 +101,18 @@ export default function ServiceInformation() {
         fetch();
     }, []);
 
-    const [bookingDetailListByUser, setBookingDetailListByUser] = useState([]);
-    const getBookingListByUser = useSelector(
-        (state) => state.booking.booking?.bookingListByUser
+    const getBookingDetailByUser = useSelector(
+        (state) => state.bookingDetail.bookingDetail?.bookingDetailByUser
     );
+
     useEffect(() => {
         const fetch = async () => {
-            if (getBookingListByUser?.length !== 0) {
-                for (const item of getBookingListByUser) {
-                    const bookingDetailList = await getBookingDetailByBookingId(
-                        dispatch,
-                        item?.id,
-                        user?.accessToken,
-                        axiosJWT
-                    );
-                    bookingDetailListByUser.push(bookingDetailList);
-                }
-            }
+            await getAllBookingDetailByUser(
+                dispatch,
+                user?.id,
+                user?.accessToken,
+                axiosJWT
+            );
         };
         fetch();
     }, []);
@@ -175,17 +173,15 @@ export default function ServiceInformation() {
                     "DD/MM/YYYY"
                 ).toString();
                 const filteredOptions = bookingTimeDefault.filter((option) => {
-                    const matchingBooking = bookingDetailListByUser
-                        .flat()
-                        .find(
-                            (booking) =>
-                                GFormatDate(
-                                    booking.date,
-                                    "DD/MM/YYYY"
-                                ).toString() === selectedDate &&
-                                booking.start_time === option.start_time &&
-                                value?.id === booking?.branch_id
-                        );
+                    const matchingBooking = getBookingDetailByUser?.find(
+                        (booking) =>
+                            GFormatDate(
+                                booking.date,
+                                "DD/MM/YYYY"
+                            ).toString() === selectedDate &&
+                            booking.start_time === option.start_time &&
+                            value?.id === booking?.branch_id
+                    );
                     return !matchingBooking;
                 });
 
@@ -193,6 +189,10 @@ export default function ServiceInformation() {
             }
         } else {
             setFieldValue("branch_id", null);
+            setFieldValue(`bookingTime_id`, null);
+            setFieldValue(`bookingTime_name`, null);
+            setFieldValue(`start_time`, null);
+            setFieldValue(`end_time`, null);
             setSelectedBranch("");
             setBookingTime([]);
         }
@@ -229,26 +229,24 @@ export default function ServiceInformation() {
         if (value) {
             setFieldValue(`date`, value);
             const selectedDate = GFormatDate(value, "DD/MM/YYYY").toString();
+            setFieldValue(`bookingTime_id`, null);
+            setFieldValue(`bookingTime_name`, null);
+            setFieldValue(`start_time`, null);
+            setFieldValue(`end_time`, null);
 
             if (values?.branch_id) {
                 const filteredOptions = bookingTimeDefault.filter((option) => {
-                    const matchingBooking = bookingDetailListByUser
-                        .flat()
-                        .find(
-                            (booking) =>
-                                GFormatDate(
-                                    booking.date,
-                                    "DD/MM/YYYY"
-                                ).toString() === selectedDate &&
-                                booking.start_time === option.start_time &&
-                                values?.branch_id === booking?.branch_id
-                        );
+                    const matchingBooking = getBookingDetailByUser?.find(
+                        (booking) =>
+                            GFormatDate(
+                                booking.date,
+                                "DD/MM/YYYY"
+                            ).toString() === selectedDate &&
+                            booking.start_time === option.start_time &&
+                            values?.branch_id === booking?.branch_id
+                    );
                     return !matchingBooking;
                 });
-
-                // if(filteredOptions?.length ===0) {
-                //     setFieldError("")
-                // }
 
                 setBookingTime(filteredOptions);
             }
@@ -260,8 +258,15 @@ export default function ServiceInformation() {
             setFieldValue(`start_time`, null);
             setFieldValue(`end_time`, null);
         }
-    };
 
+        if (errors?.date) {
+            setBookingTime([]);
+            setFieldValue(`bookingTime_id`, null);
+            setFieldValue(`bookingTime_name`, null);
+            setFieldValue(`start_time`, null);
+            setFieldValue(`end_time`, null);
+        }
+    };
     return (
         <div className={cx("wrapper")}>
             <div className={cx("inner")}>

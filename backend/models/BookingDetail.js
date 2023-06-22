@@ -14,6 +14,14 @@ const getBookingDetailById = async (id) => {
     return rows[0];
 };
 
+const getBookingDetailByUser = async (id) => {
+    const [rows, fields] = await pool.query(
+        "SELECT bd.*, b.branch_id FROM tbl_booking_detail bd JOIN tbl_booking b ON bd.booking_id = b.id WHERE b.customer_user_id = (?)",
+        [id]
+    );
+    return rows;
+};
+
 const getBookingDetailByBookingId = async (id) => {
     const [rows, fields] = await pool.query(
         "SELECT * FROM tbl_booking_detail WHERE booking_id= (?)",
@@ -58,6 +66,7 @@ const deleteBookingDetailById = async (id) => {
 module.exports = {
     getAllBookingDetail,
     getBookingDetailById,
+    getBookingDetailByUser,
     createBookingDetail,
     updateBookingDetailById,
     deleteBookingDetailById,

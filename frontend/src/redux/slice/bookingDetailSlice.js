@@ -9,6 +9,7 @@ const bookingDetailSlice = createSlice({
             bookingDetailByBooking: null,
             bookingDetailListByBooking: [],
             bookingDetailListByBookingIdList: [],
+            bookingDetailByUser: [],
             isFetching: false,
             error: false,
         },
@@ -37,6 +38,19 @@ const bookingDetailSlice = createSlice({
             state.bookingDetail.bookingDetail = action.payload;
         },
         getBookingDetailByIdFailed: (state) => {
+            state.bookingDetail.isFetching = false;
+            state.bookingDetail.error = true;
+        },
+
+        // Get all ADMIN USER
+        getBookingDetailByUserStart: (state) => {
+            state.bookingDetail.isFetching = true;
+        },
+        getBookingDetailByUserSuccess: (state, action) => {
+            state.bookingDetail.isFetching = false;
+            state.bookingDetail.bookingDetailByUser = action.payload;
+        },
+        getBookingDetailByUserFailed: (state) => {
             state.bookingDetail.isFetching = false;
             state.bookingDetail.error = true;
         },
@@ -133,6 +147,10 @@ export const {
     getBookingDetailByIdStart,
     getBookingDetailByIdSuccess,
     getBookingDetailByIdFailed,
+
+    getBookingDetailByUserStart,
+    getBookingDetailByUserSuccess,
+    getBookingDetailByUserFailed,
 
     getBookingDetailByBookingIdStart,
     getBookingDetailByBookingIdSuccess,

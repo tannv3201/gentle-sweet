@@ -2,6 +2,20 @@ const BookingDetailModel = require("../models/BookingDetail");
 const BookingModal = require("../models/Booking");
 
 const bookingController = {
+    // GET INVOICE DETAIL BY ID
+    getBookingDetailByUser: async (req, res) => {
+        try {
+            const bookingDetail =
+                await BookingDetailModel.getBookingDetailByUser(req.params.id);
+            if (!bookingDetail) {
+                return res.json({ status: 404, msg: "Lịch đặt không tồn tại" });
+            } else {
+                return res.status(200).json(bookingDetail);
+            }
+        } catch (error) {
+            res.status(500).json(error);
+        }
+    },
     // GET ALL INVOICE DETAIL
     getAllBookingDetail: async (req, res) => {
         try {
