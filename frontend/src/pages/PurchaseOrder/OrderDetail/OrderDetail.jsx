@@ -271,7 +271,7 @@ function OrderDetail() {
                                 <h3
                                     className={cx("invoice-code")}
                                 >{`Đơn hàng #${invoiceId}`}</h3>
-                                {invoiceClone?.status < 3 && (
+                                {invoiceClone?.status < 4 && (
                                     <GButton
                                         color={"error"}
                                         onClick={handleOpenCancelConfirmPopup}

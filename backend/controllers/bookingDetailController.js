@@ -1,7 +1,75 @@
 const BookingDetailModel = require("../models/BookingDetail");
 const BookingModal = require("../models/Booking");
+const dayjs = require("dayjs");
+// dayjs.extend(utc);
+const bookingTimeDefault = [
+    {
+        id: 1,
+        name: "7:00 - 09:00",
+        start_time: "07:00:00",
+        end_time: "09:00:00",
+    },
+    {
+        id: 2,
+        name: "09:00 - 11:00",
+        start_time: "09:00:00",
+        end_time: "11:00:00",
+    },
+    {
+        id: 3,
+        name: "13:00 - 15:00",
+        start_time: "13:00:00",
+        end_time: "15:00:00",
+    },
+    {
+        id: 4,
+        name: "15:00 - 17:00",
+        start_time: "15:00:00",
+        end_time: "17:00:00",
+    },
+];
 
 const bookingController = {
+    getBookingTimeList: async (req, res) => {
+        try {
+            const { customer_user_id, branch_id, date } = req.query;
+
+            const params = {
+                customer_user_id: customer_user_id,
+                branch_id: branch_id,
+                date: date,
+            };
+
+            const bookingDateTimeList =
+                await BookingDetailModel.getBookingTimeList(
+                    customer_user_id,
+                    date
+                );
+            console.log(bookingDateTimeList);
+            const filteredOptions = bookingTimeDefault.filter((option) => {
+                const matchingBooking = bookingDateTimeList?.find(
+                    (booking) =>
+                        dayjs(booking?.date).format("YYYY-MM-DD").toString() ===
+                            date &&
+                        booking.start_time === option.start_time &&
+                        parseInt(branch_id) === booking?.branch_id
+                );
+                return !matchingBooking;
+            });
+
+            if (!filteredOptions) {
+                return res.json({
+                    status: 404,
+                    bookingTimeList: bookingTimeDefault,
+                });
+            } else {
+                return res.status(200).json(filteredOptions);
+            }
+        } catch (error) {
+            res.status(500).json(error);
+        }
+    },
+
     // GET INVOICE DETAIL BY ID
     getBookingDetailByUser: async (req, res) => {
         try {

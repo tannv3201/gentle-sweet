@@ -28,6 +28,12 @@ router.get(
 );
 
 router.get(
+    "/filterBookingTime/checkDuplicate",
+    middlewareController.verifyToken,
+    bookingDetailController.getBookingTimeList
+);
+
+router.get(
     "/:bookingId/bookingDetail",
     middlewareController.verifyToken,
     bookingDetailController.getBookingDetailByBookingId

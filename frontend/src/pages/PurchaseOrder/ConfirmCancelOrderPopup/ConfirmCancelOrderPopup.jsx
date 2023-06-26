@@ -78,6 +78,12 @@ function ConfirmCancelOrderPopup({ handleClose, handleOpen, isOpen, invoice }) {
                 msg = "Gửi yêu cầu hủy đơn hàng thành công";
             }
 
+            if (invoice?.status === 3 && invoice?.paid === 0) {
+                status = 7;
+                paid = 0;
+                msg = "Gửi yêu cầu hủy đơn hàng thành công";
+            }
+
             if (invoice?.status === 1 && invoice?.paid === 2) {
                 status = 6;
                 paid = 3;

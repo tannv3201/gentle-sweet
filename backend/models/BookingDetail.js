@@ -22,6 +22,14 @@ const getBookingDetailByUser = async (id) => {
     return rows;
 };
 
+const getBookingTimeList = async (customer_user_id, date) => {
+    const [rows, fields] = await pool.query(
+        "SELECT b.*, bd.* FROM tbl_booking b INNER JOIN tbl_booking_detail bd ON b.id = bd.booking_id WHERE b.customer_user_id = ? AND bd.date = ?",
+        [customer_user_id, date]
+    );
+    return rows;
+};
+
 const getBookingDetailByBookingId = async (id) => {
     const [rows, fields] = await pool.query(
         "SELECT * FROM tbl_booking_detail WHERE booking_id= (?)",
@@ -66,6 +74,7 @@ const deleteBookingDetailById = async (id) => {
 module.exports = {
     getAllBookingDetail,
     getBookingDetailById,
+    getBookingTimeList,
     getBookingDetailByUser,
     createBookingDetail,
     updateBookingDetailById,
