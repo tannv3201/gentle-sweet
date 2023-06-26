@@ -24,7 +24,7 @@ import { toast } from "react-hot-toast";
 import { getAllBookingByUser } from "../../../redux/api/apiBooking";
 import {
     getAllBookingDetailByUser,
-    getBookingDetailByBookingId,
+    getBookingTimeList,
 } from "../../../redux/api/apiBookingDetail";
 import GTextFieldNormal from "../../../components/GTextField/GTextFieldNormal";
 import { useMediaQuery } from "@mui/material";
@@ -105,6 +105,14 @@ export default function ServiceInformation() {
         (state) => state.bookingDetail.bookingDetail?.bookingDetailByUser
     );
 
+    const [bookingDetailClone, setBookingDetailClone] = useState([]);
+
+    useEffect(() => {
+        if (getBookingDetailByUser?.length > 0) {
+            setBookingDetailClone(getBookingDetailByUser);
+        }
+    }, [getBookingDetailByUser]);
+
     useEffect(() => {
         const fetch = async () => {
             await getAllBookingDetailByUser(
@@ -157,7 +165,7 @@ export default function ServiceInformation() {
 
     const [selectedBranch, setSelectedBranch] = useState({});
 
-    const handleChangeBranch = (value) => {
+    const handleChangeBranch = async (value) => {
         if (value) {
             setFieldValue("branch_id", value?.id);
             setFieldValue(`bookingTime_id`, null);
@@ -168,24 +176,29 @@ export default function ServiceInformation() {
             setSelectedBranch(value);
 
             if (values?.date) {
-                const selectedDate = GFormatDate(
-                    values?.date,
-                    "DD/MM/YYYY"
-                ).toString();
-                const filteredOptions = bookingTimeDefault.filter((option) => {
-                    const matchingBooking = getBookingDetailByUser?.find(
-                        (booking) =>
-                            GFormatDate(
-                                booking.date,
-                                "DD/MM/YYYY"
-                            ).toString() === selectedDate &&
-                            booking.start_time === option.start_time &&
-                            value?.id === booking?.branch_id
-                    );
-                    return !matchingBooking;
-                });
+                const date = GFormatDate(values?.date, "YYYY-MM-DD").toString();
 
-                setBookingTime(filteredOptions);
+                const bookingTimeList = await getBookingTimeList(
+                    user?.accessToken,
+                    user?.id,
+                    value?.id,
+                    date,
+                    axiosJWT
+                );
+                // const filteredOptions = bookingTimeDefault.filter((option) => {
+                //     const matchingBooking = bookingDetailClone?.find(
+                //         (booking) =>
+                //             GFormatDate(
+                //                 booking.date,
+                //                 "DD/MM/YYYY"
+                //             ).toString() === selectedDate &&
+                //             booking.start_time === option.start_time &&
+                //             value?.id === booking?.branch_id
+                //     );
+                //     return !matchingBooking;
+                // });
+
+                setBookingTime(bookingTimeList);
             }
         } else {
             setFieldValue("branch_id", null);
@@ -225,30 +238,38 @@ export default function ServiceInformation() {
             end_time: "17:00:00",
         },
     ];
-    const handleChangeBookingDate = (value, index) => {
+
+    const handleChangeBookingDate = async (value, index) => {
         if (value) {
             setFieldValue(`date`, value);
-            const selectedDate = GFormatDate(value, "DD/MM/YYYY").toString();
+            const date = GFormatDate(value, "YYYY-MM-DD").toString();
             setFieldValue(`bookingTime_id`, null);
             setFieldValue(`bookingTime_name`, null);
             setFieldValue(`start_time`, null);
             setFieldValue(`end_time`, null);
 
             if (values?.branch_id) {
-                const filteredOptions = bookingTimeDefault.filter((option) => {
-                    const matchingBooking = getBookingDetailByUser?.find(
-                        (booking) =>
-                            GFormatDate(
-                                booking.date,
-                                "DD/MM/YYYY"
-                            ).toString() === selectedDate &&
-                            booking.start_time === option.start_time &&
-                            values?.branch_id === booking?.branch_id
-                    );
-                    return !matchingBooking;
-                });
+                const bookingTimeList = await getBookingTimeList(
+                    user?.accessToken,
+                    user?.id,
+                    values?.branch_id,
+                    date,
+                    axiosJWT
+                );
 
-                setBookingTime(filteredOptions);
+                // const filteredOptions = bookingTimeDefault.filter((option) => {
+                //     const matchingBooking = bookingDetailClone?.find(
+                //         (booking) =>
+                //             GFormatDate(
+                //                 booking.date,
+                //                 "DD/MM/YYYY"
+                //             ).toString() === selectedDate &&
+                //             booking.start_time === option.start_time &&
+                //             values?.branch_id === booking?.branch_id
+                //     );
+                //     return !matchingBooking;
+                // });
+                setBookingTime(bookingTimeList);
             }
         } else {
             setFieldValue(`date`, null);
@@ -267,6 +288,8 @@ export default function ServiceInformation() {
             setFieldValue(`end_time`, null);
         }
     };
+
+    console.log("After-set", bookingTime);
     return (
         <div className={cx("wrapper")}>
             <div className={cx("inner")}>

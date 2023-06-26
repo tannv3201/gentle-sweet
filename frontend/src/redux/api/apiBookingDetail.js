@@ -308,3 +308,30 @@ export const getAllBookingDetailByUser = async (
         dispatch(getBookingDetailByUserFailed(error.response?.data));
     }
 };
+
+export const getBookingTimeList = async (
+    accessToken,
+    customer_user_id,
+    branch_id,
+    date,
+    axiosJWT
+) => {
+    try {
+        const res = await axiosJWT.get(
+            "/v1/bookingDetail/filterBookingTime/checkDuplicate",
+            {
+                params: {
+                    customer_user_id: customer_user_id,
+                    branch_id: branch_id,
+                    date: date,
+                },
+                headers: {
+                    token: `Bearer ${accessToken}`,
+                },
+            }
+        );
+        return res?.data;
+    } catch (error) {
+        console.log(error);
+    }
+};
