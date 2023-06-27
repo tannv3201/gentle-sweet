@@ -55,7 +55,7 @@ export default function ServiceInformation() {
         handleChange,
         setFieldValue,
         values,
-        setFieldError,
+        setFieldTouched,
         touched,
         errors,
     } = useFormikContext();
@@ -164,6 +164,7 @@ export default function ServiceInformation() {
     };
 
     const [selectedBranch, setSelectedBranch] = useState({});
+    const [bookingTime, setBookingTime] = useState([]);
 
     const handleChangeBranch = async (value) => {
         if (value) {
@@ -185,18 +186,6 @@ export default function ServiceInformation() {
                     date,
                     axiosJWT
                 );
-                // const filteredOptions = bookingTimeDefault.filter((option) => {
-                //     const matchingBooking = bookingDetailClone?.find(
-                //         (booking) =>
-                //             GFormatDate(
-                //                 booking.date,
-                //                 "DD/MM/YYYY"
-                //             ).toString() === selectedDate &&
-                //             booking.start_time === option.start_time &&
-                //             value?.id === booking?.branch_id
-                //     );
-                //     return !matchingBooking;
-                // });
 
                 setBookingTime(bookingTimeList);
             }
@@ -211,7 +200,6 @@ export default function ServiceInformation() {
         }
     };
 
-    const [bookingTime, setBookingTime] = useState([]);
     const bookingTimeDefault = [
         {
             id: 1,
@@ -240,6 +228,14 @@ export default function ServiceInformation() {
     ];
 
     const handleChangeBookingDate = async (value, index) => {
+        if (errors?.date) {
+            setBookingTime([]);
+            setFieldValue(`bookingTime_id`, null);
+            setFieldValue(`bookingTime_name`, null);
+            setFieldValue(`start_time`, null);
+            setFieldValue(`end_time`, null);
+        }
+
         if (value) {
             setFieldValue(`date`, value);
             const date = GFormatDate(value, "YYYY-MM-DD").toString();
@@ -249,6 +245,7 @@ export default function ServiceInformation() {
             setFieldValue(`end_time`, null);
 
             if (values?.branch_id) {
+                console.log(values?.branch_id);
                 const bookingTimeList = await getBookingTimeList(
                     user?.accessToken,
                     user?.id,
@@ -257,39 +254,19 @@ export default function ServiceInformation() {
                     axiosJWT
                 );
 
-                // const filteredOptions = bookingTimeDefault.filter((option) => {
-                //     const matchingBooking = bookingDetailClone?.find(
-                //         (booking) =>
-                //             GFormatDate(
-                //                 booking.date,
-                //                 "DD/MM/YYYY"
-                //             ).toString() === selectedDate &&
-                //             booking.start_time === option.start_time &&
-                //             values?.branch_id === booking?.branch_id
-                //     );
-                //     return !matchingBooking;
-                // });
                 setBookingTime(bookingTimeList);
             }
         } else {
+            setFieldValue(`bookingTime_id`, null);
+            setFieldValue(`bookingTime_name`, null);
+            setFieldValue(`start_time`, null);
+            setFieldValue(`end_time`, null);
             setFieldValue(`date`, null);
             setBookingTime([]);
-            setFieldValue(`bookingTime_id`, null);
-            setFieldValue(`bookingTime_name`, null);
-            setFieldValue(`start_time`, null);
-            setFieldValue(`end_time`, null);
-        }
-
-        if (errors?.date) {
-            setBookingTime([]);
-            setFieldValue(`bookingTime_id`, null);
-            setFieldValue(`bookingTime_name`, null);
-            setFieldValue(`start_time`, null);
-            setFieldValue(`end_time`, null);
         }
     };
-
-    console.log("After-set", bookingTime);
+    console.log(touched?.date);
+    console.log(errors?.date);
     return (
         <div className={cx("wrapper")}>
             <div className={cx("inner")}>
@@ -416,7 +393,7 @@ export default function ServiceInformation() {
                                             }
                                             fullWidth
                                             name="date"
-                                            onBlur={handleBlur}
+                                            onBlurFormik={handleBlur}
                                             onChange={(date) =>
                                                 handleChangeBookingDate(date)
                                             }

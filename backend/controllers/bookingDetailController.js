@@ -45,7 +45,6 @@ const bookingController = {
                     customer_user_id,
                     date
                 );
-            console.log(bookingDateTimeList);
             const filteredOptions = bookingTimeDefault.filter((option) => {
                 const matchingBooking = bookingDateTimeList?.find(
                     (booking) =>
@@ -56,15 +55,7 @@ const bookingController = {
                 );
                 return !matchingBooking;
             });
-
-            if (!filteredOptions) {
-                return res.json({
-                    status: 404,
-                    bookingTimeList: bookingTimeDefault,
-                });
-            } else {
-                return res.status(200).json(filteredOptions);
-            }
+            return res.status(200).json(filteredOptions);
         } catch (error) {
             res.status(500).json(error);
         }
