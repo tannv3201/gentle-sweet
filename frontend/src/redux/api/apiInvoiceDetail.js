@@ -58,7 +58,7 @@ export const createInvoiceDetail = async (
         dispatch(createInvoiceDetailSuccess(res?.data));
         if (res?.data?.status === 201) {
             // toast.success(res?.data?.msg);
-            toast.success("Tạo đơn hàng thành công");
+            // toast.success("Tạo đơn hàng thành công");
             await getInvoiceDetailByInvoiceId(
                 dispatch,
                 invoiceId,
@@ -66,8 +66,10 @@ export const createInvoiceDetail = async (
                 axiosJWT
             );
             await getAllInvoice(accessToken, dispatch, axiosJWT);
+        } else {
+            toast.error("Có lỗi xảy ra!");
         }
-        return res?.data?.data?.insertId;
+        return res?.data;
     } catch (error) {
         dispatch(createInvoiceDetailFailed(error.response?.data));
     }

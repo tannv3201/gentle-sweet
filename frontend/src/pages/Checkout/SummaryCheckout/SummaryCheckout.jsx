@@ -165,6 +165,8 @@ function SummaryCheckout() {
             return restData;
         });
 
+        let counterCreateInvoiceDetails = 0;
+
         for (const item of productList) {
             await createInvoiceDetail(
                 newInvoice,
@@ -173,6 +175,11 @@ function SummaryCheckout() {
                 { ...item, deliveryPrice: deliveryPrice },
                 axiosJWT
             );
+            counterCreateInvoiceDetails++;
+
+            if (counterCreateInvoiceDetails === productList?.length) {
+                toast.success("Tạo đơn hàng thành công");
+            }
         }
         const delivery = await createDelivery(
             user?.accessToken,
