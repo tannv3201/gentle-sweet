@@ -63,7 +63,7 @@ export const createBookingDetail = async (
         );
         dispatch(createBookingDetailSuccess(res?.data));
         if (res?.data?.status === 201) {
-            toast.success("Thêm chi tiết lịch hẹn thành công");
+            toast.success("Tạo lịch hẹn thành công");
             await getBookingDetailByBookingId(
                 dispatch,
                 bookingId,
@@ -99,7 +99,7 @@ export const createBookingDetailByCustomer = async (
         dispatch(createBookingDetailSuccess(res?.data));
         if (res?.data?.status === 201) {
             // toast.success(res?.data?.msg);
-            toast.success("Thêm chi tiết lịch hẹn thành công");
+            toast.success("Tạo lịch hẹn thành công");
             await getBookingDetailByBookingId(
                 dispatch,
                 bookingId,

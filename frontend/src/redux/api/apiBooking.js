@@ -80,8 +80,10 @@ export const createBooking = async (
         });
         dispatch(createBookingSuccess(res?.data));
         if (res?.data?.status === 201) {
-            toast.success("Thêm lịch hẹn thành công");
+            // toast.success("Thêm lịch hẹn thành công");
             getAllBooking(accessToken, dispatch, axiosJWT);
+        } else {
+            toast.error("Có lỗi xảy ra!");
         }
 
         return res?.data?.data?.insertId;
@@ -107,8 +109,10 @@ export const createBookingByCustomer = async (
         dispatch(createBookingSuccess(res?.data));
         if (res?.data?.status === 201) {
             // toast.success(res?.data?.msg);
-            toast.success("Thêm lịch hẹn thành công");
+            // toast.success("Thêm lịch hẹn thành công");
             getAllBookingByUser(userId, accessToken, dispatch, axiosJWT);
+        } else {
+            toast.error("Có lỗi xảy ra!");
         }
 
         return res?.data?.data?.insertId;
