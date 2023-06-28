@@ -196,12 +196,103 @@ const bookingController = {
     updateBookingDetailById: async (req, res) => {
         try {
             const bookingDetailId = req.params.id;
-            const { admin_user_id, booking_id, ...data } = req.body;
+            const {
+                admin_user_id,
+                booking_id,
+                service_name,
+                customer_email,
+                start_time,
+                end_time,
+                date,
+                customer_name,
+                ...data
+            } = req.body;
             const affectedRows =
                 await BookingDetailModel.updateBookingDetailById(
                     bookingDetailId,
                     data
                 );
+
+            if (req.body.status === 6) {
+                let transporter = nodemailer.createTransport({
+                    host: mailConfig.HOST,
+                    port: mailConfig.PORT,
+                    secure: false, // true for 465, false for other ports
+                    auth: {
+                        user: mailConfig.USERNAME, // generated ethereal user
+                        pass: mailConfig.PASSWORD, // generated ethereal password
+                    },
+                });
+
+                let info = await transporter.sendMail({
+                    from: mailConfig.FROM_ADDRESS, // sender address
+                    to: req.body.customer_email, // list of receivers
+                    subject: "HỦY LỊCH HẸN", // Subject line
+                    // text: "Hello world?", // plain text body
+                    html: ` <div style="color: #000">
+                        <p style="color: #000">Xin chào ${
+                            req.body.customer_name
+                        }, bạn đã hủy lịch hẹn thành công.</p>
+    <ul>
+    <li>Tên dịch vụ: <strong>${req.body.service_name}</strong></li>
+    <li>Ngày thực hiện dịch vụ: <strong>${dayjs(req.body.date).format(
+        "DD-MM-YYYY"
+    )}</strong></li>
+                    <li>Thời gian bắt đầu: <strong>${
+                        req.body.start_time
+                    }</strong></li>
+                    <li>Thời gian kết thúc: <strong>${
+                        req.body.end_time
+                    }</strong></li>
+    </ul>
+                        <p style="color: #000">Chúc Quý khách luôn có những trải nghiệm tuyệt vời tại <strong>GentleBeauty</strong></p>
+                        <p>Trân trọng,</p>
+                        <strong style="color: #000">
+                        Gentle Beauty.
+                        </strong>
+                      </div>`, // html body
+                });
+            } else if (req.body.status === 7) {
+                let transporter = nodemailer.createTransport({
+                    host: mailConfig.HOST,
+                    port: mailConfig.PORT,
+                    secure: false, // true for 465, false for other ports
+                    auth: {
+                        user: mailConfig.USERNAME, // generated ethereal user
+                        pass: mailConfig.PASSWORD, // generated ethereal password
+                    },
+                });
+
+                let info = await transporter.sendMail({
+                    from: mailConfig.FROM_ADDRESS, // sender address
+                    to: req.body.customer_email, // list of receivers
+                    subject: "YÊU CẦU HỦY LỊCH HẸN", // Subject line
+                    // text: "Hello world?", // plain text body
+                    html: ` <div style="color: #000">
+                        <p style="color: #000">Xin chào ${
+                            req.body.customer_name
+                        }, bạn đã gửi yêu cầu hủy lịch hẹn thành công.</p>
+    <ul>
+    <li>Tên dịch vụ: <strong>${req.body.service_name}</strong></li>
+    <li>Ngày thực hiện dịch vụ: <strong>${dayjs(req.body.date).format(
+        "DD-MM-YYYY"
+    )}</strong></li>
+                    <li>Thời gian bắt đầu: <strong>${
+                        req.body.start_time
+                    }</strong></li>
+                    <li>Thời gian kết thúc: <strong>${
+                        req.body.end_time
+                    }</strong></li>
+    </ul>
+    <p style="color: #000">Quý khách vui lòng đợi sự chấp thuận từ chúng tôi.</p>
+                        <p style="color: #000">Chúc Quý khách luôn có những trải nghiệm tuyệt vời tại <strong>GentleBeauty</strong></p>
+                        <p>Trân trọng,</p>
+                        <strong style="color: #000">
+                        Gentle Beauty.
+                        </strong>
+                      </div>`, // html body
+                });
+            }
 
             await BookingDetailModel.updatePriceTotalBooking(booking_id);
             if (affectedRows === 0) {

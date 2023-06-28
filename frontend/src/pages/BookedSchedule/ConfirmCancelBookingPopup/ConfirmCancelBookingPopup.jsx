@@ -46,7 +46,15 @@ function ConfirmCancelBookingPopup({
             dispatch,
             bookingDetail?.id,
             booking?.bookingId,
-            data,
+            {
+                ...data,
+                service_name: bookingDetail?.service_name,
+                customer_email: user?.email,
+                start_time: bookingDetail?.start_time,
+                end_time: bookingDetail?.end_time,
+                date: bookingDetail?.date,
+                customer_name: user?.first_name,
+            },
             axiosJWT
         ).then(() => {
             toast.success(msg);
