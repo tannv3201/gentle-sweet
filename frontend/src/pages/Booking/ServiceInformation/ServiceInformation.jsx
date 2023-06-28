@@ -245,7 +245,6 @@ export default function ServiceInformation() {
             setFieldValue(`end_time`, null);
 
             if (values?.branch_id) {
-                console.log(values?.branch_id);
                 const bookingTimeList = await getBookingTimeList(
                     user?.accessToken,
                     user?.id,
@@ -265,8 +264,7 @@ export default function ServiceInformation() {
             setBookingTime([]);
         }
     };
-    console.log(touched?.date);
-    console.log(errors?.date);
+
     return (
         <div className={cx("wrapper")}>
             <div className={cx("inner")}>

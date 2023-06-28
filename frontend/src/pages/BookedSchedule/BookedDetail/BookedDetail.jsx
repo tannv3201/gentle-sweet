@@ -72,18 +72,6 @@ function BookedDetail() {
                         image_url: serviceInfo.image_url,
                     };
                 });
-
-                // for (const item of getBookingDetail) {
-                //     const serviceInfo = serviceList?.find(
-                //         (service) => service.id === item?.service_id
-                //     );
-
-                //     newList.push({
-                //         ...item,
-                //         service_name: serviceInfo.name,
-                //         image_url: serviceInfo.image_url,
-                //     });
-                // }
                 setServiceListClone(newList);
             }
         };
@@ -137,7 +125,6 @@ function BookedDetail() {
                             districtList
                         );
                         districtName = districtSelected?.name;
-                        console.log(districtName);
                     }
                 );
 
@@ -182,8 +169,6 @@ function BookedDetail() {
         };
         fetch();
     }, [bookingById]);
-
-    // console.log(bookingClone);
 
     useEffect(() => {
         if (deliveryByBookingId) {
@@ -579,6 +564,7 @@ function BookedDetail() {
                 handleClose={handleCloseConfirmCancelPopup}
                 handleOpen={handleOpenConfirmCancelPopup}
                 booking={{ bookingId: bookingId, status: bookingClone?.status }}
+                bookingDetail={serviceListClone[0]}
             />
         </div>
     );

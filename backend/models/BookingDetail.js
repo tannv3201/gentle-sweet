@@ -24,7 +24,7 @@ const getBookingDetailByUser = async (id) => {
 
 const getBookingTimeList = async (customer_user_id, date) => {
     const [rows, fields] = await pool.query(
-        "SELECT b.*, bd.* FROM tbl_booking b INNER JOIN tbl_booking_detail bd ON b.id = bd.booking_id WHERE b.customer_user_id = ? AND bd.date = ?",
+        "SELECT b.*, bd.* FROM tbl_booking b INNER JOIN tbl_booking_detail bd ON b.id = bd.booking_id WHERE b.customer_user_id = ? AND bd.date = ? AND b.status <> 6",
         [customer_user_id, date]
     );
     return rows;

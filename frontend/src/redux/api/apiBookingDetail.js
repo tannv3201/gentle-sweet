@@ -135,7 +135,6 @@ export const updateBookingDetail = async (
         );
         dispatch(updateBookingDetailSuccess(res?.data));
         if (res?.data?.status === 200) {
-            toast.success(res?.data?.msg);
             // getAllBookingDetail(accessToken, dispatch, axiosJWT);
             await getBookingDetailByBookingId(
                 dispatch,
@@ -144,6 +143,8 @@ export const updateBookingDetail = async (
                 axiosJWT
             );
             await getAllBooking(accessToken, dispatch, axiosJWT);
+        } else {
+            toast.error("Có lỗi xảy ra!");
         }
     } catch (error) {
         dispatch(updateBookingDetailFailed(error.response?.data));

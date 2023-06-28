@@ -13,12 +13,14 @@ import { loginSuccess } from "../../../redux/slice/authSlice";
 import { toast } from "react-hot-toast";
 import { useMediaQuery } from "@mui/material";
 import { useTheme } from "@mui/material/styles";
+import { updateBookingDetail } from "../../../redux/api/apiBookingDetail";
 
 function ConfirmCancelBookingPopup({
     handleClose,
     handleOpen,
     isOpen,
     booking,
+    bookingDetail,
 }) {
     const theme = useTheme();
     const isSmall = useMediaQuery(theme.breakpoints.down("sm"));
@@ -34,6 +36,15 @@ function ConfirmCancelBookingPopup({
         await updateBooking(
             user?.accessToken,
             dispatch,
+            booking?.bookingId,
+            data,
+            axiosJWT
+        );
+
+        await updateBookingDetail(
+            user?.accessToken,
+            dispatch,
+            bookingDetail?.id,
             booking?.bookingId,
             data,
             axiosJWT
