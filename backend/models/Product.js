@@ -49,7 +49,7 @@ const deleteProductById = async (id) => {
 
 const searchTerm = async (searchTerm) => {
     const [rows, fields] = await pool.query(
-        `SELECT * FROM tbl_product WHERE name LIKE "%${searchTerm}%"`
+        `SELECT * FROM tbl_product WHERE name LIKE '%${searchTerm}%'`
     );
     return rows;
 };
