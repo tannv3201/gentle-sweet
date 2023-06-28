@@ -69,6 +69,7 @@ function Booking() {
     const location = useLocation();
     const navigate = useNavigate();
     const handleSubmit = async (values) => {
+        console.log(values);
         const {
             service_id,
             start_time,
@@ -76,6 +77,7 @@ function Booking() {
             date,
             note,
             branch_id,
+            service_name,
             ...data
         } = values;
         if (!user?.detail_address && !getCustomerUser?.detail_address) {
@@ -105,6 +107,8 @@ function Booking() {
                 selectedService.price_onsale > 0
                     ? selectedService.price_onsale
                     : selectedService.price,
+            customer_email: user?.email,
+            service_name: service_name,
         };
 
         await createBookingDetail(

@@ -1,5 +1,8 @@
 const BookingDetailModel = require("../models/BookingDetail");
 const BookingModal = require("../models/Booking");
+const nodemailer = require("nodemailer");
+const mailConfig = require("../config/mail");
+require("dotenv").config();
 const dayjs = require("dayjs");
 // dayjs.extend(utc);
 const bookingTimeDefault = [
@@ -133,11 +136,49 @@ const bookingController = {
                     note: req.body.note,
                     status: 1,
                 });
-
             const updateTotalPrice =
                 await BookingDetailModel.updatePriceTotalBooking(
                     req.body.booking_id
                 );
+
+            let transporter = nodemailer.createTransport({
+                host: mailConfig.HOST,
+                port: mailConfig.PORT,
+                secure: false, // true for 465, false for other ports
+                auth: {
+                    user: mailConfig.USERNAME, // generated ethereal user
+                    pass: mailConfig.PASSWORD, // generated ethereal password
+                },
+            });
+
+            let info = await transporter.sendMail({
+                from: mailConfig.FROM_ADDRESS, // sender address
+                to: req.body.customer_email, // list of receivers
+                subject: "YÊU CẦU ĐẶT LỊCH HẸN", // Subject line
+                // text: "Hello world?", // plain text body
+                html: ` <div style="color: #000">
+                    <strong style="color: #000">YÊU CẦU ĐẶT LỊCH HẸN</strong>
+                    <p style="color: #000">Quý khách đã gửi yêu cầu đặt lịch hẹn thành công.</p>
+<ul>
+<li>Tên dịch vụ: <strong>${req.body.service_name}</strong></li>
+<li>Ngày thực hiện dịch vụ: <strong>${dayjs(req.body.date).format(
+                    "DD-MM-YYYY"
+                )}</strong></li>
+                <li>Thời gian bắt đầu: <strong>${
+                    req.body.start_time
+                }</strong></li>
+                <li>Thời gian kết thúc: <strong>${
+                    req.body.end_time
+                }</strong></li>
+</ul>
+                    <p style="color: #000">Quý khách vui lòng kiểm tra, theo dõi và thực hiện theo đúng chính sách đặt lịch của chúng tôi.</p>
+                    <p style="color: #000">Chúc Quý khách luôn có những trải nghiệm tuyệt vời tại <strong>GentleBeauty</strong></p>
+                    <p>Trân trọng,</p>
+                    <strong style="color: #000">
+                    Gentle Beauty.
+                    </strong>
+                  </div>`, // html body
+            });
 
             return res.json({
                 status: 201,
