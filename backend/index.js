@@ -3,6 +3,7 @@ const cors = require("cors");
 const cookieParser = require("cookie-parser");
 
 const roleRoute = require("./routes/role");
+const excelRoute = require("./routes/importExcel");
 
 const branchRoute = require("./routes/branch");
 
@@ -70,6 +71,8 @@ app.use("/v1/bookingDetail", bookingDetailRoute);
 
 app.use("/v1/delivery", deliveryRoute);
 app.use("/v1/assets", storageImageRoute);
+
+app.use("/v1/excel", excelRoute);
 
 app.use("/v1/resetPassword", resetPasswordRoute);
 app.use("/v1/registerVerify", registerVerifyRoute);
