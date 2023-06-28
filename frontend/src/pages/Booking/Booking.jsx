@@ -109,6 +109,7 @@ function Booking() {
                     : selectedService.price,
             customer_email: user?.email,
             service_name: service_name,
+            customer_name: user?.first_name,
         };
 
         await createBookingDetail(

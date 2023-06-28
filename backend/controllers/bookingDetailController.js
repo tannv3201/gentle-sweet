@@ -158,7 +158,9 @@ const bookingController = {
                 // text: "Hello world?", // plain text body
                 html: ` <div style="color: #000">
                     <strong style="color: #000">YÊU CẦU ĐẶT LỊCH HẸN</strong>
-                    <p style="color: #000">Quý khách đã gửi yêu cầu đặt lịch hẹn thành công.</p>
+                    <p style="color: #000">Xin chào ${
+                        req.body.customer_name
+                    }, bạn đã gửi yêu cầu đặt lịch hẹn thành công.</p>
 <ul>
 <li>Tên dịch vụ: <strong>${req.body.service_name}</strong></li>
 <li>Ngày thực hiện dịch vụ: <strong>${dayjs(req.body.date).format(
