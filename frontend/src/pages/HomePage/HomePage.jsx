@@ -21,6 +21,9 @@ function HomePage() {
     const isMedium = useMediaQuery(theme.breakpoints.down("lg"));
     const dispatch = useDispatch();
     useEffect(() => {
+        document.title = "Gentle Beauty";
+    }, []);
+    useEffect(() => {
         const fetch = async () => {
             await getAllProduct(null, dispatch, null);
             await provinceApi(dispatch);

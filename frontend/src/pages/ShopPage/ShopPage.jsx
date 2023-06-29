@@ -54,6 +54,9 @@ function ShopPage() {
     const [productList, setProductList] = useState([]);
 
     let axiosJWT = createAxios(user, dispatch, loginSuccess);
+    useEffect(() => {
+        document.title = "Sản phẩm";
+    }, []);
 
     return (
         <div className={cx("shop-page-wrapper")}>

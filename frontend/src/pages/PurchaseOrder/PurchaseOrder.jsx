@@ -52,6 +52,11 @@ function PurchaseOrder() {
     const invoiceDetailList = [];
     const productInvoiceDetail = [];
     const [getInvoiceListByUser, setGetInvoiceListByUser] = useState([]);
+
+    useEffect(() => {
+        document.title = "Quản lý đơn hàng";
+    }, []);
+
     useState(() => {
         const fetch = async () => {
             if (!user) {

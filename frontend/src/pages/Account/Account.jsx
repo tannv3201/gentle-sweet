@@ -50,6 +50,10 @@ export default function Account() {
         (state) => state.customerUser.customerUser?.customerUser
     );
 
+    useEffect(() => {
+        document.title = "Tài khoản";
+    }, []);
+
     const dispatch = useDispatch();
     const [selectedProvince, setSelectedProvince] = useState(null);
     const [selectedDistrict, setSelectedDistrict] = useState(null);

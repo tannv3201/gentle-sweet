@@ -48,6 +48,11 @@ function BookedSchedule() {
     const [bookingListStatus6, setBookingListStatus6] = useState([]);
     const [bookingListStatus7, setBookingListStatus7] = useState([]);
     const [getBookingListByUser, setGetBookingListByUser] = useState([]);
+
+    useEffect(() => {
+        document.title = "Quản lý lịch hẹn";
+    }, []);
+
     useState(() => {
         const fetch = async () => {
             if (!user) {

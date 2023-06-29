@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import classNames from "classnames/bind";
 import styles from "./SalonSystemPage.module.scss";
 import images from "../../assets/images";
@@ -7,6 +7,9 @@ import SalonSystem from "../../components/SalonSystem/SalonSystem";
 const cx = classNames.bind(styles);
 
 function SalonSystemPage() {
+    useEffect(() => {
+        document.title = "Hệ thống chi nhánh";
+    }, []);
     return (
         <>
             {/* <div className={cx("banner-img")}>

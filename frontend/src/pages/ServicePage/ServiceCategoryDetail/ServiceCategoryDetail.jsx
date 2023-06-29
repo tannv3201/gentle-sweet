@@ -58,7 +58,6 @@ function ServiceCategoryDetail() {
             setServiceCategoryClone(structuredClone(serviceCategory));
         document.title = serviceCategory?.name;
     }, [serviceCategory]);
-
     useEffect(() => {
         if (serviceList) setServiceListClone(structuredClone(serviceList));
     }, [serviceList]);

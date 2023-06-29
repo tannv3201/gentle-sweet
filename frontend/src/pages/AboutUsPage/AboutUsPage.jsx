@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import classNames from "classnames/bind";
 import styles from "./AboutUsPage.module.scss";
 
@@ -12,6 +12,9 @@ import Services from "./Services/Services";
 const cx = classNames.bind(styles);
 
 function AboutUsPage() {
+    useEffect(() => {
+        document.title = "Về chúng tôi";
+    }, []);
     return (
         <div className={cx("wrapper")}>
             <div className={cx("banner-img")}>

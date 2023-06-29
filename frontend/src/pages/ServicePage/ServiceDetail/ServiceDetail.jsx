@@ -53,6 +53,10 @@ function ServiceDetail() {
     }, [serviceId]);
 
     useEffect(() => {
+        document.title = getService?.name;
+    }, [getService?.name, serviceId]);
+
+    useEffect(() => {
         if (getService) {
             const discount = discountListCustomer?.find(
                 (d) => d.id === parseInt(getService.discount_id)

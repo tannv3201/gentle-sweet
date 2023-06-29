@@ -70,6 +70,7 @@ function ProductDetail() {
     const [isProductQuantityLimitInCart, setIsProductQuantityLimitInCart] =
         useState(false);
     const [productQuantityInCart, setProductQuantityInCart] = useState(0);
+
     const handleChangeBuyQuantity = async (value) => {
         const getCart = await cartSearch(productDetail?.id, user?.id);
         if (parseInt(value) > productDetail?.quantity) {
@@ -156,6 +157,9 @@ function ProductDetail() {
     const discountListCustomer = useSelector(
         (state) => state.discount.discount?.discountListCustomer
     );
+    useEffect(() => {
+        document.title = getProducById?.name;
+    }, [getProducById?.name, productId]);
 
     useEffect(() => {
         getAllDiscountCustomer(dispatch);
@@ -485,7 +489,7 @@ function ProductDetail() {
                                                             inputMode:
                                                                 "numeric",
                                                             pattern: "[0-9]*",
-                                                            maxLength: 3, // Giới hạn chiều dài của số nhập vào (ví dụ 99)
+                                                            maxLength: 4, // Giới hạn chiều dài của số nhập vào (ví dụ 99)
                                                         }}
                                                     />
                                                     <GButton

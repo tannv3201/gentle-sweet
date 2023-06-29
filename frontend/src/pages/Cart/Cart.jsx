@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import classNames from "classnames/bind";
 import styles from "./Cart.module.scss";
 import { Grid } from "@mui/material";
@@ -8,6 +8,9 @@ import CartProductList from "./CartProductList/CartProductList";
 const cx = classNames.bind(styles);
 
 function Cart() {
+    useEffect(() => {
+        document.title = "Giỏ hàng";
+    }, []);
     return (
         <div className={cx("wrapper")}>
             <div className={cx("inner")}>

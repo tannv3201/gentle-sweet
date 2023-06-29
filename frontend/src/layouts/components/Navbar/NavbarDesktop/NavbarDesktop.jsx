@@ -12,6 +12,8 @@ import MenuUser from "../MenuUser/MenuUser";
 import { useSelector } from "react-redux";
 import MenuCart from "../MenuCart/MenuCart";
 import ServiceMenuDropdown from "../ServiceMenuDropdown/ServiceMenuDropdown";
+import { getAllServiceCategory } from "../../../../redux/api/apiServiceCategory";
+import { useDispatch } from "react-redux";
 
 const cx = classNames.bind(styles);
 
@@ -32,14 +34,7 @@ function NavbarDesktop() {
             );
             return {
                 serviceCategoryId: category?.id,
-                name:
-                    category?.name.toLocaleLowerCase() ===
-                    "Danh mục dịch vụ chăm sóc tóc".toLocaleLowerCase()
-                        ? "Dịch vụ tóc"
-                        : category?.name.toLocaleLowerCase() ===
-                          "Danh mục dịch vụ chăm sóc móng".toLocaleLowerCase()
-                        ? "Dịch vụ nails"
-                        : "",
+                name: category?.name,
                 serviceList: serviceByCategory,
             };
         });
