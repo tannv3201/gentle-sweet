@@ -18,7 +18,7 @@ const cx = classNames.bind(styles);
 function BookingSummary() {
     const location = useLocation();
     const selectedService = location.state?.selectedService;
-    const { submitForm, values } = useFormikContext();
+    const { submitForm, values, isSubmitting } = useFormikContext();
     const handleToastNull = () => {
         if (!values?.bookingTime_id) {
             toast.error("Vui lòng nhập đầy đủ thông tin");
@@ -132,7 +132,6 @@ function BookingSummary() {
                                         </span>
                                     </div>
                                 </Grid>
-
                                 <Grid item xs={12}>
                                     <hr />
                                     <div
@@ -182,6 +181,7 @@ function BookingSummary() {
                                             handleToastNull();
                                             submitForm();
                                         }}
+                                        disabled={isSubmitting}
                                     >
                                         Xác nhận đặt lịch
                                     </GButton>
