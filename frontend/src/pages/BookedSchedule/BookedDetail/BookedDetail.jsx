@@ -105,33 +105,66 @@ function BookedDetail() {
     useEffect(() => {
         const fetch = async () => {
             if (bookingById) {
-                let provinceName;
-                let districtName;
-                let wardName;
+                let branchProvinceName;
+                let branchDistrictName;
+                let branchWardName;
+
+                let customerProvinceName;
+                let customerDistrictName;
+                let customerWardName;
+
                 const branch = getBranchList?.find(
                     (b) => b?.id === bookingById?.branch_id
                 );
-                const provinceSelected = getProvinceById(
+                const branchProvinceSelected = getProvinceById(
                     branch?.province,
                     getProvinceList
                 );
-                provinceName = provinceSelected?.name;
-                // District
+                branchProvinceName = branchProvinceSelected?.name;
 
+                // District
                 await districtApi(parseInt(branch?.province)).then(
                     (districtList) => {
                         const districtSelected = getDistrictById(
                             branch?.district,
                             districtList
                         );
-                        districtName = districtSelected?.name;
+                        branchDistrictName = districtSelected?.name;
                     }
                 );
 
                 await wardApi(parseInt(branch?.district)).then((wardList) => {
                     const wardSelected = getWardById(branch?.ward, wardList);
-                    wardName = wardSelected?.name;
+                    branchWardName = wardSelected?.name;
                 });
+
+                // customer address
+
+                const customerProvinceSelected = getProvinceById(
+                    user?.province,
+                    getProvinceList
+                );
+                customerProvinceName = customerProvinceSelected?.name;
+
+                // District
+                await districtApi(parseInt(user?.province)).then(
+                    (districtList) => {
+                        const customerDistrictSelected = getDistrictById(
+                            user?.district,
+                            districtList
+                        );
+                        customerDistrictName = customerDistrictSelected?.name;
+                    }
+                );
+
+                await wardApi(parseInt(user?.district)).then((wardList) => {
+                    const customerWardSelected = getWardById(
+                        user?.ward,
+                        wardList
+                    );
+                    customerWardName = customerWardSelected?.name;
+                });
+
                 setBookingClone({
                     ...bookingById,
                     statusName:
@@ -158,11 +191,19 @@ function BookedDetail() {
                     branch_address:
                         branch?.detail_address +
                         ", " +
-                        wardName +
+                        branchWardName +
                         ", " +
-                        districtName +
+                        branchDistrictName +
                         ", " +
-                        provinceName,
+                        branchProvinceName,
+                    customer_address:
+                        user?.detail_address +
+                        ", " +
+                        customerWardName +
+                        ", " +
+                        customerDistrictName +
+                        ", " +
+                        customerProvinceName,
                     branch_phone_number: branch?.phone_number,
                 });
             }
@@ -241,7 +282,7 @@ function BookedDetail() {
                                             <h3>Thông tin lịch hẹn</h3>
                                         </div>
                                     </Grid>
-                                    <Grid item lg={6} md={6} sm={12} xs={12}>
+                                    {/* <Grid item lg={6} md={6} sm={12} xs={12}>
                                         <div className={cx("info-item")}>
                                             Người tạo:{" "}
                                             <span>{`${
@@ -250,15 +291,7 @@ function BookedDetail() {
                                                 user?.first_name
                                             } - (KH)`}</span>
                                         </div>
-                                    </Grid>
-                                    <Grid item lg={6} md={6} sm={12} xs={12}>
-                                        <div className={cx("info-item")}>
-                                            Ngày tạo:{" "}
-                                            <span>
-                                                {bookingClone?.createdAt}
-                                            </span>
-                                        </div>
-                                    </Grid>
+                                    </Grid> */}
                                     <Grid item lg={6} md={6} sm={12} xs={12}>
                                         <div className={cx("info-item")}>
                                             Tên dịch vụ:{" "}
@@ -272,12 +305,52 @@ function BookedDetail() {
                                     </Grid>
                                     <Grid item lg={6} md={6} sm={12} xs={12}>
                                         <div className={cx("info-item")}>
+                                            Ngày tạo:{" "}
+                                            <span>
+                                                {bookingClone?.createdAt}
+                                            </span>
+                                        </div>
+                                    </Grid>
+                                    <Grid item lg={6} md={6} sm={12} xs={12}>
+                                        <div className={cx("info-item")}>
                                             Ngày đặt lịch:{" "}
                                             <span>
                                                 {GFormatDate(
                                                     serviceListClone[0]?.date,
                                                     "DD-MM-YYYY"
                                                 )}
+                                            </span>
+                                        </div>
+                                    </Grid>
+                                    <Grid item lg={6} md={6} sm={12} xs={12}>
+                                        <div className={cx("info-item")}>
+                                            Trạng thái lịch hẹn:{" "}
+                                            <span
+                                                className={
+                                                    bookingClone?.status === 1
+                                                        ? cx("pending")
+                                                        : bookingClone?.status ===
+                                                          2
+                                                        ? cx("received")
+                                                        : bookingClone?.status ===
+                                                          3
+                                                        ? cx("scheduled")
+                                                        : bookingClone?.status ===
+                                                          4
+                                                        ? cx("service-start")
+                                                        : bookingClone?.status ===
+                                                          5
+                                                        ? cx("service-end")
+                                                        : bookingClone?.status ===
+                                                          6
+                                                        ? cx("cancel")
+                                                        : bookingClone?.status ===
+                                                          7
+                                                        ? cx("cancel-pending")
+                                                        : ""
+                                                }
+                                            >
+                                                {bookingClone?.statusName}
                                             </span>
                                         </div>
                                     </Grid>
@@ -326,39 +399,7 @@ function BookedDetail() {
                                             </span>
                                         </div>
                                     </Grid>
-                                    <Grid item lg={6} md={6} sm={12} xs={12}>
-                                        <div className={cx("info-item")}>
-                                            Trạng thái lịch hẹn:{" "}
-                                            <span
-                                                className={
-                                                    bookingClone?.status === 1
-                                                        ? cx("pending")
-                                                        : bookingClone?.status ===
-                                                          2
-                                                        ? cx("received")
-                                                        : bookingClone?.status ===
-                                                          3
-                                                        ? cx("scheduled")
-                                                        : bookingClone?.status ===
-                                                          4
-                                                        ? cx("service-start")
-                                                        : bookingClone?.status ===
-                                                          5
-                                                        ? cx("service-end")
-                                                        : bookingClone?.status ===
-                                                          6
-                                                        ? cx("cancel")
-                                                        : bookingClone?.status ===
-                                                          7
-                                                        ? cx("cancel-pending")
-                                                        : ""
-                                                }
-                                            >
-                                                {bookingClone?.statusName}
-                                            </span>
-                                        </div>
-                                    </Grid>
-                                    <Grid item lg={6} md={6} sm={12} xs={12}>
+                                    <Grid item xs={12}>
                                         <div className={cx("info-item")}>
                                             Ghi chú:{" "}
                                             <span>
@@ -400,8 +441,7 @@ function BookedDetail() {
                                         <div className={cx("info-item")}>
                                             Địa chỉ khách hàng:{" "}
                                             <span>
-                                                {user?.detail_address ||
-                                                    getCustomerUser?.detail_address}
+                                                {bookingClone?.customer_address}
                                             </span>
                                         </div>
                                     </Grid>

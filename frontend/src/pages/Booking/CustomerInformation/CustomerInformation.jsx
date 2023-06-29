@@ -296,7 +296,7 @@ function CustomerInformation() {
                         <GTextFieldNormal
                             disabled
                             value={customerUser?.detail_address || ""}
-                            label="Địa chỉ chi tiết"
+                            label="Số nhà, đường"
                             fullWidth
                             name="detail_address"
                         />

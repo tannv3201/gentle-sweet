@@ -192,11 +192,15 @@ function OrderDetail() {
     useEffect(() => {
         const fetch = async () => {
             if (deliveryByInvoiceId) {
+                let deliveryProvinceName;
+                let deliveryDistrictName;
+                let deliveryWardName;
+
                 const provinceSelected = await getProvinceById(
                     deliveryByInvoiceId?.province,
                     provinces
                 );
-                setSelectedProvince(provinceSelected);
+                deliveryProvinceName = provinceSelected?.name;
 
                 await districtApi(parseInt(deliveryByInvoiceId?.province)).then(
                     (districtList) => {
@@ -204,7 +208,7 @@ function OrderDetail() {
                             deliveryByInvoiceId?.district,
                             districtList
                         );
-                        setSelectedDistrict(districtSelected);
+                        deliveryDistrictName = districtSelected?.name;
                     }
                 );
 
@@ -214,7 +218,7 @@ function OrderDetail() {
                             deliveryByInvoiceId?.ward,
                             wardList
                         );
-                        setSelectedWard(wardSelected);
+                        deliveryWardName = wardSelected?.name;
                     }
                 );
 
@@ -238,6 +242,14 @@ function OrderDetail() {
                             : deliveryByInvoiceId?.payment_method === 3
                             ? "Ví điện tử"
                             : "",
+                    delivery_address:
+                        deliveryByInvoiceId?.detail_address +
+                        ", " +
+                        deliveryWardName +
+                        ", " +
+                        deliveryDistrictName +
+                        ", " +
+                        deliveryProvinceName,
                 });
             }
         };
@@ -289,7 +301,7 @@ function OrderDetail() {
                                             <h3>Thông tin đơn hàng</h3>
                                         </div>
                                     </Grid>
-                                    <Grid item lg={6} md={6} sm={12} xs={12}>
+                                    {/* <Grid item lg={6} md={6} sm={12} xs={12}>
                                         <div className={cx("info-item")}>
                                             Người tạo:{" "}
                                             <span>{`${
@@ -298,7 +310,7 @@ function OrderDetail() {
                                                 user?.first_name
                                             } - (KH)`}</span>
                                         </div>
-                                    </Grid>
+                                    </Grid> */}
                                     <Grid item lg={6} md={6} sm={12} xs={12}>
                                         <div className={cx("info-item")}>
                                             Ngày tạo:{" "}
@@ -484,7 +496,7 @@ function OrderDetail() {
                                             </span>
                                         </div>
                                     </Grid>
-                                    <Grid item lg={6} md={6} sm={12} xs={12}>
+                                    <Grid item xs={12}>
                                         <div className={cx("info-item")}>
                                             Ghi chú:{" "}
                                             <span>
@@ -528,17 +540,7 @@ function OrderDetail() {
                                             <span>
                                                 {invoiceClone?.status === 6
                                                     ? "--"
-                                                    : `${selectedWard?.name}, ${selectedDistrict?.name}, ${selectedProvince?.name}`}
-                                            </span>
-                                        </div>
-                                    </Grid>
-                                    <Grid item xs={12}>
-                                        <div className={cx("info-item")}>
-                                            Địa chỉ giao hàng chi tiết:{" "}
-                                            <span>
-                                                {invoiceClone?.status === 6
-                                                    ? "--"
-                                                    : deliveryClone?.detail_address}
+                                                    : deliveryClone?.delivery_address}
                                             </span>
                                         </div>
                                     </Grid>

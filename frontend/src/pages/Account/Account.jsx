@@ -543,7 +543,7 @@ export default function Account() {
                                     <GTextFieldNormal
                                         disabled={!isEditting}
                                         onChange={formik.handleChange}
-                                        label="Địa chỉ chi tiết"
+                                        label="Số nhà, đường"
                                         fullWidth
                                         name="detail_address"
                                         value={
