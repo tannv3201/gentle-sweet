@@ -27,14 +27,7 @@ function NavbarMenu({ setIsOpenDrawer }) {
             );
             return {
                 serviceCategoryId: category?.id,
-                name:
-                    category?.name.toLocaleLowerCase() ===
-                    "Danh mục dịch vụ chăm sóc tóc".toLocaleLowerCase()
-                        ? "Dịch vụ tóc"
-                        : category?.name.toLocaleLowerCase() ===
-                          "Danh mục dịch vụ chăm sóc móng".toLocaleLowerCase()
-                        ? "Dịch vụ nails"
-                        : "",
+                name: category?.name,
                 serviceList: serviceByCategory,
             };
         });
