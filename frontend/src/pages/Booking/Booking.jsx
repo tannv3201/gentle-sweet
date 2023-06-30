@@ -69,7 +69,6 @@ function Booking() {
     const location = useLocation();
     const navigate = useNavigate();
     const handleSubmit = async (values) => {
-        console.log(values);
         const {
             service_id,
             start_time,
