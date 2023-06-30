@@ -40,11 +40,11 @@ export const checkRegisterVerifyCode = async (verifyCodeCustomer, codeId) => {
                 },
             }
         );
-        if (res?.data?.status === 200) {
-            toast.success(res?.data?.msg);
-        } else {
-            toast.error(res?.data?.msg);
-        }
+        // if (res?.data?.status === 200) {
+        //     toast.success(res?.data?.msg);
+        // } else {
+        //     toast.error(res?.data?.msg);
+        // }
         return res?.data;
     } catch (error) {
         console.log(error);

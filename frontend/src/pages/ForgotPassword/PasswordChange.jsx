@@ -54,7 +54,11 @@ function PasswordChange() {
         password: Yup.string()
             .required("Vui lòng không để trống")
             .min(8, "Mật khẩu phải có ít nhất 8 kí tự")
-            .max(20, "Mật khẩu tối đa 20 kí tự"),
+            .max(20, "Mật khẩu tối đa 20 kí tự")
+            .matches(
+                /^(?=.*[!@#$%^&*])(?=.*[A-Z]).+$/,
+                "Mật khẩu phải có ít nhất 1 kí tự đặc biệt và 1 chữ viết hoa"
+            ),
         confirmPassword: Yup.string()
             .required("Vui lòng không để trống")
             .min(8, "Mật khẩu phải có ít nhất 8 kí tự")

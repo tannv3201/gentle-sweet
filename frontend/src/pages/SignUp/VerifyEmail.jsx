@@ -57,8 +57,16 @@ function VerifyEmail() {
         } else {
             verifyCodeId = verifyCodeIdFirst;
         }
-        await checkRegisterVerifyCode(value?.code, verifyCodeId);
-        await signup(customerUser, dispatch, navigate);
+        const resCheck = await checkRegisterVerifyCode(
+            value?.code,
+            verifyCodeId
+        );
+        if (resCheck?.status === 200) {
+            await signup(customerUser, dispatch, navigate);
+            toast.success(resCheck?.msg);
+        } else {
+            toast.error(resCheck?.msg);
+        }
     };
     const validationSchema = Yup.object().shape({
         code: Yup.string().required("Vui lòng nhập mã"),

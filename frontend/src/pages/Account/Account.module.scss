@@ -6,6 +6,11 @@
     .inner {
         width: 100% !important;
     }
+
+    .user-avatar-wrapper {
+        display: flex;
+        flex-direction: column;
+    }
 }
 
 .container {
@@ -29,6 +34,10 @@
         padding: 12px 24px;
         border-top-left-radius: 4px;
         border-top-right-radius: 4px;
+        .user-avatar-wrapper {
+            display: flex;
+            align-items: center;
+        }
         .user-avatar {
             width: 120px;
             height: 120px;

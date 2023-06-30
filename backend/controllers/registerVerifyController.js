@@ -85,7 +85,7 @@ const registerVerifyController = {
 
                 return res.status(200).json({
                     status: 200,
-                    msg: "Mã hợp lệ",
+                    msg: "Đăng ký thành công",
                     customerUserId: verifyCode?.id,
                 });
             } else {

@@ -1,7 +1,7 @@
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 
-import { Autocomplete, Grid, InputAdornment } from "@mui/material";
+import { Autocomplete, Grid, IconButton, InputAdornment } from "@mui/material";
 import styles from "./Account.module.scss";
 import classNames from "classnames/bind";
 import dayjs from "dayjs";
@@ -9,7 +9,7 @@ import { useState } from "react";
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
-import { ModeEditOutlineRounded } from "@mui/icons-material";
+import { ModeEditOutlineRounded, WarningRounded } from "@mui/icons-material";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import utc from "dayjs/plugin/utc";
@@ -38,6 +38,7 @@ import {
     getWardById,
     wardApi,
 } from "../../redux/api/apiProvinceOpenAPI";
+import { RequiredMark } from "../../components/RequiredLabel/RequiredLabel";
 const cx = classNames.bind(styles);
 export default function Account() {
     dayjs.extend(utc);
@@ -298,11 +299,23 @@ export default function Account() {
                                 sm={12}
                                 xs={12}
                             >
-                                <div className={cx("user-avatar")}>
-                                    <img
-                                        src={`${API_IMAGE_URL}/women.jpg`}
-                                        alt=""
-                                    />
+                                <div className={cx("user-avatar-wrapper")}>
+                                    <div className={cx("user-avatar")}>
+                                        <img
+                                            src={`${API_IMAGE_URL}/women.jpg`}
+                                            alt=""
+                                        />
+                                    </div>
+                                    {!formik.values.detail_address && (
+                                        <div className={cx("notify-wrapper")}>
+                                            <IconButton size="small">
+                                                <WarningRounded htmlColor="#f57c00" />
+                                            </IconButton>
+                                            <span className={cx("notify-text")}>
+                                                Vui lòng cập nhật thông tin
+                                            </span>
+                                        </div>
+                                    )}
                                 </div>
                             </Grid>
                             <Grid
@@ -347,7 +360,11 @@ export default function Account() {
                                     {!isSmall && (
                                         <GDatePicker
                                             disabled={!isEditting}
-                                            label={"Ngày sinh"}
+                                            label={
+                                                <>
+                                                    Ngày sinh <RequiredMark />
+                                                </>
+                                            }
                                             onBlur={formik.handleBlur}
                                             fullWidth
                                             name="birth_date"
@@ -376,7 +393,11 @@ export default function Account() {
                                         <DateFieldMobile
                                             fullWidth={true}
                                             disabled={!isEditting}
-                                            label={"Ngày sinh"}
+                                            label={
+                                                <>
+                                                    Ngày sinh <RequiredMark />
+                                                </>
+                                            }
                                             onBlur={formik.handleBlur}
                                             name="birth_date"
                                             onChange={(date) =>
@@ -474,7 +495,12 @@ export default function Account() {
                                             <GTextFieldNormal
                                                 {...params}
                                                 disabled={!isEditting}
-                                                label="Tỉnh/Thành phố"
+                                                label={
+                                                    <>
+                                                        Tỉnh/Thành phố{" "}
+                                                        <RequiredMark />
+                                                    </>
+                                                }
                                                 variant="outlined"
                                                 name="province"
                                                 formik={formik}
@@ -500,7 +526,12 @@ export default function Account() {
                                             <GTextFieldNormal
                                                 {...params}
                                                 disabled={!isEditting}
-                                                label="Quận/Huyện"
+                                                label={
+                                                    <>
+                                                        Quận/Huyện{" "}
+                                                        <RequiredMark />
+                                                    </>
+                                                }
                                                 variant="outlined"
                                                 name="district"
                                                 formik={formik}
@@ -528,7 +559,12 @@ export default function Account() {
                                             <GTextFieldNormal
                                                 {...params}
                                                 disabled={!isEditting}
-                                                label="Xã/Phường"
+                                                label={
+                                                    <>
+                                                        Xã/Phường{" "}
+                                                        <RequiredMark />
+                                                    </>
+                                                }
                                                 variant="outlined"
                                                 name="ward"
                                                 formik={formik}
@@ -543,7 +579,11 @@ export default function Account() {
                                     <GTextFieldNormal
                                         disabled={!isEditting}
                                         onChange={formik.handleChange}
-                                        label="Số nhà, đường"
+                                        label={
+                                            <>
+                                                Số nhà, đường <RequiredMark />
+                                            </>
+                                        }
                                         fullWidth
                                         name="detail_address"
                                         value={
@@ -552,7 +592,7 @@ export default function Account() {
                                         formik={formik}
                                         InputLabelProps={{ shrink: true }}
                                         multiline={true}
-                                        rows={3}
+                                        rows={2}
                                     />
                                 </Grid>
                                 {isEditting && (

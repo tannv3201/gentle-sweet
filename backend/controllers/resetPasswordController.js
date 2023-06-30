@@ -82,7 +82,7 @@ const resetPasswordController = {
 
                 return res.status(200).json({
                     status: 200,
-                    msg: "Mã hợp lệ",
+                    msg: "Xác minh thành công",
                     customerUserId: verifyCode?.id,
                 });
             } else {
