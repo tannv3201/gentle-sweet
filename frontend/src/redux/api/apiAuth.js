@@ -14,6 +14,11 @@ import {
 } from "../slice/authSlice";
 import { resetApp } from "../store";
 import { getCustomerUserByIdSuccess } from "../slice/customerUserSlice";
+import { getCartByUserIdSuccess } from "../slice/cartSlice";
+import { getAllBookingByUserSuccess } from "../slice/bookingSlice";
+import { getAllInvoiceByUserSuccess } from "../slice/invoiceSlice";
+import { getInvoiceDetailByInvoiceIdSuccess } from "../slice/invoiceDetailSlice";
+import { getBookingDetailByBookingIdSuccess } from "../slice/bookingDetailSlice";
 
 export const loginUser = async (user, dispatch, navigate) => {
     dispatch(loginStart());
@@ -53,8 +58,15 @@ export const logout = async (
                 token: `Bearer ${accessToken}`,
             },
         });
+
         dispatch(logoutSuccess());
-        dispatch(getCustomerUserByIdSuccess(null));
+        dispatch(getCustomerUserByIdSuccess(null)); // account
+        dispatch(getCartByUserIdSuccess(null)); // cart
+        dispatch(getAllBookingByUserSuccess(null)); // booking
+        dispatch(getAllInvoiceByUserSuccess(null)); // invoice
+        dispatch(getInvoiceDetailByInvoiceIdSuccess(null)); // invoice detail
+        dispatch(getBookingDetailByBookingIdSuccess(null)); // booking detail
+
         if (parseInt(user?.role_id) === 4) {
             navigate("/");
             toast.success("Đăng xuất thành công");
