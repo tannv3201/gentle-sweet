@@ -49,7 +49,7 @@ const bookingSearch = async (params) => {
 
 const getBookingById = async (id) => {
     const [rows, fields] = await pool.query(
-        "SELECT * FROM tbl_booking WHERE id= (?)",
+        "SELECT cu.first_name, cu.phone_number, cu.detail_address AS customer_detail_address, cu.province AS customer_province, cu.district AS customer_district, cu.ward AS customer_ward, cu.last_name, b.* FROM tbl_customer_user cu JOIN tbl_booking b ON cu.id = b.customer_user_id WHERE b.id = (?)",
         [id]
     );
     return rows[0];

@@ -139,31 +139,31 @@ function BookedDetail() {
                 });
 
                 // customer address
-
                 const customerProvinceSelected = getProvinceById(
-                    user?.province,
+                    bookingById?.customer_province,
                     getProvinceList
                 );
                 customerProvinceName = customerProvinceSelected?.name;
-
                 // District
-                await districtApi(parseInt(user?.province)).then(
-                    (districtList) => {
-                        const customerDistrictSelected = getDistrictById(
-                            user?.district,
-                            districtList
+                await districtApi(
+                    parseInt(bookingById?.customer_province)
+                ).then((districtList) => {
+                    const customerDistrictSelected = getDistrictById(
+                        bookingById?.customer_district,
+                        districtList
+                    );
+                    customerDistrictName = customerDistrictSelected?.name;
+                });
+
+                await wardApi(parseInt(bookingById?.customer_district)).then(
+                    (wardList) => {
+                        const customerWardSelected = getWardById(
+                            bookingById?.customer_ward,
+                            wardList
                         );
-                        customerDistrictName = customerDistrictSelected?.name;
+                        customerWardName = customerWardSelected?.name;
                     }
                 );
-
-                await wardApi(parseInt(user?.district)).then((wardList) => {
-                    const customerWardSelected = getWardById(
-                        user?.ward,
-                        wardList
-                    );
-                    customerWardName = customerWardSelected?.name;
-                });
 
                 setBookingClone({
                     ...bookingById,
@@ -197,7 +197,7 @@ function BookedDetail() {
                         ", " +
                         branchProvinceName,
                     customer_address:
-                        user?.detail_address +
+                        bookingById?.customer_detail_address +
                         ", " +
                         customerWardName +
                         ", " +
