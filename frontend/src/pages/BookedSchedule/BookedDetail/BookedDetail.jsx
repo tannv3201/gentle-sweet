@@ -391,7 +391,7 @@ function BookedDetail() {
                                     </Grid>
                                     <Grid item xs={12}>
                                         <div className={cx("info-item")}>
-                                            Số điện thoại liên hệ:{" "}
+                                            Số điện thoại chi nhánh:{" "}
                                             <span>
                                                 {
                                                     bookingClone?.branch_phone_number
@@ -401,9 +401,17 @@ function BookedDetail() {
                                     </Grid>
                                     <Grid item xs={12}>
                                         <div className={cx("info-item")}>
-                                            Ghi chú:{" "}
+                                            {bookingById?.status >= 6
+                                                ? "Lý do hủy"
+                                                : "Ghi chú"}
+                                            :{" "}
                                             <span>
-                                                {serviceListClone[0]?.note
+                                                {/* {serviceListClone[0]?.note
+                                                    ? serviceListClone[0]?.note
+                                                    : "--"} */}
+                                                {bookingById?.status >= 6
+                                                    ? bookingById?.note
+                                                    : serviceListClone[0]?.note
                                                     ? serviceListClone[0]?.note
                                                     : "--"}
                                             </span>
@@ -433,7 +441,7 @@ function BookedDetail() {
                                     <Grid item lg={6} md={6} sm={12} xs={12}>
                                         <div className={cx("info-item")}>
                                             {" "}
-                                            Số điện thoại:{" "}
+                                            Số điện thoại khách hàng:{" "}
                                             <span>{user?.phone_number}</span>
                                         </div>
                                     </Grid>

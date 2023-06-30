@@ -41,13 +41,15 @@ function ConfirmCancelBookingPopup({
             axiosJWT
         );
 
+        const { note, ...restData } = data;
+
         await updateBookingDetail(
             user?.accessToken,
             dispatch,
             bookingDetail?.id,
             booking?.bookingId,
             {
-                ...data,
+                ...restData,
                 service_name: bookingDetail?.service_name,
                 customer_email: user?.email,
                 start_time: bookingDetail?.start_time,
@@ -116,7 +118,11 @@ function ConfirmCancelBookingPopup({
                                     />
                                 </Grid>
                                 <Grid item xs={12}>
-                                    <GButton color={"error"} type={"submit"}>
+                                    <GButton
+                                        disabled={formik.isSubmitting}
+                                        color={"error"}
+                                        type={"submit"}
+                                    >
                                         Xác nhận
                                     </GButton>
                                     <GButton

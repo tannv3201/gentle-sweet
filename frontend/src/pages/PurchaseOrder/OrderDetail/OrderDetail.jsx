@@ -472,6 +472,47 @@ function OrderDetail() {
                                             </span>
                                         </div>
                                     </Grid>
+                                    <Grid item xs={12}>
+                                        <div className={cx("info-item")}>
+                                            {invoiceClone?.status >= 6
+                                                ? "Lý do hủy"
+                                                : "Ghi chú"}
+                                            :{" "}
+                                            <span>
+                                                {invoiceClone?.note
+                                                    ? invoiceClone?.note
+                                                    : "--"}
+                                            </span>
+                                        </div>
+                                    </Grid>
+                                </Grid>
+                            </div>
+                        </Grid>
+                        <Grid item xs={12}>
+                            <div className={cx("invoice-customer-info")}>
+                                <Grid container spacing={2}>
+                                    <Grid item xs={12}>
+                                        <div className={cx("info-item")}>
+                                            <h3>Thông tin giao hàng</h3>
+                                        </div>
+                                    </Grid>
+                                    <Grid item lg={6} md={6} sm={12} xs={12}>
+                                        <div className={cx("info-item")}>
+                                            Tên khách hàng:{" "}
+                                            <span>
+                                                {deliveryClone?.customer_name}
+                                            </span>
+                                        </div>
+                                    </Grid>
+                                    <Grid item lg={6} md={6} sm={12} xs={12}>
+                                        <div className={cx("info-item")}>
+                                            {" "}
+                                            Số điện thoại khách hàng:{" "}
+                                            <span>
+                                                {deliveryClone?.customer_phone}
+                                            </span>
+                                        </div>
+                                    </Grid>
                                     <Grid item lg={6} md={6} sm={12} xs={12}>
                                         <div className={cx("info-item")}>
                                             Đơn vị vận chuyển:{" "}
@@ -493,44 +534,6 @@ function OrderDetail() {
                                                     : deliveryClone?.delivery_code
                                                     ? deliveryClone?.delivery_code
                                                     : "--"}
-                                            </span>
-                                        </div>
-                                    </Grid>
-                                    <Grid item xs={12}>
-                                        <div className={cx("info-item")}>
-                                            Ghi chú:{" "}
-                                            <span>
-                                                {invoiceClone?.note
-                                                    ? invoiceClone?.note
-                                                    : "--"}
-                                            </span>
-                                        </div>
-                                    </Grid>
-                                </Grid>
-                            </div>
-                        </Grid>
-                        <Grid item xs={12}>
-                            <div className={cx("invoice-customer-info")}>
-                                <Grid container spacing={2}>
-                                    <Grid item xs={12}>
-                                        <div className={cx("info-item")}>
-                                            <h3>Thông tin khách hàng</h3>
-                                        </div>
-                                    </Grid>
-                                    <Grid item lg={6} md={6} sm={12} xs={12}>
-                                        <div className={cx("info-item")}>
-                                            Tên khách hàng:{" "}
-                                            <span>
-                                                {deliveryClone?.customer_name}
-                                            </span>
-                                        </div>
-                                    </Grid>
-                                    <Grid item lg={6} md={6} sm={12} xs={12}>
-                                        <div className={cx("info-item")}>
-                                            {" "}
-                                            Số điện thoại:{" "}
-                                            <span>
-                                                {deliveryClone?.customer_phone}
                                             </span>
                                         </div>
                                     </Grid>
