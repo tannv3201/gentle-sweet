@@ -36,7 +36,6 @@ const serviceCategoryController = {
                     admin_user_id: req.user.id,
                     name: req.body.name,
                     description: req.body.description,
-                    image: req.body.image,
                     status: 1,
                 });
             return res.json({
