@@ -13,6 +13,7 @@ import {
     signupSuccess,
 } from "../slice/authSlice";
 import { resetApp } from "../store";
+import { getCustomerUserByIdSuccess } from "../slice/customerUserSlice";
 
 export const loginUser = async (user, dispatch, navigate) => {
     dispatch(loginStart());
@@ -53,6 +54,7 @@ export const logout = async (
             },
         });
         dispatch(logoutSuccess());
+        dispatch(getCustomerUserByIdSuccess(null));
         if (parseInt(user?.role_id) === 4) {
             navigate("/");
             toast.success("Đăng xuất thành công");
