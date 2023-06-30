@@ -36,18 +36,13 @@ function Login() {
 
     // Create Axios JWT -> Check token & refresh token
 
+    const [isLogin, setIsLogin] = useState(false);
     // Fn Create new Customer User
     const handleLogin = async (value) => {
-        await loginUser(value, dispatch, navigate);
-    };
-
-    // Fn compare password when create
-    const handlePasswordCompare = (password, confirmPassword) => {
-        if (password === confirmPassword) {
-            return true;
-        } else {
-            return false;
-        }
+        setIsLogin(true);
+        await loginUser(value, dispatch, navigate).then(() =>
+            setIsLogin(false)
+        );
     };
 
     // Validation formik
@@ -140,6 +135,9 @@ function Login() {
                                             type="submit"
                                             size="medium "
                                             fullWidth
+                                            disabled={
+                                                formik.isSubmitting && isLogin
+                                            }
                                         >
                                             Đăng nhập
                                         </GButton>

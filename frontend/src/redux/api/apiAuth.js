@@ -31,6 +31,8 @@ export const loginUser = async (user, dispatch, navigate) => {
         } else {
             toast.error(res.data.msg);
         }
+
+        return res?.data;
     } catch (error) {
         dispatch(loginFailed());
     }
