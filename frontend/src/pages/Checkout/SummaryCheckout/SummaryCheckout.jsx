@@ -215,7 +215,7 @@ function SummaryCheckout() {
                         await handleSubmit(values);
                     }}
                 >
-                    {({ handleSubmit, errors, values }) => (
+                    {({ handleSubmit, errors, values, isSubmitting }) => (
                         <form onSubmit={handleSubmit}>
                             <Grid container spacing={2}>
                                 <Grid item lg={7} md={12} sm={12} xs={12}>
@@ -603,6 +603,9 @@ function SummaryCheckout() {
                                                                     )
                                                                 }
                                                                 type={"submit"}
+                                                                disabled={
+                                                                    isSubmitting
+                                                                }
                                                             >
                                                                 Xác nhận đơn
                                                                 hàng
