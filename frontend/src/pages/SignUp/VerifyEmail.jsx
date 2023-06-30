@@ -50,7 +50,9 @@ function VerifyEmail() {
         };
     }, [resendTime]);
 
-    const handleResetPassword = async (value) => {
+    const [isVerifyAccount, setIsVerifyAccount] = useState(false);
+    const handleVerifyAccount = async (value) => {
+        setIsVerifyAccount(true);
         let verifyCodeId;
         if (verifyCodeIdResend) {
             verifyCodeId = verifyCodeIdResend;
@@ -62,9 +64,11 @@ function VerifyEmail() {
             verifyCodeId
         );
         if (resCheck?.status === 200) {
+            setIsVerifyAccount(false);
             await signup(customerUser, dispatch, navigate);
             toast.success(resCheck?.msg);
         } else {
+            setIsVerifyAccount(false);
             toast.error(resCheck?.msg);
         }
     };
@@ -79,7 +83,7 @@ function VerifyEmail() {
             code: "",
         },
         onSubmit: async (data) => {
-            await handleResetPassword(data);
+            await handleVerifyAccount(data);
         },
     });
 
@@ -135,7 +139,14 @@ function VerifyEmail() {
                             </div>
                         </Grid>
                         <Grid item xs={12}>
-                            <GButton type="submit" size="medium " fullWidth>
+                            <GButton
+                                disabled={
+                                    formik.isSubmitting && isVerifyAccount
+                                }
+                                type="submit"
+                                size="medium "
+                                fullWidth
+                            >
                                 Xác thực
                             </GButton>
                             <span className={cx("navigate-question")}>

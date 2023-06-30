@@ -35,14 +35,20 @@ function PasswordChange() {
             navigate("/dang-nhap");
         }
     }, [customerUserId]);
+
+    const [isPasswordChange, setIsPasswordChange] = useState(false);
+
     const handlePasswordChange = async (data) => {
+        setIsPasswordChange(true);
         if (data?.password !== data?.confirmPassword) {
             toast.error("Hai mật khẩu phải giống nhau");
+            setIsPasswordChange(false);
             return;
         } else {
             passwordChangeWhenReset(customerUserId, {
                 password: data?.password,
             }).then((res) => {
+                setIsPasswordChange(false);
                 if (res?.status === 200) {
                     navigate("/dang-nhap");
                 }
@@ -79,7 +85,7 @@ function PasswordChange() {
     });
     return (
         <>
-            <Layout formTitle={"Cập nhật mật khẩu"}>
+            <Layout formTitle={"Nhập mật khẩu mới"}>
                 <form onSubmit={formik.handleSubmit}>
                     <Grid container spacing={2}>
                         <Grid item xs={12}>
@@ -109,8 +115,15 @@ function PasswordChange() {
                             />
                         </Grid>
                         <Grid item xs={12}>
-                            <GButton type="submit" size="medium " fullWidth>
-                                Đặt lại mật khẩu
+                            <GButton
+                                disabled={
+                                    formik.isSubmitting && isPasswordChange
+                                }
+                                type="submit"
+                                size="medium "
+                                fullWidth
+                            >
+                                Đổi mật khẩu
                             </GButton>
                             <span className={cx("login-question")}>
                                 Trở lại{" "}

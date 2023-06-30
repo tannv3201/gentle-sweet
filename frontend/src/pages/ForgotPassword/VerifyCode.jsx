@@ -51,22 +51,25 @@ function VerifyCode() {
             clearInterval(countdown);
         };
     }, [resendTime]);
+
+    const [isResetPassword, setIsResetPassword] = useState(false);
     const handleResetPassword = async (value) => {
+        setIsResetPassword(true);
         let verifyCodeId;
         if (verifyCodeIdResend) {
             verifyCodeId = verifyCodeIdResend;
         } else {
             verifyCodeId = verifyCodeIdFirst;
         }
-        await checkVerifyCode(value?.code, verifyCodeId).then((res) => {
-            if (res?.status === 200) {
-                navigate("/doi-mat-khau", {
-                    state: {
-                        customerUserId: res?.customerUserId,
-                    },
-                });
-            }
-        });
+        const resCheck = await checkVerifyCode(value?.code, verifyCodeId);
+        setIsResetPassword(false);
+        if (resCheck?.status === 200) {
+            navigate("/doi-mat-khau", {
+                state: {
+                    customerUserId: resCheck?.customerUserId,
+                },
+            });
+        }
     };
     const validationSchema = Yup.object().shape({
         code: Yup.string().required("Vui lòng nhập mã"),
@@ -93,7 +96,7 @@ function VerifyCode() {
 
     return (
         <>
-            <Layout formTitle={"Xác nhận"}>
+            <Layout formTitle={"Xác nhận email"}>
                 <form onSubmit={formik.handleSubmit}>
                     <Grid container spacing={2}>
                         <Grid item xs={12}>
@@ -135,8 +138,15 @@ function VerifyCode() {
                             </div>
                         </Grid>
                         <Grid item xs={12}>
-                            <GButton type="submit" size="medium " fullWidth>
-                                Đặt lại mật khẩu
+                            <GButton
+                                disabled={
+                                    formik.isSubmitting && isResetPassword
+                                }
+                                type="submit"
+                                size="medium "
+                                fullWidth
+                            >
+                                Xác nhận
                             </GButton>
                             <span className={cx("login-question")}>
                                 Trở lại{" "}

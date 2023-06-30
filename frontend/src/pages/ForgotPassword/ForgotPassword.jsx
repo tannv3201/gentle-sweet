@@ -24,8 +24,12 @@ const cx = classNames.bind(styles);
 function ForgotPassword() {
     const navigate = useNavigate();
     // Fn Create new Customer User
+
+    const [isResetPassword, setIsResetPassword] = useState(false);
     const handleResetPassword = async (value) => {
+        setIsResetPassword(true);
         await resetPassword(value.email).then((res) => {
+            setIsResetPassword(false);
             if (res) {
                 toast.success("Gửi mã xác minh thành công!");
                 navigate("/quen-mat-khau/xac-thuc", {
@@ -35,7 +39,7 @@ function ForgotPassword() {
                     },
                 });
             } else {
-                toast.success("Email không tồn tại");
+                toast.error("Email không tồn tại");
             }
         });
     };
@@ -76,8 +80,15 @@ function ForgotPassword() {
                         </Grid>
 
                         <Grid item xs={12}>
-                            <GButton type="submit" size="medium " fullWidth>
-                                Đặt lại mật khẩu
+                            <GButton
+                                disabled={
+                                    formik.isSubmitting && isResetPassword
+                                }
+                                type="submit"
+                                size="medium "
+                                fullWidth
+                            >
+                                Gửi mã xác minh
                             </GButton>
                             <span className={cx("login-question")}>
                                 Trở lại{" "}

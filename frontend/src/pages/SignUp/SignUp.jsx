@@ -41,15 +41,19 @@ function SignUp() {
     // Create Axios JWT -> Check token & refresh token
 
     // Fn Create new Customer User
+    const [isSignUp, setIsSignUp] = useState(false);
     const handleCreateCustomerUser = async (customerUser) => {
+        setIsSignUp(true);
         // await signup(customerUser, dispatch, navigate);
         const findEmailExists = await checkEmailExists({
             email: customerUser?.email,
         });
         if (findEmailExists?.email) {
             toast.error("Email đã tồn tại");
+            setIsSignUp(false);
         } else {
             await sendVerifyCode({ email: customerUser?.email }).then((res) => {
+                setIsSignUp(false);
                 navigate("/dang-ky/xac-thuc", {
                     state: {
                         customerUser: customerUser,
@@ -261,7 +265,9 @@ function SignUp() {
                                             type="submit"
                                             size="medium"
                                             fullWidth
-                                            disabled={formik.isSubmitting}
+                                            disabled={
+                                                formik.isSubmitting && isSignUp
+                                            }
                                         >
                                             Đăng ký
                                         </GButton>
