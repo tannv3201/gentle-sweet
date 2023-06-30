@@ -1,5 +1,5 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import styles from "./Login.module.scss";
 import classNames from "classnames/bind";
 import images from "../../assets/images";
@@ -72,6 +72,11 @@ function Login() {
     const handleNavigateForgotPassword = () => {
         navigate("/quen-mat-khau");
     };
+
+    useEffect(() => {
+        document.title = "Đăng nhập";
+    }, []);
+
     return (
         <div className={cx("wrapper")}>
             <div className={cx("inner")}>

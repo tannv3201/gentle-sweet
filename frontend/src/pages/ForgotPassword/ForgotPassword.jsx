@@ -1,5 +1,5 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import styles from "./Layout.module.scss";
 import classNames from "classnames/bind";
 import images from "../../assets/images";
@@ -61,6 +61,11 @@ function ForgotPassword() {
             await handleResetPassword(data);
         },
     });
+
+    useEffect(() => {
+        document.title = "Quên mật khẩu";
+    }, []);
+
     return (
         <>
             <Layout formTitle={"Quên mật khẩu"}>

@@ -52,6 +52,10 @@ function VerifyCode() {
         };
     }, [resendTime]);
 
+    useEffect(() => {
+        document.title = "Xác thực Email";
+    }, []);
+
     const [isResetPassword, setIsResetPassword] = useState(false);
     const handleResetPassword = async (value) => {
         setIsResetPassword(true);

@@ -36,6 +36,10 @@ function PasswordChange() {
         }
     }, [customerUserId]);
 
+    useEffect(() => {
+        document.title = "Nhập mật khẩu mới";
+    }, []);
+
     const [isPasswordChange, setIsPasswordChange] = useState(false);
 
     const handlePasswordChange = async (data) => {

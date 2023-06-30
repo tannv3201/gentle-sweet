@@ -37,6 +37,10 @@ function VerifyEmail() {
     }, [customerUser]);
 
     useEffect(() => {
+        document.title = "Xác thực Email";
+    }, []);
+
+    useEffect(() => {
         let countdown = setInterval(() => {
             setResendTime((prevTime) => prevTime - 1);
         }, 1000);
