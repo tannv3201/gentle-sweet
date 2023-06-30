@@ -24,11 +24,14 @@ function PasswordChangePopup({
 
     let axiosJWT = createAxios(user, dispatch, loginSuccess);
 
+    const [isPasswordChange, setIsPasswordChange] = useState(false);
+
     const handlePasswordChange = (data) => {
         if (data?.newPassword !== data?.confirmNewPassword) {
             toast.error("Mật khẩu mới phải giống nhau");
             return;
         } else {
+            setIsPasswordChange(true);
             customerUserPasswordChange(
                 user?.accessToken,
                 dispatch,
@@ -36,6 +39,7 @@ function PasswordChangePopup({
                 data,
                 axiosJWT
             ).then((res) => {
+                setIsPasswordChange(false);
                 if (res?.status === 200) {
                     formik.handleReset();
                     handleClose();
@@ -53,7 +57,11 @@ function PasswordChangePopup({
         newPassword: Yup.string()
             .required("Vui lòng không để trống")
             .min(8, "Mật khẩu phải có ít nhất 8 kí tự")
-            .max(20, "Mật khẩu tối đa 20 kí tự"),
+            .max(20, "Mật khẩu tối đa 20 kí tự")
+            .matches(
+                /^(?=.*[!@#$%^&*])(?=.*[A-Z]).+$/,
+                "Mật khẩu phải có ít nhất 1 kí tự đặc biệt và 1 chữ viết hoa"
+            ),
         confirmNewPassword: Yup.string()
             .required("Vui lòng không để trống")
             .min(8, "Mật khẩu phải có ít nhất 8 kí tự")
@@ -130,7 +138,14 @@ function PasswordChangePopup({
                                 />
                             </Grid>
                             <Grid item xs={12}>
-                                <GButton type={"submit"}>Cập nhật</GButton>
+                                <GButton
+                                    type={"submit"}
+                                    disabled={
+                                        formik.isSubmitting && isPasswordChange
+                                    }
+                                >
+                                    Cập nhật
+                                </GButton>
                                 <GButton
                                     color={"text"}
                                     style={{ marginLeft: "12px" }}
