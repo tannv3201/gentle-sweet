@@ -22,7 +22,6 @@ function ConfirmCancelBookingPopup({
     booking,
     bookingDetail,
 }) {
-    console.log(bookingDetail);
     const theme = useTheme();
     const isSmall = useMediaQuery(theme.breakpoints.down("sm"));
     const validationSchema = Yup.object().shape({
