@@ -11,7 +11,6 @@ const cartController = {
             if (customer_user_id) params.customer_user_id = customer_user_id;
 
             const cart = await CartModel.cartSearch(params);
-            console.log(cart[0]);
             if (!cart) {
                 return res.status(404).json("Giỏ hàng không tồn tại");
             } else {
