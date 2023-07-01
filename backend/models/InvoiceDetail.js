@@ -16,7 +16,7 @@ const getInvoiceDetailById = async (id) => {
 
 const getInvoiceDetailByInvoiceId = async (invoice_id) => {
     const [rows, fields] = await pool.query(
-        "SELECT * FROM tbl_invoice_detail WHERE invoice_id= (?)",
+        "SELECT ivd.* , prd.name AS product_name, (ivd.product_quantity * ivd.unit_price) AS price_total FROM tbl_invoice_detail ivd INNER JOIN tbl_product prd ON ivd.product_id = prd.id WHERE ivd.invoice_id = (?)",
         [invoice_id]
     );
     return rows;
