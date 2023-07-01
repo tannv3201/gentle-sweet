@@ -114,7 +114,7 @@ export default function GentleInformation() {
                                             >
                                                 <InfoGroup
                                                     label="Email"
-                                                    title="spa.gentlebeauty@gmail.com"
+                                                    title="gentlebeauty.cskh@gmail.com"
                                                 />
                                             </Grid>
                                             <Grid
@@ -126,7 +126,7 @@ export default function GentleInformation() {
                                             >
                                                 <InfoGroup
                                                     label="Trụ sở chính"
-                                                    title="175, Tây Sơn, Đống Đa, Hà Nội"
+                                                    title="Số 28, Thụy Quỳnh, Thái Thụy, Thái Bình"
                                                 />
                                             </Grid>
                                         </Grid>
