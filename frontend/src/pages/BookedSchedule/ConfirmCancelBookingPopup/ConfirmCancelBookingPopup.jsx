@@ -22,6 +22,7 @@ function ConfirmCancelBookingPopup({
     booking,
     bookingDetail,
 }) {
+    console.log(bookingDetail);
     const theme = useTheme();
     const isSmall = useMediaQuery(theme.breakpoints.down("sm"));
     const validationSchema = Yup.object().shape({
@@ -56,6 +57,7 @@ function ConfirmCancelBookingPopup({
                 end_time: bookingDetail?.end_time,
                 date: bookingDetail?.date,
                 customer_name: user?.first_name,
+                created_at: bookingDetail?.created_at,
             },
             axiosJWT
         ).then(() => {
