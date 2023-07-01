@@ -96,7 +96,7 @@ function CheckoutInformation() {
     // Fn handle province onChange event
     // Set selected province/district/ward into states & Formik field
     useEffect(() => {
-        if (customerUser) {
+        if (getCustomerUser) {
             const fetch = async () => {
                 const provinceSelected = getProvinceById(
                     getCustomerUser?.province,
