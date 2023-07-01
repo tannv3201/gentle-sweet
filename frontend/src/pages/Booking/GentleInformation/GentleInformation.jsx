@@ -87,8 +87,8 @@ export default function GentleInformation() {
 
                                             <Grid item xs={6}>
                                                 <InfoGroup
-                                                    label="Hotlines"
-                                                    title="1900 8198"
+                                                    label="Số điện thoại"
+                                                    title="0399 859 634"
                                                 />
                                             </Grid>
                                             <Grid item xs={6}>

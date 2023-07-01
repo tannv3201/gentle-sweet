@@ -140,7 +140,7 @@ function Footer() {
                                         <a href="#">Hotline</a>
                                     </li>
                                     <li className={cx("item-of-component")}>
-                                        <a href="#">0386 653 766</a>
+                                        <a href="#">0399 859 634</a>
                                     </li>
                                 </ul>
                             </Grid>

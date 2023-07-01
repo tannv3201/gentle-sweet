@@ -209,7 +209,7 @@ function Footer() {
                                         <span>Hotline</span>
                                     </li>
                                     <li className={cx("item-of-component")}>
-                                        <span>0386 653 766</span>
+                                        <span>0399 859 634</span>
                                     </li>
                                 </ul>
                             </Grid>
