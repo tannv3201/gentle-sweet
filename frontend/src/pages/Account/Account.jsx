@@ -201,9 +201,9 @@ export default function Account() {
     useEffect(() => {
         if (!user) {
             navigate("/dang-nhap");
-            toast("Vui lòng đăng nhập để sử dụng chức năng này.", {
-                icon: "😅",
-            });
+            // toast("Vui lòng đăng nhập để sử dụng chức năng này.", {
+            //     icon: "😅",
+            // });
         }
         const fetch = async () => {
             if (getCustomerUser) {

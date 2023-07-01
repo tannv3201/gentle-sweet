@@ -57,9 +57,9 @@ function BookedSchedule() {
         const fetch = async () => {
             if (!user) {
                 navigate("/dang-nhap");
-                toast("Vui lòng đăng nhập để sử dụng chức năng này.", {
-                    icon: "😅",
-                });
+                // toast("Vui lòng đăng nhập để sử dụng chức năng này.", {
+                //     icon: "😅",
+                // });
             }
             const res = await getAllBookingByUser(
                 user?.id,
@@ -75,9 +75,9 @@ function BookedSchedule() {
         const fetchData = async () => {
             if (!user) {
                 navigate("/dang-nhap");
-                toast("Vui lòng đăng nhập để sử dụng chức năng này.", {
-                    icon: "😅",
-                });
+                // toast("Vui lòng đăng nhập để sử dụng chức năng này.", {
+                //     icon: "😅",
+                // });
             }
             if (getBookingListByUser) {
                 const newBookingList = getBookingListByUser?.map((i) => {

@@ -84,9 +84,9 @@ export default function ServiceInformation() {
     useEffect(() => {
         if (!selectedService) {
             navigate("/danh-muc-dich-vu");
-            toast("Vui lòng chọn dịch vụ để đặt lịch.", {
-                icon: "😅",
-            });
+            // toast("Vui lòng chọn dịch vụ để đặt lịch.", {
+            //     icon: "😅",
+            // });
         }
         const fetch = async () => {
             await getAllServiceCategory(user?.accessToken, dispatch, axiosJWT);

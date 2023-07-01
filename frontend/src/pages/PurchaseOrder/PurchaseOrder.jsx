@@ -61,9 +61,9 @@ function PurchaseOrder() {
         const fetch = async () => {
             if (!user) {
                 navigate("/dang-nhap");
-                toast("Vui lòng đăng nhập để sử dụng chức năng này.", {
-                    icon: "😅",
-                });
+                // toast("Vui lòng đăng nhập để sử dụng chức năng này.", {
+                //     icon: "😅",
+                // });
             }
             const res = await getAllInvoiceByUser(
                 user?.id,
@@ -162,9 +162,9 @@ function PurchaseOrder() {
         const fetchData = async () => {
             if (!user) {
                 navigate("/dang-nhap");
-                toast("Vui lòng đăng nhập để sử dụng chức năng này.", {
-                    icon: "😅",
-                });
+                // toast("Vui lòng đăng nhập để sử dụng chức năng này.", {
+                //     icon: "😅",
+                // });
             }
             if (getInvoiceListByUser) {
                 const newInvoiceList = getInvoiceListByUser?.map((i) => {
