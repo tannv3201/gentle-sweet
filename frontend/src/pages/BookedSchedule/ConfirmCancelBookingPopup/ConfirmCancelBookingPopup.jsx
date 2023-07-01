@@ -5,7 +5,7 @@ import { useFormik } from "formik";
 import GTextFieldNormal from "../../../components/GTextField/GTextFieldNormal";
 import { Grid } from "@mui/material";
 import * as Yup from "yup";
-import { cancelBooking, updateBooking } from "../../../redux/api/apiBooking";
+import { updateBooking } from "../../../redux/api/apiBooking";
 import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
 import { createAxios } from "../../../createInstance";
