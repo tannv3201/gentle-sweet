@@ -2,21 +2,24 @@ const pool = require("../config/database");
 const { v4: uuidv4 } = require("uuid");
 
 const getAllBooking = async () => {
-    const [rows, fields] = await pool.query("SELECT * FROM tbl_booking");
+    const [rows, fields] = await pool.query(
+        "SELECT b.*, cus.last_name, cus.first_name FROM tbl_booking b INNER JOIN tbl_customer_user cus ON b.customer_user_id = cus.id"
+    );
     return rows;
 };
 
 const bookingSearch = async (params) => {
-    let query = "SELECT * FROM tbl_booking WHERE 1=1";
+    let query =
+        "SELECT b.*, cus.last_name, cus.first_name FROM tbl_booking b INNER JOIN tbl_customer_user cus ON b.customer_user_id = cus.id WHERE 1=1";
     const values = [];
 
     if (params.status) {
-        query += " AND status = (?)";
+        query += " AND b.status = (?)";
         values.push(params.status);
     }
 
     if (params.startDate) {
-        query += " AND created_at >= (?)";
+        query += " AND b.created_at >= (?)";
         values.push(params.startDate);
     }
 
@@ -24,22 +27,22 @@ const bookingSearch = async (params) => {
         const endDate = new Date(params.endDate);
         endDate.setDate(endDate.getDate() + 1);
 
-        query += " AND created_at < (?)";
+        query += " AND b.created_at < (?)";
         values.push(endDate);
     }
 
     if (params.customer_user_id) {
-        query += " AND customer_user_id = (?)";
+        query += " AND b.customer_user_id = (?)";
         values.push(params.customer_user_id);
     }
 
     if (params.branch_id) {
-        query += " AND branch_id = (?)";
+        query += " AND b.branch_id = (?)";
         values.push(params.branch_id);
     }
 
     if (params.booking_time) {
-        query += " AND booking_time = (?)";
+        query += " AND b.booking_time = (?)";
         values.push(params.booking_time);
     }
 
