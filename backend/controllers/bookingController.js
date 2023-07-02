@@ -98,9 +98,11 @@ const bookingController = {
         try {
             const bookingId = req.params.id;
             const { admin_user_id, ...data } = req.body;
+            console.log(data);
+            console.log(req.body);
             const affectedRows = await BookingModel.updateBookingById(
                 bookingId,
-                data
+                req.body
             );
             if (affectedRows === 0) {
                 return res.json({ status: 404, msg: "Cập nhật thất bại" });
