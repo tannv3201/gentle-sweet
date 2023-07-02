@@ -18,7 +18,9 @@
     }
 
     .modal-body {
-        padding: 80px 8px 12px 8px;
+        padding: 12px 8px 12px 8px;
+        margin-top: 60px;
         background-color: var(--light-gray);
+        overflow: auto;
     }
 }

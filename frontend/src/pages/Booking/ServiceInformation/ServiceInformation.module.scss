@@ -19,6 +19,11 @@
 }
 
 .inner {
+    .header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+    }
     .service-title {
         h2 {
             font-size: 2.4rem;

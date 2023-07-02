@@ -1,0 +1,113 @@
+@media only screen and (max-width: 600px) {
+}
+
+.wrapper {
+}
+
+.inner {
+    .group-item-wrapper {
+        padding: 4px 0;
+        .group-item-label {
+        }
+        .group-item-content {
+            font-weight: var(--fw-medium);
+            color: var(--success);
+        }
+    }
+
+    .service-name {
+        color: var(--text-primary);
+        font-weight: var(--fw-semi-bold);
+    }
+    .booking-item {
+        background-color: var(--white);
+        border: 1px solid var(--border-color);
+        border-radius: 4px;
+        .service_name {
+            display: -webkit-box;
+            -webkit-box-orient: vertical;
+            -webkit-line-clamp: 2; /* Giới hạn chỉ nằm trên 2 dòng */
+            overflow: hidden;
+        }
+        .table_service_info {
+            .table_service_name {
+                display: block;
+                font-weight: var(--fw-medium);
+                display: -webkit-box;
+                -webkit-box-orient: vertical;
+                -webkit-line-clamp: 2; /* Giới hạn chỉ nằm trên 2 dòng */
+                overflow: hidden;
+            }
+            .table_service_quantity {
+                display: block;
+            }
+            .table_service_price {
+                display: block;
+            }
+        }
+    }
+
+    .booking-item-header {
+        padding: 12px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+
+        .booking-item-status {
+            padding: 4px 0;
+            .status-label {
+            }
+            .status-content {
+                font-weight: var(--fw-medium);
+                font-size: 1.4rem;
+                &.pending {
+                    background-color: #f57c00;
+                    color: var(--white);
+                    padding: 2px 8px !important;
+                    border-radius: 4px;
+                }
+
+                &.scheduled,
+                &.received {
+                    background-color: #0288d1;
+                    color: var(--white);
+                    padding: 2px 8px !important;
+                    border-radius: 4px;
+                }
+
+                &.cancel {
+                    background-color: #d32f2f;
+                    color: var(--white);
+                    padding: 2px 8px !important;
+                    border-radius: 4px;
+                }
+                &.cancel-pending {
+                    background-color: rgb(206, 147, 216);
+                    color: var(--white);
+                    padding: 2px 8px !important;
+                    border-radius: 4px;
+                }
+
+                // Đang vận chuyển
+                &.service-start {
+                    background-color: #1769aa;
+                    color: var(--white);
+                    padding: 2px 8px !important;
+                    border-radius: 4px;
+                }
+
+                // Đã hoàn thành
+                &.service-end {
+                    background-color: #2e7d32;
+                    color: var(--white);
+                    padding: 2px 8px !important;
+                    border-radius: 4px;
+                }
+            }
+        }
+    }
+}
+.no-booking {
+    text-align: center;
+    height: 210px;
+}

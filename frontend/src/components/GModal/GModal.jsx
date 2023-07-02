@@ -31,6 +31,7 @@ export default function GModal({
     handleOpen,
     children,
     title,
+    maxHeight,
 }) {
     const theme = useTheme();
     const isSmall = useMediaQuery(theme.breakpoints.down("sm"));
@@ -65,7 +66,13 @@ export default function GModal({
                                 <CloseRounded fontSize={"medium"} />
                             </IconButton>
                         </div>
-                        <div className={cx("modal-body")}> {children}</div>
+                        <div
+                            style={maxHeight ? { height: maxHeight } : {}}
+                            className={cx("modal-body")}
+                        >
+                            {" "}
+                            {children}
+                        </div>
                     </div>
                 </Box>
             </Modal>

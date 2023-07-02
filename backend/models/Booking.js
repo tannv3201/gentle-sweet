@@ -57,7 +57,7 @@ const getBookingById = async (id) => {
 
 const getBookingByCustomerUserId = async (id) => {
     const [rows, fields] = await pool.query(
-        "SELECT * FROM tbl_booking WHERE customer_user_id = (?)",
+        "SELECT b.*, br.name AS branch_name FROM tbl_booking b INNER JOIN tbl_branch br ON b.branch_id = br.id WHERE customer_user_id = (?)",
         [id]
     );
     return rows;

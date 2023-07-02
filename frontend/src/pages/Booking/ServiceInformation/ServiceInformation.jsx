@@ -32,6 +32,8 @@ import { useTheme } from "@mui/material/styles";
 import RequiredLabelWrapper, {
     RequiredMark,
 } from "../../../components/RequiredLabel/RequiredLabel";
+import GButton from "../../../components/MyButton/MyButton";
+import BookedScheduleModal from "./BookedScheduleModal/BookedScheduleModal";
 const cx = classNames.bind(styles);
 
 export default function ServiceInformation() {
@@ -266,6 +268,18 @@ export default function ServiceInformation() {
         }
     };
 
+    // BookedScheduleModal
+    const [isOpenBookedScheduleModal, setIsOpenBookedScheduleModal] =
+        useState(false);
+
+    const handleOpenBookedScheduleModal = () => {
+        setIsOpenBookedScheduleModal(true);
+    };
+
+    const handleCloseBookedScheduleModal = () => {
+        setIsOpenBookedScheduleModal(false);
+    };
+
     return (
         <div className={cx("wrapper")}>
             <div className={cx("inner")}>
@@ -274,9 +288,19 @@ export default function ServiceInformation() {
                         <div>
                             <Grid container spacing={2}>
                                 <Grid item xs={12}>
-                                    <RequiredLabelWrapper
-                                        label={<h3>Thông tin dịch vụ</h3>}
-                                    />
+                                    <div className={cx("header")}>
+                                        <RequiredLabelWrapper
+                                            label={<h3>Thông tin dịch vụ</h3>}
+                                        />
+                                        <GButton
+                                            color={"text"}
+                                            onClick={
+                                                handleOpenBookedScheduleModal
+                                            }
+                                        >
+                                            Dịch vụ đã đặt
+                                        </GButton>
+                                    </div>
                                 </Grid>
                                 <Grid item lg={6} md={6} sm={12} xs={12}>
                                     <Autocomplete
@@ -561,6 +585,11 @@ export default function ServiceInformation() {
                     isOpen={isOpen}
                     handleClose={handleCloseModal}
                     handleOpen={handleOpenModal}
+                />
+                <BookedScheduleModal
+                    isOpen={isOpenBookedScheduleModal}
+                    handleOpen={handleOpenBookedScheduleModal}
+                    handleClose={handleCloseBookedScheduleModal}
                 />
             </div>
         </div>

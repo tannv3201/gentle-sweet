@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import classNames from "classnames/bind";
 import styles from "./Booking.module.scss";
 import { Grid } from "@mui/material";
@@ -119,6 +119,10 @@ function Booking() {
             axiosJWT
         ).then(() => navigate("/quan-ly-lich-dat"));
     };
+
+    useEffect(() => {
+        document.title = "Đặt lịch";
+    }, []);
 
     return (
         <main>
