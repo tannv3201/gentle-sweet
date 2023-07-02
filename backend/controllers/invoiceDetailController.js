@@ -74,7 +74,6 @@ const invoiceController = {
             const getProductAddedInvoice = await ProductModel.getProductById(
                 req.body.product_id
             );
-            // console.log(getProductAddedInvoice);
             const updateProductAddedQuantity =
                 await ProductModel.updateProductById(req.body.product_id, {
                     quantity:

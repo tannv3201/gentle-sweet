@@ -83,7 +83,6 @@ const productsController = {
 
     checkProductQuantityAllowList: async (req, res) => {
         try {
-            // console.log(req.body.productListSelected);
             const checkEnoughQuantityList = [];
             const productErrorList = [];
             for (const item of req.body?.productListSelected) {
