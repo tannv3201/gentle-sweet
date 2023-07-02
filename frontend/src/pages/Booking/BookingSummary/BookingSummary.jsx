@@ -24,6 +24,7 @@ function BookingSummary() {
             toast.error("Vui lòng nhập đầy đủ thông tin");
         }
     };
+
     return (
         <div className={cx("wrapper")}>
             <div className={cx("inner")}>
@@ -31,7 +32,7 @@ function BookingSummary() {
                     <Grid container spacing={2}>
                         <Grid item xs={12}>
                             <span className={cx("booking-summary-title")}>
-                                <h2>Dịch vụ của bạn</h2>
+                                <h2>Thông tin dịch vụ</h2>
                             </span>
                         </Grid>
                         <Grid item xs={12}>
@@ -75,6 +76,16 @@ function BookingSummary() {
                                                 values.bookingTime_name
                                                     ? values.bookingTime_name
                                                     : " -- : --"
+                                            }
+                                        />
+                                    </Grid>
+                                    <Grid item xs={12}>
+                                        <GInfoGroup
+                                            label="Chi nhánh"
+                                            title={
+                                                values.branch_name
+                                                    ? values.branch_name
+                                                    : "--"
                                             }
                                         />
                                     </Grid>

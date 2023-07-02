@@ -169,6 +169,7 @@ export default function ServiceInformation() {
     const handleChangeBranch = async (value) => {
         if (value) {
             setFieldValue("branch_id", value?.id);
+            setFieldValue("branch_name", value?.name);
             setFieldValue(`bookingTime_id`, null);
             setFieldValue(`bookingTime_name`, null);
             setFieldValue(`start_time`, null);
