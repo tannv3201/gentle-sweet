@@ -98,8 +98,6 @@ const bookingController = {
         try {
             const bookingId = req.params.id;
             const { admin_user_id, ...data } = req.body;
-            console.log(data);
-            console.log(req.body);
             const affectedRows = await BookingModel.updateBookingById(
                 bookingId,
                 req.body
