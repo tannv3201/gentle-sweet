@@ -739,18 +739,21 @@ function OrderDetail() {
                                                                         )}
                                                                     </span>
                                                                 </span>
-                                                                <GButton
-                                                                    color={
-                                                                        "text"
-                                                                    }
-                                                                    onClick={() =>
-                                                                        handleOpenRatingModal(
-                                                                            rowData
-                                                                        )
-                                                                    }
-                                                                >
-                                                                    Đánh giá
-                                                                </GButton>
+                                                                {invoiceClone?.status ===
+                                                                    5 && (
+                                                                    <GButton
+                                                                        color={
+                                                                            "text"
+                                                                        }
+                                                                        onClick={() =>
+                                                                            handleOpenRatingModal(
+                                                                                rowData
+                                                                            )
+                                                                        }
+                                                                    >
+                                                                        Đánh giá
+                                                                    </GButton>
+                                                                )}
                                                             </div>
                                                         );
                                                     },
