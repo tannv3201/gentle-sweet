@@ -199,7 +199,10 @@ function ProductDetail() {
         fetch();
     }, [user?.id]);
 
+    const [isAdding, setIsAdding] = useState(false);
+
     const handleAddToCart = async () => {
+        setIsAdding(true);
         if (!user) {
             toast.error("Vui lòng đăng nhập để sử dụng chức năng này");
             return;
@@ -223,14 +226,6 @@ function ProductDetail() {
             handleOpenAlertProductQuantityLimit();
             return;
         }
-        // if (
-        //     getCart[0]?.product_quantity + buyQuantity >
-        //     productDetail?.quantity
-        // ) {
-        //     setIsProductQuantityLimitInCart(true);
-        //     setIsProductQuantityLimit(false);
-        //     return;
-        // }
 
         setIsProductQuantityLimitInCart(false);
         setIsProductQuantityLimit(false);
@@ -253,6 +248,7 @@ function ProductDetail() {
                 },
                 axiosJWT
             );
+            setIsAdding(false);
         } else {
             await updateCart(
                 user?.accessToken,
@@ -266,10 +262,15 @@ function ProductDetail() {
                 },
                 axiosJWT
             );
+            setIsAdding(false);
         }
     };
     const navigate = useNavigate();
     const handleBuyNow = () => {
+        if (!user) {
+            toast.error("Vui lòng đăng nhập để sử dụng chức năng này");
+            return;
+        }
         navigate("/thanh-toan", {
             state: {
                 selectedProductBuyNow: [
@@ -540,7 +541,8 @@ function ProductDetail() {
                                                             <GButton
                                                                 disabled={
                                                                     productDetail?.quantity ===
-                                                                    0
+                                                                        0 ||
+                                                                    isAdding
                                                                 }
                                                                 onClick={
                                                                     handleAddToCart
