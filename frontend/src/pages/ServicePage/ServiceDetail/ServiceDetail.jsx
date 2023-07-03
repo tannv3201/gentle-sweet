@@ -22,6 +22,7 @@ import { getServiceById } from "../../../redux/api/apiService";
 import Comments from "../../../components/Comments/Comments";
 import ItemDetailDescription from "../../../components/ItemDetailDescription/ItemDetailDescription";
 import { FormatCurrency } from "../../../utils/FormatCurrency/formatCurrency";
+import { getRatingByServiceId } from "../../../redux/api/apiRating";
 const cx = classNames.bind(styles);
 
 function ServiceDetail() {
@@ -43,11 +44,15 @@ function ServiceDetail() {
     const discountListCustomer = useSelector(
         (state) => state.discount.discount?.discountListCustomer
     );
+    const ratingListByService = useSelector(
+        (state) => state.rating.rating?.ratingServiceList
+    );
 
     useEffect(() => {
         const fetch = async () => {
             await getServiceById(dispatch, serviceId, null, null);
             await getAllDiscountCustomer(dispatch);
+            await getRatingByServiceId(dispatch, serviceId);
         };
         fetch();
     }, [serviceId]);
@@ -335,7 +340,9 @@ function ServiceDetail() {
                                         />
                                     </TabPanel>
                                     <TabPanel value={tabIndex} index={1}>
-                                        <Comments />
+                                        <Comments
+                                            ratingList={ratingListByService}
+                                        />
                                     </TabPanel>
                                 </div>
                             </div>

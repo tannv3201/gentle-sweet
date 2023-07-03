@@ -42,6 +42,7 @@ export default function GRatingModal({
     isProduct = false,
     isService = false,
     invoiceId,
+    bookingId,
 }) {
     const theme = useTheme();
     const isMedium = useMediaQuery(theme.breakpoints.down("md"));
@@ -75,10 +76,12 @@ export default function GRatingModal({
             if (isService) {
                 ratingData = {
                     ...data,
-                    service_id: ratingObject?.id,
+                    service_id: ratingObject?.service_id,
                     customer_user_id: user?.id,
+                    booking_id: bookingId,
                 };
             }
+            // console.log(ratingData);
             await handleRatingSubmit(ratingData);
         },
     });
@@ -114,7 +117,11 @@ export default function GRatingModal({
                                         />
                                     </div>
                                     <div className={cx("object-name")}>
-                                        {ratingObject?.product_name}
+                                        {isProduct
+                                            ? ratingObject?.product_name
+                                            : isService
+                                            ? ratingObject?.service_name
+                                            : ""}
                                     </div>
                                 </div>
                             </Grid>

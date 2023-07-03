@@ -26,6 +26,7 @@ import {
     getWardById,
     wardApi,
 } from "../../../redux/api/apiProvinceOpenAPI";
+import GRatingModal from "../../../components/GRatingModal/GRatingModal";
 const cx = classNames.bind(styles);
 
 function BookedDetail() {
@@ -248,6 +249,20 @@ function BookedDetail() {
     const handleCloseConfirmCancelPopup = () => {
         setIsOpenConfirmCancelPopup(false);
     };
+
+    // Rating modal
+    const [isOpenRatingModal, setIsOpenRatingModal] = useState(false);
+    const [ratingObject, setRatingObject] = useState({});
+
+    const handleOpenRatingModal = (product) => {
+        setRatingObject(product);
+        setIsOpenRatingModal(true);
+    };
+
+    const handleCloseRatingModal = () => {
+        setIsOpenRatingModal(false);
+    };
+
     const handleBack = () => {
         navigate("/quan-ly-lich-dat");
     };
@@ -533,6 +548,28 @@ function BookedDetail() {
                                                     },
                                                 },
                                                 {
+                                                    title: "Đánh giá",
+                                                    field: "unit_price",
+                                                    hidden:
+                                                        isSmall ||
+                                                        bookingClone?.status !==
+                                                            5,
+                                                    render: (rowData) => {
+                                                        return (
+                                                            <GButton
+                                                                color={"text"}
+                                                                onClick={() =>
+                                                                    handleOpenRatingModal(
+                                                                        rowData
+                                                                    )
+                                                                }
+                                                            >
+                                                                Đánh giá
+                                                            </GButton>
+                                                        );
+                                                    },
+                                                },
+                                                {
                                                     title: "Thông tin",
                                                     hidden: !isSmall
                                                         ? true
@@ -613,6 +650,15 @@ function BookedDetail() {
                 handleOpen={handleOpenConfirmCancelPopup}
                 booking={{ bookingId: bookingId, status: bookingClone?.status }}
                 bookingDetail={serviceListClone[0]}
+            />
+            <GRatingModal
+                isOpen={isOpenRatingModal}
+                handleClose={handleCloseRatingModal}
+                handleOpen={handleOpenRatingModal}
+                ratingObject={ratingObject}
+                title={"Đánh giá dịch vụ"}
+                isService
+                bookingId={bookingId}
             />
         </div>
     );
