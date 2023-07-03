@@ -1,8 +1,7 @@
 import React, { useEffect } from "react";
 import styles from "./ProductDetail.module.scss";
 import classNames from "classnames/bind";
-import { Grid } from "@mui/material";
-import GRating from "../../../components/GRatingModal/GRatingModal";
+import { Grid, Rating } from "@mui/material";
 import { useState } from "react";
 import {
     HorizontalRuleRounded,
@@ -38,6 +37,7 @@ import { FormatCurrency } from "../../../utils/FormatCurrency/formatCurrency";
 import GTextFieldNormal from "../../../components/GTextField/GTextFieldNormal";
 import AlertProductQuantityLimit from "../../../components/AlertProductQuantityLimit/AlertProductQuantityLimit";
 import { getRatingByProductId } from "../../../redux/api/apiRating";
+import GRating from "../../../components/GRating/GRating";
 const cx = classNames.bind(styles);
 
 function ProductDetail() {
@@ -139,9 +139,26 @@ function ProductDetail() {
     const discountListCustomer = useSelector(
         (state) => state.discount.discount?.discountListCustomer
     );
+
+    const [totalRating, setTotalRating] = useState(0);
     const ratingListByProduct = useSelector(
         (state) => state.rating.rating?.ratingProductList
     );
+
+    useEffect(() => {
+        if (ratingListByProduct?.length > 0) {
+            const total = ratingListByProduct?.reduce(
+                (accumulator, currentValue) =>
+                    accumulator + currentValue?.rating,
+                0
+            );
+
+            setTotalRating(Math.round(total / ratingListByProduct?.length));
+        } else {
+            setTotalRating(0);
+        }
+    }, [productId, ratingListByProduct]);
+
     useEffect(() => {
         document.title = getProducById?.name;
     }, [getProducById?.name, productId]);
@@ -339,9 +356,18 @@ function ProductDetail() {
                                                 >
                                                     <Grid container spacing={2}>
                                                         <Grid item xs={12}>
-                                                            <GRating
-                                                                quantitylabel
-                                                            />
+                                                            <div>
+                                                                <GRating
+                                                                    readOnly
+                                                                    value={
+                                                                        totalRating
+                                                                    }
+                                                                    valueTotal={`${totalRating}.0/5`}
+                                                                    ratingQuantity={
+                                                                        ratingListByProduct?.length
+                                                                    }
+                                                                />
+                                                            </div>
                                                         </Grid>
                                                         <Grid item xs={6}>
                                                             <div
