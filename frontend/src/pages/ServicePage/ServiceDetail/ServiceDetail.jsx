@@ -2,7 +2,6 @@ import React, { useEffect } from "react";
 import styles from "./ServiceDetail.module.scss";
 import classNames from "classnames/bind";
 import { Grid } from "@mui/material";
-import GRating from "../../../components/GRatingModal/GRatingModal";
 import { useState } from "react";
 import { ListAltRounded } from "@mui/icons-material";
 import GButton from "../../../components/MyButton/MyButton";
@@ -23,6 +22,7 @@ import Comments from "../../../components/Comments/Comments";
 import ItemDetailDescription from "../../../components/ItemDetailDescription/ItemDetailDescription";
 import { FormatCurrency } from "../../../utils/FormatCurrency/formatCurrency";
 import { getRatingByServiceId } from "../../../redux/api/apiRating";
+import GRating from "../../../components/GRating/GRating";
 const cx = classNames.bind(styles);
 
 function ServiceDetail() {
@@ -47,6 +47,22 @@ function ServiceDetail() {
     const ratingListByService = useSelector(
         (state) => state.rating.rating?.ratingServiceList
     );
+
+    const [totalRating, setTotalRating] = useState(0);
+
+    useEffect(() => {
+        if (ratingListByService?.length > 0) {
+            const total = ratingListByService?.reduce(
+                (accumulator, currentValue) =>
+                    accumulator + currentValue?.rating,
+                0
+            );
+
+            setTotalRating(Math.round(total / ratingListByService?.length));
+        } else {
+            setTotalRating(0);
+        }
+    }, [serviceId, ratingListByService]);
 
     useEffect(() => {
         const fetch = async () => {
@@ -145,7 +161,14 @@ function ServiceDetail() {
                                                     <Grid container spacing={2}>
                                                         <Grid item xs={12}>
                                                             <GRating
-                                                                quantitylabel
+                                                                readOnly
+                                                                value={
+                                                                    totalRating
+                                                                }
+                                                                valueTotal={`${totalRating}.0/5`}
+                                                                ratingQuantity={
+                                                                    ratingListByService?.length
+                                                                }
                                                             />
                                                         </Grid>
                                                         <Grid item xs={12}>
