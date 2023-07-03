@@ -1,8 +1,17 @@
 const pool = require("../config/database");
 const { v4: uuidv4 } = require("uuid");
 
+// const getAllInvoice = async () => {
+//     const [rows, fields] = await pool.query(
+//         "SELECT iv.*, cus.last_name, cus.first_name FROM tbl_invoice iv INNER JOIN tbl_customer_user cus ON iv.customer_user_id = cus.id"
+//     );
+//     return rows;
+// };
+
 const getAllInvoice = async () => {
-    const [rows, fields] = await pool.query("SELECT * FROM tbl_invoice");
+    const [rows, fields] = await pool.query(
+        "SELECT tbl_invoice.*, tbl_customer_user.last_name, tbl_customer_user.first_name FROM tbl_invoice INNER JOIN tbl_customer_user ON tbl_invoice.customer_user_id = tbl_customer_user.id"
+    );
     return rows;
 };
 
@@ -23,16 +32,17 @@ const getProductInvoiceCancel = async (invoiceId) => {
 };
 
 const invoiceSearch = async (params) => {
-    let query = "SELECT * FROM tbl_invoice WHERE 1=1";
+    let query =
+        "SELECT tbl_invoice.*, tbl_customer_user.last_name, tbl_customer_user.first_name FROM tbl_invoice INNER JOIN tbl_customer_user ON tbl_invoice.customer_user_id = tbl_customer_user.id WHERE 1=1";
     const values = [];
 
     if (params.status) {
-        query += " AND status = (?)";
+        query += " AND tbl_invoice.status = (?)";
         values.push(params.status);
     }
 
     if (params.startDate) {
-        query += " AND created_at >= (?)";
+        query += " AND tbl_invoice.created_at >= (?)";
         values.push(params.startDate);
     }
 
@@ -40,12 +50,12 @@ const invoiceSearch = async (params) => {
         const endDate = new Date(params.endDate);
         endDate.setDate(endDate.getDate() + 1);
 
-        query += " AND created_at < (?)";
+        query += " AND tbl_invoice.created_at < (?)";
         values.push(endDate);
     }
 
     if (params.customer_user_id) {
-        query += " AND customer_user_id = (?)";
+        query += " AND tbl_invoice.customer_user_id = (?)";
         values.push(params.customer_user_id);
     }
 
