@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import styles from "./ProductDetail.module.scss";
 import classNames from "classnames/bind";
 import { Grid } from "@mui/material";
-import GRating from "../../../components/GRating/GRating";
+import GRating from "../../../components/GRatingModal/GRatingModal";
 import { useState } from "react";
 import {
     HorizontalRuleRounded,
@@ -37,6 +37,7 @@ import Comments from "../../../components/Comments/Comments";
 import { FormatCurrency } from "../../../utils/FormatCurrency/formatCurrency";
 import GTextFieldNormal from "../../../components/GTextField/GTextFieldNormal";
 import AlertProductQuantityLimit from "../../../components/AlertProductQuantityLimit/AlertProductQuantityLimit";
+import { getRatingByProductId } from "../../../redux/api/apiRating";
 const cx = classNames.bind(styles);
 
 function ProductDetail() {
@@ -78,14 +79,6 @@ function ProductDetail() {
             setBuyQuantity(productDetail?.quantity);
             return;
         }
-        // if (
-        //     getCart[0]?.product_quantity + parseInt(value) >
-        //     productDetail?.quantity
-        // ) {
-        //     setIsProductQuantityLimit(true);
-        //     setBuyQuantity(productDetail?.quantity);
-        //     return;
-        // }
 
         setBuyQuantity(value);
         setIsProductQuantityLimitInCart(false);
@@ -127,17 +120,6 @@ function ProductDetail() {
             return;
         }
 
-        // if (
-        //     getCart[0]?.product_quantity + parseInt(buyQuantity, 10) + 1 >
-        //     productDetail?.quantity
-        // ) {
-        //     setBuyQuantity(
-        //         productDetail?.quantity - getCart[0]?.product_quantity
-        //     );
-        //     setIsProductQuantityLimit(true);
-        //     return;
-        // }
-
         setIsProductQuantityLimit(false);
         setBuyQuantity(parseInt(buyQuantity, 10) + 1);
     };
@@ -157,12 +139,19 @@ function ProductDetail() {
     const discountListCustomer = useSelector(
         (state) => state.discount.discount?.discountListCustomer
     );
+    const ratingListByProduct = useSelector(
+        (state) => state.rating.rating?.ratingProductList
+    );
     useEffect(() => {
         document.title = getProducById?.name;
     }, [getProducById?.name, productId]);
 
     useEffect(() => {
-        getAllDiscountCustomer(dispatch);
+        const fetch = async () => {
+            await getAllDiscountCustomer(dispatch);
+            await getRatingByProductId(dispatch, productId);
+        };
+        fetch();
     }, []);
 
     useEffect(() => {
@@ -662,7 +651,9 @@ function ProductDetail() {
                                         />
                                     </TabPanel>
                                     <TabPanel value={tabIndex} index={1}>
-                                        <Comments />
+                                        <Comments
+                                            ratingList={ratingListByProduct}
+                                        />
                                     </TabPanel>
                                 </div>
                             </div>

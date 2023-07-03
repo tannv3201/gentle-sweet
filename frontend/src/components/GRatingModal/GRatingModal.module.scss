@@ -1,0 +1,50 @@
+@import "../../assets/scss/Global.scss";
+
+@include responsive(mobile) {
+}
+
+.wrapper {
+    min-width: 600px;
+    .object-info {
+        display: flex;
+        align-items: center;
+        padding: 8px 12px;
+        border-bottom: 1px solid var(--light-gray);
+        .object-image {
+            width: 80px;
+            height: 80px;
+            border-radius: 100px;
+            overflow: hidden;
+            border: 1px solid var(--primary-400);
+            margin-right: 20px;
+            img {
+                width: 100%;
+                height: 100%;
+                object-fit: cover;
+            }
+        }
+        .object-name {
+            font-weight: var(--fw-medium);
+        }
+    }
+
+    .rating-wrapper {
+        .rating-star {
+            margin-bottom: 12px;
+            .label-rating-star {
+                display: block;
+                margin-right: 4px;
+            }
+            display: flex;
+            align-items: center;
+        }
+    }
+
+    .btn-group {
+        display: flex;
+        justify-content: flex-end;
+        button {
+            margin-left: 8px;
+        }
+    }
+}

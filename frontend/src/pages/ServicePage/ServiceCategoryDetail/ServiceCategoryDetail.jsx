@@ -6,8 +6,6 @@ import classNames from "classnames/bind";
 import images from "../../../assets/images";
 
 import ArticleCategory from "../ArticleCategory/ArticleCategory";
-import Comments from "../../../components/Comments/Comments";
-import GRrating from "../../../components/GRating/GRating";
 import Related from "./Related/Related";
 import { getServiceCategoryById } from "../../../redux/api/apiServiceCategory";
 import { useNavigate, useParams } from "react-router-dom";
@@ -600,23 +598,6 @@ function ServiceCategoryDetail() {
                                             </div>
                                         </Grid>
                                     )}
-
-                                    <Grid item xs={12}>
-                                        <div className={cx("service-rating")}>
-                                            <span
-                                                className={cx(
-                                                    "service-rating-title"
-                                                )}
-                                            >
-                                                Chọn đánh giá sao
-                                            </span>
-                                            <GRrating />
-                                        </div>
-                                    </Grid>
-
-                                    <Grid item xs={12}>
-                                        <Comments />
-                                    </Grid>
                                 </Grid>
                             </div>
                         </Grid>

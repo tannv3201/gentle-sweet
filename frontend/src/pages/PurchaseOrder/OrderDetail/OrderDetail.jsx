@@ -34,6 +34,7 @@ import {
     LightTooltip,
     TooltipMobile,
 } from "../../../components/GTooltip/GTooltip";
+import GRatingModal from "../../../components/GRatingModal/GRatingModal";
 
 const cx = classNames.bind(styles);
 
@@ -270,6 +271,20 @@ function OrderDetail() {
     const handleBack = () => {
         navigate("/don-mua");
     };
+
+    // Rating modal
+    const [isOpenRatingModal, setIsOpenRatingModal] = useState(false);
+    const [ratingObject, setRatingObject] = useState({});
+
+    const handleOpenRatingModal = (product) => {
+        setRatingObject(product);
+        setIsOpenRatingModal(true);
+    };
+
+    const handleCloseRatingModal = () => {
+        setIsOpenRatingModal(false);
+    };
+
     return (
         <div className={cx("wrapper")}>
             <div className={cx("inner")}>
@@ -658,6 +673,28 @@ function OrderDetail() {
                                                     },
                                                 },
                                                 {
+                                                    title: "Đánh giá",
+                                                    field: "unit_price",
+                                                    hidden:
+                                                        isSmall ||
+                                                        invoiceClone?.status !==
+                                                            5,
+                                                    render: (rowData) => {
+                                                        return (
+                                                            <GButton
+                                                                color={"text"}
+                                                                onClick={() =>
+                                                                    handleOpenRatingModal(
+                                                                        rowData
+                                                                    )
+                                                                }
+                                                            >
+                                                                Đánh giá
+                                                            </GButton>
+                                                        );
+                                                    },
+                                                },
+                                                {
                                                     title: "Thông tin",
                                                     hidden: !isSmall
                                                         ? true
@@ -762,6 +799,16 @@ function OrderDetail() {
                     paid: invoiceClone?.paid,
                     payment_method: invoiceClone?.payment_method,
                 }}
+            />
+
+            <GRatingModal
+                isOpen={isOpenRatingModal}
+                handleClose={handleCloseRatingModal}
+                handleOpen={handleOpenRatingModal}
+                ratingObject={ratingObject}
+                title={"Đánh giá sản phẩm"}
+                isProduct
+                invoiceId={invoiceId}
             />
         </div>
     );

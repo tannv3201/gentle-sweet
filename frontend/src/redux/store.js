@@ -17,6 +17,7 @@ import provinceReducer from "./slice/provinceSlice";
 import productImageReducer from "./slice/productImageSlice";
 import serviceImageReducer from "./slice/serviceImageSlice";
 import branchReducer from "./slice/branchSlice";
+import ratingReducer from "./slice/ratingSlice";
 
 import {
     persistStore,
@@ -55,6 +56,7 @@ const rootReducer = combineReducers({
     productImage: productImageReducer,
     serviceImage: serviceImageReducer,
     branch: branchReducer,
+    rating: ratingReducer,
 });
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);

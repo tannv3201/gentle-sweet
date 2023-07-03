@@ -36,6 +36,8 @@ const storageImageRoute = require("./routes/storageImage");
 const resetPasswordRoute = require("./routes/resetPassword");
 const registerVerifyRoute = require("./routes/registerVerify");
 
+const ratingRoute = require("./routes/rating");
+
 const app = express();
 app.use(cors());
 app.use(cookieParser());
@@ -76,6 +78,8 @@ app.use("/v1/excel", excelRoute);
 
 app.use("/v1/resetPassword", resetPasswordRoute);
 app.use("/v1/registerVerify", registerVerifyRoute);
+
+app.use("/v1/rating", ratingRoute);
 
 app.listen(port, () => {
     console.log(`Server is running on port ${port}`);

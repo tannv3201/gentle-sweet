@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import styles from "./ServiceDetail.module.scss";
 import classNames from "classnames/bind";
 import { Grid } from "@mui/material";
-import GRating from "../../../components/GRating/GRating";
+import GRating from "../../../components/GRatingModal/GRatingModal";
 import { useState } from "react";
 import { ListAltRounded } from "@mui/icons-material";
 import GButton from "../../../components/MyButton/MyButton";
