@@ -602,6 +602,21 @@ function BookedDetail() {
                                                                         )}
                                                                     </span>
                                                                 </span>
+                                                                {bookingClone?.status ===
+                                                                    5 && (
+                                                                    <GButton
+                                                                        color={
+                                                                            "text"
+                                                                        }
+                                                                        onClick={() =>
+                                                                            handleOpenRatingModal(
+                                                                                rowData
+                                                                            )
+                                                                        }
+                                                                    >
+                                                                        Đánh giá
+                                                                    </GButton>
+                                                                )}
                                                             </div>
                                                         );
                                                     },
