@@ -1,6 +1,9 @@
 @import "../../assets/scss/Global.scss";
 
 @include responsive(mobile) {
+    .wrapper {
+        min-width: 100% !important;
+    }
 }
 
 .wrapper {

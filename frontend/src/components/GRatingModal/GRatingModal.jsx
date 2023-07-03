@@ -56,6 +56,7 @@ export default function GRatingModal({
     const handleRatingSubmit = async (data) => {
         await createRating(user?.accessToken, dispatch, data, axiosJWT);
         handleClose();
+        formik.handleReset();
     };
 
     const formik = useFormik({
@@ -99,99 +100,86 @@ export default function GRatingModal({
             handleOpen={handleOpen}
             title={title}
         >
-            <Box
-                sx={{
-                    display: "flex",
-                    alignItems: "center",
-                }}
-            >
-                <div className={cx("wrapper")}>
-                    <form onSubmit={formik.handleSubmit}>
-                        <Grid container spacing={2}>
-                            <Grid item xs={12}>
-                                <div className={cx("object-info")}>
-                                    <div className={cx("object-image")}>
-                                        <img
-                                            src={`${API_IMAGE_URL}/${ratingObject?.image_url}`}
-                                            alt=""
-                                        />
-                                    </div>
-                                    <div className={cx("object-name")}>
-                                        {isProduct
-                                            ? ratingObject?.product_name
-                                            : isService
-                                            ? ratingObject?.service_name
-                                            : ""}
-                                    </div>
+            <div className={cx("wrapper")}>
+                <form onSubmit={formik.handleSubmit}>
+                    <Grid container spacing={2}>
+                        <Grid item xs={12}>
+                            <div className={cx("object-info")}>
+                                <div className={cx("object-image")}>
+                                    <img
+                                        src={`${API_IMAGE_URL}/${ratingObject?.image_url}`}
+                                        alt=""
+                                    />
                                 </div>
-                            </Grid>
-                            <Grid item xs={12}>
-                                <div className={cx("rating-wrapper")}>
-                                    <div className={cx("rating-star")}>
-                                        <span
-                                            className={
-                                                isMedium
-                                                    ? cx(
-                                                          "label-rating-star",
-                                                          "isSmall"
-                                                      )
-                                                    : cx("label-rating-star")
-                                            }
-                                        >
-                                            Đánh giá:
-                                        </span>
-                                        <Rating
-                                            size="small"
-                                            name="hover-feedback"
-                                            value={rating}
-                                            precision={1}
-                                            style={{ marginRight: 4 }}
-                                            getLabelText={getLabelText}
-                                            onChange={(event, newValue) => {
-                                                handleChangeRating(newValue);
-                                            }}
-                                            onChangeActive={(
-                                                event,
-                                                newHover
-                                            ) => {
-                                                setHover(newHover);
-                                            }}
-                                            emptyIcon={
-                                                <StarIcon
-                                                    style={{ opacity: 0.55 }}
-                                                    fontSize="small"
-                                                />
-                                            }
-                                        />
-                                    </div>
-                                    <div className={cx("rating-comment")}>
-                                        <GTextFieldNormal
-                                            label={"Bình luận"}
-                                            value={formik.values?.comment}
-                                            name="comment"
-                                            onChange={formik.handleChange}
-                                            fullWidth
-                                            multiline={true}
-                                            rows={3}
-                                        />
-                                    </div>
+                                <div className={cx("object-name")}>
+                                    {isProduct
+                                        ? ratingObject?.product_name
+                                        : isService
+                                        ? ratingObject?.service_name
+                                        : ""}
                                 </div>
-                            </Grid>
-                            <Grid item xs={12}>
-                                <div className={cx("btn-group")}>
-                                    <GButton
-                                        color={"text"}
-                                        onClick={handleClose}
-                                    >
-                                        Hủy
-                                    </GButton>
-                                    <GButton type={"submit"}>Đánh giá</GButton>
-                                </div>
-                            </Grid>
+                            </div>
                         </Grid>
-                    </form>
-                </div>
-            </Box>
+                        <Grid item xs={12}>
+                            <div className={cx("rating-wrapper")}>
+                                <div className={cx("rating-star")}>
+                                    <span
+                                        className={
+                                            isMedium
+                                                ? cx(
+                                                      "label-rating-star",
+                                                      "isSmall"
+                                                  )
+                                                : cx("label-rating-star")
+                                        }
+                                    >
+                                        Đánh giá:
+                                    </span>
+                                    <Rating
+                                        size={isSmall ? "large" : "small"}
+                                        name="hover-feedback"
+                                        value={rating}
+                                        precision={1}
+                                        style={{ marginRight: 4 }}
+                                        getLabelText={getLabelText}
+                                        onChange={(event, newValue) => {
+                                            handleChangeRating(newValue);
+                                        }}
+                                        onChangeActive={(event, newHover) => {
+                                            setHover(newHover);
+                                        }}
+                                        emptyIcon={
+                                            <StarIcon
+                                                style={{ opacity: 0.55 }}
+                                                fontSize="small"
+                                            />
+                                        }
+                                    />
+                                </div>
+                                <div className={cx("rating-comment")}>
+                                    <GTextFieldNormal
+                                        label={"Bình luận"}
+                                        value={formik.values?.comment}
+                                        name="comment"
+                                        onChange={formik.handleChange}
+                                        fullWidth
+                                        multiline={true}
+                                        rows={3}
+                                    />
+                                </div>
+                            </div>
+                        </Grid>
+                        <Grid item xs={12}>
+                            <div className={cx("btn-group")}>
+                                <GButton color={"text"} onClick={handleClose}>
+                                    Hủy
+                                </GButton>
+                                <GButton type={"submit"}>Đánh giá</GButton>
+                            </div>
+                        </Grid>
+                    </Grid>
+                </form>
+            </div>
         </GModal>
     );
 }

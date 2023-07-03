@@ -739,6 +739,18 @@ function OrderDetail() {
                                                                         )}
                                                                     </span>
                                                                 </span>
+                                                                <GButton
+                                                                    color={
+                                                                        "text"
+                                                                    }
+                                                                    onClick={() =>
+                                                                        handleOpenRatingModal(
+                                                                            rowData
+                                                                        )
+                                                                    }
+                                                                >
+                                                                    Đánh giá
+                                                                </GButton>
                                                             </div>
                                                         );
                                                     },
