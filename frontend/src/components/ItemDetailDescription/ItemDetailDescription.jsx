@@ -32,11 +32,11 @@ function ItemDetailDescription({ itemDetail }) {
                             caption={itemDetail?.name}
                         />
                     </Grid>
-                    <Grid item xs={12}>
+                    {/* <Grid item xs={12}>
                         <article className={cx("product-description-text")}>
                             <p>{itemDetail?.description}</p>
                         </article>
-                    </Grid>
+                    </Grid> */}
                 </Grid>
             </div>
         </div>
