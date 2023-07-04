@@ -117,9 +117,9 @@ export const deleteCart = async (
         });
         dispatch(deleteCartSuccess(res?.data));
         if (res?.data?.status === 200) {
-            toast.success(res?.data?.msg);
             await getCartByUserId(accessToken, dispatch, userId, axiosJWT);
         }
+        return res?.data;
     } catch (error) {
         dispatch(deleteCartFailed(error.response?.data));
     }

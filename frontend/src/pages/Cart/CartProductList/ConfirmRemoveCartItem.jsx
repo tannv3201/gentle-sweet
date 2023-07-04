@@ -5,6 +5,7 @@ import { loginSuccess } from "../../../redux/slice/authSlice";
 import { createAxios } from "../../../createInstance";
 import { deleteCart } from "../../../redux/api/apiCart";
 import ConfirmDeletePopup from "../../../components/ConfirmDeletePopup/ConfirmDeletePopup";
+import { toast } from "react-hot-toast";
 
 export default function ConfirmRemoveCartItem({
     handleClose,
@@ -24,8 +25,13 @@ export default function ConfirmRemoveCartItem({
             selectedCartItem?.id,
             user?.id,
             axiosJWT
-        ).then(() => {
+        ).then((res) => {
             handleClose();
+            if (res?.status === 200) {
+                toast.success("Xóa sản phẩm thành công");
+            } else {
+                toast.error("Có lỗi xảy ra");
+            }
         });
     };
 

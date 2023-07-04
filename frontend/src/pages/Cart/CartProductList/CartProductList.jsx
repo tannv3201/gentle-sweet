@@ -425,29 +425,6 @@ function CartProductList() {
         const { id, product_quantity, ...rest } = getCartItem;
         const updatedData = { product_quantity: tempQuantity[rowId] };
 
-        // if (
-        //     parseInt(tempQuantity[rowId]) === rowData?.product_quantity ||
-        //     !isTypingQuantity
-        // ) {
-        //     return;
-        // }
-        // if (tempQuantity[rowId] === "") {
-        //     return;
-        // }
-        // if (parseInt(tempQuantity[rowId]) === 0) {
-        //     handleOpenRemoveCartItem(getCartItem);
-        //     return;
-        // }
-
-        // await updateCart(
-        //     user?.accessToken,
-        //     dispatch,
-        //     user?.id,
-        //     id,
-        //     updatedData,
-        //     axiosJWT
-        // );
-
         const isCheckProductQuantity = await checkQuantityAllow(
             rowData?.product_id,
             tempQuantity[rowId]

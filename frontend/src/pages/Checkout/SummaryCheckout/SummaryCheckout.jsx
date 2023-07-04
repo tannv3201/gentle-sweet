@@ -27,6 +27,7 @@ import { createInvoiceDetail } from "../../../redux/api/apiInvoiceDetail";
 import { createDelivery } from "../../../redux/api/apiDelivery";
 import { toast } from "react-hot-toast";
 import { FormatCurrency } from "../../../utils/FormatCurrency/formatCurrency";
+import { deleteCart } from "../../../redux/api/apiCart";
 const cx = classNames.bind(styles);
 
 function SummaryCheckout() {
@@ -47,9 +48,6 @@ function SummaryCheckout() {
     useEffect(() => {
         if (!user) {
             navigate("/dang-nhap");
-            // toast("Vui lòng đăng nhập để sử dụng chức năng này.", {
-            //     icon: "😅",
-            // });
         }
         let selectedProduct;
         if (!selectedProductCartList && !selectedProductBuyNow) {
@@ -148,6 +146,7 @@ function SummaryCheckout() {
                 product_quantity: parseInt(p?.product_quantity),
                 product_id: p?.product_id,
                 invoice_id: newInvoice,
+                cart_id: p?.id,
             };
             const {
                 discount_percent,
@@ -164,17 +163,28 @@ function SummaryCheckout() {
             } = data;
             return restData;
         });
-
         let counterCreateInvoiceDetails = 0;
 
         for (const item of productList) {
-            await createInvoiceDetail(
+            const invoiceDetailCreated = await createInvoiceDetail(
                 newInvoice,
                 user?.accessToken,
                 dispatch,
                 { ...item, deliveryPrice: deliveryPrice },
                 axiosJWT
             );
+
+            // Delete sản phẩm trong giỏ hàng khi tạo đơn hàng
+            if (item?.cart_id) {
+                await deleteCart(
+                    user?.accessToken,
+                    dispatch,
+                    item?.cart_id,
+                    user?.id,
+                    axiosJWT
+                );
+            }
+
             counterCreateInvoiceDetails++;
 
             if (counterCreateInvoiceDetails === productList?.length) {
