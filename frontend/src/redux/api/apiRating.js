@@ -4,6 +4,12 @@ import {
     createRatingFailed,
     createRatingStart,
     createRatingSuccess,
+    getRatingByBookingIdFailed,
+    getRatingByBookingIdStart,
+    getRatingByBookingIdSuccess,
+    getRatingByInvoiceIdFailed,
+    getRatingByInvoiceIdStart,
+    getRatingByInvoiceIdSuccess,
     getRatingByProductIdFailed,
     getRatingByProductIdStart,
     getRatingByProductIdSuccess,
@@ -21,6 +27,28 @@ export const getRatingByProductId = async (dispatch, productId) => {
         return res?.data;
     } catch (error) {
         dispatch(getRatingByProductIdFailed());
+    }
+};
+
+export const getRatingByInvoiceId = async (dispatch, invoiceId) => {
+    dispatch(getRatingByInvoiceIdStart());
+    try {
+        const res = await axios.get("/v1/rating/invoice/" + invoiceId);
+        dispatch(getRatingByInvoiceIdSuccess(res?.data));
+        return res?.data;
+    } catch (error) {
+        dispatch(getRatingByInvoiceIdFailed());
+    }
+};
+
+export const getRatingByBookingId = async (dispatch, bookingId) => {
+    dispatch(getRatingByBookingIdStart());
+    try {
+        const res = await axios.get("/v1/rating/booking/" + bookingId);
+        dispatch(getRatingByBookingIdSuccess(res?.data));
+        return res?.data;
+    } catch (error) {
+        dispatch(getRatingByBookingIdFailed());
     }
 };
 
@@ -51,6 +79,9 @@ export const createRating = async (
         dispatch(createRatingSuccess(res?.data));
         if (res?.data?.status === 201) {
             toast.success("Đánh giá thành công.");
+            if (ratingData?.invoice_id) {
+                await getRatingByInvoiceId(dispatch, ratingData?.invoice_id);
+            }
         }
 
         return res?.data?.data;

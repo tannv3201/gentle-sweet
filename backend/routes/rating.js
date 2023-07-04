@@ -16,7 +16,9 @@ router.get(
 );
 
 router.get("/service/:id", ratingController.getRatingByServiceId);
+router.get("/invoice/:id", ratingController.getAllRatingByInvoiceId);
 
 router.get("/product/:id", ratingController.getRatingByProductId);
+router.get("/booking/:id", ratingController.getAllRatingByBookingId);
 
 module.exports = router;

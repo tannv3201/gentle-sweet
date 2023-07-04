@@ -21,6 +21,22 @@ const getRatingById = async (id) => {
     return rows[0];
 };
 
+const getAllRatingByInvoiceId = async (invoiceId) => {
+    const [rows, fields] = await pool.query(
+        "SELECT * FROM tbl_rating WHERE invoice_id= (?)",
+        [invoiceId]
+    );
+    return rows;
+};
+
+const getAllRatingByBookingId = async (invoiceId) => {
+    const [rows, fields] = await pool.query(
+        "SELECT * FROM tbl_rating WHERE booking_id= (?)",
+        [invoiceId]
+    );
+    return rows;
+};
+
 const getRatingByProductId = async (id) => {
     const [rows, fields] = await pool.query(
         "SELECT tbl_rating.*, tbl_customer_user.last_name, tbl_customer_user.first_name FROM tbl_rating INNER JOIN tbl_customer_user ON tbl_rating.customer_user_id = tbl_customer_user.id WHERE tbl_rating.product_id= (?)",
@@ -51,4 +67,6 @@ module.exports = {
     createRating,
     getRatingByServiceId,
     checkExistRating,
+    getAllRatingByInvoiceId,
+    getAllRatingByBookingId,
 };

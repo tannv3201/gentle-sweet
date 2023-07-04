@@ -35,12 +35,14 @@ import {
     TooltipMobile,
 } from "../../../components/GTooltip/GTooltip";
 import GRatingModal from "../../../components/GRatingModal/GRatingModal";
+import { getRatingByInvoiceId } from "../../../redux/api/apiRating";
 
 const cx = classNames.bind(styles);
 
 function OrderDetail() {
     const { invoiceId } = useParams();
     const theme = useTheme();
+    const dispatch = useDispatch();
     const isSmall = useMediaQuery(theme.breakpoints.down("sm"));
     const [invoiceClone, setInvoiceClone] = useState({});
     const [deliveryClone, setDeliveryClone] = useState({});
@@ -57,6 +59,13 @@ function OrderDetail() {
     const getProvinceList = structuredClone(
         useSelector((state) => state.province.province.provinceList)
     );
+    const ratingInvoiceList = useSelector(
+        (state) => state.rating.rating.ratingInvoiceList
+    );
+
+    useEffect(() => {
+        getRatingByInvoiceId(dispatch, invoiceId);
+    }, [dispatch, invoiceId]);
     const [open, setOpen] = React.useState(false);
 
     const handleTooltipClose = () => {
@@ -81,10 +90,6 @@ function OrderDetail() {
     }, [productListClone]);
     const [provinces, setProvinces] = useState([]);
 
-    const [selectedProvince, setSelectedProvince] = useState(null);
-    const [selectedDistrict, setSelectedDistrict] = useState(null);
-    const [selectedWard, setSelectedWard] = useState(null);
-
     // Get province list from API
     useEffect(() => {
         setProvinces(getProvinceList);
@@ -93,25 +98,29 @@ function OrderDetail() {
     const productList = useSelector(
         (state) => state.product.product?.productList
     );
-    const dispatch = useDispatch();
     const navigate = useNavigate();
     let axiosJWT = createAxios(user, dispatch, loginSuccess);
     useEffect(() => {
         if (getInvoiceDetail) {
             const newDetailList = getInvoiceDetail?.map((p) => {
+                const checkExistRating = ratingInvoiceList?.find(
+                    (rating) => rating?.product_id === p?.product_id
+                );
+
                 const productInfo = productList?.find(
                     (product) => product.id === p?.product_id
                 );
                 return {
                     ...p,
+                    isExistRating: checkExistRating ? true : false,
                     product_name: productInfo.name,
                     image_url: productInfo.image_url,
                 };
             });
-            setProductListClone(newDetailList);
+            setProductListClone(structuredClone(newDetailList));
         }
-    }, [getInvoiceDetail, productList]);
-
+    }, [getInvoiceDetail, productList, ratingInvoiceList]);
+    console.log("re-render");
     // Get invoice
     useEffect(() => {
         const fetch = async () => {
@@ -681,16 +690,24 @@ function OrderDetail() {
                                                             5,
                                                     render: (rowData) => {
                                                         return (
-                                                            <GButton
-                                                                color={"text"}
-                                                                onClick={() =>
-                                                                    handleOpenRatingModal(
-                                                                        rowData
-                                                                    )
-                                                                }
-                                                            >
-                                                                Đánh giá
-                                                            </GButton>
+                                                            <>
+                                                                {rowData?.isExistRating ? (
+                                                                    "Đã đánh giá"
+                                                                ) : (
+                                                                    <GButton
+                                                                        color={
+                                                                            "text"
+                                                                        }
+                                                                        onClick={() =>
+                                                                            handleOpenRatingModal(
+                                                                                rowData
+                                                                            )
+                                                                        }
+                                                                    >
+                                                                        Đánh giá
+                                                                    </GButton>
+                                                                )}
+                                                            </>
                                                         );
                                                     },
                                                 },
@@ -741,18 +758,33 @@ function OrderDetail() {
                                                                 </span>
                                                                 {invoiceClone?.status ===
                                                                     5 && (
-                                                                    <GButton
-                                                                        color={
-                                                                            "text"
-                                                                        }
-                                                                        onClick={() =>
-                                                                            handleOpenRatingModal(
-                                                                                rowData
-                                                                            )
-                                                                        }
-                                                                    >
-                                                                        Đánh giá
-                                                                    </GButton>
+                                                                    <>
+                                                                        {rowData?.isExistRating ? (
+                                                                            <span
+                                                                                className={cx(
+                                                                                    "isRatedMobile"
+                                                                                )}
+                                                                            >
+                                                                                Đã
+                                                                                đánh
+                                                                                giá
+                                                                            </span>
+                                                                        ) : (
+                                                                            <GButton
+                                                                                color={
+                                                                                    "text"
+                                                                                }
+                                                                                onClick={() =>
+                                                                                    handleOpenRatingModal(
+                                                                                        rowData
+                                                                                    )
+                                                                                }
+                                                                            >
+                                                                                Đánh
+                                                                                giá
+                                                                            </GButton>
+                                                                        )}
+                                                                    </>
                                                                 )}
                                                             </div>
                                                         );

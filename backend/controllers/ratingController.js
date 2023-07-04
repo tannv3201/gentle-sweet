@@ -1,7 +1,7 @@
 const RatingModel = require("../models/Rating");
 
 const ratingController = {
-    // GET ALL INVOICE
+    // GET ALL RATING
     getAllRating: async (req, res) => {
         try {
             const ratings = await RatingModel.getAllRating();
@@ -12,7 +12,7 @@ const ratingController = {
         }
     },
 
-    // GET INVOICE BY ID
+    // GET RATING BY ID
     getRatingById: async (req, res) => {
         try {
             const rating = await RatingModel.getRatingById(req.params.id);
@@ -26,7 +26,39 @@ const ratingController = {
         }
     },
 
-    // GET INVOICE BY ID
+    // GET RATING BY INVOICE_ID
+    getAllRatingByInvoiceId: async (req, res) => {
+        try {
+            const rating = await RatingModel.getAllRatingByInvoiceId(
+                req.params.id
+            );
+            if (!rating) {
+                return res.status(404).json("Đánh giá không tồn tại");
+            } else {
+                return res.status(200).json(rating);
+            }
+        } catch (error) {
+            res.status(500).json(error);
+        }
+    },
+
+    // GET RATING BY BOOKING_ID
+    getAllRatingByBookingId: async (req, res) => {
+        try {
+            const rating = await RatingModel.getAllRatingByBookingId(
+                req.params.id
+            );
+            if (!rating) {
+                return res.status(404).json("Đánh giá không tồn tại");
+            } else {
+                return res.status(200).json(rating);
+            }
+        } catch (error) {
+            res.status(500).json(error);
+        }
+    },
+
+    // GET RATING BY ID
     getRatingByProductId: async (req, res) => {
         try {
             const rating = await RatingModel.getRatingByProductId(
@@ -42,7 +74,7 @@ const ratingController = {
         }
     },
 
-    // GET INVOICE BY ID
+    // GET RATING BY ID
     getRatingByServiceId: async (req, res) => {
         try {
             const rating = await RatingModel.getRatingByServiceId(
