@@ -1,10 +1,14 @@
 @media only screen and (max-width: 600px) {
+    .inner {
+        width: 100% !important;
+    }
 }
 
 .wrapper {
 }
 
 .inner {
+    width: 600px;
     .group-item-wrapper {
         padding: 4px 0;
         .group-item-label {
@@ -109,5 +113,5 @@
 }
 .no-booking {
     text-align: center;
-    height: 210px;
+    height: 60px;
 }

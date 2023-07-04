@@ -165,7 +165,7 @@ function BookedScheduleModal({ isOpen, handleClose, handleOpen }) {
                 handleClose={handleClose}
                 handleOpen={handleOpen}
                 title={"Dịch vụ đã đặt"}
-                maxHeight={isSmall ? "460px" : "400px"}
+                maxHeight={bookedList?.length !== 0 ? "460px" : null}
             >
                 <div>
                     {bookedList?.length !== 0 ? (

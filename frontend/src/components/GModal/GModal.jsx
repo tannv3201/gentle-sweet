@@ -67,7 +67,7 @@ export default function GModal({
                             </IconButton>
                         </div>
                         <div
-                            style={maxHeight ? { height: maxHeight } : {}}
+                            style={maxHeight ? { maxHeight: maxHeight } : {}}
                             className={cx("modal-body")}
                         >
                             {" "}
