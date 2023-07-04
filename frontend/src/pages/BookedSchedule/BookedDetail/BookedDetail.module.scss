@@ -44,6 +44,11 @@
     border-radius: 6px;
     background-color: var(--white);
 
+    .isRatedLabel {
+        color: #2e7d32;
+        font-style: italic;
+    }
+
     .booking-header {
         background-color: lavender;
         display: flex;

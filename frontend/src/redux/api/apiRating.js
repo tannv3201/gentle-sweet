@@ -81,6 +81,8 @@ export const createRating = async (
             toast.success("Đánh giá thành công.");
             if (ratingData?.invoice_id) {
                 await getRatingByInvoiceId(dispatch, ratingData?.invoice_id);
+            } else if (ratingData?.booking_id) {
+                await getRatingByBookingId(dispatch, ratingData?.booking_id);
             }
         }
 

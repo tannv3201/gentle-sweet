@@ -43,6 +43,10 @@
     border: 1px solid var(--border-color);
     border-radius: 6px;
     background-color: var(--white);
+    .isRatedLabel {
+        color: #2e7d32;
+        font-style: italic;
+    }
 
     .invoice-header {
         background-color: lavender;
@@ -149,10 +153,6 @@
             }
             .table_product_price {
                 display: block;
-            }
-            .isRatedMobile {
-                color: #2e7d32;
-                font-style: italic;
             }
         }
         .product-item {

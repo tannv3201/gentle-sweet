@@ -66,6 +66,7 @@ function OrderDetail() {
     useEffect(() => {
         getRatingByInvoiceId(dispatch, invoiceId);
     }, [dispatch, invoiceId]);
+
     const [open, setOpen] = React.useState(false);
 
     const handleTooltipClose = () => {
@@ -120,7 +121,6 @@ function OrderDetail() {
             setProductListClone(structuredClone(newDetailList));
         }
     }, [getInvoiceDetail, productList, ratingInvoiceList]);
-    console.log("re-render");
     // Get invoice
     useEffect(() => {
         const fetch = async () => {
@@ -692,7 +692,14 @@ function OrderDetail() {
                                                         return (
                                                             <>
                                                                 {rowData?.isExistRating ? (
-                                                                    "Đã đánh giá"
+                                                                    <span
+                                                                        className={cx(
+                                                                            "isRatedLabel"
+                                                                        )}
+                                                                    >
+                                                                        Đã đánh
+                                                                        giá
+                                                                    </span>
                                                                 ) : (
                                                                     <GButton
                                                                         color={
@@ -762,7 +769,7 @@ function OrderDetail() {
                                                                         {rowData?.isExistRating ? (
                                                                             <span
                                                                                 className={cx(
-                                                                                    "isRatedMobile"
+                                                                                    "isRatedLabel"
                                                                                 )}
                                                                             >
                                                                                 Đã

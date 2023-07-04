@@ -27,6 +27,7 @@ import {
     wardApi,
 } from "../../../redux/api/apiProvinceOpenAPI";
 import GRatingModal from "../../../components/GRatingModal/GRatingModal";
+import { getRatingByBookingId } from "../../../redux/api/apiRating";
 const cx = classNames.bind(styles);
 
 function BookedDetail() {
@@ -38,7 +39,6 @@ function BookedDetail() {
     const [serviceListClone, setServiceListClone] = useState([]);
     const user = useSelector((state) => state.auth.login?.currentUser);
     const bookingById = useSelector((state) => state.booking.booking?.booking);
-
     const deliveryByBookingId = useSelector(
         (state) => state.delivery.delivery?.deliveryByBookingId
     );
@@ -57,27 +57,40 @@ function BookedDetail() {
     const getProvinceList = structuredClone(
         useSelector((state) => state.province.province.provinceList)
     );
+
+    const ratingBookingList = useSelector(
+        (state) => state.rating.rating.ratingBookingList
+    );
     const dispatch = useDispatch();
+
+    useEffect(() => {
+        getRatingByBookingId(dispatch, bookingId);
+    }, [dispatch, bookingId]);
+
     const navigate = useNavigate();
     let axiosJWT = createAxios(user, dispatch, loginSuccess);
     useEffect(() => {
         const fetch = async () => {
             if (getBookingDetail) {
                 const newList = getBookingDetail?.map((bd) => {
+                    const checkExistRating = ratingBookingList?.find(
+                        (rating) => rating?.service_id === bd?.service_id
+                    );
                     const serviceInfo = serviceList?.find(
                         (service) => service.id === bd?.service_id
                     );
                     return {
                         ...bd,
+                        isExistRating: checkExistRating ? true : false,
                         service_name: serviceInfo.name,
                         image_url: serviceInfo.image_url,
                     };
                 });
-                setServiceListClone(newList);
+                setServiceListClone(structuredClone(newList));
             }
         };
         fetch();
-    }, [getBookingDetail]);
+    }, [getBookingDetail, serviceList, ratingBookingList]);
 
     // Get booking
     useEffect(() => {
@@ -556,16 +569,31 @@ function BookedDetail() {
                                                             5,
                                                     render: (rowData) => {
                                                         return (
-                                                            <GButton
-                                                                color={"text"}
-                                                                onClick={() =>
-                                                                    handleOpenRatingModal(
-                                                                        rowData
-                                                                    )
-                                                                }
-                                                            >
-                                                                Đánh giá
-                                                            </GButton>
+                                                            <>
+                                                                {rowData?.isExistRating ? (
+                                                                    <span
+                                                                        className={cx(
+                                                                            "isRatedLabel"
+                                                                        )}
+                                                                    >
+                                                                        Đã đánh
+                                                                        giá
+                                                                    </span>
+                                                                ) : (
+                                                                    <GButton
+                                                                        color={
+                                                                            "text"
+                                                                        }
+                                                                        onClick={() =>
+                                                                            handleOpenRatingModal(
+                                                                                rowData
+                                                                            )
+                                                                        }
+                                                                    >
+                                                                        Đánh giá
+                                                                    </GButton>
+                                                                )}
+                                                            </>
                                                         );
                                                     },
                                                 },
@@ -604,18 +632,33 @@ function BookedDetail() {
                                                                 </span>
                                                                 {bookingClone?.status ===
                                                                     5 && (
-                                                                    <GButton
-                                                                        color={
-                                                                            "text"
-                                                                        }
-                                                                        onClick={() =>
-                                                                            handleOpenRatingModal(
-                                                                                rowData
-                                                                            )
-                                                                        }
-                                                                    >
-                                                                        Đánh giá
-                                                                    </GButton>
+                                                                    <>
+                                                                        {rowData?.isExistRating ? (
+                                                                            <span
+                                                                                className={cx(
+                                                                                    "isRatedLabel"
+                                                                                )}
+                                                                            >
+                                                                                Đã
+                                                                                đánh
+                                                                                giá
+                                                                            </span>
+                                                                        ) : (
+                                                                            <GButton
+                                                                                color={
+                                                                                    "text"
+                                                                                }
+                                                                                onClick={() =>
+                                                                                    handleOpenRatingModal(
+                                                                                        rowData
+                                                                                    )
+                                                                                }
+                                                                            >
+                                                                                Đánh
+                                                                                giá
+                                                                            </GButton>
+                                                                        )}
+                                                                    </>
                                                                 )}
                                                             </div>
                                                         );
