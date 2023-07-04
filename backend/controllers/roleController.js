@@ -35,7 +35,11 @@ const roleController = {
                 description: req.body.description,
                 status: 1,
             });
-            res.status(201).json(newRole);
+            return res.json({
+                status: 201,
+                msg: "Thêm quyền hạn thành công",
+                data: newRole,
+            });
         } catch (error) {
             res.status(500).json(error);
         }
@@ -45,14 +49,15 @@ const roleController = {
     updateRoleById: async (req, res) => {
         try {
             const roleId = req.params.id;
-            const affectedRows = await RoleModel.updateProductById(
+
+            const affectedRows = await RoleModel.updateRoleById(
                 roleId,
                 req.body
             );
             if (affectedRows === 0) {
                 return res.status(404).json({ message: "Cập nhật thất bại" });
             } else {
-                return res.status(200).json({ message: "Cập nhật thành công" });
+                return res.json({ status: 200, msg: "Cập nhật thành công" });
             }
         } catch (error) {
             console.log(error);

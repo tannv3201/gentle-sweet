@@ -3,12 +3,28 @@ const router = express.Router();
 const roleController = require("../controllers/roleController");
 const middlewareController = require("../controllers/middlewareController");
 
-router.post("/", roleController.createRole);
+router.post(
+    "/",
+    middlewareController.verifyTokenAndSuperAdminAuth,
+    roleController.createRole
+);
 
-router.get("/", roleController.getAllRole);
+router.get(
+    "/",
+    middlewareController.verifyTokenAndSuperAdminAuth,
+    roleController.getAllRole
+);
 
-router.get("/:id", roleController.getRoleById);
+router.get(
+    "/:id",
+    middlewareController.verifyTokenAndSuperAdminAuth,
+    roleController.getRoleById
+);
 
-router.put("/:id", roleController.updateRoleById);
+router.put(
+    "/:id",
+    middlewareController.verifyTokenAndSuperAdminAuth,
+    roleController.updateRoleById
+);
 
 module.exports = router;

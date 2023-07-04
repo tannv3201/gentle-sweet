@@ -28,8 +28,8 @@ const createRole = async (roleData) => {
 
 const updateRoleById = async (roleId, roleData) => {
     const [result, fields] = await pool.query(
-        "UPDATE tbl_account SET ? WHERE id = ?",
-        [accountData, roleId]
+        "UPDATE tbl_role SET ? WHERE id = ?",
+        [roleData, roleId]
     );
     return result.affectedRows;
 };
