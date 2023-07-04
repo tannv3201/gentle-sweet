@@ -193,6 +193,9 @@
         .product-name {
             cursor: pointer;
             h3 {
+                display: -webkit-box;
+                -webkit-box-orient: vertical;
+                -webkit-line-clamp: 2;
                 height: 60px;
                 font-size: 1.6rem;
                 font-weight: var(--fw-semi-bold);
