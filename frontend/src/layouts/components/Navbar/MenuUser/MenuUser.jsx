@@ -147,7 +147,7 @@ export default function MenuUser() {
                             <IconButton onClick={handleNavigateCart}>
                                 <Badge
                                     color="secondary"
-                                    badgeContent={cartList.length}
+                                    badgeContent={cartList?.length}
                                     max={99}
                                 >
                                     <ShoppingCartRounded />
