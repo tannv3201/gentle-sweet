@@ -102,7 +102,6 @@ const bookingController = {
             const bookingId = req.params.id;
             // const { admin_user_id, ...data } = req.body;
             const {
-                admin_user_id,
                 service_name,
                 customer_email,
                 start_time,
