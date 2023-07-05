@@ -724,3 +724,10 @@ span.MuiChip-label {
 .MuiTabs-scrollButtons.Mui-disabled {
     opacity: 0.3;
 }
+
+// Badge
+
+.MuiBadge-badge.MuiBadge-standard.MuiBadge-anchorOriginTopRight.MuiBadge-anchorOriginTopRightRectangular.MuiBadge-overlapRectangular.MuiBadge-colorSecondary {
+    background-color: var(--primary-500) !important;
+    font-size: 1.2rem !important;
+}

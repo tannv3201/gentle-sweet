@@ -204,9 +204,9 @@ function NavbarDesktop() {
                         </Grid>
                         <Grid item xs={3}>
                             <div className={cx("action-group")}>
-                                <IconButton title="Tìm kiếm" size="large">
+                                {/* <IconButton title="Tìm kiếm" size="large">
                                     <SearchRounded />
-                                </IconButton>
+                                </IconButton> */}
                                 <MenuCart />
                                 <MenuUser />
                             </div>
