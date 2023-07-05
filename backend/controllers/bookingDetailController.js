@@ -58,6 +58,7 @@ const bookingController = {
                 );
                 return !matchingBooking;
             });
+
             return res.status(200).json(filteredOptions);
         } catch (error) {
             res.status(500).json(error);
