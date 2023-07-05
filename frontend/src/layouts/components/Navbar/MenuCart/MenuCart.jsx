@@ -53,7 +53,7 @@ export default function MenuCart() {
                             {/* <ShoppingCartRounded /> */}
                             <Badge
                                 color="secondary"
-                                badgeContent={cartList.length}
+                                badgeContent={cartList?.length}
                                 max={99}
                             >
                                 <ShoppingCartRounded />
