@@ -1,7 +1,10 @@
 const BookingModel = require("../models/Booking");
 const BookingDetailModel = require("../models/BookingDetail");
 const ServiceModel = require("../models/Service");
-
+const nodemailer = require("nodemailer");
+const mailConfig = require("../config/mail");
+const dayjs = require("dayjs");
+require("dotenv").config();
 const { v4: uuidv4 } = require("uuid");
 
 const bookingController = {
@@ -97,11 +100,244 @@ const bookingController = {
     updateBookingById: async (req, res) => {
         try {
             const bookingId = req.params.id;
-            const { admin_user_id, ...data } = req.body;
+            // const { admin_user_id, ...data } = req.body;
+            const {
+                admin_user_id,
+                service_name,
+                customer_email,
+                start_time,
+                end_time,
+                date,
+                customer_name,
+                created_at,
+                isRejectCancel,
+                isConfirm,
+                ...data
+            } = req.body;
             const affectedRows = await BookingModel.updateBookingById(
                 bookingId,
-                req.body
+                data
             );
+
+            if (req.body.status === 6) {
+                let transporter = nodemailer.createTransport({
+                    host: mailConfig.HOST,
+                    port: mailConfig.PORT,
+                    secure: false, // true for 465, false for other ports
+                    auth: {
+                        user: mailConfig.USERNAME, // generated ethereal user
+                        pass: mailConfig.PASSWORD, // generated ethereal password
+                    },
+                });
+
+                let info = await transporter.sendMail({
+                    from: mailConfig.FROM_ADDRESS, // sender address
+                    to: req.body.customer_email, // list of receivers
+                    subject: "HỦY LỊCH HẸN THÀNH CÔNG", // Subject line
+                    // text: "Hello world?", // plain text body
+                    html: ` <div style="color: #000">
+                            <p style="color: #000">Xin chào ${
+                                req.body.customer_name
+                            }, bạn đã hủy lịch hẹn thành công.</p>
+                            <ul>
+                            <li>Tên dịch vụ: <strong>${
+                                req.body.service_name
+                            }</strong></li>
+                            <li>Ngày đặt lịch: <strong>${dayjs(
+                                req.body.created_at
+                            ).format("DD-MM-YYYY")}</strong></li>
+                            <li>Ngày thực hiện dịch vụ: <strong>${dayjs(
+                                req.body.date
+                            ).format("DD-MM-YYYY")}</strong></li>
+                            <li>Thời gian bắt đầu: <strong>${
+                                req.body.start_time
+                            }</strong></li>
+                            <li>Thời gian kết thúc: <strong>${
+                                req.body.end_time
+                            }</strong></li>
+                            </ul>
+                            <p style="color: #000">Mọi thông tin chi tiết xin liên hệ:</p>
+                            <ul>
+                                <li>Số điện thoại: <strong>0399 859 634</strong>
+                                </li>
+                                <li>Email: <strong>gentlebeauty.cskh@gmail.com</strong>
+                                </li>
+                            </ul>
+                            <p style="color: #000">Chúc Quý khách luôn có những trải nghiệm tuyệt vời tại <strong>GentleBeauty</strong></p>
+                            <p>Trân trọng,</p>
+                            <strong style="color: #000">
+                            Gentle Beauty.
+                            </strong>
+                        </div>`, // html body
+                });
+            } else if (req.body.status === 7) {
+                let transporter = nodemailer.createTransport({
+                    host: mailConfig.HOST,
+                    port: mailConfig.PORT,
+                    secure: false, // true for 465, false for other ports
+                    auth: {
+                        user: mailConfig.USERNAME, // generated ethereal user
+                        pass: mailConfig.PASSWORD, // generated ethereal password
+                    },
+                });
+
+                let info = await transporter.sendMail({
+                    from: mailConfig.FROM_ADDRESS, // sender address
+                    to: req.body.customer_email, // list of receivers
+                    subject: "YÊU CẦU HỦY LỊCH HẸN", // Subject line
+                    // text: "Hello world?", // plain text body
+                    html: ` <div style="color: #000">
+                            <p style="color: #000">Xin chào ${
+                                req.body.customer_name
+                            }, bạn đã gửi yêu cầu hủy lịch hẹn thành công.</p>
+                            <ul>
+                            <li>Tên dịch vụ: <strong>${
+                                req.body.service_name
+                            }</strong></li>
+                            <li>Ngày đặt lịch: <strong>${dayjs(
+                                req.body.created_at
+                            ).format("DD-MM-YYYY")}</strong></li>
+                            <li>Ngày thực hiện dịch vụ: <strong>${dayjs(
+                                req.body.date
+                            ).format("DD-MM-YYYY")}</strong></li>
+                            <li>Thời gian bắt đầu: <strong>${
+                                req.body.start_time
+                            }</strong></li>
+                            <li>Thời gian kết thúc: <strong>${
+                                req.body.end_time
+                            }</strong></li>
+                            </ul>
+                            <p style="color: #000">Quý khách vui lòng đợi sự chấp thuận từ chúng tôi.</p>
+                            <p style="color: #000">Mọi thông tin chi tiết xin liên hệ:</p>
+                            <ul>
+                                <li>Số điện thoại: <strong>0399 859 634</strong>
+                                </li>
+                                <li>Email: <strong>gentlebeauty.cskh@gmail.com</strong>
+                                </li>
+                            </ul>
+                            <p style="color: #000">Chúc Quý khách luôn có những trải nghiệm tuyệt vời tại <strong>GentleBeauty</strong></p>
+                            <p>Trân trọng,</p>
+                            <strong style="color: #000">
+                            Gentle Beauty.
+                            </strong>
+                            </div>`, // html body
+                });
+            } else if (req.body.status === 2 && req.body.isRejectCancel) {
+                let transporter = nodemailer.createTransport({
+                    host: mailConfig.HOST,
+                    port: mailConfig.PORT,
+                    secure: false, // true for 465, false for other ports
+                    auth: {
+                        user: mailConfig.USERNAME, // generated ethereal user
+                        pass: mailConfig.PASSWORD, // generated ethereal password
+                    },
+                });
+
+                let info = await transporter.sendMail({
+                    from: mailConfig.FROM_ADDRESS, // sender address
+                    to: req.body.customer_email, // list of receivers
+                    subject: "HỦY LỊCH HẸN KHÔNG THÀNH CÔNG", // Subject line
+                    // text: "Hello world?", // plain text body
+                    html: ` <div style="color: #000">
+                            <p style="color: #000">Xin chào ${
+                                req.body.customer_name
+                            }, yêu cầu hủy lịch hẹn của bạn đã bị <strong>từ chối</strong>.</p>
+                            <ul>
+                                <li>Tên dịch vụ: <strong>${
+                                    req.body.service_name
+                                }</strong>
+                                </li>
+                                <li>Ngày đặt lịch: <strong>${dayjs(
+                                    req.body.created_at
+                                ).format("DD-MM-YYYY")}</strong>
+                                </li>
+                                <li>Ngày thực hiện dịch vụ: <strong>${dayjs(
+                                    req.body.date
+                                ).format("DD-MM-YYYY")}</strong>
+                                </li>
+                                <li>Thời gian bắt đầu: <strong>${
+                                    req.body.start_time
+                                }</strong>
+                                </li>
+                                <li>Thời gian kết thúc: <strong>${
+                                    req.body.end_time
+                                }</strong>
+                                </li>
+                            </ul>
+                            <p style="color: #000">Mọi thông tin chi tiết xin liên hệ:</p>
+                            <ul>
+                                <li>Số điện thoại: <strong>0399 859 634</strong>
+                                </li>
+                                <li>Email: <strong>gentlebeauty.cskh@gmail.com</strong>
+                                </li>
+                            </ul>
+
+                            <p style="color: #000">Chúc Quý khách luôn có những trải nghiệm tuyệt vời tại <strong>GentleBeauty</strong></p>
+                            <p>Trân trọng,</p>
+                            <strong style="color: #000">
+                            Gentle Beauty.
+                            </strong>
+                            </div>`, // html body
+                });
+            } else if (req.body.status === 2 && req.body.isConfirm) {
+                let transporter = nodemailer.createTransport({
+                    host: mailConfig.HOST,
+                    port: mailConfig.PORT,
+                    secure: false, // true for 465, false for other ports
+                    auth: {
+                        user: mailConfig.USERNAME, // generated ethereal user
+                        pass: mailConfig.PASSWORD, // generated ethereal password
+                    },
+                });
+
+                let info = await transporter.sendMail({
+                    from: mailConfig.FROM_ADDRESS, // sender address
+                    to: req.body.customer_email, // list of receivers
+                    subject: "ĐẶT LỊCH HẸN THÀNH CÔNG", // Subject line
+                    // text: "Hello world?", // plain text body
+                    html: ` <div style="color: #000">
+                            <p style="color: #000">Xin chào ${
+                                req.body.customer_name
+                            }, yêu cầu đặt lịch hẹn của bạn đã được <strong>tiếp nhận</strong>.</p>
+                            <ul>
+                                <li>Tên dịch vụ: <strong>${
+                                    req.body.service_name
+                                }</strong>
+                                </li>
+                                <li>Ngày đặt lịch: <strong>${dayjs(
+                                    req.body.created_at
+                                ).format("DD-MM-YYYY")}</strong>
+                                </li>
+                                <li>Ngày thực hiện dịch vụ: <strong>${dayjs(
+                                    req.body.date
+                                ).format("DD-MM-YYYY")}</strong>
+                                </li>
+                                <li>Thời gian bắt đầu: <strong>${
+                                    req.body.start_time
+                                }</strong>
+                                </li>
+                                <li>Thời gian kết thúc: <strong>${
+                                    req.body.end_time
+                                }</strong>
+                                </li>
+                            </ul>
+                            <p style="color: #000">Mọi thông tin chi tiết xin liên hệ:</p>
+                            <ul>
+                                <li>Số điện thoại: <strong>0399 859 634</strong>
+                                </li>
+                                <li>Email: <strong>gentlebeauty.cskh@gmail.com</strong>
+                                </li>
+                            </ul>
+                            <p style="color: #000">Quý khách vui lòng kiểm tra, theo dõi và thực hiện theo đúng chính sách đặt lịch của chúng tôi.</p>
+                            <p style="color: #000">Chúc Quý khách luôn có những trải nghiệm tuyệt vời tại <strong>GentleBeauty</strong></p>
+                            <p>Trân trọng,</p>
+                            <strong style="color: #000">
+                            Gentle Beauty.
+                            </strong>
+                            </div>`, // html body
+                });
+            }
+
             if (affectedRows === 0) {
                 return res.json({ status: 404, msg: "Cập nhật thất bại" });
             } else {

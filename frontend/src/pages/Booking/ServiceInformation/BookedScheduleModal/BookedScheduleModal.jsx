@@ -144,7 +144,6 @@ function BookedScheduleModal({ isOpen, handleClose, handleOpen }) {
                 });
 
                 setBookingList(structuredClone(finalList));
-
                 // find booking status = 1: chờ xác nhận
                 const filterBookedList = finalList.filter(
                     (i) => i?.status <= 4

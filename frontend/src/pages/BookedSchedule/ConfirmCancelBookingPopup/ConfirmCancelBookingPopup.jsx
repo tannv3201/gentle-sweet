@@ -37,19 +37,8 @@ function ConfirmCancelBookingPopup({
             user?.accessToken,
             dispatch,
             booking?.bookingId,
-            data,
-            axiosJWT
-        );
-
-        const { note, ...restData } = data;
-
-        await updateBookingDetail(
-            user?.accessToken,
-            dispatch,
-            bookingDetail?.id,
-            booking?.bookingId,
             {
-                ...restData,
+                ...data,
                 service_name: bookingDetail?.service_name,
                 customer_email: user?.email,
                 start_time: bookingDetail?.start_time,
@@ -59,10 +48,10 @@ function ConfirmCancelBookingPopup({
                 created_at: bookingDetail?.created_at,
             },
             axiosJWT
-        ).then(() => {
-            toast.success(msg);
-            handleClose();
-        });
+        );
+
+        toast.success(msg);
+        handleClose();
     };
     const formik = useFormik({
         enableReinitialize: true,
