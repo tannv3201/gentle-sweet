@@ -32,22 +32,6 @@ const invoiceController = {
         }
     },
 
-    //  // GET INVOICE DETAIL BY ID
-    //  checkExistRating: async (req, res) => {
-    //     try {
-    //         const invoiceDetail = await InvoiceDetailModel.getInvoiceDetailById(
-    //             req.params.id
-    //         );
-    //         if (!invoiceDetail) {
-    //             return res.status(404).json("Chi tiết đơn hàng không tồn tại");
-    //         } else {
-    //             return res.status(200).json(invoiceDetail);
-    //         }
-    //     } catch (error) {
-    //         res.status(500).json(error);
-    //     }
-    // },
-
     // GET INVOICE DETAIL BY ID
     getInvoiceDetailByInvoiceId: async (req, res) => {
         try {
@@ -74,7 +58,6 @@ const invoiceController = {
                     product_id: req.body.product_id,
                     product_quantity: req.body.product_quantity,
                     unit_price: req.body.unit_price,
-                    status: 1,
                 });
             const checkPriceTotal = await InvoiceDetailModel.checkPriceTotal(
                 req.body.invoice_id
